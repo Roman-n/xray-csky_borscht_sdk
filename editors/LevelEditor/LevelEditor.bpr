@@ -129,33 +129,33 @@
       Splash.dfm FrmDBXpacker.dfm RightForm.dfm FrameFogVol.dfm 
       Edit\AppendObjectInfoForm.dfm LEClipEditor.dfm"/>
     <LIBFILES value=""/>
-    <LIBRARIES value="editorB.lib editor.lib bcbsmp.lib"/>
+    <LIBRARIES value="editorB.lib elpproB6.lib elpackB6.lib editor.lib bcbsmp.lib"/>
     <SPARELIBS value="rtl.lib vcl.lib bcbsmp.lib vclx.lib editor.lib elpackB6.lib elpproB6.lib 
       editorB.lib"/>
-    <PACKAGES value="vcl.bpi rtl.bpi vclx.bpi elpackB6.bpi elpkdbB6.bpi elpproB6.bpi"/>
-    <PATHCPP value=".;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;..\..\xrEngine;Edit;Edit;Edit;..\..\xrServerEntities;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;Edit;..\..\Layers\xrRender;..\..\Layers\xrRender;..\..\Layers\xrRender;..\..\Layers\xrRender;..\..\Layers\xrRender;Edit;..\..\xrServerEntities;Edit;Edit"/>
+    <PACKAGES value="vcl.bpi rtl.bpi vclx.bpi"/>
+    <PATHCPP value=".;Edit;..\..\xrEngine;..\..\xrServerEntities;..\..\Layers\xrRender"/>
     <PATHPAS value=".;"/>
     <PATHRC value=".;"/>
     <PATHASM value=".;"/>
     <DEBUGLIBPATH value="$(BCB)\lib\debug"/>
     <RELEASELIBPATH value="$(BCB)\lib\release"/>
     <LINKER value="ilink32"/>
-    <USERDEFINES value="_EDITOR;_LEVEL_EDITOR"/>
+    <USERDEFINES value="_EDITOR;_LEVEL_EDITOR;_DEBUG"/>
     <SYSDEFINES value="NO_STRICT;_RTLDLL;USEPACKAGES"/>
     <MAINSOURCE value="LevelEditor.cpp"/>
-    <INCLUDEPATH value="..\..\xrServerEntities;..\..\Layers\xrRender;..\..\xrEngine\xrRender;$(DXSDK_DIR)\Include;Edit;Engine;$(BCB)\Projects;$(BCB)\include\vcl;$(BCB)\include;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(CORE_DIR);../../xrEngine;../../xrRender;$(MAGIC_SW_DIR);$(ETOOLS_DIR)"/>
-    <LIBPATH value="..\..\xrServerEntities;..\..\Layers\xrRender;..\..\..\SDK\components\ElPack\Code;..\..\xrEngine\xrRender;..\..\xrRender;..\..\xrEngine;Edit;Engine;$(BCB)\Projects;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code\Source;X:\stalker_addon\libraries"/>
+    <INCLUDEPATH value="..\..\xrServerEntities;..\..\Layers\xrRender;$(DXSDK_DIR)\Include;Edit;Engine;$(BCB)\Projects;$(BCB)\include\vcl;$(BCB)\include;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(CORE_DIR);../../xrEngine;$(ETOOLS_DIR);X:\SDK\include\freemagic"/>
+    <LIBPATH value="..\..\Layers\xrRender;..\..\xrServerEntities;..\..\xrEngine;Edit;$(BCB)\Projects;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code\Source;X:\stalker_addon\libraries;$(DXSDK_DIR)\Lib\x86"/>
     <WARNINGS value="-w8092 -w8090 -w8089 -w8087 -wprc -wucp -wstv -wstu -wsig -wpin -w-par 
       -wnod -wnak -w-8027 -w-8026 -wdef -wcln -wbbf -wasm -wamp -wamb"/>
     <OTHERFILES value=""/>
   </MACROS>
   <OPTIONS>
-    <IDLCFLAGS value="-I..\..\xrServerEntities -I..\..\Layers\xrRender -I..\..\xrEngine\xrRender 
-      -I$(DXSDK_DIR)\Include -IEdit -IEngine -I$(BCB)\Projects 
-      -I$(BCB)\include\vcl -I$(BCB)\include -I$(COMPONENTS)\alexmx 
-      -I$(COMPONENTS)\ElPack\Code -I$(COMPONENTS)\ElPack\Code\Source 
-      -I$(CORE_DIR) -I../../xrEngine -I../../xrRender -I$(MAGIC_SW_DIR) 
-      -I$(ETOOLS_DIR) -src_suffix cpp -D_EDITOR -D_LEVEL_EDITOR"/>
+    <IDLCFLAGS value="-I..\..\xrServerEntities -I..\..\Layers\xrRender -I$(DXSDK_DIR)\Include 
+      -IEdit -IEngine -I$(BCB)\Projects -I$(BCB)\include\vcl -I$(BCB)\include 
+      -I$(COMPONENTS)\alexmx -I$(COMPONENTS)\ElPack\Code 
+      -I$(COMPONENTS)\ElPack\Code\Source -I$(CORE_DIR) -I../../xrEngine 
+      -I$(ETOOLS_DIR) -IX:\SDK\include\freemagic -src_suffix cpp -D_EDITOR 
+      -D_LEVEL_EDITOR -D_DEBUG"/>
     <CFLAG1 value="-Od -H=x:\intermediate_ed\le\pch.csm -Hc -Q -Vms -Vx -Ve -xf -xp -VF -ff 
       -X- -ps -a4 -6 -b- -k- -vi -He -c -tW -tWM"/>
     <PFLAGS value="-N2x:\intermediate_ed\le -N0x:\intermediate_ed\le -$Y- -$R -$Q -$L- -$D- 
@@ -334,7 +334,7 @@ AutoIncBuild=1
 MajorVer=1
 MinorVer=0
 Release=2
-Build=145
+Build=149
 Debug=1
 PreRelease=0
 Special=0
@@ -346,7 +346,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=
 FileDescription=
-FileVersion=1.0.2.145
+FileVersion=1.0.2.149
 InternalName=
 LegalCopyright=
 LegalTrademarks=
@@ -356,30 +356,37 @@ ProductVersion=1.0.0.0
 Comments=
 
 [Excluded Packages]
-e:\program files\borland\cbuilder6\Bin\bcb2kaxserver60.bpl=Borland C++Builder COM Server Components Sample Package
+X:\SDK\components\ElPack\Code\dceldbB6.bpl=EldoS DB-Aware Controls (Design-time)
+X:\SDK\components\ElPack\Code\dcelppB6.bpl=EldoS Professional Components (Design-time)
+X:\SDK\components\ElPack\Code\dclelpB6.bpl=EldoS Visual Components (Design-time)
 
 [HistoryLists\hlIncludePath]
-Count=9
-Item0=..\..\xrServerEntities;..\..\Layers\xrRender;..\..\xrEngine\xrRender;$(DXSDK_DIR)\Include;Edit;Engine;$(BCB)\Projects;$(BCB)\include\vcl;$(BCB)\include;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(CORE_DIR);../../xrEngine;../../xrRender;$(MAGIC_SW_DIR);$(ETOOLS_DIR)
-Item1=..\..\xrEngine\xrRender;$(DXSDK_DIR)\Include;Edit;Engine;$(BCB)\Projects;$(BCB)\include\vcl;$(BCB)\include;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(CORE_DIR);../../xrEngine;../../xrRender;$(MAGIC_SW_DIR);$(ETOOLS_DIR)
-Item2=..\..\xrEngine\xrRender;$(DXSDK_DIR)\Include;Edit;Engine;$(BCB)\Projects;$(BCB)\include\vcl;$(BCB)\include;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(CORE_DIR);../../xrEngine;../../xrRender;$(MAGIC_SW_DIR)
-Item3=$(DXSDK_DIR)\Include;Edit;Engine;$(BCB)\Projects;$(BCB)\include\vcl;$(BCB)\include;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(CORE_DIR);../../xrEngine;../../xrRender;$(MAGIC_SW_DIR)
-Item4=$(DXSDK_DIR)\Include;Edit;Engine;$(BCB)\Projects;$(BCB)\include\vcl;$(BCB)\include;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(CORE_DIR);../../xrEngine;../../xrEngine/xrRender;$(MAGIC_SW_DIR)
-Item5=$(DXSDK_DIR)\Include;Edit;Engine;$(BCB)\Projects;$(BCB)\include\vcl;$(BCB)\include;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(CORE_DIR);../../xrEngine;../../xrEngine/xrRender
-Item6=Edit;Engine;$(BCB)\Projects;$(BCB)\include\vcl;$(BCB)\include;$(DXSDK_DIR)\Include;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(CORE_DIR);../../xrEngine;../../xrEngine/xrRender
-Item7=Edit;H:\RAD\Borland\CBuilder6\Projects;&quot;R:\SDK\Microsoft DirectX 9.0 SDK (April 2005)\Include&quot;Edit;Engine;r:\borland\components6\alexmx;$(BCB)\include;$(BCB)\include\vcl;R:\SDK\MagicFM_Borland\Sdk\Include;R:\Borland\Components6\ElPack\Code;R:\Borland\Components6\ElPack\Code\Source;P:\xrCore;..\ECore;..\ECore\Editor;..\ECore\Engine;..\ECore\Engine\blenders;..\ECore\Engine\visuals;..\xrEProps;P:\xrSound
-Item8=H:\RAD\Borland\CBuilder6\Projects;R:\SDK\Microsoft DirectX 9.0 SDK (April 2005)\Include;Engine\Game;Edit;Engine;r:\borland\components6\alexmx;$(BCB)\include;$(BCB)\include\vcl;R:\SDK\MagicFM_Borland\Sdk\Include;R:\Borland\Components6\ElPack\Code;R:\Borland\Components6\ElPack\Code\Source;P:\xrCore;..\ECore;..\ECore\Editor;..\ECore\Engine;..\ECore\Engine\blenders;..\ECore\Engine\visuals;..\xrEProps;P:\xrSound
+Count=11
+Item0=..\..\xrServerEntities;..\..\Layers\xrRender;$(DXSDK_DIR)\Include;Edit;Engine;$(BCB)\Projects;$(BCB)\include\vcl;$(BCB)\include;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(CORE_DIR);../../xrEngine;$(ETOOLS_DIR);X:\SDK\include\freemagic
+Item1=..\..\xrServerEntities;..\..\Layers\xrRender;$(DXSDK_DIR)\Include;Edit;Engine;$(BCB)\Projects;$(BCB)\include\vcl;$(BCB)\include;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(CORE_DIR);../../xrEngine;$(ETOOLS_DIR)
+Item2=..\..\xrServerEntities;..\..\Layers\xrRender;..\..\xrEngine\xrRender;$(DXSDK_DIR)\Include;Edit;Engine;$(BCB)\Projects;$(BCB)\include\vcl;$(BCB)\include;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(CORE_DIR);../../xrEngine;../../xrRender;$(MAGIC_SW_DIR);$(ETOOLS_DIR)
+Item3=..\..\xrEngine\xrRender;$(DXSDK_DIR)\Include;Edit;Engine;$(BCB)\Projects;$(BCB)\include\vcl;$(BCB)\include;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(CORE_DIR);../../xrEngine;../../xrRender;$(MAGIC_SW_DIR);$(ETOOLS_DIR)
+Item4=..\..\xrEngine\xrRender;$(DXSDK_DIR)\Include;Edit;Engine;$(BCB)\Projects;$(BCB)\include\vcl;$(BCB)\include;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(CORE_DIR);../../xrEngine;../../xrRender;$(MAGIC_SW_DIR)
+Item5=$(DXSDK_DIR)\Include;Edit;Engine;$(BCB)\Projects;$(BCB)\include\vcl;$(BCB)\include;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(CORE_DIR);../../xrEngine;../../xrRender;$(MAGIC_SW_DIR)
+Item6=$(DXSDK_DIR)\Include;Edit;Engine;$(BCB)\Projects;$(BCB)\include\vcl;$(BCB)\include;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(CORE_DIR);../../xrEngine;../../xrEngine/xrRender;$(MAGIC_SW_DIR)
+Item7=$(DXSDK_DIR)\Include;Edit;Engine;$(BCB)\Projects;$(BCB)\include\vcl;$(BCB)\include;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(CORE_DIR);../../xrEngine;../../xrEngine/xrRender
+Item8=Edit;Engine;$(BCB)\Projects;$(BCB)\include\vcl;$(BCB)\include;$(DXSDK_DIR)\Include;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(CORE_DIR);../../xrEngine;../../xrEngine/xrRender
+Item9=Edit;H:\RAD\Borland\CBuilder6\Projects;&quot;R:\SDK\Microsoft DirectX 9.0 SDK (April 2005)\Include&quot;Edit;Engine;r:\borland\components6\alexmx;$(BCB)\include;$(BCB)\include\vcl;R:\SDK\MagicFM_Borland\Sdk\Include;R:\Borland\Components6\ElPack\Code;R:\Borland\Components6\ElPack\Code\Source;P:\xrCore;..\ECore;..\ECore\Editor;..\ECore\Engine;..\ECore\Engine\blenders;..\ECore\Engine\visuals;..\xrEProps;P:\xrSound
+Item10=H:\RAD\Borland\CBuilder6\Projects;R:\SDK\Microsoft DirectX 9.0 SDK (April 2005)\Include;Engine\Game;Edit;Engine;r:\borland\components6\alexmx;$(BCB)\include;$(BCB)\include\vcl;R:\SDK\MagicFM_Borland\Sdk\Include;R:\Borland\Components6\ElPack\Code;R:\Borland\Components6\ElPack\Code\Source;P:\xrCore;..\ECore;..\ECore\Editor;..\ECore\Engine;..\ECore\Engine\blenders;..\ECore\Engine\visuals;..\xrEProps;P:\xrSound
 
 [HistoryLists\hlLibraryPath]
-Count=8
-Item0=..\..\xrServerEntities;..\..\Layers\xrRender;..\..\..\SDK\components\ElPack\Code;..\..\xrEngine\xrRender;..\..\xrRender;..\..\xrEngine;Edit;Engine;$(BCB)\Projects;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code\Source;X:\stalker_addon\libraries
-Item1=..\..\xrEngine\xrRender;..\..\xrRender;..\..\xrEngine;Edit;Engine;$(BCB)\Projects;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;X:\stalker_addon\libraries
-Item2=..\..\xrRender;..\..\xrEngine;Edit;Engine;$(BCB)\Projects;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;X:\stalker_addon\libraries
-Item3=..\..\xrEngine\xrRender;..\..\xrEngine;Edit;Engine;$(BCB)\Projects;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;x:\libraries
-Item4=Edit;Engine;$(BCB)\Projects;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;x:\libraries
-Item5=$(BCB)\Projects;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;x:\libraries
-Item6=H:\RAD\Borland\CBuilder6\Projects;Edit;Engine;C:\Rad\Borland\CBuilder6\Projects;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;r:\borland\components6\alexmx;R:\Borland\Components6\ElPack\Code;R:\Borland\Components6\ElPack\Code\Source;..\lib\dx;..\lib;x:\;..\ECore;..\ECore\Editor
-Item7=H:\RAD\Borland\CBuilder6\Projects;Engine\Game;Edit;Engine;C:\Rad\Borland\CBuilder6\Projects;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;r:\borland\components6\alexmx;R:\Borland\Components6\ElPack\Code;R:\Borland\Components6\ElPack\Code\Source;..\lib\dx;..\lib;x:\;..\ECore;..\ECore\Editor
+Count=11
+Item0=..\..\Layers\xrRender;..\..\xrServerEntities;..\..\xrEngine;Edit;$(BCB)\Projects;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code\Source;X:\stalker_addon\libraries;$(DXSDK_DIR)\Lib\x86
+Item1=..\..\Layers\xrRender;..\..\xrServerEntities;..\..\xrEngine;Edit;$(BCB)\Projects;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code\Source;X:\stalker_addon\libraries
+Item2=$(BCB)\Projects;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code\Source;X:\stalker_addon\libraries
+Item3=..\..\xrServerEntities;..\..\Layers\xrRender;..\..\..\SDK\components\ElPack\Code;..\..\xrEngine\xrRender;..\..\xrRender;..\..\xrEngine;Edit;Engine;$(BCB)\Projects;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code\Source;X:\stalker_addon\libraries
+Item4=..\..\xrEngine\xrRender;..\..\xrRender;..\..\xrEngine;Edit;Engine;$(BCB)\Projects;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;X:\stalker_addon\libraries
+Item5=..\..\xrRender;..\..\xrEngine;Edit;Engine;$(BCB)\Projects;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;X:\stalker_addon\libraries
+Item6=..\..\xrEngine\xrRender;..\..\xrEngine;Edit;Engine;$(BCB)\Projects;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;x:\libraries
+Item7=Edit;Engine;$(BCB)\Projects;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;x:\libraries
+Item8=$(BCB)\Projects;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;x:\libraries
+Item9=H:\RAD\Borland\CBuilder6\Projects;Edit;Engine;C:\Rad\Borland\CBuilder6\Projects;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;r:\borland\components6\alexmx;R:\Borland\Components6\ElPack\Code;R:\Borland\Components6\ElPack\Code\Source;..\lib\dx;..\lib;x:\;..\ECore;..\ECore\Editor
+Item10=H:\RAD\Borland\CBuilder6\Projects;Engine\Game;Edit;Engine;C:\Rad\Borland\CBuilder6\Projects;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;r:\borland\components6\alexmx;R:\Borland\Components6\ElPack\Code;R:\Borland\Components6\ElPack\Code\Source;..\lib\dx;..\lib;x:\;..\ECore;..\ECore\Editor
 
 [HistoryLists\hlDebugSourcePath]
 Count=2
@@ -388,8 +395,8 @@ Item1=c:\rad\borland\cbuilder5\source\vcl;R:\Borland\Components6\AlexMX\
 
 [HistoryLists\hlConditionals]
 Count=2
-Item0=_EDITOR;_LEVEL_EDITOR
-Item1=_EDITOR;_LEVEL_EDITOR;_DEBUG
+Item0=_EDITOR;_LEVEL_EDITOR;_DEBUG
+Item1=_EDITOR;_LEVEL_EDITOR
 
 [HistoryLists\hlIntOutputDir]
 Count=2
@@ -412,7 +419,7 @@ Item1=x:\libraries
 DebugSourceDirs=X:\stalker_addon\sources\engine\editors\ECore\Editor\
 
 [Parameters]
-RunParams=-wf x:\stalker_addon\resources
+RunParams=-wf K:\BORSCHT
 Launcher=
 UseLauncher=0
 DebugCWD=

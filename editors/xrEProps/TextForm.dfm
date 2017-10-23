@@ -139,7 +139,7 @@ object frmText: TfrmText
   end
   object sbStatusPanel: TElStatusBar
     Left = 0
-    Top = 251
+    Top = 256
     Width = 504
     Height = 19
     Panels = <
@@ -170,7 +170,7 @@ object frmText: TfrmText
     Left = 0
     Top = 20
     Width = 504
-    Height = 231
+    Height = 236
     Align = alClient
     Color = 10526880
     Font.Charset = RUSSIAN_CHARSET

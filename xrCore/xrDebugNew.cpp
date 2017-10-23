@@ -17,8 +17,7 @@ extern bool shared_str_initialized;
 #ifdef __BORLANDC__
     #	include "d3d9.h"
     #	include "d3dx9.h"
-    #	include "D3DX_Wrapper.h"
-    #	pragma comment(lib,"EToolsB.lib")
+// include D3DX_Wrapper.h and link comment to ETools was here
     #	define DEBUG_INVOKE	DebugBreak()
         static BOOL			bException	= TRUE;
     #   define USE_BUG_TRAP
@@ -246,10 +245,10 @@ LPCSTR xrDebug::error2string	(long code)
 	LPCSTR				result	= 0;
 	static	string1024	desc_storage;
 
-#ifdef _M_AMD64
-#else
-	result				= DXGetErrorDescription9	(code);
+#if !defined(_M_AMD64) && !defined(_EDITOR)
+	result				= DXGetErrorDescription9(code);
 #endif
+
 	if (0==result) 
 	{
 		FormatMessage	(FORMAT_MESSAGE_FROM_SYSTEM,0,code,0,desc_storage,sizeof(desc_storage)-1,0);

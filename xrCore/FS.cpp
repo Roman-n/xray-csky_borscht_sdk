@@ -310,10 +310,16 @@ void	IWriter::w_printf(const char* format, ...)
 	char buf[1024];
 
 	va_start( mark , format );
-		vsprintf_s( buf , format , mark );
+    
+#ifdef __BORLANDC__
+	vsprintf( buf, format, mark );
+#else
+    vsprintf_s( buf , format , mark );
+#endif
+
 	va_end( mark );
 
-	w		( buf, xr_strlen(buf) );
+	w( buf, xr_strlen(buf) );
 }
 
 //---------------------------------------------------

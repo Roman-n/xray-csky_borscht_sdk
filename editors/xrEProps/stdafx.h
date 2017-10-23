@@ -28,7 +28,6 @@ namespace CDB{
 // libs
 #pragma comment		(lib,"xrSoundB.lib")
 #pragma comment		(lib,"xrCoreB.lib")
-#pragma comment		(lib,"EToolsB.lib")
 
 #endif //stdafxH
 

@@ -13,6 +13,8 @@
 
 #include "../../xrCore/xrCore.h"
 
+#ifndef _EDITOR
+
 #pragma warning(push)
 #pragma warning(disable:4995)
 #include "d3dx9.h"
@@ -29,6 +31,14 @@
 #pragma comment(lib,"xrCore.lib")
 #pragma comment(lib,"xrQSlim.lib")
 #pragma comment(lib,"xrCDB.lib")
+
+#else // _EDITOR
+
+#pragma link "xrCoreB.lib"
+#pragma link "xrCDBB.lib"
+
+#endif
+
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 

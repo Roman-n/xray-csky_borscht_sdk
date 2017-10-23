@@ -1082,8 +1082,6 @@ void __fastcall TProperties::WaveFormClick(TElTreeItem* item)
     }
 }
 //---------------------------------------------------------------------------
-extern "C" DLL_API bool FSColorPickerExecute(u32* currentColor, LPDWORD originalColor, const int initialExpansionState);
-
 void __fastcall TProperties::ColorClick(TElTreeItem* item)
 {
 	PropItem* prop = (PropItem*)item->Tag;

@@ -27,7 +27,7 @@
     <LIBRARIES value="editorB.lib elpackB6.lib editor.lib"/>
     <SPARELIBS value="rtl.lib vcl.lib bcbsmp.lib vclx.lib editor.lib elpackB6.lib editorB.lib"/>
     <PACKAGES value="rtl.bpi vcl.bpi vclx.bpi bcbsmp.bpi"/>
-    <PATHCPP value=".;..\..\xrEngine;..\..\xrEngine;..\ECore\Editor"/>
+    <PATHCPP value=".;..\..\xrEngine;..\ECore\Editor"/>
     <PATHPAS value=".;"/>
     <PATHRC value=".;"/>
     <PATHASM value=".;"/>

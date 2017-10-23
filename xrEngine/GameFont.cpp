@@ -268,7 +268,11 @@ void CGameFont::MasterOut(
 	rs.height = fCurrentHeight;
 	rs.align = eCurrentAlignment;
 
-	int vs_sz = vsprintf_s( rs.string , fmt , p );
+#ifdef __BORLANDC__
+	int vs_sz = vsprintf( rs.string, fmt, p );
+#else
+	int vs_sz = vsprintf_s( rs.string, fmt, p );
+#endif
 
 	//VERIFY( ( vs_sz != -1 ) && ( rs.string[ vs_sz ] == '\0' ) );
 
