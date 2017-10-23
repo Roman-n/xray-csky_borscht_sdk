@@ -210,6 +210,7 @@ __published:	// IDE-managed Components
 	TExtBtn *btEnableFogVolumes;
 	TBevel *Bevel3;
 	TMenuItem *ClipEditor1;
+	TExtBtn *ebSnapListEdit;
     void __fastcall ebClearClick(TObject *Sender);
     void __fastcall ebLoadClick(TObject *Sender);
     void __fastcall ebSaveClick(TObject *Sender);
@@ -300,8 +301,11 @@ __published:	// IDE-managed Components
 	void __fastcall e1Click(TObject *Sender);
 	void __fastcall btEnableObjectClick(TObject *Sender);
 	void __fastcall ClipEditor1Click(TObject *Sender);
+	void __fastcall lbSnapListDblClick(TObject *Sender);
+	void __fastcall ebSnapListEditClick(TObject *Sender);
 private:	// User declarations
     void RedrawBar();
+    void EditSnapList();
 	void __fastcall miRecentFilesClick(TObject *Sender);
     
     xr_vector<std::pair<TExtBtn*,TExtBtn*> >	m_TargetButtons;
