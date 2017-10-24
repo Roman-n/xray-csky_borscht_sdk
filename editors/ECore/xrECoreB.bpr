@@ -82,7 +82,7 @@
       x:\intermediate_ed\ecore\ExportSkeletonCalculateTB.obj 
       x:\intermediate_ed\ecore\ImageEditor.obj 
       x:\intermediate_ed\ecore\ImageManager.obj 
-      x:\intermediate_ed\ecore\library.obj x:\intermediate_ed\ecore\LogForm.obj 
+      x:\intermediate_ed\ecore\Library.obj x:\intermediate_ed\ecore\LogForm.obj 
       x:\intermediate_ed\ecore\render.obj 
       x:\intermediate_ed\ecore\SoundEditor.obj 
       x:\intermediate_ed\ecore\SoundManager.obj 
@@ -300,7 +300,7 @@
       <FILE FILENAME="Editor\ExportSkeletonCalculateTB.cpp" FORMNAME="" UNITNAME="ExportSkeletonCalculateTB" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="Editor\ImageEditor.cpp" FORMNAME="frmImageLib" UNITNAME="ImageEditor" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="Editor\ImageManager.cpp" FORMNAME="" UNITNAME="ImageManager.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="Editor\library.cpp" FORMNAME="" UNITNAME="Library.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="Editor\Library.cpp" FORMNAME="" UNITNAME="Library.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="Editor\LogForm.cpp" FORMNAME="frmLog" UNITNAME="LogForm" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="Editor\render.cpp" FORMNAME="" UNITNAME="render.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="Editor\SoundEditor.cpp" FORMNAME="frmSoundLib" UNITNAME="SoundEditor" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>

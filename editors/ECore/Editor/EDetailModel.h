@@ -61,6 +61,7 @@ class ECORE_API EDetail: public CDetail{
 	Fsphere				bv_sphere;
 	Fbox				bv_bb;
 */
+	bool				m_bLoadFromLibrary;
     float 				m_fDensityFactor;
 
     // references
@@ -71,7 +72,7 @@ class ECORE_API EDetail: public CDetail{
 public:
 //    bool				m_bMarkDel;
 public:
-						EDetail			();
+						EDetail			(bool lib = true);
 	virtual             ~EDetail		();
 
 	bool				Load            (IReader&);

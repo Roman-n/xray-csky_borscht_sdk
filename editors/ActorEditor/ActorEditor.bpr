@@ -41,10 +41,10 @@
     <OTHERFILES value=""/>
   </MACROS>
   <OPTIONS>
-    <IDLCFLAGS value="-src_suffix cpp -D_EDITOR -D_ACTOR_EDITOR -D_DEBUG -I$(DXSDK_DIR)\Include 
-      -I$(COMPONENTS)\alexmx -I$(BCB)\include -I$(BCB)\include\vcl 
-      -I$(COMPONENTS)\ElPack\Code -I$(COMPONENTS)\ElPack\Code\Source 
-      -I$(CORE_DIR) -I..\..\xrEngine -I..\..\xrCPU_Pipe -boa"/>
+    <IDLCFLAGS value="-I$(DXSDK_DIR)\Include -I$(COMPONENTS)\alexmx -I$(BCB)\include 
+      -I$(BCB)\include\vcl -I$(COMPONENTS)\ElPack\Code 
+      -I$(COMPONENTS)\ElPack\Code\Source -I$(CORE_DIR) -I..\..\xrEngine 
+      -I..\..\xrCPU_Pipe -src_suffix cpp -D_EDITOR -D_ACTOR_EDITOR -D_DEBUG -boa"/>
     <CFLAG1 value="-Od -H=x:\intermediate_ed\ae\pch.csm -Hc -Q -Vms -Vx -Ve -xf -xp -VF -ff 
       -X- -ps -a4 -6 -b- -k- -vi -He -c -tW -tWM"/>
     <PFLAGS value="-N2x:\intermediate_ed\ae -N0x:\intermediate_ed\ae -$Y- -$L- -$D- -$A8 -v 
@@ -89,7 +89,7 @@ AutoIncBuild=1
 MajorVer=1
 MinorVer=0
 Release=2
-Build=160
+Build=163
 Debug=1
 PreRelease=0
 Special=0
@@ -101,7 +101,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=
 FileDescription=
-FileVersion=1.0.2.160
+FileVersion=1.0.2.163
 InternalName=
 LegalCopyright=
 LegalTrademarks=
