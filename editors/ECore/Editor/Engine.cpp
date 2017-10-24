@@ -38,9 +38,6 @@ LPCSTR CEngine::LastWindowsError()
     return err;
 }
 
-extern void __stdcall xrSkin1W_x86	(vertRender* D, vertBoned1W* S, u32 vCount, CBoneInstance* Bones);
-extern void __stdcall xrSkin2W_x86	(vertRender* D, vertBoned2W* S, u32 vCount, CBoneInstance* Bones);
-
 void CEngine::Initialize(void)
 {
 	// Other stuff
@@ -56,9 +53,6 @@ void CEngine::Initialize(void)
 
 	xrBinder* bindCPU	    = (xrBinder*)GetProcAddress(hPSGP,"xrBind_PSGP");	R_ASSERT(bindCPU);
 	bindCPU		            (&PSGP, CPU::ID.feature & CPU::ID.os_support);
-    // for compliance with editor
-    PSGP.skin1W				= xrSkin1W_x86;
-    PSGP.skin2W				= xrSkin2W_x86;
 #endif
 
 	ReloadSettings			();
