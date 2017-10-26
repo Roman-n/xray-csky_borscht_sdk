@@ -41,10 +41,10 @@
     <OTHERFILES value=""/>
   </MACROS>
   <OPTIONS>
-    <IDLCFLAGS value="-I$(DXSDK_DIR)\Include -I$(COMPONENTS)\alexmx -I$(BCB)\include 
-      -I$(BCB)\include\vcl -I$(COMPONENTS)\ElPack\Code 
-      -I$(COMPONENTS)\ElPack\Code\Source -I$(CORE_DIR) -I..\..\xrEngine 
-      -I..\..\xrCPU_Pipe -src_suffix cpp -D_EDITOR -D_ACTOR_EDITOR -D_DEBUG -boa"/>
+    <IDLCFLAGS value="-src_suffix cpp -D_EDITOR -D_ACTOR_EDITOR -D_DEBUG -I$(DXSDK_DIR)\Include 
+      -I$(COMPONENTS)\alexmx -I$(BCB)\include -I$(BCB)\include\vcl 
+      -I$(COMPONENTS)\ElPack\Code -I$(COMPONENTS)\ElPack\Code\Source 
+      -I$(CORE_DIR) -I..\..\xrEngine -I..\..\xrCPU_Pipe -boa"/>
     <CFLAG1 value="-Od -H=x:\intermediate_ed\ae\pch.csm -Hc -Q -Vms -Vx -Ve -xf -xp -VF -ff 
       -X- -ps -a4 -6 -b- -k- -vi -He -c -tW -tWM"/>
     <PFLAGS value="-N2x:\intermediate_ed\ae -N0x:\intermediate_ed\ae -$Y- -$L- -$D- -$A8 -v 
@@ -230,7 +230,7 @@ Item1=x:\libraries
 DebugSourceDirs=$(COMPONENTS)\AlexMX\
 
 [Parameters]
-RunParams=-wf K:\BORSCHT
+RunParams=-wf K:\BORSCHT -hw_skin
 Launcher=
 UseLauncher=0
 DebugCWD=

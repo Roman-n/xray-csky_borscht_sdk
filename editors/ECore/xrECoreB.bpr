@@ -40,7 +40,7 @@
       x:\intermediate_ed\ecore\Blender_Editor_Selection.obj 
       x:\intermediate_ed\ecore\Blender_Screen_SET.obj 
       x:\intermediate_ed\ecore\blender_light.obj 
-      x:\intermediate_ed\ecore\blender_b.obj 
+      x:\intermediate_ed\ecore\Blender_B.obj 
       x:\intermediate_ed\ecore\Blender_Lm(EbB).obj 
       x:\intermediate_ed\ecore\Blender_Blur.obj 
       x:\intermediate_ed\ecore\Blender_Editor_Wire.obj 
@@ -196,12 +196,13 @@
       -IX:\SDK\include -IX:\SDK\include\freemagic -src_suffix cpp -D_EDITOR 
       -D_ECOREB -DXRCDB_EXPORTS -D_DEBUG -boa"/>
     <CFLAG1 value="-WD -Od -H=x:\intermediate_ed\ecore\pch.csm -Hc -Q -Vms -Vx -Ve -xf -xp 
-      -VF -ff -X- -ps -a4 -6 -b- -k- -vi -tWD -tWM -c"/>
+      -VF -ff -X- -ps -a4 -6 -b- -k- -y -v -vi- -tWD -tWM -c"/>
     <PFLAGS value="-N2x:\intermediate_ed\ecore -N0x:\intermediate_ed\ecore -$Y- -$L- -$D- 
       -$A8 -v -JPHNE -M"/>
     <RFLAGS value=""/>
     <AFLAGS value="/mu /w2 /zn"/>
-    <LFLAGS value="-lX:\stalker_addon\libraries -Ix:\intermediate_ed\ecore -D&quot;&quot; -aa -Tpd -x -Gi"/>
+    <LFLAGS value="-lX:\stalker_addon\libraries -Ix:\intermediate_ed\ecore -D&quot;&quot; -aa -Tpd -x 
+      -Gi -v"/>
     <OTHERFILES value=""/>
   </OPTIONS>
   <LINKER>
@@ -255,7 +256,7 @@
       <FILE FILENAME="..\..\Layers\xrRender\Blender_Editor_Selection.cpp" FORMNAME="" UNITNAME="Blender_Editor_Selection" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\Layers\xrRender\Blender_Screen_SET.cpp" FORMNAME="" UNITNAME="Blender_Screen_SET" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="Engine\blenders\blender_light.cpp" FORMNAME="" UNITNAME="blender_light" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="Engine\blenders\blender_b.cpp" FORMNAME="" UNITNAME="blender_b" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="Engine\blenders\Blender_B.cpp" FORMNAME="" UNITNAME="blender_b" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\Layers\xrRender\Blender_Lm(EbB).cpp" FORMNAME="" UNITNAME="Blender_Lm(EbB)" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\Layers\xrRenderPC_R1\Blender_Blur.cpp" FORMNAME="" UNITNAME="Blender_Blur" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\Layers\xrRender\Blender_Editor_Wire.cpp" FORMNAME="" UNITNAME="Blender_Editor_Wire" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
@@ -326,7 +327,6 @@
       <FILE FILENAME="Editor\du_sphere_part.cpp" FORMNAME="" UNITNAME="du_sphere_part" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="Editor\ImageManagerLOD.cpp" FORMNAME="" UNITNAME="ImageManagerLOD" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="Editor\DeviceScreenshot.cpp" FORMNAME="" UNITNAME="DeviceScreenshot" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="Editor\D3DX_Wrapper.h" FORMNAME="" UNITNAME="D3DX_Wrapper.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="Editor\PropSlimTools.h" FORMNAME="" UNITNAME="PropSlimTools.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="Editor\pDomain.cpp" FORMNAME="" UNITNAME="pDomain" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="Editor\EThumbnailGroup.cpp" FORMNAME="" UNITNAME="EThumbnailGroup" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
@@ -503,7 +503,7 @@ Item2=X:\libraries\
 DebugSourceDirs=$(BCB)\source\vcl
 
 [Parameters]
-RunParams=-wf x:\stalker_addon\resources
+RunParams=-wf K:\BORSCHT
 Launcher=
 UseLauncher=0
 DebugCWD=

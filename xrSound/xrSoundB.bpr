@@ -37,7 +37,7 @@
       visualclx.bpi visualdbclx.bpi dsnapcrba.bpi dsnapcon.bpi dbexpress.bpi 
       dss.bpi vclie.bpi xmlrtl.bpi inet.bpi inetdbbde.bpi inetdbxpress.bpi 
       webdsnap.bpi bdecds.bpi dbxcds.bpi dclocx.bpi inetdb.bpi websnap.bpi 
-      ElPackB6.bpi nmfast.bpi qrpt.bpi teeqr.bpi editor.bpi"/>
+      elpackB6.bpi nmfast.bpi qrpt.bpi teeqr.bpi editor.bpi"/>
     <PATHCPP value=".;"/>
     <PATHPAS value=".;"/>
     <PATHRC value=".;"/>
