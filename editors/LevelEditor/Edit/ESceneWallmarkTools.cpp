@@ -662,11 +662,11 @@ int	ESceneWallmarkTool::ObjectCount()
 
 BOOL ESceneWallmarkTool::AddWallmark_internal(const Fvector& start, const Fvector& dir, shared_str sh, shared_str tx, float width, float height, float rotate)
 {
-	if (ObjectCount()>=MAX_WALLMARK_COUNT){
+/*	if (ObjectCount()>=MAX_WALLMARK_COUNT){
     	ELog.DlgMsg			(mtError,"Maximum wallmark per level is reached [Max: %d].",MAX_WALLMARK_COUNT);
     	return FALSE;
     }
-    
+    */
     if (0==sh.size()){
     	ELog.DlgMsg			(mtError,"Select texture before add wallmark.");
     	return 				FALSE;
