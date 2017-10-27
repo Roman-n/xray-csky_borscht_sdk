@@ -79,7 +79,6 @@ class CLevelMain: public TUI{
     virtual void 	RealUpdateScene			();
     virtual void 	RealQuit				();
 public:
-	CInifile*		m_rt_object_props;
     C3DCursor*   	m_Cursor;
 public:
     				CLevelMain 				();
