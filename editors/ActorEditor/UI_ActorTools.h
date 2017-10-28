@@ -261,6 +261,7 @@ public:
     bool				RemoveMotion		(LPCSTR name);
     void 				WorldMotionRotate	(const Fvector& R);
     void				MakePreview			();
+    bool				VerifyMotionRefs	();
 
 	bool __stdcall  	OnBoneNameAfterEdit	(PropValue* sender, shared_str& edit_val);
     void __stdcall 		OnBoneModified		(void);
