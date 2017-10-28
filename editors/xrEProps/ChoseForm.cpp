@@ -135,6 +135,7 @@ void __fastcall TfrmChoseItem::FillItems(u32 choose_id)
 __fastcall TfrmChoseItem::TfrmChoseItem(TComponent* Owner)
     : TForm(Owner)
 {
+	DEFINE_INI				(fsStorage);
 	tvItems->MultiSelect 	= false;
     m_Flags.assign			(cfAllowNone);
     tvItems->ShowCheckboxes = false;

@@ -49,6 +49,7 @@ void __fastcall TfrmObjectList::UpdateObjectList()
 __fastcall TfrmObjectList::TfrmObjectList(TComponent* Owner)
     : TForm(Owner)
 {
+	DEFINE_INI(fsStorage);
 	bLockUpdate = false;
     find_node	= NULL;
 }

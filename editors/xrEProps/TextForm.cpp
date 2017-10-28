@@ -18,6 +18,7 @@
 __fastcall TfrmText::TfrmText(TComponent* Owner)
     : TForm(Owner)
 {
+	DEFINE_INI		(fsStorage);
 	m_Text 			= 0;
     OnApplyClick 	= 0;
     OnCloseClick	= 0;

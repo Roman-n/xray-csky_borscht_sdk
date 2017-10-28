@@ -1,6 +1,6 @@
 object frmBonePart: TfrmBonePart
-  Left = 276
-  Top = 154
+  Left = 426
+  Top = 321
   BorderStyle = bsToolWindow
   Caption = 'Bone Part'
   ClientHeight = 451
@@ -581,7 +581,6 @@ object frmBonePart: TfrmBonePart
     TabOrder = 7
   end
   object fsStorage: TFormStorage
-    IniFileName = 'ss.ini'
     StoredValues = <>
     Left = 65529
     Top = 65526

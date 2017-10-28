@@ -30,6 +30,7 @@ typedef fastdelegate::FastDelegate0<>		  					TOnModifiedEvent;
 #	include "mxPlacemnt.hpp"
     typedef fastdelegate::FastDelegate1<TElTreeItem*>			TOnILItemFocused;
 	//---------------------------------------------------------------------------
+    AnsiString GetIniFileName(void);
 	void XR_EPROPS_API CheckWindowPos(TForm* form);
 	//---------------------------------------------------------------------------
 #endif

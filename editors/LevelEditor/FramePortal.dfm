@@ -23,7 +23,7 @@ object fraPortal: TfraPortal
     Left = 0
     Top = 0
     Width = 217
-    Height = 257
+    Height = 261
     Align = alClient
     ParentColor = True
     TabOrder = 0

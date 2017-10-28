@@ -18,7 +18,7 @@ object fmItemProp: TfmItemProp
   PixelsPerInch = 96
   TextHeight = 13
   object fsStorage: TFormStorage
-    IniSection = 'Left Bar'
+    IniSection = 'fmlItemProp'
     Options = [fpPosition]
     RegistryRoot = prLocalMachine
     Version = 9

@@ -25,7 +25,7 @@ object frmObjectList: TfrmObjectList
     Left = 306
     Top = 0
     Width = 97
-    Height = 470
+    Height = 475
     Align = alRight
     BevelInner = bvRaised
     BevelOuter = bvNone
@@ -102,7 +102,7 @@ object frmObjectList: TfrmObjectList
     end
     object Panel2: TPanel
       Left = 1
-      Top = 429
+      Top = 434
       Width = 95
       Height = 40
       Align = alBottom
@@ -151,7 +151,7 @@ object frmObjectList: TfrmObjectList
     Left = 0
     Top = 0
     Width = 306
-    Height = 470
+    Height = 475
     Align = alClient
     Color = clGray
     TabOrder = 1
@@ -159,7 +159,7 @@ object frmObjectList: TfrmObjectList
       Left = 1
       Top = 1
       Width = 304
-      Height = 444
+      Height = 449
       Cursor = crDefault
       LeftPosition = 0
       DragCursor = crDrag
@@ -319,7 +319,7 @@ object frmObjectList: TfrmObjectList
     end
     object Panel4: TPanel
       Left = 1
-      Top = 445
+      Top = 450
       Width = 304
       Height = 24
       Align = alBottom

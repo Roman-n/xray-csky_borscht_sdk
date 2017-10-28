@@ -162,6 +162,7 @@ void TItemList::SelectItem(LPCSTR full_name, bool bVal, bool bLeaveSel, bool bEx
 
 __fastcall TItemList::TItemList(TComponent* Owner) : TForm(Owner)
 {
+	DEFINE_INI			(fsStorage);
     m_Flags.zero		();
     OnItemFocusedEvent	= 0;
     OnItemsFocusedEvent	= 0;

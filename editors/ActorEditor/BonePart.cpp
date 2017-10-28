@@ -33,6 +33,7 @@ bool TfrmBonePart::Run(CEditableObject* object)
 __fastcall TfrmBonePart::TfrmBonePart(TComponent* Owner)
 	: TForm(Owner)
 {
+	DEFINE_INI(fsStorage);
     T[0] = tvPart1;
     T[1] = tvPart2;
     T[2] = tvPart3;

@@ -21,6 +21,7 @@
 __fastcall TfrmPropertiesEObject::TfrmPropertiesEObject(TComponent* Owner)
     : TForm(Owner)
 {
+	DEFINE_INI(fsStorage);
 	m_Thumbnail	= 0;
 //    m_pEditObject=0;
 }

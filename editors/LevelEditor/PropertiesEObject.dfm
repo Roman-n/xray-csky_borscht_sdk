@@ -27,7 +27,7 @@ object frmPropertiesEObject: TfrmPropertiesEObject
     Left = 0
     Top = 0
     Width = 459
-    Height = 329
+    Height = 334
     ActiveTabColor = 10528425
     BorderWidth = 0
     Color = 10528425
@@ -82,7 +82,7 @@ object frmPropertiesEObject: TfrmPropertiesEObject
         Left = 0
         Top = 19
         Width = 319
-        Height = 291
+        Height = 296
         Align = alClient
         BevelOuter = bvLowered
         Color = 10528425
@@ -92,7 +92,7 @@ object frmPropertiesEObject: TfrmPropertiesEObject
         Left = 319
         Top = 19
         Width = 136
-        Height = 291
+        Height = 296
         Align = alRight
         BevelOuter = bvNone
         ParentColor = True
@@ -101,7 +101,7 @@ object frmPropertiesEObject: TfrmPropertiesEObject
           Left = 0
           Top = 0
           Width = 136
-          Height = 291
+          Height = 296
           Align = alClient
           Caption = ' Texture Details '
           TabOrder = 0

@@ -17,6 +17,7 @@
 __fastcall TfraPortal::TfraPortal(TComponent* Owner)
         : TForm(Owner)
 {
+	DEFINE_INI(fsStorage);
 }
 //---------------------------------------------------------------------------
 void __fastcall TfraPortal::PanelMinClick(TObject *Sender)

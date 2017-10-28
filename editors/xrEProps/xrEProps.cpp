@@ -21,6 +21,28 @@ void XR_EPROPS_API CheckWindowPos(TForm* form)
 }
 //---------------------------------------------------------------------------
 
+AnsiString GetIniFileName(void)
+{
+	const char * exe_name = strrchr(Application->ExeName.c_str(), '\\');
+
+    if(exe_name)
+    {
+    	exe_name++; // skip slash
+
+		if(stricmp(exe_name, "ActorEditor.exe") == 0)
+    		return "actor.ini";
+    	if(stricmp(exe_name, "ParticleEditor.exe") == 0)
+    		return "particle.ini";
+    	if(stricmp(exe_name, "ShaderEditor.exe") == 0)
+    		return "shader.ini";
+    	if(stricmp(exe_name, "LevelEditor.exe") == 0)
+    		return "level.ini";
+    }
+
+    return "xrEProps.ini";
+}
+//---------------------------------------------------------------------------
+
 //#pragma argsused
 int WINAPI DllMain(HINSTANCE hinst, unsigned long reason, void*)
 {

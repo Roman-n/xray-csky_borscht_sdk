@@ -103,6 +103,7 @@ void __fastcall TProperties::SelectItem(const AnsiString& full_name)
 
 __fastcall TProperties::TProperties(TComponent* Owner) : TForm(Owner)
 {
+	DEFINE_INI		(fsStorage);
 	m_FirstClickItem= 0;
 	bModified 		= false;
 	m_BMCheck 		= xr_new<Graphics::TBitmap>();

@@ -20,7 +20,8 @@
 //---------------------------------------------------------------------------
 __fastcall TfraAIMap::TfraAIMap(TComponent* Owner, ESceneAIMapTool* _tools)
 : TForm(Owner)
-{   
+{
+	DEFINE_INI(fsStorage);   
 	tools = _tools;  R_ASSERT(tools);         
 }
 //---------------------------------------------------------------------------
