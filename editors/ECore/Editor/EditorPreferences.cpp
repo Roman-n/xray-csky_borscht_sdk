@@ -216,8 +216,8 @@ void CCustomPreferences::Load(CInifile* I)
     tools_sens_scale	= R_FLOAT_SAFE	("editor_prefs","tools_sens_scale"	,tools_sens_scale	);
     
     bp_lim_depth		= R_BOOL_SAFE	("editor_prefs","bp_lim_depth"		,bp_lim_depth		);
-    bp_cull				= R_BOOL_SAFE	("editor_prefs","bp_lim_depth"		,bp_cull		  	);
-    bp_depth_tolerance	= R_FLOAT_SAFE	("editor_prefs","tools_sens_rot"	,bp_depth_tolerance	);
+    bp_cull				= R_BOOL_SAFE	("editor_prefs","bp_cull"			,bp_cull		  	);
+    bp_depth_tolerance	= R_FLOAT_SAFE	("editor_prefs","bp_depth_tolerance",bp_depth_tolerance	);
 
     snap_angle			= R_FLOAT_SAFE	("editor_prefs","snap_angle"		,snap_angle			);
     snap_move			= R_FLOAT_SAFE	("editor_prefs","snap_move"			,snap_move			);
@@ -273,7 +273,7 @@ void CCustomPreferences::Save(CInifile* I)
     I->w_float	("editor_prefs","tools_sens_scale",	tools_sens_scale);
 
     I->w_bool	("editor_prefs","bp_lim_depth",		bp_lim_depth	);
-    I->w_bool	("editor_prefs","bp_lim_depth",		bp_cull			);
+    I->w_bool	("editor_prefs","bp_cull",			bp_cull			);
     I->w_float	("editor_prefs","bp_depth_tolerance",bp_depth_tolerance	);
 
     I->w_float	("editor_prefs","snap_angle",		snap_angle		);
