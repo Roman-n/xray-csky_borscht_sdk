@@ -591,7 +591,7 @@ BOOL SceneBuilder::BuildMesh(	const Fmatrix& parent,
         {
 			st_Face& face = mesh->m_Faces[*f_it];
             float _a		= CalcArea(mesh->m_Vertices[face.pv[0].pindex],mesh->m_Vertices[face.pv[1].pindex],mesh->m_Vertices[face.pv[2].pindex]);
-	    	if (!_valid(_a) || (_a<EPS))
+	    	if (!_valid(_a) || (_a<EPS_S))
             {
             	Fvector p0,p1,p2;
 
