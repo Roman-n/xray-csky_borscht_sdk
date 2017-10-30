@@ -32,68 +32,41 @@ CCustomPreferences::CCustomPreferences()
 		.addFlag("Objects\\Loading\\Deffered Loading RB",	epoDeffLoadRB)
 		.addFlag("Objects\\Loading\\Deffered Loading CF",	epoDeffLoadCF);
 
-	m_Prefs["Scene\\Common\\Recent Count"].set
-    	("editor_prefs", "scene_recent_count", 	ptInteger, 	&scene_recent_count, 10,   0,    25);
-    m_Prefs["Scene\\Common\\Undo Level"].set
-    	("editor_prefs", "scene_undo_level", 	ptInteger, 	&scene_undo_level, 	 125,  0,    125);
-    m_Prefs["Scene\\Grid\\Cell Size"].set
-    	("editor_prefs", "grid_cell_size", 		ptFloat, 	&grid_cell_size,     1.0f, 0.1f, 10.f);
-    m_Prefs["Scene\\Grid\\Cell Count"].set
-    	("editor_prefs", "grid_cell_count",		ptInteger, 	&grid_cell_count,    100,  10,   1000);
+	m_Prefs["Scene\\Common\\Recent Count"].set		("editor_prefs", "scene_recent_count", 	ptInteger, 	&scene_recent_count, 10,   0,    25);
+    m_Prefs["Scene\\Common\\Undo Level"].set		("editor_prefs", "scene_undo_level", 	ptInteger, 	&scene_undo_level, 	 125,  0,    125);
+    m_Prefs["Scene\\Grid\\Cell Size"].set			("editor_prefs", "grid_cell_size", 		ptFloat, 	&grid_cell_size,     1.0f, 0.1f, 10.f);
+    m_Prefs["Scene\\Grid\\Cell Count"].set			("editor_prefs", "grid_cell_count",		ptInteger, 	&grid_cell_count,    100,  10,   1000);
 
-    m_Prefs["Tools\\Box Pick\\Limited Depth"].set
-    	("editor_prefs", "bp_lim_depth",		ptBool,		&bp_lim_depth, 		TRUE);
-    m_Prefs["Tools\\Box Pick\\Back Face Culling"].set
-    	("editor_prefs", "bp_cull",				ptBool,		&bp_cull,       	TRUE);
-    m_Prefs["Tools\\Sens\\Move"].set
-    	("editor_prefs", "tools_sens_move",		ptFloat,	&tools_sens_move, 	0.3f);
-    m_Prefs["Tools\\Sens\\Rotate"].set
-    	("editor_prefs", "tools_sens_rot",		ptFloat,	&tools_sens_rot, 	0.3f);
-    m_Prefs["Tools\\Sens\\Scale"].set
-    	("editor_prefs", "tools_sens_scale",	ptFloat,	&tools_sens_scale, 	0.3f);
-    m_Prefs["Tools\\Snap\\Angle"].set
-    	("editor_prefs", "snap_angle",			ptAngle,	&snap_angle, 		deg2rad(5.f), 0, PI_MUL_2);
-    m_Prefs["Tools\\Snap\\Move"].set
-    	("editor_prefs", "snap_move",			ptFloat,	&snap_move, 		0.1f, 0.01f, 1000.f);
-    m_Prefs["Tools\\Snap\\Move To"].set
-    	("editor_prefs", "snap_move_to",		ptFloat,	&snap_moveto, 		0.5f, 0.01f, 1000.f);
+    m_Prefs["Tools\\Box Pick\\Limited Depth"].set	("editor_prefs", "bp_lim_depth",		ptBool,		&bp_lim_depth, 		TRUE);
+    m_Prefs["Tools\\Box Pick\\Back Face Culling"].set("editor_prefs", "bp_cull",			ptBool,		&bp_cull,       	TRUE);
+    m_Prefs["Tools\\Box Pick\\Depth Tolerance"].set	("editor_prefs", "bp_depth_tolerance",	ptFloat,	&bp_depth_tolerance, 0.1f, 0.f, 10000.f);
+    m_Prefs["Tools\\Sens\\Move"].set				("editor_prefs", "tools_sens_move",		ptFloat,	&tools_sens_move, 	0.3f);
+    m_Prefs["Tools\\Sens\\Rotate"].set				("editor_prefs", "tools_sens_rot",		ptFloat,	&tools_sens_rot, 	0.3f);
+    m_Prefs["Tools\\Sens\\Scale"].set				("editor_prefs", "tools_sens_scale",	ptFloat,	&tools_sens_scale, 	0.3f);
+    m_Prefs["Tools\\Snap\\Angle"].set				("editor_prefs", "snap_angle",			ptAngle,	&snap_angle, 		deg2rad(5.f), 0, PI_MUL_2);
+    m_Prefs["Tools\\Snap\\Move"].set				("editor_prefs", "snap_move",			ptFloat,	&snap_move, 		0.1f, 0.01f, 1000.f);
+    m_Prefs["Tools\\Snap\\Move To"].set				("editor_prefs", "snap_moveto",			ptFloat,	&snap_moveto, 		0.5f, 0.01f, 1000.f);
 
-    m_Prefs["Viewport\\Camera\\Move Sens"].set
-    	("editor_prefs", "cam_sens_move",		ptFloat,	&cam_sens_move, 	0.6f);
-    m_Prefs["Viewport\\Camera\\Rotate Sens"].set
-    	("editor_prefs", "cam_sens_rot",		ptFloat,	&cam_sens_rot, 		0.6f);
-    m_Prefs["Viewport\\Camera\\Fly Speed"].set
-    	("editor_prefs", "cam_fly_speed",		ptFloat,	&cam_fly_speed, 	5.0f, 0.01f, 100.f);
-    m_Prefs["Viewport\\Camera\\Fly Altitude"].set
-    	("editor_prefs", "cam_fly_alt",			ptFloat,	&cam_fly_alt,		1.8f, 0.f, 1000.f);
-    m_Prefs["Viewport\\Fog\\Color"].set
-    	("editor_prefs", "fog_color",			ptColor,	&fog_color,			0x00555555);
-    m_Prefs["Viewport\\Fog\\Fogness"].set
-    	("editor_prefs", "fog_fogness",			ptFloat,	&fog_fogness,		0.9f, 0.f, 100.f);
-    m_Prefs["Viewport\\Near Plane"].set
-    	("editor_prefs", "view_np",				ptFloat,	&view_np,			0.1f, 0.01f, 10.f);
-    m_Prefs["Viewport\\Far Plane"].set
-    	("editor_prefs", "view_fp",				ptFloat,	&view_fp,			1500.f, 10.f, 10000.f);
-    m_Prefs["Viewport\\FOV"].set
-    	("editor_prefs", "view_fov",			ptAngle,	&view_fov,			deg2rad(60.f), deg2rad(0.1f), deg2rad(170.f));
-    m_Prefs["Viewport\\Clear Color"].set
-    	("editor_prefs", "scene_clear_color",	ptColor,	&scene_clear_color,	DEFAULT_CLEARCOLOR);
+    m_Prefs["Viewport\\Camera\\Move Sens"].set		("editor_prefs", "cam_sens_move",		ptFloat,	&cam_sens_move, 	0.6f);
+    m_Prefs["Viewport\\Camera\\Rotate Sens"].set	("editor_prefs", "cam_sens_rot",		ptFloat,	&cam_sens_rot, 		0.6f);
+    m_Prefs["Viewport\\Camera\\Fly Speed"].set		("editor_prefs", "cam_fly_speed",		ptFloat,	&cam_fly_speed, 	5.0f, 0.01f, 100.f);
+    m_Prefs["Viewport\\Camera\\Fly Altitude"].set	("editor_prefs", "cam_fly_alt",			ptFloat,	&cam_fly_alt,		1.8f, 0.f, 1000.f);
+    m_Prefs["Viewport\\Fog\\Color"].set				("editor_prefs", "fog_color",			ptColor,	&fog_color,			0x00555555);
+    m_Prefs["Viewport\\Fog\\Fogness"].set			("editor_prefs", "fog_fogness",			ptFloat,	&fog_fogness,		0.9f, 0.f, 100.f);
+    m_Prefs["Viewport\\Near Plane"].set				("editor_prefs", "view_np",				ptFloat,	&view_np,			0.1f, 0.01f, 10.f);
+    m_Prefs["Viewport\\Far Plane"].set				("editor_prefs", "view_fp",				ptFloat,	&view_fp,			1500.f, 10.f, 10000.f);
+    m_Prefs["Viewport\\FOV"].set					("editor_prefs", "view_fov",			ptAngle,	&view_fov,			deg2rad(60.f), deg2rad(0.1f), deg2rad(170.f));
+    m_Prefs["Viewport\\Clear Color"].set			("editor_prefs", "scene_clear_color",	ptColor,	&scene_clear_color,	DEFAULT_CLEARCOLOR);
 
-    m_Prefs["Style\\Log\\Default Color"].set
-    	("styles", "log_default_color", 		ptColor,	&log_default_color, 0x00E8E8E8);
-    m_Prefs["Style\\Log\\Error Color"].set
-    	("styles", "log_error_color", 			ptColor,	&log_error_color,   0x00FFC4C4);
-    m_Prefs["Style\\Log\\Info Color"].set
-    	("styles", "log_info_color",			ptColor,	&log_info_color,    0x00E7FFE6);
-    m_Prefs["Style\\Log\\Confirmation Color"].set
-    	("styles", "log_confirmation_color",	ptColor,	&log_confirmation_color,    0x00E7E6FF);
+    m_Prefs["Style\\Log\\Default Color"].set		("styles", "log_default_color", 		ptColor,	&log_default_color, 0x00E8E8E8);
+    m_Prefs["Style\\Log\\Error Color"].set			("styles", "log_error_color", 			ptColor,	&log_error_color,   0x00FFC4C4);
+    m_Prefs["Style\\Log\\Info Color"].set			("styles", "log_info_color",			ptColor,	&log_info_color,    0x00E7FFE6);
+    m_Prefs["Style\\Log\\Confirmation Color"].set	("styles", "log_confirmation_color",	ptColor,	&log_confirmation_color,    0x00E7E6FF);
 
-    m_Prefs["Style\\Text Form\\Background Color"].set
-    	("styles", "textform_background_color",	ptColor,	&textform_background_color, 0x00A9A6A0);
-    m_Prefs["Style\\Text Form\\Text Color"].set
-    	("styles", "textform_text_color",		ptColor,	&textform_text_color,		0x00000000);
+    m_Prefs["Style\\Text Form\\Background Color"].set("styles", "textform_background_color",	ptColor,	&textform_background_color, 0x00A9A6A0);
+    m_Prefs["Style\\Text Form\\Text Color"].set		("styles", "textform_text_color",		ptColor,	&textform_text_color,		0x00000000);
 
-    // it is need to set values to default there?
+    // it is necessary to set values to default there?
     /*
 	// view
     view_np				= 0.1f;
