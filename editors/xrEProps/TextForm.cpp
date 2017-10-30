@@ -250,6 +250,18 @@ void __fastcall TfrmText::FormDeactivate(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
+void __fastcall TfrmText::fsStorageRestorePlacement(TObject *Sender)
+{
+	TIniFile *ini = fsStorage->IniFile;
 
+    if(ini)
+    {
+    	TColor bgColor = TColor(bgr2rgb(mmText->Color));
+        TColor textColor = TColor(bgr2rgb(mmText->Font->Color));
 
+        mmText->Color = TColor(rgb2bgr(ini->ReadInteger("styles", "textform_background_color", bgColor)));
+        mmText->Font->Color = TColor(rgb2bgr(ini->ReadInteger("styles", "textform_text_color", textColor)));
+    }
+}
+//---------------------------------------------------------------------------
 

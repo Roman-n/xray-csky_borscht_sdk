@@ -75,9 +75,9 @@ void __fastcall TfrmLog::lbLogDrawItem(TWinControl *Control, int Index,
 		pCanvas->Brush->Color 	= TColor(MSG_DEF);
 	    TMsgDlgType mt 			= (TMsgDlgType)lb->Items->Objects[Index];
 	    switch(mt){
-	    case mtError: 			pCanvas->Brush->Color=TColor(MSG_ERROR);break;
-	    case mtInformation:     pCanvas->Brush->Color=TColor(MSG_INFO); break;
-	    case mtConfirmation: 	pCanvas->Brush->Color=TColor(MSG_CONF);	break;
+	    case mtError: pCanvas->Brush->Color=TColor(rgb2bgr(EPrefs->log_error_color)); break;
+	    case mtInformation: pCanvas->Brush->Color=TColor(rgb2bgr(EPrefs->log_info_color)); break;
+	    case mtConfirmation: pCanvas->Brush->Color=TColor(rgb2bgr(EPrefs->log_confirmation_color)); break;
     	}
     }
 	pCanvas->FillRect(Rect);

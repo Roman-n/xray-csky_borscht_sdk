@@ -188,6 +188,7 @@ object frmText: TfrmText
     IniSection = 'Text Form'
     RegistryRoot = prLocalMachine
     Version = 6
+    OnRestorePlacement = fsStorageRestorePlacement
     StoredValues = <>
     Left = 45
     Top = 30

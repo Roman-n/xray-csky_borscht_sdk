@@ -57,6 +57,7 @@ __published:	// IDE-managed Components
 	void __fastcall tmIdleTimer(TObject *Sender);
 	void __fastcall FormActivate(TObject *Sender);
 	void __fastcall FormDeactivate(TObject *Sender);
+	void __fastcall fsStorageRestorePlacement(TObject *Sender);
 private:	// User declarations
 	AnsiString* 	m_Text;
     TOnApplyClick 	OnApplyClick;

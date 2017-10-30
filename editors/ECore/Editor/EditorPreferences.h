@@ -23,6 +23,97 @@ enum{
 class ECORE_API CCustomPreferences
 {
 private:	// User declarations
+	enum
+    {
+    	ptBool,
+    	ptInteger,
+    	ptFloat,
+        ptAngle,
+        ptColor,
+        ptFlags
+    };
+
+	struct SPreference
+    {
+    	typedef SPreference  Self;
+    	typedef SPreference& SelfRef;
+
+    	struct SFlag
+        {
+        	const char * Name;
+            u32 Flag;
+        };
+
+    	const char * Section, * Name;
+        int	Type;
+
+        union
+        {
+			u32     * IntValue;
+			float   * FloatValue;
+			Flags32 * FlagsValue;
+        };
+
+        Flags32 FlagsDefault;
+
+        u32   IntDefault, IntMin, IntMax, IntInc;
+
+        float FloatDefault, FloatMin, FloatMax, FloatInc;
+        int   FloatDecimal;
+
+        xr_vector<SFlag> Flags;
+
+        SelfRef set(const char * section, const char * name, int type, int * value, int def = 0, int mn = 0, int mx = 100, int inc = 1)
+        {
+        	return set(section, name, type, (u32*)value, (u32)def, (u32)mn, (u32)mx, (u32)inc);
+        }
+        SelfRef set(const char * section, const char * name, int type, u32 * value, u32 def = 0, u32 mn = 0, u32 mx = 100, u32 inc = 1)
+        {
+        	Section 	= section;
+            Name        = name;
+            Type		= type;
+            IntValue	= value;
+            IntDefault  = def;
+            IntMin		= mn;
+            IntMax		= mx;
+            IntInc		= inc;
+
+            return *this;
+        }
+        SelfRef set(const char * section, const char * name, int type, float * value, float def = 0.f, float mn = 0.f, float mx = 1.f, float inc = 0.01f, int dec = 2)
+        {
+        	Section 	= section;
+            Name        = name;
+            Type		= type;
+            FloatValue	= value;
+            FloatDefault = def;
+            FloatMin	= mn;
+            FloatMax	= mx;
+            FloatInc	= inc;
+            FloatDecimal = dec;
+
+            return *this;
+        }
+        SelfRef set(const char * section, const char * name, int type, Flags32 * value, Flags32 def)
+        {
+        	Section 	= section;
+            Name        = name;
+            Type		= type;
+            FlagsValue	= value;
+            FlagsDefault = def;
+
+            return *this;
+        }
+        SelfRef addFlag(const char *name, u32 flag)
+        {
+        	SFlag f = { name, flag };
+        	Flags.push_back( f );
+
+            return *this;
+        }
+    };
+
+    xr_map<LPCSTR, SPreference> m_Prefs;
     TProperties*	m_ItemProps;
 public:
 	// view
@@ -60,6 +151,14 @@ public:
     // objects
     Flags32			object_flags;
     shared_str      sWeather;
+    // log style
+    u32				log_default_color;
+    u32				log_error_color;
+    u32				log_info_color;
+    u32				log_confirmation_color;
+    // textform style
+    u32				textform_background_color;
+    u32				textform_text_color;
 protected:
 	void 			OnKeyboardCommonFileClick	(ButtonValue* value, bool& bModif, bool& bSafe);
 	void 	__stdcall  OnClose	();
