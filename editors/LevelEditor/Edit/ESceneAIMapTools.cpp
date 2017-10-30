@@ -177,10 +177,11 @@ void ESceneAIMapTool::Clear(bool bOnlyNodes)
     	xr_delete		(*it);
 	m_Nodes.clear_and_free();
 	if (!bOnlyNodes){
-	    m_SnapObjects.clear	();
+//	    m_SnapObjects.clear	();
         m_AIBBox.invalidate	();
         ExecCommand		(COMMAND_REFRESH_SNAP_OBJECTS);
 		g_ainode_pool.clear	();
+        RealUpdateSnapList	();
     }
 }
 //----------------------------------------------------
