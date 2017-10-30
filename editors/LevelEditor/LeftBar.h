@@ -211,6 +211,8 @@ __published:	// IDE-managed Components
 	TBevel *Bevel3;
 	TMenuItem *ClipEditor1;
 	TExtBtn *ebSnapListEdit;
+	TPanel *paRightButtons;
+	TPanel *paLeftButtons;
     void __fastcall ebClearClick(TObject *Sender);
     void __fastcall ebLoadClick(TObject *Sender);
     void __fastcall ebSaveClick(TObject *Sender);

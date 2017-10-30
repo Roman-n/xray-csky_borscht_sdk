@@ -23,6 +23,9 @@ object fraAIMap: TfraAIMap
     Align = alTop
     ParentColor = True
     TabOrder = 0
+    DesignSize = (
+      222
+      64)
     object Label2: TLabel
       Left = 1
       Top = 1
@@ -41,6 +44,7 @@ object fraAIMap: TfraAIMap
       Width = 11
       Height = 11
       Align = alNone
+      Anchors = [akTop, akRight]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -83,6 +87,7 @@ object fraAIMap: TfraAIMap
       Width = 107
       Height = 15
       Align = alNone
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -102,6 +107,7 @@ object fraAIMap: TfraAIMap
       Width = 107
       Height = 15
       Align = alNone
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -162,6 +168,9 @@ object fraAIMap: TfraAIMap
     Align = alClient
     ParentColor = True
     TabOrder = 1
+    DesignSize = (
+      222
+      269)
     object Label3: TLabel
       Left = 1
       Top = 1
@@ -180,6 +189,7 @@ object fraAIMap: TfraAIMap
       Width = 11
       Height = 11
       Align = alNone
+      Anchors = [akTop, akRight]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -245,6 +255,7 @@ object fraAIMap: TfraAIMap
       Width = 24
       Height = 15
       Align = alNone
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -273,6 +284,7 @@ object fraAIMap: TfraAIMap
       Width = 24
       Height = 15
       Align = alNone
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -300,6 +312,7 @@ object fraAIMap: TfraAIMap
       Width = 24
       Height = 15
       Align = alNone
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -328,6 +341,7 @@ object fraAIMap: TfraAIMap
       Width = 24
       Height = 15
       Align = alNone
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -356,6 +370,7 @@ object fraAIMap: TfraAIMap
       Width = 24
       Height = 15
       Align = alNone
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -425,6 +440,7 @@ object fraAIMap: TfraAIMap
       Height = 15
       Align = alNone
       AllowAllUp = True
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -448,6 +464,7 @@ object fraAIMap: TfraAIMap
       Height = 15
       Align = alNone
       AllowAllUp = True
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -470,6 +487,7 @@ object fraAIMap: TfraAIMap
       Top = 48
       Width = 215
       Height = 2
+      Anchors = [akLeft, akTop, akRight]
     end
     object ExtBtn1: TExtBtn
       Left = 137
@@ -477,6 +495,7 @@ object fraAIMap: TfraAIMap
       Width = 77
       Height = 15
       Align = alNone
+      Anchors = [akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -498,6 +517,7 @@ object fraAIMap: TfraAIMap
       Width = 77
       Height = 15
       Align = alNone
+      Anchors = [akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -519,6 +539,7 @@ object fraAIMap: TfraAIMap
       Width = 77
       Height = 15
       Align = alNone
+      Anchors = [akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -540,6 +561,7 @@ object fraAIMap: TfraAIMap
       Height = 14
       Hint = 'Clear snap list'
       Align = alNone
+      Anchors = [akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -571,6 +593,7 @@ object fraAIMap: TfraAIMap
       Width = 208
       Height = 13
       Alignment = taCenter
+      Anchors = [akLeft, akTop, akRight]
       AutoSize = False
       Caption = 'Ignore materials'
       Color = clGray
@@ -603,6 +626,7 @@ object fraAIMap: TfraAIMap
       Top = 98
       Width = 210
       Height = 87
+      Anchors = [akLeft, akTop, akRight]
       BorderStyle = bsNone
       Color = clGray
       ExtendedSelect = False

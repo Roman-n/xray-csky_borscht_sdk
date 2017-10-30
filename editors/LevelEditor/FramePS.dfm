@@ -27,6 +27,9 @@ object fraPS: TfraPS
     Align = alTop
     ParentColor = True
     TabOrder = 0
+    DesignSize = (
+      217
+      50)
     object Label5: TLabel
       Left = 2
       Top = 16
@@ -40,6 +43,7 @@ object fraPS: TfraPS
       Width = 47
       Height = 15
       Align = alNone
+      Anchors = [akTop]
       BtnColor = 10528425
       Caption = '+'
       Font.Charset = DEFAULT_CHARSET
@@ -57,6 +61,7 @@ object fraPS: TfraPS
       Width = 47
       Height = 15
       Align = alNone
+      Anchors = [akTop]
       BtnColor = 10528425
       Caption = '-'
       Font.Charset = DEFAULT_CHARSET
@@ -86,6 +91,7 @@ object fraPS: TfraPS
       Width = 11
       Height = 11
       Align = alNone
+      Anchors = [akTop, akRight]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -109,6 +115,7 @@ object fraPS: TfraPS
       Width = 47
       Height = 15
       Align = alNone
+      Anchors = [akTop]
       BtnColor = 10528425
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
@@ -141,6 +148,7 @@ object fraPS: TfraPS
       Width = 47
       Height = 15
       Align = alNone
+      Anchors = [akTop]
       BtnColor = 10528425
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack

@@ -24,6 +24,9 @@ object fraShape: TfraShape
     Align = alTop
     ParentColor = True
     TabOrder = 0
+    DesignSize = (
+      217
+      48)
     object APHeadLabel1: TLabel
       Left = 1
       Top = 1
@@ -42,6 +45,7 @@ object fraShape: TfraShape
       Width = 11
       Height = 11
       Align = alNone
+      Anchors = [akTop, akRight]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -65,6 +69,7 @@ object fraShape: TfraShape
       Width = 215
       Height = 15
       Align = alNone
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -84,6 +89,7 @@ object fraShape: TfraShape
       Width = 215
       Height = 15
       Align = alNone
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -105,6 +111,9 @@ object fraShape: TfraShape
     Align = alTop
     ParentColor = True
     TabOrder = 1
+    DesignSize = (
+      217
+      47)
     object Label1: TLabel
       Left = 1
       Top = 1
@@ -123,6 +132,7 @@ object fraShape: TfraShape
       Width = 11
       Height = 11
       Align = alNone
+      Anchors = [akTop, akRight]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -147,6 +157,7 @@ object fraShape: TfraShape
       Height = 14
       Align = alNone
       AllowAllUp = True
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -166,6 +177,7 @@ object fraShape: TfraShape
       Width = 215
       Height = 14
       Align = alNone
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -188,6 +200,9 @@ object fraShape: TfraShape
     BorderStyle = bsSingle
     Color = 10528425
     TabOrder = 2
+    DesignSize = (
+      213
+      62)
     object ebEditLevelBoundMode: TExtBtn
       Left = -2
       Top = 9
@@ -195,6 +210,7 @@ object fraShape: TfraShape
       Height = 14
       Align = alNone
       AllowAllUp = True
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -209,11 +225,12 @@ object fraShape: TfraShape
       OnClick = ebEditLevelBoundModeClick
     end
     object ebRecalcLB: TExtBtn
-      Left = -2
-      Top = 33
-      Width = 215
+      Left = 1
+      Top = 31
+      Width = 211
       Height = 14
       Align = alNone
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320

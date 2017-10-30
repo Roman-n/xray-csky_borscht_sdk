@@ -23,6 +23,9 @@ object fraWayPoint: TfraWayPoint
     Align = alTop
     ParentColor = True
     TabOrder = 0
+    DesignSize = (
+      217
+      49)
     object APHeadLabel1: TLabel
       Left = 1
       Top = 1
@@ -41,6 +44,7 @@ object fraWayPoint: TfraWayPoint
       Width = 11
       Height = 11
       Align = alNone
+      Anchors = [akTop, akRight]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -64,6 +68,7 @@ object fraWayPoint: TfraWayPoint
       Width = 215
       Height = 15
       Align = alNone
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -125,6 +130,7 @@ object fraWayPoint: TfraWayPoint
       Width = 215
       Height = 15
       Align = alNone
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -187,6 +193,9 @@ object fraWayPoint: TfraWayPoint
     Align = alTop
     ParentColor = True
     TabOrder = 1
+    DesignSize = (
+      217
+      84)
     object Label1: TLabel
       Left = 1
       Top = 1
@@ -205,6 +214,7 @@ object fraWayPoint: TfraWayPoint
       Width = 11
       Height = 11
       Align = alNone
+      Anchors = [akTop, akRight]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -266,6 +276,7 @@ object fraWayPoint: TfraWayPoint
       Width = 107
       Height = 15
       Align = alNone
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -305,6 +316,7 @@ object fraWayPoint: TfraWayPoint
       Height = 15
       Align = alNone
       AllowAllUp = True
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -363,6 +375,7 @@ object fraWayPoint: TfraWayPoint
       Top = 35
       Width = 215
       Height = 2
+      Anchors = [akLeft, akTop, akRight]
     end
     object ebConvert1: TExtBtn
       Left = 109
@@ -370,6 +383,7 @@ object fraWayPoint: TfraWayPoint
       Width = 107
       Height = 15
       Align = alNone
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -389,6 +403,7 @@ object fraWayPoint: TfraWayPoint
       Width = 107
       Height = 15
       Align = alNone
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320

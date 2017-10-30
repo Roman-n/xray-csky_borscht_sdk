@@ -23,11 +23,21 @@ object frmMain: TfrmMain
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
+  object spLeftBar: TSplitter
+    Left = 520
+    Top = 0
+    Width = 4
+    Height = 406
+    Cursor = crHSplit
+    Align = alRight
+    Color = clMedGray
+    ParentColor = False
+  end
   object paLeftBar: TPanel
     Left = 524
     Top = 0
     Width = 238
-    Height = 401
+    Height = 406
     Align = alRight
     BevelInner = bvLowered
     BevelOuter = bvNone
@@ -39,6 +49,9 @@ object frmMain: TfrmMain
       Height = 16
       Align = alTop
       TabOrder = 0
+      DesignSize = (
+        236
+        16)
       object APHeadLabel2: TLabel
         Left = 1
         Top = 1
@@ -57,6 +70,7 @@ object frmMain: TfrmMain
         Width = 11
         Height = 13
         Align = alNone
+        Anchors = [akTop, akRight]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -120,7 +134,7 @@ object frmMain: TfrmMain
   end
   object paBottomBar: TPanel
     Left = 0
-    Top = 401
+    Top = 406
     Width = 762
     Height = 17
     Align = alBottom
@@ -131,15 +145,15 @@ object frmMain: TfrmMain
   object paMain: TPanel
     Left = 0
     Top = 0
-    Width = 524
-    Height = 401
+    Width = 520
+    Height = 406
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
     object paTopBar: TPanel
       Left = 0
       Top = 0
-      Width = 524
+      Width = 520
       Height = 18
       Align = alTop
       BevelOuter = bvNone
@@ -148,8 +162,8 @@ object frmMain: TfrmMain
     object paRender: TPanel
       Left = 0
       Top = 18
-      Width = 524
-      Height = 383
+      Width = 520
+      Height = 388
       Align = alClient
       BevelOuter = bvNone
       Color = 4868682

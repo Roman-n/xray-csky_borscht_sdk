@@ -23,6 +23,9 @@ object fraLight: TfraLight
     Align = alTop
     ParentColor = True
     TabOrder = 0
+    DesignSize = (
+      217
+      49)
     object ebUseSelInD3D: TExtBtn
       Left = 2
       Top = 17
@@ -60,6 +63,7 @@ object fraLight: TfraLight
       Width = 11
       Height = 11
       Align = alNone
+      Anchors = [akTop, akRight]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -103,6 +107,7 @@ object fraLight: TfraLight
       Height = 15
       Align = alNone
       AllowAllUp = True
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -122,6 +127,7 @@ object fraLight: TfraLight
       Height = 15
       Align = alNone
       AllowAllUp = True
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320

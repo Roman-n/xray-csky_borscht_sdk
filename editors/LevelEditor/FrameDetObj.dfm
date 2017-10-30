@@ -23,6 +23,9 @@ object fraDetailObject: TfraDetailObject
     Align = alTop
     ParentColor = True
     TabOrder = 0
+    DesignSize = (
+      217
+      154)
     object Label1: TLabel
       Left = 1
       Top = 1
@@ -41,6 +44,7 @@ object fraDetailObject: TfraDetailObject
       Width = 11
       Height = 11
       Align = alNone
+      Anchors = [akTop, akRight]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -65,6 +69,7 @@ object fraDetailObject: TfraDetailObject
       Height = 15
       Align = alNone
       AllowAllUp = True
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -85,6 +90,7 @@ object fraDetailObject: TfraDetailObject
       Height = 15
       Align = alNone
       AllowAllUp = True
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -105,6 +111,7 @@ object fraDetailObject: TfraDetailObject
       Height = 15
       Align = alNone
       AllowAllUp = True
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -125,6 +132,7 @@ object fraDetailObject: TfraDetailObject
       Height = 15
       Align = alNone
       AllowAllUp = True
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -145,6 +153,7 @@ object fraDetailObject: TfraDetailObject
       Height = 15
       Align = alNone
       AllowAllUp = True
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -165,6 +174,7 @@ object fraDetailObject: TfraDetailObject
       Height = 15
       Align = alNone
       AllowAllUp = True
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -183,12 +193,14 @@ object fraDetailObject: TfraDetailObject
       Top = 98
       Width = 215
       Height = 2
+      Anchors = [akLeft, akTop, akRight]
     end
     object Bevel4: TBevel
       Left = 1
       Top = 78
       Width = 215
       Height = 2
+      Anchors = [akLeft, akTop, akRight]
     end
     object ExtBtn5: TExtBtn
       Left = 2
@@ -197,6 +209,7 @@ object fraDetailObject: TfraDetailObject
       Height = 15
       Align = alNone
       AllowAllUp = True
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -215,6 +228,7 @@ object fraDetailObject: TfraDetailObject
       Top = 133
       Width = 215
       Height = 2
+      Anchors = [akLeft, akTop, akRight]
     end
     object ebReinitializeSlotObjects: TExtBtn
       Left = 2
@@ -223,6 +237,7 @@ object fraDetailObject: TfraDetailObject
       Height = 15
       Align = alNone
       AllowAllUp = True
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320

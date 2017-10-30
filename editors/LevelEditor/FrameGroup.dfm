@@ -136,6 +136,9 @@ object fraGroup: TfraGroup
     Align = alTop
     Color = 10528425
     TabOrder = 1
+    DesignSize = (
+      213
+      51)
     object APHeadLabel2: TLabel
       Left = 1
       Top = 1
@@ -183,6 +186,7 @@ object fraGroup: TfraGroup
       Height = 13
       AutoSize = False
       Caption = '<empty>'
+      Anchors = [akLeft, akTop, akRight]
       ShadowColor = 15000804
       ShadowPos = spRightBottom
     end
@@ -193,6 +197,7 @@ object fraGroup: TfraGroup
       Height = 15
       Align = alNone
       AllowAllUp = True
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -214,6 +219,9 @@ object fraGroup: TfraGroup
     Align = alTop
     Color = 10528425
     TabOrder = 2
+    DesignSize = (
+      213
+      51)
     object Label1: TLabel
       Left = 1
       Top = 1
@@ -233,6 +241,7 @@ object fraGroup: TfraGroup
       Height = 15
       Align = alNone
       AllowAllUp = True
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -252,6 +261,7 @@ object fraGroup: TfraGroup
       Height = 15
       Align = alNone
       AllowAllUp = True
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -281,6 +291,7 @@ object fraGroup: TfraGroup
       Top = 28
       Width = 45
       Height = 16
+      Anchors = [akTop, akRight]
     end
     object Label2: TLabel
       Left = 5
@@ -296,6 +307,7 @@ object fraGroup: TfraGroup
       Width = 27
       Height = 14
       Align = alNone
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       Caption = '+'
@@ -313,6 +325,7 @@ object fraGroup: TfraGroup
       Width = 27
       Height = 14
       Align = alNone
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       Caption = '-'
@@ -366,6 +379,7 @@ object fraGroup: TfraGroup
       Width = 27
       Height = 14
       Align = alNone
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       Caption = '=%'
@@ -382,6 +396,7 @@ object fraGroup: TfraGroup
       Top = 30
       Width = 8
       Height = 13
+      Anchors = [akTop, akRight]
       Caption = '%'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
@@ -396,6 +411,7 @@ object fraGroup: TfraGroup
       Width = 27
       Height = 14
       Align = alNone
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       Caption = '+%'
@@ -428,6 +444,7 @@ object fraGroup: TfraGroup
       AutoSize = False
       BorderStyle = bsNone
       Color = 12698049
+      Anchors = [akTop, akRight]
       TabOrder = 0
       OnKeyPress = seSelPercentKeyPress
     end

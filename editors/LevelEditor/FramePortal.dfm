@@ -27,6 +27,9 @@ object fraPortal: TfraPortal
     Align = alClient
     ParentColor = True
     TabOrder = 0
+    DesignSize = (
+      217
+      261)
     object APHeadLabel1: TLabel
       Left = 1
       Top = 1
@@ -45,6 +48,7 @@ object fraPortal: TfraPortal
       Width = 11
       Height = 11
       Align = alNone
+      Anchors = [akTop, akRight]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
