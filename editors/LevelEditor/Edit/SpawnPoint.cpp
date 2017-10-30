@@ -97,7 +97,7 @@ void CSpawnPoint::CLE_Visual::OnChangeVisual	()
 
 void CSpawnPoint::CLE_Visual::PlayAnimation ()
 {
-     if(g_tmp_lock) 			return;
+	if(g_tmp_lock) 			return;
     // play motion if skeleton
     StopAllAnimations			();
 
@@ -115,7 +115,7 @@ void CSpawnPoint::CLE_Visual::PlayAnimation ()
 
 void CSpawnPoint::CLE_Visual::StopAllAnimations()
 {
-     if(g_tmp_lock) return;
+	if(g_tmp_lock) return;
     // play motion if skeleton
     CKinematicsAnimated* KA = PKinematicsAnimated(visual);
     if (KA)
@@ -127,7 +127,7 @@ void CSpawnPoint::CLE_Visual::StopAllAnimations()
 
 void CSpawnPoint::CLE_Visual::PlayAnimationFirstFrame()
 {
-     if(g_tmp_lock) return;
+	if(g_tmp_lock) return;
     // play motion if skeleton
 
     StopAllAnimations		();
@@ -158,7 +158,7 @@ struct SetBlendLastFrameCB : public IterateBlendsCallback
 
 void CSpawnPoint::CLE_Visual::PlayAnimationLastFrame()
 {
-     if(g_tmp_lock) return;
+	if(g_tmp_lock) return;
     // play motion if skeleton
 
     StopAllAnimations		();
@@ -188,7 +188,7 @@ struct TogglelendCB : public IterateBlendsCallback
 
 void CSpawnPoint::CLE_Visual::PauseAnimation ()
 {
-     if(g_tmp_lock) return;
+	if(g_tmp_lock) return;
      
     CKinematicsAnimated* KA = PKinematicsAnimated(visual);
     IKinematics*		K 	= PKinematics(visual);
@@ -394,30 +394,30 @@ bool CSpawnPoint::SSpawnData::ExportGame(SExportStreams* F, CSpawnPoint* owner)
 void CSpawnPoint::SSpawnData::OnAnimControlClick(ButtonValue* value, bool& bModif, bool& bSafe)
 {
 	ButtonValue* B				= dynamic_cast<ButtonValue*>(value); R_ASSERT(B);
-    switch(B->btn_num)
+    if(m_Visual) switch(B->btn_num)
     {
 //		"First,Play,Pause,Stop,Last",
-    	case 0: //first
+    	case 0: m_Visual->PlayAnimationFirstFrame(); 	break; // first
+    	case 1: m_Visual->PlayAnimation(); 				break; // play
+    	case 2: m_Visual->PauseAnimation(); 			break; // pause
+    	case 3: m_Visual->StopAllAnimations(); 			break; // stop
+    	case 4: m_Visual->PlayAnimationLastFrame(); 	break; // last
+    }
+	else
+    {
+    	xr_vector<CLE_Visual*>::iterator v_it, v_end;
+        for(v_it = m_VisualHelpers.begin(), v_end = m_VisualHelpers.end(); v_it != v_end; v_it++)
         {
-			m_Visual->PlayAnimationFirstFrame();
-        }break;
-    	case 1: //play
-        {
-			m_Visual->PlayAnimation();
-        }break;
-    	case 2: //pause
-        {
-			m_Visual->PauseAnimation();
-        }break;
-    	case 3: //stop
-        {
-			m_Visual->StopAllAnimations();
-        }break;
-    	case 4: //last
-        {
-			m_Visual->PlayAnimationLastFrame();
-        }break;
-        
+        	CLE_Visual *V = *v_it;
+        	switch(B->btn_num)
+            {
+            	case 0: V->PlayAnimationFirstFrame();	break; // first
+                case 1: V->PlayAnimation();				break; // play
+                case 2: V->PauseAnimation();			break; // pause
+                case 3: V->StopAllAnimations();			break; // stop
+                case 4: V->PlayAnimationLastFrame();	break; // last
+            }
+        }
     }
 }
 
@@ -428,15 +428,14 @@ void CSpawnPoint::SSpawnData::FillProp(LPCSTR pref, PropItemVec& items)
     if(Scene->m_LevelOp.m_mapUsage.MatchType(eGameIDDeathmatch|eGameIDTeamDeathmatch|eGameIDArtefactHunt|eGameIDCaptureTheArtefact))
     	PHelper().CreateFlag8		(items, PrepareKey(pref,"MP respawn"), &m_flags, eSDTypeRespawn);
 
-   if(m_Visual)
-   {
-    ButtonValue* BV = PHelper().CreateButton	    (	items, 
+	if(m_Visual || m_VisualHelpers.size())
+	{
+		ButtonValue* BV = PHelper().CreateButton	    (	items,
 									PrepareKey(pref,m_Data->name(),"Model\\AnimationControl"),
 									"|<<,Play,Pause,Stop,>>|",
 									0);
-   BV->OnBtnClickEvent.bind			(this,&CSpawnPoint::SSpawnData::OnAnimControlClick);
-
-   }
+   		BV->OnBtnClickEvent.bind			(this,&CSpawnPoint::SSpawnData::OnAnimControlClick);
+	}
 }
 
 void CSpawnPoint::SSpawnData::Render(bool bSelected, const Fmatrix& parent,int priority, bool strictB2F)
