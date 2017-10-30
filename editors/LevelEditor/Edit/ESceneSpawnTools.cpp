@@ -132,7 +132,8 @@ ESceneSpawnTool::ESceneSpawnTool():ESceneCustomOTool(OBJCLASS_SPAWNPOINT)
     	if ((*it)->line_exist	("$spawn",&val)){
         	CLASS_ID cls_id	= pSettings->r_clsid((*it)->Name,"class");
         	shared_str v	= pSettings->r_string_wb((*it)->Name,"$spawn");
-        	m_Classes[cls_id].push_back(SChooseItem(*v,*(*it)->Name));
+            if(!v.equal(""))
+        		m_Classes[cls_id].push_back(SChooseItem(*v,*(*it)->Name));
         }
     }
     
