@@ -157,13 +157,13 @@
       -I$(ETOOLS_DIR) -IX:\SDK\include\freemagic -src_suffix cpp -D_EDITOR 
       -D_LEVEL_EDITOR -D_DEBUG"/>
     <CFLAG1 value="-Od -H=x:\intermediate_ed\le\pch.csm -Hc -Q -Vms -Vx -Ve -xf -xp -VF -ff 
-      -X- -ps -a4 -6 -b- -k- -y -v -vi- -He -c -tW -tWM"/>
+      -X- -ps -a4 -6 -b- -k- -vi -He -c -tW -tWM"/>
     <PFLAGS value="-N2x:\intermediate_ed\le -N0x:\intermediate_ed\le -$Y- -$R -$Q -$L- -$D- 
-      -$A8 -v -JPHNE -M"/>
+      -$C- -$A8 -v -JPHNE -M"/>
     <RFLAGS value=""/>
     <AFLAGS value="/mx /w2 /zn"/>
-    <LFLAGS value="-lX:\stalker_addon\libraries -Ix:\intermediate_ed\le -D&quot;&quot; -aa -Tpe -GD -x 
-      -Gn -v"/>
+    <LFLAGS value="-lX:\stalker_addon\libraries -Ix:\intermediate_ed\le -D&quot;&quot; 
+      -GC-GF:LARGEADDRESSAWARE -aa -Tpe -GD -x -Gn"/>
     <OTHERFILES value=""/>
   </OPTIONS>
   <LINKER>
@@ -334,7 +334,7 @@ AutoIncBuild=1
 MajorVer=1
 MinorVer=0
 Release=2
-Build=152
+Build=157
 Debug=1
 PreRelease=0
 Special=0
@@ -346,7 +346,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=
 FileDescription=
-FileVersion=1.0.2.152
+FileVersion=1.0.2.157
 InternalName=
 LegalCopyright=
 LegalTrademarks=
@@ -414,7 +414,7 @@ Item1=x:\libraries
 DebugSourceDirs=X:\stalker_addon\sources\engine\editors\ECore\Editor\
 
 [Parameters]
-RunParams=-wf K:\BORSCHT
+RunParams=-wf K:\BORSCHT -hw_skin
 Launcher=
 UseLauncher=0
 DebugCWD=
