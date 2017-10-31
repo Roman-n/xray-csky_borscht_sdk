@@ -109,12 +109,14 @@ void __fastcall TfrmMain::sbToolsMinClick(TObject *Sender)
         paLeftBar->Parent  = frmMain;
         paLeftBar->Tag     = 0;
         frmRight->Visible  = false;
+        spLeftBar->Show();
     }else{
         paLeftBar->Parent = frmRight; //paTopBar;
         frmRight->Width		= paLeftBar->Width;
         frmRight->Height	= 1024;
         paLeftBar->Tag    = 1;
         frmRight->Visible = true;
+        spLeftBar->Hide();
     }
 }
 //---------------------------------------------------------------------------

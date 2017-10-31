@@ -190,11 +190,6 @@ __published:	// IDE-managed Components
 	TExtBtn *btEnableObject;
 	TExtBtn *btEnableLight;
 	TExtBtn *btEnableSoundSrc;
-	TExtBtn *ExtBtn11;
-	TExtBtn *ExtBtn12;
-	TExtBtn *ExtBtn13;
-	TExtBtn *ExtBtn14;
-	TExtBtn *ExtBtn15;
 	TExtBtn *btEnableSoundEnv;
 	TExtBtn *btEnableGlow;
 	TExtBtn *btEnableShape;
@@ -208,11 +203,8 @@ __published:	// IDE-managed Components
 	TExtBtn *btEnableAIMap;
 	TExtBtn *btEnableWallmarks;
 	TExtBtn *btEnableFogVolumes;
-	TBevel *Bevel3;
 	TMenuItem *ClipEditor1;
 	TExtBtn *ebSnapListEdit;
-	TPanel *paRightButtons;
-	TPanel *paLeftButtons;
     void __fastcall ebClearClick(TObject *Sender);
     void __fastcall ebLoadClick(TObject *Sender);
     void __fastcall ebSaveClick(TObject *Sender);

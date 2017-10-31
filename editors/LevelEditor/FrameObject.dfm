@@ -1,10 +1,10 @@
 object fraObject: TfraObject
-  Left = 679
-  Top = 503
+  Left = 1631
+  Top = 564
   VertScrollBar.Visible = False
   Align = alClient
   BorderStyle = bsNone
-  ClientHeight = 372
+  ClientHeight = 423
   ClientWidth = 255
   Color = 10528425
   Constraints.MinWidth = 220
@@ -457,8 +457,9 @@ object fraObject: TfraObject
     Left = 0
     Top = 101
     Width = 255
-    Height = 271
+    Height = 322
     Align = alClient
+    AutoSize = True
     Color = 10528425
     Constraints.MinHeight = 175
     TabOrder = 2
@@ -487,7 +488,7 @@ object fraObject: TfraObject
       Left = 1
       Top = 51
       Width = 253
-      Height = 219
+      Height = 270
       Align = alClient
       BevelOuter = bvNone
       ParentColor = True

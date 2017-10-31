@@ -1,6 +1,6 @@
 object fraPortal: TfraPortal
-  Left = 129
-  Top = 69
+  Left = 1391
+  Top = 729
   Width = 225
   Height = 290
   VertScrollBar.ButtonSize = 11

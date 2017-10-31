@@ -1,11 +1,11 @@
 object fraAIMap: TfraAIMap
-  Left = 608
-  Top = 307
+  Left = 1010
+  Top = 370
   VertScrollBar.Visible = False
   Align = alClient
   BorderStyle = bsNone
-  ClientHeight = 333
-  ClientWidth = 222
+  ClientHeight = 334
+  ClientWidth = 221
   Color = 10528425
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clBlack
@@ -18,18 +18,18 @@ object fraAIMap: TfraAIMap
   object paObjectList: TPanel
     Left = 0
     Top = 0
-    Width = 222
+    Width = 221
     Height = 64
     Align = alTop
     ParentColor = True
     TabOrder = 0
     DesignSize = (
-      222
+      221
       64)
     object Label2: TLabel
       Left = 1
       Top = 1
-      Width = 220
+      Width = 219
       Height = 13
       Align = alTop
       Alignment = taCenter
@@ -39,7 +39,7 @@ object fraAIMap: TfraAIMap
       OnClick = ExpandClick
     end
     object ExtBtn2: TExtBtn
-      Left = 205
+      Left = 208
       Top = 2
       Width = 11
       Height = 11
@@ -82,7 +82,7 @@ object fraAIMap: TfraAIMap
       OnClick = ebGenerateMapClick
     end
     object ebSmoothNodes: TExtBtn
-      Left = 109
+      Left = 108
       Top = 16
       Width = 107
       Height = 15
@@ -102,7 +102,7 @@ object fraAIMap: TfraAIMap
       OnClick = ebSmoothNodesClick
     end
     object ExtBtn6: TExtBtn
-      Left = 109
+      Left = 108
       Top = 32
       Width = 107
       Height = 15
@@ -163,18 +163,18 @@ object fraAIMap: TfraAIMap
   object paLink: TPanel
     Left = 0
     Top = 64
-    Width = 222
-    Height = 269
-    Align = alClient
+    Width = 221
+    Height = 270
+    Align = alTop
     ParentColor = True
     TabOrder = 1
     DesignSize = (
-      222
-      269)
+      221
+      270)
     object Label3: TLabel
       Left = 1
       Top = 1
-      Width = 220
+      Width = 219
       Height = 13
       Align = alTop
       Alignment = taCenter
@@ -184,7 +184,7 @@ object fraAIMap: TfraAIMap
       OnClick = ExpandClick
     end
     object ExtBtn4: TExtBtn
-      Left = 205
+      Left = 208
       Top = 2
       Width = 11
       Height = 11
@@ -336,7 +336,7 @@ object fraAIMap: TfraAIMap
     end
     object ebRight: TExtBtn
       Tag = 2
-      Left = 106
+      Left = 105
       Top = 230
       Width = 24
       Height = 15
@@ -436,7 +436,7 @@ object fraAIMap: TfraAIMap
     object ebIgnoreConstraints: TExtBtn
       Left = 2
       Top = 16
-      Width = 215
+      Width = 214
       Height = 15
       Align = alNone
       AllowAllUp = True
@@ -460,7 +460,7 @@ object fraAIMap: TfraAIMap
     object ebAutoLink: TExtBtn
       Left = 2
       Top = 31
-      Width = 215
+      Width = 214
       Height = 15
       Align = alNone
       AllowAllUp = True
@@ -485,12 +485,12 @@ object fraAIMap: TfraAIMap
     object Bevel2: TBevel
       Left = 1
       Top = 48
-      Width = 215
+      Width = 225
       Height = 2
       Anchors = [akLeft, akTop, akRight]
     end
     object ExtBtn1: TExtBtn
-      Left = 137
+      Left = 136
       Top = 215
       Width = 77
       Height = 15
@@ -512,7 +512,7 @@ object fraAIMap: TfraAIMap
     end
     object ExtBtn5: TExtBtn
       Tag = 1
-      Left = 137
+      Left = 136
       Top = 230
       Width = 77
       Height = 15
@@ -534,7 +534,7 @@ object fraAIMap: TfraAIMap
     end
     object ExtBtn3: TExtBtn
       Tag = 2
-      Left = 137
+      Left = 136
       Top = 245
       Width = 77
       Height = 15
@@ -555,7 +555,7 @@ object fraAIMap: TfraAIMap
       OnClick = ebSelLinkClick
     end
     object btnIgnoreMaterialClear: TExtBtn
-      Left = 171
+      Left = 178
       Top = 81
       Width = 37
       Height = 14
@@ -590,7 +590,7 @@ object fraAIMap: TfraAIMap
     object Label1: TLabel
       Left = 1
       Top = 65
-      Width = 208
+      Width = 225
       Height = 13
       Alignment = taCenter
       Anchors = [akLeft, akTop, akRight]
@@ -624,7 +624,7 @@ object fraAIMap: TfraAIMap
     object lbIgnoreMaterialsList: TListBox
       Left = 4
       Top = 98
-      Width = 210
+      Width = 214
       Height = 87
       Anchors = [akLeft, akTop, akRight]
       BorderStyle = bsNone

@@ -812,3 +812,4 @@ void __fastcall TfraLeftBar::ebSnapListEditClick(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
+
