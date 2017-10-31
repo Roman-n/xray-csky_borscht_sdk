@@ -11,7 +11,7 @@ CCustomPreferences* EPrefs=0;
 
 CCustomPreferences::CCustomPreferences()
 {
-	m_Prefs["Tools"].set("editor_prefs", "tools_flags", ptFlags, &Tools->m_Settings, Tools->m_Settings);
+	m_Prefs["Tools"].set("editor_prefs", "tools_settings", ptFlags, &Tools->m_Settings, Tools->m_Settings);
     
     m_Prefs["Device"].set("editor_prefs", "device_flags", ptFlags, &psDeviceFlags, psDeviceFlags);
 
@@ -19,7 +19,7 @@ CCustomPreferences::CCustomPreferences()
     	.addFlag("Sounds\\Use\\Hardware", 	ss_Hardware)
         .addFlag("Sounds\\Use\\EAX",        ss_EAX);
 
-    m_Prefs["Objects"].set("editor_prefs", "objects_flags", ptFlags, &object_flags, Flags32().zero())
+    m_Prefs["Objects"].set("editor_prefs", "object_flags", ptFlags, &object_flags, Flags32().zero())
     	.addFlag("Objects\\Library\\Discard Instance", 		epoDiscardInstance)
         .addFlag("Objects\\Skeleton\\Draw Joints", 			epoDrawJoints)
 		.addFlag("Objects\\Skeleton\\Draw Bone Axis",		epoDrawBoneAxis)
@@ -63,7 +63,7 @@ CCustomPreferences::CCustomPreferences()
     m_Prefs["Style\\Log\\Info Color"].set			("styles", "log_info_color",			ptColor,	&log_info_color,    0x00E7FFE6);
     m_Prefs["Style\\Log\\Confirmation Color"].set	("styles", "log_confirmation_color",	ptColor,	&log_confirmation_color,    0x00E7E6FF);
 
-    m_Prefs["Style\\Text Form\\Background Color"].set("styles", "textform_background_color",	ptColor,	&textform_background_color, 0x00A9A6A0);
+    m_Prefs["Style\\Text Form\\Background Color"].set("styles", "textform_background_color",	ptColor,	&textform_background_color, 0x00A0A0A0);
     m_Prefs["Style\\Text Form\\Text Color"].set		("styles", "textform_text_color",		ptColor,	&textform_text_color,		0x00000000);
 
     // it is necessary to set values to default there?
