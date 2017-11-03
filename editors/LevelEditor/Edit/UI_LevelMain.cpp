@@ -210,6 +210,12 @@ CCommandVar CommandLoad(CCommandVar p1, CCommandVar p2)
             UI->SetStatus			("Level loading...");
             ExecCommand				(COMMAND_CLEAR);
 
+            if(!FS.exist(temp_fn.c_str()))
+            {
+            	ELog.DlgMsg(mtError, "Can't find map file '%s'", temp_fn.c_str());
+                return FALSE;
+            }
+
 			IReader* R = FS.r_open	(temp_fn.c_str());
             char ch;
             R->r(&ch, sizeof(ch));
