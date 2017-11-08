@@ -263,14 +263,13 @@ CCommandVar CommandInitialize(CCommandVar p1, CCommandVar p2)
             ExecCommand	(COMMAND_RENDER_FOCUS);
             ExecCommand	(COMMAND_CHANGE_ACTION, etaSelect);
             ExecCommand	(COMMAND_RENDER_RESIZE);
-/*
+
             if(bWeather && EPrefs->sWeather.size() )
             {
                 psDeviceFlags.set(rsEnvironment, TRUE);
                 g_pGamePersistent->Environment().SetWeather(EPrefs->sWeather, true);
 
             }
-*/
         }else{
         	res			= FALSE;
         }

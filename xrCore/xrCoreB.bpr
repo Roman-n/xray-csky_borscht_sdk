@@ -75,12 +75,13 @@
       -I$(BCB)\include\vcl -I$(BCB)\Include\Mfc -src_suffix cpp -D_EDITOR 
       -D_XRCOREB -DXRCORE_EXPORTS -D_DEBUG -boa"/>
     <CFLAG1 value="-WD -Od -H=x:\intermediate_ed\core\pch.csm -Q -Vx -Ve -xf -xp -VF -ff -X- 
-      -ps -a4 -6 -b- -k- -vi -tWD -tWM -c"/>
+      -ps -a4 -6 -b- -k- -y -v -vi- -tWD -tWM -c"/>
     <PFLAGS value="-N2x:\intermediate_ed\core -N0x:\intermediate_ed\core -$Y- -$L- -$D- -$A8 
       -v -JPHNE -M"/>
     <RFLAGS value=""/>
     <AFLAGS value="/mu /w2 /zn"/>
-    <LFLAGS value="-lx:\stalker_addon\libraries -Ix:\intermediate_ed\core -D&quot;&quot; -aa -Tpd -x -Gi"/>
+    <LFLAGS value="-lx:\stalker_addon\libraries -Ix:\intermediate_ed\core -D&quot;&quot; -aa -Tpd -x 
+      -Gi -v"/>
     <OTHERFILES value=""/>
   </OPTIONS>
   <LINKER>
@@ -359,7 +360,7 @@ RemoteDebug=0
 
 [Compiler]
 ShowInfoMsgs=0
-LinkDebugVcl=0
+LinkDebugVcl=1
 LinkCGLIB=0
 
 [CORBA]

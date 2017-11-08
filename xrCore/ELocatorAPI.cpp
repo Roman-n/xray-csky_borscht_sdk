@@ -548,3 +548,34 @@ BOOL CLocatorAPI::can_modify_file(LPCSTR path, LPCSTR name)
     update_path			(temp,path,name);
 	return can_modify_file(temp);
 }
+
+xr_vector<LPSTR> * CLocatorAPI::file_list_open(LPCSTR initial, LPCSTR folder, u32 flags)
+{
+	R_ASSERT(initial && initial[0]);
+
+	string_path path;
+    update_path(path, initial, folder);
+
+    return file_list_open(path, flags);
+}
+
+xr_vector<LPSTR> * CLocatorAPI::file_list_open(LPCSTR path, u32 flags)
+{
+	xr_vector<LPSTR> * result = xr_new<xr_vector<LPSTR> >();
+	FS_FileSet fileset;
+
+    file_list(fileset, path, flags);
+
+    for(FS_FileSetIt it = fileset.begin(), end = fileset.end(); it != end; it++)
+		result->push_back(xr_strdup((*it).name.c_str()));
+
+    return result;
+}
+
+void CLocatorAPI::file_list_close(xr_vector<LPSTR> *& list)
+{
+	for(xr_vector<LPSTR>::iterator it = list->begin(), end = list->end(); it != end; it++)
+    	xr_free(*it);
+
+    xr_delete(list);
+}

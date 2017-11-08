@@ -126,18 +126,20 @@ void CShaderTool::OnDestroy()
 
 void CShaderTool::RenderEnvironment()
 {
-/*    if (psDeviceFlags.is(rsEnvironment)){
+    if (psDeviceFlags.is(rsEnvironment)){
         g_pGamePersistent->Environment().RenderSky	();
         g_pGamePersistent->Environment().RenderClouds	();
     }
-*/    
 }
 
 void CShaderTool::Render()
 {
     PrepareLighting		();
 	Current()->OnRender	();
-//    if (psDeviceFlags.is(rsEnvironment)) g_pGamePersistent->Environment().RenderLast	();
+    if (psDeviceFlags.is(rsEnvironment)){
+    	g_pGamePersistent->Environment().RenderFlares	();
+    	g_pGamePersistent->Environment().RenderLast	();
+    }
     inherited::Render	();
 }
 

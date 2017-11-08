@@ -11,8 +11,6 @@
 #include "../Include/xrRender/Kinematics.h"
 #include "cl_intersect.h"
 
-#include "../xrServerEntities/object_broker.h"
-
 #ifdef _EDITOR
     #include "ui_toolscustom.h"
     #include "ui_main.h"
@@ -169,7 +167,9 @@ CLensFlare::CLensFlare()
 CLensFlare::~CLensFlare()
 {
 	OnDeviceDestroy				();
-	delete_data(m_Palette);	
+
+	for(LensFlareDescIt it = m_Palette.begin(), end = m_Palette.end(); it != end; it++)
+    	xr_delete(*it);
 }
 
 #ifndef _EDITOR

@@ -6,8 +6,10 @@
 #include "thunderbolt.h"
 #include "rain.h"
 
+#ifndef _EDITOR
 #include "IGame_Level.h"
 #include "../xrServerEntities/object_broker.h"
+#endif
 #include "../xrServerEntities/LevelGameDef.h"
 
 void CEnvModifier::load	(IReader* fs, u32 version)
@@ -152,8 +154,11 @@ CEnvAmbient::~CEnvAmbient						()
 
 void CEnvAmbient::destroy ()
 {
-	delete_data				(m_effects);
-	delete_data				(m_sound_channels);
+	for(EffectVecIt it1 = m_effects.begin(), e1 = m_effects.end(); it1 != e1; it1++)
+    	xr_delete(*it1);
+
+    for(SSndChannelVecIt it2 = m_sound_channels.begin(), e2 = m_sound_channels.end(); it2 != e2; it2++)
+    	xr_delete(*it2);
 }
 
 void CEnvAmbient::load( 
@@ -532,6 +537,7 @@ void	CEnvironment::mods_unload		()
 
 void    CEnvironment::load_level_specific_ambients ()
 {
+#ifndef _EDITOR
 	const shared_str level_name = g_pGameLevel->name();
 
 	string_path path;
@@ -564,6 +570,7 @@ void    CEnvironment::load_level_specific_ambients ()
 	}
 
 	xr_delete(level_ambients);
+#endif
 }
 
 CEnvDescriptor* CEnvironment::create_descriptor	(shared_str const& identifier, CInifile* config)
@@ -579,28 +586,21 @@ void CEnvironment::load_weathers		()
 	if (!WeatherCycles.empty())
 		return;
 
-	typedef xr_vector<LPSTR>		file_list_type;
-	file_list_type*					file_list = FS.file_list_open("$game_weathers$","");
+	xr_vector<LPSTR>*				file_list = FS.file_list_open("$game_weathers$","");
 	VERIFY							(file_list);
 
-	file_list_type::const_iterator	i = file_list->begin();
-	file_list_type::const_iterator	e = file_list->end();
+	xr_vector<LPSTR>::const_iterator	i = file_list->begin();
+	xr_vector<LPSTR>::const_iterator	e = file_list->end();
 	for ( ; i != e; ++i) {
-		u32							length = xr_strlen(*i);
-		VERIFY						(length >= 4);
-		VERIFY						((*i)[length - 4] == '.');
-		VERIFY						((*i)[length - 3] == 'l');
-		VERIFY						((*i)[length - 2] == 't');
-		VERIFY						((*i)[length - 1] == 'x');
-		u32							new_length = length - 4;
-		LPSTR						identifier = (LPSTR)_alloca((new_length + 1)*sizeof(char));
-		Memory.mem_copy				(identifier, *i, new_length*sizeof(char));
-		identifier[new_length]		= 0;
-		EnvVec& env					= WeatherCycles[identifier];
+    	LPSTR						fn = *i, ext = strext(fn);
+        VERIFY						(ext && strcmp(ext, ".ltx") == 0);
+
+		*ext 						= '\0';
+		EnvVec& env					= WeatherCycles[fn];
+        *ext 						= '.';
 
 		string_path					file_name;
-		FS.update_path				(file_name, "$game_weathers$", identifier);
-		strcat_s					(file_name, ".ltx");
+		FS.update_path				(file_name, "$game_weathers$", fn);
 		CInifile*					config = CInifile::Create(file_name);
 
 		typedef CInifile::Root		sections_type;
@@ -636,35 +636,28 @@ void CEnvironment::load_weather_effects	()
 	if (!WeatherFXs.empty())
 		return;
 
-	typedef xr_vector<LPSTR>		file_list_type;
-	file_list_type*					file_list = FS.file_list_open("$game_weather_effects$","");
+	xr_vector<LPSTR>*				file_list = FS.file_list_open("$game_weather_effects$","");
 	VERIFY							(file_list);
 
-	file_list_type::const_iterator	i = file_list->begin();
-	file_list_type::const_iterator	e = file_list->end();
+	xr_vector<LPSTR>::const_iterator	i = file_list->begin();
+	xr_vector<LPSTR>::const_iterator	e = file_list->end();
 	for ( ; i != e; ++i) {
-		u32							length = xr_strlen(*i);
-		VERIFY						(length >= 4);
-		VERIFY						((*i)[length - 4] == '.');
-		VERIFY						((*i)[length - 3] == 'l');
-		VERIFY						((*i)[length - 2] == 't');
-		VERIFY						((*i)[length - 1] == 'x');
-		u32							new_length = length - 4;
-		LPSTR						identifier = (LPSTR)_alloca((new_length + 1)*sizeof(char));
-		Memory.mem_copy				(identifier, *i, new_length*sizeof(char));
-		identifier[new_length]		= 0;
-		EnvVec& env					= WeatherFXs[identifier];
+		LPSTR						fn = *i, ext = strext(fn);
+        VERIFY						(ext && strcmp(ext, ".ltx") == 0);
+
+        *ext						= '\0';
+		EnvVec& env					= WeatherFXs[fn];
+        *ext						= '.';
 
 		string_path					file_name;
-		FS.update_path				(file_name, "$game_weather_effects$", identifier);
-		strcat_s					(file_name, ".ltx");
+		FS.update_path				(file_name, "$game_weather_effects$", fn);
 		CInifile*					config = CInifile::Create(file_name);
 
 		typedef CInifile::Root		sections_type;
 		sections_type&				sections = config->sections();
 
 		env.reserve					(sections.size() + 2);
-		env.push_back				(create_descriptor("00:00:00", false));
+		env.push_back				(create_descriptor("00:00:00", NULL));
 
 		sections_type::const_iterator	i = sections.begin();
 		sections_type::const_iterator	e = sections.end();
@@ -675,7 +668,7 @@ void CEnvironment::load_weather_effects	()
 
 		CInifile::Destroy			(config);
 
-		env.push_back				(create_descriptor("24:00:00", false));
+		env.push_back				(create_descriptor("24:00:00", NULL));
 		env.back()->exec_time_loaded = DAY_LENGTH;
 
 	}

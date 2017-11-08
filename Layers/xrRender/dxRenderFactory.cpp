@@ -6,13 +6,14 @@
 	#include "dxLensFlareRender.h"
 #endif
 #include "dxConsoleRender.h"
-#ifndef _EDITOR
-	#include "dxThunderboltRender.h"
-	#include "dxThunderboltDescRender.h"
-	#include "dxRainRender.h"
-	#include "dxLensFlareRender.h"
-	#include "dxEnvironmentRender.h"
 
+#include "dxThunderboltRender.h"
+#include "dxThunderboltDescRender.h"
+#include "dxRainRender.h"
+#include "dxLensFlareRender.h"
+#include "dxEnvironmentRender.h"
+
+#ifndef _EDITOR
 	#include "dxRenderDeviceRender.h"
 	#include "dxObjectSpaceRender.h"
 #endif // _EDITOR
@@ -52,14 +53,14 @@ dxRenderFactory RenderFactoryImpl;
 	RENDER_FACTORY_IMPLEMENT(StatsRender)
 #endif // _EDITOR
 
-#ifndef _EDITOR
-    RENDER_FACTORY_IMPLEMENT(ThunderboltRender)
-    RENDER_FACTORY_IMPLEMENT(ThunderboltDescRender)
-    RENDER_FACTORY_IMPLEMENT(RainRender)
-    RENDER_FACTORY_IMPLEMENT(LensFlareRender)
-    RENDER_FACTORY_IMPLEMENT(EnvironmentRender)
-    RENDER_FACTORY_IMPLEMENT(EnvDescriptorMixerRender)
-    RENDER_FACTORY_IMPLEMENT(EnvDescriptorRender)
-    RENDER_FACTORY_IMPLEMENT(FlareRender)
-#endif
+
+RENDER_FACTORY_IMPLEMENT(ThunderboltRender)
+RENDER_FACTORY_IMPLEMENT(ThunderboltDescRender)
+RENDER_FACTORY_IMPLEMENT(RainRender)
+RENDER_FACTORY_IMPLEMENT(LensFlareRender)
+RENDER_FACTORY_IMPLEMENT(EnvironmentRender)
+RENDER_FACTORY_IMPLEMENT(EnvDescriptorMixerRender)
+RENDER_FACTORY_IMPLEMENT(EnvDescriptorRender)
+RENDER_FACTORY_IMPLEMENT(FlareRender)
+
 RENDER_FACTORY_IMPLEMENT(FontRender)

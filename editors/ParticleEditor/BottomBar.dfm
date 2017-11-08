@@ -2,7 +2,7 @@ object fraBottomBar: TfraBottomBar
   Left = 0
   Top = 0
   Width = 443
-  Height = 102
+  Height = 275
   VertScrollBar.Visible = False
   Align = alClient
   Color = 10528425

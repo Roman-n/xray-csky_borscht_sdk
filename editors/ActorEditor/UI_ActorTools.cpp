@@ -278,19 +278,20 @@ void CActorTools::Render()
         }
     }
 
-//    if (psDeviceFlags.is(rsEnvironment)) g_pGamePersistent->Environment().RenderLast	();
+    if (psDeviceFlags.is(rsEnvironment)){
+    	g_pGamePersistent->Environment().RenderFlares	();
+    	g_pGamePersistent->Environment().RenderLast	();
+    }
 
     inherited::Render		();
 }
 //---------------------------------------------------------------------------
 void CActorTools::RenderEnvironment()
 {
-/*
     if (psDeviceFlags.is(rsEnvironment)){
         g_pGamePersistent->Environment().RenderSky	();
         g_pGamePersistent->Environment().RenderClouds	();
     }
-*/    
 }
 
 void CActorTools::OnFrame()

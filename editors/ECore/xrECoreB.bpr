@@ -158,7 +158,18 @@
       x:\intermediate_ed\ecore\NVMeshMender.obj 
       x:\intermediate_ed\ecore\ExportObjectOGFCalculateTB.obj 
       x:\intermediate_ed\ecore\R_Backend_hemi.obj 
-      x:\intermediate_ed\ecore\R_Backend_tree.obj"/>
+      x:\intermediate_ed\ecore\R_Backend_tree.obj 
+      x:\intermediate_ed\ecore\Environment.obj 
+      x:\intermediate_ed\ecore\Environment_misc.obj 
+      x:\intermediate_ed\ecore\Environment_render.obj 
+      x:\intermediate_ed\ecore\dxEnvironmentRender.obj 
+      x:\intermediate_ed\ecore\dxLensFlareRender.obj 
+      x:\intermediate_ed\ecore\dxThunderboltRender.obj 
+      x:\intermediate_ed\ecore\dxRainRender.obj 
+      x:\intermediate_ed\ecore\dxThunderboltDescRender.obj 
+      x:\intermediate_ed\ecore\thunderbolt.obj 
+      x:\intermediate_ed\ecore\xr_efflensflare.obj 
+      x:\intermediate_ed\ecore\Rain.obj"/>
     <RESFILES value="resource.res"/>
     <IDLFILES value=""/>
     <IDLGENFILES value=""/>
@@ -396,6 +407,17 @@
       <FILE FILENAME="Editor\ExportObjectOGFCalculateTB.cpp" FORMNAME="" UNITNAME="ExportObjectOGFCalculateTB" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\Layers\xrRender\R_Backend_hemi.cpp" FORMNAME="" UNITNAME="R_Backend_hemi" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\Layers\xrRender\R_Backend_tree.cpp" FORMNAME="" UNITNAME="R_Backend_tree" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\xrEngine\Environment.cpp" FORMNAME="" UNITNAME="Environment" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\xrEngine\Environment_misc.cpp" FORMNAME="" UNITNAME="Environment_misc" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\xrEngine\Environment_render.cpp" FORMNAME="" UNITNAME="Environment_render" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\Layers\xrRender\dxEnvironmentRender.cpp" FORMNAME="" UNITNAME="dxEnvironmentRender" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\Layers\xrRender\dxLensFlareRender.cpp" FORMNAME="" UNITNAME="dxLensFlareRender" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\Layers\xrRender\dxThunderboltRender.cpp" FORMNAME="" UNITNAME="dxThunderboltRender.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\Layers\xrRender\dxRainRender.cpp" FORMNAME="" UNITNAME="dxRainRender.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\Layers\xrRender\dxThunderboltDescRender.cpp" FORMNAME="" UNITNAME="dxThunderboltDescRender.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\xrEngine\thunderbolt.cpp" FORMNAME="" UNITNAME="thunderbolt.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\xrEngine\xr_efflensflare.cpp" FORMNAME="" UNITNAME="xr_efflensflare.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\xrEngine\Rain.cpp" FORMNAME="" UNITNAME="Rain.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
   </FILELIST>
   <BUILDTOOLS>
   </BUILDTOOLS>

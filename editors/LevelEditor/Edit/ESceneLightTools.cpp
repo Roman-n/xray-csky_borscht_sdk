@@ -87,11 +87,11 @@ void ESceneLightTool::BeforeRender()
         {
             Flight L;
             Fvector C;
-//            if (psDeviceFlags.is(rsEnvironment)){
-//	            C			= g_pGamePersistent->Environment().CurrentEnv->sun_color;
-//            }else{
+            if (psDeviceFlags.is(rsEnvironment)){
+	            C			= g_pGamePersistent->Environment().CurrentEnv->sun_color;
+            }else{
             	C.set		(1.f,1.f,1.f);
-//            }
+            }
             L.direction.setHP(m_SunShadowDir.y,m_SunShadowDir.x);
             L.diffuse.set	(C.x,C.y,C.z,1.f);
             L.ambient.set	(0.f,0.f,0.f,0.f);
@@ -101,11 +101,11 @@ void ESceneLightTool::BeforeRender()
             Device.LightEnable(frame_light.size(),TRUE);
         }
 		// ambient
-//        if (psDeviceFlags.is(rsEnvironment)){
-//	        Fvector& V		= g_pGamePersistent->Environment().CurrentEnv->ambient;
-//            Fcolor C;		C.set(V.x,V.y,V.z,1.f);
-//            Device.SetRS	(D3DRS_AMBIENT,C.get());
-//        }else				
+        if (psDeviceFlags.is(rsEnvironment)){
+	        Fvector& V		= g_pGamePersistent->Environment().CurrentEnv->ambient;
+            Fcolor C;		C.set(V.x,V.y,V.z,1.f);
+            Device.SetRS	(D3DRS_AMBIENT,C.get());
+        }else				
         	Device.SetRS(D3DRS_AMBIENT,0x00000000);
         
         Device.Statistic->dwTotalLight 	= l_cnt;

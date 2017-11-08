@@ -44,18 +44,17 @@
     <OTHERFILES value=""/>
   </MACROS>
   <OPTIONS>
-    <IDLCFLAGS value="-src_suffix cpp -D_EDITOR -D_PARTICLE_EDITOR -D_DEBUG -I..\ECore\Editor 
-      -I$(DXSDK_DIR)\Include -I$(COMPONENTS)\alexmx -I$(BCB)\include\vcl 
-      -I$(BCB)\include -I$(COMPONENTS)\ElPack\Code 
-      -I$(COMPONENTS)\ElPack\Code\Source -I..\..\xrEngine -I$(CORE_DIR) -no_tie 
-      -boa"/>
+    <IDLCFLAGS value="-I..\ECore\Editor -I$(DXSDK_DIR)\Include -I$(COMPONENTS)\alexmx 
+      -I$(BCB)\include\vcl -I$(BCB)\include -I$(COMPONENTS)\ElPack\Code 
+      -I$(COMPONENTS)\ElPack\Code\Source -I..\..\xrEngine -I$(CORE_DIR) 
+      -src_suffix cpp -D_EDITOR -D_PARTICLE_EDITOR -D_DEBUG -no_tie -boa"/>
     <CFLAG1 value="-Od -H=x:\intermediate_ed\pe\pch.csm -Hc -Q -Vms -Vx -Ve -xf -xp -VF -ff 
-      -X- -ps -a4 -6 -b- -k- -vi -He -c -tW -tWM"/>
+      -X- -ps -a4 -6 -b- -k- -y -v -vi- -He -c -tW -tWM"/>
     <PFLAGS value="-N2x:\intermediate_ed\pe -N0x:\intermediate_ed\pe -$Y- -$Q -$L- -$D- -$A8 
       -v -JPHNE -M"/>
     <RFLAGS value=""/>
     <AFLAGS value="/mx /w2 /zn"/>
-    <LFLAGS value="-lX:\stalker_addon\libraries -Ix:\intermediate_ed\pe -D&quot;&quot; -aa -Tpe -GD -x"/>
+    <LFLAGS value="-lX:\stalker_addon\libraries -Ix:\intermediate_ed\pe -D&quot;&quot; -aa -Tpe -GD -x -v"/>
     <OTHERFILES value=""/>
   </OPTIONS>
   <LINKER>
@@ -216,7 +215,7 @@ RemoteDebug=0
 
 [Compiler]
 ShowInfoMsgs=0
-LinkDebugVcl=0
+LinkDebugVcl=1
 LinkCGLIB=0
 
 [CORBA]

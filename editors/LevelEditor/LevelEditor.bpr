@@ -129,10 +129,10 @@
       Splash.dfm FrmDBXpacker.dfm RightForm.dfm FrameFogVol.dfm 
       Edit\AppendObjectInfoForm.dfm LEClipEditor.dfm"/>
     <LIBFILES value=""/>
-    <LIBRARIES value="editorB.lib elpproB6.lib elpackB6.lib editor.lib bcbsmp.lib"/>
+    <LIBRARIES value="editorB.lib bcbsmp.lib"/>
     <SPARELIBS value="rtl.lib vcl.lib bcbsmp.lib vclx.lib editor.lib elpackB6.lib elpproB6.lib 
       editorB.lib"/>
-    <PACKAGES value="vcl.bpi rtl.bpi vclx.bpi"/>
+    <PACKAGES value="vcl.bpi rtl.bpi vclx.bpi elpkdbB6.bpi elpproB6.bpi elpackB6.bpi editor.bpi"/>
     <PATHCPP value=".;Edit;..\..\xrEngine;..\..\xrServerEntities;..\..\Layers\xrRender"/>
     <PATHPAS value=".;"/>
     <PATHRC value=".;"/>
@@ -144,7 +144,7 @@
     <SYSDEFINES value="NO_STRICT;_RTLDLL;USEPACKAGES"/>
     <MAINSOURCE value="LevelEditor.cpp"/>
     <INCLUDEPATH value="..\..\xrServerEntities;..\..\Layers\xrRender;$(DXSDK_DIR)\Include;Edit;Engine;$(BCB)\Projects;$(BCB)\include\vcl;$(BCB)\include;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(CORE_DIR);../../xrEngine;$(ETOOLS_DIR);X:\SDK\include\freemagic"/>
-    <LIBPATH value="..\..\Layers\xrRender;..\..\xrServerEntities;..\..\xrEngine;Edit;$(BCB)\Projects;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code\Source;X:\stalker_addon\libraries;$(DXSDK_DIR)\Lib\x86"/>
+    <LIBPATH value="$(BCB)\Imports;..\..\Layers\xrRender;..\..\xrServerEntities;..\..\xrEngine;Edit;$(BCB)\Projects;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\alexmx;$(COMPONENTS)\ElPack\Code\Source;X:\stalker_addon\libraries;$(DXSDK_DIR)\Lib\x86"/>
     <WARNINGS value="-w8092 -w8090 -w8089 -w8087 -wprc -wucp -wstv -wstu -wsig -wpin -w-par 
       -wnod -wnak -w-8027 -w-8026 -wdef -wcln -wbbf -wasm -wamp -wamb"/>
     <OTHERFILES value=""/>
@@ -157,13 +157,13 @@
       -I$(ETOOLS_DIR) -IX:\SDK\include\freemagic -src_suffix cpp -D_EDITOR 
       -D_LEVEL_EDITOR -D_DEBUG"/>
     <CFLAG1 value="-Od -H=x:\intermediate_ed\le\pch.csm -Hc -Q -Vms -Vx -Ve -xf -xp -VF -ff 
-      -X- -ps -a4 -6 -b- -k- -vi -He -c -tW -tWM"/>
+      -X- -ps -a4 -6 -b- -k- -y -v -vi- -He -c -tW -tWM"/>
     <PFLAGS value="-N2x:\intermediate_ed\le -N0x:\intermediate_ed\le -$Y- -$R -$Q -$L- -$D- 
       -$C- -$A8 -v -JPHNE -M"/>
     <RFLAGS value=""/>
     <AFLAGS value="/mx /w2 /zn"/>
     <LFLAGS value="-lX:\stalker_addon\libraries -Ix:\intermediate_ed\le -D&quot;&quot; 
-      -GC-GF:LARGEADDRESSAWARE -aa -Tpe -GD -x -Gn"/>
+      -GC-GF:LARGEADDRESSAWARE -aa -Tpe -GD -x -Gn -v"/>
     <OTHERFILES value=""/>
   </OPTIONS>
   <LINKER>
@@ -334,7 +334,7 @@ AutoIncBuild=1
 MajorVer=1
 MinorVer=0
 Release=2
-Build=157
+Build=159
 Debug=1
 PreRelease=0
 Special=0
@@ -346,7 +346,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=
 FileDescription=
-FileVersion=1.0.2.157
+FileVersion=1.0.2.159
 InternalName=
 LegalCopyright=
 LegalTrademarks=
