@@ -442,11 +442,14 @@ bool CActorTools::VerifyMotionRefs()
             end = m_pEditObject->m_SMotionRefs.end();
 
 			for(; it != end; it++)
-            	if(!FS.exist(_game_meshes_, (*it).c_str()))
+            {
+            	string_path fn;
+            	if(!FS.exist(fn, _game_meshes_, (*it).c_str(), ".omf"))
                 {
                 	ELog.Msg(mtError, "Can't find motion file '%s'.", (*it).c_str());
                     result = false;
                 }
+            }
         }
     }
 
