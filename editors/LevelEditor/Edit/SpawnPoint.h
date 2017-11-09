@@ -5,7 +5,7 @@
 #ifndef SpawnPointH
 #define SpawnPointH
 
-#define SPAWNPOINT_VERSION   			0x0017
+#define SPAWNPOINT_VERSION   			0x0018
 
 #include "../../xrServerEntities/LevelGameDef.h"
 #include "../../xrServerEntities/xrServer_Objects_abstract.h"
@@ -16,6 +16,8 @@ class CSE_Visual;
 class CSE_Motion;
 class CObjectAnimator;
 class ISE_Abstract;
+
+class CEnvModifier;
 
 
 class CSpawnPoint : public CCustomObject
@@ -117,6 +119,9 @@ public:
             u32		m_EM_SkyColor;
             u32		m_EM_HemiColor;
             Flags16	m_EM_Flags;
+
+            u8		m_EM_ShapeType;
+            CEnvModifier* m_EM_Ptr;
         };
     };
 
