@@ -45,17 +45,19 @@
     <OTHERFILES value=""/>
   </MACROS>
   <OPTIONS>
-    <IDLCFLAGS value="-src_suffix cpp -D_EDITOR -D_SHADER_EDITOR -D_DEBUG -I$(DXSDK_DIR)\Include 
-      -I$(COMPONENTS)\alexmx -I$(BCB)\include -I$(BCB)\include\vcl 
-      -I$(COMPONENTS)\ElPack\Code -I$(COMPONENTS)\ElPack\Code\Source 
-      -I$(CORE_DIR) -I../../xrEngine -IX:\SDK\include\eax -no_tie -boa"/>
+    <IDLCFLAGS value="-I$(DXSDK_DIR)\Include -I$(COMPONENTS)\alexmx -I$(BCB)\include 
+      -I$(BCB)\include\vcl -I$(COMPONENTS)\ElPack\Code 
+      -I$(COMPONENTS)\ElPack\Code\Source -I$(CORE_DIR) -I../../xrEngine 
+      -IX:\SDK\include\eax -src_suffix cpp -D_EDITOR -D_SHADER_EDITOR -D_DEBUG 
+      -no_tie -boa"/>
     <CFLAG1 value="-Od -H=x:\intermediate_ed\se\pch.csm -Hc -Q -Vms -Vx -Ve -xf -xp -VF -ff 
       -X- -ps -a4 -6 -b- -k- -vi -He -c -tW -tWM"/>
     <PFLAGS value="-N2x:\intermediate_ed\se -N0x:\intermediate_ed\se -$Y- -$R -$Q -$L- -$D- 
       -$A8 -v -JPHNE -M"/>
     <RFLAGS value=""/>
     <AFLAGS value="/mx /w2 /zn"/>
-    <LFLAGS value="-lX:\stalker_addon\libraries -Ix:\intermediate_ed\se -D&quot;&quot; -aa -Tpe -GD -x"/>
+    <LFLAGS value="-lX:\stalker_addon\libraries -Ix:\intermediate_ed\se -D&quot;&quot; 
+      -GC-GF:LARGEADDRESSAWARE -aa -Tpe -GD -x"/>
     <OTHERFILES value=""/>
   </OPTIONS>
   <LINKER>

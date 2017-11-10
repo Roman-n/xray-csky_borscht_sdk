@@ -54,7 +54,8 @@
       -v -JPHNE -M"/>
     <RFLAGS value=""/>
     <AFLAGS value="/mx /w2 /zn"/>
-    <LFLAGS value="-lX:\stalker_addon\libraries -Ix:\intermediate_ed\pe -D&quot;&quot; -aa -Tpe -GD -x -v"/>
+    <LFLAGS value="-lX:\stalker_addon\libraries -Ix:\intermediate_ed\pe -D&quot;&quot; 
+      -GC-GF:LARGEADDRESSAWARE -aa -Tpe -GD -x -v"/>
     <OTHERFILES value=""/>
   </OPTIONS>
   <LINKER>
@@ -97,7 +98,7 @@ AutoIncBuild=1
 MajorVer=1
 MinorVer=0
 Release=2
-Build=128
+Build=129
 Debug=1
 PreRelease=0
 Special=0
@@ -109,7 +110,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=GSC Game World
 FileDescription=
-FileVersion=1.0.2.128
+FileVersion=1.0.2.129
 InternalName=
 LegalCopyright=
 LegalTrademarks=

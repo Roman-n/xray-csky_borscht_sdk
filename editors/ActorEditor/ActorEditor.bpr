@@ -51,7 +51,8 @@
       -JPHNE -M"/>
     <RFLAGS value=""/>
     <AFLAGS value="/mx /w2 /zn"/>
-    <LFLAGS value="-lX:\stalker_addon\libraries -Ix:\intermediate_ed\ae -D&quot;&quot; -aa -Tpe -GD -x -v"/>
+    <LFLAGS value="-lX:\stalker_addon\libraries -Ix:\intermediate_ed\ae -D&quot;&quot; 
+      -GC-GF:LARGEADDRESSAWARE -aa -Tpe -GD -x -v"/>
     <OTHERFILES value=""/>
   </OPTIONS>
   <LINKER>
