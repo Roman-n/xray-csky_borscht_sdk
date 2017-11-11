@@ -23,6 +23,8 @@ enum{
 class ECORE_API CCustomPreferences
 {
 private:	// User declarations
+    TProperties*	m_ItemProps;
+protected:
 	enum
     {
     	ptBool,
@@ -114,13 +116,12 @@ private:	// User declarations
     };
 
     xr_map<LPCSTR, SPreference> m_Prefs;
-    TProperties*	m_ItemProps;
 public:
 	// view
     float 			view_np;
     float 			view_fp;
     float 			view_fov;
-	// fog    
+	// fog
     u32 			fog_color;
     float			fog_fogness;
     // camera
