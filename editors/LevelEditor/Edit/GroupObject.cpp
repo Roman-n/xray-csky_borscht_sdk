@@ -360,8 +360,9 @@ bool CGroupObject::UpdateReference(bool bForceReload)
         	for(; it != end; it++)
             	if((*it).pObject->ClassID == OBJCLASS_SPAWNPOINT && strncmp((*it).pObject->Name, prefix, strlen(prefix)) != 0)
                 {
-        			string256 new_name;
-                    strconcat(sizeof new_name, new_name, prefix, (*it).pObject->Name);
+        			string256 prefixed_name, new_name;
+                    strconcat(sizeof prefixed_name, prefixed_name, prefix, (*it).pObject->Name);
+                    Scene->GenObjectName(OBJCLASS_SPAWNPOINT, new_name, prefixed_name);
                     (*it).pObject->Name = new_name;
                 }
         }
