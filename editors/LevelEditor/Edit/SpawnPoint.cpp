@@ -1260,6 +1260,9 @@ bool CSpawnPoint::ExportGame(SExportStreams* F)
             F->envmodif.stream.w_fvector3(u32_3f(m_EM_SkyColor));
             F->envmodif.stream.w_fvector3(u32_3f(m_EM_HemiColor));
             F->envmodif.stream.w_u16(m_EM_Flags.get());
+            F->envmodif.stream.w_u8(m_EM_ShapeType);
+            F->envmodif.stream.w_fvector3(PRotation);
+            F->envmodif.stream.w_fvector3(Fvector().set(PScale).mul(0.5f));
 			F->envmodif.stream.close_chunk();
         break;
         default: THROW;

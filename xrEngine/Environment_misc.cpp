@@ -27,9 +27,22 @@ void CEnvModifier::load	(IReader* fs, u32 version)
 	fs->r_fvector3	(hemi_color);
 
 	if(version>=0x0016)
-	{
 		use_flags.assign(fs->r_u16());
-	}
+
+	if(version>=0x0018)
+    {
+    	shape_type = fs->r_u8();
+
+    	Fvector R, S;
+        fs->r_fvector3(R);
+        fs->r_fvector3(S);
+
+        obb.m_translate.set(position);
+        obb.m_rotate.set(Fmatrix().setXYZ(R));
+        obb.m_halfsize.set(S);
+    }
+    else
+    	shape_type = CShapeData::cfSphere;
 }
 
 float	CEnvModifier::sum	(CEnvModifier& M, Fvector3& view)
