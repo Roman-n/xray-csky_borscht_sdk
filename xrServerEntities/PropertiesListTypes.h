@@ -493,7 +493,7 @@ IC xr_string draw_sprintf(xr_string& s, const float& V, int dec)
 }
 //------------------------------------------------------------------------------
 IC bool operator == (const Fvector& A, const Fvector& B)
-{	return !!A.similar(B); }
+{	return !!A.similar(B, EPS); }
 IC void clamp(Fvector& V, const Fvector& mn, const Fvector& mx)
 {
     clamp(V.x,mn.x,mx.x);
