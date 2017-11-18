@@ -270,6 +270,10 @@ CCommandVar CommandInitialize(CCommandVar p1, CCommandVar p2)
                 g_pGamePersistent->Environment().SetWeather(EPrefs->sWeather, true);
 
             }
+
+            g_pGamePersistent->Environment().ed_from_time = EPrefs->env_from_time;
+            g_pGamePersistent->Environment().ed_to_time = EPrefs->env_to_time;
+            g_pGamePersistent->Environment().fTimeFactor = EPrefs->env_speed;
         }else{
         	res			= FALSE;
         }
@@ -280,6 +284,9 @@ CCommandVar CommandInitialize(CCommandVar p1, CCommandVar p2)
 }             
 CCommandVar 	CommandDestroy(CCommandVar p1, CCommandVar p2)
 {
+	EPrefs->env_from_time 	= g_pGamePersistent->Environment().ed_from_time;
+    EPrefs->env_to_time     = g_pGamePersistent->Environment().ed_to_time;
+    EPrefs->env_speed		= g_pGamePersistent->Environment().fTimeFactor;
     ExecCommand			(COMMAND_SAVE_UI_BAR);
     EPrefs->OnDestroy	();
     ExecCommand			(COMMAND_CLEAR);

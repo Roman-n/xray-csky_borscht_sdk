@@ -337,7 +337,10 @@ void CCustomPreferences::Load(CInifile* I)
 	        	scene_recent_list.push_back(*fn);
         }
     }
-    sWeather = R_STRING_SAFE	("editor_prefs", "weather", shared_str("") );
+    sWeather 			= R_STRING_SAFE	("editor_prefs", "weather", shared_str("") );
+    env_from_time 		= R_FLOAT_SAFE	("editor_prefs", "weather_from_time", 0.f);
+    env_to_time 		= R_FLOAT_SAFE  ("editor_prefs", "weather_to_time", 24.f*60.f*60.f);
+    env_speed			= R_FLOAT_SAFE	("editor_prefs", "weather_time_factor", 12.f);
 
     // load shortcuts
     LoadShortcuts		(I);
@@ -406,7 +409,10 @@ void CCustomPreferences::Save(CInifile* I)
     	AnsiString V; V.sprintf("\"%s\"",it->c_str());
 		I->w_string("editor_prefs",L.c_str(),V.c_str());
     }
-    I->w_string("editor_prefs","weather",   sWeather.c_str() );
+    I->w_string("editor_prefs", "weather",   sWeather.c_str() );
+    I->w_float("editor_prefs", "weather_from_time", env_from_time);
+    I->w_float("editor_prefs", "weather_to_time", env_to_time);
+    I->w_float("editor_prefs", "weather_time_factor", env_speed);
     // load shortcuts
     SaveShortcuts		(I);
     UI->SaveSettings	(I);
