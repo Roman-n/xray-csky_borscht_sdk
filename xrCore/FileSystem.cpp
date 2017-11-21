@@ -120,7 +120,7 @@ bool EFS_Utils::GetOpenNameInternal( LPCSTR initial,  LPSTR buffer, int sz_buf, 
 
     CFileDialog fd(CFileDialog::fdOpen);
 
-    fd.DefaultExt 		= P.m_DefExt;
+    fd.DefaultExt 		= P.m_DefExt ? P.m_DefExt : "";
     fd.Caption 			= "Open a File";
     string512 path;
 	strcpy_s			(path,(offset&&offset[0])?offset:P.m_Path);
