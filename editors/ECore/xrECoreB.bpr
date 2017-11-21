@@ -177,9 +177,9 @@
     <RESDEPEN value="$(RESFILES) Editor\ImageEditor.dfm Editor\LogForm.dfm 
       Editor\SoundEditor.dfm Editor\MinimapEditor.dfm"/>
     <LIBFILES value=""/>
-    <LIBRARIES value="editorB.lib elpackB6.lib editor.lib"/>
+    <LIBRARIES value="elpackB6.lib editor.lib"/>
     <SPARELIBS value="rtl.lib vcl.lib bcbsmp.lib vclx.lib editor.lib elpackB6.lib editorB.lib"/>
-    <PACKAGES value="rtl.bpi vcl.bpi vclx.bpi bcbsmp.bpi"/>
+    <PACKAGES value="rtl.bpi vcl.bpi vclx.bpi bcbsmp.bpi editorB.bpi"/>
     <PATHCPP value=".;Engine;..\..\xrEngine;..\..\Layers\xrRender;..\..\xrCDB;..\..\Layers\xrRenderPC_R1;Engine\blenders;Editor;WildMagic;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;..\..\common\NvMender2003"/>
     <PATHPAS value=".;"/>
     <PATHRC value=".;"/>
@@ -449,6 +449,10 @@ OriginalFilename=
 ProductName=
 ProductVersion=1.0.0.0
 Comments=
+
+[Excluded Packages]
+f:\program files\borland\cbuilder6\Bin\bcbie60.bpl=Borland C++Builder Internet Explorer 5 Components Package
+f:\program files\borland\cbuilder6\Bin\bcb2kaxserver60.bpl=Borland C++Builder COM Server Components Sample Package
 
 [HistoryLists\hlIncludePath]
 Count=17
