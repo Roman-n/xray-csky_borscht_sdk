@@ -719,11 +719,10 @@ void __fastcall TfrmEditLibrary::paImagePaint(TObject *Sender)
 
 void __fastcall TfrmEditLibrary::ebExportLWOClick(TObject *Sender)
 {
-    TElTreeItem* node 				= m_Items->GetSelected();
-    if (node&&FHelper.IsObject(node))
+    ListItemsVec selected;
+    if (m_Items->GetSelected(NULL, selected, false) == 1)
     {
-    	AnsiString 					name;
-        FHelper.MakeName			(node,0,name,false);
+    	AnsiString 					name = selected[0]->Key();
         xr_string 					save_nm;
 
         if (EFS.GetSaveName(_import_,save_nm,0,1))
@@ -744,7 +743,7 @@ void __fastcall TfrmEditLibrary::ebExportLWOClick(TObject *Sender)
 			Lib.RemoveEditObject		(obj);
 	    }
     }else{
-        ELog.DlgMsg						(mtInformation, "Select object to export.");
+        ELog.DlgMsg						(mtInformation, "Select one object to export.");
     }
 }
 
