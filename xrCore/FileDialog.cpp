@@ -231,6 +231,14 @@ bool CFileDialog::ShowModal(HWND owner)
 {
 	Results.clear();
 
+    if(DefaultExt.length())
+    {
+    	if(DefaultExt.length() >= 2 && DefaultExt[0] == '*' && DefaultExt[1] == '.')
+        	DefaultExt.erase(0, 2);
+        else if(DefaultExt.length() >= 1 && DefaultExt[0] == '.')
+        	DefaultExt.erase(0, 1);
+    }
+
 	int ret = -1;
 	if((GetVersion() & 0xFF) >= 6) // if NT6 or greater
 	{
@@ -304,7 +312,7 @@ int CFileDialog::ShowOld(HWND owner)
     if(CurrentFilter != -1)
     	ofn.nFilterIndex = CurrentFilter + 1;
     else
-    	ofn.nFilterIndex = DefaultFilter;
+    	ofn.nFilterIndex = DefaultFilter + 1;
 
     if(Type == fdOpen)
     {
@@ -354,13 +362,13 @@ int CFileDialog::ShowOld(HWND owner)
 int CFileDialog::ShowVista(HWND owner)
 {
     // convert to full path
-	if(DefaultDir.length() < 2 || DefaultDir.at(1) != ':')
+	if(DefaultDir.length() && (DefaultDir.length() < 2 || DefaultDir.at(1) != ':'))
     {
     	char cd[512];
         GetCurrentDirectory(sizeof(cd), cd);
         DefaultDir = xr_string(cd) + DefaultDir;
     }
-    if(CurrentDir.length() < 2 || CurrentDir.at(1) != ':')
+    if(CurrentDir.length() && (CurrentDir.length() < 2 || CurrentDir.at(1) != ':'))
     {
     	char cd[512];
         GetCurrentDirectory(sizeof(cd), cd);
@@ -439,10 +447,8 @@ int CFileDialog::ShowVista(HWND owner)
             MultiByteToWideChar(CP_ACP, 0, CurrentDir.c_str(), -1, wcurrentdir, 512);
             IShellItem *si_cd;
             hr = pSHCreateItemFromParsingName(wcurrentdir, NULL, IID_IShellItem, (void**)&si_cd);
-            Log("000");
             if(!FAILED(hr))
             {
-            Log("111");
             	hr = dlg->SetFolder(si_cd);
                 si_cd->Release();
                 if(FAILED(hr)) break;
@@ -489,9 +495,9 @@ int CFileDialog::ShowVista(HWND owner)
         }
 
         if(CurrentFilter != -1)
-        	/*hr =*/ dlg->SetFileTypeIndex(CurrentFilter);
+        	/*hr =*/ dlg->SetFileTypeIndex(CurrentFilter + 1);
         else
-        	/*hr =*/ dlg->SetFileTypeIndex(DefaultFilter);
+        	/*hr =*/ dlg->SetFileTypeIndex(DefaultFilter + 1);
 
         WCHAR wcurfile[512];
         MultiByteToWideChar(CP_ACP, 0, CurrentFile.c_str(), -1, wcurfile, 512);

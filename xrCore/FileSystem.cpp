@@ -67,7 +67,7 @@ xr_string	EFS_Utils::ChangeFileExt(const xr_string& src, LPCSTR ext)
 }
 
 //----------------------------------------------------
-LPCSTR MakeFilter(string1024& dest, LPCSTR info, LPCSTR ext)
+int MakeFilter(string1024& dest, LPCSTR info, LPCSTR ext)
 {
 	ZeroMemory(dest,sizeof(dest));
     if (ext){
@@ -89,8 +89,9 @@ LPCSTR MakeFilter(string1024& dest, LPCSTR info, LPCSTR ext)
             strcpy_s			(dst, sizeof(dest) - (dst - dest), buf);
             dst				+= (xr_strlen(buf)+1);
         }
+        return icnt;
     }
-	return dest;
+	return 0;
 }
 
 //------------------------------------------------------------------------------
@@ -101,7 +102,7 @@ bool EFS_Utils::GetOpenNameInternal( LPCSTR initial,  LPSTR buffer, int sz_buf, 
 	VERIFY				(buffer&&(sz_buf>0));
 	FS_Path& P			= *FS.get_path(initial);
 	string1024 flt;
-	MakeFilter(flt,P.m_FilterCaption?P.m_FilterCaption:"",P.m_DefExt);
+	int flt_cnt 		= MakeFilter(flt,P.m_FilterCaption?P.m_FilterCaption:"",P.m_DefExt);
 
     if (xr_strlen(buffer))
     {
@@ -120,16 +121,27 @@ bool EFS_Utils::GetOpenNameInternal( LPCSTR initial,  LPSTR buffer, int sz_buf, 
 
     CFileDialog fd(CFileDialog::fdOpen);
 
-    fd.DefaultExt 		= P.m_DefExt ? P.m_DefExt : "";
     fd.Caption 			= "Open a File";
-    string512 path;
-	strcpy_s			(path,(offset&&offset[0])?offset:P.m_Path);
+//  string512 path;
+//	strcpy_s			(path,(offset&&offset[0])?offset:P.m_Path);
 //	fd.CurrentDir 		= path;
 //	fd.CurrentFile		= buffer;
 //	fd.DefaultDir		= path;
 
     fd.SetFilters(flt);
-    if(start_flt_ext >= 0) fd.DefaultFilter = start_flt_ext;
+    if(start_flt_ext >= 0)
+    {
+    	if(flt_cnt > 1)
+    		fd.DefaultFilter = start_flt_ext + 1; // MakeFilter creates first filter that accepts all extensions
+        else
+        	fd.DefaultFilter = start_flt_ext;
+    }
+    if(P.m_DefExt)
+    {
+    	string64 defext;
+    	_GetItem(P.m_DefExt, 0, defext, ';');
+        fd.DefaultExt = defext;
+    }
 
     fd.PathMustExist 	= true;
     fd.FileMustExist 	= true;
@@ -172,7 +184,7 @@ bool EFS_Utils::GetSaveName( LPCSTR initial, string_path& buffer, LPCSTR offset,
 {
 	FS_Path& P			= *FS.get_path(initial);
 	string1024 flt;
-	MakeFilter(flt,P.m_FilterCaption?P.m_FilterCaption:"",P.m_DefExt);
+	int flt_cnt 		= MakeFilter(flt,P.m_FilterCaption?P.m_FilterCaption:"",P.m_DefExt);
 
     if (xr_strlen(buffer)){ 
         string_path		dr;
@@ -185,10 +197,21 @@ bool EFS_Utils::GetSaveName( LPCSTR initial, string_path& buffer, LPCSTR offset,
     CFileDialog fd(CFileDialog::fdSave);
 
     fd.Caption			= "Save a File";
-    fd.DefaultExt		= P.m_DefExt;
     fd.SetFilters		(flt);
-    if(start_flt_ext >= 0) fd.DefaultFilter	= start_flt_ext;
-    string512 path; strcpy_s(path,(offset&&offset[0])?offset:P.m_Path);
+    if(start_flt_ext >= 0)
+    {
+    	if(flt_cnt > 1)
+    		fd.DefaultFilter	= start_flt_ext + 1;
+        else
+        	fd.DefaultFilter	= start_flt_ext;
+    }
+    if(P.m_DefExt)
+    {
+    	string64 defext;
+    	_GetItem(P.m_DefExt, 0, defext, ';');
+        fd.DefaultExt = defext;
+    }
+//  string512 path; strcpy_s(path,(offset&&offset[0])?offset:P.m_Path);
 //	fd.CurrentDir		= path;
 //	fd.DefaultDir		= path;
 
