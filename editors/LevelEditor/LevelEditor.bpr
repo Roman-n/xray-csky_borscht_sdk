@@ -116,7 +116,7 @@
       x:\intermediate_ed\le\gametype_chooser.obj 
       x:\intermediate_ed\le\GroupObjectUtils.obj 
       x:\intermediate_ed\le\AppendObjectInfoForm.obj 
-      x:\intermediate_ed\le\LEClipEditor.obj"/>
+      x:\intermediate_ed\le\LEClipEditor.obj x:\intermediate_ed\le\FormCoord.obj"/>
     <RESFILES value="LevelEditor.res resource.res"/>
     <IDLFILES value=""/>
     <IDLGENFILES value=""/>
@@ -127,7 +127,7 @@
       FrameSector.dfm FrameShape.dfm FrameSpawn.dfm FrameWayPoint.dfm 
       LeftBar.dfm ObjectList.dfm previewimage.dfm PropertiesEObject.dfm 
       Splash.dfm FrmDBXpacker.dfm RightForm.dfm FrameFogVol.dfm 
-      Edit\AppendObjectInfoForm.dfm LEClipEditor.dfm"/>
+      Edit\AppendObjectInfoForm.dfm LEClipEditor.dfm FormCoord.dfm"/>
     <LIBFILES value=""/>
     <LIBRARIES value="editor.lib bcbsmp.lib"/>
     <SPARELIBS value="rtl.lib vcl.lib bcbsmp.lib vclx.lib editor.lib elpackB6.lib elpproB6.lib 
@@ -323,6 +323,7 @@
       <FILE FILENAME="LEClipEditor.cpp" FORMNAME="ClipMaker" UNITNAME="LEClipEditor" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="LEClipEditor.dfm" FORMNAME="" UNITNAME="LEClipEditor.dfm" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="LEClipEditor.h" FORMNAME="" UNITNAME="LEClipEditor.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="FormCoord.cpp" FORMNAME="frmCoord" UNITNAME="FormCoord" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
   </FILELIST>
   <BUILDTOOLS>
   </BUILDTOOLS>

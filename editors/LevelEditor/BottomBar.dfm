@@ -1,7 +1,7 @@
 object fraBottomBar: TfraBottomBar
   Left = 0
   Top = 0
-  Width = 443
+  Width = 795
   Height = 275
   VertScrollBar.Visible = False
   Align = alClient
@@ -11,14 +11,14 @@ object fraBottomBar: TfraBottomBar
   object paBottomBar: TPanel
     Left = 0
     Top = 0
-    Width = 443
+    Width = 795
     Height = 17
     Align = alTop
     BevelOuter = bvLowered
     ParentColor = True
     TabOrder = 0
     object paInfo: TPanel
-      Left = 95
+      Left = 447
       Top = 1
       Width = 347
       Height = 15
@@ -97,12 +97,13 @@ object fraBottomBar: TfraBottomBar
         ParentColor = True
         ParentFont = False
         TabOrder = 3
+        OnDblClick = paCameraDblClick
       end
     end
     object paStatusBar: TPanel
       Left = 219
       Top = 1
-      Width = 141
+      Width = 228
       Height = 15
       Align = alClient
       BevelOuter = bvNone
@@ -123,7 +124,7 @@ object fraBottomBar: TfraBottomBar
       object paStatus: TPanel
         Left = 48
         Top = 0
-        Width = 93
+        Width = 180
         Height = 15
         Align = alClient
         Alignment = taLeftJustify
@@ -137,7 +138,7 @@ object fraBottomBar: TfraBottomBar
         ParentFont = False
         TabOrder = 1
         object cgProgress: TCGauge
-          Left = -36
+          Left = 51
           Top = 2
           Width = 127
           Height = 11

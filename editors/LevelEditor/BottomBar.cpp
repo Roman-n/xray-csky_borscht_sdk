@@ -7,6 +7,7 @@
 #include "../ECore/Editor/ui_main.h"
 #include "igame_persistent.h"
 #include "environment.h"
+#include "FormCoord.h"
 
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
@@ -333,6 +334,18 @@ void __fastcall TfraBottomBar::N501Click(TObject *Sender)
     float val 			= ((float)mi->Tag / 100.0f);
 	Device.time_factor	(val);
     mi->Checked 		= true;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraBottomBar::paCameraDblClick(TObject *Sender)
+{
+	Fvector pos = Device.m_Camera.GetPosition();
+
+    if(frmCoord->Run("Set Camera Position", pos.x, pos.y, pos.z))
+    {
+    	Device.m_Camera.Set(Device.m_Camera.GetHPB(), pos);
+    	UI->RedrawScene();
+    }
 }
 //---------------------------------------------------------------------------
 

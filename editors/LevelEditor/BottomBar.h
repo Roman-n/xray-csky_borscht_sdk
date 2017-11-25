@@ -95,6 +95,7 @@ __published:	// IDE-managed Components
 	void __fastcall ebMacroMouseDown(TObject *Sender, TMouseButton Button,
           TShiftState Shift, int X, int Y);
 	void __fastcall N501Click(TObject *Sender);
+	void __fastcall paCameraDblClick(TObject *Sender);
 private:	// User declarations
 	void __fastcall MacroAssignClick(TObject *Sender);
 	void __fastcall MacroClearClick(TObject *Sender);
