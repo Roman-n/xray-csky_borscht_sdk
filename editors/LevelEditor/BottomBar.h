@@ -82,6 +82,7 @@ __published:	// IDE-managed Components
 	TMenuItem *N501;
 	TMenuItem *N021;
 	TMenuItem *N1001;
+	TMenuItem *miDeferredTextureLoading;
     void __fastcall ClickOptionsMenuItem(TObject *Sender);
     void __fastcall QualityClick(TObject *Sender);
     void __fastcall fsStorageRestorePlacement(TObject *Sender);

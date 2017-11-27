@@ -417,6 +417,7 @@ bool CEditableObject::Load(IReader& F)
 		if (!bRes) break;
 		UpdateBox		();
 		VerifyMeshNames	();
+        OnDeviceCreate	();
 	}while(0);
 
 	return bRes;

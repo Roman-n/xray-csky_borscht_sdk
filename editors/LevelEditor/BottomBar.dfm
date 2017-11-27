@@ -1,7 +1,7 @@
 object fraBottomBar: TfraBottomBar
   Left = 0
   Top = 0
-  Width = 795
+  Width = 443
   Height = 275
   VertScrollBar.Visible = False
   Align = alClient
@@ -11,14 +11,14 @@ object fraBottomBar: TfraBottomBar
   object paBottomBar: TPanel
     Left = 0
     Top = 0
-    Width = 795
+    Width = 443
     Height = 17
     Align = alTop
     BevelOuter = bvLowered
     ParentColor = True
     TabOrder = 0
     object paInfo: TPanel
-      Left = 447
+      Left = 95
       Top = 1
       Width = 347
       Height = 15
@@ -411,6 +411,12 @@ object fraBottomBar: TfraBottomBar
       end
       object miRenderWithTextures: TMenuItem
         Caption = 'Textures'
+        Checked = True
+        GroupIndex = 4
+        OnClick = ClickOptionsMenuItem
+      end
+      object miDeferredTextureLoading: TMenuItem
+        Caption = 'Deferred Texture Loading'
         Checked = True
         GroupIndex = 4
         OnClick = ClickOptionsMenuItem

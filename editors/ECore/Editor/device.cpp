@@ -144,10 +144,13 @@ bool CRenderDevice::Create()
 	if (FS.exist(sh))
 		F				= FS.r_open(0,sh);
 	Resources			= xr_new<CResourceManager>	();
+	Resources->DeferredLoad(psDeviceFlags.is(rsDeffLoadResources));
 
     // if build options - load textures immediately
-    if (strstr(Core.Params,"-build")||strstr(Core.Params,"-ebuild"))
+    if (strstr(Core.Params,"-build")||strstr(Core.Params,"-ebuild")) {
         Device.Resources->DeferredLoad(FALSE);
+        psDeviceFlags.set(rsDeffLoadResources,FALSE);
+    }
 
     _Create				(F);
 	FS.r_close			(F);
@@ -424,5 +427,10 @@ void CRenderDevice::time_factor(float v)
 {
 	 Timer.time_factor(v);
 	 TimerGlobal.time_factor(v);
+}
+
+void CRenderDevice::DeferredLoadResources(bool bDeferredLoad)
+{
+	Resources->DeferredLoad(bDeferredLoad);
 }
 

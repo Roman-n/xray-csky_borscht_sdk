@@ -252,6 +252,8 @@ xr_string CEditableObject::GetLODTextureName()
 
 void CEditableObject::OnDeviceCreate()
 {
+	if(!EPrefs->object_flags.is(epoDeffLoadRB))
+    	DefferedLoadRP();
 }
 
 void CEditableObject::OnDeviceDestroy()
@@ -276,6 +278,11 @@ void CEditableObject::DefferedLoadRP()
     if (m_objectFlags.is(eoUsingLOD))
     	m_LODShader.create(GetLODShaderName(),l_name.c_str());
     m_LoadState.set(LS_RBUFFERS,TRUE);
+
+    // create surfaces shaders
+    SurfaceVec::iterator it, end;
+    for(it = m_Surfaces.begin(), end = m_Surfaces.end(); it != end; it++)
+    	(*it)->OnDeviceCreate();
 }
 void CEditableObject::DefferedUnloadRP()
 {
