@@ -9,7 +9,37 @@
 
 #pragma once
 
-#include "../../xrCore/xrCore.h"
+// try detach this DLL from xrCore
+
+#include <stdio.h>
+#include <float.h>
+#include <math.h>
+#include <limits>
+#include <algorithm>
+#include <windows.h>
+
+using std::swap;
+
+#define ICF __forceinline
+#define IC  __inline
+#define ICN __declspec(noinline)
+
+#define XRCORE_API
+#define M_VISUAL
+
+#define VERIFY(expr)    if(!(expr)) { MessageBoxA(NULL, #expr, "xrDXT", MB_ICONHAND); ExitProcess(-1); }
+#define R_ASSERT(expr)	if(!(expr)) { MessageBoxA(NULL, #expr, "xrDXT", MB_ICONHAND); ExitProcess(-1); }
+#define NODEFAULT		{ MessageBoxA(NULL, "nodefault reached", "xrDXT", MB_ICONHAND); ExitProcess(-1); }
+
+#include "..\..\xrCore\vector.h"			// color, vector, etc
+
+class shared_str
+{
+private:
+	class str_value;
+	str_value *value;
+};
+
 #include <io.h>
 #include <fcntl.h>
 #include <sys\stat.h>
@@ -23,9 +53,6 @@
 	((DWORD)(BYTE)(ch0) | ((DWORD)(BYTE)(ch1) << 8) |   \
 	((DWORD)(BYTE)(ch2) << 16) | ((DWORD)(BYTE)(ch3) << 24 ))
 #endif //defined(MAKEFOURCC)
-
-#pragma comment(lib,"xrCore.lib")
-#pragma comment(lib,"nvDXTlibMTDLL.lib")
 
 #pragma warning( disable : 4995 )
 

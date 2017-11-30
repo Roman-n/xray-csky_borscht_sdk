@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="DXT"
 	ProjectGUID="{EBF9B543-0830-4866-9B48-DC0740E87E8A}"
 	RootNamespace="DXT"
@@ -16,8 +16,8 @@
 	<Configurations>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="..\..\..\..\binaries"
-			IntermediateDirectory="..\..\..\..\intermediate\$(ConfigurationName)\$(ProjectName)"
+			OutputDirectory="..\..\..\stalker_addon\binaries"
+			IntermediateDirectory="..\..\..\intermediate\$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="2"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="0"
@@ -54,7 +54,7 @@
 				OmitFramePointers="true"
 				EnableFiberSafeOptimizations="true"
 				WholeProgramOptimization="true"
-				AdditionalIncludeDirectories="../../../sdk/include/stlport;"
+				AdditionalIncludeDirectories="../../../sdk/include/nvdxt"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;DXT_EXPORTS;_SECURE_SCL=0"
 				StringPooling="true"
 				ExceptionHandling="0"
@@ -101,7 +101,7 @@
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				LinkTimeCodeGeneration="1"
-				ImportLibrary="..\..\..\..\libraries\$(ProjectName).lib"
+				ImportLibrary="..\..\..\stalker_addon\libraries\$(ProjectName).lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -130,8 +130,8 @@
 		</Configuration>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="..\..\..\..\binaries"
-			IntermediateDirectory="..\..\..\..\intermediate\$(ConfigurationName)\$(ProjectName)"
+			OutputDirectory="..\..\..\stalker_addon\binaries"
+			IntermediateDirectory="..\..\..\intermediate\$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="2"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="0"
@@ -161,7 +161,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../../sdk/include/stlport;"
+				AdditionalIncludeDirectories="../../../sdk/include/nvdxt"
 				PreprocessorDefinitions="FORCE_NO_EXCEPTIONS;WIN32;DEBUG;_WINDOWS;_USRDLL;DXT_EXPORTS;_SECURE_SCL=0"
 				StringPooling="true"
 				ExceptionHandling="0"
@@ -203,7 +203,7 @@
 				GenerateMapFile="false"
 				MapFileName=""
 				LargeAddressAware="2"
-				ImportLibrary="..\..\..\..\libraries\$(ProjectName).lib"
+				ImportLibrary="..\..\..\stalker_addon\libraries\$(ProjectName).lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -347,14 +347,6 @@
 			Name="Convert"
 			>
 			<File
-				RelativePath=".\colorconvert.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ddsTypes.h"
-				>
-			</File>
-			<File
 				RelativePath=".\DXT.cpp"
 				>
 				<FileConfiguration
@@ -373,10 +365,6 @@
 						WarningLevel="0"
 					/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\dxtlib.h"
-				>
 			</File>
 			<File
 				RelativePath=".\nvdxt.cpp"
@@ -405,22 +393,6 @@
 						Name="VCCLCompilerTool"
 					/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\nvdxt_options.h"
-				>
-			</File>
-			<File
-				RelativePath=".\nvDXTlibMTDLL.lib"
-				>
-			</File>
-			<File
-				RelativePath=".\tPixel.h"
-				>
-			</File>
-			<File
-				RelativePath=".\tVector.h"
-				>
 			</File>
 		</Filter>
 		<Filter
@@ -480,7 +452,7 @@
 			</File>
 		</Filter>
 		<File
-			RelativePath=".\dds.h"
+			RelativePath=".\DXT_memory.cpp"
 			>
 		</File>
 		<File

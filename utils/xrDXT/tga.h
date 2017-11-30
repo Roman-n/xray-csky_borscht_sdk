@@ -36,7 +36,7 @@ public:
 	TGAdesc()	{ data = 0; };
 	~TGAdesc()	{};
 
-	void maketga( IWriter &fs );
+//	void maketga( IWriter &fs );
 //	void maketga( int hf );
 };
 

@@ -14,9 +14,7 @@ CImageManager ImageLib;
 extern bool IsFormatRegister(LPCSTR ext);
 extern FIBITMAP* Surface_Load(char* full_name);
 
-extern "C" __declspec(dllimport)
-int DXTCompress	(LPCSTR out_name, u8* raw_data, u8* ext_data, u32 w, u32 h, u32 pitch,
-					STextureParams* options, u32 depth);
+#include "../../utils/xrDXT/DXT.h"
 
 bool IsValidSize(u32 w, u32 h){
 	if (!btwIsPow2(h)) return false;
@@ -716,5 +714,20 @@ BOOL CImageManager::CreateSmallerCubeMap(LPCSTR src_name, LPCSTR dst_name)
         ELog.Msg(mtError,"Can't load texture '%s'.",src_name);
     }
     return FALSE;
+}
+
+static void * __stdcall xrDXT_malloc(size_t size)
+{
+	return xr_malloc(size);
+}
+
+static void __stdcall xrDXT_free(void *ptr)
+{
+	xr_free(ptr);
+}
+
+CImageManager::CImageManager()
+{
+	DXTSetMemHooks(xrDXT_malloc, xrDXT_free);
 }
 

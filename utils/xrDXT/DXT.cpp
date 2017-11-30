@@ -11,6 +11,8 @@
 #include "dds.h"
 #include <ddraw.h>
 
+#include "DXT.h"
+
 BOOL APIENTRY DllMain( HANDLE hModule, 
                        u32  ul_reason_for_call, 
                        LPVOID lpReserved
@@ -69,7 +71,7 @@ ENGINE_API u32* Build32MipLevel(u32 &_w, u32 &_h, u32 &_p, u32 *pdwPixelSrc, STe
 	R_ASSERT((_p%4)==0	);
 
 	u32	dwDestPitch	= (_w/2)*4;
-	u32*	pNewData= xr_alloc<u32>( (_h/2)*dwDestPitch );
+	u32*	pNewData= new u32[(_h/2)*dwDestPitch];
 	u8*		pDest	= (u8 *)pNewData;
 	u8*		pSrc	= (u8 *)pdwPixelSrc;
 
@@ -201,12 +203,12 @@ int DXTCompressImage	(LPCSTR out_name, u8* raw_data, u32 w, u32 h, u32 pitch,
 		u8* pImagePixels	= 0;
 		int numMipmaps		= GetPowerOf2Plus1(__min(w,h));
 		u32 line_pitch		= w*2*4;
-		pImagePixels		= xr_alloc<u8>(line_pitch*h);
+		pImagePixels		= new u8[line_pitch*h];
 		u32 w_offs			= 0;
 		u32 dwW				= w;
 		u32 dwH				= h;
 		u32 dwP				= pitch;
-		u32* pLastMip		= xr_alloc<u32>(w*h*4);
+		u32* pLastMip		= new u32[w*h*4];
 		CopyMemory			(pLastMip,raw_data,w*h*4);
 		FillRect			(pImagePixels,(u8*)pLastMip,w_offs,pitch,dwH,line_pitch);
 		w_offs				+= dwP;
@@ -216,12 +218,12 @@ int DXTCompressImage	(LPCSTR out_name, u8* raw_data, u32 w, u32 h, u32 pitch,
 		for (int i=1; i<numMipmaps; i++){
 			u32* pNewMip	= Build32MipLevel(dwW,dwH,dwP,pLastMip,fmt,i<fmt->fade_delay?0.f:1.f-blend);
 			FillRect		(pImagePixels,(u8*)pNewMip,w_offs,dwP,dwH,line_pitch);
-			xr_free			(pLastMip); 
+			delete []		pLastMip; 
 			pLastMip		= pNewMip; 
 			pNewMip			= 0;
 			w_offs			+= dwP;
 		}
-		xr_free				(pLastMip);
+		delete []			pLastMip;
 
 		nvOpt.bFadeColor	= false;
 		nvOpt.bFadeAlpha	= false;
@@ -232,7 +234,7 @@ int DXTCompressImage	(LPCSTR out_name, u8* raw_data, u32 w, u32 h, u32 pitch,
 		for (u32 k=0; k<w*2*h; k++,pixel+=4)
 			pixels[k].set	(pixel[2],pixel[1],pixel[0],pixel[3]);
 		hr					= nvDXTcompress(pImage,&nvOpt,0,0);
-		xr_free				(pImagePixels);
+		delete []			pImagePixels;
 	}else{
 		RGBAImage			pImage(w,h);
 		rgba_t* pixels		= pImage.pixels();
@@ -257,8 +259,7 @@ int DXTCompressImage	(LPCSTR out_name, u8* raw_data, u32 w, u32 h, u32 pitch,
 
 extern int DXTCompressBump(LPCSTR out_name, u8* raw_data, u8* normal_map, u32 w, u32 h, u32 pitch, STextureParams* fmt, u32 depth);
 
-extern "C" __declspec(dllexport) 
-int  __stdcall DXTCompress	(LPCSTR out_name, u8* raw_data, u8* normal_map, u32 w, u32 h, u32 pitch, 
+DXT_API(int) DXTCompress	(LPCSTR out_name, u8* raw_data, u8* normal_map, u32 w, u32 h, u32 pitch, 
 					STextureParams* fmt, u32 depth)
 {
 	switch (fmt->type){
