@@ -728,6 +728,16 @@ static void __stdcall xrDXT_free(void *ptr)
 
 CImageManager::CImageManager()
 {
-	DXTSetMemHooks(xrDXT_malloc, xrDXT_free);
+//	DXTSetMemHooks(xrDXT_malloc, xrDXT_free);
+	typedef void (__stdcall *DXTSetMemHooks)(DXTMalloc, DXTMfree);
+
+    DXTSetMemHooks pDXTSetMemHooks;
+    HMODULE hmDXTdll = GetModuleHandle("DXT.dll");
+    if(hmDXTdll)
+    {
+    	pDXTSetMemHooks = (DXTSetMemHooks)GetProcAddress(hmDXTdll, "_DXTSetMemHooks@8");
+        if(pDXTSetMemHooks)
+        	pDXTSetMemHooks(xrDXT_malloc, xrDXT_free);
+    }
 }
 
