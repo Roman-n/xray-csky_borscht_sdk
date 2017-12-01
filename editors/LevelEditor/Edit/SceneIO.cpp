@@ -436,7 +436,7 @@ void EScene::SaveLTX(LPCSTR map_name, bool bForUndo, bool bForceSaveAll)
         }
     }
 
-    m_SaveCache.clear		();
+    //m_SaveCache.clear		();
 
     SceneToolsMapPairIt _I = m_SceneTools.begin();
     SceneToolsMapPairIt _E = m_SceneTools.end();
@@ -467,7 +467,7 @@ void EScene::SaveLTX(LPCSTR map_name, bool bForUndo, bool bForceSaveAll)
                     }  //can_use_ini_file
                     else
                     {
-						_I->second->SaveStream	(m_SaveCache);
+						//_I->second->SaveStream	(m_SaveCache);
 
 						EFS.UnlockFile			(LevelPartName(map_name,_I->first).c_str(),false);
 						EFS.MarkFile			(part_name.c_str(),true);
@@ -479,7 +479,8 @@ void EScene::SaveLTX(LPCSTR map_name, bool bForUndo, bool bForceSaveAll)
                         FF->close_chunk		();
 
                         FF->open_chunk		(CHUNK_TOOLS_DATA+_I->first);
-                        FF->w				(m_SaveCache.pointer(),m_SaveCache.size());
+                        //FF->w				(m_SaveCache.pointer(),m_SaveCache.size());
+                        _I->second->SaveStream(*FF);
                         FF->close_chunk		();
 
                         FS.w_close			(FF);
@@ -493,7 +494,7 @@ void EScene::SaveLTX(LPCSTR map_name, bool bForUndo, bool bForceSaveAll)
                     	_I->second->SetChanged	(TRUE);
 */                    
             }
-			m_SaveCache.clear	();
+			//m_SaveCache.clear	();
         }
     }
         
@@ -576,7 +577,7 @@ void EScene::Save(LPCSTR map_name, bool bUndo, bool bForceSaveAll)
         F->close_chunk		();
     }
 
-    m_SaveCache.clear		();
+    //m_SaveCache.clear		();
 
     SceneToolsMapPairIt _I = m_SceneTools.begin();
     SceneToolsMapPairIt _E = m_SceneTools.end();
@@ -594,13 +595,14 @@ void EScene::Save(LPCSTR map_name, bool bUndo, bool bForceSaveAll)
             {
             	if (_I->second->IsNeedSave())
                 {
-                    _I->second->SaveStream	(m_SaveCache);
+                    //_I->second->SaveStream	(m_SaveCache);
                     F->open_chunk			(CHUNK_TOOLS_DATA+_I->first);
-                    F->w					(m_SaveCache.pointer(),m_SaveCache.size());
+                    //F->w					(m_SaveCache.pointer(),m_SaveCache.size());
+                    _I->second->SaveStream	(*F);
                     F->close_chunk			();
                 }
             }
-			m_SaveCache.clear	();
+			//m_SaveCache.clear	();
         }
     }
         
