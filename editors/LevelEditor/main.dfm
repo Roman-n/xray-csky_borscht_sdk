@@ -198,7 +198,8 @@ object frmMain: TfrmMain
     Version = 1
     OnSavePlacement = fsStorageSavePlacement
     StoredProps.Strings = (
-      'paLeftBar.Tag')
+      'paLeftBar.Tag'
+      'paLeftBar.Width')
     StoredValues = <>
     Left = 161
     Top = 33
