@@ -40,7 +40,7 @@ IC	const Fmatrix&	CBackend::get_xform_project	()	{ return xforms.get_P();	}
 
 IC	ID3DRenderTargetView* CBackend::get_RT(u32 ID)
 {
-	VERIFY((ID>=0)&&(ID<4));
+	VERIFY(ID<4);
 
 	return pRT[ID];
 }
