@@ -24,6 +24,7 @@
 #include "../xrEProps/NumericVector.h"
 #include "LevelPreferences.h"
 #include "LEClipEditor.h"
+#include "../xrEProps/TextForm.h"
 
 #ifdef _LEVEL_EDITOR
 //.    if (m_Cursor->GetVisible()) RedrawScene();
@@ -805,6 +806,51 @@ CCommandVar CommandRefreshSnapObjects(CCommandVar p1, CCommandVar p2)
     fraLeftBar->UpdateSnapList();
     return 						TRUE;
 }
+CCommandVar CommandEditSnapObjects(CCommandVar p1, CCommandVar p2)
+{
+	if(Scene->locked())
+    {
+    	ELog.DlgMsg(mtError, "Scene sharing violation");
+        return FALSE;
+    }
+
+	AnsiString snap_list;
+    ObjectList *list = Scene->GetSnapList(true);
+
+    if(list && !list->empty())
+    {
+    	ObjectIt I = list->begin();
+
+        while(I != list->end())
+        {
+        	snap_list += AnsiString((*I)->Name) + "\r\n";
+        	I++;
+        }
+    }
+
+    if(TfrmText::RunEditor(snap_list, "Snap list"))
+    {
+    	Scene->ClearSnapList(false);
+
+        char *s = xr_strdup(snap_list.c_str()), *t;
+
+        t = strtok(s, "\r\n");
+		while(t)
+        {
+        	CCustomObject *o = Scene->FindObjectByName(t, OBJCLASS_SCENEOBJECT);
+
+            if(o)
+            	Scene->AddToSnapList(o, false);
+
+            t = strtok(NULL, "\r\n");
+        }
+
+        xr_free(s);
+    }
+
+    fraLeftBar->UpdateSnapList();
+	return TRUE;
+}
 CCommandVar CommandRefreshSoundEnvs(CCommandVar p1, CCommandVar p2)
 {
     ::Sound->refresh_env_library();
@@ -947,6 +993,7 @@ void CLevelMain::RegisterCommands()
 	REGISTER_CMD_S	    (COMMAND_DEL_SEL_SNAP_OBJECTS,      CommandDelSelSnapObjects);
 	REGISTER_CMD_S	    (COMMAND_CLEAR_SNAP_OBJECTS,        CommandClearSnapObjects);
 	REGISTER_CMD_S	    (COMMAND_SELECT_SNAP_OBJECTS,       CommandSelectSnapObjects);
+    REGISTER_CMD_S		(COMMAND_EDIT_SNAP_OBJECTS,			CommandEditSnapObjects);
 	REGISTER_CMD_S	    (COMMAND_REFRESH_SNAP_OBJECTS,      CommandRefreshSnapObjects);
 	REGISTER_CMD_S	    (COMMAND_REFRESH_SOUND_ENVS,        CommandRefreshSoundEnvs);
 	REGISTER_CMD_S	    (COMMAND_REFRESH_SOUND_ENV_GEOMETRY,CommandRefreshSoundEnvGeometry);

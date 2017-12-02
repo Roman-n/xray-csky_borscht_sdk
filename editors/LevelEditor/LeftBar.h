@@ -299,7 +299,6 @@ __published:	// IDE-managed Components
 	void __fastcall ebSnapListEditClick(TObject *Sender);
 private:	// User declarations
     void RedrawBar();
-    void EditSnapList();
 	void __fastcall miRecentFilesClick(TObject *Sender);
     
     xr_vector<std::pair<TExtBtn*,TExtBtn*> >	m_TargetButtons;
