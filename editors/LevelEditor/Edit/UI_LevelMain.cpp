@@ -329,6 +329,7 @@ CCommandVar CommandClear(CCommandVar p1, CCommandVar p2)
         ExecCommand				(COMMAND_CHANGE_ACTION,etaSelect,estDefault);
 	    ExecCommand				(COMMAND_UPDATE_PROPERTIES);
         Scene->UndoSave			();
+        ::Sound->set_geometry_som(NULL); // move to scene.cpp ?
         return 					TRUE;
     } else {
         ELog.DlgMsg( mtError, "Scene sharing violation" );
@@ -663,12 +664,22 @@ CCommandVar CommandMakeHOM(CCommandVar p1, CCommandVar p2)
 CCommandVar CommandMakeSOM(CCommandVar p1, CCommandVar p2)
 {
     if( !Scene->locked() ){
-        if (mrYes==ELog.DlgMsg(mtConfirmation, TMsgDlgButtons()<<mbYes<<mbNo, "Are you sure to export Sound Occlusion Model?"))
-            return				Builder.MakeSOM();
+        if (mrYes!=ELog.DlgMsg(mtConfirmation, TMsgDlgButtons()<<mbYes<<mbNo, "Are you sure to export Sound Occlusion Model?"))
+            return				FALSE;
+        BOOL result				= Builder.MakeSOM();
+        if(result){
+        	// load sound occluder
+            IReader *F = FS.r_open(Builder.MakeLevelPath("level.som").c_str());
+            if(F){
+            	::Sound->set_geometry_som(F);
+                FS.r_close		(F);
+            }
+        }
+		return					result;
     }else{
         ELog.DlgMsg( mtError, "Scene sharing violation" );
+        return 					FALSE;
     }
-    return 						FALSE;
 }
 CCommandVar CommandInvertSelectionAll(CCommandVar p1, CCommandVar p2)
 {
@@ -862,6 +873,24 @@ CCommandVar CommandRefreshSoundEnvGeometry(CCommandVar p1, CCommandVar p2)
     LSndLib->RefreshEnvGeometry();
     return 						TRUE;
 }
+CCommandVar CommandLoadSoundOccluder(CCommandVar p1, CCommandVar p2)
+{
+	xr_string path;
+	if(EFS.GetOpenName("$level$", path))
+    {
+    	IReader *F 				= FS.r_open(path.c_str());
+		if(F)
+        {
+        	::Sound->set_geometry_som(F);
+            FS.r_close			(F);
+            return				TRUE;
+        }
+        else
+        	return				FALSE;
+    }
+    else
+    	return					FALSE;
+}
 CCommandVar CommandShowContextMenu(CCommandVar p1, CCommandVar p2)
 {
     LUI->ShowContextMenu		(p1);
@@ -997,6 +1026,7 @@ void CLevelMain::RegisterCommands()
 	REGISTER_CMD_S	    (COMMAND_REFRESH_SNAP_OBJECTS,      CommandRefreshSnapObjects);
 	REGISTER_CMD_S	    (COMMAND_REFRESH_SOUND_ENVS,        CommandRefreshSoundEnvs);
 	REGISTER_CMD_S	    (COMMAND_REFRESH_SOUND_ENV_GEOMETRY,CommandRefreshSoundEnvGeometry);
+    REGISTER_CMD_S		(COMMAND_LOAD_SOUND_OCCLUDER,		CommandLoadSoundOccluder);
 	REGISTER_CMD_S	    (COMMAND_SHOWCONTEXTMENU,           CommandShowContextMenu);
 	REGISTER_CMD_S	    (COMMAND_REFRESH_UI_BAR,            CommandRefreshUIBar);
 	REGISTER_CMD_S	    (COMMAND_RESTORE_UI_BAR,            CommandRestoreUIBar);
