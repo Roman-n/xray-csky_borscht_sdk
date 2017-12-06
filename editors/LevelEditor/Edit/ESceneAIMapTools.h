@@ -127,10 +127,11 @@ public:
     	mdInvert,
     };
 	enum{
-    	flUpdateSnapList	= (1<<0),
-    	flHideNodes			= (1<<1),
-    	flSlowCalculate		= (1<<2),
-    	flUpdateHL 			= (1<<15),
+    	flUpdateSnapList			= (1<<0),
+    	flHideNodes					= (1<<1),
+    	flSlowCalculate				= (1<<2),
+        flHideNodesWhileGenerating	= (1<<3),
+    	flUpdateHL 					= (1<<15),
     };
     Flags32				m_Flags;
 

@@ -552,16 +552,17 @@ int ESceneAIMapTool::SelectionCount(bool testflag)
 
 void ESceneAIMapTool::FillProp(LPCSTR pref, PropItemVec& items)
 {
-    PHelper().CreateFlag32	(items, PrepareKey(pref,"Common\\Draw Nodes"),			&m_Flags, 		flHideNodes, 0,0, FlagValueCustom::flInvertedDraw);
-    PHelper().CreateFlag32	(items, PrepareKey(pref,"Common\\Slow Calculate Mode"),	&m_Flags, 		flSlowCalculate);
-    PHelper().CreateFloat 	(items, PrepareKey(pref,"Common\\Visible Radius"),		&m_VisRadius, 	10.f, 	250.f);
-    PHelper().CreateFloat 	(items, PrepareKey(pref,"Common\\Smooth Height"),		&m_SmoothHeight,0.1f,	100.f);
+    PHelper().CreateFlag32	(items, PrepareKey(pref,"Common\\Draw Nodes"),					&m_Flags, 		flHideNodes, 0,0, FlagValueCustom::flInvertedDraw);
+    PHelper().CreateFlag32	(items, PrepareKey(pref,"Common\\Draw Nodes While Generating"), &m_Flags, 		flHideNodesWhileGenerating, 0, 0, FlagValueCustom::flInvertedDraw);
+    PHelper().CreateFlag32	(items, PrepareKey(pref,"Common\\Slow Calculate Mode"),			&m_Flags, 		flSlowCalculate);
+    PHelper().CreateFloat 	(items, PrepareKey(pref,"Common\\Visible Radius"),				&m_VisRadius, 	10.f, 	250.f);
+    PHelper().CreateFloat 	(items, PrepareKey(pref,"Common\\Smooth Height"),				&m_SmoothHeight,0.1f,	100.f);
 
-    PHelper().CreateU32	 	(items, PrepareKey(pref,"Params\\Brush Size"),			&m_BrushSize, 	1, 100);
-    PHelper().CreateFloat 	(items, PrepareKey(pref,"Params\\Can Up"),				&m_Params.fCanUP, 	0.f, 10.f);
-    PHelper().CreateFloat 	(items, PrepareKey(pref,"Params\\Can Down"),			&m_Params.fCanDOWN, 0.f, 10.f);
+    PHelper().CreateU32	 	(items, PrepareKey(pref,"Params\\Brush Size"),					&m_BrushSize, 	1, 100);
+    PHelper().CreateFloat 	(items, PrepareKey(pref,"Params\\Can Up"),						&m_Params.fCanUP, 	0.f, 10.f);
+    PHelper().CreateFloat 	(items, PrepareKey(pref,"Params\\Can Down"),					&m_Params.fCanDOWN, 0.f, 10.f);
 
-    FloatValue *V = PHelper().CreateFloat(items, PrepareKey(pref,"Params\\Patch Size"), &m_Params.fPatchSize, 0.1f, 1.0f);
+    FloatValue *V = PHelper().CreateFloat(items, PrepareKey(pref,"Params\\Patch Size"), 	&m_Params.fPatchSize, 0.1f, 1.0f);
     V->OnChangeEvent.bind(this, &ESceneAIMapTool::OnPatchSizeChanged);
 }
 
