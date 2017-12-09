@@ -10,7 +10,7 @@
 #include "xrPool.h"
 
 // chunks
-#define AIMAP_VERSION  				0x0002
+#define AIMAP_VERSION  				0x0003
 //----------------------------------------------------
 #define AIMAP_CHUNK_VERSION			0x0001       
 #define AIMAP_CHUNK_FLAGS			0x0002
@@ -118,15 +118,26 @@ void SAINode::SaveLTX(CInifile& ini, LPCSTR sect_name, ESceneAIMapTool* tools)
     ini.w_u8		(sect_name, "flag", flags.get());
 }
 
-void SAINode::LoadStream(IReader& F, ESceneAIMapTool* tools)
+void SAINode::LoadStream(IReader& F, ESceneAIMapTool* tools, u16 version)
 {
 	u32 			id;
     u16 			pl;
 	NodePosition 	np;
-    F.r				(&id,3); 			n1 = (SAINode*)tools->UnpackLink(id);
-    F.r				(&id,3); 			n2 = (SAINode*)tools->UnpackLink(id);
-    F.r				(&id,3); 			n3 = (SAINode*)tools->UnpackLink(id);
-    F.r				(&id,3); 			n4 = (SAINode*)tools->UnpackLink(id);
+	if( version == 0x0002 )
+    {
+    	id			= 0;
+    	F.r			(&id, 3); n1 = (SAINode*)(id == 0x00FFFFFF ? InvalidNode : id);
+    	F.r			(&id, 3); n2 = (SAINode*)(id == 0x00FFFFFF ? InvalidNode : id);
+    	F.r			(&id, 3); n3 = (SAINode*)(id == 0x00FFFFFF ? InvalidNode : id);
+    	F.r			(&id, 3); n4 = (SAINode*)(id == 0x00FFFFFF ? InvalidNode : id);
+    }
+    else
+    {
+    	F.r			(&id, sizeof(id)); n1 = (SAINode*)tools->UnpackLink(id);
+    	F.r			(&id, sizeof(id)); n2 = (SAINode*)tools->UnpackLink(id);
+    	F.r			(&id, sizeof(id)); n3 = (SAINode*)tools->UnpackLink(id);
+    	F.r			(&id, sizeof(id)); n4 = (SAINode*)tools->UnpackLink(id);
+    }
 	pl				= F.r_u16(); 		pvDecompress(Plane.n,pl);
     F.r				(&np,sizeof(np)); 	tools->UnpackPosition(Pos,np,tools->m_AIBBox,tools->m_Params);
 	Plane.build		(Pos,Plane.n);
@@ -139,10 +150,10 @@ void SAINode::SaveStream(IWriter& F, ESceneAIMapTool* tools)
     u16 			pl;
 	NodePosition 	np;
 
-    id = n1?(u32)n1->idx:InvalidNode; F.w(&id,3);
-    id = n2?(u32)n2->idx:InvalidNode; F.w(&id,3);
-    id = n3?(u32)n3->idx:InvalidNode; F.w(&id,3);
-    id = n4?(u32)n4->idx:InvalidNode; F.w(&id,3);
+    id = n1?(u32)n1->idx:InvalidNode; F.w(&id, sizeof(id));
+    id = n2?(u32)n2->idx:InvalidNode; F.w(&id, sizeof(id));
+    id = n3?(u32)n3->idx:InvalidNode; F.w(&id, sizeof(id));
+    id = n4?(u32)n4->idx:InvalidNode; F.w(&id, sizeof(id));
     pl = pvCompress (Plane.n);	 F.w_u16(pl);
 	tools->PackPosition(np,Pos,tools->m_AIBBox,tools->m_Params); F.w(&np,sizeof(np));
     F.w_u8			(flags.get());
@@ -307,7 +318,7 @@ bool ESceneAIMapTool::LoadStream(IReader& F)
 	u16 version = 0;
 
     R_ASSERT(F.r_chunk(AIMAP_CHUNK_VERSION,&version));
-    if( version!=AIMAP_VERSION ){
+    if( version < 0x0002 || version > AIMAP_VERSION ){
         ELog.DlgMsg( mtError, "AIMap: Unsupported version.");
         return false;
     }
@@ -325,7 +336,7 @@ bool ESceneAIMapTool::LoadStream(IReader& F)
     m_Nodes.resize	(F.r_u32());
 	for (AINodeIt it=m_Nodes.begin(); it!=m_Nodes.end(); it++){
     	*it			= xr_new<SAINode>();
-    	(*it)->LoadStream	(F,this);
+    	(*it)->LoadStream	(F,this,version);
     }
 	DenumerateNodes	();
 
