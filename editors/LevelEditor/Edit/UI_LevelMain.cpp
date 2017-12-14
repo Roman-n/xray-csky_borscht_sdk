@@ -841,7 +841,7 @@ CCommandVar CommandEditSnapObjects(CCommandVar p1, CCommandVar p2)
 
     if(TfrmText::RunEditor(snap_list, "Snap list"))
     {
-    	Scene->ClearSnapList(false);
+    	Scene->ClearSnapList(true);
 
         char *s = xr_strdup(snap_list.c_str()), *t;
 
