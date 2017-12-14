@@ -140,6 +140,8 @@ public:
     u32					m_BrushSize;
     xr_vector<u16>		m_ignored_materials;
 
+    xr_vector<Fvector>	m_ErrorNodes;
+
     bool				PickObjects				(Fvector& dest, const Fvector& start, const Fvector& dir, float dist);
 public:
 						ESceneAIMapTool 	   	();
@@ -190,6 +192,8 @@ public:
     virtual void		SaveSelection      		(IWriter&);
     virtual bool   		Export          		(LPCSTR path);
 
+    void				LoadCompilerErrors		(IReader&);
+
 	// device dependent funcs
 	virtual void		OnDeviceCreate			();
 	virtual void		OnDeviceDestroy			();
@@ -220,6 +224,7 @@ public:
     void				SelectNodesByLink		(int link);
 
     void				OnPatchSizeChanged		(PropValue*);
+    void				SelectErrorNodes		();
 };
 #endif // ESceneAIMapToolsH
 

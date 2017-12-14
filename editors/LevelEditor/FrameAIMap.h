@@ -55,6 +55,10 @@ __published:	// IDE-managed Components
 	TListBox *lbIgnoreMaterialsList;
 	TLabel *Label1;
 	TExtBtn *btnAddIgnoredMaterial;
+	TBevel *Bevel1;
+	TExtBtn *ebLoadErrorList;
+	TExtBtn *ebSelectErrorNodes;
+	TExtBtn *ebClearErrorList;
     void __fastcall PanelMinClick(TObject *Sender);
     void __fastcall ExpandClick(TObject *Sender);
 	void __fastcall ebGenerateMapClick(TObject *Sender);
@@ -68,6 +72,9 @@ __published:	// IDE-managed Components
 	void __fastcall ebResetSelectedClick(TObject *Sender);
 	void __fastcall btnAddIgnoredMaterialClick(TObject *Sender);
 	void __fastcall btnIgnoreMaterialClearClick(TObject *Sender);
+	void __fastcall ebLoadErrorListClick(TObject *Sender);
+	void __fastcall ebClearErrorListClick(TObject *Sender);
+	void __fastcall ebSelectErrorNodesClick(TObject *Sender);
 private:	// User declarations
 	ESceneAIMapTool* tools;
 public:		// User declarations

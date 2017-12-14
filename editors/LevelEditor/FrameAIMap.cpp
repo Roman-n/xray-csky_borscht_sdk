@@ -154,3 +154,30 @@ void __fastcall TfraAIMap::btnIgnoreMaterialClearClick(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
+void __fastcall TfraAIMap::ebLoadErrorListClick(TObject *Sender)
+{
+	xr_string filename;
+	if(false == EFS.GetOpenName("$logs$", filename))
+    	return;
+
+    IReader *R = FS.r_open(filename.c_str());
+    if(!R)
+    	return;
+
+    tools->LoadCompilerErrors(*R);
+    FS.r_close(R);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraAIMap::ebClearErrorListClick(TObject *Sender)
+{
+	tools->m_ErrorNodes.clear();	
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraAIMap::ebSelectErrorNodesClick(TObject *Sender)
+{
+	tools->SelectErrorNodes();	
+}
+//---------------------------------------------------------------------------
+

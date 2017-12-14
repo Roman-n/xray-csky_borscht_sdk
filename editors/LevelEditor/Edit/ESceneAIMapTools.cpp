@@ -599,3 +599,43 @@ void ESceneAIMapTool::OnPatchSizeChanged(PropValue*)
 	ELog.DlgMsg(mtWarning, "Patch size was changed, regenerate AI-Map");
 }
 
+void ESceneAIMapTool::LoadCompilerErrors(IReader& F)
+{
+	m_ErrorNodes.clear();
+
+	u32 version = F.r_u32();
+	if(version != 1)
+    	return;
+
+    u32 count = F.r_u32();
+    for(u32 i = 0; i < count; i++)
+    {
+    	Fvector pos = F.r_vec3();
+        u32 id = F.r_u32();
+
+        m_ErrorNodes.push_back(pos);
+        (void)id; // unused
+    }
+}
+
+void ESceneAIMapTool::SelectErrorNodes()
+{
+	u32 not_found = 0;
+
+    SelectObjects(FALSE);
+
+	xr_vector<Fvector>::iterator it, end;
+    for(it = m_ErrorNodes.begin(), end = m_ErrorNodes.end(); it != end; it++)
+    {
+    	if(SAINode *node = FindNode(*it))
+        	node->flags.set(SAINode::flSelected,TRUE);
+        else
+        	not_found++;
+    }
+
+  	if(not_found > 0)
+    	ELog.DlgMsg(mtWarning, "%u nodes from error list not found", not_found);
+
+    UpdateHLSelected();
+    UI->RedrawScene();
+}
