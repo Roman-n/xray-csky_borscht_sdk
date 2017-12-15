@@ -55,10 +55,10 @@ __published:	// IDE-managed Components
 	TListBox *lbIgnoreMaterialsList;
 	TLabel *Label1;
 	TExtBtn *btnAddIgnoredMaterial;
-	TBevel *Bevel1;
 	TExtBtn *ebLoadErrorList;
 	TExtBtn *ebSelectErrorNodes;
 	TExtBtn *ebClearErrorList;
+	TLabel *Label4;
     void __fastcall PanelMinClick(TObject *Sender);
     void __fastcall ExpandClick(TObject *Sender);
 	void __fastcall ebGenerateMapClick(TObject *Sender);

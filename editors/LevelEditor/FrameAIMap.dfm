@@ -4,7 +4,7 @@ object fraAIMap: TfraAIMap
   VertScrollBar.Visible = False
   Align = alClient
   BorderStyle = bsNone
-  ClientHeight = 374
+  ClientHeight = 361
   ClientWidth = 203
   Color = 10528425
   Font.Charset = DEFAULT_CHARSET
@@ -19,13 +19,13 @@ object fraAIMap: TfraAIMap
     Left = 0
     Top = 0
     Width = 203
-    Height = 105
+    Height = 113
     Align = alTop
     ParentColor = True
     TabOrder = 0
     DesignSize = (
       203
-      105)
+      113)
     object Label2: TLabel
       Left = 1
       Top = 1
@@ -159,16 +159,9 @@ object fraAIMap: TfraAIMap
       ParentFont = False
       OnClick = ebResetSelectedClick
     end
-    object Bevel1: TBevel
-      Left = 0
-      Top = 66
-      Width = 207
-      Height = 1
-      Anchors = [akLeft, akTop, akRight]
-    end
     object ebLoadErrorList: TExtBtn
       Left = 0
-      Top = 72
+      Top = 80
       Width = 97
       Height = 17
       Align = alNone
@@ -180,7 +173,7 @@ object fraAIMap: TfraAIMap
     end
     object ebSelectErrorNodes: TExtBtn
       Left = 99
-      Top = 72
+      Top = 80
       Width = 105
       Height = 17
       Align = alNone
@@ -193,7 +186,7 @@ object fraAIMap: TfraAIMap
     end
     object ebClearErrorList: TExtBtn
       Left = 0
-      Top = 88
+      Top = 96
       Width = 97
       Height = 17
       Align = alNone
@@ -203,18 +196,30 @@ object fraAIMap: TfraAIMap
       Caption = 'Clear Error List'
       OnClick = ebClearErrorListClick
     end
+    object Label4: TLabel
+      Left = 1
+      Top = 64
+      Width = 200
+      Height = 13
+      Alignment = taCenter
+      Anchors = [akLeft, akTop, akRight]
+      AutoSize = False
+      Caption = 'AI Map Errors'
+      Color = clGray
+      ParentColor = False
+    end
   end
   object paLink: TPanel
     Left = 0
-    Top = 105
+    Top = 113
     Width = 203
-    Height = 270
+    Height = 248
     Align = alTop
     ParentColor = True
     TabOrder = 1
     DesignSize = (
       203
-      270)
+      248)
     object Label3: TLabel
       Left = 1
       Top = 1
@@ -253,7 +258,7 @@ object fraAIMap: TfraAIMap
     end
     object ebModeAppend: TExtBtn
       Left = 6
-      Top = 215
+      Top = 71
       Width = 46
       Height = 15
       Align = alNone
@@ -274,7 +279,7 @@ object fraAIMap: TfraAIMap
     end
     object ebModeRemove: TExtBtn
       Left = 6
-      Top = 230
+      Top = 86
       Width = 46
       Height = 15
       Align = alNone
@@ -295,7 +300,7 @@ object fraAIMap: TfraAIMap
     object ebUp: TExtBtn
       Tag = 1
       Left = 74
-      Top = 215
+      Top = 71
       Width = 24
       Height = 15
       Align = alNone
@@ -324,7 +329,7 @@ object fraAIMap: TfraAIMap
     object ebDown: TExtBtn
       Tag = 3
       Left = 74
-      Top = 245
+      Top = 101
       Width = 24
       Height = 15
       Align = alNone
@@ -352,7 +357,7 @@ object fraAIMap: TfraAIMap
     end
     object ebLeft: TExtBtn
       Left = 52
-      Top = 230
+      Top = 86
       Width = 24
       Height = 15
       Align = alNone
@@ -381,7 +386,7 @@ object fraAIMap: TfraAIMap
     object ebRight: TExtBtn
       Tag = 2
       Left = 95
-      Top = 230
+      Top = 86
       Width = 24
       Height = 15
       Align = alNone
@@ -410,7 +415,7 @@ object fraAIMap: TfraAIMap
     object ebFull: TExtBtn
       Tag = 4
       Left = 74
-      Top = 230
+      Top = 86
       Width = 24
       Height = 15
       Align = alNone
@@ -446,7 +451,7 @@ object fraAIMap: TfraAIMap
     end
     object ebModeInvert: TExtBtn
       Left = 6
-      Top = 245
+      Top = 101
       Width = 46
       Height = 15
       Align = alNone
@@ -466,7 +471,7 @@ object fraAIMap: TfraAIMap
     end
     object Label5: TLabel
       Left = 5
-      Top = 199
+      Top = 55
       Width = 78
       Height = 13
       Caption = 'Link Commands:'
@@ -535,7 +540,7 @@ object fraAIMap: TfraAIMap
     end
     object ExtBtn1: TExtBtn
       Left = 118
-      Top = 215
+      Top = 71
       Width = 77
       Height = 15
       Align = alNone
@@ -557,7 +562,7 @@ object fraAIMap: TfraAIMap
     object ExtBtn5: TExtBtn
       Tag = 1
       Left = 118
-      Top = 230
+      Top = 86
       Width = 77
       Height = 15
       Align = alNone
@@ -579,7 +584,7 @@ object fraAIMap: TfraAIMap
     object ExtBtn3: TExtBtn
       Tag = 2
       Left = 118
-      Top = 245
+      Top = 101
       Width = 77
       Height = 15
       Align = alNone
@@ -600,7 +605,7 @@ object fraAIMap: TfraAIMap
     end
     object btnIgnoreMaterialClear: TExtBtn
       Left = 160
-      Top = 81
+      Top = 137
       Width = 37
       Height = 14
       Hint = 'Clear snap list'
@@ -633,7 +638,7 @@ object fraAIMap: TfraAIMap
     end
     object Label1: TLabel
       Left = 1
-      Top = 65
+      Top = 121
       Width = 207
       Height = 13
       Alignment = taCenter
@@ -646,7 +651,7 @@ object fraAIMap: TfraAIMap
     end
     object btnAddIgnoredMaterial: TExtBtn
       Left = 11
-      Top = 81
+      Top = 137
       Width = 30
       Height = 14
       Hint = 'add material to ignore list'
@@ -667,7 +672,7 @@ object fraAIMap: TfraAIMap
     end
     object lbIgnoreMaterialsList: TListBox
       Left = 4
-      Top = 98
+      Top = 154
       Width = 196
       Height = 87
       Anchors = [akLeft, akTop, akRight]
