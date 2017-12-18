@@ -29,8 +29,8 @@ CCustomPreferences::CCustomPreferences()
 		.addFlag("Objects\\Show\\Pivot",					epoDrawPivot)
 		.addFlag("Objects\\Show\\Animation Path",			epoDrawAnimPath)
 		.addFlag("Objects\\Show\\LOD",						epoDrawLOD)
-		.addFlag("Objects\\Loading\\Deffered Loading RB",	epoDeffLoadRB)
-		.addFlag("Objects\\Loading\\Deffered Loading CF",	epoDeffLoadCF);
+		.addFlag("Objects\\Loading\\Deferred Loading RB",	epoDeffLoadRB)
+		.addFlag("Objects\\Loading\\Deferred Loading CF",	epoDeffLoadCF);
 
 	m_Prefs["Scene\\Common\\Recent Count"].set		("editor_prefs", "scene_recent_count", 	ptInteger, 	&scene_recent_count, 10,   0,    25);
     m_Prefs["Scene\\Common\\Undo Level"].set		("editor_prefs", "scene_undo_level", 	ptInteger, 	&scene_undo_level, 	 125,  0,    125);
@@ -38,7 +38,7 @@ CCustomPreferences::CCustomPreferences()
     m_Prefs["Scene\\Grid\\Cell Count"].set			("editor_prefs", "grid_cell_count",		ptInteger, 	&grid_cell_count,    100,  10,   1000);
 
     m_Prefs["Tools\\Box Pick\\Limited Depth"].set	("editor_prefs", "bp_lim_depth",		ptBool,		&bp_lim_depth, 		TRUE);
-    m_Prefs["Tools\\Box Pick\\Back Face Culling"].set("editor_prefs", "bp_cull",			ptBool,		&bp_cull,       	TRUE);
+    m_Prefs["Tools\\Box Pick\\Backface Culling"].set("editor_prefs", "bp_cull",				ptBool,		&bp_cull,       	TRUE);
     m_Prefs["Tools\\Box Pick\\Depth Tolerance"].set	("editor_prefs", "bp_depth_tolerance",	ptFloat,	&bp_depth_tolerance, 0.1f, 0.f, 10000.f);
     m_Prefs["Tools\\Sens\\Move"].set				("editor_prefs", "tools_sens_move",		ptFloat,	&tools_sens_move, 	0.3f);
     m_Prefs["Tools\\Sens\\Rotate"].set				("editor_prefs", "tools_sens_rot",		ptFloat,	&tools_sens_rot, 	0.3f);
@@ -66,7 +66,7 @@ CCustomPreferences::CCustomPreferences()
     m_Prefs["Style\\Text Form\\Background Color"].set("styles", "textform_background_color",	ptColor,	&textform_background_color, 0x00A0A0A0);
     m_Prefs["Style\\Text Form\\Text Color"].set		("styles", "textform_text_color",		ptColor,	&textform_text_color,		0x00000000);
 
-    // it is necessary to set values to default there?
+    // it is necessary to set default values there?
     /*
 	// view
     view_np				= 0.1f;
