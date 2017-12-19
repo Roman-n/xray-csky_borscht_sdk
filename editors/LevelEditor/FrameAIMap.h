@@ -44,7 +44,6 @@ __published:	// IDE-managed Components
 	TLabel *Label5;
 	TExtBtn *ebIgnoreConstraints;
 	TExtBtn *ebAutoLink;
-	TBevel *Bevel2;
 	TExtBtn *ExtBtn1;
 	TExtBtn *ExtBtn5;
 	TExtBtn *ExtBtn3;
