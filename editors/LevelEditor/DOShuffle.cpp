@@ -51,6 +51,8 @@ void __fastcall TfrmDOShuffle::FormCreate(TObject *Sender)
 	m_ObjectProps 		= TProperties::CreateForm("Objects",paObjectProps,alClient,fastdelegate::bind<TOnChooseClose>(this,&TfrmDOShuffle::OnObjectPropsModified));
     bTHMLockRepaint		= false;
     bLockFocused		= false;
+
+    m_OneColorHeight	= 50;
 }
 //---------------------------------------------------------------------------
 
@@ -96,6 +98,7 @@ void TfrmDOShuffle::FillData()
             VERIFY(dd);
 	        OneColor->AppendObject(dd->GetName(),dd);
         }
+        OneColor->Height = m_OneColorHeight;
     }
     // redraw
     tvItems->IsUpdating = false;
@@ -309,6 +312,7 @@ void __fastcall TfrmDOShuffle::ebAppendIndexClick(TObject *Sender)
 	color_indices.push_back(xr_new<TfrmOneColor>((TComponent*)0));
 	color_indices.back()->Parent = sbDO;
     color_indices.back()->ShowIndex(this);
+    color_indices.back()->Height = m_OneColorHeight;
 }
 //---------------------------------------------------------------------------
 
@@ -392,14 +396,46 @@ void __fastcall TfrmDOShuffle::ebClearListClick(TObject *Sender)
 
 void __fastcall TfrmDOShuffle::fsStorageRestorePlacement(TObject *Sender)
 {
+	m_OneColorHeight = fsStorage->ReadInteger("one_color_height", 50);
 	m_ObjectProps->RestoreParams(fsStorage);
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmDOShuffle::fsStorageSavePlacement(TObject *Sender)
 {
+	fsStorage->WriteInteger("one_color_height", m_OneColorHeight);
 	m_ObjectProps->SaveParams(fsStorage);
 }
 //---------------------------------------------------------------------------
 
+
+void __fastcall TfrmDOShuffle::sbDOMouseWheelUp(TObject *Sender,
+      TShiftState Shift, TPoint &MousePos, bool &Handled)
+{
+	m_OneColorHeight++;
+    if(m_OneColorHeight > 250)
+    	m_OneColorHeight = 250;
+
+	xr_vector<TfrmOneColor*>::iterator it, end;
+	for(it = color_indices.begin(), end = color_indices.end(); it != end; it++)
+    {
+    	(*it)->Height = m_OneColorHeight;
+    }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmDOShuffle::sbDOMouseWheelDown(TObject *Sender,
+      TShiftState Shift, TPoint &MousePos, bool &Handled)
+{
+	m_OneColorHeight--;
+    if(m_OneColorHeight < 35)
+    	m_OneColorHeight = 35;
+
+	xr_vector<TfrmOneColor*>::iterator it, end;
+	for(it = color_indices.begin(), end = color_indices.end(); it != end; it++)
+    {
+    	(*it)->Height = m_OneColorHeight;
+    }
+}
+//---------------------------------------------------------------------------
 
