@@ -170,15 +170,17 @@ void __fastcall TfrmDOShuffle::FormKeyDown(TObject *Sender, WORD &Key,
 
 void __fastcall TfrmDOShuffle::FormClose(TObject *Sender, TCloseAction &Action)
 {
-    ModalResult = ApplyChanges()?mrOk:mrCancel;
+    TModalResult result = ApplyChanges()?mrOk:mrCancel;
 
 	ClearIndexForms();
 
-    if (ModalResult==mrOk)
+    if (result==mrOk)
 		DM->InvalidateCache();
 
 	Action = caFree;
     form = 0;
+
+    ModalResult = result;
 }
 //---------------------------------------------------------------------------
 
@@ -363,6 +365,7 @@ void __fastcall TfrmDOShuffle::ebSaveListClick(TObject *Sender)
 {
 	xr_string fname;
 	if (EFS.GetSaveName(_detail_objects_,fname)){
+    	ApplyChanges();
 		DM->ExportColorIndices(fname.c_str());
     }
 }
