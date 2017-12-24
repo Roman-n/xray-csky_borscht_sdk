@@ -48,6 +48,7 @@ __published:	// IDE-managed Components
 	TExtBtn *ebSaveList;
 	TExtBtn *ebClearList;
 	TSplitter *Splitter2;
+	TSplitter *Splitter3;
     void __fastcall FormKeyDown(TObject *Sender, WORD &Key,
           TShiftState Shift);
     void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
