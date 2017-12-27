@@ -1,8 +1,8 @@
 object fraLeftBar: TfraLeftBar
   Left = 0
   Top = 0
-  Width = 443
-  Height = 270
+  Width = 260
+  Height = 610
   HorzScrollBar.Visible = False
   VertScrollBar.Increment = 34
   VertScrollBar.Size = 13
@@ -22,17 +22,16 @@ object fraLeftBar: TfraLeftBar
     Left = 0
     Top = 0
     Width = 260
-    Height = 270
-    Align = alLeft
+    Height = 610
+    Align = alClient
     BevelInner = bvLowered
     BevelOuter = bvNone
     Color = 10528425
-    Constraints.MaxWidth = 260
     Constraints.MinWidth = 260
     TabOrder = 0
     object Splitter1: TSplitter
       Left = 1
-      Top = 31
+      Top = 371
       Width = 258
       Height = 2
       Cursor = crVSplit
@@ -61,6 +60,9 @@ object fraLeftBar: TfraLeftBar
       ParentShowHint = False
       ShowHint = True
       TabOrder = 0
+      DesignSize = (
+        258
+        66)
       object APHeadLabel2: TLabel
         Left = 1
         Top = 1
@@ -79,6 +81,7 @@ object fraLeftBar: TfraLeftBar
         Width = 11
         Height = 11
         Align = alNone
+        Anchors = [akTop, akRight]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -180,7 +183,7 @@ object fraLeftBar: TfraLeftBar
       Left = 1
       Top = 141
       Width = 258
-      Height = 588
+      Height = 230
       Align = alClient
       Color = 10528425
       ParentShowHint = False
@@ -638,14 +641,14 @@ object fraLeftBar: TfraLeftBar
           object Bevel5: TBevel
             Left = 0
             Top = 50
-            Width = 250
+            Width = 248
             Height = 2
             Align = alTop
           end
           object Panel5: TPanel
             Left = 0
             Top = 0
-            Width = 250
+            Width = 248
             Height = 50
             Align = alTop
             BevelOuter = bvNone
@@ -747,7 +750,7 @@ object fraLeftBar: TfraLeftBar
         Left = 1
         Top = 91
         Width = 256
-        Height = 496
+        Height = 138
         Align = alClient
         BevelOuter = bvNone
         Color = 10528425
@@ -756,7 +759,7 @@ object fraLeftBar: TfraLeftBar
     end
     object paShaderProperties: TPanel
       Left = 1
-      Top = 33
+      Top = 373
       Width = 258
       Height = 236
       Align = alBottom
@@ -764,6 +767,9 @@ object fraLeftBar: TfraLeftBar
       ParentShowHint = False
       ShowHint = False
       TabOrder = 2
+      DesignSize = (
+        258
+        236)
       object Label6: TLabel
         Left = 1
         Top = 1
@@ -782,6 +788,7 @@ object fraLeftBar: TfraLeftBar
         Width = 11
         Height = 11
         Align = alNone
+        Anchors = [akTop, akRight]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -828,6 +835,9 @@ object fraLeftBar: TfraLeftBar
       ParentShowHint = False
       ShowHint = False
       TabOrder = 3
+      DesignSize = (
+        258
+        72)
       object Label2: TLabel
         Left = 1
         Top = 1
@@ -846,6 +856,7 @@ object fraLeftBar: TfraLeftBar
         Width = 11
         Height = 11
         Align = alNone
+        Anchors = [akTop, akRight]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11

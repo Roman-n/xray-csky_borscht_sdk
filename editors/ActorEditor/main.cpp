@@ -50,6 +50,8 @@ __fastcall TfrmMain::TfrmMain(TComponent* Owner)
 	if (paLeftBar->Tag > 0) paLeftBar->Parent = paTopBar;
 	else paLeftBar->Parent 	= frmMain;
 
+    spLeftBar->Visible		= paLeftBar->Tag == 0;
+
 	Device.SetHandle		(Handle,D3DWindow->Handle);
     EnableReceiveCommands	();
     if (!ExecCommand(COMMAND_INITIALIZE,(u32)D3DWindow,(u32)paRender)){ 
@@ -108,9 +110,13 @@ void __fastcall TfrmMain::sbToolsMinClick(TObject *Sender)
     if (paLeftBar->Tag > 0){
         paLeftBar->Parent = frmMain;
         paLeftBar->Tag    = 0;
+
+        spLeftBar->Show   ();
     }else{
         paLeftBar->Parent = paTopBar;
         paLeftBar->Tag    = 1;
+
+        spLeftBar->Hide   ();
     }
 }
 //---------------------------------------------------------------------------
@@ -122,6 +128,8 @@ void __fastcall TfrmMain::TopClick(TObject *Sender)
         paLeftBar->Parent = frmMain;
         paLeftBar->Height = paLeftBar->Tag;
         paLeftBar->Tag    = 0;
+
+        spLeftBar->Show   ();
     }
 }
 //---------------------------------------------------------------------------

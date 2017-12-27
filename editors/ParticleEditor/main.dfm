@@ -1,6 +1,6 @@
 object frmMain: TfrmMain
-  Left = 71
-  Top = 183
+  Left = 420
+  Top = 497
   Width = 770
   Height = 449
   Color = clBtnFace
@@ -23,11 +23,21 @@ object frmMain: TfrmMain
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
+  object spLeftBar: TSplitter
+    Left = 520
+    Top = 0
+    Width = 4
+    Height = 403
+    Cursor = crHSplit
+    Align = alRight
+    Color = 10528425
+    ParentColor = False
+  end
   object paLeftBar: TPanel
     Left = 524
     Top = 0
     Width = 238
-    Height = 398
+    Height = 403
     Align = alRight
     BevelInner = bvLowered
     BevelOuter = bvNone
@@ -39,6 +49,9 @@ object frmMain: TfrmMain
       Height = 16
       Align = alTop
       TabOrder = 0
+      DesignSize = (
+        236
+        16)
       object APHeadLabel2: TLabel
         Left = 1
         Top = 1
@@ -52,11 +65,12 @@ object frmMain: TfrmMain
         OnClick = TopClick
       end
       object sbToolsMin: TExtBtn
-        Left = 223
+        Left = 224
         Top = 2
         Width = 11
         Height = 11
         Align = alNone
+        Anchors = [akTop, akRight]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -120,7 +134,7 @@ object frmMain: TfrmMain
   end
   object paBottomBar: TPanel
     Left = 0
-    Top = 398
+    Top = 403
     Width = 762
     Height = 17
     Align = alBottom
@@ -131,15 +145,15 @@ object frmMain: TfrmMain
   object paMain: TPanel
     Left = 0
     Top = 0
-    Width = 524
-    Height = 398
+    Width = 520
+    Height = 403
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
     object paTopBar: TPanel
       Left = 0
       Top = 0
-      Width = 524
+      Width = 520
       Height = 18
       Align = alTop
       BevelOuter = bvNone
@@ -148,8 +162,8 @@ object frmMain: TfrmMain
     object paRender: TPanel
       Left = 0
       Top = 18
-      Width = 524
-      Height = 380
+      Width = 520
+      Height = 385
       Align = alClient
       BevelOuter = bvNone
       Color = 4868682
@@ -184,7 +198,8 @@ object frmMain: TfrmMain
     Version = 1
     OnSavePlacement = fsStorageSavePlacement
     StoredProps.Strings = (
-      'paLeftBar.Tag')
+      'paLeftBar.Tag'
+      'paLeftBar.Width')
     StoredValues = <>
     Left = 161
     Top = 33

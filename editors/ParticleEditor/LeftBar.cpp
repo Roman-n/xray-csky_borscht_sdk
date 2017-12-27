@@ -29,8 +29,8 @@ __fastcall TfraLeftBar::TfraLeftBar(TComponent* Owner)
 {
 	DEFINE_INI(fsStorage);
 
-    frmMain->paLeftBar->Width = paLeftBar->Width+2;
-    frmMain->sbToolsMin->Left = paLeftBar->Width-frmMain->sbToolsMin->Width-3;
+//    frmMain->paLeftBar->Width = paLeftBar->Width+2;
+//    frmMain->sbToolsMin->Left = paLeftBar->Width-frmMain->sbToolsMin->Width-3;
 }
 //---------------------------------------------------------------------------
 
