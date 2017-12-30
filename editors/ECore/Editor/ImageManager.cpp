@@ -625,11 +625,12 @@ void CImageManager::RemoveTexture(LPCSTR fname, EItemType type, bool& res)
             // source
             FS.file_delete		(_textures_,src_name.c_str());
             // thumbnail
-            FS.file_delete		(_textures_,thm_name.c_str());
+            FS.file_delete		(_game_textures_,thm_name.c_str());
             // game
             FS.file_delete		(_game_textures_,game_name.c_str());
             // game 2
             FS.file_delete		(_game_textures_,game_name2.c_str());
+            res					= true;
             return;
         }
     }
