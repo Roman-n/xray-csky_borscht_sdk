@@ -1,0 +1,16 @@
+LIBRARY BORLANDMM.DLL
+
+EXPORTS
+	GetAllocMemSize		= _GetAllocMemSize
+	GetAllocMemCount	= _GetAllocMemCount
+	GetHeapStatus		= _GetHeapStatus
+	DumpBlocks			= _DumpBlocks
+	ReallocMemory		= _ReallocMemory
+	FreeMemory			= _FreeMemory
+	GetMemory			= _GetMemory
+	
+	"@Borlndmm@SysReallocMem$qqrpvi" 	= "@SysReallocMem"
+	"@Borlndmm@SysFreeMem$qqrpv"		= "@SysFreeMem"
+	"@Borlndmm@SysGetMem$qqri"			= "@SysGetMem"
+	"@Borlndmm@HeapRelease$qqrv"		= "@HeapRelease"
+	"@Borlndmm@HeapAddRef$qqrv"			= "@HeapAddRef"
