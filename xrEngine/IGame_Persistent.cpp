@@ -73,9 +73,9 @@ void IGame_Persistent::OnAppStart	()
 
 void IGame_Persistent::OnAppEnd		()
 {
-#ifndef _EDITOR
+//#ifndef _EDITOR
 	Environment().unload			 ();
-#endif    
+//#endif    
 	OnGameEnd						();
 
 #ifndef _EDITOR
