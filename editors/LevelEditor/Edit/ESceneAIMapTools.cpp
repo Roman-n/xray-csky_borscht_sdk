@@ -142,6 +142,9 @@ void SAINode::LoadStream(IReader& F, ESceneAIMapTool* tools, u16 version)
     F.r				(&np,sizeof(np)); 	tools->UnpackPosition(Pos,np,tools->m_AIBBox,tools->m_Params);
 	Plane.build		(Pos,Plane.n);
     flags.assign	(F.r_u8());
+
+    if(flags.is(flSelected))
+    	tools->m_SelectionCount ++;
 }
 
 void SAINode::SaveStream(IWriter& F, ESceneAIMapTool* tools)
@@ -171,6 +174,8 @@ ESceneAIMapTool::ESceneAIMapTool():ESceneToolBase(OBJCLASS_AIMAP)
     m_SmoothHeight	= 0.5f;
     m_BrushSize	= 1;
     m_CFModel	= 0;
+
+    m_SelectionCount = 0;
 }
 //----------------------------------------------------
 
@@ -187,6 +192,7 @@ void ESceneAIMapTool::Clear(bool bOnlyNodes)
 	for (AINodeIt it=m_Nodes.begin(); it!=m_Nodes.end(); it++)
     	xr_delete		(*it);
 	m_Nodes.clear_and_free();
+    m_SelectionCount = 0;
 	if (!bOnlyNodes){
 //	    m_SnapObjects.clear	();
         m_AIBBox.invalidate	();
@@ -455,7 +461,7 @@ int ESceneAIMapTool::AddNode(const Fvector& pos, bool bIgnoreConstraints, bool b
     if (1==sz){
         SAINode* N 			= BuildNode(Pos,Pos,bIgnoreConstraints,true);
         if (N){
-            N->flags.set	(SAINode::flSelected,TRUE);
+            SelectNode		(N, true);
             if (bAutoLink) 	UpdateLinks(N,bIgnoreConstraints);
             return			1;
         }else{
@@ -480,7 +486,7 @@ void ESceneAIMapTool::SelectNodesByLink(int link)
     for (AINodeIt it=m_Nodes.begin(); it!=m_Nodes.end(); it++)
         if ((*it)->Links()==link)
 //			if (!(*it)->flags.is(SAINode::flHide))
-	            (*it)->flags.set(SAINode::flSelected,TRUE);
+	            SelectNode(*it, true);
     UI->RedrawScene		();
 }
 
@@ -490,7 +496,7 @@ void ESceneAIMapTool::SelectObjects(bool flag)
     case estAIMapNode:{
         for (AINodeIt it=m_Nodes.begin(); it!=m_Nodes.end(); it++)
 //			if (!(*it)->flags.is(SAINode::flHide))
-	            (*it)->flags.set(SAINode::flSelected,flag);
+	            SelectNode(*it, flag);
     }break;
     }
     UpdateHLSelected	();
@@ -541,7 +547,7 @@ void ESceneAIMapTool::InvertSelection()
     case estAIMapNode:{
         for (AINodeIt it=m_Nodes.begin(); it!=m_Nodes.end(); it++)
 //			if (!(*it)->flags.is(SAINode::flHide))
-	            (*it)->flags.invert(SAINode::flSelected);
+	            SelectNode(*it, !(*it)->flags.is(SAINode::flSelected));
     }break;
     }
     UpdateHLSelected	();
@@ -550,6 +556,7 @@ void ESceneAIMapTool::InvertSelection()
 
 int ESceneAIMapTool::SelectionCount(bool testflag)
 {
+/*
 	int count = 0;
     switch (LTools->GetSubTarget()){
     case estAIMapNode:{
@@ -559,6 +566,11 @@ int ESceneAIMapTool::SelectionCount(bool testflag)
     }break;
     }
     return count;
+*/
+	if(testflag == true)
+		return m_SelectionCount;
+    else
+    	return m_Nodes.size() - m_SelectionCount;
 }
 
 void ESceneAIMapTool::FillProp(LPCSTR pref, PropItemVec& items)
@@ -628,7 +640,7 @@ void ESceneAIMapTool::SelectErrorNodes()
     for(it = m_ErrorNodes.begin(), end = m_ErrorNodes.end(); it != end; it++)
     {
     	if(SAINode *node = FindNode(*it))
-        	node->flags.set(SAINode::flSelected,TRUE);
+        	SelectNode(node, true);
         else
         	not_found++;
     }
@@ -638,4 +650,13 @@ void ESceneAIMapTool::SelectErrorNodes()
 
     UpdateHLSelected();
     UI->RedrawScene();
+}
+
+void ESceneAIMapTool::SelectNode(SAINode *node, bool select)
+{
+	if(node->flags.is(SAINode::flSelected) != select)
+    {
+    	node->flags.set(SAINode::flSelected, select);
+        m_SelectionCount += (-1 + (int)select*2);
+    }
 }

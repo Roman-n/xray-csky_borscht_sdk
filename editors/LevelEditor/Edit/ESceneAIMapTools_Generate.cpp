@@ -522,10 +522,10 @@ void ESceneAIMapTool::BuildNodes(bool bFromSelectedOnly)
         }
     	if (bFromSelectedOnly){
 	        // select neighbour nodes
-            if (N->n1) N->n1->flags.set(SAINode::flSelected,TRUE);
-            if (N->n2) N->n2->flags.set(SAINode::flSelected,TRUE);
-            if (N->n3) N->n3->flags.set(SAINode::flSelected,TRUE);
-            if (N->n4) N->n4->flags.set(SAINode::flSelected,TRUE);
+            if (N->n1) SelectNode(N->n1, true);
+            if (N->n2) SelectNode(N->n2, true);
+            if (N->n3) SelectNode(N->n3, true);
+            if (N->n4) SelectNode(N->n4, true);
         }
         
         if (k%512==0) {

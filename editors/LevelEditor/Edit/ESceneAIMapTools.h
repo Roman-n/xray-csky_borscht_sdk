@@ -142,6 +142,8 @@ public:
 
     xr_vector<Fvector>	m_ErrorNodes;
 
+    u32					m_SelectionCount;
+
     bool				PickObjects				(Fvector& dest, const Fvector& start, const Fvector& dir, float dist);
 public:
 						ESceneAIMapTool 	   	();
@@ -225,6 +227,8 @@ public:
 
     void				OnPatchSizeChanged		(PropValue*);
     void				SelectErrorNodes		();
+
+    void				SelectNode				(SAINode *node, bool select);
 };
 #endif // ESceneAIMapToolsH
 
