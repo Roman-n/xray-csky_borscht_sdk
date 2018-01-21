@@ -52,7 +52,7 @@ WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int)
         frmSplash->SetStatus	("Core initializing...");
 
     	Core._initialize		("level",ELogCallback);
-         CEditableMesh::m_bDraftMeshMode = TRUE;
+        if(!strstr(Core.Params,"-hq")) CEditableMesh::m_bDraftMeshMode = TRUE;
         Application->Initialize	();
                                        
         frmSplash->SetStatus	("Loading...");
