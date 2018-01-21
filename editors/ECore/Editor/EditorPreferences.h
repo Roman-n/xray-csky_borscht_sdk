@@ -155,6 +155,7 @@ public:
     float			env_from_time;
     float			env_to_time;
     float			env_speed;
+    BOOL			raindrop_collision;
     shared_str      sWeather;
     // log style
     u32				log_default_color;

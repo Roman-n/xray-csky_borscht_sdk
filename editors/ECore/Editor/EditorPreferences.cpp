@@ -66,6 +66,8 @@ CCustomPreferences::CCustomPreferences()
     m_Prefs["Style\\Text Form\\Background Color"].set("styles", "textform_background_color",	ptColor,	&textform_background_color, 0x00A0A0A0);
     m_Prefs["Style\\Text Form\\Text Color"].set		("styles", "textform_text_color",		ptColor,	&textform_text_color,		0x00000000);
 
+    m_Prefs["Weather\\Raindrop Collision Detection"].set("editor_prefs", "weather_raindrop_collision", ptBool, &raindrop_collision, TRUE);
+
     // it is necessary to set default values there?
     /*
 	// view
@@ -413,6 +415,7 @@ void CCustomPreferences::Save(CInifile* I)
     I->w_float("editor_prefs", "weather_from_time", env_from_time);
     I->w_float("editor_prefs", "weather_to_time", env_to_time);
     I->w_float("editor_prefs", "weather_time_factor", env_speed);
+
     // load shortcuts
     SaveShortcuts		(I);
     UI->SaveSettings	(I);

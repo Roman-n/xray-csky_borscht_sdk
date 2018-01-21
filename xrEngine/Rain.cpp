@@ -94,16 +94,21 @@ void	CEffect_Rain::Born		(Item& dest, float radius)
 
 BOOL CEffect_Rain::RayPick(const Fvector& s, const Fvector& d, float& range, collide::rq_target tgt)
 {
-	BOOL bRes 			= TRUE;
 #ifdef _EDITOR
-    Tools->RayPick		(s,d,range);
+	if(EPrefs->raindrop_collision)
+    	return			Tools->RayPick(s,d,range);
+    else
+    	return			FALSE;
 #else
+	BOOL bRes;
 	collide::rq_result	RQ;
+
 	CObject* E 			= g_pGameLevel->CurrentViewEntity();
 	bRes 				= g_pGameLevel->ObjectSpace.RayPick( s,d,range,tgt,RQ,E);	
     if (bRes) range 	= RQ.range;
-#endif
+
     return bRes;
+#endif
 }
 
 void CEffect_Rain::RenewItem(Item& dest, float height, BOOL bHit)
