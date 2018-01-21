@@ -41,6 +41,7 @@ CEffect_Rain::CEffect_Rain()
 	state							= stIdle;
 	
 	snd_Ambient.create				("ambient\\rain",st_Effect,sg_Undefined);
+    snd_OnRoof.create				("ambient\\rainonroof",st_Effect,sg_Undefined);
 
 	//	Moced to p_Render constructor
 	/*
@@ -60,6 +61,7 @@ CEffect_Rain::CEffect_Rain()
 CEffect_Rain::~CEffect_Rain()
 {
 	snd_Ambient.destroy				();
+    snd_OnRoof.destroy				();
 
 	// Cleanup
 	p_destroy						();
@@ -141,11 +143,14 @@ void	CEffect_Rain::OnFrame	()
 		state					= stWorking;
 		snd_Ambient.play		(0,sm_Looped);
 		snd_Ambient.set_range	(source_offset,source_offset*2.f);
+
+        snd_OnRoof.play			(0, sm_Looped);
 	break;
 	case stWorking:
 		if (factor<EPS_L){
 			state				= stIdle;
 			snd_Ambient.stop	();
+            snd_OnRoof.stop		();
 			return;
 		}
 		break;
@@ -158,6 +163,20 @@ void	CEffect_Rain::OnFrame	()
 		snd_Ambient.set_position(sndP);
 		snd_Ambient.set_volume	(1.1f*factor*hemi_factor);
 	}
+
+    if (snd_OnRoof._feedback()){
+		float dist = 10.f;
+
+        if(RayPick(Device.vCameraPosition, Fvector().set(0,1,0), dist,collide::rqtBoth))
+        {
+        	Fvector	sndP;
+            sndP.mad(Device.vCameraPosition, Fvector().set(0,1,0), dist);
+        	snd_OnRoof.set_position(sndP);
+            snd_OnRoof.set_volume(factor);
+        }
+        else
+        	snd_OnRoof.set_volume(0.f);
+    }
 }
 
 //#include "xr_input.h"
