@@ -68,6 +68,7 @@ private:
 
 	// Sounds
 	ref_sound						snd_Ambient;
+    ref_sound						snd_OnRoof;
 
 	// Utilities
 	void							p_create		();
