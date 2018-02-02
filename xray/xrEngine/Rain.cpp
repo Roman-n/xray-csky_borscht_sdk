@@ -165,12 +165,16 @@ void	CEffect_Rain::OnFrame	()
 	}
 
     if (snd_OnRoof._feedback()){
-		float dist = 10.f;
+		float dist = 50.f;
+        Fvector start, dir;
 
-        if(RayPick(Device.vCameraPosition, Fvector().set(0,1,0), dist,collide::rqtBoth))
+        dir.set(0, -1, 0);
+        start.set(Device.vCameraPosition).y += 50.f;
+
+        if(RayPick(start, dir, dist, collide::rqtBoth))
         {
         	Fvector	sndP;
-            sndP.mad(Device.vCameraPosition, Fvector().set(0,1,0), dist);
+            sndP.mad(start, dir, dist);
         	snd_OnRoof.set_position(sndP);
             snd_OnRoof.set_volume(factor);
         }
