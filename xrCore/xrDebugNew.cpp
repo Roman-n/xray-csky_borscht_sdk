@@ -34,6 +34,8 @@ extern bool shared_str_initialized;
 #ifndef _M_AMD64
 #	ifndef __BORLANDC__
 #		pragma comment(lib,"dxerr9.lib")
+#	else
+#		pragma link "dxerr9B.lib"
 #	endif
 #endif
 
@@ -245,7 +247,7 @@ LPCSTR xrDebug::error2string	(long code)
 	LPCSTR				result	= 0;
 	static	string1024	desc_storage;
 
-#if !defined(_M_AMD64) && !defined(_EDITOR)
+#if !defined(_M_AMD64)
 	result				= DXGetErrorDescription9(code);
 #endif
 
