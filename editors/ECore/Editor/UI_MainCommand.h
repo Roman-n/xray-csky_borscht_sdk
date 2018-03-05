@@ -43,6 +43,8 @@ enum{
 
     COMMAND_MUTE_SOUND,
 
+    COMMAND_TOGGLE_FULLSCREEN,
+
     // имеют разную реализацию
     COMMAND_CLEAR,
     COMMAND_LOAD,

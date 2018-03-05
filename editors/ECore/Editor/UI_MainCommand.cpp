@@ -607,6 +607,45 @@ CCommandVar 	CommandAssignMacro(CCommandVar p1, CCommandVar p2)
     }
     return FALSE;
 }
+CCommandVar		CommandToggleFullscreen(CCommandVar p1, CCommandVar p2)
+{
+	static bool fullscreen = false;
+    static int top, left, width, height;
+
+	TForm* frmMain = Application->MainForm;
+
+    if(fullscreen)
+    {
+    	SetWindowLong(frmMain->Handle, GWL_STYLE, WS_OVERLAPPEDWINDOW|WS_VISIBLE);
+        ShowWindow(frmMain->Handle, SW_RESTORE);
+
+        frmMain->Top = top;
+        frmMain->Left = left;
+        frmMain->Width = width;
+        frmMain->Height = height;
+
+        fullscreen = false;
+    }
+    else
+    {
+    	top = frmMain->Top;
+        left = frmMain->Left;
+        width = frmMain->Width;
+        height = frmMain->Height;
+
+        ShowWindow(frmMain->Handle, SW_MAXIMIZE);
+        SetWindowLong(frmMain->Handle, GWL_STYLE, WS_VISIBLE);
+
+        frmMain->Top = 0;
+        frmMain->Left = 0;
+        frmMain->Width = Screen->Width;
+        frmMain->Height = Screen->Height;
+
+        fullscreen = true;
+    }
+
+	return TRUE;
+}
 
 void TUI::RegisterCommands()
 {
@@ -676,6 +715,7 @@ void TUI::RegisterCommands()
     	APPEND_SUB_CMD	("Slot #8",						xr_string(""),0);
     REGISTER_SUB_CMD_END;
     REGISTER_CMD_S	    (COMMAND_ASSIGN_MACRO, 			CommandAssignMacro);
+    REGISTER_CMD_SE		(COMMAND_TOGGLE_FULLSCREEN,		"Toggle Fullscreen",	CommandToggleFullscreen,false);
 }                                                                        
 
 //---------------------------------------------------------------------------
