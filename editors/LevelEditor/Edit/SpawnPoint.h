@@ -29,7 +29,8 @@ public:
     class CLE_Visual
     {
     public:
-        static bool     g_tmp_lock;
+        static xr_map<xr_string, xr_string> replaced_visuals;
+
     	CSE_Visual*		source;
         IRenderVisual*	visual;
         void 			OnChangeVisual			();
