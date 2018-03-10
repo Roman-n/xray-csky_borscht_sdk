@@ -237,7 +237,7 @@ void STextureParams::FillProp(LPCSTR base_name, PropItemVec& items, PropValue::T
         PHelper().CreateFloat	   	(items, "Details\\Scale",			&detail_scale,		0.1f,10000.f,0.1f,2);
 
         PHelper().CreateToken32		(items, "Material\\Base",			(u32*)&material,	tmtl_token);
-        PHelper().CreateFloat	   	(items, "Material\\Weight",			&material_weight	);
+        PHelper().CreateFloat	   	(items, "Material\\Weight",			&material_weight,	0.0f,100.f);
         
 //		PHelper().CreateFlag32		(items, "Flags\\Binary Alpha",		&flags,				flBinaryAlpha);
         PHelper().CreateFlag32		(items, "Flags\\Dither",			&flags,				flDitherColor);
@@ -274,7 +274,7 @@ void STextureParams::FillProp(LPCSTR base_name, PropItemVec& items, PropValue::T
         PHelper().CreateFloat	   	(items, "Details\\Scale",			&detail_scale,		0.1f,10000.f,0.1f,2);
 
         PHelper().CreateToken32		(items, "Material\\Base",			(u32*)&material,	tmtl_token);
-        PHelper().CreateFloat	   	(items, "Material\\Weight",			&material_weight	);
+        PHelper().CreateFloat	   	(items, "Material\\Weight",			&material_weight,	0.0f,100.f);
 
         P = PHelper().CreateFlag32	(items, "Flags\\Implicit Lighted",	&flags,				flImplicitLighted);  P->Owner()->Enable(false);
     break;
