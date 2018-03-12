@@ -7,7 +7,7 @@
 #ifdef NDEBUG
 
 namespace std {
-	void terminate();
+//	void terminate();
 } // namespace std
 
 #endif // #ifdef NDEBUG

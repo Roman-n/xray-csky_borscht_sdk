@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #pragma hdrstop
 
+#include <commdlg.h>
 #include <objbase.h>
 #include <wchar.h>
 #include <cderr.h>
@@ -532,7 +533,7 @@ int CFileDialog::ShowVista(HWND owner)
 
                 xr_string fp;
                 fp.resize(wcslen(pfn));
-                WideCharToMultiByte(CP_ACP, 0, pfn, -1, fp.begin(), fp.size(), NULL, NULL);
+                WideCharToMultiByte(CP_ACP, 0, pfn, -1, &*fp.begin(), fp.size(), NULL, NULL);
                 Results.push_back(fp);
                 CoTaskMemFree(pfn);
 
@@ -554,7 +555,7 @@ int CFileDialog::ShowVista(HWND owner)
 
             xr_string fp;
             fp.resize(wcslen(pfn));
-            WideCharToMultiByte(CP_ACP, 0, pfn, -1, fp.begin(), fp.size(), NULL, NULL);
+            WideCharToMultiByte(CP_ACP, 0, pfn, -1, &*fp.begin(), fp.size(), NULL, NULL);
             Results.push_back(fp);
             CoTaskMemFree(pfn);
         }

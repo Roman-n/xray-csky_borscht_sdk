@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="luabind.beta7-devel.rc4"
 	ProjectGUID="{CC52E0B3-CC35-4934-9302-035B748F3F2C}"
 	RootNamespace="luabind"
@@ -20,8 +20,8 @@
 	<Configurations>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="../../../../intermediate/$(PlatformName)/$(ConfigurationName)/$(ProjectName)"
-			IntermediateDirectory="../../../../intermediate/$(PlatformName)/$(ConfigurationName)/$(ProjectName)"
+			OutputDirectory="../../../intermediate/$(PlatformName)/$(ConfigurationName)/$(ProjectName)"
+			IntermediateDirectory="../../../intermediate/$(PlatformName)/$(ConfigurationName)/$(ProjectName)"
 			ConfigurationType="2"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
@@ -76,16 +76,16 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="../../../../binaries/$(ProjectName).dll"
+				OutputFile="../../../binaries/$(ProjectName).dll"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="../../../../libraries/"
+				AdditionalLibraryDirectories="../../../libraries/"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="../../../../binaries/$(TargetName).pdb"
+				ProgramDatabaseFile="../../../binaries/$(TargetName).pdb"
 				GenerateMapFile="false"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				ImportLibrary="../../../../libraries/$(TargetName).lib"
+				ImportLibrary="../../../libraries/$(TargetName).lib"
 				TargetMachine="1"
 			/>
 			<Tool
