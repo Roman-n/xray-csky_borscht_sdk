@@ -433,8 +433,10 @@ void TUI::OnFrame()
 	// show hint
     ShowObjectHint		();
 	ResetBreak			();
+#if USE_MAILSLOT
 	// check mail
     CheckMailslot		();
+#endif
     // OnFrame
     TfrmImageLib::OnFrame();
     TfrmSoundLib::OnFrame();
@@ -530,10 +532,12 @@ bool TUI::OnCreate(TD3DWindow* w, TPanel* p)
 
     m_bReady		= true;
 
+#if USE_MAILSLOT
     if (!CreateMailslot()){
     	ELog.DlgMsg	(mtError,"Can't create mail slot.\nIt's possible two Editors started.");
         return 		false;
     }
+#endif
 
     if (!FS.path_exist(_local_root_)){
     	ELog.DlgMsg	(mtError,"Undefined Editor local directory.");

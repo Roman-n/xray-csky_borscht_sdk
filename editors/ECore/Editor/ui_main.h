@@ -6,6 +6,8 @@
 #include "UI_MainCommand.h"
 #include "IInputReceiver.h"
 
+#define USE_MAILSLOT 0
+
 // refs
 class CCustomObject;
 class TUI_Tools;
@@ -197,11 +199,13 @@ public:
     void 			OnDeviceCreate		();
     void			OnDeviceDestroy		();
 
+#if USE_MAILSLOT
     // mailslot
 	bool 			CreateMailslot		();
 	void 			CheckMailslot		();
 	void 			OnReceiveMail		(LPCSTR msg);
 	void 			SendMail			(LPCSTR name, LPCSTR dest, LPCSTR msg);
+#endif
 
     void			CheckWindowPos		(TForm* form);
 
