@@ -1,8 +1,8 @@
 object frmMain: TfrmMain
   Left = 426
   Top = 417
-  Width = 770
-  Height = 452
+  Width = 805
+  Height = 465
   Color = clBtnFace
   Constraints.MinHeight = 446
   Constraints.MinWidth = 660
@@ -12,6 +12,7 @@ object frmMain: TfrmMain
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   KeyPreview = True
+  Menu = mmMainMenu
   OldCreateOrder = False
   Position = poDefault
   Scaled = False
@@ -24,20 +25,20 @@ object frmMain: TfrmMain
   PixelsPerInch = 96
   TextHeight = 13
   object spLeftBar: TSplitter
-    Left = 520
+    Left = 555
     Top = 0
     Width = 4
-    Height = 406
+    Height = 399
     Cursor = crHSplit
     Align = alRight
     Color = clMedGray
     ParentColor = False
   end
   object paLeftBar: TPanel
-    Left = 524
+    Left = 559
     Top = 0
     Width = 238
-    Height = 406
+    Height = 399
     Align = alRight
     BevelInner = bvLowered
     BevelOuter = bvNone
@@ -134,8 +135,8 @@ object frmMain: TfrmMain
   end
   object paBottomBar: TPanel
     Left = 0
-    Top = 406
-    Width = 762
+    Top = 399
+    Width = 797
     Height = 17
     Align = alBottom
     BevelInner = bvLowered
@@ -145,25 +146,25 @@ object frmMain: TfrmMain
   object paMain: TPanel
     Left = 0
     Top = 0
-    Width = 520
-    Height = 406
+    Width = 555
+    Height = 399
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
     object paTopBar: TPanel
       Left = 0
       Top = 0
-      Width = 520
-      Height = 18
-      Align = alTop
+      Width = 25
+      Height = 399
+      Align = alLeft
       BevelOuter = bvNone
       TabOrder = 0
     end
     object paRender: TPanel
-      Left = 0
-      Top = 18
-      Width = 520
-      Height = 388
+      Left = 25
+      Top = 0
+      Width = 530
+      Height = 399
       Align = alClient
       BevelOuter = bvNone
       Color = 4868682
@@ -209,5 +210,30 @@ object frmMain: TfrmMain
     OnTimer = tmRefreshTimer
     Left = 129
     Top = 33
+  end
+  object mmMainMenu: TMainMenu
+    Left = 192
+    Top = 32
+    object File1: TMenuItem
+      Caption = 'File'
+      object Clear1: TMenuItem
+        Caption = 'Clear'
+      end
+      object Open1: TMenuItem
+        Caption = 'Open'
+      end
+      object Save1: TMenuItem
+        Caption = 'Save'
+      end
+      object SaveAs1: TMenuItem
+        Caption = 'Save As...'
+      end
+      object Quit1: TMenuItem
+        Caption = 'Quit'
+      end
+    end
+    object Edit1: TMenuItem
+      Caption = 'Edit'
+    end
   end
 end

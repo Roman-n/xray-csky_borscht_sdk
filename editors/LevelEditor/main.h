@@ -35,6 +35,14 @@ __published:	// IDE-managed Components
 	TExtBtn *ebAllMin;
 	TExtBtn *ebAllMax;
 	TSplitter *spLeftBar;
+	TMainMenu *mmMainMenu;
+	TMenuItem *File1;
+	TMenuItem *Edit1;
+	TMenuItem *Open1;
+	TMenuItem *Save1;
+	TMenuItem *SaveAs1;
+	TMenuItem *Clear1;
+	TMenuItem *Quit1;
         void __fastcall FormCreate(TObject *Sender);
     void __fastcall D3DWindowResize(TObject *Sender);
     void __fastcall D3DWindowKeyDown(TObject *Sender, WORD &Key,

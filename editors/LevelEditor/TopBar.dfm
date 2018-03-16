@@ -1,13 +1,11 @@
 object fraTopBar: TfraTopBar
   Left = 0
   Top = 0
-  Width = 775
-  Height = 20
+  Width = 159
+  Height = 644
   HorzScrollBar.Visible = False
   VertScrollBar.Visible = False
   Align = alClient
-  Constraints.MaxHeight = 20
-  Constraints.MinHeight = 20
   Color = 10528425
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clBlack
@@ -18,16 +16,16 @@ object fraTopBar: TfraTopBar
   ParentFont = False
   TabOrder = 0
   object paTBEdit: TPanel
-    Left = 0
-    Top = 0
+    Left = 112
+    Top = 24
     Width = 51
-    Height = 20
-    Align = alLeft
+    Height = 235
     BevelOuter = bvNone
     Color = 10528425
     ParentShowHint = False
     ShowHint = True
     TabOrder = 0
+    Visible = False
     object ebEditUndo: TExtBtn
       Left = 0
       Top = 0
@@ -170,19 +168,18 @@ object fraTopBar: TfraTopBar
     end
   end
   object paTBAction: TPanel
-    Left = 51
+    Left = 0
     Top = 0
-    Width = 127
-    Height = 20
-    Align = alLeft
+    Width = 25
+    Height = 105
     BevelOuter = bvNone
     Color = 10528425
     ParentShowHint = False
     ShowHint = True
     TabOrder = 1
     object ebActionMove: TExtBtn
-      Left = 50
-      Top = 0
+      Left = 0
+      Top = 40
       Width = 25
       Height = 20
       Hint = 'Move'
@@ -252,8 +249,8 @@ object fraTopBar: TfraTopBar
       OnClick = ActionClick
     end
     object ebActionRotate: TExtBtn
-      Left = 75
-      Top = 0
+      Left = 0
+      Top = 60
       Width = 25
       Height = 20
       Hint = 'Rotate'
@@ -323,8 +320,8 @@ object fraTopBar: TfraTopBar
       OnClick = ActionClick
     end
     object ebActionScale: TExtBtn
-      Left = 100
-      Top = 0
+      Left = 0
+      Top = 80
       Width = 25
       Height = 20
       Hint = 'Uniform Scale'
@@ -466,8 +463,8 @@ object fraTopBar: TfraTopBar
       OnClick = ActionClick
     end
     object ebActionAdd: TExtBtn
-      Left = 25
-      Top = 0
+      Left = 0
+      Top = 20
       Width = 25
       Height = 20
       Hint = 'Add'
@@ -538,19 +535,18 @@ object fraTopBar: TfraTopBar
     end
   end
   object paSnap: TPanel
-    Left = 282
-    Top = 0
-    Width = 227
-    Height = 20
-    Align = alLeft
+    Left = -1
+    Top = 184
+    Width = 26
+    Height = 185
     BevelOuter = bvNone
     Color = 10528425
     ParentShowHint = False
     ShowHint = True
     TabOrder = 2
     object ebMSnap: TExtBtn
-      Left = 200
-      Top = 0
+      Left = 0
+      Top = 160
       Width = 25
       Height = 20
       Hint = 'Moving Snap Toggle'
@@ -622,8 +618,8 @@ object fraTopBar: TfraTopBar
       OnClick = ebSettingsClick
     end
     object ebASnap: TExtBtn
-      Left = 175
-      Top = 0
+      Left = 0
+      Top = 140
       Width = 25
       Height = 20
       Hint = 'Angle Snap Toggle'
@@ -768,8 +764,8 @@ object fraTopBar: TfraTopBar
       OnClick = ebSettingsClick
     end
     object ebGSnap: TExtBtn
-      Left = 50
-      Top = 0
+      Left = 0
+      Top = 40
       Width = 25
       Height = 20
       Hint = 'Grid Snap Toggle (G)'
@@ -838,8 +834,8 @@ object fraTopBar: TfraTopBar
       OnClick = ebSettingsClick
     end
     object ebOSnap: TExtBtn
-      Left = 75
-      Top = 0
+      Left = 0
+      Top = 60
       Width = 25
       Height = 20
       Hint = 'Object Snap Toggle (O)'
@@ -915,8 +911,8 @@ object fraTopBar: TfraTopBar
       OnClick = ebSettingsClick
     end
     object ebNUScale: TExtBtn
-      Left = 25
-      Top = 0
+      Left = 0
+      Top = 20
       Width = 25
       Height = 20
       Hint = 'Non-Uniform Scale'
@@ -987,8 +983,8 @@ object fraTopBar: TfraTopBar
       OnClick = ebSettingsClick
     end
     object ebVSnap: TExtBtn
-      Left = 150
-      Top = 0
+      Left = 0
+      Top = 120
       Width = 25
       Height = 20
       Hint = 'Vertex Snap Toggle (O)'
@@ -1064,8 +1060,8 @@ object fraTopBar: TfraTopBar
       OnClick = ebSettingsClick
     end
     object ebMTSnap: TExtBtn
-      Left = 100
-      Top = 0
+      Left = 0
+      Top = 80
       Width = 25
       Height = 20
       Hint = 'Moving Snap To Object Toggle'
@@ -1136,8 +1132,8 @@ object fraTopBar: TfraTopBar
       OnClick = ebSettingsClick
     end
     object ebNormalAlign: TExtBtn
-      Left = 125
-      Top = 0
+      Left = 0
+      Top = 100
       Width = 25
       Height = 20
       Hint = 'Normal Alignment'
@@ -1209,11 +1205,10 @@ object fraTopBar: TfraTopBar
     end
   end
   object paAxis: TPanel
-    Left = 178
-    Top = 0
-    Width = 104
-    Height = 20
-    Align = alLeft
+    Left = -1
+    Top = 104
+    Width = 26
+    Height = 81
     BevelOuter = bvNone
     Color = 10528425
     ParentShowHint = False
@@ -1291,8 +1286,8 @@ object fraTopBar: TfraTopBar
       OnClick = ebAxisClick
     end
     object ebAxisY: TExtBtn
-      Left = 25
-      Top = 0
+      Left = 0
+      Top = 20
       Width = 25
       Height = 20
       Hint = 'Restrict to Y'
@@ -1362,8 +1357,8 @@ object fraTopBar: TfraTopBar
       OnClick = ebAxisClick
     end
     object ebAxisZ: TExtBtn
-      Left = 50
-      Top = 0
+      Left = 0
+      Top = 40
       Width = 25
       Height = 20
       Hint = 'Restrict to Z'
@@ -1433,8 +1428,8 @@ object fraTopBar: TfraTopBar
       OnClick = ebAxisClick
     end
     object ebAxisZX: TExtBtn
-      Left = 75
-      Top = 0
+      Left = 0
+      Top = 60
       Width = 25
       Height = 20
       Hint = 'Restrict to ZX'
@@ -1506,20 +1501,19 @@ object fraTopBar: TfraTopBar
     end
   end
   object paView: TPanel
-    Left = 550
-    Top = 0
-    Width = 179
-    Height = 20
-    Align = alLeft
+    Left = 0
+    Top = 416
+    Width = 25
+    Height = 217
     BevelOuter = bvNone
     Color = 10528425
     ParentShowHint = False
     ShowHint = True
     TabOrder = 4
     object ebViewFront: TExtBtn
-      Left = 0
+      Left = 3
       Top = 0
-      Width = 15
+      Width = 18
       Height = 20
       Hint = 'Front View'
       Align = alNone
@@ -1538,9 +1532,9 @@ object fraTopBar: TfraTopBar
       OnClick = ebViewClick
     end
     object ebViewLeft: TExtBtn
-      Left = 30
-      Top = 0
-      Width = 15
+      Left = 3
+      Top = 40
+      Width = 18
       Height = 20
       Hint = 'Left View'
       Align = alNone
@@ -1559,9 +1553,9 @@ object fraTopBar: TfraTopBar
       OnClick = ebViewClick
     end
     object ebViewTop: TExtBtn
-      Left = 60
-      Top = 0
-      Width = 15
+      Left = 3
+      Top = 80
+      Width = 18
       Height = 20
       Hint = 'Top View'
       Align = alNone
@@ -1580,9 +1574,9 @@ object fraTopBar: TfraTopBar
       OnClick = ebViewClick
     end
     object ebViewBack: TExtBtn
-      Left = 15
-      Top = 0
-      Width = 15
+      Left = 3
+      Top = 20
+      Width = 18
       Height = 20
       Hint = 'Back View'
       Align = alNone
@@ -1601,9 +1595,9 @@ object fraTopBar: TfraTopBar
       OnClick = ebViewClick
     end
     object ebViewRight: TExtBtn
-      Left = 45
-      Top = 0
-      Width = 15
+      Left = 3
+      Top = 60
+      Width = 18
       Height = 20
       Hint = 'Right View'
       Align = alNone
@@ -1622,9 +1616,9 @@ object fraTopBar: TfraTopBar
       OnClick = ebViewClick
     end
     object ebViewBottom: TExtBtn
-      Left = 75
-      Top = 0
-      Width = 15
+      Left = 3
+      Top = 100
+      Width = 18
       Height = 20
       Hint = 'Bottom View'
       Align = alNone
@@ -1643,8 +1637,8 @@ object fraTopBar: TfraTopBar
       OnClick = ebViewClick
     end
     object ebCameraPlane: TExtBtn
-      Left = 109
-      Top = 0
+      Left = 2
+      Top = 140
       Width = 20
       Height = 20
       Hint = 'Zoom Extents'
@@ -1667,8 +1661,8 @@ object fraTopBar: TfraTopBar
     end
     object ebCameraArcBall: TExtBtn
       Tag = 1
-      Left = 129
-      Top = 0
+      Left = 2
+      Top = 160
       Width = 20
       Height = 20
       Hint = 'Zoom Extents Selected'
@@ -1690,8 +1684,8 @@ object fraTopBar: TfraTopBar
     end
     object ebCameraFly: TExtBtn
       Tag = 2
-      Left = 149
-      Top = 0
+      Left = 2
+      Top = 180
       Width = 20
       Height = 20
       Hint = 'Zoom Extents Selected'
@@ -1712,9 +1706,9 @@ object fraTopBar: TfraTopBar
       OnClick = ebCameraStyleClick
     end
     object ebViewReset: TExtBtn
-      Left = 90
-      Top = 0
-      Width = 15
+      Left = 3
+      Top = 120
+      Width = 18
       Height = 20
       Hint = 'Reset View'
       Align = alNone
@@ -1734,18 +1728,17 @@ object fraTopBar: TfraTopBar
     end
   end
   object Panel1: TPanel
-    Left = 509
-    Top = 0
-    Width = 41
-    Height = 20
-    Align = alLeft
+    Left = 0
+    Top = 368
+    Width = 23
+    Height = 41
     BevelOuter = bvNone
     Color = 10528425
     ParentShowHint = False
     ShowHint = True
     TabOrder = 5
     object ebZoomExtents: TExtBtn
-      Left = 0
+      Left = 2
       Top = 0
       Width = 20
       Height = 20
@@ -1815,8 +1808,8 @@ object fraTopBar: TfraTopBar
       OnClick = ebZoomExtentsClick
     end
     object ebZoomExtentsSelected: TExtBtn
-      Left = 20
-      Top = 0
+      Left = 2
+      Top = 20
       Width = 20
       Height = 20
       Hint = 'Zoom Extents Selected'
@@ -1895,7 +1888,7 @@ object fraTopBar: TfraTopBar
       'ebCameraFly.Down'
       'ebCameraPlane.Down')
     StoredValues = <>
-    Left = 65514
-    Top = 65520
+    Left = 114
+    Top = 56
   end
 end
