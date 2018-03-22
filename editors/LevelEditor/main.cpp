@@ -158,17 +158,23 @@ void __fastcall TfrmMain::sbToolsMinClick(TObject *Sender)
 {
     if (paLeftBar->Tag > 0)
     {
+    	frmRight->Hide     ();
+
+    	paLeftBar->Tag     = 0;
+        paLeftBar->Align   = alRight;
         paLeftBar->Parent  = frmMain;
-        paLeftBar->Tag     = 0;
-        frmRight->Visible  = false;
+
         spLeftBar->Show();
     }else{
-        paLeftBar->Parent = frmRight; //paTopBar;
-        frmRight->Width		= paLeftBar->Width;
-        frmRight->Height	= 1024;
+    	frmRight->Show	  ();
+    	frmRight->Width	  = paLeftBar->Width;
+        frmRight->Height  = 1024;
+
         paLeftBar->Tag    = 1;
-        frmRight->Visible = true;
-        spLeftBar->Hide();
+        paLeftBar->Parent = frmRight; //paTopBar;
+        paLeftBar->Align  = alClient;
+
+        spLeftBar->Hide   ();
     }
 }
 //---------------------------------------------------------------------------
