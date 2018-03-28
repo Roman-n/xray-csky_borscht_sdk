@@ -169,7 +169,11 @@
       x:\intermediate_ed\ecore\dxThunderboltDescRender.obj 
       x:\intermediate_ed\ecore\thunderbolt.obj 
       x:\intermediate_ed\ecore\xr_efflensflare.obj 
-      x:\intermediate_ed\ecore\Rain.obj"/>
+      x:\intermediate_ed\ecore\Rain.obj x:\intermediate_ed\ecore\imgui.obj 
+      x:\intermediate_ed\ecore\imgui_demo.obj 
+      x:\intermediate_ed\ecore\imgui_draw.obj 
+      x:\intermediate_ed\ecore\imgui_impl_dx9.obj 
+      x:\intermediate_ed\ecore\IM_Log.obj x:\intermediate_ed\ecore\IM_Tree.obj"/>
     <RESFILES value="resource.res"/>
     <IDLFILES value=""/>
     <IDLGENFILES value=""/>
@@ -180,7 +184,7 @@
     <LIBRARIES value="elpackB6.lib editor.lib"/>
     <SPARELIBS value="rtl.lib vcl.lib bcbsmp.lib vclx.lib editor.lib elpackB6.lib editorB.lib"/>
     <PACKAGES value="rtl.bpi vcl.bpi vclx.bpi bcbsmp.bpi editorB.bpi"/>
-    <PATHCPP value=".;Engine;..\..\xrEngine;..\..\Layers\xrRender;..\..\xrCDB;..\..\Layers\xrRenderPC_R1;Engine\blenders;Editor;WildMagic;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;..\..\common\NvMender2003"/>
+    <PATHCPP value=".;Engine;..\..\xrEngine;..\..\Layers\xrRender;..\..\xrCDB;..\..\Layers\xrRenderPC_R1;Engine\blenders;Editor;WildMagic;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;..\..\common\NvMender2003;ImGui"/>
     <PATHPAS value=".;"/>
     <PATHRC value=".;"/>
     <PATHASM value=".;"/>
@@ -190,14 +194,14 @@
     <USERDEFINES value="_EDITOR;_ECOREB;XRCDB_EXPORTS;_DEBUG"/>
     <SYSDEFINES value="NO_STRICT;_RTLDLL;USEPACKAGES"/>
     <MAINSOURCE value="xrECoreB.bpf"/>
-    <INCLUDEPATH value="..\..\common\NvMender2003;..\..;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\xrCPU_Pipe;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;Engine\Blenders;$(BCB)\include;$(BCB)\include\vcl;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Include\Mfc;..\xrEProps;$(CORE_DIR);$(ETOOLS_DIR);X:\SDK\include;X:\SDK\include\freemagic"/>
-    <LIBPATH value="..\..\common\NvMender2003;..\..\Layers\xrRender\blenders;..\..\Layers\xrRenderDX9;..\..\xrCPU_Pipe;WildMagic;Editor;Engine\blenders;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\Layers\xrRender;..\..\xrEngine;Engine;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Lib\Psdk;x:\SDK\libraries;x:\stalker_addon\libraries;$(DXSDK_DIR)\Lib\x86"/>
+    <INCLUDEPATH value="ImGui;..\..\common\NvMender2003;..\..;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\xrCPU_Pipe;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;Engine\Blenders;$(BCB)\include;$(BCB)\include\vcl;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Include\Mfc;..\xrEProps;$(CORE_DIR);$(ETOOLS_DIR);X:\SDK\include;X:\SDK\include\freemagic"/>
+    <LIBPATH value="ImGui;..\..\common\NvMender2003;..\..\Layers\xrRender\blenders;..\..\Layers\xrRenderDX9;..\..\xrCPU_Pipe;WildMagic;Editor;Engine\blenders;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\Layers\xrRender;..\..\xrEngine;Engine;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Lib\Psdk;x:\SDK\libraries;x:\stalker_addon\libraries;$(DXSDK_DIR)\Lib\x86"/>
     <WARNINGS value="-w8092 -w8090 -w8089 -w8087 -wprc -wucp -wstv -wstu -wsig -wpin -w-par 
       -wnod -wnak -w-8027 -w-8026 -wdef -wcln -wbbf -wasm -wamp -wamb"/>
     <OTHERFILES value=""/>
   </MACROS>
   <OPTIONS>
-    <IDLCFLAGS value="-I..\..\common\NvMender2003 -I..\.. -I..\..\Layers\xrRenderDX9 
+    <IDLCFLAGS value="-IImGui -I..\..\common\NvMender2003 -I..\.. -I..\..\Layers\xrRenderDX9 
       -I..\..\Layers\xrRender\blenders -I..\..\Layers\xrRender 
       -I..\..\Layers\xrRenderPC_R1 -I..\..\xrCDB -I..\..\xrCPU_Pipe 
       -I..\..\xrEngine -I$(DXSDK_DIR)\Include -IWildMagic -IEditor -IEngine 
@@ -418,9 +422,30 @@
       <FILE FILENAME="..\..\xrEngine\thunderbolt.cpp" FORMNAME="" UNITNAME="thunderbolt.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\xrEngine\xr_efflensflare.cpp" FORMNAME="" UNITNAME="xr_efflensflare.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\xrEngine\Rain.cpp" FORMNAME="" UNITNAME="Rain.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="ImGui\imgui.cpp" FORMNAME="" UNITNAME="imgui.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="ImGui\imgui_demo.cpp" FORMNAME="" UNITNAME="imgui_demo.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="ImGui\imgui_draw.cpp" FORMNAME="" UNITNAME="imgui_draw.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="ImGui\imgui_impl_dx9.cpp" FORMNAME="" UNITNAME="imgui_impl_dx9.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="ImGui\IM_Log.cpp" FORMNAME="" UNITNAME="IM_Log.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="ImGui\IM_Tree.cpp" FORMNAME="" UNITNAME="IM_Tree.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
   </FILELIST>
   <BUILDTOOLS>
   </BUILDTOOLS>
+
+  <FILES>
+    <FILE type="override" value="ImGui\imgui_demo.cpp" translator="Auto">
+      <CFLAG1 value="-w- -VF-"/>
+    </FILE>
+    <FILE type="override" value="ImGui\imgui_impl_dx9.cpp" translator="Auto">
+      <CFLAG1 value="-w- -VF-"/>
+    </FILE>
+    <FILE type="override" value="ImGui\imgui_draw.cpp" translator="Auto">
+      <CFLAG1 value="-w- -VF-"/>
+    </FILE>
+    <FILE type="override" value="ImGui\imgui.cpp" translator="Auto">
+      <CFLAG1 value="-w- -VF-"/>
+    </FILE>
+  </FILES>
 
   <IDEOPTIONS>
 [Version Info]
@@ -451,7 +476,6 @@ ProductVersion=1.0.0.0
 Comments=
 
 [Excluded Packages]
-f:\program files\borland\cbuilder6\Bin\bcbie60.bpl=Borland C++Builder Internet Explorer 5 Components Package
 f:\program files\borland\cbuilder6\Bin\bcb2kaxserver60.bpl=Borland C++Builder COM Server Components Sample Package
 
 [HistoryLists\hlIncludePath]
@@ -508,22 +532,25 @@ Item2=_EDITOR;_ECOREB;_DEBUG;XRCDB_EXPORTS
 Item3=_EDITOR;_ECOREB;_DEBUG
 
 [HistoryLists\hlIntOutputDir]
-Count=4
+Count=5
 Item0=x:\intermediate_ed\ecore
-Item1=Intermediate
-Item2=XRLC_Intermediate
-Item3=xrLC_Options
+Item1=x:\intermediate_ed-imgui\ecore
+Item2=Intermediate
+Item3=XRLC_Intermediate
+Item4=xrLC_Options
 
 [HistoryLists\hlFinalOutputDir]
-Count=2
+Count=3
 Item0=x:\stalker_addon\binaries\
-Item1=x:\binaries\
+Item1=x:\stalker_addon-imgui\binaries\
+Item2=x:\binaries\
 
 [HistoryLists\hIBPIOutputDir]
-Count=3
+Count=4
 Item0=X:\stalker_addon\libraries
-Item1=X:\libraries
-Item2=X:\libraries\
+Item1=X:\stalker_addon-imgui\libraries
+Item2=X:\libraries
+Item3=X:\libraries\
 
 [Debugging]
 DebugSourceDirs=$(BCB)\source\vcl

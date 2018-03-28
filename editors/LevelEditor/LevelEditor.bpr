@@ -116,7 +116,9 @@
       x:\intermediate_ed\le\gametype_chooser.obj 
       x:\intermediate_ed\le\GroupObjectUtils.obj 
       x:\intermediate_ed\le\AppendObjectInfoForm.obj 
-      x:\intermediate_ed\le\LEClipEditor.obj x:\intermediate_ed\le\FormCoord.obj"/>
+      x:\intermediate_ed\le\LEClipEditor.obj x:\intermediate_ed\le\FormCoord.obj 
+      x:\intermediate_ed\le\IM_LeftBar.obj 
+      x:\intermediate_ed\le\IM_FrameObject.obj"/>
     <RESFILES value="LevelEditor.res resource.res"/>
     <IDLFILES value=""/>
     <IDLGENFILES value=""/>
@@ -324,6 +326,8 @@
       <FILE FILENAME="LEClipEditor.dfm" FORMNAME="" UNITNAME="LEClipEditor.dfm" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="LEClipEditor.h" FORMNAME="" UNITNAME="LEClipEditor.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="FormCoord.cpp" FORMNAME="frmCoord" UNITNAME="FormCoord" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="IM_LeftBar.cpp" FORMNAME="" UNITNAME="IM_LeftBar.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="IM_FrameObject.cpp" FORMNAME="" UNITNAME="IM_FrameObject.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
   </FILELIST>
   <BUILDTOOLS>
   </BUILDTOOLS>

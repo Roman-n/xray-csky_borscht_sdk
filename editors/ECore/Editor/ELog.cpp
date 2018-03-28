@@ -9,6 +9,7 @@
 #ifdef _EDITOR
 	#include "LogForm.h"
 	#include "ui_main.h"
+    #include "ImGui\IM_Log.h"
 	void __stdcall ELogCallback(LPCSTR txt)
 	{
     	if (0==txt[0]) return;
@@ -18,6 +19,8 @@
         if (('!'==txt[0])||('#'==txt[0])) txt++;
 		if (bDlg)		TfrmLog::AddDlgMessage	(mt,txt);
         else			TfrmLog::AddMessage		(mt,txt);
+
+        imLog.AddMessage(mt == mtError ? IM_Log::mtError : IM_Log::mtInfo, txt);
 	}
 #endif
 #ifdef _LW_EXPORT
@@ -175,5 +178,7 @@ void CLog::Msg(TMsgDlgType mt, LPCSTR _Format, ...)
 	::LogExecCB = FALSE;
     ::Msg		(buf);
 	::LogExecCB	= TRUE;
+
+    imLog.AddMessage(mt == mtError ? IM_Log::mtError : mt == mtConfirmation ? IM_Log::mtConfirmation : IM_Log::mtInfo, buf);
 }
 //----------------------------------------------------

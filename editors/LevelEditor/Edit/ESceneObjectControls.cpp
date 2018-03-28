@@ -11,6 +11,8 @@
 #include "leftbar.h"
 #include "ui_levelmain.h"
 
+#include "IM_LeftBar.h"
+
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
@@ -30,7 +32,8 @@ bool __fastcall TUI_ControlObjectAdd::Start(TShiftState Shift)
         if (ot->IsAppendRandomActive()&&ot->m_AppendRandomObjects.size()){
         	N = ot->m_AppendRandomObjects[Random.randI(ot->m_AppendRandomObjects.size())].c_str();  
         }else{
-            N = ((TfraObject*)parent_tool->pFrame)->Current();
+            //N = ((TfraObject*)parent_tool->pFrame)->Current();
+            N = imLeftBar.fraObject.objects_tree.GetSelected().c_str();
             if(!N){
                 ELog.DlgMsg(mtInformation,"Nothing selected.");
                 return false;

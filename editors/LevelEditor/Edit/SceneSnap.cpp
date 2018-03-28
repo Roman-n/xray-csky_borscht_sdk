@@ -6,6 +6,7 @@
 #include "ui_leveltools.h"
 #include "SceneObject.h"
 #include "../ECore/Editor/UI_Main.h"
+#include "../IM_LeftBar.h"
 //------------------------------------------------------------------------------
  
 ObjectList* EScene::GetSnapList(bool bIgnoreUse)
@@ -14,7 +15,9 @@ ObjectList* EScene::GetSnapList(bool bIgnoreUse)
     ESceneToolBase* mt 		= m_SceneTools[cls];
     if (0==mt)				return 0;
     ObjectList* snap_list	= mt->GetSnapList()?mt->GetSnapList():&m_ESO_SnapObjects;
-    return bIgnoreUse?snap_list:(fraLeftBar->ebUseSnapList->Down?snap_list:NULL);
+    bool use_snap_list = imLeftBar.m_enable_snap_list;
+    //bool use_snap_list = fraLeftBar->ebUseSnapList->Down;
+    return bIgnoreUse?snap_list:(use_snap_list?snap_list:NULL);
 }
 //--------------------------------------------------------------------------------------------------
 

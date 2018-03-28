@@ -90,7 +90,7 @@ AutoIncBuild=1
 MajorVer=1
 MinorVer=0
 Release=2
-Build=164
+Build=165
 Debug=1
 PreRelease=0
 Special=0
@@ -102,7 +102,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=
 FileDescription=
-FileVersion=1.0.2.164
+FileVersion=1.0.2.165
 InternalName=
 LegalCopyright=
 LegalTrademarks=
@@ -112,7 +112,6 @@ ProductVersion=1.0.0.0
 Comments=
 
 [Excluded Packages]
-f:\program files\borland\cbuilder6\Bin\bcbie60.bpl=Borland C++Builder Internet Explorer 5 Components Package
 f:\program files\borland\cbuilder6\Bin\bcb2kaxserver60.bpl=Borland C++Builder COM Server Components Sample Package
 
 [HistoryLists\hlIncludePath]

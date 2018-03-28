@@ -7,6 +7,8 @@
 #include "scene.h"
 #include "UI_LevelMain.h"
 #include "UI_LevelTools.h"
+
+#include "IM_LeftBar.h"
 //---------------------------------------------------------------------------
 USEFORM("BottomBar.cpp", fraBottomBar); /* TFrame: File Type */
 USEFORM("main.cpp", frmMain);
@@ -70,6 +72,8 @@ WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int)
 		frmMain->SetHInst		(hInst);
 
 		xr_delete(frmSplash);
+
+        UI->AddIMWindow(&imLeftBar);
 
 		Application->Run		();
 
