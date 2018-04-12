@@ -20,6 +20,8 @@ __published:	// IDE-managed Components
 	TExtBtn *ExtBtn2;
 	TExtBtn *ebGroup;
 	TExtBtn *ebUngroup;
+    void __fastcall PaneMinClick(TObject *Sender);
+    void __fastcall ExpandClick(TObject *Sender);
 	void __fastcall ebGroupClick(TObject *Sender);
 	void __fastcall ebUngroupClick(TObject *Sender);
 private:	// User declarations
