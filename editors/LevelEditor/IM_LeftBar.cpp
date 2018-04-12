@@ -330,7 +330,10 @@ void IM_LeftBar::Render()
 
     switch(LTools->CurrentClassID())
     {
-    	case OBJCLASS_SCENEOBJECT: fraObject.Render(); break;
+    	case OBJCLASS_SCENEOBJECT: 	fraObject.Render(); break;
+        case OBJCLASS_LIGHT:        fraLight.Render(); break;
+        case OBJCLASS_FOG_VOL:		fraFogVol.Render(); break;
+        case OBJCLASS_DO:			fraDetail.Render(); break;
     }
 
     ImGui::End();

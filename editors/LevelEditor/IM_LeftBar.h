@@ -3,11 +3,17 @@
 
 #include "..\ECore\ImGui\IM_Window.h"
 #include "IM_FrameObject.h"
+#include "IM_FrameLight.h"
+#include "IM_FrameFogVol.h"
+#include "IM_FrameDetail.h"
 
 class IM_LeftBar : public IM_Window
 {
 	public:
 	IM_FrameObject fraObject;
+    IM_FrameLight fraLight;
+    IM_FrameFogVol fraFogVol;
+    IM_FrameDetail fraDetail;
 
     bool m_enable_snap_list;
     bool m_select_snap_objs_mode;

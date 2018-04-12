@@ -32,6 +32,7 @@ object frmMain: TfrmMain
     Align = alRight
     Color = clMedGray
     ParentColor = False
+    Visible = False
   end
   object paLeftBar: TPanel
     Left = 524
@@ -42,6 +43,7 @@ object frmMain: TfrmMain
     BevelInner = bvLowered
     BevelOuter = bvNone
     TabOrder = 0
+    Visible = False
     object paTools: TPanel
       Left = 1
       Top = 1

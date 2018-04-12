@@ -12,6 +12,8 @@
 #include "MxMenus.hpp"
 #include <Menus.hpp>
 
+#include "../ImGui/IM_Log.h"
+
 class ECORE_API TfrmLog : public TForm
 {
 __published:	// IDE-managed Components
@@ -55,8 +57,11 @@ public:		// User declarations
     static void __fastcall HideLog		();
     static void __fastcall CreateLog	();
     static void __fastcall DestroyLog	();
-    static void __fastcall ChangeVisible(){if (form->Visible) HideLog(); else ShowLog();}
-    static bool __fastcall IsVisible	(){return form->Visible;}
+//    static void __fastcall ChangeVisible(){if (form->Visible) HideLog(); else ShowLog();}
+//    static bool __fastcall IsVisible	(){return form->Visible;}
+	static void __fastcall ChangeVisible() { if(imLog.IsOpen()) imLog.Close(); else imLog.Open(); }
+    static bool __fastcall IsVisible()	   { return imLog.IsOpen(); }
+
 };
 //---------------------------------------------------------------------------
 #endif

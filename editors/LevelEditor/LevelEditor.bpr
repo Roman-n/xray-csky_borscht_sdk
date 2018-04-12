@@ -118,7 +118,10 @@
       x:\intermediate_ed\le\AppendObjectInfoForm.obj 
       x:\intermediate_ed\le\LEClipEditor.obj x:\intermediate_ed\le\FormCoord.obj 
       x:\intermediate_ed\le\IM_LeftBar.obj 
-      x:\intermediate_ed\le\IM_FrameObject.obj"/>
+      x:\intermediate_ed\le\IM_FrameObject.obj 
+      x:\intermediate_ed\le\IM_FrameLight.obj 
+      x:\intermediate_ed\le\IM_FrameFogVol.obj 
+      x:\intermediate_ed\le\IM_FrameDetail.obj"/>
     <RESFILES value="LevelEditor.res resource.res"/>
     <IDLFILES value=""/>
     <IDLGENFILES value=""/>
@@ -328,6 +331,9 @@
       <FILE FILENAME="FormCoord.cpp" FORMNAME="frmCoord" UNITNAME="FormCoord" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="IM_LeftBar.cpp" FORMNAME="" UNITNAME="IM_LeftBar.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="IM_FrameObject.cpp" FORMNAME="" UNITNAME="IM_FrameObject.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="IM_FrameLight.cpp" FORMNAME="" UNITNAME="IM_FrameLight" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="IM_FrameFogVol.cpp" FORMNAME="" UNITNAME="IM_FrameFogVol" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="IM_FrameDetail.cpp" FORMNAME="" UNITNAME="IM_FrameDetail" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
   </FILELIST>
   <BUILDTOOLS>
   </BUILDTOOLS>

@@ -30,13 +30,13 @@ class IM_Log : public IM_Window
         }
     };
 
-    bool open;
+    bool show_log;
     bool has_new_messages;
     xr_list<Message> msgs;
 
 	public:
     IM_Log()
-    	: open(true),
+    	: show_log(true),
           has_new_messages(false)
     {
     }
@@ -45,9 +45,9 @@ class IM_Log : public IM_Window
     	Clear();
     }
 
-    void Open() { open = true; }
-    void Close() { open = false; }
-    bool IsOpen() const { return open; }
+    void Open() { show_log = true; }
+    void Close() { show_log = false; }
+    bool IsOpen() const { return show_log; }
 
     void Clear();
     void ClearSelected();
@@ -57,6 +57,6 @@ class IM_Log : public IM_Window
     virtual void Render();
 };
 
-extern IM_Log imLog;
+extern ECORE_API IM_Log imLog;
 
 #endif
