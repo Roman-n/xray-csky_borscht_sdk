@@ -1,6 +1,6 @@
 object fraPS: TfraPS
-  Left = 344
-  Top = 335
+  Left = 1530
+  Top = 749
   VertScrollBar.Visible = False
   Align = alClient
   BorderStyle = bsNone

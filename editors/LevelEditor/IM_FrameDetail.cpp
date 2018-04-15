@@ -17,28 +17,25 @@ void IM_FrameDetail::Render()
         VERIFY(parent_tool);
     }
 
-    if(ImGui::CollapsingHeader("DO Commands", ImGuiTreeNodeFlags_Framed))
+    if(ImGui::CollapsingHeader("DO Commands",
+    ImGuiTreeNodeFlags_Framed|ImGuiTreeNodeFlags_DefaultOpen))
     {
-    	ImGui::TextUnformatted("First Initialize");
-        if(ImGui::IsItemClicked())
+    	if(ImGui::MenuItem("First Initialize"))
         {
         	if(parent_tool->Initialize())
             	Scene->UndoSave();
         }
-		ImGui::TextUnformatted("Reinitialize All");
-        if(ImGui::IsItemClicked())
+		if(ImGui::MenuItem("Reinitialize All"))
         {
         	if(parent_tool->Reinitialize())
             	Scene->UndoSave();
         }
-        ImGui::TextUnformatted("Reinitialize Objects Only");
-        if(ImGui::IsItemClicked())
+        if(ImGui::MenuItem("Reinitialize Objects Only"))
         {
         	if(parent_tool->UpdateObjects(true, false))
             	Scene->UndoSave();
         }
-        ImGui::TextUnformatted("Reinitialize Selected Slot Objects");
-        if(ImGui::IsItemClicked())
+        if(ImGui::MenuItem("Reinitialize Selected Slot Objects"))
         {
         	if(parent_tool->UpdateObjects(false, true))
             	Scene->UndoSave();
@@ -46,8 +43,7 @@ void IM_FrameDetail::Render()
 
         ImGui::Separator();
 
-        ImGui::TextUnformatted("Update Renderer");
-        if(ImGui::IsItemClicked())
+        if(ImGui::MenuItem("Update Renderer"))
         {
         	parent_tool->InvalidateCache();
             Scene->UndoSave();
@@ -55,8 +51,7 @@ void IM_FrameDetail::Render()
 
         ImGui::Separator();
 
-        ImGui::TextUnformatted("Clear Slots");
-        if(ImGui::IsItemClicked())
+        if(ImGui::MenuItem("Clear Slots"))
         {
         	if(ELog.DlgMsg(mtConfirmation, TMsgDlgButtons() << mbYes << mbNo, "Are you sure to reset slots?") == mrYes)
             {
@@ -64,8 +59,7 @@ void IM_FrameDetail::Render()
 				Scene->UndoSave();
     		}
     	}
-		ImGui::TextUnformatted("Clear Details");
-        if(ImGui::IsItemClicked())
+		if(ImGui::MenuItem("Clear Details"))
         {
         	if(ELog.DlgMsg(mtConfirmation, TMsgDlgButtons() << mbYes << mbNo, "Are you sure to clear details?") == mrYes)
             {
@@ -77,8 +71,7 @@ void IM_FrameDetail::Render()
 
         ImGui::Separator();
 
-        ImGui::TextUnformatted("Object List");
-        if(ImGui::IsItemClicked())
+        if(ImGui::MenuItem("Object List"))
         {
         	if(TfrmDOShuffle::Run())
             	Scene->UndoSave();

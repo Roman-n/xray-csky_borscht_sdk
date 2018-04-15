@@ -173,7 +173,8 @@
       x:\intermediate_ed\ecore\imgui_demo.obj 
       x:\intermediate_ed\ecore\imgui_draw.obj 
       x:\intermediate_ed\ecore\imgui_impl_dx9.obj 
-      x:\intermediate_ed\ecore\IM_Log.obj x:\intermediate_ed\ecore\IM_Tree.obj"/>
+      x:\intermediate_ed\ecore\IM_Log.obj x:\intermediate_ed\ecore\IM_Tree.obj 
+      x:\intermediate_ed\ecore\utf8.obj"/>
     <RESFILES value="resource.res"/>
     <IDLFILES value=""/>
     <IDLGENFILES value=""/>
@@ -194,14 +195,15 @@
     <USERDEFINES value="_EDITOR;_ECOREB;XRCDB_EXPORTS;_DEBUG"/>
     <SYSDEFINES value="NO_STRICT;_RTLDLL;USEPACKAGES"/>
     <MAINSOURCE value="xrECoreB.bpf"/>
-    <INCLUDEPATH value="ImGui;..\..\common\NvMender2003;..\..;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\xrCPU_Pipe;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;Engine\Blenders;$(BCB)\include;$(BCB)\include\vcl;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Include\Mfc;..\xrEProps;$(CORE_DIR);$(ETOOLS_DIR);X:\SDK\include;X:\SDK\include\freemagic"/>
-    <LIBPATH value="ImGui;..\..\common\NvMender2003;..\..\Layers\xrRender\blenders;..\..\Layers\xrRenderDX9;..\..\xrCPU_Pipe;WildMagic;Editor;Engine\blenders;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\Layers\xrRender;..\..\xrEngine;Engine;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Lib\Psdk;x:\SDK\libraries;x:\stalker_addon\libraries;$(DXSDK_DIR)\Lib\x86"/>
+    <INCLUDEPATH value="&quot;F:\Program Files\Borland\CBuilder6\Projects&quot;;ImGui;..\..\common\NvMender2003;..\..;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\xrCPU_Pipe;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;Engine\Blenders;$(BCB)\include;$(BCB)\include\vcl;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Include\Mfc;..\xrEProps;$(CORE_DIR);$(ETOOLS_DIR);X:\SDK\include;X:\SDK\include\freemagic"/>
+    <LIBPATH value="&quot;F:\Program Files\Borland\CBuilder6\Projects&quot;;ImGui;..\..\common\NvMender2003;..\..\Layers\xrRender\blenders;..\..\Layers\xrRenderDX9;..\..\xrCPU_Pipe;WildMagic;Editor;Engine\blenders;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\Layers\xrRender;..\..\xrEngine;Engine;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Lib\Psdk;x:\SDK\libraries;x:\stalker_addon\libraries;$(DXSDK_DIR)\Lib\x86"/>
     <WARNINGS value="-w8092 -w8090 -w8089 -w8087 -wprc -wucp -wstv -wstu -wsig -wpin -w-par 
       -wnod -wnak -w-8027 -w-8026 -wdef -wcln -wbbf -wasm -wamp -wamb"/>
     <OTHERFILES value=""/>
   </MACROS>
   <OPTIONS>
-    <IDLCFLAGS value="-IImGui -I..\..\common\NvMender2003 -I..\.. -I..\..\Layers\xrRenderDX9 
+    <IDLCFLAGS value="-I&quot;F:\Program Files\Borland\CBuilder6\Projects&quot; -IImGui 
+      -I..\..\common\NvMender2003 -I..\.. -I..\..\Layers\xrRenderDX9 
       -I..\..\Layers\xrRender\blenders -I..\..\Layers\xrRender 
       -I..\..\Layers\xrRenderPC_R1 -I..\..\xrCDB -I..\..\xrCPU_Pipe 
       -I..\..\xrEngine -I$(DXSDK_DIR)\Include -IWildMagic -IEditor -IEngine 
@@ -428,22 +430,23 @@
       <FILE FILENAME="ImGui\imgui_impl_dx9.cpp" FORMNAME="" UNITNAME="imgui_impl_dx9.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="ImGui\IM_Log.cpp" FORMNAME="" UNITNAME="IM_Log.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="ImGui\IM_Tree.cpp" FORMNAME="" UNITNAME="IM_Tree.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="ImGui\utf8.cpp" FORMNAME="" UNITNAME="utf8" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
   </FILELIST>
   <BUILDTOOLS>
   </BUILDTOOLS>
 
   <FILES>
     <FILE type="override" value="ImGui\imgui_demo.cpp" translator="Auto">
-      <CFLAG1 value="-w- -VF-"/>
-    </FILE>
-    <FILE type="override" value="ImGui\imgui_impl_dx9.cpp" translator="Auto">
-      <CFLAG1 value="-w- -VF-"/>
+      <CFLAG1 value=" -w- -VF-"/>
     </FILE>
     <FILE type="override" value="ImGui\imgui_draw.cpp" translator="Auto">
-      <CFLAG1 value="-w- -VF-"/>
+      <CFLAG1 value=" -w- -VF-"/>
+    </FILE>
+    <FILE type="override" value="ImGui\imgui_impl_dx9.cpp" translator="Auto">
+      <CFLAG1 value=" -w- -VF-"/>
     </FILE>
     <FILE type="override" value="ImGui\imgui.cpp" translator="Auto">
-      <CFLAG1 value="-w- -VF-"/>
+      <CFLAG1 value=" -w- -VF-"/>
     </FILE>
   </FILES>
 

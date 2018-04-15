@@ -9,6 +9,8 @@
 #include "FramePS.h"
 #include "../ECore/Editor/ui_main.h"
 
+#include "IM_LeftBar.h"
+
 //----------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
@@ -18,7 +20,8 @@ __fastcall TUI_ControlPSAdd::TUI_ControlPSAdd(int st, int act, ESceneToolBase* p
 bool __fastcall TUI_ControlPSAdd::AfterAppendCallback(TShiftState Shift, CCustomObject* obj)
 {
 	EParticlesObject* pg= dynamic_cast<EParticlesObject*>(obj); R_ASSERT(pg);
-    LPCSTR ref_name		= ((TfraPS*)parent_tool->pFrame)->Current();
+//    LPCSTR ref_name		= ((TfraPS*)parent_tool->pFrame)->Current();
+	LPCSTR ref_name			= imLeftBar.fraPS.Current();
     if (!ref_name){
     	ELog.DlgMsg(mtInformation,"Nothing selected.");
     	return false;

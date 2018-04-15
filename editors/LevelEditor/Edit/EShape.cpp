@@ -463,15 +463,17 @@ void CEditShape::Render(int priority, bool strictB2F)
         }
     }
 }
-#include "FrameShape.h"
+//#include "FrameShape.h"
+#include "IM_LeftBar.h"
 
 void CEditShape::OnFrame()
 {
 	inherited::OnFrame();
     if(m_shape_type==eShapeLevelBound)
     {
-    	TfraShape* F 		= (TfraShape*)ParentTool->pFrame;
-    	BOOL bVis = F->ebEditLevelBoundMode->Down;
+//    	TfraShape* F 		= (TfraShape*)ParentTool->pFrame;
+//    	BOOL bVis = F->ebEditLevelBoundMode->Down;
+		BOOL bVis = imLeftBar.fraShape.m_edit_level_bound;
     	m_RT_Flags.set(flRT_Visible, bVis);
     }
 }

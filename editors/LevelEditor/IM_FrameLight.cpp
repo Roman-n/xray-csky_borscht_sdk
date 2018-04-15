@@ -26,20 +26,21 @@ void IM_FrameLight::UseInD3D(bool bAll, bool bFlag)
 
 void IM_FrameLight::Render()
 {
-	if(ImGui::CollapsingHeader("Affect in D3D", ImGuiTreeNodeFlags_Framed))
+	if(ImGui::CollapsingHeader("Affect in D3D",
+    ImGuiTreeNodeFlags_Framed|ImGuiTreeNodeFlags_DefaultOpen))
     {
     	ImGui::Columns(2, NULL, false);
 
-        if(ImGui::Button("Enable Sel"))
+        if(ImGui::MenuItem("Enable Sel"))
         	UseInD3D(false, true);
-        if(ImGui::Button("Disable Sel"))
+        if(ImGui::MenuItem("Disable Sel"))
         	UseInD3D(false, false);
 
         ImGui::NextColumn();
 
-        if(ImGui::Button("Enable All"))
+        if(ImGui::MenuItem("Enable All"))
         	UseInD3D(true, true);
-        if(ImGui::Button("Disable All"))
+        if(ImGui::MenuItem("Disable All"))
         	UseInD3D(true, false);
 
         ImGui::Columns(1);

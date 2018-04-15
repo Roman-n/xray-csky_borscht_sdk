@@ -17,16 +17,17 @@ void IM_FrameFogVol::Render()
         VERIFY(parent_tool);
     }
 
-    if(ImGui::CollapsingHeader("Commands", ImGuiTreeNodeFlags_Framed))
+    if(ImGui::CollapsingHeader("Commands",
+    ImGuiTreeNodeFlags_Framed|ImGuiTreeNodeFlags_DefaultOpen))
     {
     	ImGui::Columns(2, NULL, false);
 
-    	if(ImGui::Button("Group Selected"))
+    	if(ImGui::MenuItem("Group Selected"))
     		parent_tool->GroupSelected();
 
     	ImGui::NextColumn();
 
-    	if(ImGui::Button("UnGroup Selected"))
+    	if(ImGui::MenuItem("UnGroup Selected"))
     		parent_tool->UnGroupCurrent();
 
     	ImGui::Columns(1);

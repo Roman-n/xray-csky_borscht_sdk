@@ -121,7 +121,13 @@
       x:\intermediate_ed\le\IM_FrameObject.obj 
       x:\intermediate_ed\le\IM_FrameLight.obj 
       x:\intermediate_ed\le\IM_FrameFogVol.obj 
-      x:\intermediate_ed\le\IM_FrameDetail.obj"/>
+      x:\intermediate_ed\le\IM_FrameDetail.obj 
+      x:\intermediate_ed\le\IM_FrameSector.obj 
+      x:\intermediate_ed\le\IM_FramePortal.obj 
+      x:\intermediate_ed\le\IM_FrameShape.obj 
+      x:\intermediate_ed\le\IM_FramePS.obj 
+      x:\intermediate_ed\le\IM_FrameWayPoint.obj 
+      x:\intermediate_ed\le\IM_FrameSpawn.obj"/>
     <RESFILES value="LevelEditor.res resource.res"/>
     <IDLFILES value=""/>
     <IDLGENFILES value=""/>
@@ -155,12 +161,12 @@
     <OTHERFILES value=""/>
   </MACROS>
   <OPTIONS>
-    <IDLCFLAGS value="-I..\..\xrServerEntities -I..\..\Layers\xrRender -I$(DXSDK_DIR)\Include 
+    <IDLCFLAGS value="-src_suffix cpp -D_EDITOR -D_LEVEL_EDITOR -D_DEBUG 
+      -I..\..\xrServerEntities -I..\..\Layers\xrRender -I$(DXSDK_DIR)\Include 
       -IEdit -IEngine -I$(BCB)\Projects -I$(BCB)\include\vcl -I$(BCB)\include 
       -I$(COMPONENTS)\alexmx -I$(COMPONENTS)\ElPack\Code 
       -I$(COMPONENTS)\ElPack\Code\Source -I$(CORE_DIR) -I../../xrEngine 
-      -I$(ETOOLS_DIR) -IX:\SDK\include\freemagic -src_suffix cpp -D_EDITOR 
-      -D_LEVEL_EDITOR -D_DEBUG"/>
+      -I$(ETOOLS_DIR) -IX:\SDK\include\freemagic"/>
     <CFLAG1 value="-Od -H=x:\intermediate_ed\le\pch.csm -Hc -Q -Vms -Vx -Ve -xf -xp -VF -ff 
       -X- -ps -a4 -6 -b- -k- -y -v -vi- -He -c -tW -tWM"/>
     <PFLAGS value="-N2x:\intermediate_ed\le -N0x:\intermediate_ed\le -$Y- -$R -$Q -$L- -$D- 
@@ -334,6 +340,12 @@
       <FILE FILENAME="IM_FrameLight.cpp" FORMNAME="" UNITNAME="IM_FrameLight" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="IM_FrameFogVol.cpp" FORMNAME="" UNITNAME="IM_FrameFogVol" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="IM_FrameDetail.cpp" FORMNAME="" UNITNAME="IM_FrameDetail" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="IM_FrameSector.cpp" FORMNAME="" UNITNAME="IM_FrameSector" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="IM_FramePortal.cpp" FORMNAME="" UNITNAME="IM_FramePortal" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="IM_FrameShape.cpp" FORMNAME="" UNITNAME="IM_FrameShape" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="IM_FramePS.cpp" FORMNAME="" UNITNAME="IM_FramePS" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="IM_FrameWayPoint.cpp" FORMNAME="" UNITNAME="IM_FrameWayPoint" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="IM_FrameSpawn.cpp" FORMNAME="" UNITNAME="IM_FrameSpawn" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
   </FILELIST>
   <BUILDTOOLS>
   </BUILDTOOLS>
@@ -429,7 +441,7 @@ Item1=x:\libraries
 DebugSourceDirs=X:\stalker_addon\sources\engine\editors\ECore\Editor\
 
 [Parameters]
-RunParams=-wf K:\BORSCHT -hw_skin
+RunParams=-wf K:\BORSCHT -hw_skin -hq
 Launcher=
 UseLauncher=0
 DebugCWD=

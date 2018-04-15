@@ -22,7 +22,8 @@ void IM_LeftBar::Render()
 
     ImGui::TextUnformatted(title);
 
-    if(ImGui::CollapsingHeader("Scene", ImGuiTreeNodeFlags_Framed))
+    if(ImGui::CollapsingHeader("Scene",
+    ImGuiTreeNodeFlags_Framed|ImGuiTreeNodeFlags_DefaultOpen))
     {
 		if(ImGui::BeginMenu("File"))
         {
@@ -177,7 +178,8 @@ void IM_LeftBar::Render()
         	ExecCommand(COMMAND_EDITOR_PREF);
     }
 
-    if(ImGui::CollapsingHeader("Tools", ImGuiTreeNodeFlags_Framed))
+    if(ImGui::CollapsingHeader("Tools",
+    ImGuiTreeNodeFlags_Framed|ImGuiTreeNodeFlags_DefaultOpen))
     {
     	ImGui::Columns(2);
 
@@ -233,7 +235,8 @@ void IM_LeftBar::Render()
         ImGui::Columns(1);
     }
 
-    if(ImGui::CollapsingHeader("Edit mode", ImGuiTreeNodeFlags_Framed))
+    if(ImGui::CollapsingHeader("Edit mode",
+    ImGuiTreeNodeFlags_Framed|ImGuiTreeNodeFlags_DefaultOpen))
     {
     	ImGui::Columns(2);
 
@@ -259,7 +262,8 @@ void IM_LeftBar::Render()
         ImGui::Columns(1);
     }
 
-    if(ImGui::CollapsingHeader("Snap list", ImGuiTreeNodeFlags_Framed))
+    if(ImGui::CollapsingHeader("Snap list",
+    ImGuiTreeNodeFlags_Framed|ImGuiTreeNodeFlags_DefaultOpen))
     {
     	if(ImGui::BeginMenu("Commands"))
         {
@@ -282,34 +286,20 @@ void IM_LeftBar::Render()
         	ImGui::EndMenu();
         }
 
-        if(m_enable_snap_list)
-        	ImGui::TextColored(ImVec4(1.0, 1.0, 0.0, 1.0), "Enable/Show snap list");
-        else
-        	ImGui::TextUnformatted("Enable/Show snap list");
-
-        if(ImGui::IsItemClicked())
-        	m_enable_snap_list = !m_enable_snap_list;
+		ImGui::Selectable("Enable/Show snap list", &m_enable_snap_list);
 
         ImGui::Columns(3, NULL, false);
 
-        if(m_select_snap_objs_mode)
-        	ImGui::TextColored(ImVec4(1.0, 1.0, 0.0, 1.0), "+/- Mode");
-        else
-        	ImGui::TextUnformatted("+/- Mode");
-
-        if(ImGui::IsItemClicked())
-        	m_select_snap_objs_mode = !m_select_snap_objs_mode;
+		ImGui::Selectable("+/- Mode", &m_select_snap_objs_mode);
 
         ImGui::NextColumn();
 
-        ImGui::TextUnformatted("Clear");
-        if(ImGui::IsItemClicked())
+        if(ImGui::MenuItem("Clear"))
         	ExecCommand(COMMAND_CLEAR_SNAP_OBJECTS);
 
         ImGui::NextColumn();
 
-        ImGui::Text("Edit...");
-        if(ImGui::IsItemClicked())
+        if(ImGui::MenuItem("Edit..."))
         	ExecCommand(COMMAND_EDIT_SNAP_OBJECTS);
 
         ImGui::Columns(1);
@@ -328,15 +318,37 @@ void IM_LeftBar::Render()
         ImGui::EndChild();
     }
 
+    if(m_detach_tool_frame)
+    {
+    	ImGui::Begin("Tool Options", &m_detach_tool_frame);
+        RenderToolFrame();
+        ImGui::End();
+    }
+    else
+    {
+    	bool detach = ImGui::SmallButton("<");
+		RenderToolFrame();
+        m_detach_tool_frame = detach;
+    }
+
+    ImGui::End();
+}
+
+void IM_LeftBar::RenderToolFrame()
+{
     switch(LTools->CurrentClassID())
     {
     	case OBJCLASS_SCENEOBJECT: 	fraObject.Render(); break;
         case OBJCLASS_LIGHT:        fraLight.Render(); break;
         case OBJCLASS_FOG_VOL:		fraFogVol.Render(); break;
         case OBJCLASS_DO:			fraDetail.Render(); break;
+        case OBJCLASS_SECTOR:		fraSector.Render(); break;
+        case OBJCLASS_PORTAL:		fraPortal.Render(); break;
+        case OBJCLASS_SHAPE:		fraShape.Render(); break;
+        case OBJCLASS_PS:			fraPS.Render(); break;
+        case OBJCLASS_WAY:			fraWayPoint.Render(); break;
+        case OBJCLASS_SPAWNPOINT:	fraSpawn.Render(); break;
     }
-
-    ImGui::End();
 }
 
 IM_LeftBar imLeftBar;

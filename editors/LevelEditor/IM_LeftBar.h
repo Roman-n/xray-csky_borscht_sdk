@@ -6,6 +6,12 @@
 #include "IM_FrameLight.h"
 #include "IM_FrameFogVol.h"
 #include "IM_FrameDetail.h"
+#include "IM_FrameSector.h"
+#include "IM_FramePortal.h"
+#include "IM_FrameShape.h"
+#include "IM_FramePS.h"
+#include "IM_FrameWayPoint.h"
+#include "IM_FrameSpawn.h"
 
 class IM_LeftBar : public IM_Window
 {
@@ -14,6 +20,12 @@ class IM_LeftBar : public IM_Window
     IM_FrameLight fraLight;
     IM_FrameFogVol fraFogVol;
     IM_FrameDetail fraDetail;
+    IM_FrameSector fraSector;
+    IM_FramePortal fraPortal;
+    IM_FrameShape fraShape;
+    IM_FramePS fraPS;
+    IM_FrameWayPoint fraWayPoint;
+    IM_FrameSpawn fraSpawn;
 
     bool m_enable_snap_list;
     bool m_select_snap_objs_mode;
@@ -22,9 +34,17 @@ class IM_LeftBar : public IM_Window
     bool m_show_tools;
     bool m_show_editmode;
     bool m_show_snaplist;
-    
+
+    bool m_detach_tool_frame;
+
 	public:
+    IM_LeftBar()
+    	: m_detach_tool_frame(false)
+    {
+    }
+
     virtual void Render();
+    void RenderToolFrame();
 };
 
 extern IM_LeftBar imLeftBar;

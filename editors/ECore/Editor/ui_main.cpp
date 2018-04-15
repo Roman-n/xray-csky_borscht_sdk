@@ -215,8 +215,8 @@ void TUI::MouseMove(TShiftState Shift, int X, int Y)
 	if (!m_bReady) return;
     m_ShiftState = Shift;
 
-    ImGui::GetIO().MousePos.x = X;
-    ImGui::GetIO().MousePos.y = Y;
+    ImGui::GetIO().MousePos.x = ((float)X * Device.m_ScreenQuality);
+    ImGui::GetIO().MousePos.y = ((float)Y * Device.m_ScreenQuality);
 }
 //----------------------------------------------------
 void TUI::IR_OnMouseMove(int x, int y){
@@ -401,6 +401,7 @@ void TUI::PrepareRedraw()
     	b_imgui_rendering = true;
 
         ImGui_ImplDX9_NewFrame();
+        ImGui::GetIO().DisplaySize = ImVec2(Device.dwWidth, Device.dwHeight);
 
     	static bool show_test_window = true;
     	if(show_test_window)

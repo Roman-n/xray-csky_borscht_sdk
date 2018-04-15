@@ -1,6 +1,6 @@
 object fraWayPoint: TfraWayPoint
-  Left = 381
-  Top = 270
+  Left = 1587
+  Top = 794
   VertScrollBar.Visible = False
   Align = alClient
   BorderStyle = bsNone
