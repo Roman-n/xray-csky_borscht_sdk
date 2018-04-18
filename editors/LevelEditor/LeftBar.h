@@ -206,6 +206,10 @@ __published:	// IDE-managed Components
 	TMenuItem *ClipEditor1;
 	TExtBtn *ebSnapListEdit;
 	TMenuItem *LoadSoundOccluder1;
+	TMenuItem *miDuplicate;
+	TMenuItem *N2;
+	TMenuItem *N16;
+	TMenuItem *miDuplicate2;
     void __fastcall ebClearClick(TObject *Sender);
     void __fastcall ebLoadClick(TObject *Sender);
     void __fastcall ebSaveClick(TObject *Sender);
@@ -299,6 +303,7 @@ __published:	// IDE-managed Components
 	void __fastcall lbSnapListDblClick(TObject *Sender);
 	void __fastcall ebSnapListEditClick(TObject *Sender);
 	void __fastcall LoadSoundOccluder1Click(TObject *Sender);
+	void __fastcall ebDuplicateClick(TObject *Sender);
 private:	// User declarations
     void RedrawBar();
 	void __fastcall miRecentFilesClick(TObject *Sender);

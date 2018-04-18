@@ -776,3 +776,10 @@ void __fastcall TfraLeftBar::LoadSoundOccluder1Click(TObject *Sender)
 	ExecCommand				(COMMAND_LOAD_SOUND_OCCLUDER);
 }
 //---------------------------------------------------------------------------
+void __fastcall TfraLeftBar::ebDuplicateClick(TObject *Sender)
+{
+	ExecCommand				(COMMAND_COPY);
+    ExecCommand				(COMMAND_PASTE);
+}
+//---------------------------------------------------------------------------
+
