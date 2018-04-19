@@ -86,6 +86,10 @@ void CCustomObject::Show( BOOL flag )
     UI->RedrawScene();
 };
 
+void CCustomObject::Lock( BOOL flag )
+{
+	m_RT_Flags.set		(flRT_Locked,flag);
+}
 
 BOOL   CCustomObject::Editable() const 
 {

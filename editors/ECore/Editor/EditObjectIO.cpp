@@ -381,7 +381,7 @@ bool CEditableObject::Load(IReader& F)
                 }
 				if (!bBPok)	m_BoneParts.clear();
                 if (!m_BoneParts.empty()&&!VerifyBoneParts())
-                    Log		("!Invalid bone parts. Found duplicate bones in object '%s'.",GetName());
+                    Msg		("!Invalid bone parts. Found missing or duplicate bones in object '%s'.",GetName());
             }else if (F.find_chunk(EOBJ_CHUNK_BONEPARTS2)){
                 m_BoneParts.resize(F.r_u32());
                 for (BPIt bp_it=m_BoneParts.begin(); bp_it!=m_BoneParts.end(); bp_it++){
@@ -391,7 +391,7 @@ bool CEditableObject::Load(IReader& F)
                         F.r_stringZ(*s_it);
                 }
                 if (!m_BoneParts.empty()&&!VerifyBoneParts())
-                    Log			("!Invalid bone parts. Found duplicate bones in object '%s'.",GetName());
+                    Msg			("!Invalid bone parts. Found missing or duplicate bones in object '%s'.",GetName());
             }
         }
 
