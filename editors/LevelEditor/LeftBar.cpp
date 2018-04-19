@@ -783,3 +783,46 @@ void __fastcall TfraLeftBar::ebDuplicateClick(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
+void __fastcall TfraLeftBar::miLockSelectedClick(TObject *Sender)
+{
+	ExecCommand				(COMMAND_LOCK_SEL,TRUE);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraLeftBar::miLockUnselectedClick(TObject *Sender)
+{
+	ExecCommand				(COMMAND_LOCK_UNSEL,TRUE);	
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraLeftBar::miLockAllClick(TObject *Sender)
+{
+	ExecCommand				(COMMAND_LOCK_ALL,TRUE);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraLeftBar::miUnlockSelectedClick(TObject *Sender)
+{
+	ExecCommand				(COMMAND_LOCK_SEL,FALSE);	
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraLeftBar::miUnlockUnselectedClick(TObject *Sender)
+{
+	ExecCommand				(COMMAND_LOCK_UNSEL,FALSE);	
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraLeftBar::miUnlockAllClick(TObject *Sender)
+{
+	ExecCommand				(COMMAND_LOCK_ALL,FALSE);	
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraLeftBar::ExtBtn3MouseDown(TObject *Sender,
+      TMouseButton Button, TShiftState Shift, int X, int Y)
+{
+	FHelper.ShowPPMenu(pmToolsLocking,dynamic_cast<TExtBtn*>(Sender));
+}
+//---------------------------------------------------------------------------
+

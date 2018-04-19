@@ -93,13 +93,13 @@ __published:	// IDE-managed Components
 	TMenuItem *N5;
 	TMenuItem *UnhideAll2;
 	TMenuItem *Locking1;
-	TMenuItem *LockSelected1;
-	TMenuItem *MenuItem1;
-	TMenuItem *MenuItem2;
+	TMenuItem *miLockSelected;
+	TMenuItem *miLockUnselected;
+	TMenuItem *miLockAll;
 	TMenuItem *N6;
-	TMenuItem *MenuItem5;
-	TMenuItem *MenuItem6;
-	TMenuItem *MenuItem7;
+	TMenuItem *miUnlockSelected;
+	TMenuItem *miUnlockUnselected;
+	TMenuItem *miUnlockAll;
 	TMenuItem *Edit1;
 	TMenuItem *miCopy;
 	TMenuItem *miPaste2;
@@ -210,6 +210,16 @@ __published:	// IDE-managed Components
 	TMenuItem *N2;
 	TMenuItem *N16;
 	TMenuItem *miDuplicate2;
+	TExtBtn *ExtBtn3;
+	TMxPopupMenu *pmToolsLocking;
+	TMenuItem *MenuItem1;
+	TMenuItem *MenuItem2;
+	TMenuItem *MenuItem5;
+	TMenuItem *MenuItem6;
+	TMenuItem *MenuItem7;
+	TMenuItem *MenuItem18;
+	TMenuItem *UnlockUnselected1;
+	TMenuItem *UnlockAll1;
     void __fastcall ebClearClick(TObject *Sender);
     void __fastcall ebLoadClick(TObject *Sender);
     void __fastcall ebSaveClick(TObject *Sender);
@@ -304,6 +314,14 @@ __published:	// IDE-managed Components
 	void __fastcall ebSnapListEditClick(TObject *Sender);
 	void __fastcall LoadSoundOccluder1Click(TObject *Sender);
 	void __fastcall ebDuplicateClick(TObject *Sender);
+	void __fastcall miLockSelectedClick(TObject *Sender);
+	void __fastcall miLockUnselectedClick(TObject *Sender);
+	void __fastcall miLockAllClick(TObject *Sender);
+	void __fastcall miUnlockSelectedClick(TObject *Sender);
+	void __fastcall miUnlockUnselectedClick(TObject *Sender);
+	void __fastcall miUnlockAllClick(TObject *Sender);
+	void __fastcall ExtBtn3MouseDown(TObject *Sender, TMouseButton Button,
+          TShiftState Shift, int X, int Y);
 private:	// User declarations
     void RedrawBar();
 	void __fastcall miRecentFilesClick(TObject *Sender);
