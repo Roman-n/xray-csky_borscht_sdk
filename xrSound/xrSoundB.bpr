@@ -49,7 +49,7 @@
     <SYSDEFINES value="NO_STRICT;_RTLDLL;USEPACKAGES"/>
     <MAINSOURCE value="xrSoundB.bpf"/>
     <INCLUDEPATH value="$(DXSDK_DIR)\Include;$(BCB)\include;$(BCB)\include\vcl;$(ETOOLS_DIR);X:\SDK\include"/>
-    <LIBPATH value="..\..\sdk\components\alexmx;&quot;f:\program files\borland\cbuilder6\lib\release&quot;;$(BCB)\Imports;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(BCB)\lib\psdk;x:\stalker_addon\libraries"/>
+    <LIBPATH value="X:\SDK\components\AlexMX;..\..\sdk\components\alexmx;&quot;f:\program files\borland\cbuilder6\lib\release&quot;;$(BCB)\Imports;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(BCB)\lib\psdk;x:\stalker_addon\libraries"/>
     <WARNINGS value="-w-par -w-8027 -w-8026"/>
     <OTHERFILES value=""/>
   </MACROS>

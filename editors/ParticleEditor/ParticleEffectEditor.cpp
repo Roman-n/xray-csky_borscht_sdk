@@ -5,9 +5,9 @@
 #ifdef _PARTICLE_EDITOR
 
 #include "../xrEProps/ChoseForm.h"
-#include "..\..\Layers\xrRender\ParticleEffect.h"
+#include "../../Layers/xrRender/ParticleEffect.h"
 #include "ParticleEffectActions.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
+#include "../xrEProps/PropertiesListHelper.h"
 #include "ui_particletools.h"
 #include "ui_main.h"
 #include "../xrEProps/FolderLib.h"

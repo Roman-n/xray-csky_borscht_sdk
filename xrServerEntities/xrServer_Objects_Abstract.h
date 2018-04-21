@@ -12,7 +12,7 @@
 #pragma pack(push,4)
 #include "xrServer_Space.h"
 #	include "../xrCDB/xrCDB.h"
-#include "ShapeData.h"
+#include "../editors/LevelEditor/engine/ShapeData.h"
 #include "gametype_chooser.h"
 
 class NET_Packet;
@@ -24,12 +24,12 @@ class CDUInterface;
     #endif
 #endif
 
-#include "xrEProps.h"
+#include "../editors/xrEProps/xrEProps.h"
 
 #ifndef XRGAME_EXPORTS
-	#include "..\..\Include\xrRender\DrawUtils.h"
+	#include "../../Include/xrRender/DrawUtils.h"
 #else
-	#include "..\Include\xrRender\DrawUtils.h"
+	#include "../Include/xrRender/DrawUtils.h"
 #endif
 #pragma warning(push)
 #pragma warning(disable:4005)

@@ -4,7 +4,7 @@
 #include "Bone.h"
 #include "Motion.h"
 #ifdef _EDITOR
-#	include "../../../xrServerEntities/PropertiesListTypes.h"
+#	include "../../xrEProps/PropertiesListTypes.h"
 //	#include "PropertiesListHelper.h"
 #	include "GameMtlLib.h"
 #	include "pick_defs.h"

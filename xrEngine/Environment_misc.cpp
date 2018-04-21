@@ -11,7 +11,7 @@
 #include "../xrServerEntities/object_broker.h"
 #endif
 #include "../xrServerEntities/LevelGameDef.h"
-#include "../xrServerEntities/ShapeData.h"
+#include "../editors/LevelEditor/Engine/ShapeData.h"
 
 void CEnvModifier::load	(IReader* fs, u32 version)
 {

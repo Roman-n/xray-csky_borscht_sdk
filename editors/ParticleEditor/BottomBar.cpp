@@ -7,7 +7,7 @@
 #include "ui_main.h"
 #include "igame_persistent.h"
 #include "environment.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
+#include "../xrEProps/PropertiesListHelper.h"
 #include "../xrEProps/PropertiesList.h"
 
 //---------------------------------------------------------------------------

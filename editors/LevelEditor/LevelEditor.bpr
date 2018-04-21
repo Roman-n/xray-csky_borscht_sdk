@@ -150,12 +150,12 @@
     <OTHERFILES value=""/>
   </MACROS>
   <OPTIONS>
-    <IDLCFLAGS value="-I..\..\xrServerEntities -I..\..\Layers\xrRender -I$(DXSDK_DIR)\Include 
+    <IDLCFLAGS value="-src_suffix cpp -D_EDITOR -D_LEVEL_EDITOR -D_DEBUG 
+      -I..\..\xrServerEntities -I..\..\Layers\xrRender -I$(DXSDK_DIR)\Include 
       -IEdit -IEngine -I$(BCB)\Projects -I$(BCB)\include\vcl -I$(BCB)\include 
       -I$(COMPONENTS)\alexmx -I$(COMPONENTS)\ElPack\Code 
       -I$(COMPONENTS)\ElPack\Code\Source -I$(CORE_DIR) -I../../xrEngine 
-      -I$(ETOOLS_DIR) -IX:\SDK\include\freemagic -src_suffix cpp -D_EDITOR 
-      -D_LEVEL_EDITOR -D_DEBUG"/>
+      -I$(ETOOLS_DIR) -IX:\SDK\include\freemagic"/>
     <CFLAG1 value="-Od -H=x:\intermediate_ed\le\pch.csm -Hc -Q -Vms -Vx -Ve -xf -xp -VF -ff 
       -X- -ps -a4 -6 -b- -k- -y -v -vi- -He -c -tW -tWM"/>
     <PFLAGS value="-N2x:\intermediate_ed\le -N0x:\intermediate_ed\le -$Y- -$R -$Q -$L- -$D- 
@@ -419,7 +419,7 @@ Item1=x:\libraries
 DebugSourceDirs=X:\stalker_addon\sources\engine\editors\ECore\Editor\
 
 [Parameters]
-RunParams=-wf K:\BORSCHT -hw_skin
+RunParams=-wf K:\BORSCHT
 Launcher=
 UseLauncher=0
 DebugCWD=
