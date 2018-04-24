@@ -169,7 +169,7 @@ void CCustomPreferences::OnKeyboardCommonFileClick(ButtonValue* B, bool& bModif,
     break;
     case 1:
         if(EFS.GetSaveName("$import$", fn, NULL, 6)){
-		    CInifile* 	I 	= xr_new<CInifile>(fn.c_str(), FALSE, TRUE, TRUE);
+		    CInifile* 	I 	= xr_new<CInifile>(fn.c_str(), FALSE, FALSE, TRUE);
 		    SaveShortcuts	(I);
             xr_delete		(I);
         }
