@@ -242,7 +242,7 @@ void TfrmMain::RefreshBars()
     fraTopBar->RefreshBar		();
     fraLeftBar->RefreshBar		();
     fraBottomBar->RefreshBar	();
-
+/*
     miOpenRecent->Clear();
     for(size_t i = 0; i < EPrefs->scene_recent_list.size(); i++)
     {
@@ -253,6 +253,33 @@ void TfrmMain::RefreshBars()
 
         miOpenRecent->Add(item);
     }
+*/
+	// clear recent file list
+    xr_vector<TMenuItem*> recent;
+
+	for(size_t i = 0; i < miFile->Count; i++)
+    	if(miFile->Items[i]->Tag >= 9555)
+			recent.push_back(miFile->Items[i]);
+
+    for(i = 0; i < recent.size(); i++)
+    	miFile->Remove(recent[i]);
+
+    // recreate recent file list
+    size_t cnt = EPrefs->scene_recent_list.size();
+    for(i = 0; i < cnt; i++)
+    {
+    	TMenuItem *item = xr_new<TMenuItem>(this);
+        item->Caption = EPrefs->scene_recent_list[i];
+        item->Tag = 9555 + i;
+        item->OnClick = miOpenRecentClick;
+
+        miFile->Insert(10+i, item);
+    }
+
+    TMenuItem *separator = xr_new<TMenuItem>(this);
+    separator->Caption = "-";
+    miFile->Insert(10+i, separator);
+
 
     for(i = 0; i < miEditMode->Count/2; i++)
     {
@@ -390,7 +417,7 @@ void __fastcall TfrmMain::miQuitClick(TObject *Sender)
 void __fastcall TfrmMain::miOpenRecentClick(TObject *Sender)
 {
 	TMenuItem *item = (TMenuItem*)Sender;
-    ExecCommand(COMMAND_LOAD, xr_string(EPrefs->scene_recent_list[item->Tag].c_str()));
+    ExecCommand(COMMAND_LOAD, xr_string(EPrefs->scene_recent_list[item->Tag-9555].c_str()));
 }
 //---------------------------------------------------------------------------
 
@@ -737,5 +764,7 @@ void __fastcall TfrmMain::Preferences1Click(TObject *Sender)
 	ExecCommand( COMMAND_EDITOR_PREF );
 }
 //---------------------------------------------------------------------------
+
+
 
 

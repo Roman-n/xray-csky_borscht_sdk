@@ -254,12 +254,6 @@ object frmMain: TfrmMain
       object N1: TMenuItem
         Caption = '-'
       end
-      object miOpenRecent: TMenuItem
-        Caption = 'Open Recent'
-      end
-      object N4: TMenuItem
-        Caption = '-'
-      end
       object miQuit: TMenuItem
         Caption = 'Quit'
         OnClick = miQuitClick

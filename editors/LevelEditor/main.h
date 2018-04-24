@@ -45,13 +45,11 @@ __published:	// IDE-managed Components
 	TMenuItem *miClear;
 	TMenuItem *miQuit;
 	TMenuItem *N1;
-	TMenuItem *miOpenRecent;
 	TMenuItem *N2;
 	TMenuItem *miOpenSelection;
 	TMenuItem *miSaveSelection;
 	TMenuItem *N3;
 	TMenuItem *miMakePack;
-	TMenuItem *N4;
 	TMenuItem *miUndo;
 	TMenuItem *miRedo;
 	TMenuItem *N5;

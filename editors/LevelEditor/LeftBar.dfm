@@ -3807,6 +3807,31 @@ object fraLeftBar: TfraLeftBar
     Style = msOwnerDraw
     Left = 221
     Top = 9
+    object miCopy: TMenuItem
+      Caption = 'Copy (selection)'
+      GroupIndex = 1
+      OnClick = ebCopyClick
+    end
+    object miPaste2: TMenuItem
+      Caption = 'Paste (selection)'
+      Enabled = False
+      GroupIndex = 1
+      OnClick = ebPasteClick
+    end
+    object miCut: TMenuItem
+      Caption = 'Cut (selection)'
+      GroupIndex = 1
+      OnClick = ebCutClick
+    end
+    object miDuplicate2: TMenuItem
+      Caption = 'Duplicate (selection)'
+      GroupIndex = 1
+      OnClick = ebDuplicateClick
+    end
+    object N28: TMenuItem
+      Caption = '-'
+      GroupIndex = 1
+    end
     object miVisibility: TMenuItem
       Caption = 'Visibility'
       GroupIndex = 1
@@ -3859,35 +3884,6 @@ object fraLeftBar: TfraLeftBar
       object miUnlockAll: TMenuItem
         Caption = 'Unlock All'
         OnClick = miUnlockAllClick
-      end
-    end
-    object Edit1: TMenuItem
-      Caption = 'Edit'
-      GroupIndex = 1
-      OnClick = ebCopyClick
-      object miCopy: TMenuItem
-        Caption = 'Copy (selection)'
-        GroupIndex = 1
-      end
-      object miPaste2: TMenuItem
-        Caption = 'Paste (selection)'
-        Enabled = False
-        GroupIndex = 1
-        OnClick = ebPasteClick
-      end
-      object miCut: TMenuItem
-        Caption = 'Cut (selection)'
-        GroupIndex = 1
-        OnClick = ebCutClick
-      end
-      object N16: TMenuItem
-        Caption = '-'
-        GroupIndex = 1
-      end
-      object miDuplicate2: TMenuItem
-        Caption = 'Duplicate (selection)'
-        GroupIndex = 1
-        OnClick = ebDuplicateClick
       end
     end
     object N4: TMenuItem
