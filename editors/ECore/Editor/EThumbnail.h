@@ -2,7 +2,7 @@
 #define EThumbnailH
 
 #include "../Layers/xrRender/ETextureParams.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
+#include "../xrEProps/PropertiesListHelper.h"
 
 #include "MXCtrls.hpp"
 //------------------------------------------------------------------------------

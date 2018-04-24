@@ -108,10 +108,10 @@ __inline float expf	(float val)                           	{ return ::exp(val);}
 DEFINE_VECTOR		(AnsiString,AStringVec,AStringIt);
 DEFINE_VECTOR		(AnsiString*,LPAStringVec,LPAStringIt);
 
-#include "..\..\..\xrServerEntities\xrEProps.h"
-#include "..\..\xrCore\Log.h"
-#include "editor\engine.h"
-#include "..\..\xrEngine\defines.h"
+#include "../../xrEProps/xrEProps.h"
+#include "../../xrCore/Log.h"
+#include "editor/engine.h"
+#include "../../xrEngine/defines.h"
 
 struct str_pred : public std::binary_function<char*, char*, bool>
 {

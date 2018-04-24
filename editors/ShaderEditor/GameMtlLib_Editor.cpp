@@ -4,8 +4,8 @@
 
 #include "GameMtlLib.h"
 #include "xr_trims.h"
-#include "../../xrServerEntities/PropertiesListTypes.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
+#include "../xrEProps/PropertiesListTypes.h"
+#include "../xrEProps/PropertiesListHelper.h"
 #include "../xrEProps/FolderLib.h"
 #include "LeftBar.h"
 #include "../xrEProps/ChoseForm.h"

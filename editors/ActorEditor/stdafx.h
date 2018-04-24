@@ -108,7 +108,7 @@ __inline float expf	(float val)                           	{ return ::exp(val);}
 DEFINE_VECTOR		(AnsiString,AStringVec,AStringIt);
 DEFINE_VECTOR		(AnsiString*,LPAStringVec,LPAStringIt);
 
-#include "../../xrServerEntities/xrEProps.h"
+#include "../xrEProps/xrEProps.h"
 #include "../../xrCore/Log.h"
 #include "../ECore/editor/engine.h"
 #include "../../xrEngine/defines.h"

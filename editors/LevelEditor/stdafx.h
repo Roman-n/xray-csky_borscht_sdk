@@ -106,11 +106,11 @@ __inline float expf	(float val)                           	{ return ::exp(val);}
 DEFINE_VECTOR		(AnsiString,AStringVec,AStringIt);
 DEFINE_VECTOR		(AnsiString*,LPAStringVec,LPAStringIt);
 
-#include "../../../xrServerEntities/xrEProps.h"
+#include "../xrEProps/xrEProps.h"
 #include "Log.h"
 #include "../ECore/editor/engine.h"
 #include "defines.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
+#include "../xrEProps/PropertiesListHelper.h"
 #include "../xrEProps/PropertiesList.h"
 #include "../xrEProps/ItemList.h"
 #include "../xrEProps/ChoseForm.h"

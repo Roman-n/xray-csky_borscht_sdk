@@ -4,7 +4,7 @@
 
 
 #include "WaveForm.H"
-#include "gametype_chooser.h"
+#include "../../xrServerEntities/gametype_chooser.h"
 
 #ifdef __BORLANDC__            
 #	include "ElTree.hpp"
