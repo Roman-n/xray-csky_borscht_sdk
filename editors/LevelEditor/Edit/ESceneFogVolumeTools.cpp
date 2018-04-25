@@ -116,6 +116,8 @@ void ESceneFogVolumeTool::GroupSelected()
             fv->m_group_id		= m_group_counter;
         }
     }
+
+    HighlightSelGroups();
 }
 
 void ESceneFogVolumeTool::UnGroupCurrent()
@@ -129,6 +131,7 @@ void ESceneFogVolumeTool::UnGroupCurrent()
         }
     }
 
+    HighlightSelGroups();
 }
 
 void ESceneFogVolumeTool::RegisterGroup(u32 group)
@@ -136,24 +139,25 @@ void ESceneFogVolumeTool::RegisterGroup(u32 group)
    m_group_counter = _max(m_group_counter, group);
 }
 
-void ESceneFogVolumeTool::Selected(EFogVolume* fv)
+void ESceneFogVolumeTool::HighlightSelGroups()
 {
-	u32 grp 			= fv->m_group_id;
-	bool b_sel 			= !!fv->Selected();
+    xr_set<u32> selected_groups;
+    ObjectIt it, end = m_Objects.end();
+    EFogVolume* fv;
 
-    for(ObjectIt it = m_Objects.begin();it!=m_Objects.end();++it)
-    {
-      	EFogVolume* fv_it 		= (EFogVolume*)(*it);
-
-    	if(b_sel && (fv_it->m_group_id==grp) && (grp!=u32(-1)))
-        {
-            fv_it->m_DrawEdgeColor = 0xFFFF2020;
-        }else
-        {
-            fv_it->m_DrawEdgeColor = 0xFF202020;
-        }
+    for(it = m_Objects.begin(); it != end; it++) {
+        fv = (EFogVolume*)(*it);
+        if(fv->Selected() && fv->m_group_id != u32(-1))
+            selected_groups.insert(fv->m_group_id);
     }
 
+    for(it = m_Objects.begin(); it != end; it++) {
+        fv = (EFogVolume*)(*it);
+        if(fv->m_group_id != u32(-1) && selected_groups.find(fv->m_group_id) != selected_groups.end())
+            fv->m_DrawEdgeColor = 0xFFFF2020;
+        else
+            fv->m_DrawEdgeColor = 0xFF202020;
+    }
 }
 
 //---------------------------------------
@@ -290,8 +294,6 @@ void EFogVolume::OnSceneUpdate()
 void EFogVolume::Select(int flag)
 {
 	inherited::Select(flag);
-
-    if(Selected())
-    	((ESceneFogVolumeTool*)ParentTool)->Selected(this);
+    ((ESceneFogVolumeTool*)ParentTool)->HighlightSelGroups();
 }
 
