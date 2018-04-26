@@ -149,6 +149,7 @@ public:
     virtual LPCSTR	RefName			();
 
     bool			CreateSpawnData	(LPCSTR entity_ref);
+    virtual bool	IsRender		();
 	virtual void    Render      	( int priority, bool strictB2F );
 	virtual bool    RayPick     	( float& distance,	const Fvector& start,	const Fvector& direction, SRayPickInfo* pinf = NULL );
     virtual bool 	FrustumPick		( const CFrustum& frustum );
