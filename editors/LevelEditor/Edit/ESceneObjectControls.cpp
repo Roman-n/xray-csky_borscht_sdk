@@ -7,7 +7,7 @@
 #include "scene.h"
 #include "SceneObject.h"
 #include "ESceneObjectTools.h"
-#include "FrameObject.h"
+//#include "FrameObject.h"
 #include "leftbar.h"
 #include "ui_levelmain.h"
 
@@ -23,7 +23,7 @@ __fastcall TUI_ControlObjectAdd::TUI_ControlObjectAdd(int st, int act, ESceneToo
 bool __fastcall TUI_ControlObjectAdd::Start(TShiftState Shift)
 {
     if (Shift==ssRBOnly){ ExecCommand(COMMAND_SHOWCONTEXTMENU,OBJCLASS_SCENEOBJECT); return false;}
-    TfraObject* fraObject = (TfraObject*)parent_tool->pFrame; VERIFY(fraObject);
+//	TfraObject* fraObject = (TfraObject*)parent_tool->pFrame; VERIFY(fraObject);
 	Fvector p,n;
 	if(!LUI->PickGround(p,UI->m_CurrentRStart,UI->m_CurrentRNorm,1,&n)) return false;
     { // pick already executed (see top)
@@ -33,7 +33,7 @@ bool __fastcall TUI_ControlObjectAdd::Start(TShiftState Shift)
         	N = ot->m_AppendRandomObjects[Random.randI(ot->m_AppendRandomObjects.size())].c_str();  
         }else{
             //N = ((TfraObject*)parent_tool->pFrame)->Current();
-            N = imLeftBar.fraObject.objects_tree.GetSelected().c_str();
+            N = imLeftBar.fraObject.Current();
             if(!N){
                 ELog.DlgMsg(mtInformation,"Nothing selected.");
                 return false;

@@ -290,7 +290,11 @@ void IM_LeftBar::Render()
 
         ImGui::Columns(3, NULL, false);
 
-		ImGui::Selectable("+/- Mode", &m_select_snap_objs_mode);
+		if(ImGui::Selectable("+/- Mode", &m_select_snap_objs_mode))
+        	if (m_select_snap_objs_mode&&(etaSelect!=Tools->GetAction())){
+    			ELog.Msg(mtError,"Before modify snap list activate select mode!");
+        		m_select_snap_objs_mode = false;
+    		}
 
         ImGui::NextColumn();
 
@@ -348,6 +352,8 @@ void IM_LeftBar::RenderToolFrame()
         case OBJCLASS_PS:			fraPS.Render(); break;
         case OBJCLASS_WAY:			fraWayPoint.Render(); break;
         case OBJCLASS_SPAWNPOINT:	fraSpawn.Render(); break;
+        case OBJCLASS_GROUP:		fraGroup.Render(); break;
+        case OBJCLASS_AIMAP:		fraAIMap.Render(); break;
     }
 }
 

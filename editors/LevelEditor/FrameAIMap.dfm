@@ -1,6 +1,6 @@
 object fraAIMap: TfraAIMap
-  Left = 918
-  Top = 206
+  Left = 1525
+  Top = 521
   VertScrollBar.Visible = False
   Align = alClient
   BorderStyle = bsNone

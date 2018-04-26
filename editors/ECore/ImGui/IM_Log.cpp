@@ -84,7 +84,7 @@ void IM_Log::Render()
     ImGui::SameLine();
 
     if(ImGui::Button("Flush"))
-    	; // TODO
+    	FlushLog();
 
     ImGui::SameLine();
     ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 10.f);

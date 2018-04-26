@@ -127,7 +127,9 @@
       x:\intermediate_ed\le\IM_FrameShape.obj 
       x:\intermediate_ed\le\IM_FramePS.obj 
       x:\intermediate_ed\le\IM_FrameWayPoint.obj 
-      x:\intermediate_ed\le\IM_FrameSpawn.obj"/>
+      x:\intermediate_ed\le\IM_FrameSpawn.obj 
+      x:\intermediate_ed\le\IM_FrameGroup.obj 
+      x:\intermediate_ed\le\IM_FrameAIMap.obj"/>
     <RESFILES value="LevelEditor.res resource.res"/>
     <IDLFILES value=""/>
     <IDLGENFILES value=""/>
@@ -346,6 +348,8 @@
       <FILE FILENAME="IM_FramePS.cpp" FORMNAME="" UNITNAME="IM_FramePS" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="IM_FrameWayPoint.cpp" FORMNAME="" UNITNAME="IM_FrameWayPoint" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="IM_FrameSpawn.cpp" FORMNAME="" UNITNAME="IM_FrameSpawn" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="IM_FrameGroup.cpp" FORMNAME="" UNITNAME="IM_FrameGroup" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="IM_FrameAIMap.cpp" FORMNAME="" UNITNAME="IM_FrameAIMap" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
   </FILELIST>
   <BUILDTOOLS>
   </BUILDTOOLS>
@@ -441,7 +445,7 @@ Item1=x:\libraries
 DebugSourceDirs=X:\stalker_addon\sources\engine\editors\ECore\Editor\
 
 [Parameters]
-RunParams=-wf K:\BORSCHT -hw_skin -hq
+RunParams=-wf K:\BORSCHT -hw_skin
 Launcher=
 UseLauncher=0
 DebugCWD=

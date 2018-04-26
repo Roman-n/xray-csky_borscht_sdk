@@ -46,6 +46,7 @@ void __fastcall TfrmLog::AddDlgMessage(TMsgDlgType mt, const AnsiString& msg)
 }
 //---------------------------------------------------------------------------
 
+#include "../ImGui/IM_Log.h"
 void __fastcall TfrmLog::AddMessage(TMsgDlgType mt, const AnsiString& msg)
 {
 	if (!form) return;
@@ -57,7 +58,8 @@ void __fastcall TfrmLog::AddMessage(TMsgDlgType mt, const AnsiString& msg)
     }
 	form->lbLog->Items->AddObject(M,(TObject*)mt);
     form->lbLog->ItemIndex = form->lbLog->Items->Count-1;
-    if ((mt==mtError)&&!form->Visible) form->Show();
+//    if ((mt==mtError)&&!form->Visible) form->Show();
+	if(mt==mtError&&!imLog.IsOpen()) imLog.Open(); // temporary
 }
 //---------------------------------------------------------------------------
 

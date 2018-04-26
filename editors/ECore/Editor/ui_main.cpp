@@ -29,6 +29,7 @@ static void ImGui_Init(HWND hwnd, IDirect3DDevice9 *d3ddevice)
     ImGuiIO &io 		= ImGui::GetIO();
     ImFontAtlas &fonts 	= *io.Fonts;
     ImFont *font 		= fonts.AddFontFromFileTTF("extras\\Anonymous Pro.ttf", 14, NULL, fonts.GetGlyphRangesCyrillic());
+    fonts.AddFontFromFileTTF("extras\\Anonymous Pro.ttf", 24, NULL, fonts.GetGlyphRangesCyrillic());
 
     io.FontDefault = font;
 }
@@ -153,10 +154,10 @@ void TUI::MousePress(TShiftState Shift, int X, int Y)
 
     m_ShiftState = Shift;
 
-    if(ImGui::GetIO().WantCaptureMouse)
-    	ImGui::GetIO().MouseDown[0] = true;
+    ImGui::GetIO().MouseDown[0] = true;
+        
     // camera activate
-    else if(!Device.m_Camera.MoveStart(m_ShiftState)){
+    if(!ImGui::GetIO().WantCaptureMouse && !Device.m_Camera.MoveStart(m_ShiftState)){
     	if (Tools->Pick(Shift)) return;
         if( !m_MouseCaptured ){
             if( Tools->HiddenMode() ){
@@ -183,10 +184,10 @@ void TUI::MouseRelease(TShiftState Shift, int X, int Y)
 
     m_ShiftState = Shift;
 
-    if(ImGui::GetIO().WantCaptureMouse)
-    	ImGui::GetIO().MouseDown[0] = false;
+    ImGui::GetIO().MouseDown[0] = false;
 
     // editor may need to know about mouse release even it hover imgui window
+    
     if( Device.m_Camera.IsMoving() ){
         if (Device.m_Camera.MoveEnd(m_ShiftState)) bMouseInUse = false;
     }else{

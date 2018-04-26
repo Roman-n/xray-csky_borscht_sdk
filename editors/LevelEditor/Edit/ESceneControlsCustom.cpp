@@ -6,7 +6,8 @@
 #include "scene.h"
 #include "bottombar.h"
 #include "ui_levelmain.h"
-#include "leftbar.h"
+//#include "leftbar.h"
+#include "IM_LeftBar.h"
 
 TUI_CustomControl::TUI_CustomControl(int st, int act, ESceneToolBase* parent){
 	parent_tool		= parent; VERIFY(parent);
@@ -106,7 +107,8 @@ bool __fastcall TUI_CustomControl::AddEnd(TShiftState _Shift)
 
 bool TUI_CustomControl::CheckSnapList(TShiftState Shift)
 {
-	if (fraLeftBar->ebSnapListMode->Down){
+//	if (fraLeftBar->ebSnapListMode->Down){
+	if (imLeftBar.m_select_snap_objs_mode){
 	    CCustomObject* O=Scene->RayPickObject(UI->ZFar(),UI->m_CurrentRStart,UI->m_CurrentRNorm,OBJCLASS_SCENEOBJECT,0,0);
         if (O){
             if (Scene->FindObjectInSnapList(O)){

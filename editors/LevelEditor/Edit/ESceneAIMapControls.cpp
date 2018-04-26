@@ -4,9 +4,10 @@
 #include "ESceneAIMapControls.h"
 #include "ESceneAIMapTools.h"
 #include "../ECore/Editor/ui_main.h"
-#include "FrameAIMap.h"
+//#include "FrameAIMap.h"
 #include "scene.h"
 #include "ui_leveltools.h"
+#include "IM_LeftBar.h"
 
 //------------------------------------------------------------------------------
 // Node Add
@@ -21,7 +22,7 @@ bool __fastcall TUI_ControlAIMapNodeAdd::Start(TShiftState Shift)
     ESceneAIMapTool* S 		= (ESceneAIMapTool*)parent_tool;
     if (S->PickObjects(p,UI->m_CurrentRStart,UI->m_CurrentRNorm,UI->ZFar())){
     	S->SelectObjects	(false);
-	    append_nodes		= S->AddNode(p,((TfraAIMap*)S->pFrame)->ebIgnoreConstraints->Down,((TfraAIMap*)S->pFrame)->ebAutoLink->Down,S->m_BrushSize);
+	    append_nodes		= S->AddNode(p,imLeftBar.fraAIMap.m_ignore_constraints,imLeftBar.fraAIMap.m_auto_link,S->m_BrushSize);
 		if (!Shift.Contains(ssAlt)){ 
 		    if (append_nodes) Scene->UndoSave();
         	ResetActionToSelect();
@@ -35,7 +36,7 @@ void TUI_ControlAIMapNodeAdd::Move(TShiftState _Shift)
 	Fvector p;
     ESceneAIMapTool* S 	= (ESceneAIMapTool*)parent_tool;
     if (S->PickObjects(p,UI->m_CurrentRStart,UI->m_CurrentRNorm,UI->ZFar())){
-	    append_nodes+=S->AddNode(p,((TfraAIMap*)S->pFrame)->ebIgnoreConstraints->Down,((TfraAIMap*)S->pFrame)->ebAutoLink->Down,S->m_BrushSize);
+	    append_nodes+=S->AddNode(p,imLeftBar.fraAIMap.m_ignore_constraints,imLeftBar.fraAIMap.m_auto_link,S->m_BrushSize);
     }
 }
 bool TUI_ControlAIMapNodeAdd::End(TShiftState _Shift)

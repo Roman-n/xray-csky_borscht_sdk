@@ -65,7 +65,7 @@ void __fastcall TfraGroup::ebAlignToObjectClick(TObject *Sender)
 
 void __fastcall TfraGroup::ebSelectClick(TObject *Sender)
 {
-	LPCSTR 		nm;
+		LPCSTR 		nm;
     xr_string N	= lbCurrent->Caption.c_str();
     if (TfrmChoseItem::SelectItem(smGroup,nm,1,N.c_str()))
         ParentTools->SetCurrentObject(nm);	

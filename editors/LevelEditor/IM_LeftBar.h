@@ -12,6 +12,8 @@
 #include "IM_FramePS.h"
 #include "IM_FrameWayPoint.h"
 #include "IM_FrameSpawn.h"
+#include "IM_FrameGroup.h"
+#include "IM_FrameAIMap.h"
 
 class IM_LeftBar : public IM_Window
 {
@@ -26,6 +28,8 @@ class IM_LeftBar : public IM_Window
     IM_FramePS fraPS;
     IM_FrameWayPoint fraWayPoint;
     IM_FrameSpawn fraSpawn;
+    IM_FrameGroup fraGroup;
+    IM_FrameAIMap fraAIMap;
 
     bool m_enable_snap_list;
     bool m_select_snap_objs_mode;

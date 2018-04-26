@@ -4,16 +4,19 @@
 #include "ESceneSpawnControls.h"
 #include "ui_leveltools.h"
 #include "../ECore/Editor/ui_main.h"
-#include "FrameSpawn.h"
+//#include "FrameSpawn.h"
 #include "Scene.h"
 #include "SpawnPoint.h"
+
+#include "IM_LeftBar.h"
 //---------------------------------------------------------------------------
 __fastcall TUI_ControlSpawnAdd::TUI_ControlSpawnAdd(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent){
 }
 
 bool __fastcall TUI_ControlSpawnAdd::AppendCallback(SBeforeAppendCallbackParams* p)
 {
-	LPCSTR ref_name = ((TfraSpawn*)parent_tool->pFrame)->Current();
+//	LPCSTR ref_name = ((TfraSpawn*)parent_tool->pFrame)->Current();
+	LPCSTR ref_name = imLeftBar.fraSpawn.Current();
     if (!ref_name){
     	ELog.DlgMsg(mtInformation,"Nothing selected.");
     	return false;
@@ -30,8 +33,10 @@ bool __fastcall TUI_ControlSpawnAdd::AppendCallback(SBeforeAppendCallbackParams*
 
 bool __fastcall TUI_ControlSpawnAdd::Start(TShiftState Shift)
 {
-    TfraSpawn* F = (TfraSpawn*)parent_tool->pFrame;
-	if (F->ebAttachObject->Down){
+//    TfraSpawn* F = (TfraSpawn*)parent_tool->pFrame;
+	IM_FrameSpawn &F = imLeftBar.fraSpawn;
+//	if (F->ebAttachObject->Down){
+	if (F.m_attach_object){
 		CCustomObject* from = Scene->RayPickObject(UI->ZFar(), UI->m_CurrentRStart, UI->m_CurrentRNorm, OBJCLASS_DUMMY, 0, 0);
         if (from && from->ClassID!=OBJCLASS_SPAWNPOINT){
             ObjectList 	lst;
@@ -41,7 +46,8 @@ bool __fastcall TUI_ControlSpawnAdd::Start(TShiftState Shift)
                 CSpawnPoint* base = dynamic_cast<CSpawnPoint*>(lst.back()); R_ASSERT(base);
                 if (base->AttachObject(from)){
                     if (!Shift.Contains(ssAlt)){
-                        F->ebAttachObject->Down	= false;
+//                        F->ebAttachObject->Down	= false;
+						F.m_attach_object		= false;
                         ResetActionToSelect		();
                     }
                 }else{

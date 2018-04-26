@@ -439,10 +439,10 @@
     <FILE type="override" value="ImGui\imgui_demo.cpp" translator="Auto">
       <CFLAG1 value=" -w- -VF-"/>
     </FILE>
-    <FILE type="override" value="ImGui\imgui_draw.cpp" translator="Auto">
+    <FILE type="override" value="ImGui\imgui_impl_dx9.cpp" translator="Auto">
       <CFLAG1 value=" -w- -VF-"/>
     </FILE>
-    <FILE type="override" value="ImGui\imgui_impl_dx9.cpp" translator="Auto">
+    <FILE type="override" value="ImGui\imgui_draw.cpp" translator="Auto">
       <CFLAG1 value=" -w- -VF-"/>
     </FILE>
     <FILE type="override" value="ImGui\imgui.cpp" translator="Auto">
