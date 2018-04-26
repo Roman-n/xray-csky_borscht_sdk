@@ -19,6 +19,7 @@ class CCustomMotion;
 class SAnimParams;
 struct SSceneSummary;
 class ESceneCustomOTool;
+class CAnimationPath;
 
 struct SExportStreamItem{
 	int					chunk;
@@ -45,6 +46,7 @@ class ECORE_API CCustomObject
 
 	SAnimParams*	m_MotionParams;
     COMotion*		m_Motion;
+    CAnimationPath* m_MotionPath;
 
     // private animation methods
     void 			AnimationOnFrame	();
@@ -73,6 +75,7 @@ public:
         flRT_NeedSelfDelete	= (1<<2),
     	flRT_Selected		= (1<<3),
     	flRT_Visible		= (1<<4),
+        flRT_Locked			= (1<<5)
     };
     Flags32			m_RT_Flags;
 public:
@@ -131,6 +134,7 @@ public:
 	IC BOOL 		Motionable		()const {return m_CO_Flags.is(flMotion); 	}
 	IC BOOL 		Visible			()const {return m_RT_Flags.is(flRT_Visible);	}
 	IC BOOL 		Selected		()const {return m_RT_Flags.is(flRT_Selected);}
+    IC BOOL			Locked			()const {return m_RT_Flags.is(flRT_Locked);}
     IC BOOL			Valid			()const {return m_RT_Flags.is(flRT_Valid);}
     IC BOOL			IsDeleted		()const {return m_RT_Flags.is(flRT_NeedSelfDelete);}
 
@@ -142,6 +146,7 @@ public:
 
 	virtual void 	Select			(int  flag);
 	virtual void 	Show			(BOOL flag);
+    virtual void	Lock			(BOOL flag);
     void			SetValid		(BOOL flag)	{m_RT_Flags.set(flRT_Valid,flag);}
     void			SetRenderIfSelected(BOOL flag){m_CO_Flags.set(flRenderAnyWayIfSelected,flag);}
 

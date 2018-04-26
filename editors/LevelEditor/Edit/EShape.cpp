@@ -456,7 +456,7 @@ void CEditShape::Render(int priority, bool strictB2F)
             if( Selected()&&m_Box.is_valid() ){
 		        Device.SetShader		(Device.m_SelectionShader);
                 RCache.set_xform_world	(_Transform());
-                u32 clr 				= 0xFFFFFFFF;
+                u32 clr 				= Locked()?0xFFFF0000:0xFFFFFFFF;
                 Device.SetShader		(Device.m_WireShader);
                 DU_impl.DrawSelectionBox(m_Box,&clr);
             }

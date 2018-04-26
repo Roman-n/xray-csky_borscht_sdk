@@ -3,7 +3,7 @@
 #pragma hdrstop
 
 #include "SHGameMtlTools.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
+#include "../xrEProps/PropertiesListHelper.h"
 #include "ui_shadermain.h"
 #include "../xrEProps/folderlib.h"
 #include "UI_ShaderTools.h"

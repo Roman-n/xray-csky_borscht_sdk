@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#include "../../xrServerEntities/PropertiesListHelper.h"
+#include "PropertiesListHelper.h"
 #include "ItemListHelper.h"
 #include "ChoseForm.h"
 //---------------------------------------------------------------------------

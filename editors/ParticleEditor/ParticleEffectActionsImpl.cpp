@@ -4,7 +4,7 @@
 
 #include "ParticleEffectActions.h"
 #include "../xrEProps/folderlib.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
+#include "../xrEProps/PropertiesListHelper.h"
 #include "../../xrParticles/particle_actions_collection.h"
 #include "d3dutils.h"
 

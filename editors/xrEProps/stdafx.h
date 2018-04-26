@@ -15,7 +15,7 @@ namespace CDB{
 	class MODEL;
 };
 
-#include "../../xrServerEntities/xrEProps.h"
+#include "xrEProps.h"
 
 #include "FolderLib.h"                 
 

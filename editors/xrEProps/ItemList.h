@@ -19,7 +19,7 @@
 
 #include "ItemListHelper.h"
 #include "FolderLib.h"
-#include "../../xrServerEntities/PropertiesListTypes.h"
+#include "PropertiesListTypes.h"
           
 class XR_EPROPS_API TItemList: public TForm
 {

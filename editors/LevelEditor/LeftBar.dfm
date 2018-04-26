@@ -1,8 +1,8 @@
 object fraLeftBar: TfraLeftBar
   Left = 0
   Top = 0
-  Width = 495
-  Height = 561
+  Width = 443
+  Height = 495
   HorzScrollBar.ButtonSize = 1
   HorzScrollBar.ParentColor = False
   HorzScrollBar.Visible = False
@@ -20,13 +20,10 @@ object fraLeftBar: TfraLeftBar
   ParentColor = False
   ParentFont = False
   TabOrder = 0
-  DesignSize = (
-    482
-    561)
   object paLeftBar: TPanel
     Left = 0
     Top = 0
-    Width = 482
+    Width = 430
     Height = 553
     Align = alTop
     BevelInner = bvLowered
@@ -37,7 +34,7 @@ object fraLeftBar: TfraLeftBar
     object paScene: TPanel
       Left = 1
       Top = 1
-      Width = 480
+      Width = 428
       Height = 154
       Hint = 'Scene commands'
       Align = alTop
@@ -46,12 +43,12 @@ object fraLeftBar: TfraLeftBar
       ShowHint = True
       TabOrder = 0
       DesignSize = (
-        480
+        428
         154)
       object APHeadLabel2: TLabel
         Left = 1
         Top = 1
-        Width = 478
+        Width = 426
         Height = 13
         Align = alTop
         Alignment = taCenter
@@ -61,7 +58,7 @@ object fraLeftBar: TfraLeftBar
         OnClick = PanelMaximizeClick
       end
       object sbSceneMin: TExtBtn
-        Left = 258
+        Left = 415
         Top = 2
         Width = 11
         Height = 11
@@ -329,18 +326,18 @@ object fraLeftBar: TfraLeftBar
     object paEdit: TPanel
       Left = 1
       Top = 155
-      Width = 480
+      Width = 428
       Height = 65
       Align = alTop
       Color = 10528425
       TabOrder = 1
       DesignSize = (
-        480
+        428
         65)
       object lbTools: TLabel
         Left = 1
         Top = 1
-        Width = 478
+        Width = 426
         Height = 13
         Align = alTop
         Alignment = taCenter
@@ -350,7 +347,7 @@ object fraLeftBar: TfraLeftBar
         OnClick = PanelMaximizeClick
       end
       object sbEditMin: TExtBtn
-        Left = 258
+        Left = 415
         Top = 2
         Width = 11
         Height = 11
@@ -375,9 +372,9 @@ object fraLeftBar: TfraLeftBar
       end
       object ExtBtn7: TExtBtn
         Left = 2
-        Top = 16
-        Width = 107
-        Height = 15
+        Top = 14
+        Width = 103
+        Height = 19
         Align = alNone
         BevelShow = False
         HotTrack = True
@@ -407,7 +404,7 @@ object fraLeftBar: TfraLeftBar
       object ExtBtn8: TExtBtn
         Left = 2
         Top = 31
-        Width = 107
+        Width = 103
         Height = 15
         Align = alNone
         BevelShow = False
@@ -435,12 +432,11 @@ object fraLeftBar: TfraLeftBar
         OnMouseDown = ExtBtn8MouseDown
       end
       object ExtBtn10: TExtBtn
-        Left = 131
+        Left = 112
         Top = 16
-        Width = 107
+        Width = 139
         Height = 15
         Align = alNone
-        Anchors = [akTop]
         BevelShow = False
         HotTrack = True
         HotColor = 15790320
@@ -469,7 +465,7 @@ object fraLeftBar: TfraLeftBar
       object ebProperties: TExtBtn
         Left = 2
         Top = 47
-        Width = 107
+        Width = 103
         Height = 15
         Align = alNone
         BevelShow = False
@@ -487,12 +483,11 @@ object fraLeftBar: TfraLeftBar
         OnClick = ebPropertiesClick
       end
       object ebMultiRename: TExtBtn
-        Left = 131
-        Top = 34
-        Width = 107
+        Left = 112
+        Top = 47
+        Width = 137
         Height = 15
         Align = alNone
-        Anchors = [akTop]
         BevelShow = False
         HotTrack = True
         HotColor = 15790320
@@ -507,17 +502,48 @@ object fraLeftBar: TfraLeftBar
         ParentFont = False
         OnClick = ebMultiRenameClick
       end
+      object ExtBtn3: TExtBtn
+        Left = 112
+        Top = 31
+        Width = 139
+        Height = 15
+        Align = alNone
+        BevelShow = False
+        HotTrack = True
+        HotColor = 15790320
+        BtnColor = 10528425
+        Caption = 'Locking'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        Glyph.Data = {
+          DE000000424DDE00000000000000360000002800000007000000070000000100
+          180000000000A8000000120B0000120B00000000000000000000FFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000FFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFF000000FFFFFFFFFFFFFFFFFF000000FFFFFFFFFFFFFFFFFF00
+          0000FFFFFFFFFFFF000000000000000000FFFFFFFFFFFF000000FFFFFF000000
+          000000000000000000000000FFFFFF0000000000000000000000000000000000
+          00000000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00
+          0000}
+        Kind = knMinimize
+        Margin = 3
+        ParentFont = False
+        Spacing = 3
+        OnMouseDown = ExtBtn3MouseDown
+      end
     end
     object paTarget: TPanel
       Left = 1
       Top = 220
-      Width = 480
+      Width = 428
       Height = 139
       Align = alTop
       Color = 10528425
       TabOrder = 2
       DesignSize = (
-        480
+        428
         139)
       object ebTargetObject: TExtBtn
         Left = 17
@@ -1098,7 +1124,7 @@ object fraLeftBar: TfraLeftBar
       object lbEditMode: TLabel
         Left = 1
         Top = 1
-        Width = 478
+        Width = 426
         Height = 13
         Align = alTop
         Alignment = taCenter
@@ -1108,7 +1134,7 @@ object fraLeftBar: TfraLeftBar
         OnClick = PanelMaximizeClick
       end
       object sbTargetMin: TExtBtn
-        Left = 258
+        Left = 415
         Top = 2
         Width = 11
         Height = 11
@@ -3214,18 +3240,18 @@ object fraLeftBar: TfraLeftBar
     object paSnapList: TPanel
       Left = 1
       Top = 359
-      Width = 480
+      Width = 428
       Height = 115
       Align = alTop
       Color = 10528425
       TabOrder = 3
       DesignSize = (
-        480
+        428
         115)
       object Bevel2: TBevel
         Left = 2
         Top = 46
-        Width = 268
+        Width = 436
         Height = 18
         Anchors = [akLeft, akTop, akRight]
         Shape = bsTopLine
@@ -3234,7 +3260,7 @@ object fraLeftBar: TfraLeftBar
       object Label1: TLabel
         Left = 1
         Top = 1
-        Width = 478
+        Width = 426
         Height = 13
         Align = alTop
         Alignment = taCenter
@@ -3244,7 +3270,7 @@ object fraLeftBar: TfraLeftBar
         OnClick = PanelMaximizeClick
       end
       object ExtBtn16: TExtBtn
-        Left = 258
+        Left = 415
         Top = 2
         Width = 11
         Height = 11
@@ -3270,7 +3296,7 @@ object fraLeftBar: TfraLeftBar
       object ebUseSnapList: TExtBtn
         Left = 2
         Top = 31
-        Width = 268
+        Width = 436
         Height = 15
         Align = alNone
         AllowAllUp = True
@@ -3293,7 +3319,7 @@ object fraLeftBar: TfraLeftBar
       object ExtBtn1: TExtBtn
         Left = 2
         Top = 16
-        Width = 268
+        Width = 436
         Height = 15
         Align = alNone
         Anchors = [akLeft, akTop, akRight]
@@ -3324,7 +3350,7 @@ object fraLeftBar: TfraLeftBar
       object Bevel1: TBevel
         Left = 2
         Top = 64
-        Width = 268
+        Width = 436
         Height = 57
         Anchors = [akLeft, akTop, akRight]
       end
@@ -3368,9 +3394,9 @@ object fraLeftBar: TfraLeftBar
         OnClick = ebSnapListModeClick
       end
       object ebModeInvert: TExtBtn
-        Left = 83
+        Left = 152
         Top = 49
-        Width = 90
+        Width = 134
         Height = 14
         Hint = 'Clear snap list'
         Align = alNone
@@ -3401,9 +3427,9 @@ object fraLeftBar: TfraLeftBar
         OnClick = ebClearSnapClick
       end
       object ebSnapListEdit: TExtBtn
-        Left = 189
+        Left = 333
         Top = 49
-        Width = 49
+        Width = 98
         Height = 14
         Hint = 'Manually edit snap list'
         Align = alNone
@@ -3420,7 +3446,7 @@ object fraLeftBar: TfraLeftBar
       object lbSnapList: TListBox
         Left = 4
         Top = 66
-        Width = 263
+        Width = 433
         Height = 52
         Anchors = [akLeft, akTop, akRight]
         BorderStyle = bsNone
@@ -3441,10 +3467,10 @@ object fraLeftBar: TfraLeftBar
   end
   object paFrames: TPanel
     Left = 0
-    Top = 560
-    Width = 272
+    Top = 553
+    Width = 430
     Height = 41
-    Anchors = [akLeft, akTop, akRight]
+    Align = alBottom
     BevelOuter = bvLowered
     Color = 10528425
     Constraints.MinWidth = 220
@@ -3609,8 +3635,8 @@ object fraLeftBar: TfraLeftBar
     SepLColor = 13158600
     LeftMargin = 10
     Style = msOwnerDraw
-    Left = 189
-    Top = 169
+    Left = 277
+    Top = 97
     object N19: TMenuItem
       Caption = '-'
     end
@@ -3632,6 +3658,13 @@ object fraLeftBar: TfraLeftBar
       OnClick = ebDeleteClick
     end
     object N20: TMenuItem
+      Caption = '-'
+    end
+    object miDuplicate: TMenuItem
+      Caption = 'Duplicate'
+      OnClick = ebDuplicateClick
+    end
+    object N2: TMenuItem
       Caption = '-'
     end
     object Undo1: TMenuItem
@@ -3656,8 +3689,8 @@ object fraLeftBar: TfraLeftBar
     SepLColor = 13158600
     LeftMargin = 10
     Style = msOwnerDraw
-    Left = 189
-    Top = 185
+    Left = 269
+    Top = 65
     object N18: TMenuItem
       Caption = '-'
     end
@@ -3687,8 +3720,8 @@ object fraLeftBar: TfraLeftBar
     SepLColor = 13158600
     LeftMargin = 10
     Style = msOwnerDraw
-    Left = 213
-    Top = 187
+    Left = 317
+    Top = 99
     object N17: TMenuItem
       Caption = '-'
     end
@@ -3798,26 +3831,32 @@ object fraLeftBar: TfraLeftBar
     object Locking1: TMenuItem
       Caption = 'Locking'
       GroupIndex = 1
-      object LockSelected1: TMenuItem
+      object miLockSelected: TMenuItem
         Caption = 'Lock Selected'
+        OnClick = miLockSelectedClick
       end
-      object MenuItem1: TMenuItem
+      object miLockUnselected: TMenuItem
         Caption = 'Lock Unselected'
+        OnClick = miLockUnselectedClick
       end
-      object MenuItem2: TMenuItem
+      object miLockAll: TMenuItem
         Caption = 'Lock All'
+        OnClick = miLockAllClick
       end
       object N6: TMenuItem
         Caption = '-'
       end
-      object MenuItem5: TMenuItem
+      object miUnlockSelected: TMenuItem
         Caption = 'Unlock Selected'
+        OnClick = miUnlockSelectedClick
       end
-      object MenuItem6: TMenuItem
+      object miUnlockUnselected: TMenuItem
         Caption = 'Unlock Unselected'
+        OnClick = miUnlockUnselectedClick
       end
-      object MenuItem7: TMenuItem
+      object miUnlockAll: TMenuItem
         Caption = 'Unlock All'
+        OnClick = miUnlockAllClick
       end
     end
     object Edit1: TMenuItem
@@ -3838,6 +3877,15 @@ object fraLeftBar: TfraLeftBar
         Caption = 'Cut (selection)'
         GroupIndex = 1
         OnClick = ebCutClick
+      end
+      object N16: TMenuItem
+        Caption = '-'
+        GroupIndex = 1
+      end
+      object miDuplicate2: TMenuItem
+        Caption = 'Duplicate (selection)'
+        GroupIndex = 1
+        OnClick = ebDuplicateClick
       end
     end
     object N4: TMenuItem
@@ -4044,6 +4092,52 @@ object fraLeftBar: TfraLeftBar
     object LoadSoundOccluder1: TMenuItem
       Caption = 'Load Sound Occluder'
       OnClick = LoadSoundOccluder1Click
+    end
+  end
+  object pmToolsLocking: TMxPopupMenu
+    Alignment = paCenter
+    AutoPopup = False
+    TrackButton = tbLeftButton
+    MarginStartColor = 10921638
+    MarginEndColor = 2763306
+    BKColor = 10528425
+    SelColor = clBlack
+    SelFontColor = 10526880
+    SepHColor = 1644825
+    SepLColor = 13158600
+    LeftMargin = 10
+    Style = msOwnerDraw
+    Left = 317
+    Top = 99
+    object MenuItem1: TMenuItem
+      Caption = '-'
+    end
+    object MenuItem2: TMenuItem
+      Caption = 'Lock Selected'
+      OnClick = miLockSelectedClick
+    end
+    object MenuItem5: TMenuItem
+      Caption = 'Lock Unselected'
+      OnClick = miLockUnselectedClick
+    end
+    object MenuItem6: TMenuItem
+      Caption = 'Lock All'
+      OnClick = miLockAllClick
+    end
+    object MenuItem7: TMenuItem
+      Caption = '-'
+    end
+    object MenuItem18: TMenuItem
+      Caption = 'Unlock Selected'
+      OnClick = miUnlockSelectedClick
+    end
+    object UnlockUnselected1: TMenuItem
+      Caption = 'Unlock Unselected'
+      OnClick = miUnlockUnselectedClick
+    end
+    object UnlockAll1: TMenuItem
+      Caption = 'Unlock All'
+      OnClick = miUnlockAllClick
     end
   end
 end
