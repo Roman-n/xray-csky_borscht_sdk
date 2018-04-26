@@ -117,6 +117,7 @@
       x:\intermediate_ed\le\GroupObjectUtils.obj 
       x:\intermediate_ed\le\AppendObjectInfoForm.obj 
       x:\intermediate_ed\le\LEClipEditor.obj x:\intermediate_ed\le\FormCoord.obj 
+      x:\intermediate_ed\le\AnimationPath.obj 
       x:\intermediate_ed\le\IM_LeftBar.obj 
       x:\intermediate_ed\le\IM_FrameObject.obj 
       x:\intermediate_ed\le\IM_FrameLight.obj 
@@ -129,8 +130,7 @@
       x:\intermediate_ed\le\IM_FrameWayPoint.obj 
       x:\intermediate_ed\le\IM_FrameSpawn.obj 
       x:\intermediate_ed\le\IM_FrameGroup.obj 
-      x:\intermediate_ed\le\IM_FrameAIMap.obj
-      x:\intermediate_ed\le\AnimationPath.obj"/>
+      x:\intermediate_ed\le\IM_FrameAIMap.obj"/>
     <RESFILES value="LevelEditor.res resource.res"/>
     <IDLFILES value=""/>
     <IDLGENFILES value=""/>

@@ -23,6 +23,7 @@
 
 static void ImGui_Init(HWND hwnd, IDirect3DDevice9 *d3ddevice)
 {
+	ImGui::CreateContext();
     ImGui_ImplDX9_Init(hwnd, d3ddevice);
 
     // load font
@@ -37,6 +38,7 @@ static void ImGui_Init(HWND hwnd, IDirect3DDevice9 *d3ddevice)
 static void ImGui_Shutdown(void)
 {
 	ImGui_ImplDX9_Shutdown();
+    ImGui::DestroyContext();
 }
 
 TUI* 	UI			= 0;
@@ -404,9 +406,9 @@ void TUI::PrepareRedraw()
         ImGui_ImplDX9_NewFrame();
         ImGui::GetIO().DisplaySize = ImVec2(Device.dwWidth, Device.dwHeight);
 
-    	static bool show_test_window = true;
-    	if(show_test_window)
-    		ImGui::ShowTestWindow(&show_test_window);
+    	static bool show_demo_window = true;
+    	if(show_demo_window)
+    		ImGui::ShowDemoWindow(&show_demo_window);
 
     	xr_vector<IM_Window*>::iterator it, end;
     	for(it = imwindows.begin(), end = imwindows.end(); it != end; it++)
@@ -451,8 +453,10 @@ void TUI::Redraw()
 		    	ELog.DlgMsg(mtError, "Please notify AlexMX!!! Critical error has occured in render routine!!! [Type B]");
             }
 
-            if(!b_imgui_rendering)
-            ImGui::Render();
+            if(!b_imgui_rendering) {
+            	ImGui::Render();
+                ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
+            }
 
             // draw selection rect
             if(m_SelectionRect) 	DU_impl.DrawSelectionRect(m_SelStart,m_SelEnd);
