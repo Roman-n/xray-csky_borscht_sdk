@@ -3,6 +3,10 @@
 
 #include "ObjectAnimator.h"
 #include "motion.h"
+
+#ifdef _EDITOR
+#include "AnimationPath.h"
+#endif
  
 bool motion_sort_pred	(COMotion* a, 	COMotion* b)	{	return a->name<b->name;}
 bool motion_find_pred	(COMotion* a, 	shared_str b)	{	return a->name<b;}
@@ -16,6 +20,9 @@ CObjectAnimator::CObjectAnimator()
     m_Current		= 0;
     m_Speed			= 1.f;
 	m_Name			= "";
+#ifdef _EDITOR
+	m_MotionPath	= NULL;
+#endif
 }
 
 CObjectAnimator::~CObjectAnimator()
@@ -36,6 +43,17 @@ void CObjectAnimator::SetActiveMotion(COMotion* mot)
 	m_Current			= mot;
     if (m_Current) 		m_MParam.Set(m_Current);
 	m_XFORM.identity	();
+
+#ifdef _EDITOR
+	if (m_Current) {
+     	if (m_MotionPath)
+        	m_MotionPath->Build(m_Current);
+        else
+        	m_MotionPath = xr_new<CAnimationPath>(m_Current);
+    } else {
+    	xr_delete(m_MotionPath);
+    }
+#endif
 }
 
 void CObjectAnimator::LoadMotions(LPCSTR fname)
@@ -139,40 +157,9 @@ float CObjectAnimator::GetLength		()
 }
 
 #ifdef _EDITOR
-
-#include "../ECORE/editor/d3dutils.h"
-#include "envelope.h"
-
-static FvectorVec path_points;
-
 void CObjectAnimator::DrawPath()
 {
-    // motion path
-	if (m_Current){
-        float fps 				= m_Current->FPS();
-        float min_t				= (float)m_Current->FrameStart()/fps;
-        float max_t				= (float)m_Current->FrameEnd()/fps;
-
-        Fvector 				T,r;
-        u32 clr					= 0xffffffff;
-        path_points.clear		();
-        for (float t=min_t; (t<max_t)||fsimilar(t,max_t,EPS_L); t+=1/30.f){
-            m_Current->_Evaluate(t,T,r);
-            path_points.push_back(T);
-        }
-
-        Device.SetShader		(Device.m_WireShader);
-        RCache.set_xform_world	(Fidentity);
-        if (!path_points.empty())
-        	DU_impl.DrawPrimitiveL		(D3DPT_LINESTRIP,path_points.size()-1,path_points.begin(),path_points.size(),clr,true,false);
-        CEnvelope* E 			= m_Current->Envelope	();
-        for (KeyIt k_it=E->keys.begin(); k_it!=E->keys.end(); k_it++){
-            m_Current->_Evaluate((*k_it)->time,T,r);
-            if (Device.m_Camera.GetPosition().distance_to_sqr(T)<50.f*50.f){
-                DU_impl.DrawCross	(T,0.1f,0.1f,0.1f, 0.1f,0.1f,0.1f, clr,false);
-                DU_impl.OutText		(T,AnsiString().sprintf("K: %3.3f",(*k_it)->time).c_str(),0xffffffff,0x00000000);
-            }
-        }
-    }
+	if(m_MotionPath)
+    	m_MotionPath->Render();
 }
 #endif

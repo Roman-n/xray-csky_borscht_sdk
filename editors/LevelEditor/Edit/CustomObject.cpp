@@ -32,6 +32,7 @@ CCustomObject::CCustomObject(LPVOID data, LPCSTR name)
     m_RT_Flags.set	(flRT_UpdateTransform,TRUE);
     m_Motion		= NULL;
     m_MotionParams 	= NULL;
+    m_MotionPath	= NULL;
     FPosition.set	(0,0,0);
     FScale.set		(1,1,1);
     FRotation.set	(0,0,0);
@@ -42,6 +43,7 @@ CCustomObject::~CCustomObject()
 {
 	xr_delete				(m_Motion);
     xr_delete				(m_MotionParams);
+    xr_delete				(m_MotionPath);
 }
 
 bool CCustomObject::IsRender()

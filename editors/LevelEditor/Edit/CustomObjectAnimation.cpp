@@ -6,15 +6,18 @@
 #include "envelope.h"
 #include "../ECore/Editor/D3DUtils.h"
 #include "../ECore/Editor/ui_main.h"
+#include "AnimationPath.h"
 
 void  CCustomObject::OnMotionableChange(PropValue* sender)
 {
 	if (m_CO_Flags.is(flMotion)){
     	m_Motion		= xr_new<COMotion>();
         m_MotionParams	= xr_new<SAnimParams>();
+        m_MotionPath	= xr_new<CAnimationPath>();
     }else{
     	xr_delete		(m_Motion);
     	xr_delete		(m_MotionParams);
+        xr_delete		(m_MotionPath);
     }
     ExecCommand			(COMMAND_UPDATE_PROPERTIES);
 }
@@ -23,11 +26,15 @@ void CCustomObject::AnimationCreateKey(float t)
 {
     Fvector R;		R.set(-PRotation.x,-PRotation.y,-PRotation.z);
     m_Motion->CreateKey(t,PPosition,R);
+
+    m_MotionPath->Build(m_Motion);
 }
 
 void CCustomObject::AnimationDeleteKey(float t)
 {
     m_Motion->DeleteKey(t);
+
+    m_MotionPath->Build(m_Motion);
 }
 
 //float speed = 0.f;
@@ -60,39 +67,11 @@ void CCustomObject::AnimationOnFrame()
     }
 }
 
-static FvectorVec path_points;
 void CCustomObject::AnimationDrawPath()
 {
     // motion path
-	VERIFY (m_Motion);
-#ifdef _EDITOR
-	if (EPrefs->object_flags.is(epoDrawAnimPath)){
-        float fps 				= m_Motion->FPS();
-        float min_t				= (float)m_Motion->FrameStart()/fps;
-        float max_t				= (float)m_Motion->FrameEnd()/fps;
-
-        Fvector 				T,r;
-        u32 clr					= 0xffffffff;
-        path_points.clear		();
-        for (float t=min_t; (t<max_t)||fsimilar(t,max_t,EPS_L); t+=1/30.f){
-            m_Motion->_Evaluate	(t,T,r);
-            path_points.push_back(T);
-        }
-
-        Device.SetShader		(Device.m_WireShader);
-        RCache.set_xform_world	(Fidentity);
-        if (!path_points.empty())
-        	DU_impl.DrawPrimitiveL		(D3DPT_LINESTRIP,path_points.size()-1,path_points.begin(),path_points.size(),clr,true,false);
-        CEnvelope* E 			= m_Motion->Envelope();
-        for (KeyIt k_it=E->keys.begin(); k_it!=E->keys.end(); k_it++){
-            m_Motion->_Evaluate	((*k_it)->time,T,r);
-            if (Device.m_Camera.GetPosition().distance_to_sqr(T)<50.f*50.f){
-                DU_impl.DrawCross	(T,0.1f,0.1f,0.1f, 0.1f,0.1f,0.1f, clr,false);
-                DU_impl.OutText		(T,AnsiString().sprintf("K: %3.3f",(*k_it)->time).c_str(),0xffffffff,0x00000000);
-            }
-        }
-    }
-#endif    
+	VERIFY (m_MotionPath);
+    m_MotionPath->Render();
 }
 
 void 	CCustomObject::OnMotionControlClick(ButtonValue* value, bool& bModif, bool& bSafe)
@@ -175,6 +154,7 @@ void 	CCustomObject::OnMotionCommandsClick(ButtonValue* value, bool& bModif, boo
         	m_MotionParams->max_t=mx;
 			m_Motion->SetParam	(m_MotionParams->min_t*30.f,m_MotionParams->max_t*30.f,30.f);
         }
+        m_MotionPath->Build		(m_Motion);
     }break;
     case 3:{
     	TProperties* P 		= TProperties::CreateModalForm("Normalize keys");
@@ -193,6 +173,7 @@ void 	CCustomObject::OnMotionCommandsClick(ButtonValue* value, bool& bModif, boo
         	m_MotionParams->max_t=mx;
  			m_Motion->SetParam	(m_MotionParams->min_t*30.f,m_MotionParams->max_t*30.f,30.f);
         }
+        m_MotionPath->Build		(m_Motion);
     }break;
     case 4:{
     	float mn,mx;
@@ -200,6 +181,7 @@ void 	CCustomObject::OnMotionCommandsClick(ButtonValue* value, bool& bModif, boo
         m_MotionParams->min_t	= mn;
         m_MotionParams->max_t	= mx;
         m_Motion->SetParam		(mn*30.f,mx*30.f,30.f);
+        m_MotionPath->Build		(m_Motion);
     }break;
 	}
     AnimationUpdate			(m_MotionParams->Frame());
@@ -216,6 +198,7 @@ void 	CCustomObject::OnMotionFilesClick(ButtonValue* value, bool& bModif, bool& 
         if(EFS.GetOpenName("$game_anims$", fn)){
             m_Motion->LoadMotion(fn.c_str());
             m_MotionParams->Set	(m_Motion);
+            m_MotionPath->Build	(m_Motion); 
             AnimationUpdate		(m_MotionParams->Frame());
 			bModif 				= true;
 		    ExecCommand			(COMMAND_UPDATE_PROPERTIES);
