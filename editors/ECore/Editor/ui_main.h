@@ -234,7 +234,8 @@ public:
     SPBItem*		ProgressLast		(){return m_ProgressItems.empty()?0:m_ProgressItems.back();}
 
     xr_vector<IM_Window*> imwindows;
-    void AddIMWindow(IM_Window *wnd);
+    void AddIMWindow(IM_Window* wnd);
+    void RemoveIMWindow(IM_Window* wnd);
 };
 //---------------------------------------------------------------------------
 extern ECORE_API TUI* UI;  

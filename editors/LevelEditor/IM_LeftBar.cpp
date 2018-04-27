@@ -2,7 +2,8 @@
 #pragma hdrstop
 
 #include "IM_LeftBar.h"
-#include "..\ECore\ImGui\imgui.h"
+#include "../ECore/ImGui/utf8.h"
+#include "../ECore/ImGui/imgui.h"
 
 #include "UI_LevelMain.h"
 #include "UI_LevelTools.h"
@@ -10,17 +11,57 @@
 #include "CustomObject.h"
 #include "FrmDBXPacker.h"
 
+void IM_LeftBar::OnAdd()
+{
+	m_title = wide2utf8(L"Редактор уровней X-Ray 1.8");
+
+    fraObject.OnAdd();
+    fraLight.OnAdd();
+    fraFogVol.OnAdd();
+    fraDetail.OnAdd();
+    fraSector.OnAdd();
+    fraPortal.OnAdd();
+    fraShape.OnAdd();
+    fraPS.OnAdd();
+    fraWayPoint.OnAdd();
+    fraSpawn.OnAdd();
+    fraGroup.OnAdd();
+    fraAIMap.OnAdd();
+
+	IM_Storage storage(false, "level.ini", "IM_LeftBar");
+
+    m_enable_snap_list = storage.GetBool("enable_snap_list");
+    m_select_snap_objs_mode = storage.GetBool("select_snap_objs_mode");
+    m_detach_tool_frame = storage.GetBool("detach_tool_frame");
+}
+
+void IM_LeftBar::OnRemove()
+{
+    fraObject.OnRemove();
+    fraLight.OnRemove();
+    fraFogVol.OnRemove();
+    fraDetail.OnRemove();
+    fraSector.OnRemove();
+    fraPortal.OnRemove();
+    fraShape.OnRemove();
+    fraPS.OnRemove();
+    fraWayPoint.OnRemove();
+    fraSpawn.OnRemove();
+    fraGroup.OnRemove();
+    fraAIMap.OnRemove();
+
+	IM_Storage storage(true, "level.ini", "IM_LeftBar");
+
+    storage.PutBool("enable_snap_list", m_enable_snap_list);
+    storage.PutBool("select_snap_objs_mode", m_select_snap_objs_mode);
+    storage.PutBool("detach_tool_frame", m_detach_tool_frame);
+}
+
 void IM_LeftBar::Render()
 {
 	ImGui::Begin("Level Editor", NULL);
 
-    // UTF-8 "Редактор уровней X-Ray 1.8"
-    const char *title =
-    "\xD0\xA0\xD0\xB5\xD0\xB4\xD0\xB0\xD0\xBA\xD1\x82\xD0"
-    "\xBE\xD1\x80\x20\xD1\x83\xD1\x80\xD0\xBE\xD0\xB2\xD0\xBD"
-	"\xD0\xB5\xD0\xB9\x20\x58\x2D\x52\x61\x79\x20\x31\x2E\x38";
-
-    ImGui::TextUnformatted(title);
+    ImGui::TextUnformatted(&*m_title.begin(), &*m_title.end());
 
     if(ImGui::CollapsingHeader("Scene",
     ImGuiTreeNodeFlags_Framed|ImGuiTreeNodeFlags_DefaultOpen))
@@ -229,6 +270,24 @@ void IM_LeftBar::Render()
         	ImGui::EndMenu();
         }
 
+        if(ImGui::BeginMenu("Locking"))
+        {
+        	if(ImGui::MenuItem("Lock selection"))
+            	ExecCommand(COMMAND_LOCK_SEL, TRUE);
+            if(ImGui::MenuItem("Lock unselected"))
+            	ExecCommand(COMMAND_LOCK_UNSEL, TRUE);
+            if(ImGui::MenuItem("Lock all"))
+            	ExecCommand(COMMAND_LOCK_ALL, TRUE);
+            ImGui::Separator();
+            if(ImGui::MenuItem("Unlock selection"))
+            	ExecCommand(COMMAND_LOCK_SEL, FALSE);
+            if(ImGui::MenuItem("Unlock unselected"))
+            	ExecCommand(COMMAND_LOCK_UNSEL, FALSE);
+            if(ImGui::MenuItem("Unlock all"))
+            	ExecCommand(COMMAND_LOCK_ALL, FALSE);
+        	ImGui::EndMenu();
+        }
+
         if(ImGui::MenuItem("Multi rename"))
         	ExecCommand(COMMAND_MULTI_RENAME_OBJECTS);
 
@@ -330,7 +389,7 @@ void IM_LeftBar::Render()
     }
     else
     {
-    	bool detach = ImGui::SmallButton("<");
+    	bool detach = ImGui::Button(" ", ImVec2(-1, 5));
 		RenderToolFrame();
         m_detach_tool_frame = detach;
     }

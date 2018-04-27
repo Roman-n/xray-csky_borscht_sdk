@@ -118,16 +118,33 @@ void IM_FrameObject::RefreshList()
     }
 }
 
+void IM_FrameObject::OnAdd()
+{
+	m_parent_tool = dynamic_cast<ESceneObjectTool*>(Scene->GetTool(OBJCLASS_SCENEOBJECT));
+	VERIFY(m_parent_tool);
+	RefreshList();
+
+    IM_Storage storage(false, "level.ini", "IM_FrameObject");
+
+    m_random_append = storage.GetBool("random_append");
+    m_select_percent = storage.GetInt("select_percent", 0);
+
+	m_objects_tree.Select(storage.GetString("selected_object").c_str(), true);
+}
+
+void IM_FrameObject::OnRemove()
+{
+	IM_Storage storage(true, "level.ini", "IM_FrameObject");
+
+    storage.PutBool("random_append", m_random_append);
+    storage.PutInt("select_percent", m_select_percent);
+
+    shared_str sel_obj = m_objects_tree.GetSelected();
+    storage.PutString("selected_object", !sel_obj ? "" : sel_obj.c_str());
+}
+
 void IM_FrameObject::Render()
 {
-	if(!m_initialized)
-    {
-    	m_parent_tool = dynamic_cast<ESceneObjectTool*>(Scene->GetTool(OBJCLASS_SCENEOBJECT));
-        VERIFY(m_parent_tool);
-    	RefreshList();
-        m_initialized = true;
-    }
-
     if(ImGui::CollapsingHeader("Commands",
     ImGuiTreeNodeFlags_Framed|ImGuiTreeNodeFlags_DefaultOpen))
     {

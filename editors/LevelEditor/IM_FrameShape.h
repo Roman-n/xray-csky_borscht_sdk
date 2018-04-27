@@ -27,6 +27,8 @@ class IM_FrameShape : public IM_Window
     {
     }
 
+    virtual void OnAdd();
+    virtual void OnRemove();
     virtual void Render();
 };
 

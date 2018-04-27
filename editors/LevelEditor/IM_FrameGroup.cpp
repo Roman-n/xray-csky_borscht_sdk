@@ -63,14 +63,29 @@ void IM_FrameGroup::SelByRefObject(bool flag)
     }
 }
 
+void IM_FrameGroup::OnAdd()
+{
+	m_parent_tool = dynamic_cast<ESceneGroupTool*>(Scene->GetTool(OBJCLASS_GROUP));
+	VERIFY(m_parent_tool);
+
+    IM_Storage storage(false, "level.ini", "IM_FrameGroup");
+
+    m_select_percent = storage.GetInt("select_percent", 0);
+    m_current = storage.GetString("current", "");
+    if(!m_current.empty())
+    	m_parent_tool->SetCurrentObject(m_current.c_str());
+}
+
+void IM_FrameGroup::OnRemove()
+{
+	IM_Storage storage(true, "level.ini", "IM_FrameGroup");
+
+    storage.PutInt("select_percent", m_select_percent);
+    storage.PutString("current", m_current);
+}
+
 void IM_FrameGroup::Render()
 {
-	if(!m_parent_tool)
-    {
-    	m_parent_tool = dynamic_cast<ESceneGroupTool*>(Scene->GetTool(OBJCLASS_GROUP));
-        VERIFY(m_parent_tool);
-    }
-
 	if(ImGui::CollapsingHeader("Commands",
     ImGuiTreeNodeFlags_Framed|ImGuiTreeNodeFlags_DefaultOpen))
     {

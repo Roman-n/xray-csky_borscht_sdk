@@ -61,14 +61,23 @@ void IM_FramePS::RefreshList()
     }
 }
 
+void IM_FramePS::OnAdd()
+{
+	RefreshList();
+
+    IM_Storage storage(false, "level.ini", "IM_FramePS");
+    m_particles.Select(storage.GetString("current").c_str(), true);
+}
+
+void IM_FramePS::OnRemove()
+{
+	IM_Storage storage(true, "level.ini", "IM_FramePS");
+    LPCSTR current = Current();
+    storage.PutString("current", current ? current : "");
+}
+
 void IM_FramePS::Render()
 {
-	if(!m_initialized)
-    {
-    	RefreshList();
-        m_initialized = true;
-    }
-
     if(ImGui::CollapsingHeader("PS Commands",
     ImGuiTreeNodeFlags_Framed|ImGuiTreeNodeFlags_DefaultOpen))
     {

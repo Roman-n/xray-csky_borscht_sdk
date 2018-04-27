@@ -73,6 +73,12 @@ TUI::~TUI()
 {
 	VERIFY(m_ProgressItems.size()==0);
     VERIFY(m_EditorState.size()==0);
+
+    xr_vector<IM_Window*>::iterator it, end;
+	for(it = imwindows.begin(), end = imwindows.end(); it != end; it++)
+    {
+    	(*it)->OnRemove();
+    }
 }
 
 void TUI::OnDeviceCreate()
@@ -156,8 +162,10 @@ void TUI::MousePress(TShiftState Shift, int X, int Y)
 
     m_ShiftState = Shift;
 
-    ImGui::GetIO().MouseDown[0] = true;
-        
+    ImGui::GetIO().MouseDown[0] = Shift.Contains(ssLeft);
+    ImGui::GetIO().MouseDown[1] = Shift.Contains(ssRight);
+    ImGui::GetIO().MouseDown[2] = Shift.Contains(ssMiddle);
+
     // camera activate
     if(!ImGui::GetIO().WantCaptureMouse && !Device.m_Camera.MoveStart(m_ShiftState)){
     	if (Tools->Pick(Shift)) return;
@@ -186,7 +194,9 @@ void TUI::MouseRelease(TShiftState Shift, int X, int Y)
 
     m_ShiftState = Shift;
 
-    ImGui::GetIO().MouseDown[0] = false;
+    ImGui::GetIO().MouseDown[0] = Shift.Contains(ssLeft);
+    ImGui::GetIO().MouseDown[1] = Shift.Contains(ssRight);
+    ImGui::GetIO().MouseDown[2] = Shift.Contains(ssMiddle);
 
     // editor may need to know about mouse release even it hover imgui window
     
@@ -695,5 +705,20 @@ void SPBItem::Info				(LPCSTR text, bool bWarn)
 void TUI::AddIMWindow(IM_Window *wnd)
 {
 	imwindows.push_back(wnd);
+    wnd->OnAdd();
+}
+
+void TUI::RemoveIMWindow(IM_Window* wnd)
+{
+	xr_vector<IM_Window*>::iterator it, end;
+	for(it = imwindows.begin(), end = imwindows.end(); it != end; it++)
+    {
+    	if(*it == wnd)
+        {
+        	(*it)->OnRemove();
+        	imwindows.erase(it);
+            return;
+        }
+    }
 }
 

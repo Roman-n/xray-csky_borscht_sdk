@@ -41,11 +41,16 @@ class IM_LeftBar : public IM_Window
 
     bool m_detach_tool_frame;
 
+    xr_string m_title;
+
 	public:
     IM_LeftBar()
     	: m_detach_tool_frame(false)
     {
     }
+
+    virtual void OnAdd();
+    virtual void OnRemove();
 
     virtual void Render();
     void RenderToolFrame();

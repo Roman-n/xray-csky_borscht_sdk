@@ -174,7 +174,7 @@
       x:\intermediate_ed\ecore\imgui_draw.obj 
       x:\intermediate_ed\ecore\imgui_impl_dx9.obj 
       x:\intermediate_ed\ecore\IM_Log.obj x:\intermediate_ed\ecore\IM_Tree.obj 
-      x:\intermediate_ed\ecore\utf8.obj"/>
+      x:\intermediate_ed\ecore\utf8.obj x:\intermediate_ed\ecore\IM_Window.obj"/>
     <RESFILES value="resource.res"/>
     <IDLFILES value=""/>
     <IDLGENFILES value=""/>
@@ -431,6 +431,7 @@
       <FILE FILENAME="ImGui\IM_Log.cpp" FORMNAME="" UNITNAME="IM_Log.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="ImGui\IM_Tree.cpp" FORMNAME="" UNITNAME="IM_Tree.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="ImGui\utf8.cpp" FORMNAME="" UNITNAME="utf8" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="ImGui\IM_Window.cpp" FORMNAME="" UNITNAME="IM_Window" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
   </FILELIST>
   <BUILDTOOLS>
   </BUILDTOOLS>
@@ -439,10 +440,10 @@
     <FILE type="override" value="ImGui\imgui_demo.cpp" translator="Auto">
       <CFLAG1 value=" -w- -VF-"/>
     </FILE>
-    <FILE type="override" value="ImGui\imgui_draw.cpp" translator="Auto">
+    <FILE type="override" value="ImGui\imgui_impl_dx9.cpp" translator="Auto">
       <CFLAG1 value=" -w- -VF-"/>
     </FILE>
-    <FILE type="override" value="ImGui\imgui_impl_dx9.cpp" translator="Auto">
+    <FILE type="override" value="ImGui\imgui_draw.cpp" translator="Auto">
       <CFLAG1 value=" -w- -VF-"/>
     </FILE>
     <FILE type="override" value="ImGui\imgui.cpp" translator="Auto">

@@ -8,15 +8,13 @@ class IM_FrameSpawn : public IM_Window
 {
 	public:
     IM_Tree m_spawns;
-    bool m_initialized;
 
     int m_select_percent;
     bool m_attach_object;
 
     public:
     IM_FrameSpawn()
-    	: m_initialized(false),
-          m_select_percent(0),
+    	: m_select_percent(0),
           m_attach_object(false)
     {
     }
@@ -25,6 +23,8 @@ class IM_FrameSpawn : public IM_Window
     void RefreshList();
     void MultiSelByRefObject(bool remove_current);
     void SelByRefObject(bool flag);
+    virtual void OnAdd();
+    virtual void OnRemove();
     virtual void Render();
 };
 

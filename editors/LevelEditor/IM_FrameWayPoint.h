@@ -26,6 +26,8 @@ class IM_FrameWayPoint : public IM_Window
     void ConvertTo2Links();
     void RemoveLinks();
 
+    virtual void OnAdd();
+    virtual void OnRemove();
     virtual void Render();
 };
 

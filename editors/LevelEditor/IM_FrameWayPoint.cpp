@@ -93,6 +93,18 @@ void IM_FrameWayPoint::RemoveLinks()
     ExecCommand(COMMAND_UPDATE_PROPERTIES);
 }
 
+void IM_FrameWayPoint::OnAdd()
+{
+	IM_Storage storage(false, "level.ini", "IM_FrameWayPoint");
+    m_auto_link = storage.GetBool("auto_link", true);
+}
+
+void IM_FrameWayPoint::OnRemove()
+{
+	IM_Storage storage(true, "level.ini", "IM_FrameWayPoint");
+    storage.PutBool("auto_link", m_auto_link);
+}
+
 void IM_FrameWayPoint::Render()
 {
 	if(ImGui::CollapsingHeader("Way Mode",

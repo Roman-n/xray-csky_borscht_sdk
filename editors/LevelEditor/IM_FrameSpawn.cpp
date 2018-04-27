@@ -92,14 +92,24 @@ void IM_FrameSpawn::SelByRefObject(bool flag)
     }
 }
 
+void IM_FrameSpawn::OnAdd()
+{
+	RefreshList();
+
+    IM_Storage storage(false, "level.ini", "IM_FrameSpawn");
+    m_select_percent = storage.GetInt("select_percent", 0);
+    m_spawns.Select(storage.GetString("current").c_str(), true);
+}
+
+void IM_FrameSpawn::OnRemove()
+{
+	IM_Storage storage(true, "level.ini", "IM_FrameSpawn");
+    storage.PutInt("select_percent", m_select_percent);
+    storage.PutString("current", Current()?Current():"");
+}
+
 void IM_FrameSpawn::Render()
 {
-	if(!m_initialized)
-    {
-    	RefreshList();
-        m_initialized = true;
-    }
-
 	if(ImGui::CollapsingHeader("Reference Select",
     ImGuiTreeNodeFlags_Framed|ImGuiTreeNodeFlags_DefaultOpen))
     {

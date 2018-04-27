@@ -17,3 +17,12 @@ ECORE_API xr_string codepage2utf8(const xr_string &str)
     WideCharToMultiByte(CP_UTF8, 0, &*wstr.begin(), wstr.size(), &*result.begin(), result.size(), NULL, NULL);
     return result;
 }
+
+ECORE_API xr_string wide2utf8(const std::wstring &wstr)
+{
+    size_t sz = WideCharToMultiByte(CP_UTF8, 0, &*wstr.begin(), wstr.size(), NULL, 0, NULL, NULL);
+    xr_string result;
+    result.resize(sz);
+    WideCharToMultiByte(CP_UTF8, 0, &*wstr.begin(), wstr.size(), &*result.begin(), result.size(), NULL, NULL);
+    return result;
+}

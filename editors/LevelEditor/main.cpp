@@ -33,7 +33,6 @@ TfrmMain *frmMain;
 #include "ResourceManager.h"
 #include "../xrEProps/EditorChooseEvents.h"
 
-
 __fastcall TfrmMain::TfrmMain(TComponent* Owner)
         : TForm(Owner)
 {
@@ -263,6 +262,15 @@ void __fastcall TfrmMain::paRenderResize(TObject *Sender)
 void __fastcall TfrmMain::fsStorageSavePlacement(TObject *Sender)
 {
     fsStorage->WriteInteger("window_state",frmMain->WindowState);
+}
+//---------------------------------------------------------------------------
+#include "../ECore/ImGui/imgui.h"
+void __fastcall TfrmMain::FormMouseWheel(TObject *Sender,
+      TShiftState Shift, int WheelDelta, TPoint &MousePos, bool &Handled)
+{
+	ImGui::GetIO().MouseWheel = float(WheelDelta) * .025f;
+    if(ImGui::GetIO().WantCaptureMouse)
+    	Handled = true;
 }
 //---------------------------------------------------------------------------
 

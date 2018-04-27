@@ -34,6 +34,8 @@ class IM_FrameAIMap : public IM_Window
     void LoadCompilerErrors();
     void MakeLink(int side);
 
+    virtual void OnAdd();
+    virtual void OnRemove();
     virtual void Render();
 };
 

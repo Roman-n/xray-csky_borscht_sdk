@@ -23,6 +23,8 @@ class IM_FrameGroup : public IM_Window
     void MultiSelByRefObject(bool clear_prev);
     void SelByRefObject(bool flag);
 
+    virtual void OnAdd();
+    virtual void OnRemove();
     virtual void Render();
 };
 

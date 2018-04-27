@@ -63,14 +63,45 @@ void IM_FrameAIMap::MakeLink(int side)
     UI->RedrawScene();
 }
 
+void IM_FrameAIMap::OnAdd()
+{
+	m_parent_tool = dynamic_cast<ESceneAIMapTool*>(Scene->GetTool(OBJCLASS_AIMAP));
+	VERIFY(m_parent_tool);
+
+    IM_Storage storage(false, "level.ini", "IM_FrameAIMap");
+
+    m_ignore_constraints = storage.GetBool("ignore_constraints", false);
+    m_auto_link = storage.GetBool("auto_link", true);
+
+    xr_string link_mode = storage.GetString("link_mode", "add");
+    if(link_mode == "add")
+    {
+    	m_link_add = true;
+        m_link_del = m_link_invert = false;
+    }
+    else if(link_mode == "del")
+    {
+    	m_link_del = true;
+        m_link_add = m_link_invert = false;
+    }
+    else
+    {
+    	m_link_invert = true;
+        m_link_add = m_link_del = false;
+    }
+}
+
+void IM_FrameAIMap::OnRemove()
+{
+	IM_Storage storage(true, "level.ini", "IM_FrameAIMap");
+    storage.PutBool("ignore_constraints", m_ignore_constraints);
+    storage.PutBool("auto_link", m_auto_link);
+	storage.PutString("link_mode",
+    m_link_add ? "add" : m_link_del ? "del" : "invert");
+}
+
 void IM_FrameAIMap::Render()
 {
-	if(!m_parent_tool)
-    {
-    	m_parent_tool = dynamic_cast<ESceneAIMapTool*>(Scene->GetTool(OBJCLASS_AIMAP));
-        VERIFY(m_parent_tool);
-    }
-
     if(ImGui::CollapsingHeader("AI Map Commands",
     ImGuiTreeNodeFlags_Framed|ImGuiTreeNodeFlags_DefaultOpen))
     {
