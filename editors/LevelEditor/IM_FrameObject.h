@@ -15,11 +15,18 @@ class IM_FrameObject : public IM_Window
     bool m_random_append;
     int m_select_percent;
 
+    bool m_show_commands;
+    bool m_show_refselect;
+    bool m_show_currentobject;
+
 	public:
     IM_FrameObject()
     	: m_parent_tool(NULL),
           m_random_append(false),
-          m_select_percent(0)
+          m_select_percent(0),
+          m_show_commands(true),
+          m_show_refselect(true),
+          m_show_currentobject(true)
     {
     }
 

@@ -8,14 +8,19 @@ class ESceneFogVolumeTool;
 class IM_FrameFogVol : public IM_Window
 {
 	public:
-    ESceneFogVolumeTool *parent_tool;
+    ESceneFogVolumeTool *m_parent_tool;
+
+    bool m_show_commands;
 
 	public:
     IM_FrameFogVol()
-    	: parent_tool(NULL)
+    	: m_parent_tool(NULL),
+          m_show_commands(true)
     {
     }
 
+    virtual void OnAdd();
+    virtual void OnRemove();
     virtual void Render();
 };
 

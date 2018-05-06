@@ -39,13 +39,15 @@ class IM_LeftBar : public IM_Window
     bool m_show_editmode;
     bool m_show_snaplist;
 
+    bool m_detach_main_menu;
     bool m_detach_tool_frame;
 
     xr_string m_title;
 
 	public:
     IM_LeftBar()
-    	: m_detach_tool_frame(false)
+    	: m_detach_tool_frame(false),
+          m_detach_main_menu(false)
     {
     }
 
@@ -54,6 +56,8 @@ class IM_LeftBar : public IM_Window
 
     virtual void Render();
     void RenderToolFrame();
+    void RenderMainMenu();
+    void RenderToolsMenu();
 };
 
 extern IM_LeftBar imLeftBar;

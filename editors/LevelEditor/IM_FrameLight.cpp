@@ -24,10 +24,21 @@ void IM_FrameLight::UseInD3D(bool bAll, bool bFlag)
 //    UI->RedrawScene();
 }
 
+void IM_FrameLight::OnAdd()
+{
+    IM_Storage s(false, "level.ini", "IM_FrameLight");
+    m_show_useind3d = s.GetBool("show_useind3d_panel", true);
+}
+
+void IM_FrameLight::OnRemove()
+{
+    IM_Storage s(true, "level.ini", "IM_FrameLight");
+    s.PutBool("show_useind3d_panel", m_show_useind3d);
+}
+
 void IM_FrameLight::Render()
 {
-	if(ImGui::CollapsingHeader("Affect in D3D",
-    ImGuiTreeNodeFlags_Framed|ImGuiTreeNodeFlags_DefaultOpen))
+	if(ImGui::CollapsingPanel("Affect in D3D", &m_show_useind3d))
     {
     	ImGui::Columns(2, NULL, false);
 

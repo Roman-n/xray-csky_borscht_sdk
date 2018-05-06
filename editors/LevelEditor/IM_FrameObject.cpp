@@ -124,29 +124,36 @@ void IM_FrameObject::OnAdd()
 	VERIFY(m_parent_tool);
 	RefreshList();
 
-    IM_Storage storage(false, "level.ini", "IM_FrameObject");
+    IM_Storage s(false, "level.ini", "IM_FrameObject");
 
-    m_random_append = storage.GetBool("random_append");
-    m_select_percent = storage.GetInt("select_percent", 0);
+    m_random_append = s.GetBool("random_append");
+    m_select_percent = s.GetInt("select_percent", 0);
 
-	m_objects_tree.Select(storage.GetString("selected_object").c_str(), true);
+	m_objects_tree.Select(s.GetString("selected_object").c_str(), true);
+
+    m_show_commands = s.GetBool("show_commands_panel", true);
+    m_show_refselect = s.GetBool("show_refselect_panel", true);
+    m_show_currentobject = s.GetBool("show_currentobject_panel", true);
 }
 
 void IM_FrameObject::OnRemove()
 {
-	IM_Storage storage(true, "level.ini", "IM_FrameObject");
+	IM_Storage s(true, "level.ini", "IM_FrameObject");
 
-    storage.PutBool("random_append", m_random_append);
-    storage.PutInt("select_percent", m_select_percent);
+    s.PutBool("random_append", m_random_append);
+    s.PutInt("select_percent", m_select_percent);
 
     shared_str sel_obj = m_objects_tree.GetSelected();
-    storage.PutString("selected_object", !sel_obj ? "" : sel_obj.c_str());
+    s.PutString("selected_object", !sel_obj ? "" : sel_obj.c_str());
+
+    s.PutBool("show_commands_panel", m_show_commands);
+    s.PutBool("show_refselect_panel", m_show_refselect);
+    s.PutBool("show_currentobject_panel", m_show_currentobject);
 }
 
 void IM_FrameObject::Render()
 {
-    if(ImGui::CollapsingHeader("Commands",
-    ImGuiTreeNodeFlags_Framed|ImGuiTreeNodeFlags_DefaultOpen))
+    if(ImGui::CollapsingPanel("Commands", &m_show_commands))
     {
         if(ImGui::MenuItem("Multiple Append"))
         	MultipleAppend();
@@ -169,12 +176,13 @@ void IM_FrameObject::Render()
         ImGui::Columns(1);
     }
 
-    if(ImGui::CollapsingHeader("Reference select",
-    ImGuiTreeNodeFlags_Framed|ImGuiTreeNodeFlags_DefaultOpen))
+    if(ImGui::CollapsingPanel("Reference select", &m_show_refselect))
     {
     	ImGui::Columns(2, "ref_select", false);
 
+        ImGui::AlignTextToFramePadding();
     	ImGui::TextUnformatted("Select by Current:\t");
+        ImGui::AlignTextToFramePadding();
         ImGui::TextUnformatted("Select by Selected:\t");
 
         ImGui::NextColumn();
@@ -196,8 +204,7 @@ void IM_FrameObject::Render()
         ImGui::SliderInt("%", &m_select_percent, 0, 100);
     }
 
-    if(ImGui::CollapsingHeader("Current object",
-    ImGuiTreeNodeFlags_Framed|ImGuiTreeNodeFlags_DefaultOpen))
+    if(ImGui::CollapsingPanel("Current object", &m_show_currentobject))
     {
     	if(ImGui::MenuItem("Select..."))
         {

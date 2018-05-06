@@ -130,7 +130,7 @@
       x:\intermediate_ed\le\IM_FrameWayPoint.obj 
       x:\intermediate_ed\le\IM_FrameSpawn.obj 
       x:\intermediate_ed\le\IM_FrameGroup.obj 
-      x:\intermediate_ed\le\IM_FrameAIMap.obj"/>
+      x:\intermediate_ed\le\IM_FrameAIMap.obj x:\intermediate_ed\le\IM_TopBar.obj"/>
     <RESFILES value="LevelEditor.res resource.res"/>
     <IDLFILES value=""/>
     <IDLGENFILES value=""/>
@@ -352,6 +352,7 @@
       <FILE FILENAME="IM_FrameSpawn.cpp" FORMNAME="" UNITNAME="IM_FrameSpawn" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="IM_FrameGroup.cpp" FORMNAME="" UNITNAME="IM_FrameGroup" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="IM_FrameAIMap.cpp" FORMNAME="" UNITNAME="IM_FrameAIMap" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="IM_TopBar.cpp" FORMNAME="" UNITNAME="IM_TopBar" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
   </FILELIST>
   <BUILDTOOLS>
   </BUILDTOOLS>

@@ -850,49 +850,46 @@ CCommandVar CommandRefreshSnapObjects(CCommandVar p1, CCommandVar p2)
     fraLeftBar->UpdateSnapList();
     return 						TRUE;
 }
+#include "../../ECore/ImGui/IM_TextEditor.h"
 CCommandVar CommandEditSnapObjects(CCommandVar p1, CCommandVar p2)
 {
-	if(Scene->locked())
-    {
+	if(Scene->locked()) {
     	ELog.DlgMsg(mtError, "Scene sharing violation");
         return FALSE;
     }
 
-	AnsiString snap_list;
+	xr_string snap_list;
     ObjectList *list = Scene->GetSnapList(true);
 
-    if(list && !list->empty())
-    {
+    if(list && !list->empty()) {
     	ObjectIt I = list->begin();
-
-        while(I != list->end())
-        {
-        	snap_list += AnsiString((*I)->Name) + "\r\n";
+        while(I != list->end()){
+        	snap_list += xr_string((*I)->Name) + "\r\n";
         	I++;
         }
     }
 
-    if(TfrmText::RunEditor(snap_list, "Snap list"))
-    {
-    	Scene->ClearSnapList(true);
-
-        char *s = xr_strdup(snap_list.c_str()), *t;
-
-        t = strtok(s, "\r\n");
-		while(t)
+    struct Callback {
+    	static void Ok(IM_TextEditor* ed)
         {
-        	CCustomObject *o = Scene->FindObjectByName(t, OBJCLASS_SCENEOBJECT);
+        	Scene->ClearSnapList(true);
 
-            if(o)
-            	Scene->AddToSnapList(o, false);
+            char *s = xr_strdup(ed->GetText().c_str()), *t;
+        	t = strtok(s, "\r\n");
+			while(t) {
+        		CCustomObject *o = Scene->FindObjectByName(t, OBJCLASS_SCENEOBJECT);
+            	if(o)
+            		Scene->AddToSnapList(o, false);
+            	t = strtok(NULL, "\r\n");
+        	}
+        	xr_free(s);
 
-            t = strtok(NULL, "\r\n");
+            fraLeftBar->UpdateSnapList();
         }
+    };
 
-        xr_free(s);
-    }
+	UI->AddIMWindow(xr_new<IM_TextEditor>("Snap list", snap_list, 0, &Callback::Ok));
 
-    fraLeftBar->UpdateSnapList();
 	return TRUE;
 }
 CCommandVar CommandRefreshSoundEnvs(CCommandVar p1, CCommandVar p2)

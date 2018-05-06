@@ -230,6 +230,8 @@ void TUI::MouseMove(TShiftState Shift, int X, int Y)
 
     ImGui::GetIO().MousePos.x = ((float)X * Device.m_ScreenQuality);
     ImGui::GetIO().MousePos.y = ((float)Y * Device.m_ScreenQuality);
+
+    RedrawScene();
 }
 //----------------------------------------------------
 void TUI::IR_OnMouseMove(int x, int y){

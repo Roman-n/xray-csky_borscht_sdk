@@ -271,6 +271,8 @@ void __fastcall TfrmMain::FormMouseWheel(TObject *Sender,
 	ImGui::GetIO().MouseWheel = float(WheelDelta) * .025f;
     if(ImGui::GetIO().WantCaptureMouse)
     	Handled = true;
+
+    UI->RedrawScene(false);
 }
 //---------------------------------------------------------------------------
 

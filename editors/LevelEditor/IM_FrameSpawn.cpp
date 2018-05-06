@@ -115,7 +115,9 @@ void IM_FrameSpawn::Render()
     {
     	ImGui::Columns(2, "ref_select", false);
 
+        ImGui::AlignTextToFramePadding();
     	ImGui::TextUnformatted("Select by Current:\t");
+        ImGui::AlignTextToFramePadding();
         ImGui::TextUnformatted("Select by Selected:\t");
 
         ImGui::NextColumn();

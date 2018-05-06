@@ -9,26 +9,34 @@
 
 #pragma package(smart_init)
 
+void IM_FrameFogVol::OnAdd()
+{
+    m_parent_tool = dynamic_cast<ESceneFogVolumeTool*>(Scene->GetOTool(OBJCLASS_FOG_VOL));
+    VERIFY(m_parent_tool);
+
+    IM_Storage s(false, "level.ini", "IM_FrameFogVol");
+    m_show_commands = s.GetBool("show_commands_panel", true);
+}
+
+void IM_FrameFogVol::OnRemove()
+{
+    IM_Storage s(true, "level.ini", "IM_FrameFogVol");
+    s.PutBool("show_commands_panel", m_show_commands);
+}
+
 void IM_FrameFogVol::Render()
 {
-	if(!parent_tool)
-	{
-    	parent_tool = dynamic_cast<ESceneFogVolumeTool*>(Scene->GetOTool(OBJCLASS_FOG_VOL));
-        VERIFY(parent_tool);
-    }
-
-    if(ImGui::CollapsingHeader("Commands",
-    ImGuiTreeNodeFlags_Framed|ImGuiTreeNodeFlags_DefaultOpen))
+    if(ImGui::CollapsingPanel("Commands", &m_show_commands))
     {
     	ImGui::Columns(2, NULL, false);
 
     	if(ImGui::MenuItem("Group Selected"))
-    		parent_tool->GroupSelected();
+    		m_parent_tool->GroupSelected();
 
     	ImGui::NextColumn();
 
     	if(ImGui::MenuItem("UnGroup Selected"))
-    		parent_tool->UnGroupCurrent();
+    		m_parent_tool->UnGroupCurrent();
 
     	ImGui::Columns(1);
     }

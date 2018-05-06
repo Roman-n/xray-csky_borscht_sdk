@@ -9,6 +9,7 @@
 #include "UI_LevelTools.h"
 
 #include "IM_LeftBar.h"
+#include "IM_TopBar.h"
 //---------------------------------------------------------------------------
 USEFORM("BottomBar.cpp", fraBottomBar); /* TFrame: File Type */
 USEFORM("main.cpp", frmMain);
@@ -67,13 +68,14 @@ WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int)
 		Application->Title 		= UI->EditorDesc();
         TfrmLog::CreateLog		();
 		Application->CreateForm(__classid(TfrmMain), &frmMain);
-		Application->CreateForm(__classid(TfrmRight), &frmRight);
-		Application->CreateForm(__classid(TfrmCoord), &frmCoord);
-		frmMain->SetHInst		(hInst);
+         Application->CreateForm(__classid(TfrmRight), &frmRight);
+         Application->CreateForm(__classid(TfrmCoord), &frmCoord);
+         frmMain->SetHInst		(hInst);
 
 		xr_delete(frmSplash);
 
         UI->AddIMWindow(&imLeftBar);
+        UI->AddIMWindow(&imTopBar);
 
 		Application->Run		();
 

@@ -28,11 +28,17 @@ void IM_LeftBar::OnAdd()
     fraGroup.OnAdd();
     fraAIMap.OnAdd();
 
-	IM_Storage storage(false, "level.ini", "IM_LeftBar");
+	IM_Storage s(false, "level.ini", "IM_LeftBar");
 
-    m_enable_snap_list = storage.GetBool("enable_snap_list");
-    m_select_snap_objs_mode = storage.GetBool("select_snap_objs_mode");
-    m_detach_tool_frame = storage.GetBool("detach_tool_frame");
+    m_enable_snap_list = s.GetBool("enable_snap_list");
+    m_select_snap_objs_mode = s.GetBool("select_snap_objs_mode");
+    m_detach_tool_frame = s.GetBool("detach_tool_frame");
+    m_detach_main_menu = s.GetBool("detach_main_menu");
+
+    m_show_scene = s.GetBool("show_scene_panel", true);
+    m_show_tools = s.GetBool("show_tools_panel", true);
+    m_show_editmode = s.GetBool("show_editmode_panel", true);
+    m_show_snaplist = s.GetBool("show_snaplist_panel", true);
 }
 
 void IM_LeftBar::OnRemove()
@@ -50,11 +56,17 @@ void IM_LeftBar::OnRemove()
     fraGroup.OnRemove();
     fraAIMap.OnRemove();
 
-	IM_Storage storage(true, "level.ini", "IM_LeftBar");
+	IM_Storage s(true, "level.ini", "IM_LeftBar");
 
-    storage.PutBool("enable_snap_list", m_enable_snap_list);
-    storage.PutBool("select_snap_objs_mode", m_select_snap_objs_mode);
-    storage.PutBool("detach_tool_frame", m_detach_tool_frame);
+    s.PutBool("enable_snap_list", m_enable_snap_list);
+    s.PutBool("select_snap_objs_mode", m_select_snap_objs_mode);
+    s.PutBool("detach_tool_frame", m_detach_tool_frame);
+    s.PutBool("detach_main_menu", m_detach_main_menu);
+
+    s.PutBool("show_scene_panel", m_show_scene);
+    s.PutBool("show_tools_panel", m_show_tools);
+    s.PutBool("show_editmode_panel", m_show_editmode);
+    s.PutBool("show_snaplist_panel", m_show_snaplist);
 }
 
 void IM_LeftBar::Render()
@@ -63,239 +75,33 @@ void IM_LeftBar::Render()
 
     ImGui::TextUnformatted(&*m_title.begin(), &*m_title.end());
 
-    if(ImGui::CollapsingHeader("Scene",
-    ImGuiTreeNodeFlags_Framed|ImGuiTreeNodeFlags_DefaultOpen))
+    if(!m_detach_main_menu)
     {
-		if(ImGui::BeginMenu("File"))
+        bool need_detach = ImGui::Button("##detach_menu", ImVec2(-1, 5));
+
+        if(ImGui::CollapsingPanel("Scene", &m_show_scene))
+            RenderMainMenu();
+        if(ImGui::CollapsingPanel("Tools", &m_show_tools))
+            RenderToolsMenu();
+
+        if(need_detach)
+            m_detach_main_menu = true;
+    }
+    else
+    {
+        if(ImGui::BeginMainMenuBar())
         {
-        	if(ImGui::MenuItem("Clear"))
-            	ExecCommand(COMMAND_CLEAR);
-        	if(ImGui::MenuItem("Open"))
-            	ExecCommand(COMMAND_LOAD);
-        	if(ImGui::MenuItem("Save"))
-            	ExecCommand(COMMAND_SAVE);
-        	if(ImGui::MenuItem("Save as"))
-            	ExecCommand(COMMAND_SAVE, 0, 1);
-            ImGui::Separator();
-            if(ImGui::MenuItem("Open selection"))
-            	ExecCommand(COMMAND_LOAD_SELECTION);
-            if(ImGui::MenuItem("Save selection as"))
-            	ExecCommand(COMMAND_SAVE_SELECTION);
-            ImGui::Separator();
-            if(ImGui::MenuItem("Make pack"))
-            	TDB_packer::ActivatePacker();
-            ImGui::Separator();
-            if(ImGui::BeginMenu("Open recent", !!EPrefs->scene_recent_count))
-            {
-            	for(AStringIt it = EPrefs->scene_recent_list.begin(); it != EPrefs->scene_recent_list.end(); it++)
-                {
-                	if(ImGui::MenuItem(it->c_str()))
-                    	ExecCommand(COMMAND_LOAD, xr_string(it->c_str()));
-                }
+            bool need_attach = ImGui::MenuItem("|");
 
-            	ImGui::EndMenu();
-            }
-            ImGui::Separator();
-        	if(ImGui::MenuItem("Quit"))
-            	ExecCommand(COMMAND_QUIT);
+            RenderMainMenu();
+            ImGui::EndMainMenuBar();
 
-            ImGui::EndMenu();
+            if(need_attach)
+                m_detach_main_menu = false;
         }
-
-        if(ImGui::BeginMenu("Scene"))
-        {
-        	if(ImGui::MenuItem("Options"))
-            	ExecCommand(COMMAND_OPTIONS, CCommandVar("Scene"));
-            ImGui::Separator();
-            if(ImGui::MenuItem("Validate"))
-            	ExecCommand(COMMAND_VALIDATE_SCENE);
-            ImGui::Separator();
-            if(ImGui::MenuItem("Summary Info"))
-            {
-            	ExecCommand(COMMAND_CLEAR_SCENE_SUMMARY);
-                ExecCommand(COMMAND_COLLECT_SCENE_SUMMARY);
-                ExecCommand(COMMAND_SHOW_SCENE_SUMMARY);
-            }
-            if(ImGui::MenuItem("Highlight Texture..."))
-            	ExecCommand(COMMAND_SCENE_HIGHLIGHT_TEXTURE);
-            ImGui::Separator();
-            if(ImGui::MenuItem("Clear Debug Draw"))
-            	ExecCommand(COMMAND_CLEAR_DEBUG_DRAW);
-            ImGui::Separator();
-            if(ImGui::MenuItem("Export entire Scene as Obj"))
-            	Scene->ExportObj(false);
-            if(ImGui::MenuItem("Expoty selection as Obj"))
-            	Scene->ExportObj(true);
-
-        	ImGui::EndMenu();
-        }
-
-        if(ImGui::BeginMenu("Compile"))
-        {
-        	if(ImGui::MenuItem("Build"))
-            	ExecCommand(COMMAND_BUILD);
-            ImGui::Separator();
-            if(ImGui::MenuItem("Make game"))
-            	ExecCommand(COMMAND_MAKE_GAME);
-            if(ImGui::MenuItem("Make details"))
-            	ExecCommand(COMMAND_MAKE_DETAILS);
-            if(ImGui::MenuItem("Make HOM"))
-            	ExecCommand(COMMAND_MAKE_HOM);
-            if(ImGui::MenuItem("Make Sound Occluder"))
-            	ExecCommand(COMMAND_MAKE_SOM);
-            if(ImGui::MenuItem("Make AI-map"))
-            	ExecCommand(COMMAND_MAKE_AIMAP);
-            ImGui::Separator();
-            if(ImGui::MenuItem("Import error list"))
-            	ExecCommand(COMMAND_IMPORT_COMPILER_ERROR);
-            if(ImGui::MenuItem("Export error list"))
-            	ExecCommand(COMMAND_EXPORT_COMPILER_ERROR);
-            if(ImGui::MenuItem("Clear error list"))
-            	ExecCommand(COMMAND_CLEAR_DEBUG_DRAW);
-
-        	ImGui::EndMenu();
-        }
-
-        if(ImGui::BeginMenu("Objects"))
-    	{
-        	if(ImGui::MenuItem("Library editor"))
-            	ExecCommand(COMMAND_LIBRARY_EDITOR);
-            ImGui::Separator();
-            if(ImGui::MenuItem("Reload objects"))
-            	ExecCommand(COMMAND_RELOAD_OBJECTS);
-            if(ImGui::MenuItem("Clean library"))
-            	ExecCommand(COMMAND_CLEAN_LIBRARY);
-            if(ImGui::MenuItem("Clip editor"))
-            	ExecCommand(COMMAND_SHOW_CLIP_EDITOR);
-
-        	ImGui::EndMenu();
-        }
-
-        if(ImGui::BeginMenu("Images"))
-        {
-        	if(ImGui::MenuItem("Image editor"))
-            	ExecCommand(COMMAND_IMAGE_EDITOR);
-            ImGui::Separator();
-            if(ImGui::MenuItem("Reload textures"))
-            	ExecCommand(COMMAND_RELOAD_TEXTURES);
-            ImGui::Separator();
-            if(ImGui::MenuItem("Synchronize textures"))
-            	ExecCommand(COMMAND_REFRESH_TEXTURES);
-            if(ImGui::MenuItem("Check new textures"))
-            	ExecCommand(COMMAND_CHECK_TEXTURES);
-            ImGui::Separator();
-            if(ImGui::MenuItem("Edit minimap"))
-            	ExecCommand(COMMAND_MINIMAP_EDITOR);
-            if(ImGui::MenuItem("SyncTHM"))
-            	;
-
-        	ImGui::EndMenu();
-        }
-
-        if(ImGui::BeginMenu("Sounds"))
-        {
-        	if(ImGui::MenuItem("Sound editor"))
-            	ExecCommand(COMMAND_SOUND_EDITOR);
-            ImGui::Separator();
-        	if(ImGui::MenuItem("Synchronize sounds"))
-            	ExecCommand(COMMAND_SYNC_SOUNDS);
-            ImGui::Separator();
-            if(ImGui::MenuItem("Refresh environment library"))
-            	ExecCommand(COMMAND_REFRESH_SOUND_ENVS);
-            if(ImGui::MenuItem("Refresh environment geometry"))
-            	ExecCommand(COMMAND_REFRESH_SOUND_ENV_GEOMETRY);
-            if(ImGui::MenuItem("Load sound occluder"))
-            	ExecCommand(COMMAND_LOAD_SOUND_OCCLUDER);
-        	ImGui::EndMenu();
-        }
-
-        if(ImGui::MenuItem("Light anim editor"))
-        	ExecCommand(COMMAND_LANIM_EDITOR);
-
-        if(ImGui::MenuItem("Object list"))
-        	ExecCommand(COMMAND_SHOW_OBJECTLIST);
-
-        if(ImGui::MenuItem("Preferences"))
-        	ExecCommand(COMMAND_EDITOR_PREF);
     }
 
-    if(ImGui::CollapsingHeader("Tools",
-    ImGuiTreeNodeFlags_Framed|ImGuiTreeNodeFlags_DefaultOpen))
-    {
-    	ImGui::Columns(2);
-
-        if(ImGui::BeginMenu("Edit"))
-        {
-        	if(ImGui::MenuItem("Cut"))
-            	ExecCommand(COMMAND_CUT);
-            if(ImGui::MenuItem("Copy"))
-            	ExecCommand(COMMAND_COPY);
-            if(ImGui::MenuItem("Paste"))
-            	ExecCommand(COMMAND_PASTE);
-            ImGui::Separator();
-            if(ImGui::MenuItem("Undo"))
-            	ExecCommand(COMMAND_UNDO);
-            if(ImGui::MenuItem("Redo"))
-            	ExecCommand(COMMAND_REDO);
-        	ImGui::EndMenu();
-        }
-
-        if(ImGui::BeginMenu("Selection"))
-        {
-        	if(ImGui::MenuItem("Invert"))
-            	ExecCommand(COMMAND_INVERT_SELECTION_ALL);
-            if(ImGui::MenuItem("Select all"))
-            	ExecCommand(COMMAND_SELECT_ALL);
-            if(ImGui::MenuItem("Unselect all"))
-            	ExecCommand(COMMAND_DESELECT_ALL);
-        	ImGui::EndMenu();
-        }
-
-        if(ImGui::MenuItem("Properties"))
-        	ExecCommand(COMMAND_SHOW_PROPERTIES);
-
-        ImGui::NextColumn();
-
-        if(ImGui::BeginMenu("Visibility"))
-        {
-        	if(ImGui::MenuItem("Hide selection"))
-            	ExecCommand(COMMAND_HIDE_SEL, FALSE);
-            if(ImGui::MenuItem("Hide unselected"))
-            	ExecCommand(COMMAND_HIDE_UNSEL);
-            if(ImGui::MenuItem("Hide all"))
-            	ExecCommand(COMMAND_HIDE_ALL, FALSE);
-            ImGui::Separator();
-        	if(ImGui::MenuItem("Unhide all"))
-            	ExecCommand(COMMAND_HIDE_ALL, TRUE);
-        	ImGui::EndMenu();
-        }
-
-        if(ImGui::BeginMenu("Locking"))
-        {
-        	if(ImGui::MenuItem("Lock selection"))
-            	ExecCommand(COMMAND_LOCK_SEL, TRUE);
-            if(ImGui::MenuItem("Lock unselected"))
-            	ExecCommand(COMMAND_LOCK_UNSEL, TRUE);
-            if(ImGui::MenuItem("Lock all"))
-            	ExecCommand(COMMAND_LOCK_ALL, TRUE);
-            ImGui::Separator();
-            if(ImGui::MenuItem("Unlock selection"))
-            	ExecCommand(COMMAND_LOCK_SEL, FALSE);
-            if(ImGui::MenuItem("Unlock unselected"))
-            	ExecCommand(COMMAND_LOCK_UNSEL, FALSE);
-            if(ImGui::MenuItem("Unlock all"))
-            	ExecCommand(COMMAND_LOCK_ALL, FALSE);
-        	ImGui::EndMenu();
-        }
-
-        if(ImGui::MenuItem("Multi rename"))
-        	ExecCommand(COMMAND_MULTI_RENAME_OBJECTS);
-
-        ImGui::Columns(1);
-    }
-
-    if(ImGui::CollapsingHeader("Edit mode",
-    ImGuiTreeNodeFlags_Framed|ImGuiTreeNodeFlags_DefaultOpen))
+    if(ImGui::CollapsingPanel("Edit mode", &m_show_editmode))
     {
     	ImGui::Columns(2);
 
@@ -321,8 +127,7 @@ void IM_LeftBar::Render()
         ImGui::Columns(1);
     }
 
-    if(ImGui::CollapsingHeader("Snap list",
-    ImGuiTreeNodeFlags_Framed|ImGuiTreeNodeFlags_DefaultOpen))
+    if(ImGui::CollapsingPanel("Snap list", &m_show_snaplist))
     {
     	if(ImGui::BeginMenu("Commands"))
         {
@@ -389,7 +194,7 @@ void IM_LeftBar::Render()
     }
     else
     {
-    	bool detach = ImGui::Button(" ", ImVec2(-1, 5));
+    	bool detach = ImGui::Button("##detach_tool_opts", ImVec2(-1, 5));
 		RenderToolFrame();
         m_detach_tool_frame = detach;
     }
@@ -414,6 +219,257 @@ void IM_LeftBar::RenderToolFrame()
         case OBJCLASS_GROUP:		fraGroup.Render(); break;
         case OBJCLASS_AIMAP:		fraAIMap.Render(); break;
     }
+}
+
+void IM_LeftBar::RenderMainMenu()
+{
+	if(ImGui::BeginMenu("File"))
+    {
+    	if(ImGui::MenuItem("Clear"))
+        	ExecCommand(COMMAND_CLEAR);
+    	if(ImGui::MenuItem("Open"))
+        	ExecCommand(COMMAND_LOAD);
+    	if(ImGui::MenuItem("Save"))
+        	ExecCommand(COMMAND_SAVE);
+    	if(ImGui::MenuItem("Save as"))
+        	ExecCommand(COMMAND_SAVE, 0, 1);
+        ImGui::Separator();
+        if(ImGui::MenuItem("Open selection"))
+        	ExecCommand(COMMAND_LOAD_SELECTION);
+        if(ImGui::MenuItem("Save selection as"))
+        	ExecCommand(COMMAND_SAVE_SELECTION);
+        ImGui::Separator();
+        if(ImGui::MenuItem("Make pack"))
+        	TDB_packer::ActivatePacker();
+        ImGui::Separator();
+        if(m_detach_main_menu || ImGui::BeginMenu("Open recent", !!EPrefs->scene_recent_count))
+        {
+        	for(AStringIt it = EPrefs->scene_recent_list.begin(); it != EPrefs->scene_recent_list.end(); it++)
+            {
+            	if(ImGui::MenuItem(it->c_str()))
+                	ExecCommand(COMMAND_LOAD, xr_string(it->c_str()));
+            }
+
+            if(!m_detach_main_menu)
+        	    ImGui::EndMenu();
+        }
+        ImGui::Separator();
+    	if(ImGui::MenuItem("Quit"))
+        	ExecCommand(COMMAND_QUIT);
+
+        ImGui::EndMenu();
+    }
+
+    if(m_detach_main_menu)
+    {
+        if(ImGui::BeginMenu("Tools"))
+        {
+            RenderToolsMenu();
+            ImGui::EndMenu();
+        }
+    }
+
+    if(ImGui::BeginMenu("Scene"))
+    {
+    	if(ImGui::MenuItem("Options"))
+        	ExecCommand(COMMAND_OPTIONS, CCommandVar("Scene"));
+        ImGui::Separator();
+        if(ImGui::MenuItem("Validate"))
+        	ExecCommand(COMMAND_VALIDATE_SCENE);
+        ImGui::Separator();
+        if(ImGui::MenuItem("Summary Info"))
+        {
+        	ExecCommand(COMMAND_CLEAR_SCENE_SUMMARY);
+            ExecCommand(COMMAND_COLLECT_SCENE_SUMMARY);
+            ExecCommand(COMMAND_SHOW_SCENE_SUMMARY);
+        }
+        if(ImGui::MenuItem("Highlight Texture..."))
+        	ExecCommand(COMMAND_SCENE_HIGHLIGHT_TEXTURE);
+        ImGui::Separator();
+        if(ImGui::MenuItem("Clear Debug Draw"))
+        	ExecCommand(COMMAND_CLEAR_DEBUG_DRAW);
+        ImGui::Separator();
+        if(ImGui::MenuItem("Export entire Scene as Obj"))
+        	Scene->ExportObj(false);
+        if(ImGui::MenuItem("Expoty selection as Obj"))
+        	Scene->ExportObj(true);
+
+    	ImGui::EndMenu();
+    }
+
+    if(ImGui::BeginMenu("Compile"))
+    {
+    	if(ImGui::MenuItem("Build"))
+        	ExecCommand(COMMAND_BUILD);
+        ImGui::Separator();
+        if(ImGui::MenuItem("Make game"))
+        	ExecCommand(COMMAND_MAKE_GAME);
+        if(ImGui::MenuItem("Make details"))
+        	ExecCommand(COMMAND_MAKE_DETAILS);
+        if(ImGui::MenuItem("Make HOM"))
+        	ExecCommand(COMMAND_MAKE_HOM);
+        if(ImGui::MenuItem("Make Sound Occluder"))
+        	ExecCommand(COMMAND_MAKE_SOM);
+        if(ImGui::MenuItem("Make AI-map"))
+        	ExecCommand(COMMAND_MAKE_AIMAP);
+        ImGui::Separator();
+        if(ImGui::MenuItem("Import error list"))
+        	ExecCommand(COMMAND_IMPORT_COMPILER_ERROR);
+        if(ImGui::MenuItem("Export error list"))
+        	ExecCommand(COMMAND_EXPORT_COMPILER_ERROR);
+        if(ImGui::MenuItem("Clear error list"))
+        	ExecCommand(COMMAND_CLEAR_DEBUG_DRAW);
+
+    	ImGui::EndMenu();
+    }
+
+    if(ImGui::BeginMenu("Objects"))
+	{
+    	if(ImGui::MenuItem("Library editor"))
+        	ExecCommand(COMMAND_LIBRARY_EDITOR);
+        ImGui::Separator();
+        if(ImGui::MenuItem("Reload objects"))
+        	ExecCommand(COMMAND_RELOAD_OBJECTS);
+        if(ImGui::MenuItem("Clean library"))
+        	ExecCommand(COMMAND_CLEAN_LIBRARY);
+        if(ImGui::MenuItem("Clip editor"))
+        	ExecCommand(COMMAND_SHOW_CLIP_EDITOR);
+
+    	ImGui::EndMenu();
+    }
+
+    if(ImGui::BeginMenu("Images"))
+    {
+    	if(ImGui::MenuItem("Image editor"))
+        	ExecCommand(COMMAND_IMAGE_EDITOR);
+        ImGui::Separator();
+        if(ImGui::MenuItem("Reload textures"))
+        	ExecCommand(COMMAND_RELOAD_TEXTURES);
+        ImGui::Separator();
+        if(ImGui::MenuItem("Synchronize textures"))
+        	ExecCommand(COMMAND_REFRESH_TEXTURES);
+        if(ImGui::MenuItem("Check new textures"))
+        	ExecCommand(COMMAND_CHECK_TEXTURES);
+        ImGui::Separator();
+        if(ImGui::MenuItem("Edit minimap"))
+        	ExecCommand(COMMAND_MINIMAP_EDITOR);
+        if(ImGui::MenuItem("SyncTHM"))
+        	;
+
+    	ImGui::EndMenu();
+    }
+
+    if(ImGui::BeginMenu("Sounds"))
+    {
+    	if(ImGui::MenuItem("Sound editor"))
+        	ExecCommand(COMMAND_SOUND_EDITOR);
+        ImGui::Separator();
+    	if(ImGui::MenuItem("Synchronize sounds"))
+        	ExecCommand(COMMAND_SYNC_SOUNDS);
+        ImGui::Separator();
+        if(ImGui::MenuItem("Refresh environment library"))
+        	ExecCommand(COMMAND_REFRESH_SOUND_ENVS);
+        if(ImGui::MenuItem("Refresh environment geometry"))
+        	ExecCommand(COMMAND_REFRESH_SOUND_ENV_GEOMETRY);
+        if(ImGui::MenuItem("Load sound occluder"))
+        	ExecCommand(COMMAND_LOAD_SOUND_OCCLUDER);
+    	ImGui::EndMenu();
+    }
+
+    if(ImGui::MenuItem("Light anim editor"))
+    	ExecCommand(COMMAND_LANIM_EDITOR);
+
+    if(ImGui::MenuItem("Object list"))
+    	ExecCommand(COMMAND_SHOW_OBJECTLIST);
+
+    if(ImGui::MenuItem("Preferences"))
+    	ExecCommand(COMMAND_EDITOR_PREF);
+}
+
+void IM_LeftBar::RenderToolsMenu()
+{
+    if(!m_detach_main_menu)
+        ImGui::Columns(2);
+
+    if(ImGui::BeginMenu("Edit"))
+    {
+    	if(ImGui::MenuItem("Cut"))
+        	ExecCommand(COMMAND_CUT);
+        if(ImGui::MenuItem("Copy"))
+        	ExecCommand(COMMAND_COPY);
+        if(ImGui::MenuItem("Paste"))
+        	ExecCommand(COMMAND_PASTE);
+        ImGui::Separator();
+        if(ImGui::MenuItem("Undo"))
+        	ExecCommand(COMMAND_UNDO);
+        if(ImGui::MenuItem("Redo"))
+        	ExecCommand(COMMAND_REDO);
+    	ImGui::EndMenu();
+    }
+
+    if(ImGui::BeginMenu("Selection"))
+    {
+    	if(ImGui::MenuItem("Invert"))
+        	ExecCommand(COMMAND_INVERT_SELECTION_ALL);
+        if(ImGui::MenuItem("Select all"))
+        	ExecCommand(COMMAND_SELECT_ALL);
+        if(ImGui::MenuItem("Unselect all"))
+        	ExecCommand(COMMAND_DESELECT_ALL);
+    	ImGui::EndMenu();
+    }
+
+    if(!m_detach_main_menu)
+    {
+        if(ImGui::MenuItem("Properties"))
+    	    ExecCommand(COMMAND_SHOW_PROPERTIES);
+    }
+
+    if(!m_detach_main_menu)
+        ImGui::NextColumn();
+
+    if(ImGui::BeginMenu("Visibility"))
+    {
+    	if(ImGui::MenuItem("Hide selection"))
+        	ExecCommand(COMMAND_HIDE_SEL, FALSE);
+        if(ImGui::MenuItem("Hide unselected"))
+        	ExecCommand(COMMAND_HIDE_UNSEL);
+        if(ImGui::MenuItem("Hide all"))
+        	ExecCommand(COMMAND_HIDE_ALL, FALSE);
+        ImGui::Separator();
+    	if(ImGui::MenuItem("Unhide all"))
+        	ExecCommand(COMMAND_HIDE_ALL, TRUE);
+    	ImGui::EndMenu();
+    }
+
+    if(ImGui::BeginMenu("Locking"))
+    {
+    	if(ImGui::MenuItem("Lock selection"))
+        	ExecCommand(COMMAND_LOCK_SEL, TRUE);
+        if(ImGui::MenuItem("Lock unselected"))
+        	ExecCommand(COMMAND_LOCK_UNSEL, TRUE);
+        if(ImGui::MenuItem("Lock all"))
+        	ExecCommand(COMMAND_LOCK_ALL, TRUE);
+        ImGui::Separator();
+        if(ImGui::MenuItem("Unlock selection"))
+        	ExecCommand(COMMAND_LOCK_SEL, FALSE);
+        if(ImGui::MenuItem("Unlock unselected"))
+        	ExecCommand(COMMAND_LOCK_UNSEL, FALSE);
+        if(ImGui::MenuItem("Unlock all"))
+        	ExecCommand(COMMAND_LOCK_ALL, FALSE);
+    	ImGui::EndMenu();
+    }
+
+    if(ImGui::MenuItem("Multi rename"))
+    	ExecCommand(COMMAND_MULTI_RENAME_OBJECTS);
+
+    if(m_detach_main_menu)
+    {
+        if(ImGui::MenuItem("Properties"))
+    	    ExecCommand(COMMAND_SHOW_PROPERTIES);
+    }
+
+    if(!m_detach_main_menu)
+        ImGui::Columns(1);
 }
 
 IM_LeftBar imLeftBar;
