@@ -5,7 +5,7 @@
 #include "motion.h"
 
 #ifdef _EDITOR
-#include "AnimationPath.h"
+#include "../editors/ECore/Editor/AnimationPath.h"
 #endif
  
 bool motion_sort_pred	(COMotion* a, 	COMotion* b)	{	return a->name<b->name;}

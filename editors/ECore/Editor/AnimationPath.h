@@ -1,11 +1,11 @@
 #ifndef AnimationPathH
 #define AnimationPathH
 
-#include "../../Layers/xrRender/FVF.h"
+#include "../../../Layers/xrRender/FVF.h"
 
 class COMotion;
 
-class CAnimationPath
+ECORE_API class CAnimationPath
 {
     struct AnmKey
     {

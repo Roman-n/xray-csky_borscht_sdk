@@ -4,8 +4,8 @@
 #include "AnimationPath.h"
 #include "motion.h"
 #include "envelope.h"
-#include "../ECore/Editor/device.h"
-#include "../ECore/Editor/D3DUtils.h"
+#include "device.h"
+#include "D3DUtils.h"
 
 #pragma package(smart_init)
 

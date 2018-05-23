@@ -6,7 +6,7 @@
 #include "envelope.h"
 #include "../ECore/Editor/D3DUtils.h"
 #include "../ECore/Editor/ui_main.h"
-#include "AnimationPath.h"
+#include "../ECore/Editor/AnimationPath.h"
 
 void  CCustomObject::OnMotionableChange(PropValue* sender)
 {
