@@ -817,6 +817,11 @@ void CSpawnPoint::OnFrame()
     }
 }
 
+bool CSpawnPoint::IsRender()
+{
+	return inherited::IsRender() || (Selected() && m_SpawnData.m_Motion && m_SpawnData.m_Motion->animator);
+}
+
 void CSpawnPoint::Render( int priority, bool strictB2F )
 {
 	inherited::Render			(priority, strictB2F);

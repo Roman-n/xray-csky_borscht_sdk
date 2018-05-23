@@ -40,7 +40,7 @@ public:
 	void				GroupSelected			();
 	void				UnGroupCurrent			();
     void				RegisterGroup			(u32 group);
-    void				Selected				(EFogVolume* fv);
+    void				HighlightSelGroups	    ();
 };
 
 #include "CustomObject.h"

@@ -19,6 +19,7 @@ class CCustomMotion;
 class SAnimParams;
 struct SSceneSummary;
 class ESceneCustomOTool;
+class CAnimationPath;
 
 struct SExportStreamItem{
 	int					chunk;
@@ -45,6 +46,7 @@ class ECORE_API CCustomObject
 
 	SAnimParams*	m_MotionParams;
     COMotion*		m_Motion;
+    CAnimationPath* m_MotionPath;
 
     // private animation methods
     void 			AnimationOnFrame	();
