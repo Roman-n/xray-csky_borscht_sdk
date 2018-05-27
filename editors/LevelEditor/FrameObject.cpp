@@ -155,6 +155,7 @@ void __fastcall TfraObject::ebMultiAppendClick(TObject *Sender)
 */
             obj->MoveTo(pos,up);
             Scene->AppendObject( obj );
+            obj->Select(FALSE); // Issue #200
         }         
         UI->ProgressEnd(pb);
     }
