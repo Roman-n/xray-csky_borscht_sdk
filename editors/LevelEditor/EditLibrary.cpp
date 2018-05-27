@@ -376,6 +376,7 @@ void __fastcall TfrmEditLibrary::ebMakeThmClick(TObject *Sender)
     ListItemsIt it 				= sel_items.begin();
     ListItemsIt it_e 			= sel_items.end();
 
+    SPBItem* PB = UI->ProgressStart(sel_items.size(), "Creating thumbnails...");
     for( ;it!=it_e; ++it)
     {
         ListItem* item			= *it;
@@ -397,7 +398,20 @@ void __fastcall TfrmEditLibrary::ebMakeThmClick(TObject *Sender)
             ELog.DlgMsg(mtError,"Can't create thumbnail. Set preview mode.");
         }
 		Lib.RemoveEditObject(obj);
+
+        PB->Inc(item->Key());
 	}
+    UI->ProgressEnd(PB);
+
+    // Refresh paImage
+    if(sel_items.size() > 1)
+    {
+    	ListItemsVec last_item;
+        last_item.push_back(sel_items.back());
+        OnItemsFocused(last_item);
+    }
+    else
+    	OnItemsFocused(sel_items);
 
 /*
     TElTreeItem* node 			= m_Items->GetSelected();
@@ -423,7 +437,6 @@ void __fastcall TfrmEditLibrary::ebMakeThmClick(TObject *Sender)
 		Lib.RemoveEditObject(obj);
     }
 */
-    ELog.DlgMsg(mtInformation,"Done.");
 }
 //---------------------------------------------------------------------------
 

@@ -150,14 +150,14 @@
     <OTHERFILES value=""/>
   </MACROS>
   <OPTIONS>
-    <IDLCFLAGS value="-src_suffix cpp -D_EDITOR -D_LEVEL_EDITOR -D_DEBUG 
-      -I..\..\xrServerEntities -I..\..\Layers\xrRender -I$(DXSDK_DIR)\Include 
+    <IDLCFLAGS value="-I..\..\xrServerEntities -I..\..\Layers\xrRender -I$(DXSDK_DIR)\Include 
       -IEdit -IEngine -I$(BCB)\Projects -I$(BCB)\include\vcl -I$(BCB)\include 
       -IX:\SDK\Components\alexmx -IX:\SDK\Components\ElPack\Code 
       -IX:\SDK\Components\ElPack\Code\Source -I..\..\xrCore -I..\..\xrEngine 
-      -I..\..\utils\ETools -IX:\SDK\include\freemagic"/>
+      -I..\..\utils\ETools -IX:\SDK\include\freemagic -src_suffix cpp -D_EDITOR 
+      -D_LEVEL_EDITOR -D_DEBUG"/>
     <CFLAG1 value="-Od -H=x:\intermediate_ed\le\pch.csm -Hc -Q -Vms -Vx -Ve -xf -xp -VF -ff 
-      -X- -ps -a4 -6 -b- -k- -y -v -vi- -He -c -tW -tWM"/>
+      -X- -ps -a4 -6 -b- -k- -y -v -vi -He -c -tW -tWM"/>
     <PFLAGS value="-N2x:\intermediate_ed\le -N0x:\intermediate_ed\le -$Y- -$R -$Q -$L- -$D- 
       -$C- -$A8 -v -JPHNE -M"/>
     <RFLAGS value=""/>
@@ -357,9 +357,7 @@ ProductVersion=1.0.0.0
 Comments=
 
 [Excluded Packages]
-X:\SDK\components\ElPack\Code\dceldbB6.bpl=EldoS DB-Aware Controls (Design-time)
-X:\SDK\components\ElPack\Code\dcelppB6.bpl=EldoS Professional Components (Design-time)
-X:\SDK\components\ElPack\Code\dclelpB6.bpl=EldoS Visual Components (Design-time)
+f:\program files\borland\cbuilder6\Bin\bcb2kaxserver60.bpl=Borland C++Builder COM Server Components Sample Package
 
 [HistoryLists\hlIncludePath]
 Count=12
