@@ -22,9 +22,12 @@
 #ifdef	__BORLANDC__
 #define M_BORLAND
 #endif
+#ifdef	__GNUC__
+#define	M_GCC
+#endif
 
 // Constants
-#ifdef M_VISUAL
+#if defined(M_VISUAL) || defined(M_GCC)
 const	float		EPS_S		= 0.0000001f;
 const	float		EPS			= 0.0000100f;
 const	float		EPS_L		= 0.0010000f;

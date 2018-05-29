@@ -13,7 +13,7 @@
 
 #include "../../xrCore/xrCore.h"
 
-#ifndef _EDITOR
+#ifdef _MSC_VER
 
 #pragma warning(push)
 #pragma warning(disable:4995)
@@ -32,10 +32,18 @@
 #pragma comment(lib,"xrQSlim.lib")
 #pragma comment(lib,"xrCDB.lib")
 
-#else // _EDITOR
+#endif // _MSC_VER
+
+#ifdef __BORLANDC___
 
 #pragma link "xrCoreB.lib"
 #pragma link "xrCDBB.lib"
+
+#endif
+
+#ifdef __GNUC__
+
+#include "d3dx9.h"
 
 #endif
 
