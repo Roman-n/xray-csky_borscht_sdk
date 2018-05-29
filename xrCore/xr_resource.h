@@ -56,6 +56,12 @@ class resptr_core		: public C
 protected:
 	typedef resptr_core			this_type;
 	typedef resptr_core<T,C>	self;
+
+#ifdef __GNUC__	
+	using	C::p_;
+	using	C::_inc;
+	using	C::_dec;
+#endif
 public:
 						// construction
 						resptr_core		()												{	p_ = 0;						}
