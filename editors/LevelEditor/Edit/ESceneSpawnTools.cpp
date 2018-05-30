@@ -18,6 +18,11 @@ static LPCSTR destroy_entity_func 	= "_destroy_entity@4";
 Tcreate_entity 	create_entity;
 Tdestroy_entity destroy_entity;
 
+static LPCSTR factory_init_func		= "factory_init";
+static LPCSTR factory_done_func		= "factory_done";
+typedef void (__cdecl *Tfactory_init)(void);
+typedef void (__cdecl *Tfactory_done)(void);
+
 CEditableObject* ESceneSpawnTool::get_draw_visual(u8 _RP_TeamID, u8 _RP_Type, const GameTypeChooser& _GameType)
 {
 	CEditableObject* ret = NULL;
@@ -121,9 +126,16 @@ ESceneSpawnTool::ESceneSpawnTool():ESceneCustomOTool(OBJCLASS_SPAWNPOINT)
 	m_Flags.zero();
     TfrmChoseItem::AppendEvents	(smSpawnItem,		"Select Spawn Item",		FillSpawnItems,		0,0,0,0);
 
-    hXRSE_FACTORY	= LoadLibrary(xrse_factory_library);									VERIFY3(hXRSE_FACTORY,"Can't load library:",xrse_factory_library);
-    create_entity 	= (Tcreate_entity)	GetProcAddress(hXRSE_FACTORY,create_entity_func);  	VERIFY3(create_entity,"Can't find func:",create_entity_func);
-    destroy_entity 	= (Tdestroy_entity)	GetProcAddress(hXRSE_FACTORY,destroy_entity_func);	VERIFY3(destroy_entity,"Can't find func:",destroy_entity_func);
+    hXRSE_FACTORY	= LoadLibrary(xrse_factory_library);
+    VERIFY3(hXRSE_FACTORY,"Can't load library:",xrse_factory_library);
+
+    Tfactory_init factory_init = (Tfactory_init)GetProcAddress(hXRSE_FACTORY, factory_init_func);
+    if(factory_init != NULL)	factory_init();
+
+    create_entity 	= (Tcreate_entity)	GetProcAddress(hXRSE_FACTORY,create_entity_func);
+    destroy_entity 	= (Tdestroy_entity)	GetProcAddress(hXRSE_FACTORY,destroy_entity_func);
+    VERIFY3(create_entity,"Can't find func:",create_entity_func);
+    VERIFY3(destroy_entity,"Can't find func:",destroy_entity_func);
 
     m_Classes.clear			();
     CInifile::Root& data 	= pSettings->sections();
@@ -141,6 +153,9 @@ ESceneSpawnTool::ESceneSpawnTool():ESceneCustomOTool(OBJCLASS_SPAWNPOINT)
 
 ESceneSpawnTool::~ESceneSpawnTool()
 {
+	Tfactory_done factory_done = (Tfactory_done)GetProcAddress(hXRSE_FACTORY, factory_done_func);
+    if(factory_done != NULL)	factory_done();
+
 	FreeLibrary		(hXRSE_FACTORY);
     m_Icons.clear	();
 
