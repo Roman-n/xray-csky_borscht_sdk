@@ -765,6 +765,33 @@ void __fastcall TfrmMain::Preferences1Click(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
+void __fastcall TfrmMain::miRunClick(TObject *Sender)
+{
+	ExecCommand( COMMAND_RUN_SCRIPT, Scene->m_ScriptRunGame );
+}
+//---------------------------------------------------------------------------
 
+void __fastcall TfrmMain::miCompileLevelClick(TObject *Sender)
+{
+	ExecCommand( COMMAND_RUN_SCRIPT, Scene->m_ScriptCompileLevel );	
+}
+//---------------------------------------------------------------------------
 
+void __fastcall TfrmMain::miCompileDetailsClick(TObject *Sender)
+{
+	ExecCommand( COMMAND_RUN_SCRIPT, Scene->m_ScriptCompileDetails );	
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmMain::miCompileAIMapClick(TObject *Sender)
+{
+	ExecCommand( COMMAND_RUN_SCRIPT, Scene->m_ScriptCompileAIMap );	
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmMain::miCompileSpawnClick(TObject *Sender)
+{
+	ExecCommand( COMMAND_RUN_SCRIPT, Scene->m_ScriptCompileSpawn );	
+}
+//---------------------------------------------------------------------------
 

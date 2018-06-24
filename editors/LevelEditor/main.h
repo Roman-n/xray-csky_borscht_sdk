@@ -124,6 +124,13 @@ __published:	// IDE-managed Components
 	TMenuItem *LightAnimEditor1;
 	TMenuItem *ObjectList1;
 	TMenuItem *Preferences1;
+	TMenuItem *N4;
+	TMenuItem *miRun;
+	TMenuItem *N22;
+	TMenuItem *miCompileLevel;
+	TMenuItem *miCompileDetails;
+	TMenuItem *miCompileAIMap;
+	TMenuItem *miCompileSpawn;
         void __fastcall FormCreate(TObject *Sender);
     void __fastcall D3DWindowResize(TObject *Sender);
     void __fastcall D3DWindowKeyDown(TObject *Sender, WORD &Key,
@@ -209,6 +216,11 @@ __published:	// IDE-managed Components
 	void __fastcall LightAnimEditor1Click(TObject *Sender);
 	void __fastcall ObjectList1Click(TObject *Sender);
 	void __fastcall Preferences1Click(TObject *Sender);
+	void __fastcall miRunClick(TObject *Sender);
+	void __fastcall miCompileLevelClick(TObject *Sender);
+	void __fastcall miCompileDetailsClick(TObject *Sender);
+	void __fastcall miCompileAIMapClick(TObject *Sender);
+	void __fastcall miCompileSpawnClick(TObject *Sender);
 private:	// User declarations
     void __fastcall IdleHandler(TObject *Sender, bool &Done);
 

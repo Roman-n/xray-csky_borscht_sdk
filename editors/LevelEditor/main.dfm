@@ -28,7 +28,7 @@ object frmMain: TfrmMain
     Left = 555
     Top = 0
     Width = 4
-    Height = 399
+    Height = 394
     Cursor = crHSplit
     Align = alRight
     Color = clMedGray
@@ -38,7 +38,7 @@ object frmMain: TfrmMain
     Left = 559
     Top = 0
     Width = 238
-    Height = 399
+    Height = 394
     Align = alRight
     BevelInner = bvLowered
     BevelOuter = bvNone
@@ -135,7 +135,7 @@ object frmMain: TfrmMain
   end
   object paBottomBar: TPanel
     Left = 0
-    Top = 399
+    Top = 394
     Width = 797
     Height = 17
     Align = alBottom
@@ -147,7 +147,7 @@ object frmMain: TfrmMain
     Left = 0
     Top = 0
     Width = 555
-    Height = 399
+    Height = 394
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
@@ -155,7 +155,7 @@ object frmMain: TfrmMain
       Left = 0
       Top = 0
       Width = 25
-      Height = 399
+      Height = 394
       Align = alLeft
       BevelOuter = bvNone
       TabOrder = 0
@@ -164,7 +164,7 @@ object frmMain: TfrmMain
       Left = 25
       Top = 0
       Width = 530
-      Height = 399
+      Height = 394
       Align = alClient
       BevelOuter = bvNone
       Color = 4868682
@@ -379,6 +379,13 @@ object frmMain: TfrmMain
         Caption = 'Export selection as Obj'
         OnClick = Exportselection1Click
       end
+      object N4: TMenuItem
+        Caption = '-'
+      end
+      object miRun: TMenuItem
+        Caption = 'Run'
+        OnClick = miRunClick
+      end
     end
     object Compile1: TMenuItem
       Caption = 'Compile'
@@ -423,6 +430,25 @@ object frmMain: TfrmMain
       object ClearErrorList1: TMenuItem
         Caption = 'Clear Error List'
         OnClick = ClearErrorList1Click
+      end
+      object N22: TMenuItem
+        Caption = '-'
+      end
+      object miCompileLevel: TMenuItem
+        Caption = 'Compile level'
+        OnClick = miCompileLevelClick
+      end
+      object miCompileDetails: TMenuItem
+        Caption = 'Compile details'
+        OnClick = miCompileDetailsClick
+      end
+      object miCompileAIMap: TMenuItem
+        Caption = 'Compile AI-map'
+        OnClick = miCompileAIMapClick
+      end
+      object miCompileSpawn: TMenuItem
+        Caption = 'Compile spawn'
+        OnClick = miCompileSpawnClick
       end
     end
     object miEditMode: TMenuItem
