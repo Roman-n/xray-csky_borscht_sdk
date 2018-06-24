@@ -490,7 +490,6 @@ bool CParticleTool::Validate(bool bMsg)
 
     if (bMsg){
         if (error_cnt>0)ELog.DlgMsg	(mtError,"Validation FAILED! Found %d error's.",error_cnt);
-        else			ELog.DlgMsg	(mtInformation,"Validation OK.");
     }
     return error_cnt==0;
 }

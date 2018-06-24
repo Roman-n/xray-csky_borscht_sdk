@@ -81,7 +81,9 @@ CCommandVar CParticleTool::CommandReload(CCommandVar p1, CCommandVar p2)
 }
 CCommandVar CParticleTool::CommandValidate(CCommandVar p1, CCommandVar p2)
 {
-	Validate(true);
+	bool result = Validate(true);
+	if(result)
+    	ELog.DlgMsg	(mtInformation,"Validation OK.");
     return TRUE;
 }
 CCommandVar CParticleTool::CommandClear(CCommandVar p1, CCommandVar p2)

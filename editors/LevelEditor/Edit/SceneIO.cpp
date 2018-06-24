@@ -30,6 +30,7 @@
 #define CHUNK_SNAPOBJECTS   	0x7710
 #define CHUNK_LEVELOP       	0x7711
 #define CHUNK_OBJECT_COUNT  	0x7712
+#define CHUNK_SCRIPTS			0x7713
 #define CHUNK_LEVEL_TAG			0x7777
 
 #define CHUNK_TOOLS_GUID		0x7000
@@ -391,51 +392,54 @@ void EScene::SaveLTX(LPCSTR map_name, bool bForUndo, bool bForceSaveAll)
 
     CTimer 			T;
     T.Start			();
-    xr_string 		full_name;
-	full_name		= map_name;
-    
-    xr_string 		part_prefix;
 
-    bool bSaveMain	= true;
-    
-	if (!bForUndo)
+    bool bSaveMain	= true; // save .level file, if false only .part's will be saved
+
+    if ((false==EFS.CheckLocking(map_name,true,false))&&
+    	(true==EFS.CheckLocking(map_name,false,false)))
     {
-		if ((false==EFS.CheckLocking(map_name,true,false))&&
-        	(true==EFS.CheckLocking(map_name,false,false)))
-            {
-            bSaveMain	= false;
-        }
-        if (bSaveMain)
-        {
-	    	EFS.UnlockFile	(map_name,false);
-    		EFS.MarkFile	(full_name.c_str(),true);
-        }
-    	part_prefix		= LevelPartPath(full_name.c_str());
+    	bSaveMain	= false;
     }
-
-    
-    CInifile ini(full_name.c_str(),FALSE,FALSE,TRUE);
 
     if (bSaveMain)
     {
-        ini.w_u32			("version","value",CURRENT_FILE_VERSION);
+		EFS.UnlockFile	(map_name,false);
+    	EFS.MarkFile	(map_name,true);
 
-        m_LevelOp.SaveLTX	(ini);
+    	CInifile ini	(map_name,FALSE,FALSE,TRUE);
 
-        m_GUID.SaveLTX		(ini,"guid","guid");
+        ini.w_u32		("version","value",CURRENT_FILE_VERSION);
 
-		ini.w_string		("level_tag","owner",m_OwnerName.c_str());
-        ini.w_u32			("level_tag","create_time",m_CreateTime);
+        m_LevelOp.SaveLTX(ini);
 
-        ini.w_fvector3		("camera","hpb",Device.m_Camera.GetHPB());
-        ini.w_fvector3		("camera","pos",Device.m_Camera.GetPosition());
+        m_GUID.SaveLTX	(ini,"guid","guid");
+
+		ini.w_string	("level_tag","owner",m_OwnerName.c_str());
+        ini.w_u32		("level_tag","create_time",m_CreateTime);
+
+        ini.w_fvector3	("camera","hpb",Device.m_Camera.GetHPB());
+        ini.w_fvector3	("camera","pos",Device.m_Camera.GetPosition());
 
         for(ObjectIt SO=m_ESO_SnapObjects.begin(); SO!=m_ESO_SnapObjects.end(); ++SO)
         {
             ini.w_string	("snap_objects",(*SO)->Name,NULL);
         }
+
+        ini.w_string	("scripts","compile_level",
+        	xr_string("\"").append(m_ScriptCompileLevel).append("\"").c_str());
+        ini.w_string	("scripts","compile_details",
+        	xr_string("\"").append(m_ScriptCompileDetails).append("\"").c_str());
+        ini.w_string	("scripts","compile_aimap",
+        	xr_string("\"").append(m_ScriptCompileAIMap).append("\"").c_str());
+        ini.w_string	("scripts","compile_spawn",
+        	xr_string("\"").append(m_ScriptCompileSpawn).append("\"").c_str());
+        ini.w_string	("scripts","run_game",
+        	xr_string("\"").append(m_ScriptRunGame).append("\"").c_str());
+
+        EFS.LockFile	(map_name,false);
     }
 
+    // save .part files
     //m_SaveCache.clear		();
 
     SceneToolsMapPairIt _I = m_SceneTools.begin();
@@ -443,69 +447,55 @@ void EScene::SaveLTX(LPCSTR map_name, bool bForUndo, bool bForceSaveAll)
 
     for (; _I!=_E; ++_I)
     {
-        if (		(_I->first!=OBJCLASS_DUMMY) && 
-        			_I->second && 
-                    _I->second->IsEnabled() && 
-                    _I->second->IsEditable() /* && 
-                    (_I->second->IsChanged() || bForceSaveAll) */
+        if ((_I->first!=OBJCLASS_DUMMY) &&
+        	 _I->second &&
+       		 _I->second->IsEnabled() &&
+       		 _I->second->IsEditable() /* &&
+        	(_I->second->IsChanged() || bForceSaveAll) */
             )
         {
-            if (bForUndo)
+        	xr_string part_name 	= LevelPartName(map_name,_I->first);
+        	if(_I->second->can_use_inifile())
             {
-            	if (_I->second->IsNeedSave())
-                    _I->second->SaveStream	(m_SaveCache);
-            }else
-            {
-            	// !ForUndo
-                    xr_string part_name 	= part_prefix + _I->second->ClassName() + ".part";
-                    if(_I->second->can_use_inifile())
-                    {
-                        EFS.UnlockFile			(LevelPartName(map_name,_I->first).c_str(),false);
-                        EFS.MarkFile			(part_name.c_str(),true);
-                    	SaveToolLTX				(_I->second->ClassID, part_name.c_str());
-    					EFS.LockFile			(LevelPartName(map_name,_I->first).c_str(),false);
-                    }  //can_use_ini_file
-                    else
-                    {
-						//_I->second->SaveStream	(m_SaveCache);
-
-						EFS.UnlockFile			(LevelPartName(map_name,_I->first).c_str(),false);
-						EFS.MarkFile			(part_name.c_str(),true);
-
-						IWriter* FF				= FS.w_open	(part_name.c_str());
-						R_ASSERT			(FF);
-                        FF->open_chunk		(CHUNK_TOOLS_GUID);
-                        FF->w				(&m_GUID,sizeof(m_GUID));
-                        FF->close_chunk		();
-
-                        FF->open_chunk		(CHUNK_TOOLS_DATA+_I->first);
-                        //FF->w				(m_SaveCache.pointer(),m_SaveCache.size());
-                        _I->second->SaveStream(*FF);
-                        FF->close_chunk		();
-
-                        FS.w_close			(FF);
-
-                        EFS.LockFile		(LevelPartName(map_name,_I->first).c_str(),false);
-                    }//  ! can_use_ini_file
-/*
-                    _I->second->SetChanged	(FALSE);
-
-                    if(  _I->second->ClassID  == LTools->CurrentClassID())
-                    	_I->second->SetChanged	(TRUE);
-*/                    
+            	EFS.UnlockFile		(part_name.c_str(),false);
+            	EFS.MarkFile		(part_name.c_str(),true);
+            	SaveToolLTX			(_I->second->ClassID, part_name.c_str());
+    			EFS.LockFile		(part_name.c_str(),false);
             }
+            else
+            {
+				//_I->second->SaveStream	(m_SaveCache);
+
+				EFS.UnlockFile		(part_name.c_str(),false);
+				EFS.MarkFile		(part_name.c_str(),true);
+
+				IWriter* FF			= FS.w_open	(part_name.c_str());
+				R_ASSERT			(FF);
+                FF->open_chunk		(CHUNK_TOOLS_GUID);
+                FF->w				(&m_GUID,sizeof(m_GUID));
+                FF->close_chunk		();
+
+                FF->open_chunk		(CHUNK_TOOLS_DATA+_I->first);
+                //FF->w				(m_SaveCache.pointer(),m_SaveCache.size());
+                _I->second->SaveStream(*FF);
+                FF->close_chunk		();
+
+                FS.w_close			(FF);
+
+                EFS.LockFile		(part_name.c_str(),false);
+			}
+
+            //_I->second->SetChanged	(FALSE);
+
+            //if(_I->second->ClassID  == LTools->CurrentClassID())
+            //	_I->second->SetChanged	(TRUE);
+
 			//m_SaveCache.clear	();
         }
     }
-        
-	if (!bForUndo)
-    {
-    	if (bSaveMain)
-        	EFS.LockFile(map_name,false);
 
-    	m_RTFlags.set	(flRT_Unsaved,FALSE);
-    	Msg				("Saving time: %3.2f sec",T.GetElapsed_sec());
-    }
+    m_RTFlags.set	(flRT_Unsaved,FALSE);
+    Msg				("Saving time: %3.2f sec",T.GetElapsed_sec());
 }
 //--------------------------------------------------------------------------------------------------
 void EScene::SaveToolLTX(ObjClassID clsid, LPCSTR fn)
@@ -531,51 +521,51 @@ void EScene::Save(LPCSTR map_name, bool bUndo, bool bForceSaveAll)
 	R_ASSERT		(bUndo);
 	VERIFY			(map_name);
 
-    CTimer 			T;
-    T.Start			();
-    xr_string 		full_name;
-	full_name		= map_name;
+//    CTimer 			T;
+//    T.Start			();
+
+	IWriter* F 		= FS.w_open(map_name); R_ASSERT(F);
+
+    F->open_chunk	(CHUNK_VERSION);
+    F->w_u32		(CURRENT_FILE_VERSION);
+    F->close_chunk	();
+
+    F->open_chunk	(CHUNK_LEVELOP);
+    m_LevelOp.Save	(*F);
+    F->close_chunk	();
+
+    F->open_chunk	(CHUNK_TOOLS_GUID);
+    F->w			(&m_GUID,sizeof(m_GUID));
+    F->close_chunk	();
+
+    F->open_chunk	(CHUNK_LEVEL_TAG);
+    F->w_stringZ	(m_OwnerName);
+    F->w			(&m_CreateTime,sizeof(m_CreateTime));
+    F->close_chunk	();
     
-    xr_string 		part_prefix;
+    F->open_chunk	(CHUNK_CAMERA);
+    F->w_fvector3	(Device.m_Camera.GetHPB());
+    F->w_fvector3	(Device.m_Camera.GetPosition());
+    F->close_chunk	();
 
-    bool bSaveMain	= true;
-    
-	IWriter* F			= 0;
+    F->open_chunk	(CHUNK_SNAPOBJECTS);
+    F->w_u32		(m_ESO_SnapObjects.size());
 
-    if (bSaveMain)
-    {
-	    F				= FS.w_open(full_name.c_str()); R_ASSERT(F);
-        
-        F->open_chunk	(CHUNK_VERSION);
-        F->w_u32		(CURRENT_FILE_VERSION);
-        F->close_chunk	();
+    for(ObjectIt _F=m_ESO_SnapObjects.begin();_F!=m_ESO_SnapObjects.end();++_F)
+    	F->w_stringZ	((*_F)->Name);
 
-        F->open_chunk	(CHUNK_LEVELOP);
-        m_LevelOp.Save	(*F);
-        F->close_chunk	();
+    F->close_chunk	();
 
-        F->open_chunk	(CHUNK_TOOLS_GUID);
-        F->w			(&m_GUID,sizeof(m_GUID));
-        F->close_chunk	();
+    F->open_chunk	(CHUNK_SCRIPTS);
+    F->w_stringZ	(m_ScriptCompileLevel.c_str());
+    F->w_stringZ	(m_ScriptCompileDetails.c_str());
+    F->w_stringZ	(m_ScriptCompileAIMap.c_str());
+    F->w_stringZ	(m_ScriptCompileSpawn.c_str());
+    F->w_stringZ	(m_ScriptRunGame.c_str());
+    F->close_chunk	();
 
-        F->open_chunk	(CHUNK_LEVEL_TAG);
-        F->w_stringZ	(m_OwnerName);
-        F->w			(&m_CreateTime,sizeof(m_CreateTime));
-        F->close_chunk	();
-    
-		F->open_chunk	(CHUNK_CAMERA);
-        F->w_fvector3	(Device.m_Camera.GetHPB());
-        F->w_fvector3	(Device.m_Camera.GetPosition());
-        F->close_chunk	();
-
-        F->open_chunk		(CHUNK_SNAPOBJECTS);
-        F->w_u32			(m_ESO_SnapObjects.size());
-
-        for(ObjectIt _F=m_ESO_SnapObjects.begin();_F!=m_ESO_SnapObjects.end();++_F)
-            F->w_stringZ	((*_F)->Name);
-
-        F->close_chunk		();
-    }
+    if (!bUndo)
+    	FS.w_close(F);
 
     //m_SaveCache.clear		();
 
@@ -584,22 +574,47 @@ void EScene::Save(LPCSTR map_name, bool bUndo, bool bForceSaveAll)
 
     for (; _I!=_E; ++_I)
     {
-        if (	(_I->first!=OBJCLASS_DUMMY) && 
-        		_I->second 					&& 
-                _I->second->IsEnabled()		&&
-                _I->second->IsEditable() 	&&
-                (_I->second->IsChanged()||bForceSaveAll)	)
+        if ((_I->first!=OBJCLASS_DUMMY) &&
+        	 _I->second 				&&
+             _I->second->IsEnabled()	&&
+             _I->second->IsEditable() 	&&
+            (_I->second->IsChanged()||bForceSaveAll))
         {
 
             if (_I->second->IsEnabled()&&_I->second->IsEditable())
             {
-            	if (_I->second->IsNeedSave())
+            	if (bUndo)
                 {
-                    //_I->second->SaveStream	(m_SaveCache);
-                    F->open_chunk			(CHUNK_TOOLS_DATA+_I->first);
-                    //F->w					(m_SaveCache.pointer(),m_SaveCache.size());
-                    _I->second->SaveStream	(*F);
-                    F->close_chunk			();
+            		if (_I->second->IsNeedSave())
+                	{
+                    	//_I->second->SaveStream	(m_SaveCache);
+                    	F->open_chunk			(CHUNK_TOOLS_DATA+_I->first);
+                    	//F->w					(m_SaveCache.pointer(),m_SaveCache.size());
+                    	_I->second->SaveStream	(*F);
+                    	F->close_chunk			();
+                	}
+                }
+                else
+                {
+                	xr_string part_name = LevelPartName(map_name, _I->first);
+
+                    EFS.UnlockFile(part_name.c_str(), false);
+                    EFS.MarkFile(part_name.c_str(), true);
+
+                	IWriter* F = FS.w_open(part_name.c_str());
+                    R_ASSERT(F);
+
+                    F->open_chunk(CHUNK_TOOLS_GUID);
+                    F->w(&m_GUID, sizeof(m_GUID));
+                    F->close_chunk();
+
+                    F->open_chunk(CHUNK_TOOLS_DATA+_I->first);
+                    _I->second->SaveStream(*F);
+                    F->close_chunk();
+
+                    FS.w_close(F);
+
+                    EFS.LockFile(part_name.c_str(), false);
                 }
             }
 			//m_SaveCache.clear	();
@@ -607,7 +622,8 @@ void EScene::Save(LPCSTR map_name, bool bUndo, bool bForceSaveAll)
     }
         
     // save data
-    if (bSaveMain)		FS.w_close(F);
+    if (bUndo)
+    	FS.w_close(F);
 }
 //--------------------------------------------------------------------------------------------------
 
@@ -900,6 +916,15 @@ bool EScene::LoadLTX(LPCSTR map_name, bool bUndo)
             UpdateSnapList();
         }
 
+        if(ini.section_exist("scripts"))
+        {
+        	m_ScriptCompileLevel = *ini.r_string_wb("scripts","compile_level");
+            m_ScriptCompileDetails = *ini.r_string_wb("scripts","compile_details");
+            m_ScriptCompileAIMap = *ini.r_string_wb("scripts","compile_aimap");
+            m_ScriptCompileSpawn = *ini.r_string_wb("scripts","compile_spawn");
+            m_ScriptRunGame	   	 = *ini.r_string_wb("scripts","run_game");
+        }
+
         Msg("EScene: %d objects loaded, %3.2f sec", ObjCount(), T.GetElapsed_sec() );
 
     	UI->UpdateScene(true);
@@ -1029,6 +1054,15 @@ bool EScene::Load(LPCSTR map_name, bool bUndo)
                 }
             }
             UpdateSnapList();
+        }
+
+        if (F->find_chunk(CHUNK_SCRIPTS))
+        {
+        	F->r_stringZ(m_ScriptCompileLevel);
+            F->r_stringZ(m_ScriptCompileDetails);
+            F->r_stringZ(m_ScriptCompileAIMap);
+            F->r_stringZ(m_ScriptCompileSpawn);
+            F->r_stringZ(m_ScriptRunGame);
         }
 
         Msg("EScene: %d objects loaded, %3.2f sec", ObjCount(), T.GetElapsed_sec() );

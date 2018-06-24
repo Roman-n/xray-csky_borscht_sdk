@@ -87,12 +87,19 @@ void CParticleTool::RealUpdateProperties()
             I->SetIcon(2);
         }
 	}
+	bool was_playing;
+    switch(m_EditMode) {
+    	case emEffect:	was_playing = m_EditPE->IsPlaying(); break;
+        case emGroup:	was_playing = m_EditPG->IsPlaying(); break;
+        default:		was_playing = false;
+    }
 	m_PList->AssignItems(items,false,true);
     if(_item_to_select_after_edit.Length())
     {
     	m_PList->SelectItem(_item_to_select_after_edit.c_str(),true,false,true);
         _item_to_select_after_edit = "";
     }
-    
+    if (was_playing)
+    	PlayCurrent();
 }
 

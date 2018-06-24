@@ -62,6 +62,13 @@ public:
 	mapObject_D						    	mapRenderObjects;
 public:
 	st_LevelOptions	m_LevelOp;
+
+    // BAT scripts to run compilers and engine
+    xr_string		m_ScriptCompileLevel;
+    xr_string		m_ScriptCompileDetails;
+    xr_string		m_ScriptCompileAIMap;
+    xr_string		m_ScriptCompileSpawn;
+    xr_string		m_ScriptRunGame;
 protected:
 	bool m_Valid;
 	int m_Locked;

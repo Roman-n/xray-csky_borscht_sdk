@@ -2,7 +2,7 @@ object fraLeftBar: TfraLeftBar
   Left = 0
   Top = 0
   Width = 443
-  Height = 275
+  Height = 270
   HorzScrollBar.ButtonSize = 1
   HorzScrollBar.ParentColor = False
   HorzScrollBar.Visible = False
@@ -3623,6 +3623,13 @@ object fraLeftBar: TfraLeftBar
       Caption = 'Export selection as Obj'
       OnClick = e1Click
     end
+    object N29: TMenuItem
+      Caption = '-'
+    end
+    object miRun: TMenuItem
+      Caption = 'Run'
+      OnClick = miRunClick
+    end
   end
   object pmToolsEdit: TMxPopupMenu
     Alignment = paCenter
@@ -3955,6 +3962,25 @@ object fraLeftBar: TfraLeftBar
     object MenuItem34: TMenuItem
       Caption = 'Clear Error List'
       OnClick = miClearErrorListClick
+    end
+    object N16: TMenuItem
+      Caption = '-'
+    end
+    object miCompileLevel: TMenuItem
+      Caption = 'Compile level'
+      OnClick = miCompileLevelClick
+    end
+    object miCompileDetails: TMenuItem
+      Caption = 'Compile details'
+      OnClick = miCompileDetailsClick
+    end
+    object miCompileAIMap: TMenuItem
+      Caption = 'Compile AI-map'
+      OnClick = miCompileAIMapClick
+    end
+    object miCompileSpawn: TMenuItem
+      Caption = 'Compile spawn'
+      OnClick = miCompileSpawnClick
     end
   end
   object pmObjects: TMxPopupMenu

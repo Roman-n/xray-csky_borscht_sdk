@@ -251,6 +251,12 @@ void EScene::Clear(BOOL bEditableToolsOnly)
     m_CreateTime			= time(NULL);
 
     m_SaveCache.free		();
+
+    m_ScriptCompileLevel	= "bin_x86\\xrLC -f %LEVEL%";
+    m_ScriptCompileDetails	= "bin_x86\\xrDO_Light -f %LEVEL%";
+    m_ScriptCompileAIMap	= "bin_x86\\xrAI -f %LEVEL%";
+    m_ScriptCompileSpawn	= "bin_x86\\xrAI -s %LEVEL%";
+    m_ScriptRunGame			= "bin_x86\\xrEngine -start server(%LEVEL%/single) client(localhost)";
 }
 //----------------------------------------------------
 
@@ -549,7 +555,14 @@ void EScene::FillProp(LPCSTR pref, PropItemVec& items, ObjClassID cls_id)
     V=PHelper().CreateU32		(items,PrepareKey(pref,"Scene\\Build options\\Lighting\\Error (LM collapsing)"), 	&m_LevelOp.m_BuildParams.m_lm_rms,						0,255);		V->Owner()->Enable(enabled);
     V=PHelper().CreateU32		(items,PrepareKey(pref,"Scene\\Build options\\Lighting\\Error (LM zero)"),			&m_LevelOp.m_BuildParams.m_lm_rms_zero,					0,255);		V->Owner()->Enable(enabled);
     V=PHelper().CreateToken32	(items,PrepareKey(pref,"Scene\\Build options\\Lighting\\Jitter samples"),			&m_LevelOp.m_BuildParams.m_lm_jitter_samples, 			js_token);	V->Owner()->Enable(enabled);
-    
+
+    // Scripts
+    PHelper().CreateSText		(items,PrepareKey(pref,"Scene\\Commands\\Compile level"),&m_ScriptCompileLevel);
+    PHelper().CreateSText		(items,PrepareKey(pref,"Scene\\Commands\\Compile details"),&m_ScriptCompileDetails);
+    PHelper().CreateSText		(items,PrepareKey(pref,"Scene\\Commands\\Compile AI-map"),&m_ScriptCompileAIMap);
+    PHelper().CreateSText		(items,PrepareKey(pref,"Scene\\Commands\\Compile spawn"),&m_ScriptCompileSpawn);
+    PHelper().CreateSText		(items,PrepareKey(pref,"Scene\\Commands\\Run game"),&m_ScriptRunGame);
+
     // tools options
     if (OBJCLASS_DUMMY==cls_id)
     {
