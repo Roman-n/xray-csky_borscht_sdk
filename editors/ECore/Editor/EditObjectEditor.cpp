@@ -291,7 +291,7 @@ void CEditableObject::DefferedUnloadRP()
 	vs_SkeletonGeom.destroy();
     // удалить буфера
 	for (EditMeshIt _M=m_Meshes.begin(); _M!=m_Meshes.end(); _M++)
-    	if (*_M) (*_M)->GenerateRenderBuffers();
+    	if (*_M) (*_M)->UnloadRenderBuffers();
 	// удалить shaders
     for(SurfaceIt s_it=m_Surfaces.begin(); s_it!=m_Surfaces.end(); s_it++)
         (*s_it)->OnDeviceDestroy();
