@@ -53,7 +53,7 @@ u32 mem_usage_impl(HANDLE heap_handle, u32* pBlocksUsed, u32* pBlocksFree)
 			blocks_used ++;
 			allocated += entry.cbData;
 		}
-		else if ( entry.wFlags & PROCESS_HEAP_UNCOMMITTED_RANGE ) {
+		else {
 			blocks_free ++;
 			free += entry.cbData;
 		}
