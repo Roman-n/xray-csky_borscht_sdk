@@ -264,7 +264,16 @@ void _initialize_cpu	(void)
 void _initialize_cpu_thread	()
 {
 }
-#else
+#endif
+
+#ifdef M_GCC
+void _initialize_cpu_thread ()
+{
+	// TODO
+}
+#endif
+
+#ifdef M_VISUAL
 // per-thread initialization
 #include <xmmintrin.h>
 #define _MM_DENORMALS_ZERO_MASK 0x0040
@@ -284,7 +293,7 @@ void _initialize_cpu_thread	()
 	// fpu & sse 
 	FPU::m24r	();
 #endif  // XRCORE_STATIC
-#ifndef M_GCC
+
 	if (CPU::ID.feature&_CPU_FEATURE_SSE)	{
 		//_mm_setcsr ( _mm_getcsr() | (_MM_FLUSH_ZERO_ON+_MM_DENORMALS_ZERO_ON) );
 		_MM_SET_FLUSH_ZERO_MODE			(_MM_FLUSH_ZERO_ON);
@@ -296,7 +305,6 @@ void _initialize_cpu_thread	()
 			}
 		}
 	}
-#endif
 }
 #endif
 // threading API 
