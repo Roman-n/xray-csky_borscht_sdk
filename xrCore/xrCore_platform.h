@@ -47,4 +47,34 @@
 #endif
 #pragma warning(pop)
 
+// Select platform
+#ifdef	_MSC_VER
+	#define	M_VISUAL
+	
+	#if defined(_M_AMD64)
+		#define M_AMD64
+	#elif defined(_M_IX86)
+		#define M_IX86
+	#else
+		#error unknown processor architecture
+	#endif
+#endif
+
+#ifdef	__BORLANDC__
+	#define M_BORLAND
+	#define M_IX86
+#endif
+
+#ifdef	__GNUC__
+	#define	M_GCC
+	
+	#if defined(__amd64__)
+		#define M_AMD64
+	#elif defined(__i386__)
+		#define M_IX86
+	#else
+		#error unknown processor architecture
+	#endif	
+#endif
+
 #endif

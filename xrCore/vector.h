@@ -15,17 +15,6 @@
 #undef FLT_MIN
 #endif
 
-// Select platform
-#ifdef	_MSC_VER
-#define	M_VISUAL
-#endif
-#ifdef	__BORLANDC__
-#define M_BORLAND
-#endif
-#ifdef	__GNUC__
-#define	M_GCC
-#endif
-
 // Constants
 #if defined(M_VISUAL) || defined(M_GCC)
 const	float		EPS_S		= 0.0000001f;
