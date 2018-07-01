@@ -89,7 +89,8 @@ void VerifyPath(LPCSTR path)
 	}
 }
 
-#ifdef _EDITOR
+//#ifdef _EDITOR
+#if defined(M_BORLAND) || defined(M_GCC)
 bool file_handle_internal	(LPCSTR file_name, u32 &size, int &hFile)
 {
 	hFile				= _open(file_name,O_RDONLY|O_BINARY|O_SEQUENTIAL);
@@ -341,7 +342,10 @@ IReader*	IReader::open_chunk(u32 ID)
 	} else return 0;
 };
 void	IReader::close()
-{	xr_delete((IReader*)this); }
+{
+	IReader* _this = const_cast<IReader*>(this);	
+	xr_delete(_this); 
+}
 
 #include "FS_impl.h"
 

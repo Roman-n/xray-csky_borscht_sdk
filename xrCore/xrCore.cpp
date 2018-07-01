@@ -3,6 +3,7 @@
 #include "stdafx.h"
 #pragma hdrstop
 
+#include <float.h>
 #include <mmsystem.h>
 #include <objbase.h>
 #include "xrCore.h"
@@ -23,9 +24,9 @@ namespace CPU
 };
 
 static u32	init_counter	= 0;
-
+#ifdef M_VISUAL
 extern char g_application_path[256];
-
+#endif
 //. extern xr_vector<shared_str>*	LogFile;
 
 void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs, LPCSTR fs_fname)
@@ -34,10 +35,9 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 	if (0==init_counter) {
 #ifdef XRCORE_STATIC	
 		_clear87	();
-		_control87	( _PC_53,   MCW_PC );
-		_control87	( _RC_CHOP, MCW_RC );
-		_control87	( _RC_NEAR, MCW_RC );
-		_control87	( _MCW_EM,  MCW_EM );
+		_control87	( _PC_53,   _MCW_PC );
+		_control87	( _RC_NEAR, _MCW_RC );
+		_control87	( _MCW_EM,  _MCW_EM );
 #endif
 		// Init COM so we can use CoCreateInstance
 //		HRESULT co_res = 
@@ -53,7 +53,7 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
         GetModuleFileName(GetModuleHandle(MODULE_NAME),fn,sizeof(fn));
         _splitpath		(fn,dr,di,0,0);
         strconcat		(sizeof(ApplicationPath),ApplicationPath,dr,di);
-#ifndef _EDITOR
+#ifdef M_VISUAL
 		strcpy_s		(g_application_path,sizeof(g_application_path),ApplicationPath);
 #endif
 
@@ -127,10 +127,11 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 	init_counter++;
 }
 
-#ifndef	_EDITOR
+#ifdef M_VISUAL
 #include "compression_ppmd_stream.h"
 extern compression::ppmd::stream	*trained_model;
 #endif
+
 void xrCore::_destroy		()
 {
 	--init_counter;
@@ -140,7 +141,7 @@ void xrCore::_destroy		()
 		xr_delete			(xr_FS);
 		xr_delete			(xr_EFS);
 
-#ifndef	_EDITOR
+#ifdef M_VISUAL
 		if (trained_model) {
 			void			*buffer = trained_model->buffer();
 			xr_free			(buffer);
@@ -166,10 +167,9 @@ void xrCore::_destroy		()
 	case DLL_PROCESS_ATTACH:
 		{
 			_clear87		();
-			_control87		( _PC_53,   MCW_PC );
-			_control87		( _RC_CHOP, MCW_RC );
-			_control87		( _RC_NEAR, MCW_RC );
-			_control87		( _MCW_EM,  MCW_EM );
+			_control87		( _PC_53,   _MCW_PC ); // 53 bit precision
+			_control87		( _RC_NEAR, _MCW_RC ); // near rounding
+			_control87		( _MCW_EM,  _MCW_EM ); // disable all exceptions
 		}
 //.		LogFile.reserve		(256);
 		break;
