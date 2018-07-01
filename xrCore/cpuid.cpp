@@ -40,7 +40,11 @@ int IsCPUID()
 {
 	try 
 	{
-		__asm__("cpuid\n");
+		__asm__(
+			"xorl %%eax, %%eax;\n"
+			"cpuid;\n"
+			::: "%eax"
+		);
 	}
 	catch (...)
 	{
