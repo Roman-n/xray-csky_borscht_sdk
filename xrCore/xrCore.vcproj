@@ -1286,10 +1286,6 @@
 				>
 			</File>
 			<File
-				RelativePath="xrMemory_subst_borland.cpp"
-				>
-			</File>
-			<File
 				RelativePath="xrMemory_subst_borland.h"
 				>
 			</File>

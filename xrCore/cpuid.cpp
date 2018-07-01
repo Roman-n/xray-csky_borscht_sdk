@@ -61,7 +61,7 @@ int IsCPUID()
 *   - Checks if OS Supports the capablity or not
 ****************************************************************/
 
-#if defined(M_VISUAL) || defined(M_BORLAND)
+#if defined(M_BORLAND)
 void _os_support(int feature, int& res)
 {
     __try
@@ -104,6 +104,45 @@ void _os_support(int feature, int& res)
         return;
     }
 	__asm db 0fh, 77h;					// emms
+	res |= feature;
+}
+#endif
+
+#if defined(M_VISUAL)
+void _os_support(int feature, int& res)
+{
+    __try
+    {
+        switch (feature)
+        {
+        case _CPU_FEATURE_SSE:
+            __asm {
+            	xorps xmm0, xmm0        // executing SSE instruction
+            }
+            break;
+        case _CPU_FEATURE_SSE2:
+            __asm {
+                xorpd xmm0, xmm0		// executing WNI instruction
+            }
+            break;
+        case _CPU_FEATURE_3DNOW:
+            __asm 
+			{
+                pfrcp mm0, mm0			// executing 3Dnow instruction
+            }
+            break;
+        case _CPU_FEATURE_MMX:
+            __asm 
+			{
+				pxor mm0, mm0           // executing MMX instruction
+            }
+            break;
+        }
+    } __except (EXCEPTION_EXECUTE_HANDLER) {
+		_mm_empty();
+        return;
+    }
+	_mm_empty();
 	res |= feature;
 }
 #endif
