@@ -14,6 +14,8 @@
 #include "igame_persistent.h"
 #include "Builder.h"
 
+#include "../../ECore/ImGui/IM_PropertyTree.h"
+
 #define DETACH_FRAME(a) 	if (a){ (a)->Hide(); 	(a)->Parent = NULL; }
 #define ATTACH_FRAME(a,b)	if (a){ (a)->Parent=(b);(a)->Show(); 		}
 
@@ -55,6 +57,7 @@ bool CLevelTool::OnCreate()
     Scene->OnCreate	();
     // change target to Object
     ExecCommand		(COMMAND_CHANGE_TARGET, OBJCLASS_SCENEOBJECT);
+/*
 	m_Props 		= TProperties::CreateForm(	"Object Inspector",
     											0,
                                                 alClient,
@@ -62,6 +65,12 @@ bool CLevelTool::OnCreate()
                                                 0,
                                                 TOnCloseEvent(this,&CLevelTool::OnPropsClose),
                           TProperties::plItemFolders|TProperties::plFolderStore|TProperties::plNoClearStore|TProperties::plFullExpand);
+*/
+	m_IMProps		= xr_new<IM_PropertiesWnd>("Object Inspector", false,
+    					TOnModifiedEvent(this,&CLevelTool::OnPropsModified),
+                        IM_PropertyTree::TOnItemFocused(NULL),
+                        TOnCloseEvent(this,&CLevelTool::OnPropsClose));
+	UI->AddIMWindow	(m_IMProps);
     pObjectListForm = TfrmObjectList::CreateForm();
     return true;
 }
@@ -71,7 +80,9 @@ void CLevelTool::OnDestroy()
 {
 	inherited::OnDestroy();
     TfrmObjectList::DestroyForm(pObjectListForm);
-	TProperties::DestroyForm(m_Props);
+//	TProperties::DestroyForm(m_Props);
+	UI->RemoveIMWindow(m_IMProps);
+    xr_delete(m_IMProps);
     // scene destroing
     if (pCurTool)
     	pCurTool->OnDeactivate();
@@ -265,6 +276,7 @@ void CLevelTool::RefreshProperties()
 
 void CLevelTool::ShowProperties(LPCSTR focus_to_item)
 {
+/*
     m_Props->ShowProperties	();
     RealUpdateProperties	();
 
@@ -278,6 +290,20 @@ void CLevelTool::ShowProperties(LPCSTR focus_to_item)
     		m_Props->SelectFolder	(cn);
         }
     }
+*/
+	m_IMProps->Open					();
+    RealUpdateProperties			();
+
+    if(focus_to_item)
+    	m_IMProps->Props().Select	(focus_to_item);
+    else
+    {
+    	if(pCurTool && pCurTool->ClassID!=OBJCLASS_DUMMY)
+        {
+           	LPCSTR cn = pCurTool->ClassDesc();
+    		m_IMProps->Props().Select(cn);
+        }
+    }
 
     UI->RedrawScene			();
 }
@@ -285,6 +311,7 @@ void CLevelTool::ShowProperties(LPCSTR focus_to_item)
 
 void CLevelTool::RealUpdateProperties()
 {
+/*
 	if (m_Props->Visible)
     {
 		if (m_Props->IsModified()) Scene->UndoSave();
@@ -297,13 +324,22 @@ void CLevelTool::RealUpdateProperties()
 
 		m_Props->AssignItems		(items);
     }
+*/
+
+	// scene common props
+    PropItemVec items;
+	Scene->FillProp				("",items,CurrentClassID());
+
+    m_IMProps->AssignItems		(items);
+
 	m_Flags.set(flUpdateProperties,FALSE);
 }
 //---------------------------------------------------------------------------
 
 void CLevelTool::OnPropsClose()
 {
-	if (m_Props->IsModified()) Scene->UndoSave();
+//	.?
+//	if (m_Props->IsModified()) Scene->UndoSave();
 }
 //---------------------------------------------------------------------------
 

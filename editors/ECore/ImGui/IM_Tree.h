@@ -2,29 +2,37 @@
 #define IM_TREE_H
 
 #include "IM_Window.h"
+#include "../../xrEProps/xrEProps.h"
+#include "../../xrEProps/ItemListTypes.h"
 
 ECORE_API class IM_Tree : public IM_Window
 {
 	private:
 	char separator;
     bool multiselect;
+    bool bullets;
 
 	struct ImTreeNode
     {
 		xr_map<xr_string,ImTreeNode> * child;
-		shared_str value;
         bool selected;
+
+        shared_str value;
+        ListItem*  item;
 
         ImTreeNode()
         	: child(NULL),
+              selected(false),
               value(NULL),
-              selected(false)
+              item(NULL)
         { }
 
         ~ImTreeNode()
         {
         	if(child)
             	xr_delete(child);
+            if(item)
+            	xr_delete(item);
         }
     };
 
@@ -33,12 +41,14 @@ ECORE_API class IM_Tree : public IM_Window
 
     ImTreeNode*		GetNode(LPCSTR path, bool must_exist);
     void 			RenderNode(ImTreeNode &node);
-    void 			ClearNode(ImTreeNode &node) { if(node.child) xr_delete(node.child); }
+    void 			ClearNode(ImTreeNode &node) { node.~ImTreeNode(); }
+    void			SelectNode(ImTreeNode &node, bool select = true);
 
     public:
-    IM_Tree(char folder_separator = '\\', bool allow_multiselect = false)
+    IM_Tree(char folder_separator = '\\', bool allow_multiselect = false, bool draw_bullets = false)
     	: separator(folder_separator),
-          multiselect(allow_multiselect)
+          multiselect(allow_multiselect),
+          bullets(draw_bullets)
 	{ }
 
     ~IM_Tree()
@@ -46,6 +56,7 @@ ECORE_API class IM_Tree : public IM_Window
     }
 
     void 			Add(LPCSTR path, LPCSTR value);
+    void			Add(LPCSTR path, ListItem* item);
     void 			Clear();
 
     void 			Select(LPCSTR path, bool select = true);
@@ -53,6 +64,13 @@ ECORE_API class IM_Tree : public IM_Window
     shared_str 		GetSelected();
     void 			GetSelected(xr_vector<shared_str> &result); // for multiselect tree
     u32 			GetSelectedCount();
+
+    // for compatibility with xrEProps item list
+    TOnILItemsFocused 	OnItemsFocused;
+    TOnILItemFocused 	OnItemFocused;
+
+    void			AssignItems(ListItemsVec& items, bool full_expand, bool full_sort = false);
+	void			GetSelected(ListItemsVec& result);
 
     virtual void 	Render();
 };

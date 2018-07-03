@@ -7,20 +7,10 @@
 
 #pragma package(smart_init)
 
-IM_TextEditor::IM_TextEditor(const xr_string& caption, const xr_string& initial_text, u32 desired_text_len, IM_TECallback on_ok, IM_TECallback on_cancel, LPCSTR user_buttons, ...)
-	: m_caption(caption),
-	  m_on_ok(on_ok),
-      m_on_cancel(on_cancel)
+static const u32 text_reserve = 4096; // 4kb
+
+void IM_TextEditor::SetupUserButtons(LPCSTR user_buttons, va_list v)
 {
-	if(desired_text_len == 0)
-    	desired_text_len = 512*1024;
-
-	m_text.resize(desired_text_len);
-    SetText(initial_text);
-
-    va_list v;
-    va_start(v, user_buttons);
-
     u32 cnt = _GetItemCount(user_buttons, ',');
     for(u32 i = 0; i < cnt; i++)
     {
@@ -31,8 +21,42 @@ IM_TextEditor::IM_TextEditor(const xr_string& caption, const xr_string& initial_
         	std::make_pair(xr_string(str), va_arg(v, IM_TECallback))
         );
     }
+}
 
-    va_end(v);
+IM_TextEditor::IM_TextEditor(const xr_string& caption, const xr_string& initial_text, IM_TECallback on_ok, IM_TECallback on_cancel, IM_TECallback on_close, LPCSTR user_buttons, ...)
+	: m_caption(caption),
+	  m_on_ok(on_ok),
+      m_on_cancel(on_cancel),
+      m_on_close(on_close),
+      m_actions(NULL)
+{
+    SetText(initial_text);
+
+    if(user_buttons)
+    {
+    	va_list v;
+    	va_start(v, user_buttons);
+		SetupUserButtons(user_buttons, v);
+    	va_end(v);
+    }
+}
+
+IM_TextEditor::IM_TextEditor(const xr_string& caption, const xr_string& initial_text, IM_TEActions* actions, LPCSTR user_buttons, ...)
+	: m_caption(caption),
+      m_on_ok(NULL),
+      m_on_cancel(NULL),
+      m_on_close(NULL),
+      m_actions(actions)
+{
+	SetText(initial_text);
+
+    if(user_buttons)
+    {
+    	va_list v;
+    	va_start(v, user_buttons);
+		SetupUserButtons(user_buttons, v);
+    	va_end(v);
+    }
 }
 
 IM_TextEditor::~IM_TextEditor()
@@ -41,7 +65,13 @@ IM_TextEditor::~IM_TextEditor()
 
 void IM_TextEditor::Close()
 {
+	if(m_on_close)
+    	m_on_close(this);
+	if(m_actions)
+    	m_actions->OnClose(this);
+
 	UI->RemoveIMWindow(this);
+    xr_delete(m_actions);
     xr_delete(const_cast<IM_TextEditor*>(this));
 }
 
@@ -52,15 +82,20 @@ xr_string IM_TextEditor::GetText()
 
 void IM_TextEditor::SetText(const xr_string& new_text)
 {
-	strncpy(&*m_text.begin(), new_text.c_str(), m_text.size()-1);
-    m_text.back() = '\0';
+	if(m_text.size() < new_text.length()+1+text_reserve)
+    	m_text.resize(new_text.length()+1+text_reserve*2);
+
+    memcpy(&*m_text.begin(), new_text.c_str(), new_text.length()+1);
 }
 
 void IM_TextEditor::Render()
 {
 	bool open = true;
 
-	if(!ImGui::Begin(m_caption.c_str(), &open))
+    ImGui::SetNextWindowSize(ImVec2(500,350), ImGuiCond_FirstUseEver);
+
+    ImGui::OpenPopup(m_caption.c_str()); // this is fine, i hope
+	if(!ImGui::BeginPopupModal(m_caption.c_str(), &open))
     {
     	Close();
         return;
@@ -72,6 +107,8 @@ void IM_TextEditor::Render()
     {
     	if(m_on_ok)
         	m_on_ok(this);
+        if(m_actions)
+        	m_actions->OnOK(this);
 
 		open = false;
 	}
@@ -80,6 +117,8 @@ void IM_TextEditor::Render()
     {
     	if(m_on_cancel)
         	m_on_cancel(this);
+        if(m_actions)
+        	m_actions->OnCancel(this);
 
         open = false;
     }
@@ -89,9 +128,9 @@ void IM_TextEditor::Render()
     for(u32 i = 0; i < m_user_buttons.size(); i++)
     {
     	ImGui::PushID(4444 + i);
-        
     	if(ImGui::Button(m_user_buttons[i].first.c_str()))
         	m_user_buttons[i].second(this);
+        ImGui::PopID();
 
         ImGui::SameLine();
     }
@@ -110,11 +149,32 @@ void IM_TextEditor::Render()
     ImGui::Columns(1);
 
     ImGui::Separator();
+    if(ImGui::InputTextMultiline("##textarea", &*m_text.begin(), m_text.size(),
+       ImVec2(-1,-1), ImGuiInputTextFlags_AllowTabInput))
+    {
+    	if(m_text.size() < strlen(&*m_text.begin())+1+text_reserve)
+        	m_text.resize(m_text.size()+text_reserve*2);
+    }
 
-    ImGui::InputTextMultiline("##textarea", &*m_text.begin(), m_text.size(), ImVec2(-1,-1), ImGuiInputTextFlags_AllowTabInput);
-
-    ImGui::End();
+    ImGui::EndPopup();
 
     if(!open)
     	Close();
+}
+
+//
+IM_TEActions::~IM_TEActions()
+{
+}
+
+void IM_TEActions::OnOK(IM_TextEditor* editor)
+{
+}
+
+void IM_TEActions::OnCancel(IM_TextEditor* editor)
+{
+}
+
+void IM_TEActions::OnClose(IM_TextEditor* editor)
+{
 }

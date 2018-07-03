@@ -38,6 +38,7 @@ void IM_Log::Render()
 	if(!show_log)
     	return;
 
+	ImGui::SetNextWindowSize(ImVec2(500,150), ImGuiCond_FirstUseEver);
 	if(!ImGui::Begin("Log", &show_log))
     {
     	ImGui::End();
@@ -61,7 +62,7 @@ void IM_Log::Render()
     	}
 
     	color = subst_alpha(bgr2rgb(color), 0xFF);
-    	ImGui::PushStyleColor(ImGuiCol_Text, subst_alpha(color, 0xff));
+    	ImGui::PushStyleColor(ImGuiCol_Text, color);
 
     	ImGui::Selectable(text, &it->selected);
 

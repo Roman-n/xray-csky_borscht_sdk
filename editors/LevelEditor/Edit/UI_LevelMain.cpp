@@ -888,7 +888,7 @@ CCommandVar CommandEditSnapObjects(CCommandVar p1, CCommandVar p2)
         }
     };
 
-	UI->AddIMWindow(xr_new<IM_TextEditor>("Snap list", snap_list, 0, &Callback::Ok));
+	UI->AddIMWindow(xr_new<IM_TextEditor>("Snap list", snap_list, &Callback::Ok));
 
 	return TRUE;
 }

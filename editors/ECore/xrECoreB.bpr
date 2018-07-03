@@ -175,7 +175,8 @@
       x:\intermediate_ed\ecore\imgui_impl_dx9.obj 
       x:\intermediate_ed\ecore\IM_Log.obj x:\intermediate_ed\ecore\IM_Tree.obj 
       x:\intermediate_ed\ecore\utf8.obj x:\intermediate_ed\ecore\IM_Window.obj 
-      x:\intermediate_ed\ecore\IM_TextEditor.obj"/>
+      x:\intermediate_ed\ecore\IM_TextEditor.obj 
+      x:\intermediate_ed\ecore\IM_PropertyTree.obj"/>
     <RESFILES value="resource.res"/>
     <IDLFILES value=""/>
     <IDLGENFILES value=""/>
@@ -433,6 +434,7 @@
       <FILE FILENAME="ImGui\utf8.cpp" FORMNAME="" UNITNAME="utf8" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="ImGui\IM_Window.cpp" FORMNAME="" UNITNAME="IM_Window" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="ImGui\IM_TextEditor.cpp" FORMNAME="" UNITNAME="IM_TextEditor" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="ImGui\IM_PropertyTree.cpp" FORMNAME="" UNITNAME="IM_PropertyTree" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
   </FILELIST>
   <BUILDTOOLS>
   </BUILDTOOLS>

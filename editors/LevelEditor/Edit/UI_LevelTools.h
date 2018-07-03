@@ -6,6 +6,8 @@ class ESceneToolBase;
 class TProperties;
 class TfrmObjectList;
 
+class IM_PropertiesWnd;
+
 #include "ESceneClassList.h"
 #include "../ECore/Editor/UI_ToolsCustom.h"
 #include "../ECore/Editor/UI_mainCommand.h"
@@ -47,6 +49,8 @@ class CLevelTool: public CToolCustom
     TProperties* 		m_Props;
     void __stdcall  	OnPropsModified		();
     void __stdcall  	OnPropsClose		();
+
+    IM_PropertiesWnd*	m_IMProps;
 
     void				RealUpdateProperties();
     void				RealUpdateObjectList();
