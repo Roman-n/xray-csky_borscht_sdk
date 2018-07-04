@@ -8,7 +8,7 @@
 	#include "malloc.h"
 #endif
 
-extern BOOL					LogExecCB		= TRUE;
+BOOL						LogExecCB		= TRUE;
 static string_path			logFName		= "engine.log";
 static string_path			log_file_name	= "engine.log";
 static BOOL 				no_log			= TRUE;

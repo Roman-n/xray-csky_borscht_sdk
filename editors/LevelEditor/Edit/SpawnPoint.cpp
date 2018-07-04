@@ -45,6 +45,9 @@
 #define ENVMOD_SIZE 0.25f
 #define MAX_TEAM 6
 const u32 RP_COLORS[MAX_TEAM]={0xff0000,0x00ff00,0x0000ff,0xffff00,0x00ffff,0xff00ff};
+#define ENVMOD_COLOR 0x00DF8E00
+#define ENVMOD_SEL_COLOR1 0x30FFBE10
+#define ENVMOD_SEL_COLOR2 0x00FFBE10
 //----------------------------------------------------
 void CSE_Visual::set_visual	   	(LPCSTR name, bool load)
 {
@@ -705,17 +708,22 @@ bool CSpawnPoint::GetBox( Fbox& box )
         box.max.z 	+= RPOINT_SIZE;
     break;
     case ptEnvMod:
-    	switch(m_EM_ShapeType){
-        case CShapeData::cfSphere:
-        	box.set		(PPosition, PPosition);
-        	box.grow	(Selected()?m_EM_Radius:ENVMOD_SIZE);
-        break;
-        case CShapeData::cfBox:
-        	box.identity	();
-            box.xform		(FTransform);
-        break;
-        default:
-        	THROW;
+    	if (Selected()){
+    		switch(m_EM_ShapeType){
+        	case CShapeData::cfSphere:
+        		box.set		(PPosition, PPosition);
+        		box.grow	(m_EM_Radius);
+        	break;
+        	case CShapeData::cfBox:
+        		box.identity();
+            	box.xform	(FTransform);
+        	break;
+        	default:
+        		THROW;
+        	}
+    	}else{
+        	box.set			(PPosition, PPosition);
+            box.grow		(ENVMOD_SIZE);
         }
     break;
     case ptSpawnPoint:
@@ -860,12 +868,12 @@ void CSpawnPoint::Render( int priority, bool strictB2F )
                     {
                         Fvector pos={0,0,0};
                         Device.SetShader(Device.m_WireShader);
-                        DU_impl.DrawCross(pos,0.25f,0x20FFAE00,true);
+                        DU_impl.DrawCross(pos,0.25f,Selected()?ENVMOD_SEL_COLOR2:ENVMOD_COLOR,true);
                         if (Selected())
                         	switch(m_EM_ShapeType)
                             {
                             	case CShapeData::cfSphere:
-                                	DU_impl.DrawSphere(Fidentity,PPosition,m_EM_Radius,0x30FFAE00,0x00FFAE00,true,true);
+                                	DU_impl.DrawSphere(Fidentity,PPosition,m_EM_Radius,ENVMOD_SEL_COLOR1,ENVMOD_SEL_COLOR2,true,true);
                                 break;
                                 case CShapeData::cfBox:
                                 {

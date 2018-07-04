@@ -155,7 +155,7 @@ inline void buffer_vector_specialized::insert	(iterator const &where, input_iter
 
 	m_end			+= count;
 
-	for (iterator i = where, e = i + count; i != e; ++i, ++begin)
+	for ( i = where, e = i + count; i != e; ++i, ++begin)
 		construct	(i, *begin);
 }
 
@@ -175,7 +175,7 @@ inline void buffer_vector_specialized::insert	(iterator const &where, size_type 
 
 	m_end			+= count;
 
-	for (iterator i = where, e = i + count; i != e; ++i)
+	for ( i = where, e = i + count; i != e; ++i)
 		construct	(i, value);
 }
 

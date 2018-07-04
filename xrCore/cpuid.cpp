@@ -3,22 +3,7 @@
 
 #include "cpuid.h"
 
-#ifdef _M_AMD64
-
-int _cpuid (_processor_info *pinfo)
-{
-	_processor_info&	P	= *pinfo;
-	strcpy_s				(P.v_name,		"AuthenticAMD");
-	strcpy_s				(P.model_name,	"AMD64 family");
-	P.family			=	8;
-	P.model				=	8;
-	P.stepping			=	0;
-	P.feature			=	_CPU_FEATURE_SSE | _CPU_FEATURE_SSE2;
-	P.os_support		=	_CPU_FEATURE_SSE | _CPU_FEATURE_SSE2;
-	return P.feature;
-}
-
-#else
+#ifdef M_IX86
 
 #ifdef	M_VISUAL
 #include "mmintrin.h"
@@ -33,7 +18,8 @@ int _cpuid (_processor_info *pinfo)
 // This bit is set when cpuid is called with
 // register set to 80000001h (only applicable to AMD)
 #define _3DNOW_FEATURE_BIT			0x80000000
- 
+
+#if defined(M_BORLAND) || defined(M_VISUAL) 
 int IsCPUID()
 {
     __try {
@@ -47,6 +33,27 @@ int IsCPUID()
     }
     return 1;
 }
+#endif
+
+#if defined(M_GCC)
+int IsCPUID()
+{
+	try 
+	{
+		__asm__(
+			"xorl %%eax, %%eax;\n"
+			"cpuid;\n"
+			::: "%eax"
+		);
+	}
+	catch (...)
+	{
+		return 0;
+	}
+	
+	return 1;
+}
+#endif
 
 
 /***
@@ -54,23 +61,23 @@ int IsCPUID()
 *   - Checks if OS Supports the capablity or not
 ****************************************************************/
 
-#ifdef M_VISUAL
+#if defined(M_BORLAND)
 void _os_support(int feature, int& res)
 {
-
     __try
     {
         switch (feature)
         {
         case _CPU_FEATURE_SSE:
             __asm {
-                xorps xmm0, xmm0        // __asm _emit 0x0f __asm _emit 0x57 __asm _emit 0xc0
+            	db 0fh, 57h, 0c0h;
+                						// xorps xmm0, xmm0        
                                         // executing SSE instruction
             }
             break;
         case _CPU_FEATURE_SSE2:
             __asm {
-                __asm _emit 0x66 __asm _emit 0x0f __asm _emit 0x57 __asm _emit 0xc0
+                db 66h, 0fh, 57h, 0c0h;
                                         // xorpd xmm0, xmm0
                                         // executing WNI instruction
             }
@@ -78,7 +85,7 @@ void _os_support(int feature, int& res)
         case _CPU_FEATURE_3DNOW:
             __asm 
 			{
-                __asm _emit 0x0f __asm _emit 0x0f __asm _emit 0xc0 __asm _emit 0x96 
+                db 0fh, 0fh, 0c0h, 96h; 
                                         // pfrcp mm0, mm0
                                         // executing 3Dnow instruction
             }
@@ -86,27 +93,88 @@ void _os_support(int feature, int& res)
         case _CPU_FEATURE_MMX:
             __asm 
 			{
-                pxor mm0, mm0           // executing MMX instruction
+				db 0fh, 0efh, 0c0h;
+                						// pxor mm0, mm0           
+										// executing MMX instruction
             }
             break;
         }
     } __except (EXCEPTION_EXECUTE_HANDLER) {
-		_mm_empty	();
+		__asm db 0fh, 77h;				// emms
         return;
     }
-	_mm_empty	();
+	__asm db 0fh, 77h;					// emms
 	res |= feature;
 }
 #endif
 
-#ifdef M_BORLAND
-// borland doesn't understand MMX/3DNow!/SSE/SSE2 asm opcodes
+#if defined(M_VISUAL)
 void _os_support(int feature, int& res)
 {
+    __try
+    {
+        switch (feature)
+        {
+        case _CPU_FEATURE_SSE:
+            __asm {
+            	xorps xmm0, xmm0        // executing SSE instruction
+            }
+            break;
+        case _CPU_FEATURE_SSE2:
+            __asm {
+                xorpd xmm0, xmm0		// executing WNI instruction
+            }
+            break;
+        case _CPU_FEATURE_3DNOW:
+            __asm 
+			{
+                pfrcp mm0, mm0			// executing 3Dnow instruction
+            }
+            break;
+        case _CPU_FEATURE_MMX:
+            __asm 
+			{
+				pxor mm0, mm0           // executing MMX instruction
+            }
+            break;
+        }
+    } __except (EXCEPTION_EXECUTE_HANDLER) {
+		_mm_empty();
+        return;
+    }
+	_mm_empty();
 	res |= feature;
 }
 #endif
 
+#if defined(M_GCC)
+void _os_support(int feature, int& res)
+{
+    try
+    {
+        switch (feature)
+        {
+        case _CPU_FEATURE_SSE:
+            __asm__("xorps %xmm0, %xmm0\n"); // executing SSE instruction
+            break;
+        case _CPU_FEATURE_SSE2:
+            __asm__("xorpd %xmm0, %xmm0\n"); // executing WNI instruction
+            break;
+        case _CPU_FEATURE_3DNOW:
+            __asm__("pfrcp %mm0, %mm0\n"); // executing 3Dnow instruction
+            break;
+        case _CPU_FEATURE_MMX:
+            __asm__("pxor %mm0, %mm0\n"); // executing MMX instruction
+            break;
+        }
+    } catch (...) {
+		__asm__("emms");
+        return;
+    }
+	__asm__("emms");
+	res |= feature;
+}
+#endif
 
 /***
 *
@@ -261,7 +329,46 @@ int _cpuid (_processor_info *pinfo)
         return 0;
     }
 
-    _asm
+#if defined(M_GCC)
+	__asm__(
+		"pushl %%ebx;\n"
+		"pushl %%ecx;\n"
+		"pushl %%edx;\n"
+		
+		// get the vendor string
+		"xorl %%eax, %%eax;\n"
+		"cpuid;\n"
+		"movl %%eax, %3;\n"
+		"movl %%ebx, %0;\n"
+		"movl %%edx, %1;\n"
+		"movl %%ecx, %2;\n"
+		
+		// get the Standard bits
+		"movl $1, %%eax;\n"
+		"cpuid;\n"
+		"movl %%eax, %4;\n"
+		"movl %%edx, %5;\n"
+		
+		// get AMD-specials
+		"movl $0x80000000, %%eax;\n"
+		"cpuid;\n"
+		"cmpl $0x80000000, %%eax;\n"
+		"jc notamd;\n"
+		"movl $0x80000001, %%eax;\n"
+		"cpuid;\n"
+		"movl %%edx, %6;\n"
+		
+		"notamd:\n"
+		"popl %%edx;\n"
+		"popl %%ecx;\n"
+		"popl %%ebx;\n"
+		: "=m" (Ident.dw0), "=m" (Ident.dw1), "=m" (Ident.dw2), 
+		  "=m" (dwMax), "=m" (dwStandard), "=m" (dwFeature), "=m" (dwExt)
+		:
+		: "%eax"
+	);
+#else
+    __asm
     {
         push ebx
         push ecx
@@ -295,6 +402,7 @@ notamd:
         pop ebx
         pop edx
     }
+#endif
 
     if (dwFeature & _MMX_FEATURE_BIT)
     {
@@ -331,5 +439,24 @@ notamd:
     }
    return feature;
 }
+
+#else // ifdef M_IX86
+
+#ifdef M_AMD64
+int _cpuid (_processor_info *pinfo)
+{
+	_processor_info&	P	= *pinfo;
+	strcpy_s				(P.v_name,		"AuthenticAMD");
+	strcpy_s				(P.model_name,	"AMD64 family");
+	P.family			=	8;
+	P.model				=	8;
+	P.stepping			=	0;
+	P.feature			=	_CPU_FEATURE_SSE | _CPU_FEATURE_SSE2;
+	P.os_support		=	_CPU_FEATURE_SSE | _CPU_FEATURE_SSE2;
+	return P.feature;
+}
+#else
+#error unknown processor architecture
+#endif
 
 #endif

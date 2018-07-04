@@ -124,18 +124,18 @@ bool ESoundSource::LoadLTX(CInifile& ini, LPCSTR sect_name)
 
 	inherited::LoadLTX	(ini, sect_name);
 
-    m_Type				= ini.r_u32			(sect_name, "snd_type");
+    m_Type				= (ESoundType)ini.r_u32	(sect_name, "snd_type");
 
-    m_WAVName			= ini.r_string		(sect_name, "snd_name");
+    m_WAVName			= ini.r_string			(sect_name, "snd_name");
 
-    m_Flags.assign		(ini.r_u32			(sect_name, "flags"));
+    m_Flags.assign		(ini.r_u32				(sect_name, "flags"));
 
     m_Params.position	= ini.r_fvector3		(sect_name, "snd_position");
     m_Params.volume		= ini.r_float			(sect_name, "volume");
     m_Params.freq		= ini.r_float			(sect_name, "freq");
     m_Params.min_distance=ini.r_float			(sect_name, "min_dist");
     m_Params.max_distance= ini.r_float			(sect_name, "max_dist");
-    m_Params.max_ai_distance=ini.r_float			(sect_name, "max_ai_dist");
+    m_Params.max_ai_distance=ini.r_float		(sect_name, "max_ai_dist");
 
     m_RandomPause		= ini.r_fvector2		(sect_name, "random_pause");
     m_ActiveTime		= ini.r_fvector2		(sect_name, "active_time");
@@ -160,7 +160,7 @@ void ESoundSource::SaveLTX(CInifile& ini, LPCSTR sect_name)
 
 	ini.w_u32			(sect_name, "version", SOUND_SOURCE_VERSION);
 
-    ini.w_u32			(sect_name, "snd_type", m_Type);
+    ini.w_u32			(sect_name, "snd_type", (u32)m_Type);
 
     ini.w_string		(sect_name, "snd_name", m_WAVName.c_str());
 
@@ -243,7 +243,7 @@ bool ESoundSource::LoadStream(IReader& F)
     switch (m_Type){
     case stStaticSource: 
     	if (m_Flags.is(flPlaying)) 		Play(); 
-//.    	if (m_Flags.is(flSimulating)) 	Simulate(); 
+    	if (m_Flags.is(flSimulating)) 	Simulate(); 
     break;
     default: THROW;
     }
@@ -301,7 +301,7 @@ void ESoundSource::OnControlClick(ButtonValue* V, bool& bModif, bool& bSafe)
     switch (V->btn_num){
     case 0: Play();		break;
     case 1: Stop();		break;
-//.    case 2: Simulate(); break;
+    case 2: Simulate(); break;
 	}
     UI->RedrawScene();
     bModif = false;
@@ -366,7 +366,6 @@ void ESoundSource::OnFrame()
     break;
     case stSimulate:
     {
-/*    
 		m_Flags.set			(flSimulating,TRUE);
     	if ((fis_zero(m_ActiveTime.x)&&fis_zero(m_ActiveTime.y))||
         	((g_pGamePersistent->Environment().GetGameTime()>m_ActiveTime.x)&&(g_pGamePersistent->Environment().GetGameTime()<m_ActiveTime.y)))
@@ -403,7 +402,6 @@ void ESoundSource::OnFrame()
             if (0!=m_Source._feedback())
             	m_Source.stop_deffered();
         }
-*/        
     }break;
     case stNothing:    		break;
     default: THROW;
