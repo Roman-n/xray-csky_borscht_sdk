@@ -94,6 +94,7 @@
 #include <luabind/config.hpp>
 #include <luabind/scope.hpp>
 #include <luabind/back_reference.hpp>
+#include <luabind/raw_policy.hpp>
 #include <luabind/detail/constructor.hpp>
 #include <luabind/detail/call.hpp>
 #include <luabind/detail/signature_match.hpp>
@@ -720,11 +721,11 @@ namespace luabind
 				, const boost::function2<int, lua_State*, int, luabind::memory_allocator<boost::function_base> >& g);
 
 #ifdef LUABIND_NO_ERROR_CHECKING
-			void class_base::add_setter(
+			void add_setter(
 				const char* name
 				, const boost::function2<int, lua_State*, int, luabind::memory_allocator<boost::function_base> >& s);
 #else
-			void class_base::add_setter(
+			void add_setter(
 				const char* name
 				, const boost::function2<int, lua_State*, int, luabind::memory_allocator<boost::function_base> >& s
 				, int (*match)(lua_State*, int)
@@ -1015,6 +1016,8 @@ namespace luabind
 		template<class Derived, class Policies>
 		class_& def(detail::operator_<Derived>, Policies const& policies)
 		{
+			using luabind::raw;
+			
 			return this->def(
 				Derived::name()
 			  , &Derived::template apply<T, Policies>::execute
@@ -1025,6 +1028,8 @@ namespace luabind
 		template<class Derived>
 		class_& def(detail::operator_<Derived>)
 		{
+			using luabind::raw;
+			
 			return this->def(
 				Derived::name()
 			  , &Derived::template apply<T, detail::null_type>::execute

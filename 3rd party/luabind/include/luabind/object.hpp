@@ -169,7 +169,7 @@ namespace luabind
 				lua_pop(L, 1);
 				return *this;
 			}
-
+/*
 			template<class T, class Policies>
 			void assign(const T& val, const Policies& p)
 			{
@@ -183,7 +183,7 @@ namespace luabind
 				lua_pop(L, 1);
 				return *this;
 			}
-
+*/
 			template<class T>
 			detail::proxy_object operator[](const T& key) const;
 
@@ -286,7 +286,7 @@ namespace luabind
 		friend class luabind::detail::proxy_object;
 //		template<class T> friend T luabind::object_cast(const proxy_object& obj);
 		public:
-
+/*
 			template<class T>
 			proxy_raw_object& operator=(const T& val)
 			{
@@ -300,7 +300,7 @@ namespace luabind
 				lua_pop(L, 1);
 				return *this;
 			}
-
+*//*
 			template<class T, class Policies>
 			void assign(const T& val, const Policies& p)
 			{
@@ -314,7 +314,7 @@ namespace luabind
 				lua_pop(L, 1);
 				return *this;
 			}
-
+*/
 			proxy_raw_object& operator=(const object& p);
 			proxy_raw_object& operator=(const proxy_object& p);
 			proxy_raw_object& operator=(const proxy_raw_object& p);
@@ -404,7 +404,7 @@ namespace luabind
 				lua_pop(L, 1);
 				return *this;
 			}
-
+/*
 			template<class T, class Policies>
 			void assign(const T& val, const Policies& p)
 			{
@@ -417,7 +417,7 @@ namespace luabind
 				lua_pop(L, 1);
 				return *this;
 			}
-
+*/
 			proxy_array_object& operator=(const object& p);
 			proxy_array_object& operator=(const proxy_object& p);
 			proxy_array_object& operator=(const proxy_raw_object& p);
@@ -437,6 +437,7 @@ namespace luabind
 
 #define LUABIND_PROXY_ARRAY_RAW_AT_BODY\
 			{\
+				lua_State* m_state = m_obj->m_state;\
 				pushvalue();\
 				detail::convert_to_lua(m_state, key);\
 				lua_rawget(m_state, -2);\
@@ -448,6 +449,7 @@ namespace luabind
 
 #define LUABIND_PROXY_ARRAY_AT_BODY\
 			{\
+				lua_State* m_state = m_obj->m_state;\
 				pushvalue();\
 				detail::convert_to_lua(m_state, key);\
 				lua_gettable(m_state, -2);\

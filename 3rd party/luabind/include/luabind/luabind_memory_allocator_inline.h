@@ -47,9 +47,15 @@ typename MEMORY_ALLOCATOR::const_pointer MEMORY_ALLOCATOR::address		(const_refer
 	return			(&value);
 }
 
+namespace luabind {
+	void* call_allocator(void const* ptr, size_t const nb);
+}
+
 TEMPLATE_SPECIALIZATION
-typename MEMORY_ALLOCATOR::pointer MEMORY_ALLOCATOR::allocate			(size_type const n, void const* const p=0) const
+typename MEMORY_ALLOCATOR::pointer MEMORY_ALLOCATOR::allocate			(size_type const n, void const* const p) const
 {
+	using luabind::call_allocator;
+	
 	pointer			result = (pointer)call_allocator(p,n*sizeof(T));
 	if (!n)
 		result		= (pointer)call_allocator(p,1*sizeof(T));
@@ -60,7 +66,7 @@ typename MEMORY_ALLOCATOR::pointer MEMORY_ALLOCATOR::allocate			(size_type const
 TEMPLATE_SPECIALIZATION
 char *MEMORY_ALLOCATOR::__charalloc										(size_type const n)
 {
-	return 			((char _FARQ *)allocate(n));
+	return 			((char*)allocate(n));
 }
 
 TEMPLATE_SPECIALIZATION

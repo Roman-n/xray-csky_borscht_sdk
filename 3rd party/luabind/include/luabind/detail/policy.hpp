@@ -591,7 +591,7 @@ namespace luabind { namespace detail
 // ********** user defined converter ***********
 
 	template<class Direction> struct user_defined_converter;
-	
+/*	
 	template<>
 	struct user_defined_converter<lua_to_cpp>
 	{
@@ -649,7 +649,7 @@ namespace luabind { namespace detail
 				converters::convert_cpp_to_lua(L, v);
 			}
 	};
-
+*/
 // ********** pointer converter ***********
 
 

@@ -44,6 +44,30 @@ namespace luabind { namespace detail {
 
 }} // namespace luabind
 
+namespace luabind { namespace detail {
+
+    template<class Policies>
+    inline void operator_result(lua_State* L, operator_void_return, Policies*)
+    {
+    }
+
+    template<class T, class Policies>
+    inline void operator_result(lua_State* L, T const& x, Policies*)
+    {
+        typedef typename find_conversion_policy<
+            0
+          , Policies
+        >::type cv_policy;
+
+        typename cv_policy::template generate_converter<
+            T
+          , cpp_to_lua
+        >::type cv;
+
+        cv.apply(L, x);
+    }
+}}
+
 namespace luabind { namespace operators {
 
    #define BOOST_PP_ITERATION_PARAMS_1 (3, \
@@ -151,28 +175,6 @@ namespace luabind { namespace detail {
             return Derived::name();
         }
     };
-
-    template<class Policies>
-    inline void operator_result(lua_State* L, operator_void_return, Policies*)
-    {
-    }
-
-    template<class T, class Policies>
-    inline void operator_result(lua_State* L, T const& x, Policies*)
-    {
-        typedef typename find_conversion_policy<
-            0
-          , Policies
-        >::type cv_policy;
-
-        typename cv_policy::template generate_converter<
-            T
-          , cpp_to_lua
-        >::type cv;
-
-        cv.apply(L, x);
-    }
-
 }} // namespace detail::luabind
 
 namespace luabind {

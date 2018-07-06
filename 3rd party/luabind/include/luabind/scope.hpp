@@ -41,10 +41,10 @@ namespace luabind { namespace detail {
         registration();
         virtual ~registration();
 
-    protected:
+    public:
         virtual void register_(lua_State*) const = 0;
 
-    private:
+    public: // morozov
         friend struct scope;
         registration* m_next;
     };
