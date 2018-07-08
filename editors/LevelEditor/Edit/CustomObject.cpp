@@ -8,6 +8,7 @@
 #include "customobject.h"
 #include "UI_LevelMain.h"
 #include "../ECore/Editor/D3DUtils.h"
+#include "../ECore/Editor/AnimationPath.h"
 #include "motion.h"
 
 #define CUSTOMOBJECT_CHUNK_PARAMS 		0xF900
