@@ -9,8 +9,8 @@ Libs=
 PrivateResource=
 ResourceIncludes=
 MakeIncludes=
-Compiler=-DBUILDING_DLL=1_@@_
-CppCompiler=-DBUILDING_DLL=1_@@_
+Compiler=-DBUILDING_DLL=1_@@_-DCOCO_DISABLE=1_@@_
+CppCompiler=-DBUILDING_DLL=1_@@_-DCOCO_DISABLE=1_@@_
 Linker=
 IsCpp=0
 Icon=
@@ -27,8 +27,8 @@ CommandLine=
 Folders=
 IncludeVersionInfo=0
 SupportXPThemes=0
-CompilerSet=6
-CompilerSettings=0000000000000000000000000
+CompilerSet=3
+CompilerSettings=0000000100000000000000000
 UnitCount=35
 
 [VersionInfo]
