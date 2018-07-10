@@ -5,7 +5,7 @@
 
 #ifdef M_IX86
 
-#ifdef	M_VISUAL
+#ifndef	M_BORLAND
 #include "mmintrin.h"
 #endif
 
@@ -155,23 +155,23 @@ void _os_support(int feature, int& res)
         switch (feature)
         {
         case _CPU_FEATURE_SSE:
-            __asm__("xorps %xmm0, %xmm0\n"); // executing SSE instruction
+            __asm__("xorps %%xmm0, %%xmm0\n" ::: "%xmm0"); // executing SSE instruction
             break;
         case _CPU_FEATURE_SSE2:
-            __asm__("xorpd %xmm0, %xmm0\n"); // executing WNI instruction
+            __asm__("xorpd %%xmm0, %%xmm0\n" ::: "%xmm0"); // executing WNI instruction
             break;
         case _CPU_FEATURE_3DNOW:
-            __asm__("pfrcp %mm0, %mm0\n"); // executing 3Dnow instruction
+            __asm__("pfrcp %%mm0, %%mm0\n" ::: "%mm0"); // executing 3Dnow instruction
             break;
         case _CPU_FEATURE_MMX:
-            __asm__("pxor %mm0, %mm0\n"); // executing MMX instruction
+            __asm__("pxor %%mm0, %%mm0\n" ::: "%mm0"); // executing MMX instruction
             break;
         }
     } catch (...) {
-		__asm__("emms");
+		_mm_empty();
         return;
     }
-	__asm__("emms");
+	_mm_empty();
 	res |= feature;
 }
 #endif
@@ -330,11 +330,7 @@ int _cpuid (_processor_info *pinfo)
     }
 
 #if defined(M_GCC)
-	__asm__(
-		"pushl %%ebx;\n"
-		"pushl %%ecx;\n"
-		"pushl %%edx;\n"
-		
+	__asm__(	
 		// get the vendor string
 		"xorl %%eax, %%eax;\n"
 		"cpuid;\n"
@@ -359,13 +355,10 @@ int _cpuid (_processor_info *pinfo)
 		"movl %%edx, %6;\n"
 		
 		"notamd:\n"
-		"popl %%edx;\n"
-		"popl %%ecx;\n"
-		"popl %%ebx;\n"
 		: "=m" (Ident.dw0), "=m" (Ident.dw1), "=m" (Ident.dw2), 
 		  "=m" (dwMax), "=m" (dwStandard), "=m" (dwFeature), "=m" (dwExt)
 		:
-		: "%eax"
+		: "%eax", "%ebx", "%ecx", "%edx"
 	);
 #else
     __asm

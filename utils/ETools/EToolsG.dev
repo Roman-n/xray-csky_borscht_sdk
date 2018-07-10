@@ -5,13 +5,13 @@ Type=3
 Ver=2
 ObjFiles=
 Includes=..\..\..\SDK\include;..\xrQSlim\src
-Libs=..\..\..\SDK\libraries
+Libs=..\..\..\SDK\libraries;..\..\..\stalker_addon\binaries
 PrivateResource=
 ResourceIncludes=
 MakeIncludes=
 Compiler=-DBUILDING_DLL=1_@@_-fpack-struct=8_@@_
 CppCompiler=-DBUILDING_DLL=1_@@_-fno-operator-names_@@_-DXRCORE_STATIC_@@_-DETOOLS_EXPORTS_@@_
-Linker=../../../stalker_addon/libraries/xrCoreGCC.a_@@_../../../stalker_addon/binaries/libxrCDBG.a_@@_../../../stalker_addon/libraries/xrQSlimG.a_@@_-ld3dx9_@@_-lvorbis_static_@@_-lvorbisfile_static_@@_-logg_static_@@_
+Linker=-lxrCoreG_@@_-lxrCDBG_@@_-ld3dx9_@@_-lvorbis_static_@@_-lvorbisfile_static_@@_-logg_static_@@_..\..\..\stalker_addon\libraries\xrQSlimG.a_@@_
 IsCpp=1
 Icon=
 ExeOutput=..\..\..\stalker_addon\binaries\

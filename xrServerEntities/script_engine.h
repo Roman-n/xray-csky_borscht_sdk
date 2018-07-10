@@ -8,6 +8,8 @@
 
 #pragma once
 
+#include <luabind/luabind.hpp>
+
 #include "script_storage.h"
 #include "script_export_space.h"
 #include "script_space_forward.h"

@@ -216,9 +216,6 @@ SERVER_ENTITY_DECLARE_END
 #define script_type_list save_type_list(CSE_PHSkeleton)
 
 SERVER_ENTITY_DECLARE_BEGIN2(CSE_AbstractVisual,CSE_Abstract,CSE_Visual)
-	typedef CSE_Abstract			inherited1;
-	typedef CSE_Visual				inherited2;
-
 	CSE_AbstractVisual										(LPCSTR caSection);
 	virtual	~CSE_AbstractVisual								();
 	virtual CSE_Visual* __stdcall	visual					();

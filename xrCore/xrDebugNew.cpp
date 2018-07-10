@@ -14,16 +14,24 @@
 
 extern bool shared_str_initialized;
 
-#if defined(M_BORLAND) || defined(M_GCC)
+#ifdef M_BORLAND
+	#	include <new>
+	#	include "d3d9.h"
+	#	pragma warn -8010
+	#	include "d3dx9.h"
+    #	pragma warn .8010
+	#	define DEBUG_INVOKE	DebugBreak()
+//	#   define USE_BUG_TRAP
+
+	#	pragma link "dxerr9B.lib"
+#endif
+
+#ifdef M_GCC
 	#	include <new>
 	#	include "d3d9.h"
 	#	include "d3dx9.h"
 	#	define DEBUG_INVOKE	DebugBreak()
 //	#   define USE_BUG_TRAP
-
-	#if defined(M_BORLAND)
-	#	pragma link "dxerr9B.lib"
-	#endif
 #endif
 
 #ifdef M_VISUAL

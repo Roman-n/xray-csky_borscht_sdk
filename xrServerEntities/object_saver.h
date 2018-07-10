@@ -10,7 +10,7 @@
 
 template <class M, typename P>
 struct CSaver {
-	
+/*	
 	template <typename T>
 	struct CHelper1 {
 		template <bool a>
@@ -27,10 +27,28 @@ struct CSaver {
 			data1->save	(stream);
 		}
 	};
+*/
+	template<typename T, bool A>
+	struct CHelper1 {
+		IC	static void save_data(const T &data, M &stream, const P &p)
+		{
+//			STATIC_CHECK				(!is_polymorphic<T>::result,"Cannot_save_polymorphic_classes_as_binary_data");
+			stream.w					(&data,sizeof(T));
+		}
+	};
+	
+	template<typename T>
+	struct CHelper1<T, true> {
+		IC	static void save_data(const T &data, M &stream, const P &p)
+		{
+			T* data1 = const_cast<T*>(&data);
+			data1->save	(stream);
+		}
+	};
 
+/*
 	template <typename T>
 	struct CHelper {
-
 		template <bool pointer>
 		IC	static void save_data(const T &data, M &stream, const P &p)
 		{
@@ -48,20 +66,43 @@ struct CSaver {
 			CSaver<M,P>::save_data	(*data,stream,p);
 		}
 	};
+*/
+	template<typename T, bool A>
+	struct CHelper {
+		IC	static void save_data(const T &data, M &stream, const P &p)
+		{
+			CHelper1<
+				T,
+				object_type_traits::is_base_and_derived_or_same_from_template<
+					IPureSavableObject,
+					T
+				>::value
+			>::save_data(data,stream,p);
+		}
+	};
+	
+	template<typename T>
+	struct CHelper<T, true> {
+		IC	static void save_data(const T &data, M &stream, const P &p)
+		{
+			CSaver<M,P>::save_data	(*data,stream,p);
+		}
+	};
 
 	struct CHelper3 {
 		template <typename T>
 		IC	static void save_data(const T &data, M &stream, const P &p)
 		{
 			stream.w_u32					((u32)data.size());
-			T::const_iterator				I = data.begin();
-			T::const_iterator				E = data.end();
+			auto							I = data.begin();
+			auto							E = data.end();
 			for ( ; I != E; ++I)
 				if (p(data,*I))
 					CSaver<M,P>::save_data	(*I,stream,p);
 		}
 	};
-	
+
+/*	
 	template <typename T>
 	struct CHelper4 {
 		template <bool a>
@@ -72,6 +113,23 @@ struct CSaver {
 
 		template <>
 		IC	static void save_data<true>(const T &data, M &stream, const P &p)
+		{
+			CHelper3::save_data	(data,stream,p);
+		}
+	};
+*/
+
+	template<typename T, bool A>
+	struct CHelper4 {
+		IC	static void save_data(const T &data, M &stream, const P &p)
+		{
+			CHelper<T,object_type_traits::is_pointer<T>::value>::save_data(data,stream,p);
+		}
+	};
+	
+	template<typename T>
+	struct CHelper4<T, true> {
+		IC	static void save_data(const T &data, M &stream, const P &p)
 		{
 			CHelper3::save_data	(data,stream,p);
 		}
@@ -109,8 +167,8 @@ struct CSaver {
 	IC	static void save_data(const xr_vector<bool> &data, M &stream, const P &p)
 	{
 		stream.w_u32					((u32)data.size());
-		xr_vector<bool>::const_iterator I = data.begin();
-		xr_vector<bool>::const_iterator E = data.end();
+		auto							I = data.begin();
+		auto							E = data.end();
 		u32								mask = 0;
 		if (I != E) {
 			for (int j=0; I != E; ++I, ++j) {
@@ -130,8 +188,8 @@ struct CSaver {
 	IC	static void save_data(const svector<T,size> &data, M &stream, const P &p)
 	{
 		stream.w_u32					((u32)data.size());
-		svector<T,size>::const_iterator	I = data.begin();
-		svector<T,size>::const_iterator	E = data.end();
+		auto							I = data.begin();
+		auto							E = data.end();
 		for ( ; I != E; ++I)
 			if (p(data,*I))
 				CSaver<M,P>::save_data	(*I,stream,p);
@@ -182,7 +240,7 @@ struct CSaver {
 	template <typename T>
 	IC	static void save_data(const T &data, M &stream, const P &p)
 	{
-		CHelper4<T>::save_data<object_type_traits::is_stl_container<T>::value>	(data,stream,p);
+		CHelper4<T,object_type_traits::is_stl_container<T>::value>::save_data(data,stream,p);
 	}
 };
 

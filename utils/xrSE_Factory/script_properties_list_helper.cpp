@@ -20,10 +20,11 @@ CSE_Abstract *owner				(luabind::object object)
 	R_ASSERT				(result);
 	return					(result);
 }
-
+/*
 template <typename T>
 struct CWrapHelper {
 	typedef T result_type;
+	
 	template <bool a>
 	static T	*wrap_value				(luabind::object object, LPCSTR name)
 	{
@@ -38,7 +39,34 @@ struct CWrapHelper {
 		return					(luabind::object_cast<T*>(object[name]));
 	}
 };
+*/
 
+template<typename T, bool A>
+struct CWrapHelper {};
+
+template<typename T>
+struct CWrapHelper<T, true>
+{
+	typedef T result_type;
+	static T	*wrap_value		(luabind::object object, LPCSTR name)
+	{
+		return					(luabind::object_cast<T*>(object[name]));
+	}
+};
+
+template<typename T>
+struct CWrapHelper<T, false>
+{
+	typedef T result_type;
+	static T	*wrap_value				(luabind::object object, LPCSTR name)
+	{
+		CScriptValueWrapper<T>	*value = xr_new<CScriptValueWrapper<T> >(object,name);
+		owner(object)->add		(value);
+		return					(value->value());
+	}
+};
+
+/*
 template <>
 struct CWrapHelper<bool> {
 	typedef BOOL result_type;
@@ -50,7 +78,21 @@ struct CWrapHelper<bool> {
 		return						(value->value());
 	}
 };
+*/
 
+template <>
+struct CWrapHelper<bool, false> {
+	typedef BOOL result_type;
+
+	static BOOL	*wrap_value				(luabind::object object, LPCSTR name)
+	{
+		CScriptValueWrapper<bool>	*value = xr_new<CScriptValueWrapper<bool> >(object,name);
+		owner(object)->add			(value);
+		return						(value->value());
+	}
+};
+
+/*
 template <typename T>
 typename CWrapHelper<T>::result_type	*wrap_value		(luabind::object object, LPCSTR name)
 {
@@ -58,6 +100,15 @@ typename CWrapHelper<T>::result_type	*wrap_value		(luabind::object object, LPCST
 		is_class<T>::result &&
 		!object_type_traits::is_same<shared_str,T>::value
 	>(object,name));
+}
+*/
+template <typename T>
+typename CWrapHelper<T,is_class<T>::result && !object_type_traits::is_same<shared_str,T>::value>::result_type	*wrap_value		(luabind::object object, LPCSTR name)
+{
+	return	(CWrapHelper<
+		T,
+		is_class<T>::result && !object_type_traits::is_same<shared_str,T>::value
+	>::wrap_value(object,name));
 }
 
 bool CScriptPropertiesListHelper::FvectorRDOnAfterEdit	(PropValue* sender,  Fvector& edit_val)
