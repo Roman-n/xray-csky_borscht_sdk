@@ -19,7 +19,7 @@ template <typename TList> struct Register
 
 	static void _Register(lua_State *L)
 	{
-		Register<TList::Tail>::_Register(L);
+		Register<typename TList::Tail>::_Register(L);
 #ifdef XRGAME_EXPORTS
 #	ifdef _DEBUG
 		Msg("Exporting %s",typeid(TList::Head).name());
@@ -35,7 +35,7 @@ template <> struct Register<Loki::NullType>
 	{
 	}
 };
-
+/*
 template <typename T1, typename T2>
 struct TypePair {
 	typedef T1	first;
@@ -47,12 +47,12 @@ template <typename TFullList> struct DynamicCast
 	ASSERT_TYPELIST(TFullList);
 
 	template <typename TList, typename T> struct Helper2
-	{
+	{	
 		typedef typename TList::Head Head;
 
 		static void Register(lua_State *L)
 		{
-			Helper2<TList::Tail,T>::Register(L);
+			Helper2<typename TList::Tail,T>::Register(L);
 			declare<Loki::SuperSubclassStrict<Head,T>::value>();
 		}
 
@@ -79,11 +79,11 @@ template <typename TFullList> struct DynamicCast
 	{
 		static void Register(lua_State *L)
 		{
-			Helper<TList::Tail>::Register(L);
-			Helper2<TFullList,TList::Head>::Register(L);
+			Helper<typename TList::Tail>::Register(L);
+			Helper2<TFullList,typename TList::Head>::Register(L);
 		}
 	};
-
+	
 	template <> struct Helper<Loki::NullType>
 	{
 		static void Register(lua_State *L)
@@ -96,7 +96,7 @@ template <typename TFullList> struct DynamicCast
 		Helper<TFullList>::Register(L);
 	}
 };
-
+*/
 void export_classes	(lua_State *L)
 {
 	Register<script_type_list>::_Register(L);
