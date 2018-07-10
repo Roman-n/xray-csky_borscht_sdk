@@ -153,7 +153,7 @@
 */
 #ifdef WIN32
 #	define LUA_BUILD_AS_DLL
-#endif // #ifdef WIN32
+#endif /* #ifdef WIN32 */
 
 #if defined(LUA_BUILD_AS_DLL)
 
