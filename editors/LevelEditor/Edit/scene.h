@@ -198,7 +198,7 @@ public:
     void 			SelectSnapList		();
     void 			UpdateSnapList 	   	();
     void			UpdateSnapListReal	();
-	virtual ObjectList* 	GetSnapList			(bool bIgnoreUse);
+	virtual ObjectList* 	GetSnapList			(bool bIgnoreUse, ObjClassID for_tool=OBJCLASS_DUMMY);
 
 	virtual CCustomObject*	RayPickObject 		(float dist, const Fvector& start, const Fvector& dir, ObjClassID classfilter, SRayPickInfo* pinf, ObjectList* from_list);
 	int 			BoxPickObjects		(const Fbox& box, SBoxPickInfoVec& pinf, ObjectList* from_list);

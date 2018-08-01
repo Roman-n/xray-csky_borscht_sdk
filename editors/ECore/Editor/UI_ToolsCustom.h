@@ -212,6 +212,9 @@ public:
     virtual bool		Pick				(TShiftState Shift)=0;
 	virtual bool 		RayPick				(const Fvector& start, const Fvector& dir, float& dist, Fvector* pt=0, Fvector* n=0)=0;
 
+    // for LE
+    virtual bool		RayPickFromSnap		(const Fvector& start, const Fvector& dir, float& dist, Fvector* pt=0, Fvector* n=0) { return RayPick(start, dir, dist, pt, n); }
+
     virtual void		ShowProperties		(LPCSTR focused_item)=0;
     virtual void		UpdateProperties	(BOOL bForced=FALSE)=0;
     virtual void		RefreshProperties	()=0;

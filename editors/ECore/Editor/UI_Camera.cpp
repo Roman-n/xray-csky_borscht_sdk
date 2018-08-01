@@ -125,7 +125,7 @@ void CUI_Camera::Update(float dt)
 
             if (m_Shift.Contains(ssCtrl)){
                 float dist = UI->ZFar();
-            	if (Tools->RayPick(m_Position,down_dir,dist))//UI->R PickGround(pos,m_Position,dir,-1))
+            	if (Tools->RayPickFromSnap(m_Position,down_dir,dist))//UI->R PickGround(pos,m_Position,dir,-1))
                 	m_Position.y = m_Position.y+down_dir.y*dist+m_FlyAltitude;
                 else
                 	m_Position.y = m_FlyAltitude;
