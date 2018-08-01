@@ -13,6 +13,7 @@ class ECORE_API CUI_Camera{
     bool			m_bMoving;
     TShiftState	 	m_Shift;
     Ivector2		m_StartPos;
+    float			m_FreeFlySpeed;
     float 			m_FlySpeed;
     float 			m_FlyAltitude;
 
@@ -72,7 +73,7 @@ public:
     void			SetSensitivity(float sm, float sr);
     void			SetViewport	(float _near, float _far, float _fov);
     void			SetDepth	(float _far, bool bForcedUpdate);
-    void			SetFlyParams(float speed, float fAltitude){ m_FlySpeed=speed; m_FlyAltitude=fAltitude; }
+    void			SetFlyParams(float free_speed, float speed, float fAltitude){ m_FreeFlySpeed=free_speed; m_FlySpeed=speed; m_FlyAltitude=fAltitude; }
 
     void			ZoomExtents	(const Fbox& bb);
 
