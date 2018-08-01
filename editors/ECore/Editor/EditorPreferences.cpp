@@ -49,6 +49,7 @@ CCustomPreferences::CCustomPreferences()
 
     m_Prefs["Viewport\\Camera\\Move Sens"].set		("editor_prefs", "cam_sens_move",		ptFloat,	&cam_sens_move, 	0.6f);
     m_Prefs["Viewport\\Camera\\Rotate Sens"].set	("editor_prefs", "cam_sens_rot",		ptFloat,	&cam_sens_rot, 		0.6f);
+    m_Prefs["Viewport\\Camera\\Free Fly Speed"].set	("editor_prefs", "cam_free_fly_speed",	ptFloat,	&cam_free_fly_speed, 5.0f, 0.01f, 100.f);
     m_Prefs["Viewport\\Camera\\Fly Speed"].set		("editor_prefs", "cam_fly_speed",		ptFloat,	&cam_fly_speed, 	5.0f, 0.01f, 100.f);
     m_Prefs["Viewport\\Camera\\Fly Altitude"].set	("editor_prefs", "cam_fly_alt",			ptFloat,	&cam_fly_alt,		1.8f, 0.f, 1000.f);
     m_Prefs["Viewport\\Fog\\Color"].set				("editor_prefs", "fog_color",			ptColor,	&fog_color,			0x00555555);
@@ -125,7 +126,7 @@ void CCustomPreferences::ApplyValues()
     UI->m_MouseSS	= 0.02f*tools_sens_scale*tools_sens_scale;
 
     Device.m_Camera.SetSensitivity	(cam_sens_move, cam_sens_rot);
-    Device.m_Camera.SetFlyParams	(cam_fly_speed, cam_fly_alt);
+    Device.m_Camera.SetFlyParams	(cam_free_fly_speed, cam_fly_speed, cam_fly_alt);
 
     ExecCommand		(COMMAND_UPDATE_GRID);
 }
