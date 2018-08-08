@@ -330,6 +330,58 @@ bool __fastcall TUI_CustomControl::ScaleEnd(TShiftState _Shift)
     return true;
 }
 //------------------------------------------------------------------------------
+// keyboard move
+//------------------------------------------------------------------------------
+bool __fastcall TUI_CustomControl::KeyPress(WORD Key, TShiftState Shift)
+{
+	const float sens = 0.001;
+	Fvector amount;
+	bool moved = false;
+
+    switch (Key){
+    	case '4':
+        	amount = Device.m_Camera.GetRight();
+            amount.normalize().mul(-sens);
+            moved = true;
+        break;
+        case '6':
+        	amount = Device.m_Camera.GetRight();
+            amount.normalize().mul(sens);
+            moved = true;
+        break;
+        case '2':
+        	amount = Device.m_Camera.GetNormal();
+            amount.normalize().mul(-sens);
+            moved = true;
+        break;
+        case '8':
+        	amount = Device.m_Camera.GetNormal();
+            amount.normalize().mul(sens);
+            moved = true;
+        break;
+        case '9':
+        	amount = Device.m_Camera.GetDirection();
+            amount.normalize().mul(sens);
+            moved = true;
+        break;
+        case '3':
+        	amount = Device.m_Camera.GetDirection();
+            amount.normalize().mul(-sens);
+            moved = true;
+        break;
+    }
+
+    if (moved){
+    	ObjectList lst;
+        if (Scene->GetQueryObjects(lst,LTools->CurrentClassID(),1,1,0))
+            for(ObjectIt _F = lst.begin();_F!=lst.end();_F++) (*_F)->Move(amount);
+
+        return true;
+    }
+
+    return false;
+}
+//------------------------------------------------------------------------------
 
 
 
