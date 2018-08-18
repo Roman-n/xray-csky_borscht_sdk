@@ -29,6 +29,46 @@ extern char g_application_path[256];
 #endif
 //. extern xr_vector<shared_str>*	LogFile;
 
+static LPSTR month_id[12] = {
+	"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"
+};
+
+static int days_in_month[12] = {
+	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+};
+
+static int start_day	= 31;	// 31
+static int start_month	= 1;	// January
+static int start_year	= 1999;	// 1999
+
+static void compute_build_id()
+{
+	build_date			= __DATE__;
+
+	int					days;
+	int					months = 0;
+	int					years;
+	string16			month;
+	string256			buffer;
+	strcpy_s			(buffer,__DATE__);
+	sscanf				(buffer,"%s %d %d",month,&days,&years);
+
+	for (int i=0; i<12; i++) {
+		if (_stricmp(month_id[i],month) == 0) {
+			months		= i;
+			break;
+        }
+	}
+
+	build_id			= (years - start_year)*365 + days - start_day;
+
+	for (i=0; i<months; ++i)
+		build_id		+= days_in_month[i];
+
+	for (i=0; i<start_month-1; ++i)
+		build_id		-= days_in_month[i];
+}
+
 void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs, LPCSTR fs_fname)
 {
 	strcpy_s					(ApplicationName,_ApplicationName);
@@ -39,6 +79,9 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 		_control87	( _RC_NEAR, _MCW_RC );
 		_control87	( _MCW_EM,  _MCW_EM );
 #endif
+
+		compute_build_id	();
+
 		// Init COM so we can use CoCreateInstance
 //		HRESULT co_res = 
 		if (!strstr(GetCommandLine(),"-editor"))
