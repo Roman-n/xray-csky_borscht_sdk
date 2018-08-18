@@ -87,8 +87,6 @@ __published:	// IDE-managed Components
 	TMenuItem *ImportErrorList1;
 	TMenuItem *ExportErrorList1;
 	TMenuItem *ClearErrorList1;
-	TMenuItem *miEditMode;
-	TImageList *ilToolsVis;
 	TMenuItem *Objects1;
 	TMenuItem *Images1;
 	TMenuItem *Sounds1;
@@ -236,8 +234,6 @@ public:		// User declarations
     bool            IsFocused(){return D3DWindow->Focused();}
     void			RefreshBars();
     void __fastcall miOpenRecentClick(TObject *Sender);
-    void __fastcall miChangeTargetClick(TObject *Sender);
-    void __fastcall miShowTargetClick(TObject *Sender);
 };
 //---------------------------------------------------------------------------
 extern /*ECORE_API*/ PACKAGE TfrmMain *frmMain;

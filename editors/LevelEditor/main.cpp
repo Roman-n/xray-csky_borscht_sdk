@@ -60,54 +60,6 @@ __fastcall TfrmMain::TfrmMain(TComponent* Owner)
     	FlushLog			();
     	TerminateProcess(GetCurrentProcess(),-1);
     }
-
-    // add tools to edit mode menu
-    struct
-    {
-    	LPCSTR caption;
-        DWORD class_id;
-    } tools_desc[] = {
-    	{"Object",			OBJCLASS_SCENEOBJECT},
-        {"Light",			OBJCLASS_LIGHT},
-        {"Sound Source",	OBJCLASS_SOUND_SRC},
-        {"Sound Env",		OBJCLASS_SOUND_ENV},
-        {"Glow",			OBJCLASS_GLOW},
-        {"Shape",			OBJCLASS_SHAPE},
-        {"Spawn Element",	OBJCLASS_SPAWNPOINT},
-        {"Way Points",		OBJCLASS_WAY},
-        {"Sector",			OBJCLASS_SECTOR},
-        {"Portal",			OBJCLASS_PORTAL},
-        {"Group",			OBJCLASS_GROUP},
-        {"Static Particles",OBJCLASS_PS},
-        {"Detail Objects",	OBJCLASS_DO},
-        {"AI-Map",			OBJCLASS_AIMAP},
-        {"Wallmarks",		OBJCLASS_WM},
-        {"Fog Volumes",		OBJCLASS_FOG_VOL}
-    };
-
-    for(int i = 0; i < sizeof(tools_desc)/sizeof(tools_desc[0]); i++)
-    {
-    	TMenuItem *item 	= xr_new<TMenuItem>(this);
-    	item->Caption 		= tools_desc[i].caption;
-    	item->Tag			= tools_desc[i].class_id;
-        item->RadioItem		= true;
-        item->OnClick		= miChangeTargetClick;
-
-        miEditMode->Add		(item);
-    }
-
-    for(i = 0; i < sizeof(tools_desc)/sizeof(tools_desc[0]); i++)
-    {
-    	TMenuItem *item		= xr_new<TMenuItem>(this);
-        item->Caption		= "";
-        item->Tag			= tools_desc[i].class_id;
-        item->OnClick		= miShowTargetClick;
-
-        if(i == 0)
-        	item->Break		= mbBreak;
-
-        miEditMode->Add		(item);
-    }
 }
 //---------------------------------------------------------------------------
 void __fastcall TfrmMain::FormShow(TObject *Sender)
@@ -280,21 +232,6 @@ void TfrmMain::RefreshBars()
     TMenuItem *separator = xr_new<TMenuItem>(this);
     separator->Caption = "-";
     miFile->Insert(10+i, separator);
-
-
-    for(i = 0; i < miEditMode->Count/2; i++)
-    {
-    	if(LTools->CurrentClassID() == miEditMode->Items[i]->Tag)
-        	miEditMode->Items[i]->Checked = true;
-    }
-
-    for(i = miEditMode->Count/2; i < miEditMode->Count; i++)
-    {
-    	ESceneToolBase *tool = Scene->GetTool(miEditMode->Items[i]->Tag);
-        VERIFY(tool);
-
-        miEditMode->Items[i]->ImageIndex = tool->IsVisible() ? 0 : 1;
-    }
 }
 //---------------------------------------------------------------------------
 
@@ -491,25 +428,6 @@ void __fastcall TfrmMain::miDeselectAllClick(TObject *Sender)
 void __fastcall TfrmMain::miInvertSelectionClick(TObject *Sender)
 {
 	ExecCommand(COMMAND_INVERT_SELECTION_ALL);
-}
-//---------------------------------------------------------------------------
-
-void __fastcall TfrmMain::miChangeTargetClick(TObject *Sender)
-{
-	TMenuItem *item = (TMenuItem*)Sender;
-    ExecCommand(COMMAND_CHANGE_TARGET, item->Tag);
-    item->Checked = true;
-}
-//---------------------------------------------------------------------------
-
-void __fastcall TfrmMain::miShowTargetClick(TObject *Sender)
-{
-	TMenuItem *item = (TMenuItem*)Sender;
-    ESceneToolBase *tool = Scene->GetTool(item->Tag);
-    VERIFY(tool);
-
-    ExecCommand(COMMAND_SHOW_TARGET, item->Tag, !tool->IsVisible());
-    item->ImageIndex = tool->IsVisible() ? 0 : 1;
 }
 //---------------------------------------------------------------------------
 
