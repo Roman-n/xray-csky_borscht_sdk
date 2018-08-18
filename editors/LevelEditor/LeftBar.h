@@ -100,7 +100,6 @@ __published:	// IDE-managed Components
 	TMenuItem *miUnlockSelected;
 	TMenuItem *miUnlockUnselected;
 	TMenuItem *miUnlockAll;
-	TMenuItem *Edit1;
 	TMenuItem *miCopy;
 	TMenuItem *miPaste2;
 	TMenuItem *miCut;
@@ -208,7 +207,6 @@ __published:	// IDE-managed Components
 	TMenuItem *LoadSoundOccluder1;
 	TMenuItem *miDuplicate;
 	TMenuItem *N2;
-	TMenuItem *N16;
 	TMenuItem *miDuplicate2;
 	TExtBtn *ExtBtn3;
 	TMxPopupMenu *pmToolsLocking;
@@ -227,6 +225,7 @@ __published:	// IDE-managed Components
 	TMenuItem *miCompileSpawn;
 	TMenuItem *N29;
 	TMenuItem *miRun;
+	TMenuItem *N16;
     void __fastcall ebClearClick(TObject *Sender);
     void __fastcall ebLoadClick(TObject *Sender);
     void __fastcall ebSaveClick(TObject *Sender);

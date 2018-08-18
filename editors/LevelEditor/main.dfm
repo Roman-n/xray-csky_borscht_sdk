@@ -1,8 +1,8 @@
 object frmMain: TfrmMain
   Left = 426
   Top = 417
-  Width = 770
-  Height = 452
+  Width = 805
+  Height = 465
   Color = clBtnFace
   Constraints.MinHeight = 446
   Constraints.MinWidth = 660
@@ -12,6 +12,7 @@ object frmMain: TfrmMain
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   KeyPreview = True
+  Menu = mmMainMenu
   OldCreateOrder = False
   Position = poDefault
   Scaled = False
@@ -24,20 +25,20 @@ object frmMain: TfrmMain
   PixelsPerInch = 96
   TextHeight = 13
   object spLeftBar: TSplitter
-    Left = 520
+    Left = 555
     Top = 0
     Width = 4
-    Height = 406
+    Height = 394
     Cursor = crHSplit
     Align = alRight
     Color = clMedGray
     ParentColor = False
   end
   object paLeftBar: TPanel
-    Left = 524
+    Left = 559
     Top = 0
     Width = 238
-    Height = 406
+    Height = 394
     Align = alRight
     BevelInner = bvLowered
     BevelOuter = bvNone
@@ -134,8 +135,8 @@ object frmMain: TfrmMain
   end
   object paBottomBar: TPanel
     Left = 0
-    Top = 406
-    Width = 762
+    Top = 394
+    Width = 797
     Height = 17
     Align = alBottom
     BevelInner = bvLowered
@@ -145,25 +146,25 @@ object frmMain: TfrmMain
   object paMain: TPanel
     Left = 0
     Top = 0
-    Width = 520
-    Height = 406
+    Width = 555
+    Height = 394
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
     object paTopBar: TPanel
       Left = 0
       Top = 0
-      Width = 520
-      Height = 18
-      Align = alTop
+      Width = 25
+      Height = 394
+      Align = alLeft
       BevelOuter = bvNone
       TabOrder = 0
     end
     object paRender: TPanel
-      Left = 0
-      Top = 18
-      Width = 520
-      Height = 388
+      Left = 25
+      Top = 0
+      Width = 530
+      Height = 394
       Align = alClient
       BevelOuter = bvNone
       Color = 4868682
@@ -209,5 +210,495 @@ object frmMain: TfrmMain
     OnTimer = tmRefreshTimer
     Left = 129
     Top = 33
+  end
+  object mmMainMenu: TMainMenu
+    Images = ilToolsVis
+    Left = 192
+    Top = 32
+    object miFile: TMenuItem
+      Caption = 'File'
+      object miClear: TMenuItem
+        Caption = 'Clear'
+        OnClick = miClearClick
+      end
+      object miOpen: TMenuItem
+        Caption = 'Open'
+        OnClick = miOpenClick
+      end
+      object miSave: TMenuItem
+        Caption = 'Save'
+        OnClick = miSaveClick
+      end
+      object miSaveAs: TMenuItem
+        Caption = 'Save As...'
+        OnClick = miSaveAsClick
+      end
+      object N3: TMenuItem
+        Caption = '-'
+      end
+      object miOpenSelection: TMenuItem
+        Caption = 'Open Selection'
+        OnClick = miOpenSelectionClick
+      end
+      object miSaveSelection: TMenuItem
+        Caption = 'Save Selection As...'
+        OnClick = miSaveSelectionClick
+      end
+      object N2: TMenuItem
+        Caption = '-'
+      end
+      object miMakePack: TMenuItem
+        Caption = 'Make Pack'
+        OnClick = miMakePackClick
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object miQuit: TMenuItem
+        Caption = 'Quit'
+        OnClick = miQuitClick
+      end
+    end
+    object Edit1: TMenuItem
+      Caption = 'Edit'
+      object miUndo: TMenuItem
+        Caption = 'Undo'
+        OnClick = miUndoClick
+      end
+      object miRedo: TMenuItem
+        Caption = 'Redo'
+        OnClick = miRedoClick
+      end
+      object N5: TMenuItem
+        Caption = '-'
+      end
+      object miCut: TMenuItem
+        Caption = 'Cut'
+        OnClick = miCutClick
+      end
+      object miCopy: TMenuItem
+        Caption = 'Copy'
+        OnClick = miCopyClick
+      end
+      object miPaste: TMenuItem
+        Caption = 'Paste'
+        OnClick = miPasteClick
+      end
+      object miDelete: TMenuItem
+        Caption = 'Delete'
+        OnClick = miDeleteClick
+      end
+      object N6: TMenuItem
+        Caption = '-'
+      end
+      object miSelectAll: TMenuItem
+        Caption = 'Select All'
+        OnClick = miSelectAllClick
+      end
+      object miDeselectAll: TMenuItem
+        Caption = 'Deselect All'
+        OnClick = miDeselectAllClick
+      end
+      object miInvertSelection: TMenuItem
+        Caption = 'Invert Selection'
+        OnClick = miInvertSelectionClick
+      end
+      object N7: TMenuItem
+        Caption = '-'
+      end
+      object HideSelected1: TMenuItem
+        Caption = 'Hide Selected'
+        OnClick = HideSelected1Click
+      end
+      object HideUnselected1: TMenuItem
+        Caption = 'Hide Unselected'
+        OnClick = HideUnselected1Click
+      end
+      object HideAll1: TMenuItem
+        Caption = 'Hide All'
+        OnClick = HideAll1Click
+      end
+      object Unhideall1: TMenuItem
+        Caption = 'Unhide all'
+        OnClick = Unhideall1Click
+      end
+      object N21: TMenuItem
+        Caption = '-'
+      end
+      object MultiRename1: TMenuItem
+        Caption = 'Multi Rename'
+        OnClick = MultiRename1Click
+      end
+      object N20: TMenuItem
+        Caption = '-'
+      end
+      object Properties1: TMenuItem
+        Caption = 'Properties'
+        OnClick = Properties1Click
+      end
+    end
+    object Scene1: TMenuItem
+      Caption = 'Scene'
+      object Options1: TMenuItem
+        Caption = 'Options'
+        OnClick = Options1Click
+      end
+      object N8: TMenuItem
+        Caption = '-'
+      end
+      object Validate1: TMenuItem
+        Caption = 'Validate'
+        OnClick = Validate1Click
+      end
+      object N9: TMenuItem
+        Caption = '-'
+      end
+      object SummaryInfo1: TMenuItem
+        Caption = 'Summary Info'
+        OnClick = SummaryInfo1Click
+      end
+      object HighlightTexture1: TMenuItem
+        Caption = 'Highlight Texture...'
+        OnClick = HighlightTexture1Click
+      end
+      object N10: TMenuItem
+        Caption = '-'
+      end
+      object ClearDebugDraw1: TMenuItem
+        Caption = 'Clear Debug Draw'
+        OnClick = ClearDebugDraw1Click
+      end
+      object N11: TMenuItem
+        Caption = '-'
+      end
+      object ExportentireSceneasObj1: TMenuItem
+        Caption = 'Export entire Scene as Obj'
+        OnClick = ExportentireSceneasObj1Click
+      end
+      object Exportselection1: TMenuItem
+        Caption = 'Export selection as Obj'
+        OnClick = Exportselection1Click
+      end
+      object N4: TMenuItem
+        Caption = '-'
+      end
+      object miRun: TMenuItem
+        Caption = 'Run'
+        OnClick = miRunClick
+      end
+    end
+    object Compile1: TMenuItem
+      Caption = 'Compile'
+      object miBuild: TMenuItem
+        Caption = 'Build'
+        OnClick = miBuildClick
+      end
+      object N12: TMenuItem
+        Caption = '-'
+      end
+      object miMakeGame: TMenuItem
+        Caption = 'Make Game'
+        OnClick = miMakeGameClick
+      end
+      object miMakeDetails: TMenuItem
+        Caption = 'Make Details'
+        OnClick = miMakeDetailsClick
+      end
+      object miMakeHOM: TMenuItem
+        Caption = 'Make HOM'
+        OnClick = miMakeHOMClick
+      end
+      object miMakeSoundOccluder: TMenuItem
+        Caption = 'Make Sound Occluder'
+        OnClick = miMakeSoundOccluderClick
+      end
+      object miMakeAIMap: TMenuItem
+        Caption = 'Make AI-Map'
+        OnClick = miMakeAIMapClick
+      end
+      object N13: TMenuItem
+        Caption = '-'
+      end
+      object ImportErrorList1: TMenuItem
+        Caption = 'Import Error List'
+        OnClick = ImportErrorList1Click
+      end
+      object ExportErrorList1: TMenuItem
+        Caption = 'Export Error List'
+        OnClick = ExportErrorList1Click
+      end
+      object ClearErrorList1: TMenuItem
+        Caption = 'Clear Error List'
+        OnClick = ClearErrorList1Click
+      end
+      object N22: TMenuItem
+        Caption = '-'
+      end
+      object miCompileLevel: TMenuItem
+        Caption = 'Compile level'
+        OnClick = miCompileLevelClick
+      end
+      object miCompileDetails: TMenuItem
+        Caption = 'Compile details'
+        OnClick = miCompileDetailsClick
+      end
+      object miCompileAIMap: TMenuItem
+        Caption = 'Compile AI-map'
+        OnClick = miCompileAIMapClick
+      end
+      object miCompileSpawn: TMenuItem
+        Caption = 'Compile spawn'
+        OnClick = miCompileSpawnClick
+      end
+    end
+    object miEditMode: TMenuItem
+      Caption = 'Edit mode'
+      Visible = False
+    end
+    object Objects1: TMenuItem
+      Caption = 'Objects'
+      object LibraryEditor1: TMenuItem
+        Caption = 'Library Editor'
+        OnClick = LibraryEditor1Click
+      end
+      object N14: TMenuItem
+        Caption = '-'
+      end
+      object ReloadObjects1: TMenuItem
+        Caption = 'Reload Objects'
+        OnClick = ReloadObjects1Click
+      end
+      object CleanLibrary1: TMenuItem
+        Caption = 'Clean Library'
+        OnClick = CleanLibrary1Click
+      end
+      object ClipEditor1: TMenuItem
+        Caption = 'Clip Editor'
+        OnClick = ClipEditor1Click
+      end
+    end
+    object Images1: TMenuItem
+      Caption = 'Images'
+      object ImageEditor1: TMenuItem
+        Caption = 'Image Editor'
+        OnClick = ImageEditor1Click
+      end
+      object N15: TMenuItem
+        Caption = '-'
+      end
+      object ReloadTextures1: TMenuItem
+        Caption = 'Reload Textures'
+        OnClick = ReloadTextures1Click
+      end
+      object N16: TMenuItem
+        Caption = '-'
+      end
+      object SychronizeTextures1: TMenuItem
+        Caption = 'Sychronize Textures'
+        OnClick = SychronizeTextures1Click
+      end
+      object CheckNewTextures1: TMenuItem
+        Caption = 'Check New Textures'
+        OnClick = CheckNewTextures1Click
+      end
+      object N17: TMenuItem
+        Caption = '-'
+      end
+      object EditMinimap1: TMenuItem
+        Caption = 'Edit Minimap'
+        OnClick = EditMinimap1Click
+      end
+      object SynchronizeTHM1: TMenuItem
+        Caption = 'Synchronize THM'
+        OnClick = SynchronizeTHM1Click
+      end
+    end
+    object Sounds1: TMenuItem
+      Caption = 'Sounds'
+      object SoundEditor1: TMenuItem
+        Caption = 'Sound Editor'
+        OnClick = SoundEditor1Click
+      end
+      object N18: TMenuItem
+        Caption = '-'
+      end
+      object SynchronizeSounds1: TMenuItem
+        Caption = 'Synchronize Sounds'
+        OnClick = SynchronizeSounds1Click
+      end
+      object N19: TMenuItem
+        Caption = '-'
+      end
+      object RefreshEnvironmentLibrary1: TMenuItem
+        Caption = 'Refresh Environment Library'
+        OnClick = RefreshEnvironmentLibrary1Click
+      end
+      object RefreshEnvironmentGeometry1: TMenuItem
+        Caption = 'Refresh Environment Geometry'
+        OnClick = RefreshEnvironmentGeometry1Click
+      end
+      object LoadSoundOccluder1: TMenuItem
+        Caption = 'Load Sound Occluder'
+        OnClick = LoadSoundOccluder1Click
+      end
+    end
+    object Other1: TMenuItem
+      Caption = 'Other'
+      object LightAnimEditor1: TMenuItem
+        Caption = 'Light Anim Editor'
+        OnClick = LightAnimEditor1Click
+      end
+      object ObjectList1: TMenuItem
+        Caption = 'Object List'
+        OnClick = ObjectList1Click
+      end
+      object Preferences1: TMenuItem
+        Caption = 'Preferences'
+        OnClick = Preferences1Click
+      end
+    end
+  end
+  object ilToolsVis: TImageList
+    Left = 224
+    Top = 32
+    Bitmap = {
+      494C010102000400040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      0000000000003600000028000000400000001000000001002000000000000010
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000ACB3B600A9B0B400A9B0B400ABB2B50000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000084898C0042454600383A3B00383B3C003E4042007F848700000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000002A2B
+      2C00676B6D00989EA100A9B0B400AAB1B400B9C1C400777C7E001B1D1D008489
+      8C00000000000000000000000000000000000000000000000000000000000000
+      0000090660000906600000000000000000000000000000000000090660000906
+      6000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000000000000000000000AEB5
+      B900C6CED2000E0A9D000E0A9D000E0A9D000E0A9D00A9B0B400AAB1B4001213
+      13007A7E81000000000000000000000000000000000000000000000000000000
+      0000000000000906600009066000000000000000000009066000090660000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000000000000000000000000000000000009FA6A9009FA6
+      A9000E0A9D000E0A9D000E0A9D000E0A9D000E0A9D000E0A9D0091979A00868B
+      8E001F2020000000000000000000000000000000000000000000000000000000
+      0000000000000000000009066000090660000906600009066000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000000000000000000000000000000000005B5F6000868B
+      8E000E0A9D007272FF00BDBDFF000E0A9D000E0A9D000E0A9D00808588003739
+      3A002F313200B4BBBE0000000000000000000000000000000000000000000000
+      0000000000000000000000000000090660000906600000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000969C9F002526
+      270000000000000000002C2E2F00090A0A000202020000000000383A3B002628
+      29007E8386008B8D8E0000000000000000000000000000000000000000000000
+      0000000000000000000009066000090660000906600009066000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000000000000000000000000000000000004E5152008186
+      880071757800444748001617170018191A0015161600505355005D616300888E
+      90004043440093989A0000000000000000000000000000000000000000000000
+      0000000000000906600009066000000000000000000009066000090660000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000000000000093999C004B4D
+      4F0073787A00757A7C00949A9D0090969900909699007D8385006A6E70005255
+      5600A1A7AA000000000000000000000000000000000000000000000000000000
+      0000090660000906600000000000000000000000000000000000090660000906
+      6000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00008085880073787A005255560052555600525556006E72740084898C00B8BF
+      C300000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000424D3E000000000000003E000000
+      2800000040000000100000000100010000000000800000000000000000000000
+      000000000000000000000000FFFFFF00FFFFFFFF00000000FFFFFFFF00000000
+      FFFFFFFF00000000F87FFFFF00000000F03FFFFF00000000E00FF3CF00000000
+      E007F99F00000000C007FC3F00000000C003FE7F00000000C003FC3F00000000
+      C003F99F00000000C007F3CF00000000F00FFFFF00000000FFFFFFFF00000000
+      FFFFFFFF00000000FFFFFFFF0000000000000000000000000000000000000000
+      000000000000}
   end
 end

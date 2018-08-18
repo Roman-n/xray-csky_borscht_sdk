@@ -932,9 +932,7 @@ CCommandVar CommandShowContextMenu(CCommandVar p1, CCommandVar p2)
 //------        
 CCommandVar CommandRefreshUIBar(CCommandVar p1, CCommandVar p2)
 {
-    fraTopBar->RefreshBar		();
-    fraLeftBar->RefreshBar		();
-    fraBottomBar->RefreshBar	();
+    frmMain->RefreshBars		();
     return 						TRUE;
 }
 CCommandVar CommandRestoreUIBar(CCommandVar p1, CCommandVar p2)

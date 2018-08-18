@@ -46,7 +46,7 @@
       -I..\..\xrEngine -I..\..\xrCPU_Pipe -src_suffix cpp -D_EDITOR 
       -D_ACTOR_EDITOR -D_DEBUG -boa"/>
     <CFLAG1 value="-Od -H=x:\intermediate_ed\ae\pch.csm -Hc -Q -Vms -Vx -Ve -xf -xp -VF -ff 
-      -X- -ps -a4 -6 -b- -k- -y -v -vi- -He -c -tW -tWM"/>
+      -X- -ps -a4 -6 -b- -k- -y -v -vi -He -c -tW -tWM"/>
     <PFLAGS value="-N2x:\intermediate_ed\ae -N0x:\intermediate_ed\ae -$Y- -$L- -$D- -$A8 -v 
       -JPHNE -M"/>
     <RFLAGS value=""/>
@@ -110,6 +110,9 @@ OriginalFilename=
 ProductName=
 ProductVersion=1.0.0.0
 Comments=
+
+[Excluded Packages]
+f:\program files\borland\cbuilder6\Bin\bcb2kaxserver60.bpl=Borland C++Builder COM Server Components Sample Package
 
 [HistoryLists\hlIncludePath]
 Count=30

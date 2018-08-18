@@ -49,7 +49,7 @@
       -IX:\SDK\Components\ElPack\Code\Source -I..\..\xrEngine -I..\..\xrCore 
       -src_suffix cpp -D_EDITOR -D_PARTICLE_EDITOR -D_DEBUG -no_tie -boa"/>
     <CFLAG1 value="-Od -H=x:\intermediate_ed\pe\pch.csm -Hc -Q -Vms -Vx -Ve -xf -xp -VF -ff 
-      -X- -ps -a4 -6 -b- -k- -y -v -vi- -He -c -tW -tWM"/>
+      -X- -ps -a4 -6 -b- -k- -y -v -vi -He -c -tW -tWM"/>
     <PFLAGS value="-N2x:\intermediate_ed\pe -N0x:\intermediate_ed\pe -$Y- -$Q -$L- -$D- -$A8 
       -v -JPHNE -M"/>
     <RFLAGS value=""/>
@@ -118,6 +118,9 @@ OriginalFilename=
 ProductName=Stalker
 ProductVersion=1.0.0.0
 Comments=
+
+[Excluded Packages]
+f:\program files\borland\cbuilder6\Bin\bcb2kaxserver60.bpl=Borland C++Builder COM Server Components Sample Package
 
 [HistoryLists\hlIncludePath]
 Count=20
