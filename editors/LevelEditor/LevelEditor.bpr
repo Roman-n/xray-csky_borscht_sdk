@@ -116,7 +116,8 @@
       x:\intermediate_ed\le\gametype_chooser.obj 
       x:\intermediate_ed\le\GroupObjectUtils.obj 
       x:\intermediate_ed\le\AppendObjectInfoForm.obj 
-      x:\intermediate_ed\le\LEClipEditor.obj x:\intermediate_ed\le\FormCoord.obj"/>
+      x:\intermediate_ed\le\LEClipEditor.obj x:\intermediate_ed\le\FormCoord.obj 
+      x:\intermediate_ed\le\FormAbout.obj"/>
     <RESFILES value="LevelEditor.res resource.res"/>
     <IDLFILES value=""/>
     <IDLGENFILES value=""/>
@@ -127,7 +128,7 @@
       FrameSector.dfm FrameShape.dfm FrameSpawn.dfm FrameWayPoint.dfm 
       LeftBar.dfm ObjectList.dfm previewimage.dfm PropertiesEObject.dfm 
       Splash.dfm FrmDBXpacker.dfm RightForm.dfm FrameFogVol.dfm 
-      Edit\AppendObjectInfoForm.dfm LEClipEditor.dfm FormCoord.dfm"/>
+      Edit\AppendObjectInfoForm.dfm LEClipEditor.dfm FormCoord.dfm FormAbout.dfm"/>
     <LIBFILES value=""/>
     <LIBRARIES value="elpproB6.lib elpackB6.lib editor.lib bcbsmp.lib"/>
     <SPARELIBS value="rtl.lib vcl.lib bcbsmp.lib vclx.lib editor.lib elpackB6.lib elpproB6.lib 
@@ -150,12 +151,12 @@
     <OTHERFILES value=""/>
   </MACROS>
   <OPTIONS>
-    <IDLCFLAGS value="-I..\..\xrServerEntities -I..\..\Layers\xrRender -I$(DXSDK_DIR)\Include 
+    <IDLCFLAGS value="-src_suffix cpp -D_EDITOR -D_LEVEL_EDITOR -D_DEBUG 
+      -I..\..\xrServerEntities -I..\..\Layers\xrRender -I$(DXSDK_DIR)\Include 
       -IEdit -IEngine -I$(BCB)\Projects -I$(BCB)\include\vcl -I$(BCB)\include 
       -IX:\SDK\Components\alexmx -IX:\SDK\Components\ElPack\Code 
       -IX:\SDK\Components\ElPack\Code\Source -I..\..\xrCore -I..\..\xrEngine 
-      -I..\..\utils\ETools -IX:\SDK\include\freemagic -src_suffix cpp -D_EDITOR 
-      -D_LEVEL_EDITOR -D_DEBUG"/>
+      -I..\..\utils\ETools -IX:\SDK\include\freemagic"/>
     <CFLAG1 value="-Od -H=x:\intermediate_ed\le\pch.csm -Hc -Q -Vms -Vx -Ve -xf -xp -VF -ff 
       -X- -ps -a4 -6 -b- -k- -y -v -vi -He -c -tW -tWM"/>
     <PFLAGS value="-N2x:\intermediate_ed\le -N0x:\intermediate_ed\le -$Y- -$R -$Q -$L- -$D- 
@@ -324,6 +325,7 @@
       <FILE FILENAME="LEClipEditor.dfm" FORMNAME="" UNITNAME="LEClipEditor.dfm" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="LEClipEditor.h" FORMNAME="" UNITNAME="LEClipEditor.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="FormCoord.cpp" FORMNAME="frmCoord" UNITNAME="FormCoord" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="FormAbout.cpp" FORMNAME="AboutForm" UNITNAME="FormAbout" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
   </FILELIST>
   <BUILDTOOLS>
   </BUILDTOOLS>
@@ -423,7 +425,7 @@ Item1=x:\libraries
 DebugSourceDirs=X:\stalker_addon\sources\engine\editors\ECore\Editor\
 
 [Parameters]
-RunParams=-wf K:\BORSCHT -hw_skin
+RunParams=-wf K:\BORSCHT -hw_skin -editor
 Launcher=
 UseLauncher=0
 DebugCWD=

@@ -36,6 +36,7 @@ TfrmMain *frmMain;
 #include "UI_LevelMain.h"
 #include "FrmDBXpacker.h"
 #include "scene.h"
+#include "FormAbout.h"
 
 
 __fastcall TfrmMain::TfrmMain(TComponent* Owner)
@@ -792,6 +793,12 @@ void __fastcall TfrmMain::miCompileAIMapClick(TObject *Sender)
 void __fastcall TfrmMain::miCompileSpawnClick(TObject *Sender)
 {
 	ExecCommand( COMMAND_RUN_SCRIPT, Scene->m_ScriptCompileSpawn );	
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmMain::About1Click(TObject *Sender)
+{
+	AboutForm->ShowModal();	
 }
 //---------------------------------------------------------------------------
 

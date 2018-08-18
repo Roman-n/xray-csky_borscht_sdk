@@ -556,6 +556,13 @@ object frmMain: TfrmMain
         Caption = 'Preferences'
         OnClick = Preferences1Click
       end
+      object N23: TMenuItem
+        Caption = '-'
+      end
+      object About1: TMenuItem
+        Caption = 'About...'
+        OnClick = About1Click
+      end
     end
   end
   object ilToolsVis: TImageList

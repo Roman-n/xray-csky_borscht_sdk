@@ -37,6 +37,7 @@ USEFORM("FrameFogVol.cpp", fraFogVol);
 USEFORM("Edit\AppendObjectInfoForm.cpp", frmAppendObjectInfo);
 USEFORM("LEClipEditor.cpp", ClipMaker);
 USEFORM("FormCoord.cpp", frmCoord);
+USEFORM("FormAbout.cpp", AboutForm);
 //---------------------------------------------------------------------------
 WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int)
 {
@@ -67,6 +68,7 @@ WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int)
 		Application->CreateForm(__classid(TfrmMain), &frmMain);
 		Application->CreateForm(__classid(TfrmRight), &frmRight);
 		Application->CreateForm(__classid(TfrmCoord), &frmCoord);
+		Application->CreateForm(__classid(TAboutForm), &AboutForm);
 		frmMain->SetHInst		(hInst);
 
 		xr_delete(frmSplash);

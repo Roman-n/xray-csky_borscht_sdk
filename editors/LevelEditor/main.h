@@ -131,6 +131,8 @@ __published:	// IDE-managed Components
 	TMenuItem *miCompileDetails;
 	TMenuItem *miCompileAIMap;
 	TMenuItem *miCompileSpawn;
+	TMenuItem *N23;
+	TMenuItem *About1;
         void __fastcall FormCreate(TObject *Sender);
     void __fastcall D3DWindowResize(TObject *Sender);
     void __fastcall D3DWindowKeyDown(TObject *Sender, WORD &Key,
@@ -221,6 +223,7 @@ __published:	// IDE-managed Components
 	void __fastcall miCompileDetailsClick(TObject *Sender);
 	void __fastcall miCompileAIMapClick(TObject *Sender);
 	void __fastcall miCompileSpawnClick(TObject *Sender);
+	void __fastcall About1Click(TObject *Sender);
 private:	// User declarations
     void __fastcall IdleHandler(TObject *Sender, bool &Done);
 
