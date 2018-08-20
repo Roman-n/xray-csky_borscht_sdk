@@ -29,7 +29,7 @@ extern char g_application_path[256];
 #endif
 //. extern xr_vector<shared_str>*	LogFile;
 
-static LPSTR month_id[12] = {
+static LPCSTR month_id[12] = {
 	"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"
 };
 
