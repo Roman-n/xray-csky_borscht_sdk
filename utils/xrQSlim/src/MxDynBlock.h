@@ -22,6 +22,10 @@ class MxDynBlock : public MxBlock<T>
 {
 private:
 	int fill;
+	
+	using MxBlock<T>::resize;
+	using MxBlock<T>::begin;
+	using MxBlock<T>::end;
 
 public:
 	MxDynBlock(int n=2) : MxBlock<T>(n) { fill=0; }
@@ -54,7 +58,7 @@ public:
 
 	void remove(int i) { (*this)[i] = (*this)[--fill]; }
 	void remove_inorder(int i)
-	{ Memory.mem_move(&(*this)[i], &(*this)[i+1], (--fill - i)*sizeof(T)); }
+	{ memmove(&(*this)[i], &(*this)[i+1], (--fill - i)*sizeof(T)); }
 
 	// Restricted STL-like interface for interoperability with
 	// STL-based code.  Overrides select MxBlock<> definitions and

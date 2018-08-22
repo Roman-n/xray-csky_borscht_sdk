@@ -304,14 +304,15 @@ void setEditable(PropItemVec& items, u32 start_idx, bool bEditableTool, bool bOb
 {
 	PropItemIt it 	= items.begin()+start_idx;
 	PropItemIt it_e = items.end();
-	u32 idx=0;
     
     bool bEditableObject = bEditableTool && (!bObjectInGroup || (bObjectInGroup&&bObjectInGroupUnique) );
     
-    for(; it!=it_e;++it,++idx)
+    for(; it!=it_e;++it)
     {
-        bool bEnabledItem 	= bEditableObject;
-        if(!bEnabledItem && idx==4 && bObjectInGroup)
+        bool bEnabledItem = bEditableObject && (*it)->Enabled();
+
+        // force enable "in group editable"
+        if(bObjectInGroup && !bEnabledItem && strstr((*it)->Key(), "In group editable"))
             bEnabledItem = true;
             
     	(*it)->Enable(bEnabledItem);

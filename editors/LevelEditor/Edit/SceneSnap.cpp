@@ -9,15 +9,25 @@
 #include "../IM_LeftBar.h"
 //------------------------------------------------------------------------------
  
-ObjectList* EScene::GetSnapList(bool bIgnoreUse)
+ObjectList* EScene::GetSnapList(bool bIgnoreUse, ObjClassID for_tool)
 {
-	ObjClassID cls 			= LTools->CurrentClassID();
+//	bool bEnabled = fraLeftBar->ebUseSnapList->Down;
+    bool bEnabled = imLeftBar.m_enable_snap_list;
+    if(!bIgnoreUse && !bEnabled)
+    	return NULL;
+
+	ObjClassID cls 			= for_tool == OBJCLASS_DUMMY ? LTools->CurrentClassID() : for_tool;
+    ObjectList* snap_list	= NULL;
+
     ESceneToolBase* mt 		= m_SceneTools[cls];
-    if (0==mt)				return 0;
-    ObjectList* snap_list	= mt->GetSnapList()?mt->GetSnapList():&m_ESO_SnapObjects;
-    bool use_snap_list = imLeftBar.m_enable_snap_list;
-    //bool use_snap_list = fraLeftBar->ebUseSnapList->Down;
-    return bIgnoreUse?snap_list:(use_snap_list?snap_list:NULL);
+    if(!mt)
+    	return NULL;
+
+    snap_list 				= mt->GetSnapList();
+    if(!snap_list)
+    	snap_list			= &m_ESO_SnapObjects;
+
+    return snap_list;
 }
 //--------------------------------------------------------------------------------------------------
 

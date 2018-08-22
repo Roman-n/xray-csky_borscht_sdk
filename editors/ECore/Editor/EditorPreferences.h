@@ -125,6 +125,7 @@ public:
     u32 			fog_color;
     float			fog_fogness;
     // camera
+    float			cam_free_fly_speed;
     float			cam_fly_speed;
     float			cam_fly_alt;
     float			cam_sens_rot;

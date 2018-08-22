@@ -100,7 +100,6 @@ __published:	// IDE-managed Components
 	TMenuItem *miUnlockSelected;
 	TMenuItem *miUnlockUnselected;
 	TMenuItem *miUnlockAll;
-	TMenuItem *Edit1;
 	TMenuItem *miCopy;
 	TMenuItem *miPaste2;
 	TMenuItem *miCut;
@@ -208,7 +207,6 @@ __published:	// IDE-managed Components
 	TMenuItem *LoadSoundOccluder1;
 	TMenuItem *miDuplicate;
 	TMenuItem *N2;
-	TMenuItem *N16;
 	TMenuItem *miDuplicate2;
 	TExtBtn *ExtBtn3;
 	TMxPopupMenu *pmToolsLocking;
@@ -220,6 +218,14 @@ __published:	// IDE-managed Components
 	TMenuItem *MenuItem18;
 	TMenuItem *UnlockUnselected1;
 	TMenuItem *UnlockAll1;
+	TMenuItem *N28;
+	TMenuItem *miCompileLevel;
+	TMenuItem *miCompileDetails;
+	TMenuItem *miCompileAIMap;
+	TMenuItem *miCompileSpawn;
+	TMenuItem *N29;
+	TMenuItem *miRun;
+	TMenuItem *N16;
     void __fastcall ebClearClick(TObject *Sender);
     void __fastcall ebLoadClick(TObject *Sender);
     void __fastcall ebSaveClick(TObject *Sender);
@@ -322,6 +328,11 @@ __published:	// IDE-managed Components
 	void __fastcall miUnlockAllClick(TObject *Sender);
 	void __fastcall ExtBtn3MouseDown(TObject *Sender, TMouseButton Button,
           TShiftState Shift, int X, int Y);
+	void __fastcall miRunClick(TObject *Sender);
+	void __fastcall miCompileLevelClick(TObject *Sender);
+	void __fastcall miCompileDetailsClick(TObject *Sender);
+	void __fastcall miCompileAIMapClick(TObject *Sender);
+	void __fastcall miCompileSpawnClick(TObject *Sender);
 private:	// User declarations
     void RedrawBar();
 	void __fastcall miRecentFilesClick(TObject *Sender);

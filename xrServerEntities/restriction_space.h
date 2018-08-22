@@ -6,6 +6,8 @@
 //	Description : Restriction space
 ////////////////////////////////////////////////////////////////////////////
 
+#ifndef RESTRICTION_SPACE_H
+#define RESTRICTION_SPACE_H
 #pragma once
 
 namespace RestrictionSpace {
@@ -19,7 +21,9 @@ namespace RestrictionSpace {
 		template <typename T>
 		IC	void	_release		(T*object)
 		{
+#ifdef XRGAME_EXPORTS
 			m_last_time_dec = Device.dwTimeGlobal;
+#endif
 		}
 	};
 
@@ -32,4 +36,6 @@ namespace RestrictionSpace {
 		eRestrictorTypeOut		   = u8(5),
 	};
 };
+
+#endif
 

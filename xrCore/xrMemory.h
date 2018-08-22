@@ -88,7 +88,7 @@ extern XRCORE_API	xrMemory	Memory;
 #define FillMemory(a,b,c)	Memory.mem_fill(a,c,b)
 
 // delete
-#ifdef __BORLANDC__
+#if defined(M_BORLAND) || defined(M_GCC)
 	#include "xrMemory_subst_borland.h"
 #else
 	#include "xrMemory_subst_msvc.h"
@@ -117,14 +117,14 @@ XRCORE_API	char* 	xr_strdup	(const char* string);
 
 #ifdef DEBUG_MEMORY_NAME
 // Global new/delete override
-#	if !(defined(__BORLANDC__) || defined(NO_XRNEW))
+#	if !(defined(M_BORLAND) || defined(NO_XRNEW))
 	IC void*	operator new		(size_t size)		{	return Memory.mem_alloc(size?size:1, "C++ NEW");	}
 	IC void		operator delete		(void *p)			{	xr_free(p);											}
 	IC void*	operator new[]		(size_t size)		{	return Memory.mem_alloc(size?size:1, "C++ NEW");	}
 	IC void		operator delete[]	(void* p)			{	xr_free(p);											}
 #	endif
 #else // DEBUG_MEMORY_NAME
-#	if !(defined(__BORLANDC__) || defined(NO_XRNEW))
+#	if !(defined(M_BORLAND) || defined(NO_XRNEW))
 	IC void*	operator new		(size_t size)		{	return Memory.mem_alloc(size?size:1);				}
 	IC void		operator delete		(void *p)			{	xr_free(p);											}
 	IC void*	operator new[]		(size_t size)		{	return Memory.mem_alloc(size?size:1);				}

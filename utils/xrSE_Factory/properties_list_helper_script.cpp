@@ -16,6 +16,7 @@
 using namespace luabind;
 
 struct CChooseType {};
+CSound_manager_interface *Sound; // hack
 
 typedef IPropHelper& (__stdcall *TPHelper) ();
 

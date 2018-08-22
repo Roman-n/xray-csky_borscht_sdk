@@ -65,7 +65,7 @@ public:
 	virtual bool 	HiddenMode			();
     virtual bool 	KeyDown				(WORD Key, TShiftState Shift){return false;}
     virtual bool 	KeyUp  				(WORD Key, TShiftState Shift){return false;}
-    virtual bool 	KeyPress			(WORD Key, TShiftState Shift){return false;}
+    virtual bool 	KeyPress			(WORD Key, TShiftState Shift);
     virtual void 	OnEnter				(){;}
     virtual void 	OnExit				(){;}
 

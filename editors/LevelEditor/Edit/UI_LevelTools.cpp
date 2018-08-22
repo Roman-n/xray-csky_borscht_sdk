@@ -482,12 +482,12 @@ bool CLevelTool::IsModified()
 //---------------------------------------------------------------------------
 
 #include "../ECore/Editor/EditMesh.h"
-bool CLevelTool::RayPick(const Fvector& start, const Fvector& dir, float& dist, Fvector* pt, Fvector* n)
+bool CLevelTool::RealRayPick(const Fvector& start, const Fvector& dir, float& dist, Fvector* pt, Fvector* n, ObjectList* ol)
 {
     if (Scene->ObjCount()&&(UI->GetEState()==esEditScene)){
         SRayPickInfo pinf;
         pinf.inf.range	= dist;
-        if (Scene->RayPickObject(dist, start,dir,OBJCLASS_SCENEOBJECT,&pinf,0)){ 
+        if (Scene->RayPickObject(dist, start,dir,OBJCLASS_SCENEOBJECT,&pinf,ol)){
         	dist		= pinf.inf.range;
         	if (pt) 	pt->set(pinf.pt); 
             if (n){	
@@ -508,5 +508,15 @@ bool CLevelTool::RayPick(const Fvector& start, const Fvector& dir, float& dist, 
         if (n)	n->set(N);
         return true;
     }else return false;
+}
+
+bool CLevelTool::RayPick(const Fvector& start, const Fvector& dir, float& dist, Fvector* pt, Fvector* n)
+{
+	return RealRayPick(start, dir, dist, pt, n, NULL);
+}
+
+bool CLevelTool::RayPickFromSnap(const Fvector& start, const Fvector& dir, float& dist, Fvector* pt, Fvector* n)
+{
+    return RealRayPick(start, dir, dist, pt, n, Scene->GetSnapList(true, OBJCLASS_SCENEOBJECT));
 }
 

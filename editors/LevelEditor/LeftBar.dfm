@@ -2,7 +2,7 @@ object fraLeftBar: TfraLeftBar
   Left = 0
   Top = 0
   Width = 443
-  Height = 495
+  Height = 270
   HorzScrollBar.ButtonSize = 1
   HorzScrollBar.ParentColor = False
   HorzScrollBar.Visible = False
@@ -42,6 +42,7 @@ object fraLeftBar: TfraLeftBar
       ParentShowHint = False
       ShowHint = True
       TabOrder = 0
+      Visible = False
       DesignSize = (
         428
         154)
@@ -331,6 +332,7 @@ object fraLeftBar: TfraLeftBar
       Align = alTop
       Color = 10528425
       TabOrder = 1
+      Visible = False
       DesignSize = (
         428
         65)
@@ -3621,6 +3623,13 @@ object fraLeftBar: TfraLeftBar
       Caption = 'Export selection as Obj'
       OnClick = e1Click
     end
+    object N29: TMenuItem
+      Caption = '-'
+    end
+    object miRun: TMenuItem
+      Caption = 'Run'
+      OnClick = miRunClick
+    end
   end
   object pmToolsEdit: TMxPopupMenu
     Alignment = paCenter
@@ -3805,6 +3814,31 @@ object fraLeftBar: TfraLeftBar
     Style = msOwnerDraw
     Left = 221
     Top = 9
+    object miCopy: TMenuItem
+      Caption = 'Copy (selection)'
+      GroupIndex = 1
+      OnClick = ebCopyClick
+    end
+    object miPaste2: TMenuItem
+      Caption = 'Paste (selection)'
+      Enabled = False
+      GroupIndex = 1
+      OnClick = ebPasteClick
+    end
+    object miCut: TMenuItem
+      Caption = 'Cut (selection)'
+      GroupIndex = 1
+      OnClick = ebCutClick
+    end
+    object miDuplicate2: TMenuItem
+      Caption = 'Duplicate (selection)'
+      GroupIndex = 1
+      OnClick = ebDuplicateClick
+    end
+    object N28: TMenuItem
+      Caption = '-'
+      GroupIndex = 1
+    end
     object miVisibility: TMenuItem
       Caption = 'Visibility'
       GroupIndex = 1
@@ -3857,35 +3891,6 @@ object fraLeftBar: TfraLeftBar
       object miUnlockAll: TMenuItem
         Caption = 'Unlock All'
         OnClick = miUnlockAllClick
-      end
-    end
-    object Edit1: TMenuItem
-      Caption = 'Edit'
-      GroupIndex = 1
-      OnClick = ebCopyClick
-      object miCopy: TMenuItem
-        Caption = 'Copy (selection)'
-        GroupIndex = 1
-      end
-      object miPaste2: TMenuItem
-        Caption = 'Paste (selection)'
-        Enabled = False
-        GroupIndex = 1
-        OnClick = ebPasteClick
-      end
-      object miCut: TMenuItem
-        Caption = 'Cut (selection)'
-        GroupIndex = 1
-        OnClick = ebCutClick
-      end
-      object N16: TMenuItem
-        Caption = '-'
-        GroupIndex = 1
-      end
-      object miDuplicate2: TMenuItem
-        Caption = 'Duplicate (selection)'
-        GroupIndex = 1
-        OnClick = ebDuplicateClick
       end
     end
     object N4: TMenuItem
@@ -3957,6 +3962,25 @@ object fraLeftBar: TfraLeftBar
     object MenuItem34: TMenuItem
       Caption = 'Clear Error List'
       OnClick = miClearErrorListClick
+    end
+    object N16: TMenuItem
+      Caption = '-'
+    end
+    object miCompileLevel: TMenuItem
+      Caption = 'Compile level'
+      OnClick = miCompileLevelClick
+    end
+    object miCompileDetails: TMenuItem
+      Caption = 'Compile details'
+      OnClick = miCompileDetailsClick
+    end
+    object miCompileAIMap: TMenuItem
+      Caption = 'Compile AI-map'
+      OnClick = miCompileAIMapClick
+    end
+    object miCompileSpawn: TMenuItem
+      Caption = 'Compile spawn'
+      OnClick = miCompileSpawnClick
     end
   end
   object pmObjects: TMxPopupMenu

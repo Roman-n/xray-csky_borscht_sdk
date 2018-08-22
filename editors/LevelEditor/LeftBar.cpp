@@ -826,3 +826,33 @@ void __fastcall TfraLeftBar::ExtBtn3MouseDown(TObject *Sender,
 }
 //---------------------------------------------------------------------------
 
+void __fastcall TfraLeftBar::miRunClick(TObject *Sender)
+{
+	ExecCommand(COMMAND_RUN_SCRIPT, Scene->m_ScriptRunGame);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraLeftBar::miCompileLevelClick(TObject *Sender)
+{
+	ExecCommand(COMMAND_RUN_SCRIPT, Scene->m_ScriptCompileLevel);	
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraLeftBar::miCompileDetailsClick(TObject *Sender)
+{
+	ExecCommand(COMMAND_RUN_SCRIPT, Scene->m_ScriptCompileDetails);	
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraLeftBar::miCompileAIMapClick(TObject *Sender)
+{
+	ExecCommand(COMMAND_RUN_SCRIPT, Scene->m_ScriptCompileAIMap);	
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraLeftBar::miCompileSpawnClick(TObject *Sender)
+{
+	ExecCommand(COMMAND_RUN_SCRIPT, Scene->m_ScriptCompileSpawn);	
+}
+//---------------------------------------------------------------------------
+

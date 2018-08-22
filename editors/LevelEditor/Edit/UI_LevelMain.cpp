@@ -929,9 +929,7 @@ CCommandVar CommandShowContextMenu(CCommandVar p1, CCommandVar p2)
 //------        
 CCommandVar CommandRefreshUIBar(CCommandVar p1, CCommandVar p2)
 {
-    fraTopBar->RefreshBar		();
-    fraLeftBar->RefreshBar		();
-    fraBottomBar->RefreshBar	();
+    frmMain->RefreshBars		();
     return 						TRUE;
 }
 CCommandVar CommandRestoreUIBar(CCommandVar p1, CCommandVar p2)
@@ -970,6 +968,40 @@ CCommandVar CommandToggleAiMapVisibility(CCommandVar p1, CCommandVar p2)
 {
 	ai_map_shown 				= !ai_map_shown;
     return 						TRUE;
+}
+
+CCommandVar CommandRunScript(CCommandVar p1, CCommandVar p2)
+{
+	if (!p1.IsString())
+    	return					FALSE;
+
+	string_path fp;
+    FS.update_path				(fp, _temp_, "$$temp.bat");
+
+    IWriter* F = FS.w_open		(fp);
+    if (!F){
+    	ELog.Msg				(mtError, "Can't open file '%s'", fp);
+        return					FALSE;
+    }
+
+	F->w_string					(xr_string(p1).c_str());
+    FS.w_close					(F);
+
+	xr_string level;
+    (level = "LEVEL=") += *Scene->m_LevelOp.m_FNLevelPath;
+
+    const char* env[] = {
+    	level.c_str(),
+        NULL
+    };
+
+    unsigned code = spawnle		(P_WAIT, fp, fp, NULL, env);
+    if(code != 0)
+    	ELog.DlgMsg				(mtError, "Error %u", code);
+
+    FS.file_delete				(fp);
+    
+	return						TRUE;
 }
 
 void CLevelMain::RegisterCommands()
@@ -1069,6 +1101,7 @@ void CLevelMain::RegisterCommands()
 	REGISTER_CMD_S	    (COMMAND_CREATE_SOUND_LIB,          CommandCreateSoundLib);
 	REGISTER_CMD_SE	    (COMMAND_TOGGLE_AIMAP_VISIBILITY,   "Visibility\\Toggle AIMap",			CommandToggleAiMapVisibility,true);
 	REGISTER_CMD_S	    (COMMAND_SHOW_CLIP_EDITOR,			CommandShowClipEditor);
+    REGISTER_CMD_S		(COMMAND_RUN_SCRIPT,				CommandRunScript);
 
 }
 

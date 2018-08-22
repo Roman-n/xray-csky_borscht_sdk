@@ -46,6 +46,7 @@ enum EPropType{
 struct 	xr_token;        
 class PropValue;
 class PropItem;
+class TProperties;
 DEFINE_VECTOR			(PropItem*,PropItemVec,PropItemIt);
 
 //------------------------------------------------------------------------------
@@ -444,8 +445,18 @@ typedef CustomValue<Fcolor>		ColorValue;
 //------------------------------------------------------------------------------
 
 template <class T>
+IC xr_string draw_sprintf(xr_string& s, const T& V, int tag)
+{  string256 tmp; sprintf_s(tmp,sizeof(tmp),"%d",V); s=tmp; return s;}
+//------------------------------------------------------------------------------
+
+template <class T>
 class NumericValue: public CustomValue<T>
 {
+#ifdef M_GCC
+	using CustomValue<T>::value;
+	using CustomValue<T>::init_value;
+#endif
+
 public:
     T					lim_mn;
     T					lim_mx;
@@ -454,15 +465,15 @@ public:
 public:
 						NumericValue	(T* val):CustomValue<T>(val)
 	{
-        value			= val;
-        init_value		= *value;
-        dec				= 0;
+        value				= val;
+        init_value			= *val;
+        dec					= 0;
     };
 						NumericValue	(T* val, T mn, T mx, T increm, int decim):CustomValue<T>(val),lim_mn(mn),lim_mx(mx),inc(increm),dec(decim)
 	{
     	clamp			(*val,lim_mn,lim_mx);
         value			= val;
-        init_value		= *value;
+        init_value		= *val;
     };
     bool				ApplyValue		(const T& _val)
     {
@@ -479,10 +490,6 @@ public:
     }
 };
 
-//------------------------------------------------------------------------------
-template <class T>
-IC xr_string draw_sprintf(xr_string& s, const T& V, int tag)
-{  string256 tmp; sprintf_s(tmp,sizeof(tmp),"%d",V); s=tmp; return s;}
 //------------------------------------------------------------------------------
 IC xr_string draw_sprintf(xr_string& s, const float& V, int dec)
 {
@@ -549,6 +556,11 @@ public:
 template <class T>
 class FlagValue: public CustomValue<T>, public FlagValueCustom
 {
+#ifdef M_GCC
+	using CustomValue<T>::value;
+	using CustomValue<T>::init_value;
+#endif
+
 public:
 	typedef T			TYPE;
 	typedef typename T::TYPE FLAG_TYPE;
@@ -593,6 +605,10 @@ public:
 template <class T>
 class TokenValue: public CustomValue<T>, public TokenValueCustom
 {
+#ifdef M_GCC
+	using CustomValue<T>::GetValue;
+#endif
+
 public:
 						TokenValue		(T* val, xr_token* _token):TokenValueCustom(_token),CustomValue<T>(val){};
     virtual xr_string	GetDrawText		(TOnDrawTextEvent OnDrawText)
@@ -618,6 +634,10 @@ public:
 template <class T>
 class RTokenValue: public CustomValue<T>, public RTokenValueCustom
 {
+#ifdef M_GCC
+	using CustomValue<T>::GetValue;
+#endif
+
 public:
 						RTokenValue		(T* val, xr_rtoken* _token, u32 _t_cnt):CustomValue<T>(val),RTokenValueCustom(_token,_t_cnt){};
     virtual xr_string	GetDrawText		(TOnDrawTextEvent OnDrawText)

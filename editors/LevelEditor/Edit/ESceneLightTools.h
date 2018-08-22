@@ -23,6 +23,8 @@ protected:
 	enum{
     	flShowSun			= (1<<31),
         flShowControlName	= (1<<30),
+        flWthrSunDir		= (1<<29),
+        flWthrHemi			= (1<<28)
     };
     Flags32				m_Flags;
 	// hemisphere

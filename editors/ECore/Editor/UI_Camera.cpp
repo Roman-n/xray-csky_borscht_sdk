@@ -116,16 +116,17 @@ void CUI_Camera::Update(float dt)
 	if (m_bMoving){
     	BOOL bLeftDn = m_Shift.Contains(ssLeft);
     	BOOL bRightDn = m_Shift.Contains(ssRight);
+        BOOL bCtrlDn = m_Shift.Contains(ssCtrl);
 		if ((m_Style==csFreeFly)&&(bLeftDn||bRightDn)&&!(bLeftDn&&bRightDn)){
 			Fvector vmove;
 	        vmove.set( m_CamMat.k );
-			vmove.mul( m_FlySpeed*dt );
+			vmove.mul( (bCtrlDn?m_FlySpeed:m_FreeFlySpeed)*dt );
     		if (bLeftDn) 		m_Position.add( vmove );
     		else if (bRightDn) 	m_Position.sub( vmove );
 
-            if (m_Shift.Contains(ssCtrl)){
+            if (bCtrlDn){
                 float dist = UI->ZFar();
-            	if (Tools->RayPick(m_Position,down_dir,dist))//UI->R PickGround(pos,m_Position,dir,-1))
+            	if (Tools->RayPickFromSnap(m_Position,down_dir,dist))//UI->R PickGround(pos,m_Position,dir,-1))
                 	m_Position.y = m_Position.y+down_dir.y*dist+m_FlyAltitude;
                 else
                 	m_Position.y = m_FlyAltitude;

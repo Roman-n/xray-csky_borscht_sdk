@@ -169,7 +169,9 @@
       x:\intermediate_ed\ecore\dxThunderboltDescRender.obj 
       x:\intermediate_ed\ecore\thunderbolt.obj 
       x:\intermediate_ed\ecore\xr_efflensflare.obj 
-      x:\intermediate_ed\ecore\Rain.obj x:\intermediate_ed\ecore\imgui.obj 
+      x:\intermediate_ed\ecore\Rain.obj 
+      x:\intermediate_ed\ecore\AnimationPath.obj
+      x:\intermediate_ed\ecore\imgui.obj 
       x:\intermediate_ed\ecore\imgui_demo.obj 
       x:\intermediate_ed\ecore\imgui_draw.obj 
       x:\intermediate_ed\ecore\imgui_impl_dx9.obj 
@@ -425,6 +427,7 @@
       <FILE FILENAME="..\..\xrEngine\thunderbolt.cpp" FORMNAME="" UNITNAME="thunderbolt.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\xrEngine\xr_efflensflare.cpp" FORMNAME="" UNITNAME="xr_efflensflare.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\xrEngine\Rain.cpp" FORMNAME="" UNITNAME="Rain.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="Editor\AnimationPath.cpp" FORMNAME="" UNITNAME="AnimationPath" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="ImGui\imgui.cpp" FORMNAME="" UNITNAME="imgui.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="ImGui\imgui_demo.cpp" FORMNAME="" UNITNAME="imgui_demo.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="ImGui\imgui_draw.cpp" FORMNAME="" UNITNAME="imgui_draw.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>

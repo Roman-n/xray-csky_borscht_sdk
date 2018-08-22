@@ -65,7 +65,7 @@
 				EnableFunctionLevelLinking="false"
 				EnableEnhancedInstructionSet="1"
 				FloatingPointModel="2"
-				ForceConformanceInForLoopScope="false"
+				ForceConformanceInForLoopScope="true"
 				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="stdafx.h"

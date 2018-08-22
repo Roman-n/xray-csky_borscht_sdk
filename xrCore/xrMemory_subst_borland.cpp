@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#ifdef __BORLANDC__
 MEMPOOL		mem_pools			[mem_pools_count];
 // Borland doesn't support marked aligned allocs ???
 void*	xrMemory::mem_alloc		(size_t size)
@@ -23,4 +22,3 @@ void*	xrMemory::mem_realloc	(void* P, size_t size)
 		Debug.fatal(DEBUG_INFO,"Out of memory. Memory request: %d K",size/1024);
 	return data;
 }
-#endif

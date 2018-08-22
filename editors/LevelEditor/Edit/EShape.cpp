@@ -474,7 +474,7 @@ void CEditShape::OnFrame()
 //    	TfraShape* F 		= (TfraShape*)ParentTool->pFrame;
 //    	BOOL bVis = F->ebEditLevelBoundMode->Down;
 		BOOL bVis = imLeftBar.fraShape.m_edit_level_bound;
-    	m_RT_Flags.set(flRT_Visible, bVis);
+    	m_CO_Flags.set(flVisible, bVis);
     }
 }
 

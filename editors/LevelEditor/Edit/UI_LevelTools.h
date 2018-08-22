@@ -105,7 +105,9 @@ public:
     virtual bool __fastcall 	KeyPress    (WORD Key, TShiftState Shift);
 
     virtual bool		Pick				(TShiftState Shift);
+    		bool		RealRayPick			(const Fvector& start, const Fvector& dir, float& dist, Fvector* pt, Fvector* n, ObjectList* ol=0);
 	virtual bool 		RayPick				(const Fvector& start, const Fvector& dir, float& dist, Fvector* pt, Fvector* n);
+    virtual bool		RayPickFromSnap		(const Fvector& start, const Fvector& dir, float& dist, Fvector* pt, Fvector* n);
 
     virtual void		ShowProperties		(LPCSTR focused_item);
     virtual void		UpdateProperties	(BOOL bForced){m_Flags.set(flUpdateProperties|flUpdateObjectList,TRUE); if (bForced) OnFrame();}

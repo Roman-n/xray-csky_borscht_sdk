@@ -291,7 +291,7 @@ void CEditableObject::DefferedUnloadRP()
 	vs_SkeletonGeom.destroy();
     // удалить буфера
 	for (EditMeshIt _M=m_Meshes.begin(); _M!=m_Meshes.end(); _M++)
-    	if (*_M) (*_M)->GenerateRenderBuffers();
+    	if (*_M) (*_M)->UnloadRenderBuffers();
 	// удалить shaders
     for(SurfaceIt s_it=m_Surfaces.begin(); s_it!=m_Surfaces.end(); s_it++)
         (*s_it)->OnDeviceDestroy();
@@ -380,6 +380,14 @@ bool CEditableObject::CheckShaderCompatible()
             if (!BE(B->canBeLMAPped(),!C->flags.bLIGHT_Vertex)){
                 ELog.Msg	(mtError,"Object '%s': engine shader '%s' non compatible with compiler shader '%s'",GetName(),(*s_it)->_ShaderName(),(*s_it)->_ShaderXRLCName());
                 bRes 		= false;
+            }
+            if (IsStatic() && B->getDescription().CLS == B_TREE){
+            	ELog.Msg	(mtError,"Object '%s': engine shader '%s' not compatible with static objects",GetName(),(*s_it)->_ShaderName());
+                bRes		= false;
+            }
+            if (IsMUStatic() && B->getDescription().CLS != B_TREE && C->flags.bRendering){
+            	ELog.Msg	(mtError,"Object '%s': engine shader '%s' non compatible with compiler shader '%s' on MU-objects",GetName(),(*s_it)->_ShaderName(),(*s_it)->_ShaderXRLCName());
+                bRes		= false;
             }
         }
     }

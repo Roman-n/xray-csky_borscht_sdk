@@ -709,7 +709,7 @@ BOOL CImageManager::CreateSmallerCubeMap(LPCSTR src_name, LPCSTR dst_name)
         tp.flags.zero	();
 		if (!MakeGameTexture(out_name,&*sm_data.begin(),tp))
         	return FALSE;
-        ELog.DlgMsg(mtInformation,"Smaller cubemap successfylly created [%3.2f sec].",tm_scm);
+        ELog.Msg(mtInformation,"Smaller cubemap successfylly created [%3.2f sec].",tm_scm);
         return TRUE;
     }else{
         ELog.Msg(mtError,"Can't load texture '%s'.",src_name);

@@ -77,7 +77,7 @@
       -I$(BCB)\include\vcl -I$(BCB)\Include\Mfc -IX:\SDK\include -src_suffix cpp 
       -D_EDITOR -D_XRCOREB -DXRCORE_EXPORTS -D_DEBUG -boa"/>
     <CFLAG1 value="-WD -Od -H=x:\intermediate_ed\core\pch.csm -Q -Vx -Ve -xf -xp -VF -ff -X- 
-      -ps -a4 -6 -b- -k- -y -v -vi- -tWD -tWM -c"/>
+      -ps -a4 -6 -b- -k- -y -v -vi -tWD -tWM -c"/>
     <PFLAGS value="-N2x:\intermediate_ed\core -N0x:\intermediate_ed\core -$Y- -$L- -$D- -$A8 
       -v -JPHNE -M"/>
     <RFLAGS value=""/>
@@ -236,6 +236,9 @@ OriginalFilename=
 ProductName=
 ProductVersion=1.0.0.0
 Comments=
+
+[Excluded Packages]
+f:\program files\borland\cbuilder6\Bin\bcb2kaxserver60.bpl=Borland C++Builder COM Server Components Sample Package
 
 [HistoryLists\hlIncludePath]
 Count=30

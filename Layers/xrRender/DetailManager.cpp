@@ -308,8 +308,10 @@ void __stdcall	CDetailManager::MT_CALC		()
 #endif    
 
 	MT.Enter					();
-	if (m_frame_calc!=Device.dwFrame)	
+	if (m_frame_calc!=Device.dwFrame)
+#ifndef _EDITOR
 		if ((m_frame_rendered+1)==Device.dwFrame) //already rendered
+#endif
 		{
 			Fvector		EYE				= Device.vCameraPosition;
 			int s_x	= iFloor			(EYE.x/dm_slot_size+.5f);

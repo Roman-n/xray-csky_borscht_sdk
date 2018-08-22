@@ -269,15 +269,15 @@ void CScriptStorage::reinit	()
 	luajit::open_lib	(lua(),	LUA_MATHLIBNAME,	luaopen_math);
 	luajit::open_lib	(lua(),	LUA_STRLIBNAME,		luaopen_string);
 
-#ifdef DEBUG
+//#ifdef DEBUG
 	luajit::open_lib	(lua(),	LUA_DBLIBNAME,		luaopen_debug);
-#endif // #ifdef DEBUG
+//#endif // #ifdef DEBUG
 
 	if (!strstr(Core.Params,"-nojit")) {
 		luajit::open_lib(lua(),	LUA_JITLIBNAME,		luaopen_jit);
 #ifndef DEBUG
 		put_function	(lua(), opt_lua_binary, sizeof(opt_lua_binary), "jit.opt");
-		put_function	(lua(), opt_inline_lua_binary, sizeof(opt_lua_binary), "jit.opt_inline");
+		put_function	(lua(), opt_inline_lua_binary, sizeof(opt_inline_lua_binary), "jit.opt_inline");
 		dojitopt		(lua(), "2");
 #endif // #ifndef DEBUG
 	}
@@ -486,9 +486,9 @@ bool CScriptStorage::load_buffer	(lua_State *L, LPCSTR caBuffer, size_t tSize, L
 	}
 
 	if (l_iErrorCode) {
-#ifdef DEBUG
+//#ifdef DEBUG
 		print_output	(L,caScriptName,l_iErrorCode);
-#endif
+//#endif
 		on_error		(L);
 		return			(false);
 	}
@@ -541,9 +541,9 @@ bool CScriptStorage::do_file	(LPCSTR caScriptName, LPCSTR caNameSpaceName)
 #	endif // #ifndef USE_LUA_STUDIO
 #endif // #ifdef USE_DEBUGGER
 	if (l_iErrorCode) {
-#ifdef DEBUG
+//#ifdef DEBUG
 		print_output(lua(),caScriptName,l_iErrorCode);
-#endif
+//#endif
 		on_error	(lua());
 		lua_settop	(lua(),start);
 		return		(false);
