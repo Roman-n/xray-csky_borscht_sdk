@@ -5,6 +5,7 @@
 #include "..\ECore\ImGui\IM_Tree.h"
 
 class ESceneObjectTool;
+class IM_ChooseForm;
 
 class IM_FrameObject : public IM_Window
 {
@@ -32,7 +33,7 @@ class IM_FrameObject : public IM_Window
 
     LPCSTR Current();
 
-    void MultipleAppend();
+    void MultipleAppend(IM_ChooseForm* form);
 
     void MultiSelByRefObject(bool clear_prev);
     void SelByRefObject(bool flag);

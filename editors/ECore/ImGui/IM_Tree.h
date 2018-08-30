@@ -5,24 +5,27 @@
 #include "../../xrEProps/xrEProps.h"
 #include "../../xrEProps/ItemListTypes.h"
 
+typedef fastdelegate::FastDelegate3<shared_str,shared_str,bool> IM_TOnNodeSelected;
+
 ECORE_API class IM_Tree : public IM_Window
 {
 	private:
 	char separator;
     bool multiselect;
-    bool bullets;
 
 	struct ImTreeNode
     {
 		xr_map<xr_string,ImTreeNode> * child;
         bool selected;
 
+        shared_str name;
         shared_str value;
         ListItem*  item;
 
         ImTreeNode()
         	: child(NULL),
               selected(false),
+              name(NULL),
               value(NULL),
               item(NULL)
         { }
@@ -44,11 +47,20 @@ ECORE_API class IM_Tree : public IM_Window
     void 			ClearNode(ImTreeNode &node) { node.~ImTreeNode(); }
     void			SelectNode(ImTreeNode &node, bool select = true);
 
+    public: // properties
+
+    bool DrawBullets;
+    bool CheckmarkMode;
+    int MaxSelectedCount;
+    IM_TOnNodeSelected OnNodeSelected;
+
     public:
     IM_Tree(char folder_separator = '\\', bool allow_multiselect = false, bool draw_bullets = false)
     	: separator(folder_separator),
           multiselect(allow_multiselect),
-          bullets(draw_bullets)
+          DrawBullets(draw_bullets),
+          CheckmarkMode(false),
+          MaxSelectedCount(-1)
 	{ }
 
     ~IM_Tree()
@@ -61,8 +73,13 @@ ECORE_API class IM_Tree : public IM_Window
 
     void 			Select(LPCSTR path, bool select = true);
     void			SelectAll(bool select = true);
+
     shared_str 		GetSelected();
-    void 			GetSelected(xr_vector<shared_str> &result); // for multiselect tree
+    void 			GetSelected(xr_vector<shared_str>& result); // for multiselect tree
+
+    shared_str		GetSelectedPath();
+    void			GetSelectedPaths(xr_vector<shared_str>& result);
+
     u32 			GetSelectedCount();
 
     // for compatibility with xrEProps item list

@@ -2,15 +2,23 @@
 #pragma hdrstop
 
 #include "../ECore/ImGui/imgui.h"
+#include "../ECore/ImGui/IM_ChooseForm.h"
 
 #include "IM_FrameGroup.h"
 #include "ui_leveltools.h"
 #include "scene.h"
 #include "ESceneGroupTools.h"
 #include "UI_LevelTools.h"
+#include "UI_LevelMain.h"
 #include "GroupObject.h"
 
 #pragma package(smart_init)
+
+void IM_FrameGroup::OnGroupSelected(IM_ChooseForm* form)
+{
+	m_current = form->GetSelected().c_str();
+    m_parent_tool->SetCurrentObject(m_current.c_str());
+}
 
 void IM_FrameGroup::MultiSelByRefObject(bool clear_prev)
 {
@@ -113,12 +121,9 @@ void IM_FrameGroup::Render()
 
         if(ImGui::MenuItem("Select..."))
         {
-        	LPCSTR ref;
-            if(TfrmChoseItem::SelectItem(smGroup, ref, 1, m_current.c_str()))
-            {
-            	m_current = ref;
-                m_parent_tool->SetCurrentObject(ref);
-            }
+			IM_ChooseForm* cf = new IM_ChooseForm(smGroup, 1, NULL, NULL, NULL,
+            IM_CFCallback(this, &IM_FrameGroup::OnGroupSelected));
+            UI->AddIMWindow(cf);
         }
 
         ImGui::NextColumn();

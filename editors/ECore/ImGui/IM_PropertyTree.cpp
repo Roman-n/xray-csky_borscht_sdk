@@ -3,6 +3,7 @@
 
 #include "IM_PropertyTree.h"
 #include "IM_TextEditor.h"
+#include "IM_ChooseForm.h"
 #include "imgui.h"
 #include "utf8.h"
 #include "../Editor/UI_Main.h"
@@ -172,6 +173,12 @@ void IM_PropertyTree::RenderItem(ImTreeNode& node) //PropItem* item)
     	case PROP_BUTTON:
         RenderButton(item);
         return;
+
+        case PROP_CHOOSE:
+        ImGui::Selectable(codepage2utf8(item->GetDrawText()).c_str(), false);
+        if(ImGui::IsItemClicked(0) && ImGui::IsMouseDoubleClicked(0))
+        	OpenChooseForm(item);
+		return;
 
         case PROP_NUMERIC:
         if(editing_node == item->Key())
@@ -394,6 +401,63 @@ void IM_PropertyTree::RenderButton(PropItem* item)
     	ImGui::AlignTextToFramePadding();
     	ImGui::TextUnformatted(item->GetDrawText().c_str());
     }
+}
+
+class ChooseDelegate
+{
+	IM_PropertyTree* parent;
+    PropItem* item;
+
+    public:
+    ChooseItemVec items;
+
+	public:
+    ChooseDelegate(IM_PropertyTree* props, PropItem* itm)
+    	: parent(props),
+          item(itm)
+    {}
+
+    void OnOK(IM_ChooseForm* form);
+    void OnClose(IM_ChooseForm* form);
+};
+
+void ChooseDelegate::OnOK(IM_ChooseForm* form)
+{
+	shared_str res = form->GetSelected();
+    if(item->AfterEdit<ChooseValue,shared_str>(res))
+    	if(item->ApplyValue<ChooseValue,shared_str>(res))
+        	parent->Modified();
+}
+
+void ChooseDelegate::OnClose(IM_ChooseForm*)
+{
+	ChooseDelegate* _this = const_cast<ChooseDelegate*>(this);
+    xr_delete(_this);
+}
+
+void IM_PropertyTree::OpenChooseForm(PropItem* item)
+{
+	ChooseValue* V = dynamic_cast<ChooseValue*>(item->GetFrontValue());
+	VERIFY(V);
+
+	ChooseDelegate* cd = xr_new<ChooseDelegate>(this, item);
+	if(!V->OnChooseFillEvent.empty())
+	{
+		V->m_Items = &cd->items;
+		V->OnChooseFillEvent(V);
+	}
+
+	IM_ChooseForm* cf = new IM_ChooseForm( // xr_new
+		EChooseMode(V->m_ChooseID), V->subitem,
+		V->m_Items, TOnChooseFillItems(NULL), V->m_FillParam,
+		IM_CFCallback(cd, &ChooseDelegate::OnOK), IM_CFCallback(NULL), IM_CFCallback(cd, &ChooseDelegate::OnClose)
+	);
+
+	shared_str val = V->GetValue();
+	item->BeforeEdit<ChooseValue,shared_str>(val);
+	cf->SetSelected(val);
+
+	UI->AddIMWindow(cf);
 }
 
 void IM_PropertyTree::RenderNumeric(PropItem* item)

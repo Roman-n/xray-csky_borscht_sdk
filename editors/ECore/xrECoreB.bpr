@@ -170,15 +170,16 @@
       x:\intermediate_ed\ecore\thunderbolt.obj 
       x:\intermediate_ed\ecore\xr_efflensflare.obj 
       x:\intermediate_ed\ecore\Rain.obj 
-      x:\intermediate_ed\ecore\AnimationPath.obj
-      x:\intermediate_ed\ecore\imgui.obj 
-      x:\intermediate_ed\ecore\imgui_demo.obj 
+      x:\intermediate_ed\ecore\AnimationPath.obj 
+      x:\intermediate_ed\ecore\imgui.obj x:\intermediate_ed\ecore\imgui_demo.obj 
       x:\intermediate_ed\ecore\imgui_draw.obj 
       x:\intermediate_ed\ecore\imgui_impl_dx9.obj 
       x:\intermediate_ed\ecore\IM_Log.obj x:\intermediate_ed\ecore\IM_Tree.obj 
       x:\intermediate_ed\ecore\utf8.obj x:\intermediate_ed\ecore\IM_Window.obj 
       x:\intermediate_ed\ecore\IM_TextEditor.obj 
-      x:\intermediate_ed\ecore\IM_PropertyTree.obj"/>
+      x:\intermediate_ed\ecore\IM_PropertyTree.obj 
+      x:\intermediate_ed\ecore\IM_ChooseForm.obj 
+      x:\intermediate_ed\ecore\IM_Canvas.obj"/>
     <RESFILES value="resource.res"/>
     <IDLFILES value=""/>
     <IDLGENFILES value=""/>
@@ -199,14 +200,15 @@
     <USERDEFINES value="_EDITOR;_ECOREB;XRCDB_EXPORTS;_DEBUG"/>
     <SYSDEFINES value="NO_STRICT;_RTLDLL;USEPACKAGES"/>
     <MAINSOURCE value="xrECoreB.bpf"/>
-    <INCLUDEPATH value="ImGui;..\..\common\NvMender2003;..\..;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\xrCPU_Pipe;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;Engine\Blenders;$(BCB)\include;$(BCB)\include\vcl;X:\SDK\Components\AlexMX;X:\SDK\Components\ElPack\Code\Source;$(BCB)\Include\Mfc;..\xrEProps;..\..\xrCore;..\..\utils\ETools;X:\SDK\include;X:\SDK\include\freemagic"/>
-    <LIBPATH value="ImGui;..\..\common\NvMender2003;..\..\Layers\xrRender\blenders;..\..\Layers\xrRenderDX9;..\..\xrCPU_Pipe;WildMagic;Editor;Engine\blenders;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\Layers\xrRender;..\..\xrEngine;Engine;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;X:\SDK\components\AlexMX;X:\SDK\components\ElPack\Code;$(BCB)\Lib\Psdk;x:\SDK\libraries;x:\stalker_addon\libraries;$(DXSDK_DIR)\Lib\x86;X:\SDK\components\ElPack\Code\Source"/>
+    <INCLUDEPATH value="&quot;F:\Program Files\Borland\CBuilder6\Projects&quot;;ImGui;..\..\common\NvMender2003;..\..;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\xrCPU_Pipe;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;Engine\Blenders;$(BCB)\include;$(BCB)\include\vcl;X:\SDK\Components\AlexMX;X:\SDK\Components\ElPack\Code\Source;$(BCB)\Include\Mfc;..\xrEProps;..\..\xrCore;..\..\utils\ETools;X:\SDK\include;X:\SDK\include\freemagic"/>
+    <LIBPATH value="&quot;F:\Program Files\Borland\CBuilder6\Projects&quot;;ImGui;..\..\common\NvMender2003;..\..\Layers\xrRender\blenders;..\..\Layers\xrRenderDX9;..\..\xrCPU_Pipe;WildMagic;Editor;Engine\blenders;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\Layers\xrRender;..\..\xrEngine;Engine;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;X:\SDK\components\AlexMX;X:\SDK\components\ElPack\Code;$(BCB)\Lib\Psdk;x:\SDK\libraries;x:\stalker_addon\libraries;$(DXSDK_DIR)\Lib\x86;X:\SDK\components\ElPack\Code\Source"/>
     <WARNINGS value="-w8092 -w8090 -w8089 -w8087 -wprc -wucp -wstv -wstu -wsig -wpin -w-par 
       -wnod -wnak -w-8027 -w-8026 -wdef -wcln -wbbf -wasm -wamp -wamb"/>
     <OTHERFILES value=""/>
   </MACROS>
   <OPTIONS>
-    <IDLCFLAGS value="-IImGui -I..\..\common\NvMender2003 -I..\.. -I..\..\Layers\xrRenderDX9 
+    <IDLCFLAGS value="-I&quot;F:\Program Files\Borland\CBuilder6\Projects&quot; -IImGui 
+      -I..\..\common\NvMender2003 -I..\.. -I..\..\Layers\xrRenderDX9 
       -I..\..\Layers\xrRender\blenders -I..\..\Layers\xrRender 
       -I..\..\Layers\xrRenderPC_R1 -I..\..\xrCDB -I..\..\xrCPU_Pipe 
       -I..\..\xrEngine -I$(DXSDK_DIR)\Include -IWildMagic -IEditor -IEngine 
@@ -438,6 +440,8 @@
       <FILE FILENAME="ImGui\IM_Window.cpp" FORMNAME="" UNITNAME="IM_Window" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="ImGui\IM_TextEditor.cpp" FORMNAME="" UNITNAME="IM_TextEditor" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="ImGui\IM_PropertyTree.cpp" FORMNAME="" UNITNAME="IM_PropertyTree" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="ImGui\IM_ChooseForm.cpp" FORMNAME="" UNITNAME="IM_ChooseForm" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="ImGui\IM_Canvas.cpp" FORMNAME="" UNITNAME="IM_Canvas" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
   </FILELIST>
   <BUILDTOOLS>
   </BUILDTOOLS>

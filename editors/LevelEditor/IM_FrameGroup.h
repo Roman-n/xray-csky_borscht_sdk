@@ -4,6 +4,7 @@
 #include "../ECore/ImGui/IM_Window.h"
 
 class ESceneGroupTool;
+class IM_ChooseForm;
 
 class IM_FrameGroup : public IM_Window
 {
@@ -19,6 +20,8 @@ class IM_FrameGroup : public IM_Window
           m_select_percent(0)
     {
     }
+
+    void OnGroupSelected(IM_ChooseForm* form);
 
     void MultiSelByRefObject(bool clear_prev);
     void SelByRefObject(bool flag);

@@ -29,7 +29,7 @@ object frmMain: TfrmMain
     Left = 555
     Top = 0
     Width = 4
-    Height = 406
+    Height = 394
     Cursor = crHSplit
     Align = alRight
     Color = clMedGray
@@ -40,7 +40,7 @@ object frmMain: TfrmMain
     Left = 559
     Top = 0
     Width = 238
-    Height = 406
+    Height = 394
     Align = alRight
     BevelInner = bvLowered
     BevelOuter = bvNone
@@ -138,7 +138,7 @@ object frmMain: TfrmMain
   end
   object paBottomBar: TPanel
     Left = 0
-    Top = 406
+    Top = 394
     Width = 797
     Height = 17
     Align = alBottom
@@ -150,7 +150,7 @@ object frmMain: TfrmMain
     Left = 0
     Top = 0
     Width = 555
-    Height = 406
+    Height = 394
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
@@ -168,7 +168,7 @@ object frmMain: TfrmMain
       Left = 25
       Top = 0
       Width = 530
-      Height = 388
+      Height = 394
       Align = alClient
       BevelOuter = bvNone
       Color = 4868682

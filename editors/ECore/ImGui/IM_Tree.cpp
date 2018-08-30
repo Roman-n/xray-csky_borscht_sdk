@@ -43,7 +43,7 @@ void IM_Tree::RenderNode(ImTreeNode& node)
             	flags |= ImGuiTreeNodeFlags_Selected;
 
         	bool open = ImGui::TreeNodeEx(it->first.c_str(), flags);
-
+/*
             if(ImGui::IsItemClicked())
             {
             	if(!multiselect || (multiselect && !ImGui::GetIO().KeyCtrl))
@@ -51,7 +51,7 @@ void IM_Tree::RenderNode(ImTreeNode& node)
                     
             	SelectNode(node);
             }
-
+*/
             if(open)
             {
 				RenderNode(node);
@@ -60,17 +60,31 @@ void IM_Tree::RenderNode(ImTreeNode& node)
         }
         else				 // file
         {
-        	if(bullets)
+        	if(DrawBullets)
             	ImGui::Bullet();
-                
-        	ImGui::Selectable(it->first.c_str(), node.selected);
+
+            if(CheckmarkMode)
+            	ImGui::MenuItem(it->first.c_str(), NULL, node.selected);
+            else
+            	ImGui::Selectable(it->first.c_str(), node.selected);
 
             if(ImGui::IsItemClicked())
             {
-				if(!multiselect || (multiselect && !ImGui::GetIO().KeyCtrl))
-					SelectAll(false);
+            	if(!CheckmarkMode)
+                {
+					if(!multiselect || (multiselect && !ImGui::GetIO().KeyCtrl))
+						SelectAll(false);
 
-				SelectNode(node);
+                	if(MaxSelectedCount < 0 || GetSelectedCount() < MaxSelectedCount)
+						SelectNode(node);
+                }
+                else
+                {
+                	bool select = !node.selected;
+
+                	if((select && (MaxSelectedCount < 0 || GetSelectedCount() < MaxSelectedCount)) || !select)
+                    	SelectNode(node, select);
+                }
 
                 if(node.item && !node.item->OnClickEvent.empty())
                 	node.item->OnClickEvent(node.item);
@@ -85,11 +99,18 @@ void IM_Tree::SelectNode(ImTreeNode& node, bool select)
 	{
 		selected.remove(&node);
 		node.selected = false;
+
+        if(!OnNodeSelected.empty())
+    		OnNodeSelected(node.name, node.value, select);
 	}
 	else if(!node.selected && select)
 	{
 		selected.push_back(&node);
 		node.selected = true;
+
+        // so much callbacks ...
+    	if(!OnNodeSelected.empty())
+    		OnNodeSelected(node.name, node.value, select);
 
         if(node.item && !node.item->OnItemFocused.empty())
         	node.item->OnItemFocused(node.item);
@@ -108,13 +129,17 @@ void IM_Tree::SelectNode(ImTreeNode& node, bool select)
 
 void IM_Tree::Add(LPCSTR path, LPCSTR value)
 {
+	if(path == NULL) __asm int 3h;
 	ImTreeNode *node = GetNode(path, false);
+    node->name = path;
     node->value = value;
 }
 
 void IM_Tree::Add(LPCSTR path, ListItem* item)
 {
+	if(path == NULL) __asm int 3h;
 	ImTreeNode *node = GetNode(path, false);
+    node->name = path;
     node->item = item;
 }
 
@@ -133,7 +158,7 @@ void IM_Tree::Select(LPCSTR path, bool select)
     	if(!multiselect)
         	SelectAll(false);
 
-		SelectNode(*node);
+        SelectNode(*node, select);
     }
 }
 
@@ -148,11 +173,10 @@ void IM_Tree::SelectAll(bool select)
     }
     else
     {
-    	xr_list<ImTreeNode*>::iterator it, end;
-        for(it = selected.begin(), end = selected.end(); it != end; it++)
-        	(*it)->selected = false;
-
-        selected.clear();
+    	xr_list<ImTreeNode*> sel = selected; // copy
+    	xr_list<ImTreeNode*>::iterator it;
+        for(it = sel.begin(); it != sel.end(); it++)
+        	SelectNode(**it, false);
     }
 }
 
@@ -166,10 +190,27 @@ shared_str IM_Tree::GetSelected()
 
 void IM_Tree::GetSelected(xr_vector<shared_str> &result)
 {
-	xr_list<ImTreeNode*>::iterator it, end;
-    for(it = selected.begin(), end = selected.end(); it != end; it++)
+	xr_list<ImTreeNode*>::iterator it;
+    for(it = selected.begin(); it != selected.end(); it++)
     {
     	result.push_back((*it)->value);
+    }
+}
+
+shared_str IM_Tree::GetSelectedPath()
+{
+	if(selected.size())
+    	return selected.front()->name;
+    else
+    	return NULL;
+}
+
+void IM_Tree::GetSelectedPaths(xr_vector<shared_str> &result)
+{
+	xr_list<ImTreeNode*>::iterator it;
+    for(it = selected.begin(); it != selected.end(); it++)
+    {
+    	result.push_back((*it)->name);
     }
 }
 

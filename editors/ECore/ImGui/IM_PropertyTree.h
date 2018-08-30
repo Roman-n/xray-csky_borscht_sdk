@@ -83,6 +83,7 @@ ECORE_API class IM_PropertyTree : public IM_Window
 
     //
     void			RenderButton(PropItem* item);
+    void			OpenChooseForm(PropItem* item);
     void			RenderNumeric(PropItem* item);
     void			RenderBoolean(PropItem* item);
     void 			RenderFlag(PropItem* item);

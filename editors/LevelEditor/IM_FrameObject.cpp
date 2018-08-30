@@ -4,6 +4,7 @@
 #include "IM_FrameObject.h"
 #include "../ECore/ImGui/ImGui.h"
 #include "../ECore/ImGui/utf8.h"
+#include "../ECore/ImGui/IM_ChooseForm.h"
 #include "../ECore/Editor/Library.h"
 #include "Scene.h"
 #include "SceneObject.h"
@@ -18,15 +19,14 @@ LPCSTR IM_FrameObject::Current()
     	return NULL;
 }
 
-void IM_FrameObject::MultipleAppend()
+void IM_FrameObject::MultipleAppend(IM_ChooseForm* form)
 {
-	LPCSTR N;
-    if (TfrmChoseItem::SelectItem(smObject,N,32,0)){
+	{
     	Fvector pos={0.f,0.f,0.f};
     	Fvector up={0.f,1.f,0.f};
         Scene->SelectObjects(false,OBJCLASS_SCENEOBJECT);
 	    AStringVec lst;
-    	_SequenceToList(lst,N);
+    	_SequenceToList(lst,*form->GetSelected());
         SPBItem* pb = UI->ProgressStart(lst.size(),"Append object: ");
         for (AStringIt it=lst.begin(); it!=lst.end(); it++){
             string256 namebuffer;
@@ -156,7 +156,13 @@ void IM_FrameObject::Render()
     if(ImGui::CollapsingPanel("Commands", &m_show_commands))
     {
         if(ImGui::MenuItem("Multiple Append"))
-        	MultipleAppend();
+        {
+        	IM_ChooseForm* cf = new IM_ChooseForm(smObject, 1024,
+            NULL, NULL, NULL,
+            IM_CFCallback(this, &IM_FrameObject::MultipleAppend));
+
+            UI->AddIMWindow(cf);
+        }
 
         ImGui::Separator();
 

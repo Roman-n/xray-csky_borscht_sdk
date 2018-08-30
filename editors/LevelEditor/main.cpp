@@ -59,6 +59,8 @@ __fastcall TfrmMain::TfrmMain(TComponent* Owner)
     	FlushLog			();
     	TerminateProcess(GetCurrentProcess(),-1);
     }
+
+    this->Menu = NULL;
 }
 //---------------------------------------------------------------------------
 void __fastcall TfrmMain::FormShow(TObject *Sender)
@@ -329,6 +331,7 @@ void __fastcall TfrmMain::FormMouseWheel(TObject *Sender,
     	Handled = true;
 
     UI->RedrawScene(false);
+}
 
 void __fastcall TfrmMain::miClearClick(TObject *Sender)
 {

@@ -10,6 +10,7 @@
 #include "scene.h"
 #include "CustomObject.h"
 #include "FrmDBXPacker.h"
+#include "FormAbout.h"
 
 void IM_LeftBar::OnAdd()
 {
@@ -384,6 +385,9 @@ void IM_LeftBar::RenderMainMenu()
 
     if(ImGui::MenuItem("Preferences"))
     	ExecCommand(COMMAND_EDITOR_PREF);
+
+    if(ImGui::MenuItem("About"))
+    	AboutForm->ShowModal();
 }
 
 void IM_LeftBar::RenderToolsMenu()

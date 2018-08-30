@@ -27,9 +27,10 @@ static void ImGui_Init(HWND hwnd, IDirect3DDevice9 *d3ddevice)
     ImGui_ImplDX9_Init(hwnd, d3ddevice);
 
     // load font
-    ImGuiIO &io 		= ImGui::GetIO();
+    ImGuiIO &io = ImGui::GetIO();
     ImFontAtlas &fonts 	= *io.Fonts;
-    ImFont *font 		= fonts.AddFontFromFileTTF("extras\\Anonymous Pro.ttf", 14, NULL, fonts.GetGlyphRangesCyrillic());
+
+    ImFont *font = fonts.AddFontFromFileTTF("extras\\Anonymous Pro.ttf", 14, NULL, fonts.GetGlyphRangesCyrillic());
     fonts.AddFontFromFileTTF("extras\\Anonymous Pro.ttf", 24, NULL, fonts.GetGlyphRangesCyrillic());
 
     io.FontDefault = font;
@@ -422,8 +423,8 @@ void TUI::PrepareRedraw()
     	if(show_demo_window)
     		ImGui::ShowDemoWindow(&show_demo_window);
 
-    	xr_vector<IM_Window*>::iterator it, end;
-    	for(it = imwindows.begin(), end = imwindows.end(); it != end; it++)
+        xr_vector<IM_Window*> windows = imwindows; // copy
+    	for(xr_vector<IM_Window*>::iterator it = windows.begin(); it != windows.end(); it++)
 			(*it)->Render();
 
         b_imgui_rendering = false;
