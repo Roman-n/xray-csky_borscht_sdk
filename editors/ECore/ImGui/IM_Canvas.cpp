@@ -117,7 +117,7 @@ void IM_Canvas::EndPaint()
         });
 
         bmi.bmiHeader.biWidth = m_width;
-        bmi.bmiHeader.biHeight = m_height;
+        bmi.bmiHeader.biHeight = -m_height;
 
         bmi.colors[0] = 0x00FF0000;
         bmi.colors[1] = 0x0000FF00;
