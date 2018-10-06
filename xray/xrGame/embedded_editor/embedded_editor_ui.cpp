@@ -3,6 +3,7 @@
 #include "HUDmanager.h"
 #include "Level.h"
 #include "UIGameCustom.h"
+#include "controls/imgui_ext.h"
 #include "embedded_editor_helper.h"
 #include "ui/UIFrameWindow.h"
 #include "ui/UIMainIngameWnd.h"
@@ -93,9 +94,6 @@ u32 fromImColor(const ImColor& c)
     // return (rgba & 0x00FF00FF) | (b << 24) | (r << 8);
     return abgr;
 }
-
-bool ImGui_ListBox(const char* label, int* current_item, bool (*items_getter)(void*, int, const char**), void* data,
-    int items_count, const ImVec2& size_arg = ImVec2(0, 0));
 
 bool editTexture(shared_str& texName)
 {

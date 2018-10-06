@@ -8,6 +8,7 @@
 #include "../Level.h"
 #include "../ai_space.h"
 #include "../xrServerEntities/script_engine.h"
+#include "controls/imgui_ext.h"
 #include <imgui.h>
 
 Fvector convert(const Fvector& v)
@@ -133,9 +134,6 @@ void nextTexture(char* tex, int texSize, int offset)
     strconcat(texSize, tex, dir, newFn);
     FS.file_list_close(files);
 }
-
-bool ImGui_ListBox(const char* label, int* current_item, bool (*items_getter)(void*, int, const char**), void* data,
-    int items_count, const ImVec2& size_arg = ImVec2(0, 0));
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // from https://www.strchr.com/natural_sorting

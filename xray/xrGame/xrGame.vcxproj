@@ -1269,6 +1269,7 @@
     <ClInclude Include="ElectricBall.h" />
     <ClInclude Include="ElevatorState.h" />
     <ClInclude Include="EliteDetector.h" />
+    <ClInclude Include="embedded_editor\controls\imgui_ext.h" />
     <ClInclude Include="embedded_editor\embedded_editor_ae.h" />
     <ClInclude Include="embedded_editor\embedded_editor_helper.h" />
     <ClInclude Include="embedded_editor\embedded_editor_hud.h" />
@@ -4532,6 +4533,7 @@
     <ClCompile Include="ElectricBall.cpp" />
     <ClCompile Include="ElevatorState.cpp" />
     <ClCompile Include="EliteDetector.cpp" />
+    <ClCompile Include="embedded_editor\controls\imgui_ext.cpp" />
     <ClCompile Include="embedded_editor\embedded_editor_ae.cpp" />
     <ClCompile Include="embedded_editor\embedded_editor_helper.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch_script.h</PrecompiledHeaderFile>
