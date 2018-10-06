@@ -3,6 +3,8 @@
 #include "../../ai_space.h"
 #include "../../alife_object_registry.h"
 #include "../../alife_simulator.h"
+#include "../../game_graph.h"
+#include "../../level_graph.h"
 #include "../Include/xrRender/UIRender.h"
 #include "../Include/xrRender/UIShader.h"
 #include "ui_defs.h"
@@ -17,6 +19,8 @@ void renderSpawnElements()
         return;
     auto& registry = alife->objects();
     for (auto el : registry.objects()) {
+        if (ai().game_graph().vertex(el.second->m_tGraphID)->level_id() != ai().level_graph().level_id())
+            continue;
         auto lc = smart_cast<CSE_ALifeLevelChanger*>(el.second);
         if (lc)
             renderLevelChanger(lc);
