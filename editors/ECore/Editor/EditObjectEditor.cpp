@@ -375,18 +375,22 @@ bool CEditableObject::CheckShaderCompatible()
         Shader_xrLC* 	C = Device.ShaderXRLC.Get(*(*s_it)->m_ShaderXRLCName);
         if (!B||!C){
         	ELog.Msg	(mtError,"Object '%s': invalid or missing shader [E:'%s', C:'%s']",GetName(),(*s_it)->_ShaderName(),(*s_it)->_ShaderXRLCName());
+            ELog.Msg	(mtError,"        surface: '%s'",(*s_it)->_Name());
             bRes 		= false;
         }else{
             if (!BE(B->canBeLMAPped(),!C->flags.bLIGHT_Vertex)){
                 ELog.Msg	(mtError,"Object '%s': engine shader '%s' non compatible with compiler shader '%s'",GetName(),(*s_it)->_ShaderName(),(*s_it)->_ShaderXRLCName());
+                ELog.Msg	(mtError,"        surface: '%s'",(*s_it)->_Name());
                 bRes 		= false;
             }
             if (IsStatic() && B->getDescription().CLS == B_TREE){
             	ELog.Msg	(mtError,"Object '%s': engine shader '%s' not compatible with static objects",GetName(),(*s_it)->_ShaderName());
+                ELog.Msg	(mtError,"        surface: '%s'",(*s_it)->_Name());
                 bRes		= false;
             }
             if (IsMUStatic() && B->getDescription().CLS != B_TREE && C->flags.bRendering){
             	ELog.Msg	(mtError,"Object '%s': engine shader '%s' non compatible with compiler shader '%s' on MU-objects",GetName(),(*s_it)->_ShaderName(),(*s_it)->_ShaderXRLCName());
+                ELog.Msg	(mtError,"        surface: '%s'",(*s_it)->_Name());
                 bRes		= false;
             }
         }
