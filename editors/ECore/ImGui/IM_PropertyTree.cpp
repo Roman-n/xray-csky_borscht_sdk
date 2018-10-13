@@ -586,23 +586,38 @@ void IM_PropertyTree::RenderFlag(PropItem* item)
     Flag32Value* f32 = dynamic_cast<Flag32Value*>(V);
     VERIFY(f8 || f16 || f32);
 
-    bool value;
+    bool value, have_caption;
     if(f8) {
     	Flags8 f = f8->GetValue();
 		item->BeforeEdit<Flag8Value,Flags8>(f);
         value = f.is(f8->mask);
+        have_caption = f8->HaveCaption();
     } else if(f16) {
     	Flags16 f = f16->GetValue();
 		item->BeforeEdit<Flag16Value,Flags16>(f);
         value = f.is(f16->mask);
+        have_caption = f16->HaveCaption();
     } else if(f32) {
     	Flags32 f = f32->GetValue();
 		item->BeforeEdit<Flag32Value,Flags32>(f);
         value = f.is(f32->mask);
+        have_caption = f32->HaveCaption();
     }
 
+    bool modified;
     ImGui::PushID(item->Key());
-    if(ImGui::Checkbox("", &value))
+    if(have_caption)
+    {
+    	if(ImGui::Selectable(item->GetDrawText().c_str(), false))
+        {
+        	value = !value;
+            modified = true;
+        }
+    }
+    else
+    	modified = ImGui::Checkbox("", &value);
+
+    if(modified)
     {
     	if(f8) {
 			Flags8 f; f.set(f8->mask, value);
