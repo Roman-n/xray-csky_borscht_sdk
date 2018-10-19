@@ -244,7 +244,17 @@ void CEditableObject::RenderLOD(const Fmatrix& parent)
 
 xr_string CEditableObject::GetLODTextureName()
 {
-    string512 nm; 	strcpy	(nm,m_LibName.c_str()); _ChangeSymbol(nm,'\\','_');
+	string_path base;
+    FS.update_path(base, _objects_, "");
+
+    string512 nm;
+    strcpy(nm,EFS.ExcludeBasePath(m_LibName.c_str(), base).c_str());
+
+    if(char* ext = strext(nm))
+    	*ext = '\0';
+
+    _ChangeSymbol(nm,'\\','_');
+
 	xr_string 	l_name;
     l_name 			= xr_string("lod_")+nm;
     return ImageLib.UpdateFileName(l_name);
