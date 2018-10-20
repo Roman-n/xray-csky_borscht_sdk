@@ -2,50 +2,13 @@
 #include "resource.h"
 #include "dedicated_server_only.h"
 
-#ifdef INGAME_EDITOR
-#	include "../include/editor/ide.hpp"
-#	include "engine_impl.hpp"
-#endif // #ifdef INGAME_EDITOR
-
 extern LRESULT CALLBACK WndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
-
-#ifdef INGAME_EDITOR
-void CRenderDevice::initialize_editor	()
-{
-    Msg("loading \"editor.dll\"...");
-	m_editor_module		= LoadLibrary("editor.dll");
-	if (!m_editor_module) {
-		Msg				("! cannot load library \"editor.dll\"");
-		return;
-	}
-    Msg("\"editor.dll\" loaded successfully");
-
-	m_editor_initialize	= (initialize_function_ptr)GetProcAddress(m_editor_module, "initialize");
-	R_ASSERT			(m_editor_initialize);
-
-	m_editor_finalize	= (finalize_function_ptr)GetProcAddress(m_editor_module, "finalize");
-    R_ASSERT(m_editor_finalize);
-
-	m_engine			= xr_new<engine_impl>();
-	m_editor_initialize	(m_editor, m_engine);
-    R_ASSERT(m_editor);
-
-	m_hWnd				= m_editor->view_handle();
-    R_ASSERT(m_hWnd != INVALID_HANDLE_VALUE);
-    Msg("editor initialized");
-}
-#endif // #ifdef INGAME_EDITOR
 
 PROTECT_API void CRenderDevice::Initialize			()
 {
 	Msg("Initializing Engine %s %s...", CI_VERSION, __DATE__);
 	TimerGlobal.Start			();
 	TimerMM.Start				();
-
-#ifdef INGAME_EDITOR
-	if (strstr(Core.Params,"-editor"))
-		initialize_editor		();
-#endif // #ifdef INGAME_EDITOR
 
 	// Unless a substitute hWnd has been specified, create a window to render into
     if( m_hWnd == NULL)

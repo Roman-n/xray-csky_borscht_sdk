@@ -3,7 +3,6 @@
 
 #include "xr_input.h"
 #include "IInputReceiver.h"
-#include "../include/editor/ide.hpp"
 
 #ifndef _EDITOR
 #	include "xr_input_xinput.h"
@@ -24,10 +23,6 @@ float stop_vibration_time				= flt_max;
 static bool g_exclusive	= true;
 static void on_error_dialog			(bool before)
 {
-#ifdef INGAME_EDITOR
-	if (Device.editor())
-		return;
-#endif // #ifdef INGAME_EDITOR
 	if (!pInput || !g_exclusive)
 		return;
 
@@ -133,9 +128,6 @@ HRESULT CInput::CreateInputDevice( LPDIRECTINPUTDEVICE8* device, GUID guidDevice
 
 	// Set the cooperativity level to let DirectInput know how this device
 	// should interact with the system and with other DirectInput applications.
-#ifdef INGAME_EDITOR
-	if (!Device.editor())
-#endif // #ifdef INGAME_EDITOR
 	{
 		HRESULT	_hr = (*device)->SetCooperativeLevel( Device.m_hWnd, dwFlags );
 		if (FAILED(_hr) && (_hr==E_NOTIMPL)) Msg("! INPUT: Can't set coop level. Emulation???");
@@ -492,18 +484,12 @@ void CInput::unacquire				()
 void CInput::acquire				(const bool &exclusive)
 {
 	pKeyboard->SetCooperativeLevel	(
-#ifdef INGAME_EDITOR
-		Device.editor() ? Device.editor()->main_handle() : 
-#endif // #ifdef INGAME_EDITOR
 		Device.m_hWnd,
 		(exclusive ? DISCL_EXCLUSIVE : DISCL_NONEXCLUSIVE) | DISCL_FOREGROUND
 	);
 	pKeyboard->Acquire				();
 
 	pMouse->SetCooperativeLevel		(
-#ifdef INGAME_EDITOR
-		Device.editor() ? Device.editor()->main_handle() :
-#endif // #ifdef INGAME_EDITOR
 		Device.m_hWnd,
 		(exclusive ? DISCL_EXCLUSIVE : DISCL_NONEXCLUSIVE) | DISCL_FOREGROUND | DISCL_NOWINKEY
 	);
