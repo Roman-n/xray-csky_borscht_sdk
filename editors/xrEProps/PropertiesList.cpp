@@ -220,7 +220,7 @@ void __fastcall TProperties::HideProperties()
 	Hide();
 }
 
-int __fastcall TProperties::EditPropertiesModal(PropItemVec& values, LPCSTR title, bool bShowButtonsBar, TOnModifiedEvent modif, TOnItemFocused focused, TOnCloseEvent close, u32 flags)
+int TProperties::EditPropertiesModal(PropItemVec& values, LPCSTR title, bool bShowButtonsBar, TOnModifiedEvent modif, TOnItemFocused focused, TOnCloseEvent close, u32 flags)
 {
 	TProperties* P 	= CreateModalForm(title,bShowButtonsBar,modif,focused,close,flags);
     P->AssignItems	(values);
@@ -394,7 +394,7 @@ void TProperties::FolderRestore()
         }
     }
 }
-void __fastcall TProperties::OnFolderFocused(TElTreeItem* item)
+void TProperties::OnFolderFocused(TElTreeItem* item)
 {
 	AnsiString s, lfsi;
     if (tvProperties->Selected) FHelper.MakeFullName(tvProperties->Selected,0,lfsi);

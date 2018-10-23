@@ -255,9 +255,9 @@ void __fastcall TfrmSoundLib::fsStorageSavePlacement(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmSoundLib::OnControlClick(ButtonValue* V, bool& bModif, bool& bSafe)
+void TfrmSoundLib::OnControlClick(ButtonValue* V, bool& bModif, bool& bSafe)
 {
-    switch (V->btn_num){
+	switch (V->btn_num){
     case 0: m_Snd.play(0,sm_2D); 	break;
     case 1: m_Snd.stop();			break;
     case 2:{ 
@@ -269,7 +269,7 @@ void __fastcall TfrmSoundLib::OnControlClick(ButtonValue* V, bool& bModif, bool&
 }
 //------------------------------------------------------------------------------
 
-void __fastcall TfrmSoundLib::OnControl2Click(ButtonValue* V, bool& bModif, bool& bSafe)
+void TfrmSoundLib::OnControl2Click(ButtonValue* V, bool& bModif, bool& bSafe)
 {
     switch (V->btn_num){
     case 0:{
@@ -351,7 +351,7 @@ void __stdcall TfrmSoundLib::OnAttClick(ButtonValue* V, bool& bModif, bool& bSaf
 	}
 }
 
-void __fastcall TfrmSoundLib::OnItemsFocused(ListItemsVec& items)
+void TfrmSoundLib::OnItemsFocused(ListItemsVec& items)
 {
 	PropItemVec props;
 
@@ -436,7 +436,7 @@ void TfrmSoundLib::OnFrame()
     }
 }
 
-void __fastcall TfrmSoundLib::OnSyncCurrentClick(ButtonValue* V, bool& bModif, bool& bSafe)
+void TfrmSoundLib::OnSyncCurrentClick(ButtonValue* V, bool& bModif, bool& bSafe)
 {
 //.
 	THMIt it 	= m_THM_Current.begin();

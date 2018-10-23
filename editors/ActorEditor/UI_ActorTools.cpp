@@ -623,7 +623,7 @@ void CActorTools::OnItemModified()
     }
 }
 
-void __fastcall CActorTools::OnBoneModified(void)
+void CActorTools::OnBoneModified(void)
 {
 	Modified				();
 	RefreshSubProperties	();
