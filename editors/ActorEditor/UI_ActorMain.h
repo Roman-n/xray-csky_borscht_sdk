@@ -36,7 +36,7 @@ public:
     				CActorMain 				();
     virtual 		~CActorMain				();
 
-    virtual LPSTR	GetCaption				();
+    virtual LPCSTR	GetCaption				();
 
     virtual void 	ResetStatus				();
     virtual void 	SetStatus				(LPSTR s, bool bOutLog);

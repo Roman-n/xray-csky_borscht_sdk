@@ -396,7 +396,7 @@ void CActorMain::RegisterCommands()
     REGISTER_SUB_CMD_END;
 }                                                                    
 
-char* CActorMain::GetCaption()
+LPCSTR CActorMain::GetCaption()
 {
 	return ATools->GetEditFileName().IsEmpty()?"noname":ATools->GetEditFileName().c_str();
 }

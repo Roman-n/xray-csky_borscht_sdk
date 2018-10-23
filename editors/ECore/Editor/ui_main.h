@@ -136,7 +136,7 @@ public:
     virtual bool 	OnCreate		(TD3DWindow* w, TPanel* p);
     virtual void 	OnDestroy		();
 
-    virtual char* 	GetCaption		()=0;
+    virtual LPCSTR 	GetCaption		()=0;
 
     bool 			IsModified		();
 

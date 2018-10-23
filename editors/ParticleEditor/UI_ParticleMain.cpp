@@ -169,7 +169,7 @@ void CParticleMain::RegisterCommands()
 	REGISTER_CMD_CE	(COMMAND_CREATE_GROUP_FROM_SELECTED,"Particles\\CreateGroupFromEffect",	PTools, CParticleTool::CreateGroupFromSelected, true);
 }                                                                    
 
-char* CParticleMain::GetCaption()
+LPCSTR CParticleMain::GetCaption()
 {
 	return "particles";
 }
