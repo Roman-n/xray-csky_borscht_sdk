@@ -537,7 +537,7 @@ bool EDetailManager::Export(LPCSTR path)
             }
         }
 		F.open_chunk	(DETMGR_CHUNK_SLOTS);
-		F.w				(dt_slots.begin(),dtH.size_x*dtH.size_z*sizeof(DetailSlot));
+		F.w				(&dt_slots.front(),dtH.size_x*dtH.size_z*sizeof(DetailSlot));
 	    F.close_chunk	();
         pb->Inc();
 

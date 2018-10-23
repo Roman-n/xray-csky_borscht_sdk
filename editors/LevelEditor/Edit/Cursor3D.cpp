@@ -92,13 +92,13 @@ void C3DCursor::Render(){
 //                UI->D3D_RenderNearer(0.0001);
                 RCache.set_xform_world(Fidentity);
 				Device.SetShader(Device.m_WireShader);
-                DU_impl.DrawPrimitiveL(D3DPT_LINESTRIP,m_RenderBuffer.size(),m_RenderBuffer.begin(),m_RenderBuffer.size(),dwColor,true,true);
+				DU_impl.DrawPrimitiveL(D3DPT_LINESTRIP,m_RenderBuffer.size(),&m_RenderBuffer.front(),m_RenderBuffer.size(),dwColor,true,true);
 //                UI->D3D_ResetNearer();
             }break;
             case csPoint:{
             	FVF::TL pt[5];
                 pt[0].transform(pinf.pt,Device.mFullTransform);
-                pt[0].color = dwColor;
+				pt[0].color = dwColor;
                 pt[0].p.x = Device._x2real(pt[0].p.x);
                 pt[0].p.y = Device._y2real(pt[0].p.y);
 				pt[1].set(pt[0].p.x-1,pt[0].p.y  ,pt[0].p.z,pt[0].p.w,dwColor,0,0);
@@ -141,8 +141,8 @@ bool C3DCursor::PrepareBrush(){
 void C3DCursor::GetRandomBrushPos(Fvector& pos, Fvector& norm){
     Fvector p, start, dir;
     SRayPickInfo pinf;
-    float s_a = Random.randF(PI_MUL_2);
-    float dist = sqrtf(Random.randF())*brush_radius;
+	float s_a = ::Random.randF(PI_MUL_2);
+	float dist = sqrtf(::Random.randF())*brush_radius;
     p.set(cosf(s_a)*dist, sinf(s_a)*dist, 0);
     brush_mat.transform(p);
     GetPickPoint(p, pos, &norm);

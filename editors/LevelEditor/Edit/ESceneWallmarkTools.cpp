@@ -219,7 +219,7 @@ void ESceneWallmarkTool::OnRender(int priority, bool strictB2F)
                                 w_start					= w_verts;
                             }
                             // real fill buffer
-                            FVF::LIT* S		= W->verts.begin()+t_idx*3;
+                            FVF::LIT* S		= &W->verts.front()+t_idx*3;
                         	for (int k=0; k<3; k++,S++,w_verts++){
                                 w_verts->p.set	(S->p);
                                 w_verts->color	= C;

@@ -893,8 +893,8 @@ bool CActorTools::BatchConvert(LPCSTR fn)
     if (ini->section_exist("ogf"))
     {
     	CInifile::Sect& sect	= ini->r_section("ogf");
-        Msg						("Start converting %d items...",sect.Data.size());
-        for (CInifile::Item* it=sect.Data.begin(); it!=sect.Data.end(); it++){
+		Msg						("Start converting %d items...",sect.Data.size());
+		for (CInifile::SectCIt it=sect.Data.begin(); it!=sect.Data.end(); it++){
         	string_path 		src_name;
             string_path 		tgt_name;
             FS.update_path		(src_name,_objects_,		it->first.c_str());
@@ -920,7 +920,7 @@ bool CActorTools::BatchConvert(LPCSTR fn)
     {
     	CInifile::Sect& sect	= ini->r_section("omf");
         Msg						("Start converting %d items...",sect.Data.size());
-        for (CInifile::Item* it=sect.Data.begin(); it!=sect.Data.end(); ++it)
+        for (CInifile::SectCIt it=sect.Data.begin(); it!=sect.Data.end(); ++it)
         {
         	string_path 		src_name;
             string_path 		tgt_name;
