@@ -337,7 +337,7 @@ AutoIncBuild=1
 MajorVer=1
 MinorVer=0
 Release=2
-Build=159
+Build=161
 Debug=1
 PreRelease=0
 Special=0
@@ -349,7 +349,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=
 FileDescription=
-FileVersion=1.0.2.159
+FileVersion=1.0.2.161
 InternalName=
 LegalCopyright=
 LegalTrademarks=
@@ -425,7 +425,7 @@ Item1=x:\libraries
 DebugSourceDirs=X:\stalker_addon\sources\engine\editors\ECore\Editor\
 
 [Parameters]
-RunParams=-wf K:\BORSCHT -hw_skin -editor
+RunParams=-wf Z:\ -hw_skin -editor -hq -nosound
 Launcher=
 UseLauncher=0
 DebugCWD=

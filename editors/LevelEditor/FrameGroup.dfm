@@ -13,6 +13,8 @@ object fraGroup: TfraGroup
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = True
+  ExplicitWidth = 320
+  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   object paCommands: TPanel
@@ -139,6 +141,7 @@ object fraGroup: TfraGroup
       Color = clGray
       ParentColor = False
       OnClick = ExpandClick
+      ExplicitWidth = 52
     end
     object ExtBtn4: TExtBtn
       Left = 201
@@ -187,6 +190,7 @@ object fraGroup: TfraGroup
       Color = clGray
       ParentColor = False
       OnClick = ExpandClick
+      ExplicitWidth = 68
     end
     object ebSelect: TExtBtn
       Left = 7
@@ -294,6 +298,7 @@ object fraGroup: TfraGroup
       Color = clGray
       ParentColor = False
       OnClick = ExpandClick
+      ExplicitWidth = 73
     end
     object ebCenterToGroup: TExtBtn
       Left = 2
@@ -433,6 +438,7 @@ object fraGroup: TfraGroup
       Color = clGray
       ParentColor = False
       OnClick = ExpandClick
+      ExplicitWidth = 83
     end
     object ExtBtn5: TExtBtn
       Left = 201
@@ -521,11 +527,11 @@ object fraGroup: TfraGroup
       Top = 30
       Width = 43
       Height = 13
-      LWSensitivity = 1
+      LWSensitivity = 1.000000000000000000
       ButtonKind = bkLightWave
-      MaxValue = 100
-      MinValue = 1
-      Value = 100
+      MaxValue = 100.000000000000000000
+      MinValue = 1.000000000000000000
+      Value = 100.000000000000000000
       AutoSize = False
       BorderStyle = bsNone
       Color = 12698049

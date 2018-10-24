@@ -1,10 +1,10 @@
 object frmEditLightAnim: TfrmEditLightAnim
   Left = -903
   Top = 271
-  Width = 650
-  Height = 258
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Light Animation Library'
+  ClientHeight = 223
+  ClientWidth = 634
   Color = 10528425
   Constraints.MinHeight = 250
   Constraints.MinWidth = 650
@@ -28,8 +28,8 @@ object frmEditLightAnim: TfrmEditLightAnim
   object paItemProps: TPanel
     Left = 191
     Top = 0
-    Width = 451
-    Height = 231
+    Width = 443
+    Height = 223
     Align = alClient
     BevelOuter = bvNone
     Color = 10528425
@@ -41,24 +41,29 @@ object frmEditLightAnim: TfrmEditLightAnim
     ParentFont = False
     TabOrder = 0
     Visible = False
+    ExplicitWidth = 451
+    ExplicitHeight = 231
     object paColorAndControls: TPanel
-      Left = 249
+      Left = 241
       Top = 0
       Width = 202
-      Height = 231
+      Height = 223
       Align = alRight
       BevelOuter = bvNone
       ParentColor = True
       TabOrder = 0
+      ExplicitLeft = 249
+      ExplicitHeight = 231
       object paColor: TPanel
         Left = 0
         Top = 0
         Width = 202
-        Height = 197
+        Height = 189
         Align = alClient
         BevelInner = bvLowered
         Color = 10526880
         TabOrder = 0
+        ExplicitHeight = 197
         object lbCurFrame: TMxLabel
           Left = 3
           Top = 3
@@ -99,13 +104,14 @@ object frmEditLightAnim: TfrmEditLightAnim
       end
       object Panel1: TPanel
         Left = 0
-        Top = 197
+        Top = 189
         Width = 202
         Height = 34
         Align = alBottom
         BevelOuter = bvNone
         Color = 10528425
         TabOrder = 1
+        ExplicitTop = 197
         object ebPrevKey: TExtBtn
           Left = 44
           Top = 18
@@ -325,11 +331,11 @@ object frmEditLightAnim: TfrmEditLightAnim
           Width = 70
           Height = 17
           Hint = 'Current Frame'
-          LWSensitivity = 0.01
+          LWSensitivity = 0.010000000000000000
           BtnColor = 10526880
           ButtonKind = bkDiagonal
           ButtonWidth = 16
-          MaxValue = 100000
+          MaxValue = 100000.000000000000000000
           AutoSize = False
           Color = 12582911
           Ctl3D = False
@@ -374,12 +380,14 @@ object frmEditLightAnim: TfrmEditLightAnim
     object paPropsGroup: TPanel
       Left = 0
       Top = 0
-      Width = 249
-      Height = 231
+      Width = 241
+      Height = 223
       Align = alClient
       BevelOuter = bvNone
       ParentColor = True
       TabOrder = 1
+      ExplicitWidth = 249
+      ExplicitHeight = 231
       object paProps: TPanel
         Left = 0
         Top = 0
@@ -421,11 +429,12 @@ object frmEditLightAnim: TfrmEditLightAnim
     Left = 0
     Top = 0
     Width = 191
-    Height = 231
+    Height = 223
     Align = alLeft
     BevelOuter = bvNone
     ParentColor = True
     TabOrder = 1
+    ExplicitHeight = 231
     object Panel2: TPanel
       Left = 0
       Top = 212

@@ -1,0 +1,730 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{8443cb96-697f-4933-972f-9248beabe800}</ProjectGuid>
+    <ProjectType>CppDynamicLibrary</ProjectType>
+    <Config Condition="'$(Config)'==''">Debug Build</Config>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+    <Base>true</Base>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Config)'=='Debug Build' or '$(Cfg_1)'!=''">
+    <Base>true</Base>
+    <Cfg_1>true</Cfg_1>
+    <CfgParent>Base</CfgParent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Config)'=='Release Build' or '$(Cfg_2)'!=''">
+    <Base>true</Base>
+    <Cfg_2>true</Cfg_2>
+    <CfgParent>Base</CfgParent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Base)'!=''">
+    <OutputExt>dll</OutputExt>
+    <BCC_wamb>true</BCC_wamb>
+    <BCC_wnod>true</BCC_wnod>
+    <BCC_InstructionSet>6</BCC_InstructionSet>
+    <BCC_wdef>true</BCC_wdef>
+    <ILINK_AppType>Windows</ILINK_AppType>
+    <DCC_DebugInformation>false</DCC_DebugInformation>
+    <ILINK_ObjectSearchPath>Engine\blenders;Editor;..\..\xrCDB;..\..\Layers\xrRenderPC_R1;..\..\Layers\xrRender;Engine;..\..\xrEngine;WildMagic;..\..\common\NvMender2003;..\..\Layers\xrRender\blenders;..\..\Layers\xrRenderDX9;X:\SDK\components\LMD2007\lib\d11;X:\src\editors\ECore\WildMagic</ILINK_ObjectSearchPath>
+    <BCC_wnak>true</BCC_wnak>
+    <UsePackages>true</UsePackages>
+    <DCC_MakeModifiedUnits>true</DCC_MakeModifiedUnits>
+    <BCC_wasm>true</BCC_wasm>
+    <BCC_wpin>true</BCC_wpin>
+    <IntermediateOutputDir>x:\intermediate_ed\ecore</IntermediateOutputDir>
+    <BCC_wamp>true</BCC_wamp>
+    <BCC_wucp>true</BCC_wucp>
+    <DCC_UnitSearchPath>.\;$(BDS)\lib;$(BDS)\lib\obj</DCC_UnitSearchPath>
+    <BCC_wpar>false</BCC_wpar>
+    <ILINK_WinAppType>DLL</ILINK_WinAppType>
+    <IncludePath>Engine\blenders;Editor;..\..\xrCDB;..\..\Layers\xrRenderPC_R1;..\..\Layers\xrRender;Engine;..\..\xrEngine;WildMagic;..\..\common\NvMender2003;..\..\Layers\xrRender\blenders;..\..\Layers\xrRenderDX9</IncludePath>
+    <DCC_DcuOutput>x:\intermediate_ed\ecore\</DCC_DcuOutput>
+    <BCC_IntegerSizedEnums>false</BCC_IntegerSizedEnums>
+    <BCC_IncludePath>..\..\common\NvMender2003;..\..;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\xrCPU_Pipe;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;Engine\Blenders;$(BDS)\include;$(BDS)\include\vcl;X:\SDK\Components\AlexMX;X:\SDK\components\LMD2018\lib\d11;$(BDS)\Include\Mfc;..\xrEProps;..\..\xrCore;..\..\utils\ETools;X:\SDK\include;X:\SDK\include\freemagic;$(BDS)\include\dinkumware</BCC_IncludePath>
+    <BRCC_IncludePath>..\..\common\NvMender2003;..\..;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\xrCPU_Pipe;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;Engine\Blenders;$(BDS)\include;$(BDS)\include\vcl;X:\SDK\Components\AlexMX;X:\SDK\Components\ElPack\Code\Source;$(BDS)\Include\Mfc;..\xrEProps;..\..\xrCore;..\..\utils\ETools;X:\SDK\include;X:\SDK\include\freemagic;$(BDS)\include\dinkumware</BRCC_IncludePath>
+    <DCC_IncludePath>.\;$(BDS)\lib;$(BDS)\lib\obj</DCC_IncludePath>
+    <BCC_ZeroLengthEmptyBaseClass>true</BCC_ZeroLengthEmptyBaseClass>
+    <BCC_MemberPtrKind>Single</BCC_MemberPtrKind>
+    <DCC_ObjOutput>x:\intermediate_ed\ecore\</DCC_ObjOutput>
+    <BCC_SourceDebuggingOn>true</BCC_SourceDebuggingOn>
+    <DCC_SymbolReferenceInfo>2</DCC_SymbolReferenceInfo>
+    <BCC_ExceptionLocationInfo>true</BCC_ExceptionLocationInfo>
+    <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
+    <ILINK_IntermediateOutputPath>x:\intermediate_ed\ecore</ILINK_IntermediateOutputPath>
+    <BCC_OutputDir>x:\intermediate_ed\ecore\</BCC_OutputDir>
+    <BCC_wprc>true</BCC_wprc>
+    <DynamicRTL>true</DynamicRTL>
+    <ILINK_FullDebugInfo>true</ILINK_FullDebugInfo>
+    <BCC_FastExceptionPrologs>true</BCC_FastExceptionPrologs>
+    <BCC_wbbf>true</BCC_wbbf>
+    <BRCC_OutputDir>x:\intermediate_ed\ecore\</BRCC_OutputDir>
+    <ILINK_GenerateImportLibrary>true</ILINK_GenerateImportLibrary>
+    <BCC_DebugLineNumbers>true</BCC_DebugLineNumbers>
+    <BCC_wstl>true</BCC_wstl>
+    <BCC_ZeroLengthEmptyMemberFuncs>true</BCC_ZeroLengthEmptyMemberFuncs>
+    <BCC_OldForStatementScoping>true</BCC_OldForStatementScoping>
+    <FinalOutputDir>x:\stalker_addon\binaries</FinalOutputDir>
+    <BCC_wcln>true</BCC_wcln>
+    <BCC_ExtendedErrorInfo>true</BCC_ExtendedErrorInfo>
+    <TASM_AdditionalSwitches> /w2 x:\intermediate_ed\ecore\</TASM_AdditionalSwitches>
+    <PackageImports>rtl.bpi;vcl.bpi;vclx.bpi;bcbsmp.bpi;editorB.bpi;lmdrtl.bpi;lmdrtrtlx.bpi;lmdrtelcore.bpi;lmdrtelpro.bpi</PackageImports>
+    <PackageLibs>xmlrtl.lib;vclactnband.lib;xmlrtl.lib;vclactnband.lib</PackageLibs>
+    <BCC_GenerateMultithreaded>true</BCC_GenerateMultithreaded>
+    <BRCC_UserSuppliedOptions> -I..\..\common\NvMender2003;..\..;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\xrCPU_Pipe;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;Engine\Blenders;$(BDS)\include;$(BDS)\include\vcl;X:\SDK\Components\AlexMX;X:\SDK\Components\ElPack\Code\Source;$(BDS)\Include\Mfc;..\xrEProps;..\..\xrCore;..\..\utils\ETools;X:\SDK\include;X:\SDK\include\freemagic;$(BDS)\include\dinkumware</BRCC_UserSuppliedOptions>
+    <BCC_DataAlignment>DWord</BCC_DataAlignment>
+    <BCC_PCHCache>true</BCC_PCHCache>
+    <BCC_wstu>true</BCC_wstu>
+    <BCC_wstv>true</BCC_wstv>
+    <ILINK_BpiLibOutputDir>X:\stalker_addon\libraries</ILINK_BpiLibOutputDir>
+    <TASM_IncludePath>..\..\common\NvMender2003;..\..;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\xrCPU_Pipe;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;Engine\Blenders;$(BDS)\include;$(BDS)\include\vcl;X:\SDK\Components\AlexMX;X:\SDK\Components\ElPack\Code\Source;$(BDS)\Include\Mfc;..\xrEProps;..\..\xrCore;..\..\utils\ETools;X:\SDK\include;X:\SDK\include\freemagic;$(BDS)\include\dinkumware</TASM_IncludePath>
+    <AllPackageLibs>xmlrtl.lib;vclactnband.lib;rtl.lib;vcl.lib;bcbsmp.lib;vclx.lib;editorB.lib;xmlrtl.lib;vclactnband.lib;lmdrtelcore.lib;lmdrtrtlx.lib;lmdrtl.lib</AllPackageLibs>
+    <BCC_DisableOptimizations>true</BCC_DisableOptimizations>
+    <ILINK_LibraryPath>..\..\common\NvMender2003;..\..\Layers\xrRender\blenders;..\..\Layers\xrRenderDX9;..\..\xrCPU_Pipe;WildMagic;Editor;Engine\blenders;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\Layers\xrRender;..\..\xrEngine;Engine;$(BDS)\lib;$(BDS)\lib\obj;$(BDS)\Projects\Lib;X:\SDK\components\AlexMX;X:\SDK\components\LMD2018\lib\d11;$(BDS)\Lib\Psdk;x:\SDK\libraries;x:\stalker_addon\libraries;$(DXSDK_DIR)\Lib\x86;X:\src\editors\ECore\WildMagic</ILINK_LibraryPath>
+    <BRCC_Defines>_EDITOR;_ECOREB;XRCDB_EXPORTS;_DEBUG</BRCC_Defines>
+    <BCC_GenerateDLL>true</BCC_GenerateDLL>
+    <BCC_Defines>NO_STRICT;_EDITOR;_ECOREB;XRCDB_EXPORTS</BCC_Defines>
+    <TASM_Defines>_EDITOR _ECOREB XRCDB_EXPORTS _DEBUG</TASM_Defines>
+    <Multithreaded>true</Multithreaded>
+    <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+    <TASM_Debugging>None</TASM_Debugging>
+    <BCC_CallingConvention>stdcall</BCC_CallingConvention>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Cfg_1)'!=''">
+    <DCC_Optimize>false</DCC_Optimize>
+    <BCC_OptimizeForSpeed>true</BCC_OptimizeForSpeed>
+    <DCC_DebugInfoInExe>true</DCC_DebugInfoInExe>
+    <BCC_OutputDir>x:\intermediate_ed\ecore\Debug</BCC_OutputDir>
+    <BCC_InlineFunctionExpansion>false</BCC_InlineFunctionExpansion>
+    <ILINK_DisableIncrementalLinking>true</ILINK_DisableIncrementalLinking>
+    <DCC_DebugInformation>true</DCC_DebugInformation>
+    <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+    <IntermediateOutputDir>x:\intermediate_ed\ecore\Debug</IntermediateOutputDir>
+    <TASM_DisplaySourceLines>true</TASM_DisplaySourceLines>
+    <BCC_StackFrames>true</BCC_StackFrames>
+    <ILINK_LibraryPath>$(BDS)\lib\debug;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+    <BCC_DisableOptimizations>false</BCC_DisableOptimizations>
+    <BCC_Defines>_DEBUG;$(BCC_Defines)</BCC_Defines>
+    <TASM_Debugging>Full</TASM_Debugging>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Cfg_2)'!=''">
+    <BCC_OptimizeForSpeed>true</BCC_OptimizeForSpeed>
+    <BCC_OutputDir>x:\intermediate_ed\ecore\Release</BCC_OutputDir>
+    <IntermediateOutputDir>x:\intermediate_ed\ecore\Release</IntermediateOutputDir>
+    <ILINK_LibraryPath>$(BDS)\lib\release;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+    <BCC_Defines>NDEBUG;$(BCC_Defines)</BCC_Defines>
+  </PropertyGroup>
+  <ProjectExtensions>
+    <Borland.Personality>CPlusPlusBuilder.Personality</Borland.Personality>
+    <Borland.ProjectType>CppDynamicLibrary</Borland.ProjectType>
+    <BorlandProject>
+<BorlandProject><CPlusPlusBuilder.Personality><VersionInfo><VersionInfo Name="IncludeVerInfo">False</VersionInfo><VersionInfo Name="AutoIncBuild">False</VersionInfo><VersionInfo Name="MajorVer">1</VersionInfo><VersionInfo Name="MinorVer">0</VersionInfo><VersionInfo Name="Release">0</VersionInfo><VersionInfo Name="Build">34</VersionInfo><VersionInfo Name="Debug">False</VersionInfo><VersionInfo Name="PreRelease">False</VersionInfo><VersionInfo Name="Special">False</VersionInfo><VersionInfo Name="Private">False</VersionInfo><VersionInfo Name="DLL">False</VersionInfo><VersionInfo Name="Locale">1058</VersionInfo><VersionInfo Name="CodePage">1251</VersionInfo></VersionInfo><VersionInfoKeys><VersionInfoKeys Name="CompanyName"></VersionInfoKeys><VersionInfoKeys Name="FileDescription"></VersionInfoKeys><VersionInfoKeys Name="FileVersion">1.0.0.34</VersionInfoKeys><VersionInfoKeys Name="InternalName"></VersionInfoKeys><VersionInfoKeys Name="LegalCopyright"></VersionInfoKeys><VersionInfoKeys Name="LegalTrademarks"></VersionInfoKeys><VersionInfoKeys Name="OriginalFilename"></VersionInfoKeys><VersionInfoKeys Name="ProductName"></VersionInfoKeys><VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys><VersionInfoKeys Name="Comments"></VersionInfoKeys></VersionInfoKeys><ExcludedPackages><ExcludedPackages Name="f:\program files\borland\cbuilder6\Bin\bcb2kaxserver60.bpl">Borland C++Builder COM Server Components Sample Package</ExcludedPackages></ExcludedPackages><HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Count">19</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item0">Engine\blenders;Editor;..\..\xrCDB;..\..\Layers\xrRenderPC_R1;..\..\Layers\xrRender;Engine;..\..\xrEngine;WildMagic;..\..\common\NvMender2003;..\..\Layers\xrRender\blenders;..\..\Layers\xrRenderDX9</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item1">..\..\common\NvMender2003;..\..;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\xrCPU_Pipe;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;Engine\Blenders;$(BCB)\include;$(BCB)\include\vcl;X:\SDK\Components\AlexMX;X:\SDK\Components\ElPack\Code\Source;$(BCB)\Include\Mfc;..\xrEProps;..\..\xrCore;..\..\utils\ETools;X:\SDK\include;X:\SDK\include\freemagic</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item2">..\..\common\NvMender2003;..\..;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\xrCPU_Pipe;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;Engine\Blenders;$(BCB)\include;$(BCB)\include\vcl;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Include\Mfc;..\xrEProps;$(CORE_DIR);$(ETOOLS_DIR);X:\SDK\include;X:\SDK\include\freemagic</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item3">..\..\common\NvMender2003;..\..;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\xrCPU_Pipe;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;Engine\Blenders;$(BCB)\include;$(BCB)\include\vcl;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Include\Mfc;..\xrEProps;$(CORE_DIR);$(ETOOLS_DIR);X:\SDK\include</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item4">..\..\common\NvMender2003;..\..;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\xrCPU_Pipe;Engine\Blenders;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;$(BCB)\include;$(BCB)\include\vcl;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Include\Mfc;$(CORE_DIR);..\xrEProps;$(XIPH_DIR);$(MAGIC_SW_DIR);$(SDK_DIR)\include\freeimage;$(ETOOLS_DIR)</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item5">D:\Program Files\Borland\CBuilder6\Projects;..\..\common\NvMender2003;..\..;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;E:\Program Files\Borland\CBuilder6\Projects;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrEngine\xrRender_R1;..\..\xrEngine\xrCPU_Pipe;..\..\xrEngine\xrRender;..\..\xrRender_R1;..\..\xrEngine\blenders;..\..\xrCDB;..\..\xrCPU_Pipe;Engine\Blenders;..\..\xrRender;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;$(BCB)\include;$(BCB)\include\vcl;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Include\Mfc;$(CORE_DIR);..\xrEProps;$(XIPH_DIR);$(MAGIC_SW_DIR);$(SDK_DIR)\include\freeimage;$(ETOOLS_DIR)</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item6">..\..\common\NvMender2003;..\..;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;E:\Program Files\Borland\CBuilder6\Projects;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrEngine\xrRender_R1;..\..\xrEngine\xrCPU_Pipe;..\..\xrEngine\xrRender;..\..\xrRender_R1;..\..\xrEngine\blenders;..\..\xrCDB;..\..\xrCPU_Pipe;Engine\Blenders;..\..\xrRender;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;$(BCB)\include;$(BCB)\include\vcl;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Include\Mfc;$(CORE_DIR);..\xrEProps;$(XIPH_DIR);$(MAGIC_SW_DIR);$(SDK_DIR)\include\freeimage;$(ETOOLS_DIR)</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item7">..\..\common\NvMender2003;D:\STALKER\sources\engine\common\NvMender2003;..\..;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;E:\Program Files\Borland\CBuilder6\Projects;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrEngine\xrRender_R1;..\..\xrEngine\xrCPU_Pipe;..\..\xrEngine\xrRender;..\..\xrRender_R1;..\..\xrEngine\blenders;..\..\xrCDB;..\..\xrCPU_Pipe;Engine\Blenders;..\..\xrRender;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;$(BCB)\include;$(BCB)\include\vcl;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Include\Mfc;$(CORE_DIR);..\xrEProps;$(XIPH_DIR);$(MAGIC_SW_DIR);$(SDK_DIR)\include\freeimage;$(ETOOLS_DIR)</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item8">..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;E:\Program Files\Borland\CBuilder6\Projects;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrEngine\xrRender_R1;..\..\xrEngine\xrCPU_Pipe;..\..\xrEngine\xrRender;..\..\xrRender_R1;..\..\xrEngine\blenders;..\..\xrCDB;..\..\xrCPU_Pipe;Engine\Blenders;..\..\xrRender;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;$(BCB)\include;$(BCB)\include\vcl;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Include\Mfc;$(CORE_DIR);..\xrEProps;$(XIPH_DIR);$(MAGIC_SW_DIR);$(SDK_DIR)\include\freeimage;$(ETOOLS_DIR)</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item9">..\..\xrEngine\xrRender_R1;..\..\xrEngine\xrCPU_Pipe;..\..\xrEngine\xrRender;..\..\xrRender_R1;..\..\xrEngine\blenders;..\..\xrCDB;..\..\xrCPU_Pipe;Engine\Blenders;..\..\xrRender;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;$(BCB)\include;$(BCB)\include\vcl;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Include\Mfc;$(CORE_DIR);..\xrEProps;$(XIPH_DIR);$(MAGIC_SW_DIR);$(SDK_DIR)\include\freeimage;$(ETOOLS_DIR)</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item10">..\..\xrEngine\xrRender_R1;..\..\xrEngine\xrCPU_Pipe;..\..\xrEngine\xrRender;..\..\xrRender_R1;..\..\xrEngine\blenders;..\..\xrCDB;..\..\xrCPU_Pipe;Engine\Blenders;..\..\xrRender;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;$(BCB)\include;$(BCB)\include\vcl;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Include\Mfc;$(CORE_DIR);..\xrEProps;$(XIPH_DIR);$(MAGIC_SW_DIR);$(SDK_DIR)\include\freeimage</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item11">..\..\xrRender_R1;..\..\xrEngine\blenders;..\..\xrCDB;..\..\xrCPU_Pipe;Engine\Blenders;..\..\xrRender;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;$(BCB)\include;$(BCB)\include\vcl;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Include\Mfc;$(CORE_DIR);..\xrEProps;$(XIPH_DIR);$(MAGIC_SW_DIR);$(SDK_DIR)\include\freeimage</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item12">I:\Program Files\Borland\CBuilder6\Projects;blenders;..\..\xrEngine\xrRender_R1;..\..\xrEngine\blenders;..\..\xrCDB;..\..\xrEngine\xrCPU_Pipe;Engine\Blenders;..\..\xrEngine\xrRender;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;$(BCB)\include;$(BCB)\include\vcl;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Include\Mfc;$(CORE_DIR);..\xrEProps;$(XIPH_DIR);$(MAGIC_SW_DIR);$(SDK_DIR)\freeimage</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item13">blenders;..\..\xrEngine\xrRender_R1;..\..\xrEngine\blenders;..\..\xrCDB;..\..\xrEngine\xrCPU_Pipe;Engine\Blenders;..\..\xrEngine\xrRender;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;$(BCB)\include;$(BCB)\include\vcl;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Include\Mfc;$(CORE_DIR);..\xrEProps;$(XIPH_DIR);$(MAGIC_SW_DIR);$(SDK_DIR)\freeimage</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item14">blenders;..\..\xrEngine\xrRender_R1;..\..\xrEngine\blenders;..\..\xrCDB;..\..\xrEngine\xrCPU_Pipe;Engine\Blenders;..\..\xrEngine\xrRender;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;$(BCB)\include;$(BCB)\include\vcl;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Include\Mfc;$(CORE_DIR);..\xrEProps;$(XIPH_DIR);$(MAGIC_SW_DIR)</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item15">..\..\xrCDB;..\..\xrEngine\xrCPU_Pipe;Engine\Blenders;..\..\xrEngine\xrRender;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;$(BCB)\include;$(BCB)\include\vcl;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Include\Mfc;$(CORE_DIR);..\xrEProps;$(XIPH_DIR);$(MAGIC_SW_DIR)</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item16">..\..\xrCDB;..\..\xrEngine\xrCPU_Pipe;Engine\Blenders;..\..\xrEngine\xrRender;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;$(BCB)\include;$(BCB)\include\vcl;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Include\Mfc;$(CORE_DIR);..\xrEProps;$(XIPH_DIR)</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item17">..\..\xrCDB;..\..\xrEngine\xrCPU_Pipe;Engine\Blenders;..\..\xrEngine\xrRender;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;$(BCB)\include;$(BCB)\include\vcl;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Include\Mfc;$(CORE_DIR);..\xrEProps;$(XIPH_DIR)\include</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item18">$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;$(BCB)\include;$(BCB)\include\vcl;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Include\Mfc;$(CORE_DIR);..\xrEProps;$(XIPH_DIR)\include</HistoryLists_hlIncludePath></HistoryLists_hlIncludePath><HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Count">21</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item0">..\..\common\NvMender2003;..\..\Layers\xrRender\blenders;..\..\Layers\xrRenderDX9;..\..\xrCPU_Pipe;WildMagic;Editor;Engine\blenders;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\Layers\xrRender;..\..\xrEngine;Engine;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;X:\SDK\components\AlexMX;X:\SDK\components\ElPack\Code;$(BCB)\Lib\Psdk;x:\SDK\libraries;x:\stalker_addon\libraries;$(DXSDK_DIR)\Lib\x86</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item1">X:\SDK\components\AlexMX;..\..\common\NvMender2003;..\..\Layers\xrRender\blenders;..\..\Layers\xrRenderDX9;..\..\xrCPU_Pipe;WildMagic;Editor;Engine\blenders;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\Layers\xrRender;..\..\xrEngine;Engine;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Lib\Psdk;x:\SDK\libraries;x:\stalker_addon\libraries;$(DXSDK_DIR)\Lib\x86</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item2">..\..\common\NvMender2003;..\..\Layers\xrRender\blenders;..\..\Layers\xrRenderDX9;..\..\xrCPU_Pipe;WildMagic;Editor;Engine\blenders;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\Layers\xrRender;..\..\xrEngine;Engine;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Lib\Psdk;x:\SDK\libraries;x:\stalker_addon\libraries;$(DXSDK_DIR)\Lib\x86</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item3">..\..\common\NvMender2003;..\..\Layers\xrRender\blenders;..\..\Layers\xrRenderDX9;..\..\xrCPU_Pipe;WildMagic;Editor;Engine\blenders;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\Layers\xrRender;..\..\xrEngine;Engine;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Lib\Psdk;x:\SDK\libraries;x:\stalker_addon\libraries</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item4">$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Lib\Psdk;x:\SDK\libraries;x:\stalker_addon\libraries</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item5">..\..\common\NvMender2003;..\..\Layers\xrRender\blenders;..\..\Layers\xrRenderDX9;..\..\xrCPU_Pipe;WildMagic;Editor;Engine\blenders;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\Layers\xrRender;..\..\xrEngine;Engine;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code;$(COMPONENTS)\ElPack\Code\Source;$(BCB)\Lib\Psdk;x:\stalker_addon\libraries</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item6">..\..\common\NvMender2003;..\..\Layers\xrRender\blenders;..\..\Layers\xrRenderDX9;..\..\xrCPU_Pipe;WildMagic;Editor;Engine\blenders;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\Layers\xrRender;..\..\xrEngine;Engine;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code;$(BCB)\Lib\Psdk;x:\stalker_addon\libraries</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item7">$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code;$(BCB)\Lib\Psdk;x:\stalker_addon\libraries</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item8">..\..\Layers\xrRender\blenders;..\..\Layers\xrRenderDX9;..\..\xrCPU_Pipe;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\Layers\xrRender;..\..\xrEngine;..\..\common\NvMender2003;..\..;WildMagic;Editor;Engine\blenders;Engine;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code;$(BCB)\Lib\Psdk;x:\stalker_addon\libraries</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item9">..\..\common\NvMender2003;..\..;WildMagic;Editor;Engine\blenders;Engine;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code;$(BCB)\Lib\Psdk;x:\stalker_addon\libraries</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item10">..\..\common\NvMender2003;..\..;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;E:\Program Files\Borland\CBuilder6\Projects;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrRender_R1;..\..\xrCPU_Pipe;..\..\xrRender;WildMagic;Editor;Engine\blenders;..\..\xrEngine\xrRender_R1;..\..\xrEngine\blenders;..\..\xrCDB;..\..\xrEngine\xrCPU_Pipe;..\..\xrEngine\xrRender;..\..\xrEngine;Engine;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code;$(BCB)\Lib\Psdk;x:\stalker_addon\libraries</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item11">..\..\common\NvMender2003;..\..;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;E:\Program Files\Borland\CBuilder6\Projects;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrRender_R1;..\..\xrCPU_Pipe;..\..\xrRender;WildMagic;Editor;Engine\blenders;..\..\xrEngine\xrRender_R1;..\..\xrEngine\blenders;..\..\xrCDB;..\..\xrEngine\xrCPU_Pipe;..\..\xrEngine\xrRender;..\..\xrEngine;Engine;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code;$(BCB)\Lib\Psdk;$(XRAY_LIBS)</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item12">D:\Program Files\Borland\CBuilder6\Projects;..\..\common\NvMender2003;D:\STALKER\sources\engine\common\NvMender2003;..\..;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;E:\Program Files\Borland\CBuilder6\Projects;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrRender_R1;..\..\xrCPU_Pipe;..\..\xrRender;WildMagic;Editor;Engine\blenders;..\..\xrEngine\xrRender_R1;..\..\xrEngine\blenders;..\..\xrCDB;..\..\xrEngine\xrCPU_Pipe;..\..\xrEngine\xrRender;..\..\xrEngine;Engine;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code;$(BCB)\Lib\Psdk;$(XRAY_LIBS)</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item13">..\..\common\NvMender2003;D:\STALKER\sources\engine\common\NvMender2003;..\..;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;E:\Program Files\Borland\CBuilder6\Projects;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrRender_R1;..\..\xrCPU_Pipe;..\..\xrRender;WildMagic;Editor;Engine\blenders;..\..\xrEngine\xrRender_R1;..\..\xrEngine\blenders;..\..\xrCDB;..\..\xrEngine\xrCPU_Pipe;..\..\xrEngine\xrRender;..\..\xrEngine;Engine;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code;$(BCB)\Lib\Psdk;$(XRAY_LIBS)</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item14">..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;E:\Program Files\Borland\CBuilder6\Projects;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrRender_R1;..\..\xrCPU_Pipe;..\..\xrRender;WildMagic;Editor;Engine\blenders;..\..\xrEngine\xrRender_R1;..\..\xrEngine\blenders;..\..\xrCDB;..\..\xrEngine\xrCPU_Pipe;..\..\xrEngine\xrRender;..\..\xrEngine;Engine;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code;$(BCB)\Lib\Psdk;$(XRAY_LIBS)</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item15">..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;E:\Program Files\Borland\CBuilder6\Projects;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrRender_R1;..\..\xrCPU_Pipe;..\..\xrRender;WildMagic;Editor;Engine\blenders;..\..\xrEngine\xrRender_R1;..\..\xrEngine\blenders;..\..\xrCDB;..\..\xrEngine\xrCPU_Pipe;..\..\xrEngine\xrRender;..\..\xrEngine;Engine;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code;$(BCB)\Lib\Psdk;x:\stalker_addon\libraries</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item16">WildMagic;Editor;Engine\blenders;..\..\xrEngine\xrRender_R1;..\..\xrEngine\blenders;..\..\xrCDB;..\..\xrEngine\xrCPU_Pipe;..\..\xrEngine\xrRender;..\..\xrEngine;Engine;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code;$(BCB)\Lib\Psdk;x:\stalker_addon\libraries</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item17">I:\Program Files\Borland\CBuilder6\Projects;blenders;..\..\xrEngine\xrRender_R1;..\..\xrEngine\blenders;WildMagic;Editor;..\..\xrCDB;..\..\xrEngine\xrCPU_Pipe;Engine\Blenders;..\..\xrEngine\xrRender;..\..\xrEngine;Engine;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code;$(BCB)\Lib\Psdk;x:\libraries</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item18">blenders;..\..\xrEngine\xrRender_R1;..\..\xrEngine\blenders;WildMagic;Editor;..\..\xrCDB;..\..\xrEngine\xrCPU_Pipe;Engine\Blenders;..\..\xrEngine\xrRender;..\..\xrEngine;Engine;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code;$(BCB)\Lib\Psdk;x:\libraries</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item19">WildMagic;Editor;..\..\xrCDB;..\..\xrEngine\xrCPU_Pipe;Engine\Blenders;..\..\xrEngine\xrRender;..\..\xrEngine;Engine;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code;$(BCB)\Lib\Psdk;x:\libraries</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item20">Editor;WildMagic;Engine;$(BCB)\lib;$(BCB)\lib\obj;$(BCB)\Projects\Lib;$(COMPONENTS)\AlexMX;$(COMPONENTS)\ElPack\Code;$(BCB)\Lib\Psdk;x:\libraries</HistoryLists_hlLibraryPath></HistoryLists_hlLibraryPath><HistoryLists_hlDebugSourcePath><HistoryLists_hlDebugSourcePath Name="Count">1</HistoryLists_hlDebugSourcePath><HistoryLists_hlDebugSourcePath Name="Item0">$(BCB)\source\vcl</HistoryLists_hlDebugSourcePath></HistoryLists_hlDebugSourcePath><HistoryLists_hlConditionals><HistoryLists_hlConditionals Name="Count">4</HistoryLists_hlConditionals><HistoryLists_hlConditionals Name="Item0">_EDITOR;_ECOREB;XRCDB_EXPORTS;_DEBUG</HistoryLists_hlConditionals><HistoryLists_hlConditionals Name="Item1">_EDITOR;_ECOREB;XRCDB_EXPORTS</HistoryLists_hlConditionals><HistoryLists_hlConditionals Name="Item2">_EDITOR;_ECOREB;_DEBUG;XRCDB_EXPORTS</HistoryLists_hlConditionals><HistoryLists_hlConditionals Name="Item3">_EDITOR;_ECOREB;_DEBUG</HistoryLists_hlConditionals></HistoryLists_hlConditionals><HistoryLists_hlIntOutputDir><HistoryLists_hlIntOutputDir Name="Count">4</HistoryLists_hlIntOutputDir><HistoryLists_hlIntOutputDir Name="Item0">x:\intermediate_ed\ecore</HistoryLists_hlIntOutputDir><HistoryLists_hlIntOutputDir Name="Item1">Intermediate</HistoryLists_hlIntOutputDir><HistoryLists_hlIntOutputDir Name="Item2">XRLC_Intermediate</HistoryLists_hlIntOutputDir><HistoryLists_hlIntOutputDir Name="Item3">xrLC_Options</HistoryLists_hlIntOutputDir></HistoryLists_hlIntOutputDir><HistoryLists_hlFinalOutputDir><HistoryLists_hlFinalOutputDir Name="Count">3</HistoryLists_hlFinalOutputDir><HistoryLists_hlFinalOutputDir Name="Item0">x:\stalker_addon\binaries</HistoryLists_hlFinalOutputDir><HistoryLists_hlFinalOutputDir Name="Item1">x:\stalker_addon\binaries\</HistoryLists_hlFinalOutputDir><HistoryLists_hlFinalOutputDir Name="Item2">x:\binaries\</HistoryLists_hlFinalOutputDir></HistoryLists_hlFinalOutputDir><HistoryLists_hIBPIOutputDir><HistoryLists_hIBPIOutputDir Name="Count">3</HistoryLists_hIBPIOutputDir><HistoryLists_hIBPIOutputDir Name="Item0">X:\stalker_addon\libraries</HistoryLists_hIBPIOutputDir><HistoryLists_hIBPIOutputDir Name="Item1">X:\libraries</HistoryLists_hIBPIOutputDir><HistoryLists_hIBPIOutputDir Name="Item2">X:\libraries\</HistoryLists_hIBPIOutputDir></HistoryLists_hIBPIOutputDir><Debugging><Debugging Name="DebugSourceDirs">$(BCB)\source\vcl</Debugging></Debugging><Parameters><Parameters Name="RunParams">-wf K:\BORSCHT</Parameters><Parameters Name="Launcher"></Parameters><Parameters Name="UseLauncher">False</Parameters><Parameters Name="DebugCWD"></Parameters><Parameters Name="HostApplication">x:\stalker_addon\binaries\LevelEditor.exe</Parameters><Parameters Name="RemoteHost"></Parameters><Parameters Name="RemotePath"></Parameters><Parameters Name="RemoteLauncher"></Parameters><Parameters Name="RemoteCWD"></Parameters><Parameters Name="RemoteDebug">False</Parameters><Parameters Name="RemoteParams"></Parameters><Parameters Name="UseRemoteLauncher">False</Parameters><Parameters Name="Debug Symbols Search Path"></Parameters><Parameters Name="LoadAllSymbols">True</Parameters><Parameters Name="LoadUnspecifiedSymbols">False</Parameters></Parameters><Compiler><Compiler Name="ShowInfoMsgs">0</Compiler><Compiler Name="LinkDebugVcl">0</Compiler><Compiler Name="LinkCGLIB">0</Compiler></Compiler><CORBA><CORBA Name="AddServerUnit">1</CORBA><CORBA Name="AddClientUnit">1</CORBA><CORBA Name="PrecompiledHeaders">1</CORBA></CORBA><Language><Language Name="ActiveLang"></Language><Language Name="ProjectLang"></Language><Language Name="RootDir"></Language></Language><Linker><Linker Name="LibPrefix"></Linker><Linker Name="LibSuffix"></Linker><Linker Name="LibVersion"></Linker></Linker><ProjectProperties><ProjectProperties Name="AutoShowDeps">False</ProjectProperties><ProjectProperties Name="ManagePaths">True</ProjectProperties><ProjectProperties Name="VerifyPackages">True</ProjectProperties></ProjectProperties><HistoryLists_hlILINK_LibraryPath><HistoryLists_hlILINK_LibraryPath Name="Count">1</HistoryLists_hlILINK_LibraryPath><HistoryLists_hlILINK_LibraryPath Name="Item0">$(BDS)\lib\debug;..\..\common\NvMender2003;..\..\Layers\xrRender\blenders;..\..\Layers\xrRenderDX9;..\..\xrCPU_Pipe;WildMagic;Editor;Engine\blenders;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\Layers\xrRender;..\..\xrEngine;Engine;$(BDS)\lib;$(BDS)\lib\obj;$(BDS)\Projects\Lib;X:\SDK\components\AlexMX;X:\SDK\components\LMD2018\lib\d11;$(BDS)\Lib\Psdk;x:\SDK\libraries;x:\stalker_addon\libraries;$(DXSDK_DIR)\Lib\x86;X:\src\editors\ECore\WildMagic</HistoryLists_hlILINK_LibraryPath><HistoryLists_hlILINK_LibraryPath Name="Item1">..\..\common\NvMender2003;..\..\Layers\xrRender\blenders;..\..\Layers\xrRenderDX9;..\..\xrCPU_Pipe;WildMagic;Editor;Engine\blenders;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\Layers\xrRender;..\..\xrEngine;Engine;$(BDS)\lib;$(BDS)\lib\obj;$(BDS)\Projects\Lib;X:\SDK\components\AlexMX;X:\SDK\components\LMD2018\lib\d11;$(BDS)\Lib\Psdk;x:\SDK\libraries;x:\stalker_addon\libraries;$(DXSDK_DIR)\Lib\x86;X:\SDK\components\LMD2007\lib\d11;X:\src\editors\ECore\WildMagic</HistoryLists_hlILINK_LibraryPath></HistoryLists_hlILINK_LibraryPath><HistoryLists_hlIntermediateOutputDir><HistoryLists_hlIntermediateOutputDir Name="Count">1</HistoryLists_hlIntermediateOutputDir><HistoryLists_hlIntermediateOutputDir Name="Item0">x:\intermediate_ed\ecore\Debug</HistoryLists_hlIntermediateOutputDir><HistoryLists_hlIntermediateOutputDir Name="Item1">x:\intermediate_ed\ecore\Debug</HistoryLists_hlIntermediateOutputDir></HistoryLists_hlIntermediateOutputDir><HistoryLists_hlILINK_BpiLibOutputDir><HistoryLists_hlILINK_BpiLibOutputDir Name="Count">1</HistoryLists_hlILINK_BpiLibOutputDir><HistoryLists_hlILINK_BpiLibOutputDir Name="Item0">X:\stalker_addon\libraries</HistoryLists_hlILINK_BpiLibOutputDir></HistoryLists_hlILINK_BpiLibOutputDir><HistoryLists_hlBCC_IncludePath><HistoryLists_hlBCC_IncludePath Name="Count">1</HistoryLists_hlBCC_IncludePath><HistoryLists_hlBCC_IncludePath Name="Item0">..\..\common\NvMender2003;..\..;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\xrCPU_Pipe;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;Engine\Blenders;$(BDS)\include;$(BDS)\include\vcl;X:\SDK\Components\AlexMX;X:\SDK\components\LMD2018\lib\d11;$(BDS)\Include\Mfc;..\xrEProps;..\..\xrCore;..\..\utils\ETools;X:\SDK\include;X:\SDK\include\freemagic;$(BDS)\include\dinkumware</HistoryLists_hlBCC_IncludePath></HistoryLists_hlBCC_IncludePath><HistoryLists_hlBCC_Defines><HistoryLists_hlBCC_Defines Name="Count">1</HistoryLists_hlBCC_Defines><HistoryLists_hlBCC_Defines Name="Item0">NO_STRICT;_EDITOR;_ECOREB;XRCDB_EXPORTS</HistoryLists_hlBCC_Defines></HistoryLists_hlBCC_Defines><HistoryLists_hlBCC_OutputDir><HistoryLists_hlBCC_OutputDir Name="Count">1</HistoryLists_hlBCC_OutputDir><HistoryLists_hlBCC_OutputDir Name="Item0">x:\intermediate_ed\ecore\</HistoryLists_hlBCC_OutputDir></HistoryLists_hlBCC_OutputDir><HistoryLists_hlBCC_MaxIdentifierLength><HistoryLists_hlBCC_MaxIdentifierLength Name="Count">1</HistoryLists_hlBCC_MaxIdentifierLength><HistoryLists_hlBCC_MaxIdentifierLength Name="Item0">250</HistoryLists_hlBCC_MaxIdentifierLength></HistoryLists_hlBCC_MaxIdentifierLength></CPlusPlusBuilder.Personality></BorlandProject></BorlandProject>
+  </ProjectExtensions>
+  <Import Project="$(MSBuildBinPath)\Borland.Cpp.Targets" />
+  <ItemGroup>
+    <CppCompile Include="..\..\common\NvMender2003\NVMeshMender.cpp">
+      <BuildOrder>113</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRenderDX9\dx9r_constants_cache.cpp">
+      <BuildOrder>109</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRenderPC_R1\BlenderDefault.cpp">
+      <BuildOrder>100</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRenderPC_R1\Blender_Blur.cpp">
+      <BuildOrder>105</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRenderPC_R1\Blender_default_aref.cpp">
+      <BuildOrder>101</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRenderPC_R1\Blender_LaEmB.cpp">
+      <BuildOrder>106</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRenderPC_R1\Blender_Model.cpp">
+      <BuildOrder>108</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRenderPC_R1\Blender_screen_gray.cpp">
+      <BuildOrder>104</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRenderPC_R1\Blender_Shadow_World.cpp">
+      <BuildOrder>107</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRenderPC_R1\Blender_vertex.cpp">
+      <BuildOrder>102</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRenderPC_R1\Blender_vertex_aref.cpp">
+      <BuildOrder>103</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\Animation.cpp">
+      <BuildOrder>65</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\blenders\Blender.cpp">
+      <BuildOrder>87</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\blenders\Blender_Palette.cpp">
+      <BuildOrder>88</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\blenders\Blender_Recorder.cpp">
+      <BuildOrder>86</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\Blender_BmmD.cpp">
+      <BuildOrder>48</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\Blender_detail_still.cpp">
+      <BuildOrder>50</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\Blender_Editor_Selection.cpp">
+      <BuildOrder>44</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\Blender_Editor_Wire.cpp">
+      <BuildOrder>47</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\Blender_Lm(EbB).cpp">
+      <BuildOrder>46</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\Blender_Model_EbB.cpp">
+      <BuildOrder>49</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\Blender_particle.cpp">
+      <BuildOrder>52</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\Blender_Recorder_R2.cpp">
+      <BuildOrder>92</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\Blender_Recorder_StandartBinding.cpp">
+      <BuildOrder>89</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\Blender_Screen_SET.cpp">
+      <BuildOrder>45</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\Blender_tree.cpp">
+      <BuildOrder>51</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\DetailModel.cpp">
+      <BuildOrder>54</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\dxEnvironmentRender.cpp">
+      <BuildOrder>95</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\dxFontRender.cpp">
+      <BuildOrder>69</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\dxLensFlareRender.cpp">
+      <BuildOrder>96</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\dxRainRender.cpp">
+      <BuildOrder>98</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\dxRenderFactory.cpp">
+      <BuildOrder>68</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\dxThunderboltDescRender.cpp">
+      <BuildOrder>99</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\dxThunderboltRender.cpp">
+      <BuildOrder>97</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\ETextureParams.cpp">
+      <BuildOrder>91</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\FBasicVisual.cpp">
+      <BuildOrder>37</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\FHierrarhyVisual.cpp">
+      <BuildOrder>38</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\FProgressive.cpp">
+      <BuildOrder>63</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\FSkinned.cpp">
+      <BuildOrder>64</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\FVisual.cpp">
+      <BuildOrder>61</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\HW.cpp">
+      <BuildOrder>66</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\HWCaps.cpp">
+      <BuildOrder>67</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\ModelPool.cpp">
+      <BuildOrder>55</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\ParticleEffect.cpp">
+      <BuildOrder>56</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\ParticleEffectDef.cpp">
+      <BuildOrder>62</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\ParticleGroup.cpp">
+      <BuildOrder>57</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\PSLibrary.cpp">
+      <BuildOrder>58</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\ResourceManager.cpp">
+      <BuildOrder>76</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\ResourceManager_Loader.cpp">
+      <BuildOrder>78</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\ResourceManager_Reset.cpp">
+      <BuildOrder>43</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\ResourceManager_Resources.cpp">
+      <BuildOrder>77</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\R_Backend.cpp">
+      <BuildOrder>70</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\R_Backend_DBG.cpp">
+      <BuildOrder>72</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\R_Backend_hemi.cpp">
+      <BuildOrder>93</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\R_Backend_Runtime.cpp">
+      <BuildOrder>73</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\R_Backend_tree.cpp">
+      <BuildOrder>94</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\R_Backend_xform.cpp">
+      <BuildOrder>71</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\r_constants.cpp">
+      <BuildOrder>74</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\R_DStreams.cpp">
+      <BuildOrder>75</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\Shader.cpp">
+      <BuildOrder>84</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\SH_Atomic.cpp">
+      <BuildOrder>79</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\SH_Constant.cpp">
+      <BuildOrder>81</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\SH_Matrix.cpp">
+      <BuildOrder>82</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\SH_RT.cpp">
+      <BuildOrder>83</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\SH_Texture.cpp">
+      <BuildOrder>80</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\SkeletonAnimated.cpp">
+      <BuildOrder>39</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\SkeletonCustom.cpp">
+      <BuildOrder>40</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\SkeletonRigid.cpp">
+      <BuildOrder>41</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\SkeletonX.cpp">
+      <BuildOrder>42</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\Texture.cpp">
+      <BuildOrder>59</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\TextureDescrManager.cpp">
+      <BuildOrder>90</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\tga.cpp">
+      <BuildOrder>53</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\tss_def.cpp">
+      <BuildOrder>85</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\Layers\xrRender\xrRender_console.cpp">
+      <BuildOrder>60</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrCDB\xrCDB_Collector.cpp">
+      <BuildOrder>110</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrEngine\defines.cpp">
+      <BuildOrder>11</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrEngine\Envelope.cpp">
+      <BuildOrder>12</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrEngine\Environment.cpp">
+      <BuildOrder>31</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrEngine\Environment_misc.cpp">
+      <BuildOrder>32</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrEngine\Environment_render.cpp">
+      <BuildOrder>33</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrEngine\fmesh.cpp">
+      <BuildOrder>13</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrEngine\Frustum.cpp">
+      <BuildOrder>14</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrEngine\GameFont.cpp">
+      <BuildOrder>15</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrEngine\GameMtlLib.cpp">
+      <BuildOrder>16</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrEngine\IGame_Persistent.cpp">
+      <BuildOrder>17</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrEngine\IInputReceiver.cpp">
+      <BuildOrder>18</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrEngine\interp.cpp">
+      <BuildOrder>19</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrEngine\LightAnimLibrary.cpp">
+      <BuildOrder>29</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrEngine\motion.cpp">
+      <BuildOrder>20</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrEngine\perlin.cpp">
+      <BuildOrder>26</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrEngine\pure.cpp">
+      <BuildOrder>21</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrEngine\Rain.cpp">
+      <BuildOrder>36</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrEngine\SkeletonMotions.cpp">
+      <BuildOrder>24</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrEngine\thunderbolt.cpp">
+      <BuildOrder>34</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrEngine\tntQAVI.cpp">
+      <BuildOrder>25</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrEngine\xrHemisphere.cpp">
+      <BuildOrder>30</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrEngine\xrImage_Resampler.cpp">
+      <BuildOrder>23</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrEngine\xrTheora_Stream.cpp">
+      <BuildOrder>28</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrEngine\xrTheora_Surface.cpp">
+      <BuildOrder>27</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrEngine\xr_efflensflare.cpp">
+      <BuildOrder>35</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="..\..\xrEngine\Xr_input.cpp">
+      <BuildOrder>22</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\AnimationPath.cpp">
+      <BuildOrder>178</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\BoneEditor.cpp">
+      <BuildOrder>117</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\ColorPicker.cpp">
+      <BuildOrder>119</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\c_dinput.cpp">
+      <BuildOrder>118</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\D3DUtils.cpp">
+      <BuildOrder>120</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\device.cpp">
+      <BuildOrder>121</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\DeviceScreenshot.cpp">
+      <BuildOrder>171</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\du_box.cpp">
+      <BuildOrder>122</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\du_cone.cpp">
+      <BuildOrder>123</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\du_cylinder.cpp">
+      <BuildOrder>124</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\du_sphere.cpp">
+      <BuildOrder>125</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\du_sphere_part.cpp">
+      <BuildOrder>169</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\EDetailModel.cpp">
+      <BuildOrder>126</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\EditMesh.cpp">
+      <BuildOrder>127</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\EditMeshIO.cpp">
+      <BuildOrder>128</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\EditMeshModify.cpp">
+      <BuildOrder>129</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\EditMeshPick.cpp">
+      <BuildOrder>130</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\EditMeshRender.cpp">
+      <BuildOrder>131</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\EditObject.cpp">
+      <BuildOrder>132</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\EditObjectEditor.cpp">
+      <BuildOrder>133</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\EditObjectImport.cpp">
+      <BuildOrder>134</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\EditObjectIO.cpp">
+      <BuildOrder>135</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\EditObjectMotions.cpp">
+      <BuildOrder>136</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\EditObjectProps.cpp">
+      <BuildOrder>137</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\EditObjectSkin.cpp">
+      <BuildOrder>138</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\EditorPreferences.cpp">
+      <BuildOrder>139</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\ELog.cpp">
+      <BuildOrder>140</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\Engine.cpp">
+      <BuildOrder>141</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\EStats.cpp">
+      <BuildOrder>142</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\EThumbnail.cpp">
+      <BuildOrder>166</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\EThumbnailGroup.cpp">
+      <BuildOrder>174</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\EThumbnailObject.cpp">
+      <BuildOrder>167</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\EThumbnailSound.cpp">
+      <BuildOrder>168</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\EThumbnailTexture.cpp">
+      <BuildOrder>165</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\ExportObjectOGF.cpp">
+      <BuildOrder>143</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\ExportObjectOGFCalculateTB.cpp">
+      <BuildOrder>177</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\ExportSkeleton.cpp">
+      <BuildOrder>144</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\ExportSkeletonCalculateTB.cpp">
+      <BuildOrder>145</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\GeometryCollector.cpp">
+      <BuildOrder>163</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\ImageEditor.cpp">
+      <Form>frmImageLib</Form>
+      <DependentOn>Editor\ImageEditor.h</DependentOn>
+      <BuildOrder>146</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\ImageManager.cpp">
+      <BuildOrder>147</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\ImageManagerDO.cpp">
+      <BuildOrder>162</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\ImageManagerLOD.cpp">
+      <BuildOrder>170</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\Library.cpp">
+      <BuildOrder>148</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\LogForm.cpp">
+      <Form>frmLog</Form>
+      <DependentOn>Editor\LogForm.h</DependentOn>
+      <BuildOrder>149</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\MinimapEditor.cpp">
+      <Form>TMinimapEditor</Form>
+      <DependentOn>Editor\MinimapEditor.h</DependentOn>
+      <BuildOrder>176</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\ParticleEffectActions.cpp">
+      <BuildOrder>164</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\pDomain.cpp">
+      <BuildOrder>173</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\render.cpp">
+      <BuildOrder>150</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\SoundEditor.cpp">
+      <Form>frmSoundLib</Form>
+      <DependentOn>Editor\SoundEditor.h</DependentOn>
+      <BuildOrder>151</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\SoundManager.cpp">
+      <BuildOrder>152</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\TLSPRITE.CPP">
+      <BuildOrder>153</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\UI_Camera.cpp">
+      <BuildOrder>154</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\ui_main.cpp">
+      <BuildOrder>156</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\UI_MainCommand.cpp">
+      <BuildOrder>155</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\UI_MainMail.cpp">
+      <BuildOrder>116</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\UI_ToolsCustom.cpp">
+      <BuildOrder>161</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Editor\xrLoadSurface.cpp">
+      <BuildOrder>175</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Engine\ai_sounds.cpp">
+      <BuildOrder>3</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Engine\blenders\Blender_B.cpp">
+      <BuildOrder>8</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Engine\blenders\blender_light.cpp">
+      <BuildOrder>7</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Engine\bone.cpp">
+      <BuildOrder>1</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Engine\cl_collector.cpp">
+      <BuildOrder>2</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Engine\guid_generator.cpp">
+      <BuildOrder>9</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Engine\Image.cpp">
+      <BuildOrder>10</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="Engine\nv_algebra.cpp">
+      <BuildOrder>4</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="guid.cpp">
+      <BuildOrder>0</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="stdafx.cpp">
+      <BuildOrder>179</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="WildMagic\RAPIDMinBox.cpp">
+      <BuildOrder>194</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="WildMagic\WmlApprGaussPointsFit3.cpp">
+      <BuildOrder>191</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="WildMagic\WmlBox3.cpp">
+      <BuildOrder>182</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="WildMagic\WmlContBox3.cpp">
+      <BuildOrder>189</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="WildMagic\WmlContMinBox3.cpp">
+      <BuildOrder>181</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="WildMagic\WmlEigen.cpp">
+      <BuildOrder>192</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="WildMagic\WmlMath.cpp">
+      <DependentOn>WildMagic\WmlMath.h</DependentOn>
+      <BuildOrder>193</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="WildMagic\WmlMatrix3.cpp">
+      <BuildOrder>186</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="WildMagic\WmlMinimize1.cpp">
+      <BuildOrder>184</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="WildMagic\WmlMinimizeN.cpp">
+      <BuildOrder>183</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="WildMagic\WmlQuaternion.cpp">
+      <BuildOrder>190</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="WildMagic\WmlSystem.cpp">
+      <BuildOrder>187</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="WildMagic\WmlVector3.cpp">
+      <BuildOrder>185</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="WildMagic\WmlWinSystem.cpp">
+      <BuildOrder>188</BuildOrder>
+    </CppCompile>
+    <None Include="..\..\common\NvMender2003\convert.h">
+      <BuildOrder>115</BuildOrder>
+    </None>
+    <None Include="..\..\common\NvMender2003\mender_input_output.h">
+      <BuildOrder>112</BuildOrder>
+    </None>
+    <None Include="..\..\common\NvMender2003\NVMeshMender.h">
+      <BuildOrder>114</BuildOrder>
+    </None>
+    <None Include="..\..\common\NvMender2003\remove_isolated_verts.h">
+      <BuildOrder>111</BuildOrder>
+    </None>
+    <None Include="Editor\ImageEditor.dfm">
+      <BuildOrder>157</BuildOrder>
+    </None>
+    <None Include="Editor\LogForm.dfm">
+      <BuildOrder>158</BuildOrder>
+    </None>
+    <None Include="Editor\PropSlimTools.h">
+      <BuildOrder>172</BuildOrder>
+    </None>
+    <None Include="Editor\ShaderFunction.dfm">
+      <BuildOrder>159</BuildOrder>
+    </None>
+    <None Include="Editor\SoundEditor.dfm">
+      <BuildOrder>160</BuildOrder>
+    </None>
+    <None Include="Engine\nv_math.h">
+      <BuildOrder>5</BuildOrder>
+    </None>
+    <None Include="Engine\nv_mathdecl.h">
+      <BuildOrder>6</BuildOrder>
+    </None>
+    <ResFiles Include="resource.res">
+      <BuildOrder>180</BuildOrder>
+    </ResFiles>
+    <FormResources Include="Editor\ImageEditor.dfm" />
+    <FormResources Include="Editor\LogForm.dfm" />
+    <FormResources Include="Editor\MinimapEditor.dfm" />
+    <FormResources Include="Editor\SoundEditor.dfm" />
+    <BuildConfiguration Include="Debug Build">
+      <Key>Cfg_1</Key>
+    </BuildConfiguration>
+    <BuildConfiguration Include="Release Build">
+      <Key>Cfg_2</Key>
+    </BuildConfiguration>
+  </ItemGroup>
+</Project>

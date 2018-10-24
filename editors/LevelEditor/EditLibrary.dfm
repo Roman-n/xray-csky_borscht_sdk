@@ -1,10 +1,10 @@
 object frmEditLibrary: TfrmEditLibrary
   Left = 598
   Top = 244
-  Width = 332
-  Height = 468
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Object Library'
+  ClientHeight = 433
+  ClientWidth = 316
   Color = 10528425
   Constraints.MinHeight = 405
   Constraints.MinWidth = 332
@@ -26,14 +26,16 @@ object frmEditLibrary: TfrmEditLibrary
   PixelsPerInch = 96
   TextHeight = 13
   object paCommands: TPanel
-    Left = 192
+    Left = 184
     Top = 0
     Width = 132
-    Height = 439
+    Height = 433
     Align = alRight
     BevelOuter = bvNone
     ParentColor = True
     TabOrder = 0
+    ExplicitLeft = 192
+    ExplicitHeight = 437
     object ebMakeThm: TExtBtn
       Left = 2
       Top = 188
@@ -194,7 +196,7 @@ object frmEditLibrary: TfrmEditLibrary
     end
     object paControl: TPanel
       Left = 0
-      Top = 293
+      Top = 291
       Width = 132
       Height = 146
       Align = alBottom
@@ -357,12 +359,14 @@ object frmEditLibrary: TfrmEditLibrary
   object paItems: TPanel
     Left = 0
     Top = 0
-    Width = 192
-    Height = 439
+    Width = 184
+    Height = 433
     Align = alClient
     BevelOuter = bvNone
     ParentColor = True
     TabOrder = 1
+    ExplicitWidth = 192
+    ExplicitHeight = 437
   end
   object fsStorage: TFormStorage
     OnSavePlacement = fsStorageSavePlacement
