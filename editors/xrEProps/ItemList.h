@@ -20,6 +20,8 @@
 #include "ItemListHelper.h"
 #include "FolderLib.h"
 #include "PropertiesListTypes.h"
+#include "ElTreeInplaceEditors.hpp"
+#include "ElComponent.hpp"
           
 class XR_EPROPS_API TItemList: public TForm
 {

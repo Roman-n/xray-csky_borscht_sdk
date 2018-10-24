@@ -19,6 +19,7 @@
 #include "mxPlacemnt.hpp"
 #include "ESceneClassList.h"
 #include "ElEdits.hpp"
+#include "ElTreeInplaceEditors.hpp"
 
 //---------------------------------------------------------------------------
 class TfrmObjectList : public TForm

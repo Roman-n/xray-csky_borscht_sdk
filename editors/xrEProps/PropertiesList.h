@@ -21,6 +21,8 @@
 #include "RenderWindow.hpp"
 #include "MxShortcut.hpp"
 #include "ExtBtn.hpp"
+#include "ElComponent.hpp"
+#include "ElTreeInplaceEditors.hpp"
 
 #define TElFString ::TElFString
 

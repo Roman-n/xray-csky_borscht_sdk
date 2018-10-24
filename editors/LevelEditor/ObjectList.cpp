@@ -10,6 +10,7 @@
 #pragma package(smart_init)
 #pragma link "mxPlacemnt"
 #pragma link "ElEdits"
+#pragma link "ElTreeInplaceEditors"
 #pragma resource "*.dfm"
 //---------------------------------------------------------------------------
 TfrmObjectList* TfrmObjectList::CreateForm(TWinControl* parent)
@@ -105,17 +106,17 @@ TElTreeItem* TfrmObjectList::AddFolder(LPCSTR name, void* data, TElTreeItem* par
     else
     	node 			= tvItems->Items->AddObject(parent_node, name, NULL);
         
-    node->ParentStyle 	= false;
+	node->ParentFontStyle = false;
     node->Bold 			= true;
-    return 				node;
+	return 				node;
 }
 
 TElTreeItem* TfrmObjectList::AddObject(TElTreeItem* node, LPCSTR name, void* obj, TColor color)
 {
     TElTreeItem* ret 	= tvItems->Items->AddChildObject(node, name, obj);
 
-    ret->ParentColors 	= false;
-    node->ParentStyle = false;
+	ret->ParentColors 	= false;
+	node->ParentFontStyle = false;
     ret->Color			= color;
     ret->BkColor		= clGray;
 
@@ -281,9 +282,9 @@ void TfrmObjectList::UpdateState()
         TElTreeItem* parent_node	=  node->Parent;
         CCustomObject* PO			= (parent_node && parent_node->Data)?(CCustomObject*)parent_node->Data : NULL;
             
-        CCustomObject* O 			= (CCustomObject*)node->Data;
-            
-        node->ParentStyle 			= false;
+		CCustomObject* O 			= (CCustomObject*)node->Data;
+
+		node->ParentFontStyle		= false;
         node->StrikeOut 			= !O->Visible();
 
         if(rgSO->ItemIndex==1) 	

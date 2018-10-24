@@ -24,6 +24,8 @@
 #pragma link "ElTreeAdvEdit"
 #pragma link "ElBtnCtl"
 #pragma link "ElPopBtn"
+#pragma link "ElTreeInplaceEditors"
+#pragma link "ElComponent"
 #pragma resource "*.dfm"
 
 //---------------------------------------------------------------------------
@@ -215,7 +217,7 @@ void TItemList::AssignItems(ListItemsVec& items, bool full_expand, bool full_sor
             prop_item->UseStyles		   	= true;
             prop_item->MainStyle->TextColor		= (TColor)prop->prop_color;         
             prop_item->MainStyle->OwnerProps 	= true;
-            prop_item->MainStyle->Style 		= ElhsOwnerDraw;
+            prop_item->MainStyle->Style 		= elhsOwnerDraw;
         }else{
             prop->item		= FHelper.AppendObject(tvItems,*prop->key,false,!m_Flags.is(ilSuppressIcon));
             if (!prop->item){
@@ -237,7 +239,7 @@ void TItemList::AssignItems(ListItemsVec& items, bool full_expand, bool full_sor
             }
             // set style
             prop_item->MainStyle->OwnerProps 	= true;
-            prop_item->MainStyle->Style 		= ElhsOwnerDraw;
+            prop_item->MainStyle->Style 		= elhsOwnerDraw;
         }
     }
 
@@ -402,7 +404,7 @@ void __fastcall TItemList::tvItemsItemChange(TObject *Sender,
       TElTreeItem *Item, TItemChangeMode ItemChangeMode)
 {
 	if (Item){
-    	if (icmCheckState==ItemChangeMode){
+		if (icmCheckState==ItemChangeMode){
             ListItem* prop 			= (ListItem*)Item->Tag;
             if (prop){
                 prop->m_Flags.set	(ListItem::flCBChecked,Item->Checked);
@@ -487,35 +489,37 @@ void __fastcall TItemList::InplaceEditValidateResult(
 {
 	R_ASSERT(m_Flags.is(ilEditMenu));
 	TElTreeInplaceAdvancedEdit* IE	= InplaceEdit;
-    AnsiString new_text 			= AnsiString(IE->Editor->Text).LowerCase();
-    InputValid						= false;
-    if (!new_text.IsEmpty()){
-	    IE->Editor->Text 			= new_text;
+	AnsiString new_text 			= AnsiString(IE->Editor->Text).LowerCase();
+	InputValid						= false;
+	if (!new_text.IsEmpty()){
+		IE->Editor->Text 			= new_text;
 		AnsiString old_name, new_name;
-		FHelper.MakeName			(IE->Item,0,old_name,false);
-	    _ReplaceItem				(old_name.c_str(),IE->Item->Level,new_text.c_str(),new_name,'\\');
-	    TElTreeItem* find_item		= FHelper.FindItem(tvItems,new_name);
-    	InputValid 					= (find_item==IE->Item)||(!find_item);//.(!find_item); нужно для того чтобы принимало 
-    }
+		TElTreeItem* Item			= dynamic_cast<TElTreeItem*>(IE->Item); R_ASSERT(Item);
+		FHelper.MakeName			(Item,0,old_name,false);
+		_ReplaceItem				(old_name.c_str(),Item->Level,new_text.c_str(),new_name,'\\');
+		TElTreeItem* find_item		= FHelper.FindItem(tvItems,new_name);
+		InputValid 					= (find_item==Item)||(!find_item);//.(!find_item); нужно для того чтобы принимало
+	}
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TItemList::InplaceEditAfterOperation(TObject *Sender,
-      bool &Accepted, bool &DefaultConversion)
+	  bool &Accepted, bool &DefaultConversion)
 {
 	if (Accepted){
-        R_ASSERT(m_Flags.is(ilEditMenu));
-        TElTreeInplaceAdvancedEdit* IE	= InplaceEdit;
-        AnsiString new_text 			= AnsiString(IE->Editor->Text).LowerCase();
-        bool bRes						= FHelper.RenameItem(tvItems,IE->Item,new_text,TOnItemRename(this,&TItemList::RenameItem)); 
-        if (bRes){
-	        if (tvItems->OnAfterSelectionChange)tvItems->OnAfterSelectionChange(0);
-            if (!OnModifiedEvent.empty())OnModifiedEvent();
-            // ensure visible
-            IE->Item->Text				= new_text;
-			tvItems->EnsureVisible		(IE->Item); 
-        }
-    }
+		R_ASSERT(m_Flags.is(ilEditMenu));
+		TElTreeInplaceAdvancedEdit* IE	= InplaceEdit;
+		AnsiString new_text 			= AnsiString(IE->Editor->Text).LowerCase();
+		TElTreeItem* Item				= dynamic_cast<TElTreeItem*>(IE->Item); R_ASSERT(Item);
+		bool bRes						= FHelper.RenameItem(tvItems,Item,new_text,TOnItemRename(this,&TItemList::RenameItem));
+		if (bRes){
+			if (tvItems->OnAfterSelectionChange)tvItems->OnAfterSelectionChange(0);
+			if (!OnModifiedEvent.empty())OnModifiedEvent();
+			// ensure visible
+			Item->Text					= new_text;
+			tvItems->EnsureVisible		(Item);
+		}
+	}
 }
 //---------------------------------------------------------------------------
 

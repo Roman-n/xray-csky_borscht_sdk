@@ -19,6 +19,7 @@
 #include "ExtBtn.hpp"
 #include "MXCtrls.hpp"
 #include "mxPlacemnt.hpp"
+#include "ElTreeInplaceEditors.hpp"
 //---------------------------------------------------------------------------
 // refs
 class TfrmOneColor;

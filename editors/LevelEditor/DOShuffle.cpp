@@ -16,6 +16,7 @@
 #include "../ECore/Editor/ImageManager.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
+#pragma link "ElTreeInplaceEditors"
 #pragma resource "*.dfm"
 TfrmDOShuffle *TfrmDOShuffle::form=0;
 
@@ -155,7 +156,7 @@ TElTreeItem* TfrmDOShuffle::FindItem(const char* s)
 TElTreeItem* TfrmDOShuffle::AddItem(TElTreeItem* node, const char* name, void* obj)
 {
     TElTreeItem* obj_node = tvItems->Items->AddChildObject(node, name, obj);
-    obj_node->ParentStyle = false;
+	obj_node->ParentFontStyle = false;
     obj_node->Bold = false;
     return obj_node;
 }
