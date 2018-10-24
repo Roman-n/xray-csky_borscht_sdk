@@ -256,7 +256,7 @@ void CActorTools::OnMotionKeysModified()
     OnMotionDefsModified();
 }
 
-void CActorTools::OnMotionDefsModified()
+void __stdcall CActorTools::OnMotionDefsModified()
 {
 	Modified			();
 	m_Flags.set			(flUpdateMotionDefs,TRUE);

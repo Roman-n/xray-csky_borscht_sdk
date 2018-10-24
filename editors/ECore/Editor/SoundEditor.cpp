@@ -118,19 +118,19 @@ void TfrmSoundLib::AppendModif(LPCSTR nm)
 }
 //---------------------------------------------------------------------------
 
-void TfrmSoundLib::RemoveSound(LPCSTR fname, EItemType type, bool& res)
+void __stdcall TfrmSoundLib::RemoveSound(LPCSTR fname, EItemType type, bool& res)
 {
 	// delete it from modif map
-    FS_FileSetIt it=modif_map.find(FS_File(fname));
-    if (it!=modif_map.end()) modif_map.erase(it);
+	FS_FileSetIt it=modif_map.find(FS_File(fname));
+	if (it!=modif_map.end()) modif_map.erase(it);
 	// remove sound source
 	res = SndLib->RemoveSound(fname,type);
 }
 //---------------------------------------------------------------------------
 
-void TfrmSoundLib::RenameSound(LPCSTR p0, LPCSTR p1, EItemType type)
+void __stdcall TfrmSoundLib::RenameSound(LPCSTR p0, LPCSTR p1, EItemType type)
 {
-    // rename sound source
+	// rename sound source
 	SndLib->RenameSound(p0,p1,type);
 	// delete old from map
     FS_FileSetIt old_it=modif_map.find(FS_File(p0)); 
@@ -255,7 +255,7 @@ void __fastcall TfrmSoundLib::fsStorageSavePlacement(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void TfrmSoundLib::OnControlClick(ButtonValue* V, bool& bModif, bool& bSafe)
+void __stdcall TfrmSoundLib::OnControlClick(ButtonValue* V, bool& bModif, bool& bSafe)
 {
 	switch (V->btn_num){
     case 0: m_Snd.play(0,sm_2D); 	break;
@@ -269,7 +269,7 @@ void TfrmSoundLib::OnControlClick(ButtonValue* V, bool& bModif, bool& bSafe)
 }
 //------------------------------------------------------------------------------
 
-void TfrmSoundLib::OnControl2Click(ButtonValue* V, bool& bModif, bool& bSafe)
+void __stdcall TfrmSoundLib::OnControl2Click(ButtonValue* V, bool& bModif, bool& bSafe)
 {
     switch (V->btn_num){
     case 0:{
@@ -291,7 +291,7 @@ void TfrmSoundLib::DestroyUsedTHM()
 
 #define X_GRID 10
 #define Y_GRID 5
-void  TfrmSoundLib::OnAttenuationDraw(CanvasValue* sender, void* _canvas, const Irect& _rect)
+void __stdcall TfrmSoundLib::OnAttenuationDraw(CanvasValue* sender, void* _canvas, const Irect& _rect)
 {
 	TCanvas* canvas 	= (TCanvas*)_canvas;
     const TRect& rect	= *((TRect*)&_rect);
@@ -351,7 +351,7 @@ void __stdcall TfrmSoundLib::OnAttClick(ButtonValue* V, bool& bModif, bool& bSaf
 	}
 }
 
-void TfrmSoundLib::OnItemsFocused(ListItemsVec& items)
+void __stdcall TfrmSoundLib::OnItemsFocused(ListItemsVec& items)
 {
 	PropItemVec props;
 
@@ -436,7 +436,7 @@ void TfrmSoundLib::OnFrame()
     }
 }
 
-void TfrmSoundLib::OnSyncCurrentClick(ButtonValue* V, bool& bModif, bool& bSafe)
+void __stdcall TfrmSoundLib::OnSyncCurrentClick(ButtonValue* V, bool& bModif, bool& bSafe)
 {
 //.
 	THMIt it 	= m_THM_Current.begin();

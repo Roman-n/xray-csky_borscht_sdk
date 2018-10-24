@@ -174,13 +174,13 @@ LPCSTR CParticleMain::GetCaption()
 	return "particles";
 }
 
-bool __fastcall CParticleMain::ApplyShortCut(WORD Key, TShiftState Shift)
+bool CParticleMain::ApplyShortCut(WORD Key, TShiftState Shift)
 {
     return inherited::ApplyShortCut(Key,Shift);
 }
 //---------------------------------------------------------------------------
 
-bool __fastcall CParticleMain::ApplyGlobalShortCut(WORD Key, TShiftState Shift)
+bool CParticleMain::ApplyGlobalShortCut(WORD Key, TShiftState Shift)
 {
     return inherited::ApplyGlobalShortCut(Key,Shift);
 }

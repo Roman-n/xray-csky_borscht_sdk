@@ -216,7 +216,7 @@ bool CActorTools::IfModified(){
 }
 //---------------------------------------------------------------------------
 
-void CActorTools::OnObjectModified()
+void __stdcall CActorTools::OnObjectModified()
 {
     m_Flags.set				(flUpdateGeometry,TRUE);
     OnGeometryModified		();
@@ -612,7 +612,7 @@ void CActorTools::OnShowHint(AStringVec& SS)
 {
 }
 
-void CActorTools::OnItemModified()
+void __stdcall CActorTools::OnItemModified()
 {
 	switch(m_EditMode){
     case emObject:      OnObjectModified();		break;
@@ -623,7 +623,7 @@ void CActorTools::OnItemModified()
     }
 }
 
-void CActorTools::OnBoneModified(void)
+void __stdcall CActorTools::OnBoneModified(void)
 {
 	Modified				();
 	RefreshSubProperties	();

@@ -112,7 +112,7 @@ xr_token preview_obj_token[]={
 	{ 0,				0			}
 };
 
-bool CSHEngineTools::OnPreviewObjectRefChange(PropValue* sender, u32& new_val)
+bool __stdcall CSHEngineTools::OnPreviewObjectRefChange(PropValue* sender, u32& new_val)
 {                                                                              
     LPCSTR fn=0;
     m_bCustomEditObject = false; 
@@ -480,7 +480,7 @@ LPCSTR CSHEngineTools::GenerateConstantName(LPSTR name)
     return name;
 }
 
-void CSHEngineTools::FillChooseTemplate(ChooseItemVec& items, void* param)
+void __stdcall CSHEngineTools::FillChooseTemplate(ChooseItemVec& items, void* param)
 {
     for (TemplateIt it=m_TemplatePalette.begin(); it!=m_TemplatePalette.end(); it++) 
         items.push_back(SChooseItem((*it)->getComment(),""));

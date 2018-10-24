@@ -56,7 +56,7 @@ CSHSoundEnvTools::~CSHSoundEnvTools()
 }
 //---------------------------------------------------------------------------
 
-void CSHSoundEnvTools::OnChangeWAV	(PropValue* prop)
+void __stdcall CSHSoundEnvTools::OnChangeWAV	(PropValue* prop)
 {
 
 	BOOL bPlay 		= !!m_PreviewSnd._feedback();
@@ -71,7 +71,7 @@ void CSHSoundEnvTools::OnChangeWAV	(PropValue* prop)
     
 }
 
-void CSHSoundEnvTools::OnControlClick(ButtonValue* V, bool& bModif, bool& bSafe)
+void __stdcall CSHSoundEnvTools::OnControlClick(ButtonValue* V, bool& bModif, bool& bSafe)
 {
 
     switch (V->btn_num){
@@ -251,7 +251,7 @@ LPCSTR CSHSoundEnvTools::AppendItem(LPCSTR folder_name, LPCSTR parent_name)
     return *S->name;
 }
 
-void CSHSoundEnvTools::OnRenameItem(LPCSTR old_full_name, LPCSTR new_full_name, EItemType type)
+void __stdcall CSHSoundEnvTools::OnRenameItem(LPCSTR old_full_name, LPCSTR new_full_name, EItemType type)
 {
 	if (type==TYPE_OBJECT){
         ApplyChanges	();
@@ -262,7 +262,7 @@ void CSHSoundEnvTools::OnRenameItem(LPCSTR old_full_name, LPCSTR new_full_name, 
     }
 }
 
-void CSHSoundEnvTools::OnRemoveItem(LPCSTR name, EItemType type, bool& res)
+void __stdcall CSHSoundEnvTools::OnRemoveItem(LPCSTR name, EItemType type, bool& res)
 {
 	if (type==TYPE_OBJECT){
         R_ASSERT		(name && name[0]);
@@ -290,7 +290,7 @@ void CSHSoundEnvTools::ResetCurrentItem()
 	UseEnvironment	();
 }
 
-void __fastcall CSHSoundEnvTools::OnRevResetClick(ButtonValue* V, bool& bModif, bool& bSafe)
+void __stdcall CSHSoundEnvTools::OnRevResetClick(ButtonValue* V, bool& bModif, bool& bSafe)
 {
     switch (V->btn_num){
     case 0: m_Env->set_identity();	break;
@@ -300,7 +300,7 @@ void __fastcall CSHSoundEnvTools::OnRevResetClick(ButtonValue* V, bool& bModif, 
     Modified();
 }
 
-void __fastcall CSHSoundEnvTools::OnEnvSizeChange(PropValue* sender)
+void __stdcall CSHSoundEnvTools::OnEnvSizeChange(PropValue* sender)
 {
     CSoundRender_Environment 	test_env=*m_Env;
     test_env.EnvironmentSize	= m_EnvSrc.EnvironmentSize;
@@ -314,7 +314,7 @@ void __fastcall CSHSoundEnvTools::OnEnvSizeChange(PropValue* sender)
     ExecCommand					(COMMAND_UPDATE_PROPERTIES);
 }
 
-void __fastcall CSHSoundEnvTools::OnEnvChange(PropValue* sender)
+void __stdcall CSHSoundEnvTools::OnEnvChange(PropValue* sender)
 {
     CSound_environment* E		= m_Env;
     Sound->set_environment		(m_Env->Environment,&E);

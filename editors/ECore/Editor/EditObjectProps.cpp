@@ -9,7 +9,7 @@
 #include "motion.h"
 #include "bone.h"
 
-void CEditableObject::OnChangeShader(PropValue*)
+void  __stdcall CEditableObject::OnChangeShader(PropValue*)
 {
     OnDeviceDestroy	();
     UI->RedrawScene	();

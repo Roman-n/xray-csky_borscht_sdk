@@ -363,7 +363,7 @@ bool CEditableObject::PrepareOMF(IWriter& F)
 }
 //---------------------------------------------------------------------------
 
-void CEditableObject::OnChangeTransform(PropValue*)
+void __stdcall CEditableObject::OnChangeTransform(PropValue*)
 {
 	UI->RedrawScene();
 }

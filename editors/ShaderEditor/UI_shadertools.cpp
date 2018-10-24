@@ -327,7 +327,7 @@ void CShaderTool::RealUpdateList()
 	m_Flags.set(flRefreshList,FALSE);
 }
 
-void __fastcall CShaderTool::OnItemFocused(ListItemsVec& items)
+void __stdcall CShaderTool::OnItemFocused(ListItemsVec& items)
 {
 	LPCSTR name				= 0;
     Current()->m_CurrentItem= 0;

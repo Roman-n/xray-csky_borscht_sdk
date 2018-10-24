@@ -114,7 +114,7 @@ public:
 	virtual				~CLensFlare		();
 
 	void				OnFrame			(shared_str id);
-    void __fastcall		Render			(BOOL bSun, BOOL bFlares, BOOL bGradient);
+    void				Render			(BOOL bSun, BOOL bFlares, BOOL bGradient);
 	void 				OnDeviceCreate	();         
 	void 				OnDeviceDestroy	();
 

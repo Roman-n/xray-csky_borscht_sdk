@@ -17,7 +17,7 @@ xr_token							mode_token					[ ]={
 	{ 0,							0							}           
 };
 //---------------------------------------------------------------------------
-void __fastcall CSHEngineTools::FillMatrixProps(PropItemVec& items, LPCSTR pref, LPSTR name)
+void __stdcall CSHEngineTools::FillMatrixProps(PropItemVec& items, LPCSTR pref, LPSTR name)
 {
     CMatrix* M 						= AppendMatrix(name);
     R_ASSERT(M);
@@ -37,13 +37,13 @@ void __fastcall CSHEngineTools::FillMatrixProps(PropItemVec& items, LPCSTR pref,
 }
 //---------------------------------------------------------------------------
 
-void __fastcall CSHEngineTools::MCOnDraw(PropValue* sender, xr_string& draw_val)
+void __stdcall CSHEngineTools::MCOnDraw(PropValue* sender, xr_string& draw_val)
 {
 	if (draw_val[0]!='$') draw_val="Custom";
 }
 //---------------------------------------------------------------------------
 
-bool CSHEngineTools::MatrixOnAfterEdit(PropValue* sender, xr_string& nm)
+bool __stdcall CSHEngineTools::MatrixOnAfterEdit(PropValue* sender, xr_string& nm)
 {
 	CListValue* V 	= dynamic_cast<CListValue*>(sender);  R_ASSERT(V);
 	VERIFY			(nm.size());
@@ -65,7 +65,7 @@ bool CSHEngineTools::MatrixOnAfterEdit(PropValue* sender, xr_string& nm)
 }
 //------------------------------------------------------------------------------
 
-void __fastcall CSHEngineTools::FillConstProps(PropItemVec& items, LPCSTR pref, LPSTR name)
+void __stdcall CSHEngineTools::FillConstProps(PropItemVec& items, LPCSTR pref, LPSTR name)
 {
 	CConstant* C = AppendConstant(name);
     R_ASSERT(C);
@@ -76,7 +76,7 @@ void __fastcall CSHEngineTools::FillConstProps(PropItemVec& items, LPCSTR pref, 
 }
 //---------------------------------------------------------------------------
 
-bool CSHEngineTools::ConstOnAfterEdit(PropValue* sender, xr_string& nm)
+bool __stdcall CSHEngineTools::ConstOnAfterEdit(PropValue* sender, xr_string& nm)
 {
 	CListValue* V 	= dynamic_cast<CListValue*>(sender);  R_ASSERT(V);
     VERIFY			(nm.size());
@@ -97,7 +97,7 @@ bool CSHEngineTools::ConstOnAfterEdit(PropValue* sender, xr_string& nm)
     return true;
 }
 //------------------------------------------------------------------------------
-bool CSHEngineTools::NameOnAfterEdit(PropValue* sender, xr_string& new_name)
+bool __stdcall CSHEngineTools::NameOnAfterEdit(PropValue* sender, xr_string& new_name)
 {
 	CTextValue* V 			= dynamic_cast<CTextValue*>(sender); R_ASSERT(V);
     AnsiString nn			= new_name.c_str();

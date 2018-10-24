@@ -704,7 +704,7 @@ void CParticleTool::OnShowHint(AStringVec& SS)
 {
 }
 
-bool CParticleTool::MouseStart(TShiftState Shift)
+bool __fastcall CParticleTool::MouseStart(TShiftState Shift)
 {
 	inherited::MouseStart(Shift);
 	switch(m_Action){
@@ -742,13 +742,13 @@ bool CParticleTool::MouseStart(TShiftState Shift)
 	return m_bHiddenMode;
 }
 
-bool CParticleTool::MouseEnd(TShiftState Shift)
+bool __fastcall CParticleTool::MouseEnd(TShiftState Shift)
 {
 	inherited::MouseEnd(Shift);
 	return true;
 }
 
-void CParticleTool::MouseMove(TShiftState Shift)
+void __fastcall CParticleTool::MouseMove(TShiftState Shift)
 {
 	inherited::MouseMove(Shift);
 	switch(m_Action){

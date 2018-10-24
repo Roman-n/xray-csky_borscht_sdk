@@ -118,7 +118,7 @@ void __fastcall TfraGroup::seSelPercentKeyPress(TObject *Sender, char &Key)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfraGroup::MultiSelByRefObject ( bool clear_prev )
+void TfraGroup::MultiSelByRefObject ( bool clear_prev )
 {
     ObjectList 	objlist;
     LPU32Vec 	sellist;

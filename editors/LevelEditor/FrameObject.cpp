@@ -26,14 +26,14 @@ __fastcall TfraObject::TfraObject(TComponent* Owner,ESceneObjectTool* parent_too
     ParentTools	= parent_tools;
 }
 //---------------------------------------------------------------------------
-void TfraObject::OnDrawObjectThumbnail(LPCSTR name, HDC hdc, const Irect &r)
+void __stdcall TfraObject::OnDrawObjectThumbnail(LPCSTR name, HDC hdc, const Irect &r)
 {
 	EObjectThumbnail* thm	= xr_new<EObjectThumbnail>(name);
     thm->Draw				(hdc,r);
     xr_delete				(thm);
 }
 //---------------------------------------------------------------------------
-void __fastcall TfraObject::OnItemFocused(ListItemsVec& items)
+void __stdcall TfraObject::OnItemFocused(ListItemsVec& items)
 {
 	VERIFY(items.size()<=1);
     m_Current 			= 0;
@@ -70,7 +70,7 @@ void __fastcall TfraObject::ebDeselectByRefsClick(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfraObject::MultiSelByRefObject ( bool clear_prev )
+void TfraObject::MultiSelByRefObject ( bool clear_prev )
 {
     ObjectList 	objlist;
     LPU32Vec 	sellist;

@@ -109,13 +109,13 @@ LPCSTR CShaderMain::GetCaption()
 	return STools->CurrentToolsName();// "shaders&materials";
 }           
 
-bool __fastcall CShaderMain::ApplyShortCut(WORD Key, TShiftState Shift)
+bool CShaderMain::ApplyShortCut(WORD Key, TShiftState Shift)
 {
     return inherited::ApplyShortCut(Key,Shift);
 }
 //---------------------------------------------------------------------------
 
-bool __fastcall CShaderMain::ApplyGlobalShortCut(WORD Key, TShiftState Shift)
+bool CShaderMain::ApplyGlobalShortCut(WORD Key, TShiftState Shift)
 {
     return inherited::ApplyGlobalShortCut(Key,Shift);
 }
