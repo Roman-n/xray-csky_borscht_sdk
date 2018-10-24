@@ -113,7 +113,7 @@ bool SBPart::prepare				(SBAdjVec& adjs, u32 bone_face_min)
             if (!F)						break;
             float area					= 0;
             u32 face_accum				= 0;
-            u32 face_max_count 			= Random.randI(bone_face_min,bone_face_max+1);
+            u32 face_max_count 			= ::Random.randI(bone_face_min,bone_face_max+1);
             // fill faces
             recurse_fragment			(F,face_accum,bone_idx,face_max_count,area);
             if (face_accum==1){

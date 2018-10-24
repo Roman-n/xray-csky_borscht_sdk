@@ -386,10 +386,10 @@ void ESoundSource::OnFrame()
                         if (bFullPlay)
                         {
                             m_StopTime		= 0xFFFFFFFF;
-                            m_NextTime		= Device.dwTimeGlobal+iFloor(m_Source.get_length_sec()/1000.0f)+Random.randF(m_RandomPause.x,m_RandomPause.y)*1000;
+							m_NextTime		= Device.dwTimeGlobal+iFloor(m_Source.get_length_sec()/1000.0f)+::Random.randF(m_RandomPause.x,m_RandomPause.y)*1000;
                         }else{
-                            m_StopTime		= bFullPlay?0:Device.dwTimeGlobal+Random.randF(m_PlayTime.x,m_PlayTime.y)*1000;
-                            m_NextTime		= m_StopTime+Random.randF(m_RandomPause.x,m_RandomPause.y)*1000;
+							m_StopTime		= bFullPlay?0:Device.dwTimeGlobal+::Random.randF(m_PlayTime.x,m_PlayTime.y)*1000;
+							m_NextTime		= m_StopTime+::Random.randF(m_RandomPause.x,m_RandomPause.y)*1000;
                         }
                     }
                 }

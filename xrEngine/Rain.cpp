@@ -115,7 +115,7 @@ BOOL CEffect_Rain::RayPick(const Fvector& s, const Fvector& d, float& range, col
 
 void CEffect_Rain::RenewItem(Item& dest, float height, BOOL bHit)
 {
-	dest.uv_set			= Random.randI(2);
+	dest.uv_set			= ::Random.randI(2);
     if (bHit){
 		dest.dwTime_Life= Device.dwTimeGlobal + iFloor(1000.f*height/dest.fSpeed) - Device.dwTimeDelta;
 		dest.dwTime_Hit	= Device.dwTimeGlobal + iFloor(1000.f*height/dest.fSpeed) - Device.dwTimeDelta;
