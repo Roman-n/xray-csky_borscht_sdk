@@ -103,6 +103,44 @@ IC errno_t strcat_s(char* dest, const char* str)
 #undef _REDIFINE_SECURE_FUNCS
 #endif
 
+// work-around dumb borland compiler
+#ifdef M_BORLAND
+	// function redefinition
+	#define fabsf(a) fabs(a)
+	using std::sinf;
+	#define asinf(a) asin(a)
+	using std::cosf;
+	#define acosf(a) acos(a)
+	using std::tanf;
+	#define atanf(a) atan(a)
+	using std::sqrtf;
+	using std::expf;
+	#define floorf(a) floor(a)
+	using std::atan2f;
+	using std::logf;
+	using std::fmodf;
+
+	// this function declared in RAD Studio 2007
+	// but while linking i got an 'unresolved symbol' error
+	namespace std
+	{
+		IC float __cdecl fmodf(float num, float denom)
+		{
+			return fmod(num, denom);
+		}
+	}
+
+	// float redefine
+	#define _PC_24 PC_24
+	#define _PC_53 PC_53
+	#define _PC_64 PC_64
+	#define _RC_CHOP RC_CHOP
+	#define _RC_NEAR RC_NEAR
+    #define _MCW_EM MCW_EM
+    #define _MCW_PC MCW_PC
+	#define _MCW_RC MCW_RC
+#endif
+
 // token type definition
 struct XRCORE_API xr_token
 {

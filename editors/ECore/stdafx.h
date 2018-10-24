@@ -7,8 +7,6 @@
 
 #pragma warn -pck
 
-#define sqrtf(a) sqrt(a)
-
 #define smart_cast dynamic_cast
 
 #ifndef O_SEQUENTIAL
@@ -46,7 +44,7 @@ __inline long _lseek(int handle, long offset, int fromwhere){ return ::lseek(han
 #ifdef _dup
 #undef _dup
 #endif
-#define fmodf fmod
+
 __inline int _dup    (int handle)                           { return ::dup(handle);}
 __inline float modff(float a, float *b){
 	double x,y;
