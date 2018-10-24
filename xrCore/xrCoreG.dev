@@ -11,7 +11,7 @@ ResourceIncludes=
 MakeIncludes=
 Compiler=-DBUILDING_DLL=1_@@_
 CppCompiler=-DBUILDING_DLL=1_@@_-DXRCORE_EXPORTS=1_@@_-fno-operator-names_@@_-fno-for-scope_@@_-Wno-deprecated_@@_
-Linker=-lwinmm_@@_-lole32_@@_-lcomdlg32_@@_-ldxerr9_@@_
+Linker=-lwinmm_@@_-lole32_@@_-lcomdlg32_@@_-ldxerr9_@@_-luuid_@@_
 IsCpp=1
 Icon=
 ExeOutput=..\..\stalker_addon\binaries
