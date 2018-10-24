@@ -32,7 +32,6 @@ TfrmMain *frmMain;
 #include "GameMtlLib.h"
 #include "../../xrSound/soundrender_source.h"
 #include "render.h"
-#include "ResourceManager.h"
 #include "../xrEProps/EditorChooseEvents.h"
 
 

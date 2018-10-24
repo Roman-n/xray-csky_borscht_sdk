@@ -101,8 +101,6 @@ __inline float expf	(float val)                           	{ return ::exp(val);}
 #include "../../xrEngine/fmesh.h"
 #include "../../xrEngine/_d3d_extensions.h"
 
-//#include "../ECore/editor/D3DX_Wrapper.h"
-
 DEFINE_VECTOR		(AnsiString,AStringVec,AStringIt);
 DEFINE_VECTOR		(AnsiString*,LPAStringVec,LPAStringIt);
 
