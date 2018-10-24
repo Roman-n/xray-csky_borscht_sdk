@@ -1740,7 +1740,7 @@ void __fastcall TProperties::ebCancelClick(TObject *Sender)
 //---------------------------------------------------------------------------
 
 void __fastcall TProperties::tvPropertiesShowLineHint(TObject *Sender,
-      TElTreeItem *Item, TElHeaderSection *Section, TElFString &Text,
+      TElTreeItem *Item, TElHeaderSection *Section, TLMDString &Text,
       THintWindow *HintWindow, TPoint &MousePos, bool &DoShowHint)
 {
     PropItem* prop 				= (PropItem*)Item->Tag;

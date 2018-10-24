@@ -84,7 +84,7 @@ __published:	// IDE-managed Components
 	void __fastcall ebOKClick(TObject *Sender);
 	void __fastcall ebCancelClick(TObject *Sender);
 	void __fastcall tvPropertiesShowLineHint(TObject *Sender,
-          TElTreeItem *Item, TElHeaderSection *Section, TElFString &Text,
+          TElTreeItem *Item, TElHeaderSection *Section, TLMDString &Text,
           THintWindow *HintWindow, TPoint &MousePos, bool &DoShowHint);
 	void __fastcall tvPropertiesCompareItems(TObject *Sender,
           TElTreeItem *Item1, TElTreeItem *Item2, int &res);
