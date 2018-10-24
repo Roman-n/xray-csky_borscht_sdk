@@ -2,7 +2,6 @@
 #pragma hdrstop
 
 #include <process.h>
-#include <float.h>
 
 // mmsystem.h
 #define MMNOSOUND

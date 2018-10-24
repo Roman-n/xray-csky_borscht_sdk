@@ -3,7 +3,6 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#include <float.h>
 #include <mmsystem.h>
 #include <objbase.h>
 #include "xrCore.h"

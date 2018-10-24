@@ -62,6 +62,7 @@
 #include <string.h>
 #include <typeinfo.h>
 //#include <process.h>
+#include <float.h>
 
 #ifndef DEBUG
 	#ifdef _DEBUG
