@@ -1,5 +1,4 @@
 #include "stdafx.h"
-//.#include "../xrCore/xrCore.h"
 #pragma hdrstop
 
 #include "xrCDB.h"
@@ -77,7 +76,7 @@ namespace CDB
 
 #pragma warning(push)
 #pragma warning(disable:4995)
-#include <malloc.h>
+//#include <malloc.h>
 #pragma warning(pop)
 
 #pragma pack(push,1)
