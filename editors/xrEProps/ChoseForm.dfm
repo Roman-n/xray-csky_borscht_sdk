@@ -35,17 +35,15 @@ object frmChoseItem: TfrmChoseItem
     Left = 179
     Top = 0
     Width = 170
-    Height = 430
+    Height = 429
     Align = alRight
     BevelOuter = bvNone
     Color = clGray
     Constraints.MinWidth = 170
     TabOrder = 0
-    ExplicitLeft = 187
-    ExplicitHeight = 435
     object Splitter2: TSplitter
       Left = 0
-      Top = 285
+      Top = 284
       Width = 170
       Height = 2
       Cursor = crVSplit
@@ -54,7 +52,7 @@ object frmChoseItem: TfrmChoseItem
     end
     object paMulti: TPanel
       Left = 0
-      Top = 287
+      Top = 286
       Width = 170
       Height = 125
       Align = alBottom
@@ -185,7 +183,7 @@ object frmChoseItem: TfrmChoseItem
         HeaderHeight = 19
         HeaderHotTrack = False
         HeaderSections.Data = {
-          F4FFFFFF070000000000000000000000FFFFFFFF000001010100000078000000
+          F1FFFFFF070000000000000000000000FFFFFFFF000001010100000078000000
           0000000010270000000100006489770600000000000000000000000000000100
           0000000000000000000100000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000000000000000
@@ -224,7 +222,7 @@ object frmChoseItem: TfrmChoseItem
         HorzScrollBarStyles.Width = 17
         HorzScrollBarStyles.ButtonSize = 14
         HorzScrollBarStyles.UseSystemMetrics = False
-        HorzScrollBarStyles.UseXPThemes = False
+        HorzScrollBarStyles.ThemeMode = ttmNone
         ItemIndent = 14
         LineHeight = 15
         LinesColor = clBtnShadow
@@ -247,8 +245,8 @@ object frmChoseItem: TfrmChoseItem
         VertScrollBarStyles.Width = 17
         VertScrollBarStyles.ButtonSize = 14
         VertScrollBarStyles.UseSystemMetrics = False
-        VertScrollBarStyles.UseXPThemes = False
-        UseXPThemes = False
+        VertScrollBarStyles.ThemeMode = ttmNone
+        ThemeMode = ttmNone
         TextColor = clBtnText
         BkColor = clGray
         OnDragDrop = tvMultiDragDrop
@@ -258,7 +256,7 @@ object frmChoseItem: TfrmChoseItem
     end
     object Panel2: TPanel
       Left = 0
-      Top = 412
+      Top = 411
       Width = 170
       Height = 18
       Align = alBottom
@@ -267,7 +265,6 @@ object frmChoseItem: TfrmChoseItem
       Constraints.MaxHeight = 18
       Constraints.MinHeight = 18
       TabOrder = 1
-      ExplicitTop = 417
       object sbSelect: TExtBtn
         Left = 1
         Top = 0
@@ -472,13 +469,12 @@ object frmChoseItem: TfrmChoseItem
       Left = 0
       Top = 185
       Width = 170
-      Height = 100
+      Height = 99
       Align = alClient
       BevelOuter = bvNone
-      Constraints.MinHeight = 100
+      Constraints.MinHeight = 99
       TabOrder = 3
       Visible = False
-      ExplicitHeight = 105
     end
   end
   object Panel4: TPanel
@@ -557,7 +553,7 @@ object frmChoseItem: TfrmChoseItem
       HeaderHeight = 19
       HeaderHotTrack = False
       HeaderSections.Data = {
-        F4FFFFFF070000000000000000000000FFFFFFFF000001010100000078000000
+        F1FFFFFF070000000000000000000000FFFFFFFF000001010100000078000000
         000000001027000000010000206F2C0400000000000000000000000000000100
         0000000000000000000100000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000
@@ -597,7 +593,7 @@ object frmChoseItem: TfrmChoseItem
       HorzScrollBarStyles.Width = 17
       HorzScrollBarStyles.ButtonSize = 14
       HorzScrollBarStyles.UseSystemMetrics = False
-      HorzScrollBarStyles.UseXPThemes = False
+      HorzScrollBarStyles.ThemeMode = ttmNone
       LineHeight = 18
       LinesColor = clBtnShadow
       MinusPicture.Data = {
@@ -622,7 +618,6 @@ object frmChoseItem: TfrmChoseItem
         8080808080808080808080808080808080808080808080808080}
       HorzScrollTracking = True
       VertScrollTracking = True
-      ShowCheckBoxes = True
       ShowLines = False
       SortMode = smAdd
       SortType = stCustom
@@ -640,8 +635,8 @@ object frmChoseItem: TfrmChoseItem
       VertScrollBarStyles.Width = 17
       VertScrollBarStyles.ButtonSize = 14
       VertScrollBarStyles.UseSystemMetrics = False
-      VertScrollBarStyles.UseXPThemes = False
-      UseXPThemes = False
+      VertScrollBarStyles.ThemeMode = ttmNone
+      ThemeMode = ttmNone
       TextColor = clBtnText
       BkColor = clGray
       OnItemChange = tvItemsItemChange
@@ -661,8 +656,6 @@ object frmChoseItem: TfrmChoseItem
       Caption = 'Find:'
       Color = 10528425
       TabOrder = 1
-      ExplicitTop = 417
-      ExplicitWidth = 185
       object edFind: TEdit
         Left = 25
         Top = 1

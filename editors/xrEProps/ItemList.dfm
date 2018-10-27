@@ -1,7 +1,7 @@
 object ItemList: TItemList
   Left = 376
   Top = 239
-  BiDiMode = bdRightToLeft
+  BiDiMode = bdLeftToRight
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Item list'
   ClientHeight = 491
@@ -205,6 +205,8 @@ object ItemList: TItemList
   end
   object pmSystem: TMxPopupMenu
     Alignment = paCenter
+    BiDiMode = bdLeftToRight
+    ParentBiDiMode = False
     MarginStartColor = 10921638
     MarginEndColor = 2763306
     BKColor = 10528425

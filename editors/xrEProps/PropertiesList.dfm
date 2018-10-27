@@ -1,7 +1,7 @@
 object Properties: TProperties
   Left = 638
   Top = 43
-  BiDiMode = bdRightToLeft
+  BiDiMode = bdLeftToRight
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Properties'
   ClientHeight = 294
@@ -166,7 +166,6 @@ object Properties: TProperties
       8080808080808080808080808080808080808080808080808080}
     QuickEditMode = True
     ShowColumns = True
-    ShowCheckBoxes = True
     ShowHint = False
     ShowImages = False
     ShowLines = False
@@ -213,6 +212,8 @@ object Properties: TProperties
     BorderStyle = bsNone
     Color = 10526880
     Ctl3D = True
+    BiDiMode = bdLeftToRight
+    ParentBiDiMode = False
     ParentCtl3D = False
     TabOrder = 1
     Visible = False
@@ -285,8 +286,10 @@ object Properties: TProperties
     Top = 42
     Width = 89
     Height = 15
+    BiDiMode = bdLeftToRight
     BorderStyle = bsNone
     Color = 10526880
+    ParentBiDiMode = False
     TabOrder = 3
     Visible = False
     OnDblClick = edTextDblClick
@@ -311,9 +314,11 @@ object Properties: TProperties
     Height = 15
     TabStop = False
     HotKey = 0
+    BiDiMode = bdLeftToRight
     BorderStyle = bsNone
     Color = 10526880
     Ctl3D = False
+    ParentBiDiMode = False
     ParentCtl3D = False
     TabOrder = 5
     Visible = False

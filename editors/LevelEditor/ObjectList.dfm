@@ -31,8 +31,6 @@ object frmObjectList: TfrmObjectList
     BevelOuter = bvNone
     Color = 10528425
     TabOrder = 0
-    ExplicitLeft = 306
-    ExplicitHeight = 475
     object ebShowSel: TExtBtn
       Left = 1
       Top = 84
@@ -111,7 +109,6 @@ object frmObjectList: TfrmObjectList
       BevelOuter = bvNone
       ParentColor = True
       TabOrder = 1
-      ExplicitTop = 434
       object sbRefreshList: TExtBtn
         Left = 1
         Top = 0
@@ -158,8 +155,6 @@ object frmObjectList: TfrmObjectList
     Align = alClient
     Color = clGray
     TabOrder = 1
-    ExplicitWidth = 306
-    ExplicitHeight = 475
     object tvItems: TElTree
       Left = 1
       Top = 1
@@ -305,12 +300,10 @@ object frmObjectList: TfrmObjectList
       Align = alBottom
       Color = clGray
       TabOrder = 1
-      ExplicitTop = 450
-      ExplicitWidth = 304
       object ElEdit1: TElEdit
         Left = 1
         Top = 1
-        Width = 302
+        Width = 294
         Height = 21
         DoubleBuffered = False
         LineBorderActiveColor = clBlack

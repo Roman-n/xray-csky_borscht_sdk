@@ -1,8 +1,8 @@
 object fraLeftBar: TfraLeftBar
   Left = 0
   Top = 0
-  Width = 443
-  Height = 543
+  Width = 451
+  Height = 304
   HorzScrollBar.Visible = False
   VertScrollBar.Increment = 34
   VertScrollBar.Size = 13
@@ -21,8 +21,8 @@ object fraLeftBar: TfraLeftBar
   object paLeftBar: TPanel
     Left = 0
     Top = 0
-    Width = 443
-    Height = 543
+    Width = 451
+    Height = 304
     Align = alClient
     BevelInner = bvLowered
     BevelOuter = bvNone
@@ -31,18 +31,20 @@ object fraLeftBar: TfraLeftBar
     TabOrder = 0
     object Splitter1: TSplitter
       Left = 1
-      Top = 399
-      Width = 441
+      Top = 160
+      Width = 449
       Height = 2
       Cursor = crVSplit
       Align = alBottom
       Color = clBlack
       ParentColor = False
+      ExplicitTop = 399
+      ExplicitWidth = 441
     end
     object paScene: TPanel
       Left = 1
       Top = 1
-      Width = 441
+      Width = 449
       Height = 97
       Hint = 'Scene commands'
       Align = alTop
@@ -51,12 +53,12 @@ object fraLeftBar: TfraLeftBar
       ShowHint = True
       TabOrder = 0
       DesignSize = (
-        441
+        449
         97)
       object APHeadLabel2: TLabel
         Left = 1
         Top = 1
-        Width = 439
+        Width = 447
         Height = 13
         Align = alTop
         Alignment = taCenter
@@ -64,9 +66,10 @@ object fraLeftBar: TfraLeftBar
         Color = clGray
         ParentColor = False
         OnClick = PanelMaximizeClick
+        ExplicitWidth = 31
       end
       object ebSceneMin: TExtBtn
-        Left = 429
+        Left = 437
         Top = 2
         Width = 11
         Height = 11
@@ -88,6 +91,7 @@ object fraLeftBar: TfraLeftBar
           0000}
         ParentFont = False
         OnClick = PanelMimimizeClick
+        ExplicitLeft = 429
       end
       object ebSceneFile: TExtBtn
         Left = 3
@@ -230,7 +234,7 @@ object fraLeftBar: TfraLeftBar
     object paModel: TPanel
       Left = 1
       Top = 98
-      Width = 441
+      Width = 449
       Height = 49
       Hint = 'Scene commands'
       Align = alTop
@@ -239,12 +243,12 @@ object fraLeftBar: TfraLeftBar
       ShowHint = True
       TabOrder = 1
       DesignSize = (
-        441
+        449
         49)
       object Label4: TLabel
         Left = 1
         Top = 1
-        Width = 439
+        Width = 447
         Height = 13
         Align = alTop
         Alignment = taCenter
@@ -252,9 +256,10 @@ object fraLeftBar: TfraLeftBar
         Color = clGray
         ParentColor = False
         OnClick = PanelMaximizeClick
+        ExplicitWidth = 29
       end
       object ExtBtn2: TExtBtn
-        Left = 429
+        Left = 437
         Top = 2
         Width = 11
         Height = 11
@@ -276,6 +281,7 @@ object fraLeftBar: TfraLeftBar
           0000}
         ParentFont = False
         OnClick = PanelMimimizeClick
+        ExplicitLeft = 429
       end
       object ebRenderEditorStyle: TExtBtn
         Left = 84
@@ -448,8 +454,8 @@ object fraLeftBar: TfraLeftBar
     object paObjectProperties: TPanel
       Left = 1
       Top = 147
-      Width = 441
-      Height = 252
+      Width = 449
+      Height = 13
       Align = alClient
       Color = 10528425
       ParentShowHint = False
@@ -458,7 +464,7 @@ object fraLeftBar: TfraLeftBar
       object Label6: TLabel
         Left = 1
         Top = 1
-        Width = 439
+        Width = 447
         Height = 13
         Align = alTop
         Alignment = taCenter
@@ -466,19 +472,21 @@ object fraLeftBar: TfraLeftBar
         Color = clGray
         ParentColor = False
         OnClick = PanelMaximizeClick
+        ExplicitWidth = 59
       end
       object Bevel6: TBevel
         Left = 1
         Top = 14
-        Width = 439
+        Width = 447
         Height = 1
         Align = alTop
         Shape = bsLeftLine
+        ExplicitWidth = 439
       end
       object paObjectProps: TPanel
         Left = 1
         Top = 15
-        Width = 439
+        Width = 447
         Height = 236
         Align = alClient
         BevelOuter = bvNone
@@ -488,8 +496,8 @@ object fraLeftBar: TfraLeftBar
     end
     object paCurrentMotion: TPanel
       Left = 1
-      Top = 401
-      Width = 441
+      Top = 162
+      Width = 449
       Height = 141
       Align = alBottom
       Color = 10528425
@@ -497,12 +505,12 @@ object fraLeftBar: TfraLeftBar
       ShowHint = True
       TabOrder = 3
       DesignSize = (
-        441
+        449
         141)
       object Label1: TLabel
         Left = 1
         Top = 1
-        Width = 439
+        Width = 447
         Height = 13
         Align = alTop
         Alignment = taCenter
@@ -510,9 +518,10 @@ object fraLeftBar: TfraLeftBar
         Color = clGray
         ParentColor = False
         OnClick = PanelMaximizeClick
+        ExplicitWidth = 70
       end
       object ExtBtn10: TExtBtn
-        Left = 429
+        Left = 437
         Top = 2
         Width = 11
         Height = 11
@@ -534,11 +543,12 @@ object fraLeftBar: TfraLeftBar
           0000}
         ParentFont = False
         OnClick = PanelMimimizeClick
+        ExplicitLeft = 429
       end
       object paPSList: TPanel
         Left = 1
         Top = 14
-        Width = 439
+        Width = 447
         Height = 126
         Align = alClient
         BevelOuter = bvNone
@@ -546,15 +556,16 @@ object fraLeftBar: TfraLeftBar
         object Bevel1: TBevel
           Left = 0
           Top = 0
-          Width = 439
+          Width = 447
           Height = 1
           Align = alTop
           Shape = bsLeftLine
+          ExplicitWidth = 439
         end
         object paItemProps: TPanel
           Left = 0
           Top = 1
-          Width = 439
+          Width = 447
           Height = 125
           Align = alClient
           BevelOuter = bvNone
@@ -586,6 +597,8 @@ object fraLeftBar: TfraLeftBar
     Alignment = paCenter
     AutoHotkeys = maManual
     AutoPopup = False
+    BiDiMode = bdLeftToRight
+    ParentBiDiMode = False
     TrackButton = tbLeftButton
     MarginStartColor = 13158600
     MarginEndColor = 1644825

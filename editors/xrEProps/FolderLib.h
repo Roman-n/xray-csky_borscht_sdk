@@ -13,7 +13,8 @@ class XR_EPROPS_API CFolderHelper{
     IC TElTreeItem*		LL_CreateFolder	(TElTree* tv, TElTreeItem* parent, const AnsiString& name, bool force_icon)
     {
     	TElTreeItem* N	= tv->Items->AddChildObject(parent,name,(void*)TYPE_FOLDER);
-        N->ForceButtons	= force_icon;
+		N->ForceButtons	= force_icon;
+		N->ShowCheckBox = false;
         return N;
     }
     IC TElTreeItem*		LL_CreateObject	(TElTree* tv, TElTreeItem* parent, const AnsiString& name)

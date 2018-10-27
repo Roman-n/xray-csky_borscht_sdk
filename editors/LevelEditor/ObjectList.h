@@ -71,7 +71,8 @@ private:	// User declarations
     bool 					bLockUpdate;
     TElTreeItem* 			find_node;
     bool 					stored_parent_colors;
-    TColor					storred_bk_color;
+	TColor					stored_bk_color;
+	TColor					stored_row_color;
     void					ProcessFindItemInList(TElTreeItem* from, AnsiString str);
 
     struct SFolderStore{
