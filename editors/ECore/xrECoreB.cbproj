@@ -68,7 +68,7 @@
     <BCC_wcln>true</BCC_wcln>
     <BCC_ExtendedErrorInfo>true</BCC_ExtendedErrorInfo>
     <TASM_AdditionalSwitches> /w2 x:\intermediate_ed\ecore\</TASM_AdditionalSwitches>
-    <PackageImports>rtl.bpi;vcl.bpi;vclx.bpi;bcbsmp.bpi;editorB.bpi;lmdrtl.bpi;lmdrtrtlx.bpi;lmdrtelcore.bpi;lmdrtelpro.bpi</PackageImports>
+    <PackageImports>rtl.bpi;vcl.bpi;vclx.bpi;bcbsmp.bpi;lmdrtl.bpi;lmdrtrtlx.bpi;lmdrtelcore.bpi;lmdrtelpro.bpi;editorB.bpi</PackageImports>
     <PackageLibs>xmlrtl.lib;vclactnband.lib;xmlrtl.lib;vclactnband.lib</PackageLibs>
     <BCC_GenerateMultithreaded>true</BCC_GenerateMultithreaded>
     <BRCC_UserSuppliedOptions> -I..\..\common\NvMender2003;..\..;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\xrCPU_Pipe;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;Engine\Blenders;$(BDS)\include;$(BDS)\include\vcl;X:\SDK\Components\AlexMX;X:\SDK\Components\ElPack\Code\Source;$(BDS)\Include\Mfc;..\xrEProps;..\..\xrCore;..\..\utils\ETools;X:\SDK\include;X:\SDK\include\freemagic;$(BDS)\include\dinkumware</BRCC_UserSuppliedOptions>
@@ -81,29 +81,27 @@
     <AllPackageLibs>xmlrtl.lib;vclactnband.lib;rtl.lib;vcl.lib;bcbsmp.lib;vclx.lib;editorB.lib;xmlrtl.lib;vclactnband.lib;lmdrtelcore.lib;lmdrtrtlx.lib;lmdrtl.lib</AllPackageLibs>
     <BCC_DisableOptimizations>true</BCC_DisableOptimizations>
     <ILINK_LibraryPath>..\..\common\NvMender2003;..\..\Layers\xrRender\blenders;..\..\Layers\xrRenderDX9;..\..\xrCPU_Pipe;WildMagic;Editor;Engine\blenders;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\Layers\xrRender;..\..\xrEngine;Engine;$(BDS)\lib;$(BDS)\lib\obj;$(BDS)\Projects\Lib;X:\SDK\components\AlexMX;X:\SDK\components\LMD2018\lib\d11;$(BDS)\Lib\Psdk;x:\SDK\libraries;x:\stalker_addon\libraries;$(DXSDK_DIR)\Lib\x86;X:\src\editors\ECore\WildMagic</ILINK_LibraryPath>
-    <BRCC_Defines>_EDITOR;_ECOREB;XRCDB_EXPORTS;_DEBUG</BRCC_Defines>
-    <BCC_GenerateDLL>true</BCC_GenerateDLL>
-    <BCC_Defines>NO_STRICT;_EDITOR;_ECOREB;XRCDB_EXPORTS</BCC_Defines>
     <TASM_Defines>_EDITOR _ECOREB XRCDB_EXPORTS _DEBUG</TASM_Defines>
     <Multithreaded>true</Multithreaded>
-    <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+    <BCC_Defines>NO_STRICT;_EDITOR;_ECOREB;XRCDB_EXPORTS</BCC_Defines>
+    <BCC_GenerateDLL>true</BCC_GenerateDLL>
+    <BRCC_Defines>_EDITOR;_ECOREB;XRCDB_EXPORTS;_DEBUG</BRCC_Defines>
     <TASM_Debugging>None</TASM_Debugging>
+    <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
     <BCC_CallingConvention>stdcall</BCC_CallingConvention>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Cfg_1)'!=''">
     <DCC_Optimize>false</DCC_Optimize>
-    <BCC_OptimizeForSpeed>true</BCC_OptimizeForSpeed>
     <DCC_DebugInfoInExe>true</DCC_DebugInfoInExe>
     <BCC_OutputDir>x:\intermediate_ed\ecore\Debug</BCC_OutputDir>
     <BCC_InlineFunctionExpansion>false</BCC_InlineFunctionExpansion>
     <ILINK_DisableIncrementalLinking>true</ILINK_DisableIncrementalLinking>
-    <DCC_DebugInformation>true</DCC_DebugInformation>
     <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+    <DCC_DebugInformation>true</DCC_DebugInformation>
     <IntermediateOutputDir>x:\intermediate_ed\ecore\Debug</IntermediateOutputDir>
     <TASM_DisplaySourceLines>true</TASM_DisplaySourceLines>
     <BCC_StackFrames>true</BCC_StackFrames>
     <ILINK_LibraryPath>$(BDS)\lib\debug;$(ILINK_LibraryPath)</ILINK_LibraryPath>
-    <BCC_DisableOptimizations>false</BCC_DisableOptimizations>
     <BCC_Defines>_DEBUG;$(BCC_Defines)</BCC_Defines>
     <TASM_Debugging>Full</TASM_Debugging>
   </PropertyGroup>

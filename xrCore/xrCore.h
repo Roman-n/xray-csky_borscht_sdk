@@ -17,7 +17,7 @@
 	#define XRAY_EXCEPTIONS		1	// XRAY
 #else
 	// "release"
-	#if defined(_CPPUNWIND)
+	#if defined(_CPPUNWIND) && !defined(_EDITOR)
 		#error Please disable exceptions...
 	#endif
 	#define _HAS_EXCEPTIONS		1	// STL
