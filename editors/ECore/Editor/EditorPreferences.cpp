@@ -141,8 +141,17 @@ void __stdcall CCustomPreferences::OnClose	()
 
 void CheckValidate(ShortcutValue*, const xr_shortcut& new_val, bool& result)
 {
-	result 					= true; 
-    ECommandVec& cmds		= GetEditorCommands();
+	result 					= true;
+
+	if(new_val.similar(xr_shortcut(0, FALSE, FALSE, FALSE)))
+		return;
+
+	if(new_val.key==0) { // key == 0 && ext != 0 - invalid
+		result = false;
+		return;
+	}
+
+	ECommandVec& cmds		= GetEditorCommands();
     for (u32 cmd_idx=0; cmd_idx<cmds.size(); cmd_idx++){
     	SECommand*& CMD		= cmds[cmd_idx];
         if (CMD&&CMD->editable){
