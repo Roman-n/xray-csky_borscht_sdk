@@ -939,6 +939,9 @@ CRenderTarget::CRenderTarget		()
 	// 
 	dwWidth		= Device.dwWidth;
 	dwHeight	= Device.dwHeight;
+
+	m_fishEye = RCache.get_c("c_fishEye");
+	m_fishEye = RCache.get_c("c_vignette");
 }
 
 CRenderTarget::~CRenderTarget	()

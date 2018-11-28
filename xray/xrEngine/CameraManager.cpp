@@ -55,6 +55,9 @@ void SPPInfo::validate(LPCSTR str)
 	VERIFY2(_valid(color_add.r),str);
 	VERIFY2(_valid(color_add.g),str);
 	VERIFY2(_valid(color_add.b),str);
+	VERIFY2(_valid(fish_eye), str);
+	VERIFY2(_valid(vignette.x), str);
+	VERIFY2(_valid(vignette.y), str);
 }
 
 SPPInfo& SPPInfo::lerp(const SPPInfo& def, const SPPInfo& to, float factor)
@@ -88,6 +91,9 @@ SPPInfo& SPPInfo::lerp(const SPPInfo& def, const SPPInfo& to, float factor)
 		def.color_add.g	+ (to.color_add.g - def.color_add.g) * factor, 
 		def.color_add.b	+ (to.color_add.b - def.color_add.b) * factor
 		);
+	pp.fish_eye += def.fish_eye + (to.fish_eye - def.fish_eye) * factor;
+	pp.vignette.set(def.vignette.x + (to.vignette.x - def.vignette.x) * factor,
+		def.vignette.y + (to.vignette.y - def.vignette.y) * factor);
 	return *this;
 }
 
@@ -96,28 +102,8 @@ CCameraManager::CCameraManager(bool bApplyOnUpdate)
 #ifdef DEBUG
 	dbg_upd_frame					= 0;
 #endif
-
 	m_bAutoApply					= bApplyOnUpdate;
-
-	pp_identity.blur				= 0;
-	pp_identity.gray				= 0;
-	pp_identity.duality.h			= 0; 
-	pp_identity.duality.v			= 0;
-	pp_identity.noise.intensity		= 0;	
-	pp_identity.noise.grain			= 1.0f;	
-	pp_identity.noise.fps			= 30;
-	pp_identity.color_base.set		(.5f,	.5f,	.5f);
-	pp_identity.color_gray.set		(.333f,	.333f,	.333f);
-	pp_identity.color_add.set		(0,		0,		0);
-
-	pp_zero.blur = pp_zero.gray		= pp_zero.duality.h = pp_zero.duality.v = 0.0f;
-	pp_zero.noise.intensity			=0;
-	pp_zero.noise.grain				= 0.0f;	
-	pp_zero.noise.fps				= 0.0f;
-	pp_zero.color_base.set			(0,0,0);
-	pp_zero.color_gray.set			(0,0,0);
-	pp_zero.color_add.set			(0,0,0);
-
+	pp_zero.zero();
 	pp_affected						= pp_identity;
 }
 
@@ -375,15 +361,14 @@ void CCameraManager::ApplyDevice (float _viewport_near)
 		T->set_blur					(pp_affected.blur);
 		T->set_gray					(pp_affected.gray);
 		T->set_noise				(pp_affected.noise.intensity);
-
 		clamp						(pp_affected.noise.grain,EPS_L,1000.0f);
-
 		T->set_noise_scale			(pp_affected.noise.grain);
-
 		T->set_noise_fps			(pp_affected.noise.fps);
 		T->set_color_base			(pp_affected.color_base);
 		T->set_color_gray			(pp_affected.color_gray);
 		T->set_color_add			(pp_affected.color_add);
+		T->set_fish_eye				(pp_affected.fish_eye);
+		T->set_vignette				(pp_affected.vignette);
 	}
 }
 
@@ -400,6 +385,8 @@ void CCameraManager::ResetPP()
 	T->set_color_base		(pp_identity.color_base);
 	T->set_color_gray		(pp_identity.color_gray);
 	T->set_color_add		(pp_identity.color_add);
+	T->set_fish_eye			(pp_identity.fish_eye);
+	T->set_vignette			(pp_identity.vignette);
 }
 
 void CCameraManager::Dump()

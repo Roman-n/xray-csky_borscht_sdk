@@ -119,6 +119,17 @@ void        CPostprocessAnimator::Load                            (LPCSTR name)
           //load noise fps
           VERIFY (m_Params[9]);
           m_Params[9]->load (*F);
+		  if (dwVersion >= 2) {
+			  //load fisheye intensity
+			  VERIFY(m_Params[10]);
+			  m_Params[10]->load(*F);
+			  //load vignette radius
+			  VERIFY(m_Params[11]);
+			  m_Params[11]->load(*F);
+			  //load vignette softness
+			  VERIFY(m_Params[12]);
+			  m_Params[12]->load(*F);
+		  }
           //close reader
           FS.r_close (F);
           }
@@ -216,6 +227,10 @@ BOOL CPostprocessAnimator::Process(SPPInfo &PPInfo)
 		m_EffectorParams.noise.fps = pp_identity.noise.fps;
 	}else
 		m_EffectorParams.noise.fps		*= 100.0f;
+	
+	if (0 == m_Params[pp_vignette_radius]->get_keys_count()) {
+		m_EffectorParams.noise.fps = pp_identity.vignette.x;
+	}
 
 	PPInfo.lerp				(pp_identity, m_EffectorParams, m_factor);
 
@@ -278,6 +293,12 @@ void        CPostprocessAnimator::Create                          ()
     VERIFY (m_Params[8]);
     m_Params[9] = xr_new<CPostProcessValue> (&m_EffectorParams.noise.fps);          //noise fps
     VERIFY (m_Params[9]);
+	m_Params[10] = xr_new<CPostProcessValue>(&m_EffectorParams.fish_eye);          // fish eye intensity
+	VERIFY(m_Params[10]);
+	m_Params[11] = xr_new<CPostProcessValue>(&m_EffectorParams.vignette.x);        //vignette radius
+	VERIFY(m_Params[11]);
+	m_Params[12] = xr_new<CPostProcessValue>(&m_EffectorParams.vignette.y);        //vignette softness
+	VERIFY(m_Params[12]);
 }
 
 #ifdef _PP_EDITOR_

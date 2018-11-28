@@ -79,6 +79,12 @@ public:
             return m_Params[pp_noise_g]->envelope(0);
         case 15:
             return m_Params[pp_noise_f]->envelope(0);
+		case 16:
+			return m_Params[pp_fish_eye]->envelope(0);
+		case 17:
+			return m_Params[pp_vignette_radius]->envelope(0);
+		case 18:
+			return m_Params[pp_vignette_softness]->envelope(0);
         }
         return nullptr;
     }
@@ -191,6 +197,13 @@ struct PostprocessEditor : public Editor {
             0.0f, 5.0f, getKeys(m_data[14]), true });
         m_plotData.push_back({ getSamples(m_data[15], SAMPLE_COUNT, step), (ImU32)ImColor::HSV(6 / 7.0f, 0.6f, 0.6f),
             0.0f, 40.0f, getKeys(m_data[15]), true });
+
+		m_plotData.push_back({ getSamples(m_data[16], SAMPLE_COUNT, step), (ImU32)ImColor::HSV(1.5f / 7.0f, 0.6f, 0.6f),
+			-5.0f, 5.0f, getKeys(m_data[16]), true });
+		m_plotData.push_back({ getSamples(m_data[17], SAMPLE_COUNT, step), (ImU32)ImColor::HSV(2.5f / 7.0f, 0.6f, 0.6f),
+			0.0f, 1.0f, getKeys(m_data[17]), true });
+		m_plotData.push_back({ getSamples(m_data[18], SAMPLE_COUNT, step), (ImU32)ImColor::HSV(3.5 / 7.0f, 0.6f, 0.6f),
+			0.0f, 1.0f, getKeys(m_data[18]), true });
     }
 
     std::vector<float> getSamples(CEnvelope* e, int count, float step)
@@ -224,7 +237,7 @@ struct PostprocessEditor : public Editor {
     std::string m_title;
     std::unique_ptr<CEditablePostprocessAnimator> m_anim;
     const int SAMPLE_COUNT = 100;
-    const int ENVELOPE_COUNT = 16;
+    const int ENVELOPE_COUNT = 19;
     std::vector<CEnvelope*> m_data;
     std::vector<ImGui::PlotSource> m_plotData;
     bool m_changed = false;
@@ -280,10 +293,18 @@ struct PostprocessEditor : public Editor {
         ImGui::SameLine();
         ImGui_ColoredCheckBox("Frequency##Noise", &m_plotData[15].visible, m_plotData[15].color);
 
+		ImGui::Text(u8"Effects:");
+		ImGui::SameLine();
+		ImGui_ColoredCheckBox("Fish Eye Intensity##Effects", &m_plotData[16].visible, m_plotData[16].color);
+		ImGui::SameLine();
+		ImGui_ColoredCheckBox("Vignette Radius##Effects", &m_plotData[17].visible, m_plotData[17].color);
+		ImGui::SameLine();
+		ImGui_ColoredCheckBox("Vignette Softness##Effects", &m_plotData[18].visible, m_plotData[18].color);
+
         ImGui::Columns(2);
         ImGui::PushItemWidth(-1.0f);
         if (ImGui::Plot2(
-                "##empty", &m_plotData[0], 16, m_anim->position(), m_anim->GetLength(), ImVec2(-1, -50), &m_changes)) {
+                "##empty", &m_plotData[0], 19, m_anim->position(), m_anim->GetLength(), ImVec2(-1, -50), &m_changes)) {
             CEnvelope* e = m_data[m_changes.sourceIndex];
             auto key = e->keys[m_changes.keyIndex];
             key->time = m_changes.newPos.x;

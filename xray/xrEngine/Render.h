@@ -142,6 +142,8 @@ public:
 	virtual void					set_color_gray		(u32	f)							= 0;
 	//virtual void					set_color_add		(u32	f)							= 0;
 	virtual void					set_color_add		(const Fvector	&f)					= 0;
+	virtual void					set_fish_eye		(float f)							= 0;
+	virtual void					set_vignette		(const Fvector2& f)					= 0;
 	virtual u32						get_width			()									= 0;
 	virtual u32						get_height			()									= 0;
 	virtual ~IRender_Target()		{};

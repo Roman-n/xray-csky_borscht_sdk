@@ -14,8 +14,9 @@
     #include "CameraManager.h"
 #endif /*_PP_EDITOR_*/
 
-#define POSTPROCESS_PARAMS_COUNT    10
-#define POSTPROCESS_FILE_VERSION    0x0001
+#define POSTPROCESS_PARAMS_COUNT    13
+#define POSTPROCESS_FILE_VERSION    0x0002
+// 2 - добавлены кривые для fish eye, vignette radius, vignette softness
 
 #define POSTPROCESS_FILE_EXTENSION  ".ppe"
 
@@ -33,7 +34,10 @@ typedef enum _pp_params
     pp_noise_i              =   7,
     pp_noise_g              =   8,
     pp_noise_f              =   9,
-    pp_last					=	10,
+	pp_fish_eye             =   10,
+	pp_vignette_radius      =   11,
+	pp_vignette_softness    =   12,
+    pp_last					=	13,
     pp_force_dword          =   0x7fffffff
 } pp_params;
 

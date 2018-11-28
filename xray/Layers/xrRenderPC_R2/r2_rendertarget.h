@@ -156,6 +156,8 @@ private:
 	u32							param_color_base;
 	u32							param_color_gray;
 	Fvector						param_color_add;
+	float param_fish_eye;
+	Fvector2 param_vignette;
 
 	//	Igor: used for volumetric lights
 	bool						m_bHasActiveVolumetric;
@@ -231,6 +233,8 @@ public:
 	virtual void				set_color_base			(u32	f)		{ param_color_base=f;				}
 	virtual void				set_color_gray			(u32	f)		{ param_color_gray=f;				}
 	virtual void				set_color_add			(const Fvector	&f)		{ param_color_add=f;		}
+	void set_fish_eye(float f) override { param_fish_eye = f; }
+	void set_vignette(const Fvector2& f) override { param_vignette = f; }
 
 	virtual u32					get_width				()				{ return dwWidth;					}
 	virtual u32					get_height				()				{ return dwHeight;					}

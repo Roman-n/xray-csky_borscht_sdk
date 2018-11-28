@@ -55,6 +55,8 @@ struct ENGINE_API SPPInfo {
 	SColor		color_base;
 	SColor		color_gray;
 	SColor		color_add;
+	float		fish_eye;
+	Fvector2	vignette;
 
 	IC SPPInfo& add (const SPPInfo &ppi) 
 	{
@@ -73,6 +75,11 @@ struct ENGINE_API SPPInfo {
 		color_base	+= ppi.color_base;
 		color_gray	+= ppi.color_gray;
 		color_add	+= ppi.color_add;
+
+		fish_eye = _max(fish_eye, ppi.fish_eye);
+		vignette.x = _min(vignette.x, ppi.vignette.x);
+		vignette.y = _max(vignette.y, ppi.vignette.y);
+
 		return *this;
 	}
 	IC SPPInfo& sub (const SPPInfo &ppi) 
@@ -97,6 +104,18 @@ struct ENGINE_API SPPInfo {
 		color_base.set	(.5f,	.5f,	.5f);
 		color_gray.set	(.333f, .333f,	.333f);
 		color_add.set	(0.f,	0.f,	0.f);
+		fish_eye = 0.0f;
+		vignette.set(1.0f, 0.0f);
+	}
+	void zero()
+	{
+		blur = gray = duality.h = duality.v = fish_eye = vignette.x = vignette.y = 0.0f;
+		noise.intensity = 0;
+		noise.grain = 0.0f;
+		noise.fps = 0.0f;
+		color_base.set(0, 0, 0);
+		color_gray.set(0, 0, 0);
+		color_add.set(0, 0, 0);
 	}
 	SPPInfo&	lerp(const SPPInfo& def, const SPPInfo& to, float factor);
 	void		validate(LPCSTR str);

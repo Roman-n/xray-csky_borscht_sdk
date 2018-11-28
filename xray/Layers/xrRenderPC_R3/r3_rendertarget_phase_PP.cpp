@@ -138,6 +138,8 @@ void CRenderTarget::phase_pp		()
 	// Actual rendering
 	static	shared_str	s_brightness	= "c_brightness";
 	RCache.set_c		( s_brightness, p_brightness.x, p_brightness.y, p_brightness.z, 0 );
+	RCache.set_c(m_fishEye._get(), param_fish_eye);
+	RCache.set_c(m_vignette._get(), param_vignette.x, param_vignette.y, 0.0f, 0.0f);
 	RCache.set_Geometry	(g_postprocess);
 	RCache.Render		(D3DPT_TRIANGLELIST,Offset,0,4,0,2);
 }
