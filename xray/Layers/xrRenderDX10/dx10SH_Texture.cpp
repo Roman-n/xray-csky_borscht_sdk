@@ -1,18 +1,13 @@
 #include "stdafx.h"
-
-
 #include "../xrRender/ResourceManager.h"
-
 #ifndef _EDITOR
 #include "../../xrEngine/render.h"
 #endif
-
 #include "../../xrEngine/tntQAVI.h"
 #include "../../xrEngine/xrTheora_Surface.h"
-
 #include "../xrRender/dxRenderDeviceRender.h"
-
 #include "StateManager/dx10ShaderResourceStateCache.h"
+#include "dx10TextureUtils.h"
 
 #define		PRIORITY_HIGH	12
 #define		PRIORITY_NORMAL	8
@@ -623,4 +618,53 @@ void CTexture::video_Stop			()
 BOOL CTexture::video_IsPlaying	()				
 { 
 	return (pTheora)?pTheora->IsPlaying():FALSE; 
+}
+
+void* CTexture::getData()
+{
+	D3D10_MAPPED_TEXTURE2D	mapData;
+	R_CHK(((ID3DTexture2D*)pSurface)->Map(0, D3D10_MAP_WRITE, 0, &mapData));
+	return mapData.pData;
+}
+
+void CTexture::releaseData()
+{
+	((ID3DTexture2D*)pSurface)->Unmap(0);
+}
+
+void CTexture::convert(D3DFORMAT destFormat)
+{
+	ID3D10Texture2D* dest;
+
+	D3D10_TEXTURE2D_DESC desc = {};
+	desc.Width = get_Width();
+	desc.Height = get_Height();
+	desc.MipLevels = 1;
+	desc.ArraySize = 1;
+	desc.Format = dx10TextureUtils::ConvertTextureFormat(destFormat);
+	desc.SampleDesc.Count = 1;
+	desc.Usage = D3D10_USAGE_STAGING;
+	desc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
+	R_CHK(HW.pDevice->CreateTexture2D(&desc, nullptr, &dest));
+	R_CHK(D3DX10LoadTextureFromTexture(pSurface, nullptr, dest));
+
+	_RELEASE(pSurface);
+	pSurface = dest;
+}
+
+void CTexture::save(LPCSTR fileName)
+{
+	D3DX10_IMAGE_FILE_FORMAT format = D3DX10_IFF_DDS;
+	if (strstr(fileName, ".tga"))
+		format = D3DX10_IFF_TIFF;
+	else if (strstr(fileName, ".png"))
+		format = D3DX10_IFF_PNG;
+	ID3DBlob *saved = 0;
+	R_CHK(D3DX10SaveTextureToMemory(pSurface, format, &saved, 0));
+	IWriter* fs = FS.w_open(fileName);
+	if (fs) {
+		fs->w(saved->GetBufferPointer(), (u32)saved->GetBufferSize());
+		FS.w_close(fs);
+	}
+	_RELEASE(saved);
 }

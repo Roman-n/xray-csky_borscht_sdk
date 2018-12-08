@@ -48,6 +48,11 @@ public:
 	CTexture							();
 	virtual ~CTexture					();
 
+	void*								getData();
+	void								releaseData();
+	void								convert(D3DFORMAT destFormat);
+	void								save(LPCSTR fileName);
+
 private:
 	IC BOOL								desc_valid		()		{ return pSurface==desc_cache; }
 	IC void								desc_enshure	()		{ if (!desc_valid()) desc_update(); }

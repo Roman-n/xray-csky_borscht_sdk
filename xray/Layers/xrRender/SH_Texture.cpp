@@ -343,3 +343,48 @@ BOOL CTexture::video_IsPlaying	()
 { 
 	return (pTheora)?pTheora->IsPlaying():FALSE; 
 }
+
+void* CTexture::getData()
+{
+	D3DLOCKED_RECT r;
+	R_CHK(((ID3DTexture2D*)pSurface)->LockRect(0, &r, NULL, 0));
+	return r.pBits;
+}
+
+void CTexture::releaseData()
+{
+	R_CHK(((ID3DTexture2D*)pSurface)->UnlockRect(0));
+}
+
+void CTexture::convert(D3DFORMAT destFormat)
+{
+	ID3DTexture2D*	dest = nullptr;
+	R_CHK(D3DXCreateTexture(HW.pDevice, get_Width(), get_Height(), 1, 0, destFormat, D3DPOOL_SCRATCH, &dest));
+	IDirect3DSurface9*	destSurface = nullptr;
+	R_CHK(dest->GetSurfaceLevel(0, &destSurface));
+	IDirect3DSurface9*	srcSurface = nullptr;
+	R_CHK(((ID3DTexture2D*)pSurface)->GetSurfaceLevel(0, &srcSurface));
+	R_CHK(D3DXLoadSurfaceFromSurface(destSurface, 0, 0, srcSurface, 0, 0, D3DX_DEFAULT, 0));
+	_RELEASE(srcSurface);
+	_RELEASE(destSurface);
+
+	_RELEASE(pSurface);
+	pSurface = dest;
+}
+
+void CTexture::save(LPCSTR fileName)
+{
+	D3DXIMAGE_FILEFORMAT format = D3DXIFF_DDS;
+	if (strstr(fileName, ".tga"))
+		format = D3DXIFF_TGA;
+	else if (strstr(fileName, ".png"))
+		format = D3DXIFF_PNG;
+	ID3DBlob* saved = nullptr;
+	R_CHK(D3DXSaveTextureToFileInMemory(&saved, format, pSurface, 0));
+	IWriter* fs = FS.w_open(fileName);
+	if (fs) {
+		fs->w(saved->GetBufferPointer(), saved->GetBufferSize());
+		FS.w_close(fs);
+	}
+	_RELEASE(saved);
+}
