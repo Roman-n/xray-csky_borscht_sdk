@@ -6,6 +6,8 @@
 enum class Editors {
     None,
     Details, ///< Редактор маски травы
+    PpList, ///< Список постпроцессов
+    PpEdit, ///< Редактор постпроцесса
 };
 
 struct Editor {

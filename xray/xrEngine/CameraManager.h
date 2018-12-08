@@ -134,8 +134,10 @@ public:
 	void					RemoveCamEffector		(ECamEffectorType	type);
 
 	CEffectorPP*			GetPPEffector			(EEffectorPPType	type);
+	CEffectorPP*			GetPPEffector			(const CEffectorPP*	ef);
 	CEffectorPP*			AddPPEffector			(CEffectorPP*		ef);
 	void					RemovePPEffector		(EEffectorPPType	type);
+	void					RemovePPEffector		(const CEffectorPP*	ef);
 
 	IC Fvector				Position				()	const { return m_cam_info.p;	}
 	IC Fvector				Direction				()	const { return m_cam_info.d;}

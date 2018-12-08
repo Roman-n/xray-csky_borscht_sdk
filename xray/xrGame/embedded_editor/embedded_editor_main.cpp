@@ -78,7 +78,8 @@ void ShowMain()
         show_le_editor = !show_le_editor;
     if (ImGui::Button("SE"))
         show_se_editor = !show_se_editor;
-    ImGui::Button("PP Editor");
+    if (ImGui::Button("PP Editor"))
+        switchEditor(Editors::PpList);
     if (ImGui::Button("UI Editor"))
         show_ui_editor = !show_ui_editor;
     if (ImGui::Button("Map Editor"))

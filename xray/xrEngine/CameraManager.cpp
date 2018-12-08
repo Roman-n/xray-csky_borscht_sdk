@@ -176,6 +176,12 @@ CEffectorPP* CCameraManager::GetPPEffector(EEffectorPPType type)
 	return 0;
 }
 
+CEffectorPP* CCameraManager::GetPPEffector(const CEffectorPP* ef)
+{
+	auto i = std::find(m_EffectorsPP.begin(), m_EffectorsPP.end(), ef);
+	return i == m_EffectorsPP.end() ? nullptr : *i;
+}
+
 CEffectorPP* CCameraManager::AddPPEffector(CEffectorPP* ef) 
 {
 	RemovePPEffector				(ef->Type());
@@ -195,6 +201,19 @@ void CCameraManager::RemovePPEffector(EEffectorPPType type)
 			m_EffectorsPP.erase			(it);
 			return;
 		}
+}
+
+void CCameraManager::RemovePPEffector(const CEffectorPP* ef)
+{
+    for (EffectorPPIt it = m_EffectorsPP.begin(); it != m_EffectorsPP.end(); it++)
+        if (*it == ef) {
+            if ((*it)->FreeOnRemove()) {
+                OnEffectorReleased(*it);
+                //				xr_delete				(*it);
+            }
+            m_EffectorsPP.erase(it);
+            return;
+        }
 }
 
 void CCameraManager::OnEffectorReleased(SBaseEffector* e)

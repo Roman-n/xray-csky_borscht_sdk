@@ -6,9 +6,9 @@ struct SPPInfo;
 // постпроцесс
 class ENGINE_API CEffectorPP :public SBaseEffector
 {
+protected:
 	EEffectorPPType		eType;
 	bool				bFreeOnRemove;
-protected:
 	float				fLifeTime;
 public:
 						CEffectorPP		(EEffectorPPType type, f32 lifeTime, bool free_on_remove=true);

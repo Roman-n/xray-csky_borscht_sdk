@@ -45,6 +45,7 @@ void drawActiveEditors()
 
 bool editorExists(std::function<bool(Editor*)> f)
 {
-    auto i = std::find_if(activeEditors.begin(), activeEditors.end(), [f](const auto& el) { return f(el.second.get()); });
+    auto i
+        = std::find_if(activeEditors.begin(), activeEditors.end(), [f](const auto& el) { return f(el.second.get()); });
     return i != activeEditors.end();
 }

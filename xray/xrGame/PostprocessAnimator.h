@@ -48,6 +48,9 @@ public:
     virtual float   get_length                      () = 0;
     virtual size_t  get_keys_count                  () = 0;
 	virtual ~CPostProcessParam() {}
+
+	virtual CEnvelope* envelope(int index) = 0;
+
 #ifdef _PP_EDITOR_
     virtual void    add_value                       (float time, float value,  int index = 0) = 0;
     virtual void    delete_value                    (float time) = 0;
@@ -73,6 +76,9 @@ public:
     virtual void    save                            (IWriter &pWriter);
     virtual float   get_length                      ()                    	{float mn, mx; return m_Value.GetLength (&mn, &mx);}
     virtual size_t  get_keys_count                  () 						{return m_Value.keys.size ();}
+
+    CEnvelope* envelope(int) override { return &m_Value; }
+
 #ifdef _PP_EDITOR_
     virtual void    add_value                       (float time, float value, int index = 0);
     virtual void    delete_value                    (float time);
@@ -115,6 +121,9 @@ public:
                     {
                     return m_Red.keys.size ();
                     }
+
+	CEnvelope* envelope(int index) override { return index == 0 ? &m_Red : index == 1 ? &m_Green : index == 2 ? &m_Blue : 0; }
+
 #ifdef _PP_EDITOR_
     virtual void    add_value                       (float time, float value, int index = 0);
     virtual void    delete_value                    (float time);
