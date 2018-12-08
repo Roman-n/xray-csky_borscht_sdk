@@ -135,45 +135,6 @@ void nextTexture(char* tex, int texSize, int offset)
     FS.file_list_close(files);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// from https://www.strchr.com/natural_sorting
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-int count_digits(const char* s)
-{
-    const char* p = s;
-    while (isdigit(*p))
-        p++;
-    return (int)(p - s);
-}
-
-int compare_naturally(const void* a_ptr, const void* b_ptr)
-{
-    const char* a = (const char*)a_ptr;
-    const char* b = (const char*)b_ptr;
-
-    for (;;) {
-        if (isdigit(*a) && isdigit(*b)) {
-            int a_count = count_digits(a);
-            int diff = a_count - count_digits(b);
-            if (diff)
-                return diff;
-            diff = memcmp(a, b, a_count);
-            if (diff)
-                return diff;
-            a += a_count;
-            b += a_count;
-        }
-        if (*a != *b)
-            return *a - *b;
-        if (*a == '\0')
-            return 0;
-        a++, b++;
-    }
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
 bool editTexture(const char* label, shared_str& texName)
 {
     char tex[100];
@@ -218,7 +179,8 @@ bool editTexture(const char* label, shared_str& texName)
                 cur = i;
                 break;
             }
-        if (ImGui_ListBox("", &cur,
+        if (ImGui_ListBox(
+                "", &cur,
                 [](void* data, int idx, const char** out_text) -> bool {
                     xr_vector<xr_string>* textures = (xr_vector<xr_string>*)data;
                     *out_text = (*textures)[idx].c_str();
@@ -358,7 +320,7 @@ void ShowWeatherEditor(bool& show)
         cur->tb_id = (sel == 0)
             ? env.eff_Thunderbolt->AppendDef(env, env.m_thunderbolt_collections_config, env.m_thunderbolts_config, "")
             : env.eff_Thunderbolt->AppendDef(env, env.m_thunderbolt_collections_config, env.m_thunderbolts_config,
-                  env.m_thunderbolt_collections_config->sections()[sel - 1]->Name.c_str());
+                env.m_thunderbolt_collections_config->sections()[sel - 1]->Name.c_str());
         changed = true;
     }
     if (ImGui::SliderFloat("thunderbolt_duration", &cur->bolt_duration, 0.0f, 2.0f))
