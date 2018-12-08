@@ -44,6 +44,8 @@ public:
 
 	void				load		(IReader* fs, u32 version);
 	float				sum			(CEnvModifier&	_another, Fvector3& view);
+
+	static CEnvModifier load(LPCSTR envSect);
 };
 
 class ENGINE_API	CEnvAmbient

@@ -64,6 +64,9 @@ float	CEnvModifier::sum	(CEnvModifier& M, Fvector3& view)
 				pl[i].project(p, p);
 		_dist_sq = view.distance_to_sqr(p);
 		break;
+	case CShapeData::cfNone:
+		_dist_sq = 0.0f;
+		break;
 	default:
 		NODEFAULT;
 	}
@@ -110,6 +113,46 @@ float	CEnvModifier::sum	(CEnvModifier& M, Fvector3& view)
 	}
 	
 	return				_power;
+}
+
+CEnvModifier CEnvModifier::load(LPCSTR envSect)
+{
+    CEnvModifier result;
+    result.radius = 1000.0f;
+    result.shape_type = CShapeData::cfNone;
+    result.power = 1.0f;
+    result.use_flags.zero();
+    result.far_plane = 300.0f;
+    result.fog_color.set(1.0f, 1.0f, 1.0f);
+    result.fog_density = 0.0f;
+    result.ambient.set(1.0f, 1.0f, 1.0f);
+    result.sky_color.set(1.0f, 1.0f, 1.0f);
+    result.hemi_color.set(1.0f, 1.0f, 1.0f);
+    if (pSettings->line_exist(envSect, "view_dist")) {
+        result.far_plane = pSettings->r_float(envSect, "view_dist");
+        result.use_flags.set(eViewDist, TRUE);
+    }
+    if (pSettings->line_exist(envSect, "fog_color")) {
+        result.fog_color = pSettings->r_fvector3(envSect, "fog_color");
+        result.use_flags.set(eFogColor, TRUE);
+    }
+    if (pSettings->line_exist(envSect, "fog_density")) {
+        result.fog_density = pSettings->r_float(envSect, "fog_density");
+        result.use_flags.set(eFogDensity, TRUE);
+    }
+    if (pSettings->line_exist(envSect, "ambient")) {
+        result.ambient = pSettings->r_fvector3(envSect, "ambient");
+        result.use_flags.set(eAmbientColor, TRUE);
+    }
+    if (pSettings->line_exist(envSect, "sky_color")) {
+        result.sky_color = pSettings->r_fvector3(envSect, "sky_color");
+        result.use_flags.set(eSkyColor, TRUE);
+    }
+    if (pSettings->line_exist(envSect, "hemi_color")) {
+        result.hemi_color = pSettings->r_fvector3(envSect, "hemi_color");
+        result.use_flags.set(eHemiColor, TRUE);
+    }
+    return result;
 }
 
 //-----------------------------------------------------------------------------

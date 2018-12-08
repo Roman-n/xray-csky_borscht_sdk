@@ -8,6 +8,8 @@ enum class Editors {
     Details, ///< Редактор маски травы
     PpList, ///< Список постпроцессов
     PpEdit, ///< Редактор постпроцесса
+    EnvModList, ///< Список Env Mod
+    EnvModEdit, ///< Редактор Env Mod
 };
 
 struct Editor {

@@ -11234,6 +11234,9 @@
     <ClCompile Include="embedded_editor\embedded_editor.cpp">
       <Filter>Embedded editor</Filter>
     </ClCompile>
+    <ClCompile Include="embedded_editor\embedded_editor_envmod.cpp">
+      <Filter>Embedded editor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="graph_abstract.h">

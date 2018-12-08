@@ -5,7 +5,8 @@ struct CShapeData
 {
 	enum{
     	cfSphere=0,
-        cfBox
+        cfBox,
+		cfNone,
     };
 	union shape_data
 	{

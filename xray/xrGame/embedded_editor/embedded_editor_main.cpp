@@ -88,6 +88,8 @@ void ShowMain()
         show_hud_editor = !show_hud_editor;
     if (ImGui::Button("Details"))
         switchEditor(Editors::Details);
+    if (ImGui::Button("Env Mods"))
+        switchEditor(Editors::EnvModList);
 
     bool full = stage == EditorStage::Full;
     if (ImGui::Checkbox("Active", &full))

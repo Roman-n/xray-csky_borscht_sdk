@@ -6,17 +6,18 @@
 #include "PhysicsShell.h"
 #include "xrserver_objects_alife_items.h"
 #include "ai_sounds.h"
-
 #include "HUDManager.h"
 #include "level.h"
 #include "../Include/xrRender/Kinematics.h"
 #include "../xrEngine/camerabase.h"
 #include "inventory.h"
 #include "game_base_space.h"
-
 #include "UIGameCustom.h"
 #include "actorEffector.h"
 #include "CustomOutfit.h"
+#include "GamePersistent.h"
+#include "../xrEngine/Environment.h"
+#include <algorithm>
 
 static const float		TIME_2_HIDE					= 5.f;
 static const float		TORCH_INERTION_CLAMP		= PI_DIV_6;
@@ -137,6 +138,10 @@ void CTorch::SwitchNightVision(bool vision_on)
 			if (pCO&&pCO->m_NightVisionSect.size())
 			{
 				AddEffector(pA,effNightvision, pCO->m_NightVisionSect);
+				if (pSettings->line_exist(pCO->m_NightVisionSect, "illuminator")) {
+					LPCSTR envSect = pSettings->r_string(pCO->m_NightVisionSect, "illuminator");
+					GamePersistent().Environment().Modifiers.push_back(CEnvModifier::load(envSect));
+				}
 				m_sounds.PlaySound("NightVisionOnSnd", pA->Position(), pA, bPlaySoundFirstPerson);
 				m_sounds.PlaySound("NightVisionIdleSnd", pA->Position(), pA, bPlaySoundFirstPerson, true);
 			}
@@ -144,6 +149,8 @@ void CTorch::SwitchNightVision(bool vision_on)
 	}else{
  		CEffectorPP* pp = pA->Cameras().GetPPEffector((EEffectorPPType)effNightvision);
 		if(pp){
+			auto& modifiers = GamePersistent().Environment().Modifiers;
+			modifiers.erase(std::remove_if(modifiers.begin(), modifiers.end(), [](const auto& el) -> bool { return el.shape_type == CShapeData::cfNone; }), modifiers.end());
 			pp->Stop			(1.0f);
 			m_sounds.PlaySound("NightVisionOffSnd", pA->Position(), pA, bPlaySoundFirstPerson);
 			m_sounds.StopSound("NightVisionIdleSnd");
