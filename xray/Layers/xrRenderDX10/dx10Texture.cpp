@@ -313,7 +313,7 @@ ID3DBaseTexture*	CRender::texture_load(LPCSTR fRName, u32& ret_msize, bool bStag
 	if (FS.exist(fn,"$level$",			fname,	".dds"))							goto _DDS;
 	if (FS.exist(fn,"$game_saves$",		fname,	".dds"))							goto _DDS;
 	if (FS.exist(fn,"$game_textures$",	fname,	".dds"))							goto _DDS;
-
+	if (FS.exist(fn,"$level$",			fname,	".png"))							goto _DDS;
 
 #ifdef _EDITOR
 	ELog.Msg(mtError,"Can't find texture '%s'",fname);
