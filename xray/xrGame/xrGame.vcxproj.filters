@@ -7485,9 +7485,6 @@
     <ClInclude Include="embedded_editor\embedded_editor_ae.h">
       <Filter>Embedded editor</Filter>
     </ClInclude>
-    <ClInclude Include="embedded_editor\embedded_editor_postprocess.h">
-      <Filter>Embedded editor</Filter>
-    </ClInclude>
     <ClInclude Include="embedded_editor\embedded_editor_stats.h">
       <Filter>Embedded editor</Filter>
     </ClInclude>
@@ -7517,6 +7514,9 @@
     </ClInclude>
     <ClInclude Include="embedded_editor\controls\imgui_ext.h">
       <Filter>Embedded editor\controls</Filter>
+    </ClInclude>
+    <ClInclude Include="embedded_editor\embedded_editor.h">
+      <Filter>Embedded editor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -11224,6 +11224,9 @@
     </ClCompile>
     <ClCompile Include="embedded_editor\controls\imgui_ext.cpp">
       <Filter>Embedded editor\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="embedded_editor\embedded_editor.cpp">
+      <Filter>Embedded editor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

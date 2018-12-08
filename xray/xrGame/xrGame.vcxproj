@@ -1270,6 +1270,7 @@
     <ClInclude Include="ElevatorState.h" />
     <ClInclude Include="EliteDetector.h" />
     <ClInclude Include="embedded_editor\controls\imgui_ext.h" />
+    <ClInclude Include="embedded_editor\embedded_editor.h" />
     <ClInclude Include="embedded_editor\embedded_editor_ae.h" />
     <ClInclude Include="embedded_editor\embedded_editor_helper.h" />
     <ClInclude Include="embedded_editor\embedded_editor_hud.h" />
@@ -1277,7 +1278,6 @@
     <ClInclude Include="embedded_editor\embedded_editor_logic.h" />
     <ClInclude Include="embedded_editor\embedded_editor_main.h" />
     <ClInclude Include="embedded_editor\embedded_editor_map.h" />
-    <ClInclude Include="embedded_editor\embedded_editor_postprocess.h" />
     <ClInclude Include="embedded_editor\embedded_editor_prop.h" />
     <ClInclude Include="embedded_editor\embedded_editor_se.h" />
     <ClInclude Include="embedded_editor\embedded_editor_stats.h" />
@@ -4534,6 +4534,7 @@
     <ClCompile Include="ElevatorState.cpp" />
     <ClCompile Include="EliteDetector.cpp" />
     <ClCompile Include="embedded_editor\controls\imgui_ext.cpp" />
+    <ClCompile Include="embedded_editor\embedded_editor.cpp" />
     <ClCompile Include="embedded_editor\embedded_editor_ae.cpp" />
     <ClCompile Include="embedded_editor\embedded_editor_helper.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch_script.h</PrecompiledHeaderFile>
