@@ -5,8 +5,9 @@
 
 ENGINE_API int	__cdecl	_REG_Compare(const void *e1, const void *e2)
 {
-	_REG_INFO *p1 = (_REG_INFO *)e1;
-	_REG_INFO *p2 = (_REG_INFO *)e2;
+	using REG_INFO = REG_INFO_T<void*>;
+	REG_INFO* p1 = (REG_INFO*)e1;
+	REG_INFO* p2 = (REG_INFO*)e2;
 	return (p2->Prio - p1->Prio);
 }
 

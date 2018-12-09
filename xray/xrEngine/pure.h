@@ -61,8 +61,9 @@ public:
 
 
 //-----------------------------------------------------------------------------
-struct _REG_INFO {
-	void*	Object;
+template<class T>
+struct REG_INFO_T {
+	T*	Object;
 	int		Prio;
 	u32		Flags;
 };
@@ -73,7 +74,8 @@ template <class T> class CRegistrator		// the registrator itself
 {
 	friend ENGINE_API int	__cdecl	_REG_Compare(const void *, const void *);
 public:
-	xr_vector<_REG_INFO>	R;
+	using REG_INFO = REG_INFO_T<T>;
+	xr_vector<REG_INFO>	R;
 	// constructor
 	struct {
 		u32		in_process	:1;
@@ -89,7 +91,7 @@ public:
 		VERIFY	(obj);
 		for		(u32 i=0; i<R.size(); i++) VERIFY( !((R[i].Prio!=REG_PRIORITY_INVALID)&&(R[i].Object==(void*)obj))   );
 #endif
-		_REG_INFO			I;
+		REG_INFO			I;
 		I.Object			=obj;
 		I.Prio				=priority;
 		I.Flags				=flags;
@@ -122,7 +124,7 @@ public:
 	};
 	void Resort	(void)
 	{
-		qsort	(&*R.begin(),R.size(),sizeof(_REG_INFO),_REG_Compare);
+		qsort	(&*R.begin(),R.size(),sizeof(REG_INFO),_REG_Compare);
 		while	((R.size()) && (R[R.size()-1].Prio==REG_PRIORITY_INVALID)) R.pop_back();
 		if (R.empty())		R.clear		();
 		changed				= false;
