@@ -15,17 +15,17 @@
 //---------------------------------------------------------------------------
 // add
 //------------------------------------------------------------------------------
-__fastcall TUI_ControlSectorAdd::TUI_ControlSectorAdd(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent){
+TUI_ControlSectorAdd::TUI_ControlSectorAdd(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent){
 }
 
-void __fastcall TUI_ControlSectorAdd::OnEnter()
+void TUI_ControlSectorAdd::OnEnter()
 {
     m_Action = saNone;
     TfraSector* fraSector = (TfraSector*)parent_tool->pFrame; VERIFY(fraSector);
     fraSector->paSectorActions->Show();
 }
 
-void __fastcall TUI_ControlSectorAdd::OnExit()
+void TUI_ControlSectorAdd::OnExit()
 {
     TfraSector* fraSector = (TfraSector*)parent_tool->pFrame; VERIFY(fraSector);
     fraSector->paSectorActions->Hide();
@@ -104,19 +104,19 @@ bool TUI_ControlSectorAdd::AddSectors()
             if (_O->AddMesh(S,*it)){
             	cnt++;
                 u32 clr	= 0;
-                do{}while(!valid_color(clr=color_rgba(Random.randI(0,3)*255/2,Random.randI(0,3)*255/2,Random.randI(0,3)*255/2,0)));
+				do{}while(!valid_color(clr=color_rgba(::Random.randI(0,3)*255/2,::Random.randI(0,3)*255/2,::Random.randI(0,3)*255/2,0)));
                 _O->SetColor		(clr);
                 Scene->SelectObjects(false,OBJCLASS_SECTOR);
                 Scene->AppendObject	(_O);
             }else{
             	xr_delete	(_O);
-            }
+			}
         }
     }
     return cnt!=0;
 }
 
-bool __fastcall TUI_ControlSectorAdd::Start(TShiftState Shift)
+bool TUI_ControlSectorAdd::Start(TShiftState Shift)
 {
     if (Shift==ssRBOnly){ ExecCommand(COMMAND_SHOWCONTEXTMENU,OBJCLASS_SECTOR); return false;}
     TfraSector* fraSector = (TfraSector*)parent_tool->pFrame; VERIFY(fraSector);
@@ -144,7 +144,7 @@ bool __fastcall TUI_ControlSectorAdd::Start(TShiftState Shift)
     return false;
 }
 
-void __fastcall TUI_ControlSectorAdd::Move(TShiftState _Shift)
+void TUI_ControlSectorAdd::Move(TShiftState _Shift)
 {
     switch (m_Action){
     case saAddMesh:	AddMesh();	break;
@@ -153,7 +153,7 @@ void __fastcall TUI_ControlSectorAdd::Move(TShiftState _Shift)
     }
 }
 
-bool __fastcall TUI_ControlSectorAdd::End(TShiftState _Shift)
+bool TUI_ControlSectorAdd::End(TShiftState _Shift)
 {
     TfraSector* fraSector = (TfraSector*)parent_tool->pFrame; VERIFY(fraSector);
     CSector* sector=PortalUtils.GetSelectedSector();
@@ -196,7 +196,7 @@ bool __fastcall TUI_ControlSectorAdd::End(TShiftState _Shift)
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-__fastcall TUI_ControlSectorSelect::TUI_ControlSectorSelect(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent){
+TUI_ControlSectorSelect::TUI_ControlSectorSelect(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent){
     pFrame 	= 0;
 }
 void TUI_ControlSectorSelect::OnEnter(){
@@ -205,16 +205,16 @@ void TUI_ControlSectorSelect::OnEnter(){
 void TUI_ControlSectorSelect::OnExit (){
 	pFrame = 0;
 }
-bool __fastcall TUI_ControlSectorSelect::Start(TShiftState Shift){
+bool  TUI_ControlSectorSelect::Start(TShiftState Shift){
 	bool bRes = SelectStart(Shift);
 //	if(!bBoxSelection) pFrame->OnChange();
     return bRes;
 }
-void __fastcall TUI_ControlSectorSelect::Move(TShiftState Shift){
+void TUI_ControlSectorSelect::Move(TShiftState Shift){
 	SelectProcess(Shift);
 }
 
-bool __fastcall TUI_ControlSectorSelect::End(TShiftState Shift){
+bool TUI_ControlSectorSelect::End(TShiftState Shift){
 	bool bRes = SelectEnd(Shift);
 //	if (bBoxSelection) pFrame->OnChange();
     return bRes;

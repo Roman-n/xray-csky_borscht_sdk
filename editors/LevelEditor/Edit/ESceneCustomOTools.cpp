@@ -167,6 +167,9 @@ void ESceneCustomOTool::RemoveSelection()
                 _F++;
             }
         }else{
+        	if((*_F)->Selected() && (*_F)->Locked() && !(*_F)->m_CO_Flags.test(CCustomObject::flObjectInGroup))
+            	ELog.Msg(mtError, "Cannot delete locked object '%s'", (*_F)->Name);
+                
             _F++;
         }
     }

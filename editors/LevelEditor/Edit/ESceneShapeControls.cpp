@@ -9,7 +9,7 @@
 #include "../ECore/Editor/ui_main.h"
 #include "IM_LeftBar.h"
 //---------------------------------------------------------------------------
-__fastcall TUI_ControlShapeAdd::TUI_ControlShapeAdd(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent)
+TUI_ControlShapeAdd::TUI_ControlShapeAdd(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent)
 {
 }
 
@@ -36,7 +36,7 @@ bool __fastcall TUI_ControlShapeAdd::AfterAppendCallback(TShiftState Shift, CCus
     return false;
 }
 
-bool __fastcall TUI_ControlShapeAdd::Start(TShiftState Shift)
+bool TUI_ControlShapeAdd::Start(TShiftState Shift)
 {
 //	TfraShape* F 		= (TfraShape*)parent_tool->pFrame;
     IM_FrameShape& F 	= imLeftBar.fraShape;

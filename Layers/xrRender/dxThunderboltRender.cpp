@@ -29,7 +29,7 @@ void dxThunderboltRender::Render(CEffect_Thunderbolt &owner)
 
 	// lightning model
 	float dv			= owner.lightning_phase*0.5f;
-	dv					= (owner.lightning_phase>0.5f)?Random.randI(2)*0.5f:dv;
+	dv					= (owner.lightning_phase>0.5f)?::Random.randI(2)*0.5f:dv;
 
 	RCache.set_CullMode	(CULL_NONE);
 	u32					v_offset,i_offset;

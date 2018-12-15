@@ -125,7 +125,7 @@ void CGameMtlLibrary::RemoveMaterial(LPCSTR name)
 //------------------------------------------------------------------------------
 // material pair routines
 //------------------------------------------------------------------------------
-void __fastcall SGameMtlPair::OnFlagChange(PropValue* sender)
+void __stdcall SGameMtlPair::OnFlagChange(PropValue* sender)
 {
 	bool bChecked = sender->Owner()->m_Flags.is(PropItem::flCBChecked);
     u32 mask=0;
@@ -186,7 +186,7 @@ BOOL SGameMtlPair::SetParent(int parent)
     return TRUE;
 }
 
-void __fastcall SGameMtlPair::FillChooseMtl(ChooseItemVec& items, void* param)
+void __stdcall SGameMtlPair::FillChooseMtl(ChooseItemVec& items, void* param)
 {
     for (GameMtlIt m0_it=m_Owner->FirstMaterial(); m0_it!=m_Owner->LastMaterial(); m0_it++){
         SGameMtl* M0 		= *m0_it;
@@ -199,7 +199,7 @@ void __fastcall SGameMtlPair::FillChooseMtl(ChooseItemVec& items, void* param)
     }
 }
 
-void __fastcall SGameMtlPair::OnParentClick(ButtonValue* V, bool& bModif, bool& bSafe)
+void __stdcall SGameMtlPair::OnParentClick(ButtonValue* V, bool& bModif, bool& bSafe)
 {
     bModif = false;
     switch (V->btn_num){
@@ -229,7 +229,7 @@ void __fastcall SGameMtlPair::OnParentClick(ButtonValue* V, bool& bModif, bool& 
 	}
 }
 
-void __fastcall SGameMtlPair::OnCommandClick(ButtonValue* V, bool& bModif, bool& bSafe)
+void __stdcall SGameMtlPair::OnCommandClick(ButtonValue* V, bool& bModif, bool& bSafe)
 {
     bModif = false;
     switch (V->btn_num){

@@ -1,8 +1,8 @@
 object fraLeftBar: TfraLeftBar
   Left = 0
   Top = 0
-  Width = 443
-  Height = 270
+  Width = 451
+  Height = 304
   HorzScrollBar.ButtonSize = 1
   HorzScrollBar.ParentColor = False
   HorzScrollBar.Visible = False
@@ -23,7 +23,7 @@ object fraLeftBar: TfraLeftBar
   object paLeftBar: TPanel
     Left = 0
     Top = 0
-    Width = 430
+    Width = 451
     Height = 553
     Align = alTop
     BevelInner = bvLowered
@@ -31,6 +31,7 @@ object fraLeftBar: TfraLeftBar
     Color = 10528425
     Constraints.MinWidth = 220
     TabOrder = 0
+    ExplicitWidth = 430
     object paScene: TPanel
       Left = 1
       Top = 1
@@ -44,12 +45,12 @@ object fraLeftBar: TfraLeftBar
       TabOrder = 0
       Visible = False
       DesignSize = (
-        428
+        449
         154)
       object APHeadLabel2: TLabel
         Left = 1
         Top = 1
-        Width = 426
+        Width = 447
         Height = 13
         Align = alTop
         Alignment = taCenter
@@ -57,9 +58,10 @@ object fraLeftBar: TfraLeftBar
         Color = clGray
         ParentColor = False
         OnClick = PanelMaximizeClick
+        ExplicitWidth = 31
       end
       object sbSceneMin: TExtBtn
-        Left = 415
+        Left = 436
         Top = 2
         Width = 11
         Height = 11
@@ -81,6 +83,7 @@ object fraLeftBar: TfraLeftBar
           0000}
         ParentFont = False
         OnClick = PanelMimimizeClickClick
+        ExplicitLeft = 415
       end
       object ebSceneFile: TExtBtn
         Left = 2
@@ -327,19 +330,20 @@ object fraLeftBar: TfraLeftBar
     object paEdit: TPanel
       Left = 1
       Top = 155
-      Width = 428
+      Width = 449
       Height = 65
       Align = alTop
       Color = 10528425
       TabOrder = 1
       Visible = False
+      ExplicitWidth = 428
       DesignSize = (
-        428
+        449
         65)
       object lbTools: TLabel
         Left = 1
         Top = 1
-        Width = 426
+        Width = 447
         Height = 13
         Align = alTop
         Alignment = taCenter
@@ -347,9 +351,10 @@ object fraLeftBar: TfraLeftBar
         Color = clGray
         ParentColor = False
         OnClick = PanelMaximizeClick
+        ExplicitWidth = 26
       end
       object sbEditMin: TExtBtn
-        Left = 415
+        Left = 436
         Top = 2
         Width = 11
         Height = 11
@@ -371,6 +376,7 @@ object fraLeftBar: TfraLeftBar
           0000}
         ParentFont = False
         OnClick = PanelMimimizeClickClick
+        ExplicitLeft = 415
       end
       object ExtBtn7: TExtBtn
         Left = 2
@@ -539,13 +545,14 @@ object fraLeftBar: TfraLeftBar
     object paTarget: TPanel
       Left = 1
       Top = 220
-      Width = 428
+      Width = 449
       Height = 139
       Align = alTop
       Color = 10528425
       TabOrder = 2
+      ExplicitWidth = 428
       DesignSize = (
-        428
+        449
         139)
       object ebTargetObject: TExtBtn
         Left = 17
@@ -1126,7 +1133,7 @@ object fraLeftBar: TfraLeftBar
       object lbEditMode: TLabel
         Left = 1
         Top = 1
-        Width = 426
+        Width = 447
         Height = 13
         Align = alTop
         Alignment = taCenter
@@ -1134,9 +1141,10 @@ object fraLeftBar: TfraLeftBar
         Color = clGray
         ParentColor = False
         OnClick = PanelMaximizeClick
+        ExplicitWidth = 48
       end
       object sbTargetMin: TExtBtn
-        Left = 415
+        Left = 436
         Top = 2
         Width = 11
         Height = 11
@@ -1158,6 +1166,7 @@ object fraLeftBar: TfraLeftBar
           0000}
         ParentFont = False
         OnClick = PanelMimimizeClickClick
+        ExplicitLeft = 415
       end
       object ebTargetGroup: TExtBtn
         Left = 127
@@ -3242,27 +3251,29 @@ object fraLeftBar: TfraLeftBar
     object paSnapList: TPanel
       Left = 1
       Top = 359
-      Width = 428
+      Width = 449
       Height = 115
       Align = alTop
       Color = 10528425
       TabOrder = 3
+      ExplicitWidth = 428
       DesignSize = (
-        428
+        449
         115)
       object Bevel2: TBevel
         Left = 2
         Top = 46
-        Width = 436
+        Width = 457
         Height = 18
         Anchors = [akLeft, akTop, akRight]
         Shape = bsTopLine
         Style = bsRaised
+        ExplicitWidth = 436
       end
       object Label1: TLabel
         Left = 1
         Top = 1
-        Width = 426
+        Width = 447
         Height = 13
         Align = alTop
         Alignment = taCenter
@@ -3270,9 +3281,10 @@ object fraLeftBar: TfraLeftBar
         Color = clGray
         ParentColor = False
         OnClick = PanelMaximizeClick
+        ExplicitWidth = 44
       end
       object ExtBtn16: TExtBtn
-        Left = 415
+        Left = 436
         Top = 2
         Width = 11
         Height = 11
@@ -3294,11 +3306,12 @@ object fraLeftBar: TfraLeftBar
           0000}
         ParentFont = False
         OnClick = PanelMimimizeClickClick
+        ExplicitLeft = 415
       end
       object ebUseSnapList: TExtBtn
         Left = 2
         Top = 31
-        Width = 436
+        Width = 457
         Height = 15
         Align = alNone
         AllowAllUp = True
@@ -3317,11 +3330,12 @@ object fraLeftBar: TfraLeftBar
         Margin = 13
         ParentFont = False
         OnClick = ebUseSnapListClick
+        ExplicitWidth = 436
       end
       object ExtBtn1: TExtBtn
         Left = 2
         Top = 16
-        Width = 436
+        Width = 457
         Height = 15
         Align = alNone
         Anchors = [akLeft, akTop, akRight]
@@ -3348,13 +3362,15 @@ object fraLeftBar: TfraLeftBar
         ParentFont = False
         Spacing = 3
         OnMouseDown = ExtBtn1MouseDown
+        ExplicitWidth = 436
       end
       object Bevel1: TBevel
         Left = 2
         Top = 64
-        Width = 436
+        Width = 457
         Height = 57
         Anchors = [akLeft, akTop, akRight]
+        ExplicitWidth = 436
       end
       object ebSnapListMode: TExtBtn
         Left = 15
@@ -3398,7 +3414,7 @@ object fraLeftBar: TfraLeftBar
       object ebModeInvert: TExtBtn
         Left = 152
         Top = 49
-        Width = 134
+        Width = 155
         Height = 14
         Hint = 'Clear snap list'
         Align = alNone
@@ -3427,9 +3443,10 @@ object fraLeftBar: TfraLeftBar
         ParentShowHint = False
         ShowHint = True
         OnClick = ebClearSnapClick
+        ExplicitWidth = 134
       end
       object ebSnapListEdit: TExtBtn
-        Left = 333
+        Left = 354
         Top = 49
         Width = 98
         Height = 14
@@ -3444,11 +3461,12 @@ object fraLeftBar: TfraLeftBar
         ParentShowHint = False
         ShowHint = True
         OnClick = ebSnapListEditClick
+        ExplicitLeft = 333
       end
       object lbSnapList: TListBox
         Left = 4
         Top = 66
-        Width = 433
+        Width = 454
         Height = 52
         Anchors = [akLeft, akTop, akRight]
         BorderStyle = bsNone
@@ -3469,14 +3487,16 @@ object fraLeftBar: TfraLeftBar
   end
   object paFrames: TPanel
     Left = 0
-    Top = 553
-    Width = 430
+    Top = 263
+    Width = 451
     Height = 41
     Align = alBottom
     BevelOuter = bvLowered
     Color = 10528425
     Constraints.MinWidth = 220
     TabOrder = 1
+    ExplicitTop = 553
+    ExplicitWidth = 430
   end
   object fsStorage: TFormStorage
     IniSection = 'LeftBar'

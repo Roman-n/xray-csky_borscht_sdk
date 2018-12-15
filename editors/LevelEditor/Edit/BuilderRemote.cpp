@@ -93,12 +93,12 @@ public:
         
         AnsiString image_name = AnsiString(fn)+".tga";
         CImage* I 	= xr_new<CImage>();
-        I->Create	(sx,sz,data.begin());
+		I->Create	(sx,sz,&data.front());
         I->Vflip	();
         I->SaveTGA	(image_name.c_str());
         xr_delete	(I);
 
-        // flush text
+		// flush text
         AnsiString txt_name = AnsiString(fn)+".txt";
         IWriter* F	= FS.w_open(txt_name.c_str());
         if (F){
@@ -365,49 +365,49 @@ void SceneBuilder::SaveBuild()
         F->close_chunk	();
 
         F->open_chunk	(EB_Materials);
-        F->w	   		(l_materials.begin(),sizeof(b_material)*l_materials.size());
-        F->close_chunk	();
+		F->w	   		(&l_materials.front(),sizeof(b_material)*l_materials.size());
+		F->close_chunk	();
 
-        F->open_chunk	(EB_Shaders_Render);
-        F->w			(l_shaders.begin(),sizeof(b_shader)*l_shaders.size());
-        F->close_chunk	();
+		F->open_chunk	(EB_Shaders_Render);
+		F->w			(&l_shaders.front(),sizeof(b_shader)*l_shaders.size());
+		F->close_chunk	();
 
         F->open_chunk	(EB_Shaders_Compile);
-        F->w			(l_shaders_xrlc.begin(),sizeof(b_shader)*l_shaders_xrlc.size());
+		F->w			(&l_shaders_xrlc.front(),sizeof(b_shader)*l_shaders_xrlc.size());
         F->close_chunk	();
 
         F->open_chunk	(EB_Textures);
-        F->w			(l_textures.begin(),sizeof(b_texture)*l_textures.size());
+		F->w			(&l_textures.front(),sizeof(b_texture)*l_textures.size());
         F->close_chunk	();
 
         F->open_chunk 	(EB_Glows);
-        F->w			(l_glows.begin(),sizeof(b_glow)*l_glows.size());
-        F->close_chunk	();
+		F->w			(&l_glows.front(),sizeof(b_glow)*l_glows.size());
+		F->close_chunk	();
 
-        F->open_chunk	(EB_Portals);
-        F->w			(l_portals.begin(),sizeof(b_portal)*l_portals.size());
-        F->close_chunk	();
+		F->open_chunk	(EB_Portals);
+		F->w			(&l_portals.front(),sizeof(b_portal)*l_portals.size());
+		F->close_chunk	();
 
         F->open_chunk	(EB_Light_control);
         for (xr_vector<sb_light_control>::iterator lc_it=l_light_control.begin(); lc_it!=l_light_control.end(); lc_it++){
             F->w		(lc_it->name,sizeof(lc_it->name));
             F->w_u32 	(lc_it->data.size());
-            F->w	 	(lc_it->data.begin(),sizeof(u32)*lc_it->data.size());
+			F->w	 	(&lc_it->data.front(),sizeof(u32)*lc_it->data.size());
         }
         F->close_chunk	();
 
         F->open_chunk	(EB_Light_static);
-        F->w		 	(l_light_static.begin(),sizeof(b_light_static)*l_light_static.size());
-        F->close_chunk	();
+		F->w		 	(&l_light_static.front(),sizeof(b_light_static)*l_light_static.size());
+		F->close_chunk	();
 
-        F->open_chunk	(EB_Light_dynamic);
-        F->w		  	(l_light_dynamic.begin(),sizeof(b_light_dynamic)*l_light_dynamic.size());
+		F->open_chunk	(EB_Light_dynamic);
+		F->w		  	(&l_light_dynamic.front(),sizeof(b_light_dynamic)*l_light_dynamic.size());
         F->close_chunk	();
 
         F->open_chunk	(EB_LOD_models);
         for (int k=0; k<(int)l_lods.size(); ++k)
             F->w	  	(&l_lods[k].lod,sizeof(b_lod));
-        F->close_chunk	();
+		F->close_chunk	();
 
         F->open_chunk	(EB_MU_models);
         for (k=0; k<(int)l_mu_models.size(); ++k)
@@ -428,7 +428,7 @@ void SceneBuilder::SaveBuild()
         F->close_chunk	();
 
         F->open_chunk	(EB_MU_refs);
-        F->w			(l_mu_refs.begin(),sizeof(b_mu_reference)*l_mu_refs.size());
+        F->w			(&l_mu_refs.front(),sizeof(b_mu_reference)*l_mu_refs.size());
         F->close_chunk	();
 
         FS.w_close		(F);
@@ -1053,7 +1053,7 @@ void SceneBuilder::BuildPortal(b_portal* b, CPortal* e){
 	b->sector_front	= (u16)e->m_SectorFront->m_sector_num;
 	b->sector_back	= (u16)e->m_SectorBack->m_sector_num;
     b->vertices.resize(e->m_SimplifyVertices.size());
-    CopyMemory(b->vertices.begin(),e->m_SimplifyVertices.begin(),e->m_SimplifyVertices.size()*sizeof(Fvector));
+    CopyMemory(&b->vertices.front(),&e->m_SimplifyVertices.front(),e->m_SimplifyVertices.size()*sizeof(Fvector));
 }
 
 //------------------------------------------------------------------------------
@@ -1357,8 +1357,8 @@ BOOL SceneBuilder::CompileStatic(bool b_selected_only)
             tp.type				= STextureParams::ttImage;
             tp.mip_filter		= STextureParams::kMIPFilterAdvanced;
             tp.flags.assign		(STextureParams::flDitherColor|STextureParams::flGenerateMipMaps);
-            ImageLib.MakeGameTexture		(fn_color.c_str(),merged_image.layers[0].begin(), tp);
-            ImageLib.MakeGameTexture		(fn_normal.c_str(),merged_image.layers[1].begin(),tp);
+			ImageLib.MakeGameTexture		(fn_color.c_str(),&merged_image.layers[0].front(), tp);
+			ImageLib.MakeGameTexture		(fn_normal.c_str(),&merged_image.layers[1].front(),tp);
 	        for (k=0; k<(int)l_lods.size(); k++){        
 	            e_b_lod& l	= l_lods[k];         
                 for (u32 f=0; f<8; f++){

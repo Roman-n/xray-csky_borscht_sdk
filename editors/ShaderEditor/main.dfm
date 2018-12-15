@@ -1,8 +1,8 @@
 object frmMain: TfrmMain
   Left = 405
   Top = 348
-  Width = 770
-  Height = 452
+  ClientHeight = 417
+  ClientWidth = 754
   Color = clBtnFace
   Constraints.MinHeight = 446
   Constraints.MinWidth = 660
@@ -24,24 +24,27 @@ object frmMain: TfrmMain
   PixelsPerInch = 96
   TextHeight = 13
   object spLeftBar: TSplitter
-    Left = 520
+    Left = 512
     Top = 0
     Width = 4
-    Height = 406
-    Cursor = crHSplit
+    Height = 400
     Align = alRight
     Color = 10528425
     ParentColor = False
+    ExplicitLeft = 520
+    ExplicitHeight = 406
   end
   object paLeftBar: TPanel
-    Left = 524
+    Left = 516
     Top = 0
     Width = 238
-    Height = 406
+    Height = 400
     Align = alRight
     BevelInner = bvLowered
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitLeft = 524
+    ExplicitHeight = 406
     object paTools: TPanel
       Left = 1
       Top = 1
@@ -137,22 +140,26 @@ object frmMain: TfrmMain
   end
   object paBottomBar: TPanel
     Left = 0
-    Top = 406
-    Width = 762
+    Top = 400
+    Width = 754
     Height = 17
     Align = alBottom
     BevelInner = bvLowered
     BevelOuter = bvNone
     TabOrder = 1
+    ExplicitTop = 406
+    ExplicitWidth = 762
   end
   object paMain: TPanel
     Left = 0
     Top = 0
-    Width = 520
-    Height = 406
+    Width = 512
+    Height = 400
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
+    ExplicitWidth = 520
+    ExplicitHeight = 406
     object paTopBar: TPanel
       Left = 0
       Top = 0

@@ -7,8 +7,6 @@
 
 #pragma warn -pck
 
-#define sqrtf(a) sqrt(a)
-
 #define smart_cast dynamic_cast
 
 #ifndef O_SEQUENTIAL
@@ -46,7 +44,7 @@ __inline long _lseek(int handle, long offset, int fromwhere){ return ::lseek(han
 #ifdef _dup
 #undef _dup
 #endif
-#define fmodf fmod
+
 __inline int _dup    (int handle)                           { return ::dup(handle);}
 __inline float modff(float a, float *b){
 	double x,y;
@@ -102,8 +100,6 @@ __inline float expf	(float val)                           	{ return ::exp(val);}
 // some user components
 #include "..\..\xrEngine\fmesh.h"
 #include "..\..\xrEngine\_d3d_extensions.h"
-
-//#include "D3DX_Wrapper.h"
 
 DEFINE_VECTOR		(AnsiString,AStringVec,AStringIt);
 DEFINE_VECTOR		(AnsiString*,LPAStringVec,LPAStringIt);

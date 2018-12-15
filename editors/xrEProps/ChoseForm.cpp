@@ -13,6 +13,7 @@
 #pragma link "mxPlacemnt"
 #pragma link "ElXPThemedControl"
 #pragma link "Gradient"
+#pragma link "ElTreeInplaceEditors"
 #pragma resource "*.dfm"
 TfrmChoseItem*				TfrmChoseItem::form			= 0;
 AnsiString 					TfrmChoseItem::select_item	= "";
@@ -138,7 +139,7 @@ __fastcall TfrmChoseItem::TfrmChoseItem(TComponent* Owner)
 	DEFINE_INI				(fsStorage);
 	tvItems->MultiSelect 	= false;
     m_Flags.assign			(cfAllowNone);
-    tvItems->ShowCheckboxes = false;
+    tvItems->ShowCheckBoxes = false;
     grdFon->Caption 		= "";
 }
 //---------------------------------------------------------------------------
@@ -182,7 +183,7 @@ void __fastcall TfrmChoseItem::FormKeyDown(TObject *Sender, WORD &Key,
 
 void __fastcall TfrmChoseItem::FormShow(TObject *Sender)
 {
-    tvItems->ShowCheckboxes 	= m_Flags.is(cfMultiSelect);
+    tvItems->ShowCheckBoxes 	= m_Flags.is(cfMultiSelect);
 	int itm_cnt = _GetItemCount(m_LastSelection.c_str());
 	if (m_Flags.is(cfMultiSelect)){
 	    string256 T;

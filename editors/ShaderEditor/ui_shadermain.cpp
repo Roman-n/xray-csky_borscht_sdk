@@ -104,18 +104,18 @@ void CShaderMain::RegisterCommands()
     REGISTER_CMD_S	(COMMAND_UPDATE_CAPTION,	CommandUpdateCaption);
 }
 
-char* CShaderMain::GetCaption()
+LPCSTR CShaderMain::GetCaption()
 {
-	return (LPSTR)STools->CurrentToolsName();// "shaders&materials";
+	return STools->CurrentToolsName();// "shaders&materials";
 }           
 
-bool __fastcall CShaderMain::ApplyShortCut(WORD Key, TShiftState Shift)
+bool CShaderMain::ApplyShortCut(WORD Key, TShiftState Shift)
 {
     return inherited::ApplyShortCut(Key,Shift);
 }
 //---------------------------------------------------------------------------
 
-bool __fastcall CShaderMain::ApplyGlobalShortCut(WORD Key, TShiftState Shift)
+bool CShaderMain::ApplyGlobalShortCut(WORD Key, TShiftState Shift)
 {
     return inherited::ApplyGlobalShortCut(Key,Shift);
 }

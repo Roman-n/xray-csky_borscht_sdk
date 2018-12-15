@@ -243,7 +243,7 @@ void CSE_ALifeTraderAbstract::FillProps	(LPCSTR pref, PropItemVec& items)
 		&m_sCharacterProfile, 
 		&*fp_data.character_profiles.begin(), fp_data.character_profiles.size());
 	
-	value->OnChangeEvent.bind	(this,&CSE_ALifeTraderAbstract::OnChangeProfile);
+	PHelper().SetChangeEvent(value, fastdelegate::MakeDelegate(this,&CSE_ALifeTraderAbstract::OnChangeProfile));
 #	endif // #ifdef XRSE_FACTORY_EXPORTS
 }
 #endif // #ifndef XRGAME_EXPORTS
@@ -449,7 +449,7 @@ void CSE_SmartCover::FillProps	(LPCSTR pref, PropItemVec& items)
 #	ifdef XRSE_FACTORY_EXPORTS
 	PHelper().CreateFloat		(items, PrepareKey(pref,*s_name,"hold position time"), 	&m_hold_position_time,	0.f, 60.f);
 	RListValue *value			= PHelper().CreateRList	 	(items,	PrepareKey(pref,*s_name,"description"),			&m_description,			&*fp_data.smart_covers.begin(),	fp_data.smart_covers.size());
-	value->OnChangeEvent.bind	(this,&CSE_SmartCover::OnChangeDescription);
+	PHelper().SetChangeEvent	(value, fastdelegate::MakeDelegate(this,&CSE_SmartCover::OnChangeDescription));
  
 	PHelper().CreateFloat		(items, PrepareKey(pref,*s_name,"enter min enemy distance"),&m_enter_min_enemy_distance,	0.f, 100.f);
 	PHelper().CreateFloat		(items, PrepareKey(pref,*s_name,"exit min enemy distance"),	&m_exit_min_enemy_distance,		0.f, 100.f);
@@ -1928,7 +1928,7 @@ void CSE_ALifeObjectHangingLamp::load(NET_Packet &tNetPacket)
 
 void CSE_ALifeObjectHangingLamp::OnChangeFlag(PropValue* sender)
 {
-	set_editor_flag				(flUpdateProperties);
+	set_editor_flag					(flUpdateProperties);
 }
 
 #ifndef XRGAME_EXPORTS
@@ -1937,16 +1937,18 @@ void CSE_ALifeObjectHangingLamp::FillProps	(LPCSTR pref, PropItemVec& values)
 	inherited1::FillProps		(pref,values);
 	inherited2::FillProps		(pref,values);
 
-    PropValue* P				= 0;
+    Flag16Value* P				= 0;
+    PropValue::TOnChange E		= fastdelegate::MakeDelegate(this,&CSE_ALifeObjectHangingLamp::OnChangeFlag);
+    
 	PHelper().CreateFlag16		(values, PrepareKey(pref,*s_name,"Flags\\Physic"),		&flags,			flPhysic);
 	PHelper().CreateFlag16		(values, PrepareKey(pref,*s_name,"Flags\\Cast Shadow"),	&flags,			flCastShadow);
 	PHelper().CreateFlag16		(values, PrepareKey(pref,*s_name,"Flags\\Allow R1"),	&flags,			flR1);
 	PHelper().CreateFlag16		(values, PrepareKey(pref,*s_name,"Flags\\Allow R2"),	&flags,			flR2);
 	P=PHelper().CreateFlag16	(values, PrepareKey(pref,*s_name,"Flags\\Allow Ambient"),&flags,			flPointAmbient);
-    P->OnChangeEvent.bind		(this,&CSE_ALifeObjectHangingLamp::OnChangeFlag);
+    PHelper().SetChangeEvent	(P,E);
 	// 
 	P=PHelper().CreateFlag16	(values, PrepareKey(pref,*s_name,"Light\\Type"), 		&flags,				flTypeSpot, "Point", "Spot");
-    P->OnChangeEvent.bind		(this,&CSE_ALifeObjectHangingLamp::OnChangeFlag);
+    PHelper().SetChangeEvent	(P,E);
 	PHelper().CreateColor		(values, PrepareKey(pref,*s_name,"Light\\Main\\Color"),			&color);
     PHelper().CreateFloat		(values, PrepareKey(pref,*s_name,"Light\\Main\\Brightness"),	&brightness,		0.1f, 5.f);
 	PHelper().CreateChoose		(values, PrepareKey(pref,*s_name,"Light\\Main\\Color Animator"),&color_animator, 	smLAnim);

@@ -396,18 +396,18 @@ void CActorMain::RegisterCommands()
     REGISTER_SUB_CMD_END;
 }                                                                    
 
-char* CActorMain::GetCaption()
+LPCSTR CActorMain::GetCaption()
 {
 	return ATools->GetEditFileName().IsEmpty()?"noname":ATools->GetEditFileName().c_str();
 }
 
-bool __fastcall CActorMain::ApplyShortCut(WORD Key, TShiftState Shift)
+bool CActorMain::ApplyShortCut(WORD Key, TShiftState Shift)
 {
     return inherited::ApplyShortCut(Key,Shift);
 }
 //---------------------------------------------------------------------------
 
-bool __fastcall CActorMain::ApplyGlobalShortCut(WORD Key, TShiftState Shift)
+bool CActorMain::ApplyGlobalShortCut(WORD Key, TShiftState Shift)
 {
     return inherited::ApplyGlobalShortCut(Key,Shift);
 }

@@ -244,7 +244,17 @@ void CEditableObject::RenderLOD(const Fmatrix& parent)
 
 xr_string CEditableObject::GetLODTextureName()
 {
-    string512 nm; 	strcpy	(nm,m_LibName.c_str()); _ChangeSymbol(nm,'\\','_');
+	string_path base;
+    FS.update_path(base, _objects_, "");
+
+    string512 nm;
+    strcpy(nm,EFS.ExcludeBasePath(m_LibName.c_str(), base).c_str());
+
+    if(char* ext = strext(nm))
+    	*ext = '\0';
+
+    _ChangeSymbol(nm,'\\','_');
+
 	xr_string 	l_name;
     l_name 			= xr_string("lod_")+nm;
     return ImageLib.UpdateFileName(l_name);
@@ -353,7 +363,7 @@ bool CEditableObject::PrepareOMF(IWriter& F)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall CEditableObject::OnChangeTransform(PropValue*)
+void __stdcall CEditableObject::OnChangeTransform(PropValue*)
 {
 	UI->RedrawScene();
 }
@@ -375,18 +385,22 @@ bool CEditableObject::CheckShaderCompatible()
         Shader_xrLC* 	C = Device.ShaderXRLC.Get(*(*s_it)->m_ShaderXRLCName);
         if (!B||!C){
         	ELog.Msg	(mtError,"Object '%s': invalid or missing shader [E:'%s', C:'%s']",GetName(),(*s_it)->_ShaderName(),(*s_it)->_ShaderXRLCName());
+            ELog.Msg	(mtError,"        surface: '%s'",(*s_it)->_Name());
             bRes 		= false;
         }else{
             if (!BE(B->canBeLMAPped(),!C->flags.bLIGHT_Vertex)){
                 ELog.Msg	(mtError,"Object '%s': engine shader '%s' non compatible with compiler shader '%s'",GetName(),(*s_it)->_ShaderName(),(*s_it)->_ShaderXRLCName());
+                ELog.Msg	(mtError,"        surface: '%s'",(*s_it)->_Name());
                 bRes 		= false;
             }
             if (IsStatic() && B->getDescription().CLS == B_TREE){
             	ELog.Msg	(mtError,"Object '%s': engine shader '%s' not compatible with static objects",GetName(),(*s_it)->_ShaderName());
+                ELog.Msg	(mtError,"        surface: '%s'",(*s_it)->_Name());
                 bRes		= false;
             }
             if (IsMUStatic() && B->getDescription().CLS != B_TREE && C->flags.bRendering){
             	ELog.Msg	(mtError,"Object '%s': engine shader '%s' non compatible with compiler shader '%s' on MU-objects",GetName(),(*s_it)->_ShaderName(),(*s_it)->_ShaderXRLCName());
+                ELog.Msg	(mtError,"        surface: '%s'",(*s_it)->_Name());
                 bRes		= false;
             }
         }

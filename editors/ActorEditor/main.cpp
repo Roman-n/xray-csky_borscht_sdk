@@ -31,7 +31,6 @@ TfrmMain *frmMain;
 #include "..\..\Layers\xrRender\PSLibrary.h"
 #include "GameMtlLib.h"
 #include "../../xrSound/soundrender_source.h"
-#include "ResourceManager.h"
 #include "../xrEProps/EditorChooseEvents.h"
 
 

@@ -19,7 +19,8 @@
 #include "mxPlacemnt.hpp"
 #include "ElXPThemedControl.hpp"
 #include "Gradient.hpp"
-#include "ChooseTypes.H"     
+#include "ChooseTypes.H"
+#include "ElTreeInplaceEditors.hpp"     
 
 //---------------------------------------------------------------------------
 // refs
@@ -62,7 +63,7 @@ __published:	// IDE-managed Components
 	void __fastcall tvItemsDblClick(TObject *Sender);
 	void __fastcall tvItemsKeyPress(TObject *Sender, char &Key);
 	void __fastcall tvItemsItemChange(TObject *Sender, TElTreeItem *Item,
-          TItemChangeMode ItemChangeMode);
+		  TItemChangeMode ItemChangeMode);
 	void __fastcall ebMultiUpClick(TObject *Sender);
 	void __fastcall ebMultiDownClick(TObject *Sender);
 	void __fastcall tvMultiDragDrop(TObject *Sender, TObject *Source, int X,

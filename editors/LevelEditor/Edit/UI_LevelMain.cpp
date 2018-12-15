@@ -1105,18 +1105,18 @@ void CLevelMain::RegisterCommands()
 
 }
 
-char* CLevelMain::GetCaption()
+LPCSTR CLevelMain::GetCaption()
 {
 	return Tools->m_LastFileName.IsEmpty()?"noname":Tools->m_LastFileName.c_str();
 }
 
-bool __fastcall CLevelMain::ApplyShortCut(WORD Key, TShiftState Shift)
+bool CLevelMain::ApplyShortCut(WORD Key, TShiftState Shift)
 {
     return inherited::ApplyShortCut(Key,Shift);
 }
 //---------------------------------------------------------------------------
 
-bool __fastcall CLevelMain::ApplyGlobalShortCut(WORD Key, TShiftState Shift)
+bool CLevelMain::ApplyGlobalShortCut(WORD Key, TShiftState Shift)
 {
     return inherited::ApplyGlobalShortCut(Key,Shift);
 }

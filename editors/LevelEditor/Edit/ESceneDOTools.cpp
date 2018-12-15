@@ -489,7 +489,7 @@ bool EDetailManager::Export(LPCSTR path)
 	    	*remap_object_it	= (u8)new_idx++;
 
     AnsiString 			do_tex_name = ChangeFileExt(fn,"_details");
-    int res				= ImageLib.CreateMergedTexture(textures,do_tex_name.c_str(),STextureParams::tfDXT3,256,1024,256,1024,offsets,scales,rotated,remap);
+    int res				= ImageLib.CreateMergedTexture(textures,do_tex_name.c_str(),STextureParams::tfDXT3,256,4096,256,4096,offsets,scales,rotated,remap);
     if (1!=res)			bRes=FALSE;
 
     pb->Inc				("export geometry");
@@ -537,7 +537,7 @@ bool EDetailManager::Export(LPCSTR path)
             }
         }
 		F.open_chunk	(DETMGR_CHUNK_SLOTS);
-		F.w				(dt_slots.begin(),dtH.size_x*dtH.size_z*sizeof(DetailSlot));
+		F.w				(&dt_slots.front(),dtH.size_x*dtH.size_z*sizeof(DetailSlot));
 	    F.close_chunk	();
         pb->Inc();
 

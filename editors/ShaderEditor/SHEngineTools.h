@@ -102,10 +102,6 @@ friend class TfrmShaderProperties;
 
     void					RealResetShaders	();
 
-	void __stdcall  		FillMatrix			(PropItemVec& values, LPCSTR pref, CMatrix* m);
-	void __stdcall  		FillConst			(PropItemVec& values, LPCSTR pref, CConstant* c);
-    void __stdcall 			RefreshProperties	();
-
     void					ResetShaders		(bool bForced=false){m_bNeedResetShaders=true; if (bForced) RealResetShaders(); }
     void					UpdateObjectShader	();
 

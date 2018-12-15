@@ -37,6 +37,8 @@
 #pragma link "RenderWindow"
 #pragma link "MxShortcut"
 #pragma link "ExtBtn"
+#pragma link "ElComponent"
+#pragma link "ElTreeInplaceEditors"
 #pragma resource "*.dfm"
 
 #define TSTRING_COUNT 	4
@@ -220,7 +222,7 @@ void __fastcall TProperties::HideProperties()
 	Hide();
 }
 
-int __fastcall TProperties::EditPropertiesModal(PropItemVec& values, LPCSTR title, bool bShowButtonsBar, TOnModifiedEvent modif, TOnItemFocused focused, TOnCloseEvent close, u32 flags)
+int TProperties::EditPropertiesModal(PropItemVec& values, LPCSTR title, bool bShowButtonsBar, TOnModifiedEvent modif, TOnItemFocused focused, TOnCloseEvent close, u32 flags)
 {
 	TProperties* P 	= CreateModalForm(title,bShowButtonsBar,modif,focused,close,flags);
     P->AssignItems	(values);
@@ -285,20 +287,20 @@ void TProperties::FillElItems(PropItemVec& items, LPCSTR startup_pref)
         	prop->Item()->OwnerHeight = false;
         }
         // main text set style
-        prop->Item()->MainStyle->Style= ElhsOwnerDraw;
+		prop->Item()->MainStyle->Style= elhsOwnerDraw;
         
         // set style
         TElCellStyle* CS    = prop->Item()->AddStyle();
         CS->OwnerProps 		= true;
         CS->CellType 		= sftUndef;
-        CS->Style 			= ElhsOwnerDraw;
+        CS->Style 			= elhsOwnerDraw;
         prop->Item()->ColumnText->Add(prop->GetDrawText().c_str());
     }
     if (m_Flags.is(plFullExpand)||miAutoExpand->Checked) tvProperties->FullExpand();
     if (m_Flags.is(plFullSort)){
         tvProperties->ShowColumns	= false;
     	tvProperties->Sort			(true);
-        tvProperties->SortMode 		= smAdd;
+		tvProperties->SortMode 		= smAdd;
         tvProperties->ShowColumns	= true;
     }else{
         for (PropItemIt it=m_ViewItems.begin(); it!=m_ViewItems.end(); it++){
@@ -394,7 +396,7 @@ void TProperties::FolderRestore()
         }
     }
 }
-void __fastcall TProperties::OnFolderFocused(TElTreeItem* item)
+void __stdcall TProperties::OnFolderFocused(TElTreeItem* item)
 {
 	AnsiString s, lfsi;
     if (tvProperties->Selected) FHelper.MakeFullName(tvProperties->Selected,0,lfsi);
@@ -424,7 +426,7 @@ void __fastcall TProperties::tvPropertiesClick(TObject *Sender)
 
   	GetCursorPos(&P);
   	P = tvProperties->ScreenToClient(P);
-  	Item = tvProperties->GetItemAt(P.x, P.y, IP, HC);
+	Item = tvProperties->GetItemAt(P.x, P.y, IP, HC);
 	if (HC==1)
     	tvProperties->EditItem(Item, HC);
 }
@@ -459,8 +461,9 @@ void TProperties::OutText(LPCSTR text, TCanvas* Surface, TRect& R, bool bEnable,
         }else if (bArrow){
             R.Left 	= 	R.Right;
             R.Right += 	10;
-            DrawArrow	(Surface, eadDown, R, clWindowText, true);
-        }
+			//DrawArrow	(Surface, eadDown, R, clWindowText, true);
+			LMDDrawArrow	(Surface, eadDown, R, clWindowText, true);
+		}
     }
 }
 
@@ -517,7 +520,7 @@ void __fastcall TProperties::tvPropertiesItemDraw(TObject *Sender,
 	if (SectionIndex == 0){
         Surface->Font->Style 		= TFontStyles();           
         Surface->Font->Color 		= (TColor)prop->prop_color;
-        DrawText					(Surface->Handle, AnsiString(Item->Text).c_str(), -1, &R, DT_LEFT | DT_SINGLELINE | DT_VCENTER);
+		DrawText					(Surface->Handle, AnsiString(Item->Text).c_str(), -1, &R, DT_LEFT | DT_SINGLELINE | DT_VCENTER);
 	}else if (SectionIndex == 1){
         u32 type 					= prop->type;
         if (prop->Enabled()){
@@ -1737,7 +1740,7 @@ void __fastcall TProperties::ebCancelClick(TObject *Sender)
 //---------------------------------------------------------------------------
 
 void __fastcall TProperties::tvPropertiesShowLineHint(TObject *Sender,
-      TElTreeItem *Item, TElHeaderSection *Section, TElFString &Text,
+      TElTreeItem *Item, TElHeaderSection *Section, TLMDString &Text,
       THintWindow *HintWindow, TPoint &MousePos, bool &DoShowHint)
 {
     PropItem* prop 				= (PropItem*)Item->Tag;

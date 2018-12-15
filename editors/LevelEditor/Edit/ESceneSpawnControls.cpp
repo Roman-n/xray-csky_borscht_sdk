@@ -10,7 +10,7 @@
 
 #include "IM_LeftBar.h"
 //---------------------------------------------------------------------------
-__fastcall TUI_ControlSpawnAdd::TUI_ControlSpawnAdd(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent){
+TUI_ControlSpawnAdd::TUI_ControlSpawnAdd(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent){
 }
 
 bool __fastcall TUI_ControlSpawnAdd::AppendCallback(SBeforeAppendCallbackParams* p)
@@ -31,7 +31,7 @@ bool __fastcall TUI_ControlSpawnAdd::AppendCallback(SBeforeAppendCallbackParams*
     return (0!=p->name_prefix.length());
 }
 
-bool __fastcall TUI_ControlSpawnAdd::Start(TShiftState Shift)
+bool TUI_ControlSpawnAdd::Start(TShiftState Shift)
 {
 //    TfraSpawn* F = (TfraSpawn*)parent_tool->pFrame;
 	IM_FrameSpawn &F = imLeftBar.fraSpawn;

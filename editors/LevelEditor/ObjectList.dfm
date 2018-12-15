@@ -1,9 +1,9 @@
 object frmObjectList: TfrmObjectList
   Left = 348
   Top = 415
-  Width = 411
-  Height = 504
   Caption = 'Object List'
+  ClientHeight = 469
+  ClientWidth = 395
   Color = clGray
   Constraints.MinHeight = 360
   Constraints.MinWidth = 297
@@ -22,10 +22,10 @@ object frmObjectList: TfrmObjectList
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
-    Left = 306
+    Left = 298
     Top = 0
     Width = 97
-    Height = 475
+    Height = 469
     Align = alRight
     BevelInner = bvRaised
     BevelOuter = bvNone
@@ -102,7 +102,7 @@ object frmObjectList: TfrmObjectList
     end
     object Panel2: TPanel
       Left = 1
-      Top = 434
+      Top = 428
       Width = 95
       Height = 40
       Align = alBottom
@@ -150,24 +150,18 @@ object frmObjectList: TfrmObjectList
   object Panel3: TPanel
     Left = 0
     Top = 0
-    Width = 306
-    Height = 475
+    Width = 298
+    Height = 469
     Align = alClient
     Color = clGray
     TabOrder = 1
     object tvItems: TElTree
       Left = 1
       Top = 1
-      Width = 304
-      Height = 449
-      Cursor = crDefault
-      LeftPosition = 0
-      DragCursor = crDrag
+      Width = 296
+      Height = 443
       Align = alClient
-      AutoCollapse = False
       AutoLineHeight = False
-      DockOrientation = doNoOrient
-      DefaultSectionWidth = 120
       AdjustMultilineHeight = False
       BorderStyle = bsNone
       BorderSides = []
@@ -223,7 +217,6 @@ object frmObjectList: TfrmObjectList
       CustomCheckboxes = True
       CustomPlusMinus = True
       DrawFocusRect = False
-      ExpandOnDblClick = False
       ExplorerEditMode = True
       FilteredVisibility = True
       FocusedSelectColor = 10526880
@@ -234,30 +227,18 @@ object frmObjectList: TfrmObjectList
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       FullRowSelect = False
-      GradientSteps = 64
       HeaderColor = 7368816
       HeaderHeight = 17
       HeaderHotTrack = False
-      HeaderSections.Data = {F4FFFFFF00000000}
+      HeaderSections.Data = {F1FFFFFF00000000}
       HeaderFlat = True
-      HeaderFont.Charset = DEFAULT_CHARSET
-      HeaderFont.Color = clWindowText
-      HeaderFont.Height = -11
-      HeaderFont.Name = 'MS Sans Serif'
-      HeaderFont.Style = []
       HorizontalLines = True
       HorzDivLinesColor = 7368816
-      HorzScrollBarStyles.ShowTrackHint = False
       HorzScrollBarStyles.Width = 17
       HorzScrollBarStyles.ButtonSize = 16
       HorzScrollBarStyles.UseSystemMetrics = False
-      HorzScrollBarStyles.UseXPThemes = False
-      IgnoreEnabled = False
-      IncrementalSearch = False
+      HorzScrollBarStyles.ThemeMode = ttmNone
       ItemIndent = 14
-      KeepSelectionWithinLevel = False
-      LineBorderActiveColor = clBlack
-      LineBorderInactiveColor = clBlack
       LineHeight = 17
       LinesColor = clBtnShadow
       LinesStyle = psSolid
@@ -270,8 +251,6 @@ object frmObjectList: TfrmObjectList
         E0E0E0E0E0E0E0E0E0808080808080808080808080E0E0E0E0E0E0E0E0E0E0E0
         E0E0E0E0808080808080808080E0E0E0E0E0E0E0E0E0E0E0E0E0E0E080808080
         8080808080808080808080808080808080808080808080808080}
-      MouseFrameSelect = True
-      OwnerDrawMask = '~~@~~'
       ParentFont = False
       ParentShowHint = False
       PlusMinusTransparent = True
@@ -285,10 +264,8 @@ object frmObjectList: TfrmObjectList
         E0808080808080808080808080E0E0E0E0E0E080808080808080808080808080
         8080808080808080808080808080808080808080808080808080}
       QuickEditMode = True
-      ScrollbarOpposite = False
       ShowHint = False
       ShowImages = False
-      ShowLeafButton = False
       ShowLines = False
       SortSection = -1
       StoragePath = '\Tree'
@@ -297,7 +274,6 @@ object frmObjectList: TfrmObjectList
       StripedEvenColor = 8158332
       StripedItems = True
       TabOrder = 0
-      TabStop = True
       Tracking = False
       TrackColor = 10526880
       VertDivLinesColor = 7368816
@@ -306,9 +282,8 @@ object frmObjectList: TfrmObjectList
       VertScrollBarStyles.Width = 17
       VertScrollBarStyles.ButtonSize = 16
       VertScrollBarStyles.UseSystemMetrics = False
-      VertScrollBarStyles.UseXPThemes = False
-      VirtualityLevel = vlNone
-      UseXPThemes = False
+      VertScrollBarStyles.ThemeMode = ttmNone
+      ThemeMode = ttmNone
       TextColor = clBtnText
       BkColor = clGray
       OnAfterSelectionChange = tvItemsAfterSelectionChange
@@ -319,8 +294,8 @@ object frmObjectList: TfrmObjectList
     end
     object Panel4: TPanel
       Left = 1
-      Top = 450
-      Width = 304
+      Top = 444
+      Width = 296
       Height = 24
       Align = alBottom
       Color = clGray
@@ -328,31 +303,14 @@ object frmObjectList: TfrmObjectList
       object ElEdit1: TElEdit
         Left = 1
         Top = 1
-        Width = 302
+        Width = 294
         Height = 21
-        Cursor = crIBeam
-        VertScrollBarStyles.ShowTrackHint = False
-        VertScrollBarStyles.Width = 17
-        VertScrollBarStyles.ButtonSize = 17
-        HorzScrollBarStyles.ShowTrackHint = False
-        HorzScrollBarStyles.Width = 17
-        HorzScrollBarStyles.ButtonSize = 17
-        UseCustomScrollBars = True
-        Alignment = taLeftJustify
-        BorderSides = [ebsLeft, ebsRight, ebsTop, ebsBottom]
-        RTLContent = False
-        Transparent = False
-        TopMargin = 2
-        BorderStyle = bsSingle
+        DoubleBuffered = False
         LineBorderActiveColor = clBlack
         LineBorderInactiveColor = clBlack
-        WordWrap = False
         OnChange = ElEdit1Change
         Align = alClient
         Color = clWhite
-        Ctl3D = True
-        ParentColor = False
-        ParentCtl3D = False
         TabOrder = 0
         OnEnter = ElEdit1Change
         OnExit = ElEdit1Exit

@@ -121,12 +121,16 @@ bool EFS_Utils::GetOpenNameInternal( LPCSTR initial,  LPSTR buffer, int sz_buf, 
 
     CFileDialog fd(CFileDialog::fdOpen);
 
-    fd.Caption 			= "Open a File";
-//  string512 path;
-//	strcpy_s			(path,(offset&&offset[0])?offset:P.m_Path);
-//	fd.CurrentDir 		= path;
-//	fd.CurrentFile		= buffer;
-//	fd.DefaultDir		= path;
+	fd.Caption 			= "Open a File";
+
+	if(strstr(Core.Params, "-dont_remember_last_folder"))
+	{
+		string512 path;
+		strcpy_s			(path,(offset&&offset[0])?offset:P.m_Path);
+		fd.CurrentDir 		= path;
+		fd.CurrentFile		= buffer;
+		fd.DefaultDir		= path;
+	}
 
     fd.SetFilters(flt);
     if(start_flt_ext >= 0)
@@ -210,10 +214,14 @@ bool EFS_Utils::GetSaveName( LPCSTR initial, string_path& buffer, LPCSTR offset,
     	string64 defext;
     	_GetItem(P.m_DefExt, 0, defext, ';');
         fd.DefaultExt = defext;
-    }
-//  string512 path; strcpy_s(path,(offset&&offset[0])?offset:P.m_Path);
-//	fd.CurrentDir		= path;
-//	fd.DefaultDir		= path;
+	}
+
+	if(strstr(Core.Params, "-dont_remember_last_folder"))
+	{
+		string512 path; strcpy_s(path,(offset&&offset[0])?offset:P.m_Path);
+		fd.CurrentDir		= path;
+		fd.DefaultDir		= path;
+	}
 
     fd.OverwritePrompt	= true;
     fd.NoChangeDir		= true;

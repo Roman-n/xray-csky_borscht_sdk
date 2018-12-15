@@ -633,7 +633,7 @@ void CInifile::w_string( LPCSTR S, LPCSTR L, LPCSTR V, LPCSTR comment)
 	// section
 	string256			sect;
 	_parse				(sect,S);
-	_strlwr				(sect);
+	strlwr				(sect);
 	
 	if (!section_exist(sect))	
 	{

@@ -3,7 +3,6 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#include <float.h>
 #include <mmsystem.h>
 #include <objbase.h>
 #include "xrCore.h"
@@ -54,7 +53,7 @@ static void compute_build_id()
 	sscanf				(buffer,"%s %d %d",month,&days,&years);
 
 	for (int i=0; i<12; i++) {
-		if (_stricmp(month_id[i],month) == 0) {
+		if (stricmp(month_id[i],month) == 0) {
 			months		= i;
 			break;
         }
@@ -130,9 +129,9 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 		_initialize_cpu		();
 
 //		Debug._initialize	();
-
+ #ifndef _EDITOR
 		rtc_initialize		();
-
+ #endif
 		xr_FS				= xr_new<CLocatorAPI>	();
 
 		xr_EFS				= xr_new<EFS_Utils>		();

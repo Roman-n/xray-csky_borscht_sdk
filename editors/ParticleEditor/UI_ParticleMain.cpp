@@ -169,18 +169,18 @@ void CParticleMain::RegisterCommands()
 	REGISTER_CMD_CE	(COMMAND_CREATE_GROUP_FROM_SELECTED,"Particles\\CreateGroupFromEffect",	PTools, CParticleTool::CreateGroupFromSelected, true);
 }                                                                    
 
-char* CParticleMain::GetCaption()
+LPCSTR CParticleMain::GetCaption()
 {
 	return "particles";
 }
 
-bool __fastcall CParticleMain::ApplyShortCut(WORD Key, TShiftState Shift)
+bool CParticleMain::ApplyShortCut(WORD Key, TShiftState Shift)
 {
     return inherited::ApplyShortCut(Key,Shift);
 }
 //---------------------------------------------------------------------------
 
-bool __fastcall CParticleMain::ApplyGlobalShortCut(WORD Key, TShiftState Shift)
+bool CParticleMain::ApplyGlobalShortCut(WORD Key, TShiftState Shift)
 {
     return inherited::ApplyGlobalShortCut(Key,Shift);
 }

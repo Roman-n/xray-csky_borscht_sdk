@@ -160,9 +160,9 @@ void CExportObjectOGF::SSplit::SavePart(IWriter& F, CObjectOGFCollectorPacked* p
 
     // Faces
     F.open_chunk(OGF_INDICES);
-    F.w_u32(part->m_Faces.size()*3);
-    F.w(part->m_Faces.begin(),part->m_Faces.size()*3*sizeof(u16));
-    F.close_chunk();
+	F.w_u32(part->m_Faces.size()*3);
+	F.w(&part->m_Faces.front(),part->m_Faces.size()*3*sizeof(u16));
+	F.close_chunk();
 
     // PMap
     if (part->m_SWR.size()) {
@@ -402,8 +402,9 @@ bool CExportObjectOGF::PrepareMESH(CEditableMesh* MESH)
                         }
                         R_ASSERT2		(uv,"uv empty");
                         u32 norm_id 	= (*f_it)*3+k;
-                        R_ASSERT2		(norm_id<MESH->GetFCount()*3,"Normal index out of range.");
-                        v[k].set		(MESH->m_Vertices[fv.pindex],MESH->m_VertexNormals[norm_id],*uv);
+						R_ASSERT2		(norm_id<MESH->GetFCount()*3,"Normal index out of range.");
+						Fvector2 _uv = *uv;
+						v[k].set		(MESH->m_Vertices[fv.pindex],MESH->m_VertexNormals[norm_id],_uv);
                     }   
                     elapsed_faces--;
                     if (!split->m_CurrentPart->add_face(v[0], v[1], v[2])) 		bNewPart	= true;

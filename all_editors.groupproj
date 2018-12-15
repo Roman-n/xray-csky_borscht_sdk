@@ -1,0 +1,114 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{8c58e657-c810-4c44-98d0-6c1fc7f23466}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Projects Include="editors\ActorEditor\ActorEditor.cbproj" />
+    <Projects Include="editors\ECore\xrECoreB.cbproj" />
+    <Projects Include="editors\LevelEditor\LevelEditor.cbproj" />
+    <Projects Include="editors\ParticleEditor\ParticleEditor.cbproj" />
+    <Projects Include="editors\ShaderEditor\ShaderEditor.cbproj" />
+    <Projects Include="editors\xrEProps\xrEPropsB.cbproj" />
+    <Projects Include="xrCore\xrCoreB.cbproj" />
+    <Projects Include="xrParticles\xrParticlesB.cbproj" />
+    <Projects Include="xrSound\xrSoundB.cbproj" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <Borland.Personality>Default.Personality</Borland.Personality>
+    <Borland.ProjectType />
+    <BorlandProject>
+<BorlandProject xmlns=""><Default.Personality></Default.Personality></BorlandProject></BorlandProject>
+  </ProjectExtensions>
+  <Target Name="xrCoreB">
+    <MSBuild Projects="xrCore\xrCoreB.cbproj" Targets="" />
+  </Target>
+  <Target Name="xrCoreB:Clean">
+    <MSBuild Projects="xrCore\xrCoreB.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="xrCoreB:Make">
+    <MSBuild Projects="xrCore\xrCoreB.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="xrSoundB">
+    <MSBuild Projects="xrSound\xrSoundB.cbproj" Targets="" />
+  </Target>
+  <Target Name="xrSoundB:Clean">
+    <MSBuild Projects="xrSound\xrSoundB.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="xrSoundB:Make">
+    <MSBuild Projects="xrSound\xrSoundB.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="xrParticlesB">
+    <MSBuild Projects="xrParticles\xrParticlesB.cbproj" Targets="" />
+  </Target>
+  <Target Name="xrParticlesB:Clean">
+    <MSBuild Projects="xrParticles\xrParticlesB.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="xrParticlesB:Make">
+    <MSBuild Projects="xrParticles\xrParticlesB.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="xrEPropsB">
+    <MSBuild Projects="editors\xrEProps\xrEPropsB.cbproj" Targets="" />
+  </Target>
+  <Target Name="xrEPropsB:Clean">
+    <MSBuild Projects="editors\xrEProps\xrEPropsB.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="xrEPropsB:Make">
+    <MSBuild Projects="editors\xrEProps\xrEPropsB.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="xrECoreB">
+    <MSBuild Projects="editors\ECore\xrECoreB.cbproj" Targets="" />
+  </Target>
+  <Target Name="xrECoreB:Clean">
+    <MSBuild Projects="editors\ECore\xrECoreB.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="xrECoreB:Make">
+    <MSBuild Projects="editors\ECore\xrECoreB.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="ActorEditor">
+    <MSBuild Projects="editors\ActorEditor\ActorEditor.cbproj" Targets="" />
+  </Target>
+  <Target Name="ActorEditor:Clean">
+    <MSBuild Projects="editors\ActorEditor\ActorEditor.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="ActorEditor:Make">
+    <MSBuild Projects="editors\ActorEditor\ActorEditor.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="ParticleEditor">
+    <MSBuild Projects="editors\ParticleEditor\ParticleEditor.cbproj" Targets="" />
+  </Target>
+  <Target Name="ParticleEditor:Clean">
+    <MSBuild Projects="editors\ParticleEditor\ParticleEditor.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="ParticleEditor:Make">
+    <MSBuild Projects="editors\ParticleEditor\ParticleEditor.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="ShaderEditor">
+    <MSBuild Projects="editors\ShaderEditor\ShaderEditor.cbproj" Targets="" />
+  </Target>
+  <Target Name="ShaderEditor:Clean">
+    <MSBuild Projects="editors\ShaderEditor\ShaderEditor.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="ShaderEditor:Make">
+    <MSBuild Projects="editors\ShaderEditor\ShaderEditor.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="LevelEditor">
+    <MSBuild Projects="editors\LevelEditor\LevelEditor.cbproj" Targets="" />
+  </Target>
+  <Target Name="LevelEditor:Clean">
+    <MSBuild Projects="editors\LevelEditor\LevelEditor.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="LevelEditor:Make">
+    <MSBuild Projects="editors\LevelEditor\LevelEditor.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="Build">
+    <CallTarget Targets="xrCoreB;xrSoundB;xrParticlesB;xrEPropsB;xrECoreB;ActorEditor;ParticleEditor;ShaderEditor;LevelEditor" />
+  </Target>
+  <Target Name="Clean">
+    <CallTarget Targets="xrCoreB:Clean;xrSoundB:Clean;xrParticlesB:Clean;xrEPropsB:Clean;xrECoreB:Clean;ActorEditor:Clean;ParticleEditor:Clean;ShaderEditor:Clean;LevelEditor:Clean" />
+  </Target>
+  <Target Name="Make">
+    <CallTarget Targets="xrCoreB:Make;xrSoundB:Make;xrParticlesB:Make;xrEPropsB:Make;xrECoreB:Make;ActorEditor:Make;ParticleEditor:Make;ShaderEditor:Make;LevelEditor:Make" />
+  </Target>
+  <Import Condition="Exists('$(MSBuildBinPath)\Borland.Group.Targets')" Project="$(MSBuildBinPath)\Borland.Group.Targets" />
+</Project>

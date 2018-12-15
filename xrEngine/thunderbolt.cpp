@@ -180,7 +180,7 @@ void CEffect_Thunderbolt::Bolt(shared_str id, float period, float lt)
 {
 	VERIFY					(id.size());
 	state 		            = stWorking;
-	life_time	            = lt+Random.randF(-lt*0.5f,lt*0.5f);
+	life_time	            = lt+::Random.randF(-lt*0.5f,lt*0.5f);
     current_time            = 0.f;
 
     current		            = g_pGamePersistent->Environment().thunderbolt_collection(collection, id)->GetRandomDesc(); VERIFY(current);
@@ -191,13 +191,13 @@ void CEffect_Thunderbolt::Bolt(shared_str id, float period, float lt)
 	CEnvironment&			environment = g_pGamePersistent->Environment();
     environment.CurrentEnv->sun_dir.getHP			(sun_h,sun_p);
     float alt	            = environment.p_var_alt;//Random.randF(environment.p_var_alt.x,environment.p_var_alt.y);
-    float lng	            = Random.randF(sun_h-environment.p_var_long+PI,sun_h+environment.p_var_long+PI); 
-    float dist	            = Random.randF(FAR_DIST*environment.p_min_dist,FAR_DIST*.95f);
+	float lng	            = ::Random.randF(sun_h-environment.p_var_long+PI,sun_h+environment.p_var_long+PI);
+	float dist	            = ::Random.randF(FAR_DIST*environment.p_min_dist,FAR_DIST*.95f);
     current_direction.setHP	(lng,alt);
     pos.mad		            (Device.vCameraPosition,current_direction,dist);
-    dev.x		            = Random.randF(-environment.p_tilt,environment.p_tilt);
-    dev.y		            = Random.randF(0,PI_MUL_2);
-    dev.z		            = Random.randF(-environment.p_tilt,environment.p_tilt);
+	dev.x		            = ::Random.randF(-environment.p_tilt,environment.p_tilt);
+	dev.y		            = ::Random.randF(0,PI_MUL_2);
+	dev.z		            = ::Random.randF(-environment.p_tilt,environment.p_tilt);
     XF.setXYZi	            (dev);               
 
     Fvector light_dir 		= {0.f,-1.f,0.f};
@@ -211,12 +211,12 @@ void CEffect_Thunderbolt::Bolt(shared_str id, float period, float lt)
     XF.translate_over		(pos);
     current_xform.mul_43	(XF,S);
 
-    float next_v			= Random.randF();
+	float next_v			= ::Random.randF();
 
     if (next_v<environment.p_second_prop){
 	    next_lightning_time = Device.fTimeGlobal+lt+EPS_L;
     }else{
-	    next_lightning_time = Device.fTimeGlobal+period+Random.randF(-period*0.3f,period*0.3f);
+		next_lightning_time = Device.fTimeGlobal+period+::Random.randF(-period*0.3f,period*0.3f);
 		current->snd.play_no_feedback		(0,0,dist/300.f,&pos,0,0,&Fvector2().set(dist/2,dist*2.f));
     }
 
@@ -229,7 +229,7 @@ void CEffect_Thunderbolt::OnFrame(shared_str id, float period, float duration)
 	BOOL enabled			= !!(id.size());
 	if (bEnabled!=enabled){
     	bEnabled			= enabled;
-	    next_lightning_time = Device.fTimeGlobal+period+Random.randF(-period*0.5f,period*0.5f);
+		next_lightning_time = Device.fTimeGlobal+period+::Random.randF(-period*0.5f,period*0.5f);
     }else if (bEnabled&&(Device.fTimeGlobal>next_lightning_time)){ 
     	if (state==stIdle && !!(id.size())) Bolt(id,period,duration);
     }

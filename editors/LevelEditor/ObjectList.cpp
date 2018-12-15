@@ -10,6 +10,7 @@
 #pragma package(smart_init)
 #pragma link "mxPlacemnt"
 #pragma link "ElEdits"
+#pragma link "ElTreeInplaceEditors"
 #pragma resource "*.dfm"
 //---------------------------------------------------------------------------
 TfrmObjectList* TfrmObjectList::CreateForm(TWinControl* parent)
@@ -47,11 +48,11 @@ void __fastcall TfrmObjectList::UpdateObjectList()
 
 //---------------------------------------------------------------------------
 __fastcall TfrmObjectList::TfrmObjectList(TComponent* Owner)
-    : TForm(Owner)
+	: TForm(Owner)
 {
 	DEFINE_INI(fsStorage);
 	bLockUpdate = false;
-    find_node	= NULL;
+	find_node	= NULL;
 }
 
 void __fastcall TfrmObjectList::sbCloseClick(TObject *Sender)
@@ -105,19 +106,20 @@ TElTreeItem* TfrmObjectList::AddFolder(LPCSTR name, void* data, TElTreeItem* par
     else
     	node 			= tvItems->Items->AddObject(parent_node, name, NULL);
         
-    node->ParentStyle 	= false;
+	node->ParentFontStyle = false;
     node->Bold 			= true;
-    return 				node;
+	return 				node;
 }
 
 TElTreeItem* TfrmObjectList::AddObject(TElTreeItem* node, LPCSTR name, void* obj, TColor color)
 {
     TElTreeItem* ret 	= tvItems->Items->AddChildObject(node, name, obj);
 
-    ret->ParentColors 	= false;
-    node->ParentStyle = false;
-    ret->Color			= color;
-    ret->BkColor		= clGray;
+	ret->ParentColors 	= false;
+	node->ParentFontStyle = false;
+	ret->Color			= color;
+	ret->BkColor		= clGray;
+	ret->RowBkColor		= clGray;
 
     return ret;
 }
@@ -281,9 +283,9 @@ void TfrmObjectList::UpdateState()
         TElTreeItem* parent_node	=  node->Parent;
         CCustomObject* PO			= (parent_node && parent_node->Data)?(CCustomObject*)parent_node->Data : NULL;
             
-        CCustomObject* O 			= (CCustomObject*)node->Data;
-            
-        node->ParentStyle 			= false;
+		CCustomObject* O 			= (CCustomObject*)node->Data;
+
+		node->ParentFontStyle		= false;
         node->StrikeOut 			= !O->Visible();
 
         if(rgSO->ItemIndex==1) 	
@@ -342,7 +344,7 @@ void TfrmObjectList::UpdateSelection()
         Scene->SelectObjects( false, OBJCLASS_DUMMY/*m_cur_cls*/);
         
         for(TElTreeItem* node = tvItems->GetNextSelected(0); node; node=tvItems->GetNextSelected(node))
-        {
+		{
             if(node->Data)
             {
             	CCustomObject* O = (CCustomObject*)(node->Data);
@@ -487,33 +489,37 @@ void TfrmObjectList::ProcessFindItemInList(TElTreeItem* from, AnsiString str)
     	if(NULL==node->Data)
         	continue;
             
-        CCustomObject* O 			= (CCustomObject*)node->Data;
+		CCustomObject* O 			= (CCustomObject*)node->Data;
         if( strstr(O->FName.c_str(), str.c_str()) )
         {
             if(find_node)
             {
                 find_node->ParentColors 	= stored_parent_colors;
-                find_node->BkColor			= storred_bk_color;
-            }
-            stored_parent_colors		= node->ParentColors;
-            storred_bk_color			= node->BkColor;
-            find_node 					= node;
+				find_node->BkColor			= stored_bk_color;
+				find_node->RowBkColor		= stored_row_color;
+			}
+			stored_parent_colors		= node->ParentColors;
+			stored_bk_color				= node->BkColor;
+			stored_row_color			= node->RowBkColor;
+			find_node 					= node;
 
-            find_node->MakeVisible		();
-            find_node->ParentColors 	= false;
-            find_node->BkColor			= clYellow;
+			find_node->MakeVisible		();
+			find_node->ParentColors 	= false;
+			find_node->BkColor			= clYellow;
+			find_node->RowBkColor		= clYellow;
 
-            bfound						= true;
-            break;
-         }
-	}                
+			bfound						= true;
+			break;
+		 }
+	}
 
-    if(!bfound && find_node)
-    {
-        find_node->ParentColors 	= stored_parent_colors;
-        find_node->BkColor			= storred_bk_color;
-    	find_node = NULL;
-    }
+	if(!bfound && find_node)
+	{
+		find_node->ParentColors 	= stored_parent_colors;
+		find_node->BkColor			= stored_bk_color;
+		find_node->RowBkColor		= stored_bk_color;
+		find_node = NULL;
+	}
 }
 
 void __fastcall TfrmObjectList::ElEdit1Exit(TObject *Sender)
@@ -521,8 +527,9 @@ void __fastcall TfrmObjectList::ElEdit1Exit(TObject *Sender)
     if(find_node)
     {
         find_node->ParentColors 	= stored_parent_colors;
-        find_node->BkColor			= storred_bk_color;
-    }
+		find_node->BkColor			= stored_bk_color;
+		find_node->RowBkColor		= stored_row_color;
+	}
 //.    find_node = NULL;
 }
 //---------------------------------------------------------------------------

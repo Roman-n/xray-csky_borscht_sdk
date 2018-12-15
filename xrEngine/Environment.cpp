@@ -87,7 +87,7 @@ CEnvironment::CEnvironment	() :
 	CopyMemory				(&CloudsIndices.front(),indices,CloudsIndices.size()*sizeof(u16));
 
 	// perlin noise
-	PerlinNoise1D			= xr_new<CPerlinNoise1D>(Random.randI(0,0xFFFF));
+	PerlinNoise1D			= xr_new<CPerlinNoise1D>(::Random.randI(0,0xFFFF));
 	PerlinNoise1D->SetOctaves(2);
 	PerlinNoise1D->SetAmplitude(0.66666f);
 

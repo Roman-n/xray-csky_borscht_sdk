@@ -29,6 +29,8 @@ public:
     virtual bool 				__stdcall  	CNameAfterEdit		(PropValue* sender, xr_string& edit_val);
     virtual void 				__stdcall  	CNameDraw			(PropValue* sender, xr_string& draw_val);
 public:
+	virtual void				__stdcall	SetChangeEvent		(PropValue* value, const PropValue::TOnChange& event);
+public:
     virtual CaptionValue*  		__stdcall	CreateCaption	    (PropItemVec& items, const shared_str& key, shared_str val);
     virtual CanvasValue*		__stdcall	CreateCanvas	    (PropItemVec& items, const shared_str& key, shared_str val, int height);
     virtual ButtonValue*		__stdcall	CreateButton	    (PropItemVec& items, const shared_str& key, shared_str val, u32 flags, ButtonValue::TOnBtnClick onclick=0);

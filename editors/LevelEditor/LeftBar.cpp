@@ -554,7 +554,7 @@ void __fastcall TfraLeftBar::RemoveSelectedFromList1Click(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfraLeftBar::UpdateSnapList()
+void TfraLeftBar::UpdateSnapList()
 {
 	lbSnapList->Items->Clear();
     ObjectList* lst = Scene->GetSnapList(true);

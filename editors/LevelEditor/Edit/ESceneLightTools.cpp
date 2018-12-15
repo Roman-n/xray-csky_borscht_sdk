@@ -235,7 +235,7 @@ xr_rtoken* ESceneLightTool::FindLightControl(int id)
 	RTokenVecIt		_I 	= lcontrols.begin();
     RTokenVecIt		_E 	= lcontrols.end();
     for (;_I!=_E; _I++)
-    	if (_I->id==id) return _I;
+    	if (_I->id==id) return &*_I;
     return 0;
 }
 //------------------------------------------------------------------------------

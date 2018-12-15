@@ -260,6 +260,11 @@ bool CPropHelper::CNameAfterEdit(PropValue* sender, xr_string& edit_val)
     return 			accepted;
 }
 //---------------------------------------------------------------------------
+void CPropHelper::SetChangeEvent(PropValue* value, const PropValue::TOnChange& event)
+{
+	value->OnChangeEvent = event;
+}
+//---------------------------------------------------------------------------
 
 
 

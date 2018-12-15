@@ -246,7 +246,7 @@ void TfrmEditLibrary::OnModified()
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmEditLibrary::OnItemsFocused(ListItemsVec& items)
+void __stdcall TfrmEditLibrary::OnItemsFocused(ListItemsVec& items)
 {
 	xr_delete		(m_Thm);
 //    bool mt			= false;
@@ -255,11 +255,11 @@ void __fastcall TfrmEditLibrary::OnItemsFocused(ListItemsVec& items)
     if (b_one /*&& FHelper.IsObject(items[0])*/ && UI->ContainEState(esEditLibrary))
     {
         // change thm
-        ListItem* prop 			= items[0];
-        VERIFY					(prop);
-        AnsiString nm			= prop->Key();
-        string_path 			thm_fn;
-        ebRenameObject->Enabled = !bReadOnly;
+		ListItem* prop 			= items[0];
+		VERIFY					(prop);
+		AnsiString nm			= prop->Key();
+		string_path 			thm_fn;
+		ebRenameObject->Enabled = !bReadOnly;
         ebRemoveObject->Enabled = !bReadOnly;
 //		ebExportLWO->Enabled 	= !bReadOnly;
 
