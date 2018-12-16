@@ -15,13 +15,13 @@
 	PROP_CAPTION    // yes
 	PROP_SHORTCUT,
 	PROP_BUTTON,    // yes
-    PROP_CHOOSE,
+	PROP_CHOOSE,
 	PROP_NUMERIC,   // yes
 	PROP_BOOLEAN,   // yes
 	PROP_FLAG,      // yes
     PROP_VECTOR,    // yes
 	PROP_TOKEN,     // yes
-	PROP_RTOKEN,
+	PROP_RTOKEN,    // yes
 	PROP_RLIST,     // yes
 	PROP_COLOR,     // yes
 	PROP_FCOLOR,    // yes
@@ -29,14 +29,14 @@
 	PROP_RTEXT,     // yes
     PROP_STEXT,     // yes
 	PROP_WAVE,
-    PROP_CANVAS,
-    PROP_TIME,
+	PROP_CANVAS,
+	PROP_TIME,
 
 	PROP_CTEXT,     // yes
 	PROP_CLIST,     // yes
     PROP_SH_TOKEN,
 	PROP_TEXTURE2,
-    PROP_GAMETYPE,  // yes
+	PROP_GAMETYPE,  // yes
 */
 
 IM_PropertyTree::ImTreeNode* IM_PropertyTree::GetNode(LPCSTR path, bool must_exist)
@@ -175,12 +175,12 @@ void IM_PropertyTree::RenderItem(ImTreeNode& node) //PropItem* item)
         return;
 
         case PROP_CHOOSE:
-        ImGui::Selectable(codepage2utf8(item->GetDrawText()).c_str(), false);
-        if(ImGui::IsItemClicked(0) && ImGui::IsMouseDoubleClicked(0))
-        	OpenChooseForm(item);
+		ImGui::Selectable(codepage2utf8(item->GetDrawText()).c_str(), false);
+		if(ImGui::IsItemClicked(0) && ImGui::IsMouseDoubleClicked(0))
+			OpenChooseForm(item);
 		return;
 
-        case PROP_NUMERIC:
+		case PROP_NUMERIC:
         if(editing_node == item->Key())
         	RenderNumeric(item);
         else
@@ -204,7 +204,11 @@ void IM_PropertyTree::RenderItem(ImTreeNode& node) //PropItem* item)
 
         case PROP_TOKEN:
         RenderToken(item);
-        return;
+		return;
+
+		case PROP_RTOKEN:
+		RenderRToken(item);
+		return;
 
         case PROP_RLIST:
         RenderRList(item);
@@ -722,6 +726,64 @@ void IM_PropertyTree::RenderToken(PropItem* item)
     ImGui::PopID();
 }
 
+void IM_PropertyTree::RenderRToken(PropItem* item)
+{
+	ImGui::PushID(item->Key());
+	if(ImGui::BeginCombo("", item->GetDrawText().c_str()))
+	{
+		u32 current;
+
+		RToken8Value* t8 = dynamic_cast<RToken8Value*>(item->GetFrontValue());
+		RToken16Value* t16 = dynamic_cast<RToken16Value*>(item->GetFrontValue());
+		RToken32Value* t32 = dynamic_cast<RToken32Value*>(item->GetFrontValue());
+		VERIFY(t8 || t16 || t32);
+
+		if(t8) {
+			u8 value = t8->GetValue();
+			item->BeforeEdit<RToken8Value,u8>(value);
+			current = value;
+		} else if(t16) {
+			u16 value = t16->GetValue();
+			item->BeforeEdit<RToken16Value,u16>(value);
+			current = value;
+		} else if(t32) {
+			u32 value = t32->GetValue();
+			item->BeforeEdit<RToken32Value,u32>(value);
+			current = value;
+        }
+
+		RTokenValueCustom* V = dynamic_cast<RTokenValueCustom*>(item->GetFrontValue());
+		VERIFY(V);
+
+		for(u32 i = 0; i < V->token_count; i++)
+		{
+			const xr_rtoken& t = V->token[i];
+			if(ImGui::Selectable(*t.name, t.id == (int)current))
+			{
+				if(t8) {
+					u8 newvalue = u8(t.id);
+					if(item->AfterEdit<RToken8Value,u8>(newvalue))
+						if(item->ApplyValue<RToken8Value,u8>(newvalue))
+							Modified();
+				} else if(t16) {
+					u16 newvalue = u16(t.id);
+					if(item->AfterEdit<RToken16Value,u16>(newvalue))
+						if(item->ApplyValue<RToken16Value,u16>(newvalue))
+							Modified();
+				} else if(t32) {
+					u32 newvalue = u32(t.id);
+					if(item->AfterEdit<RToken32Value,u32>(newvalue))
+						if(item->ApplyValue<RToken32Value,u32>(newvalue))
+							Modified();
+                }
+			}
+        }
+
+    	ImGui::EndCombo();
+    }
+    ImGui::PopID();
+}
+
 void IM_PropertyTree::RenderRList(PropItem* item)
 {
 	ImGui::PushID(item->Key());
@@ -1001,28 +1063,26 @@ void IM_PropertyTree::RenderTime(PropItem* item)
 
     u32 time = u32(ftime);
 
-    int tc[3];
-
+	int tc[3];
 	tc[0] = time/(60*60);		// hours
 	tc[1] = (time%(60*60))/60;	// minutes
 	tc[2] = (time%(60*60))%60;	// seconds
 
 	bool changed = false;
+	char str[256];
+	sprintf(str, "%02d:%02d:%02d", tc[0], tc[1], tc[2]);
 
-    ImGui::PushID(item->Key());
-    if(ImGui::InputInt3("", tc))
+	ImGui::PushID(item->Key());
+	if(ImGui::InputText("", str, sizeof(str)))
     {
-    	tc[0] = _min(tc[0], 23);
-        tc[0] = _max(tc[0], 0);
-
-    	tc[1] = _min(tc[1], 59);
-        tc[1] = _max(tc[1], 0);
-
-    	tc[2] = _min(tc[2], 59);
-        tc[2] = _max(tc[2], 0);
-
-        changed = true;
-    }
+		if(sscanf(str, "%d:%d:%d", &tc[0], &tc[1], &tc[2]) == 3)
+		{
+			if(tc[0] >= 0 && tc[0] < 24 &&
+			   tc[1] >= 0 && tc[1] < 60 &&
+			   tc[2] >= 0 && tc[2] < 60)
+				changed = true;
+		}
+	}
     ImGui::PopID();
 
     if(changed)

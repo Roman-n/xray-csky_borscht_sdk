@@ -88,7 +88,8 @@ ECORE_API class IM_PropertyTree : public IM_Window
     void			RenderBoolean(PropItem* item);
     void 			RenderFlag(PropItem* item);
     void			RenderVector(PropItem* item);
-    void			RenderToken(PropItem* item);
+	void			RenderToken(PropItem* item);
+	void			RenderRToken(PropItem* item);
     void			RenderRList(PropItem* item);
     void			RenderCList(PropItem* item);
     void			RenderColor(PropItem* item);
