@@ -71,8 +71,9 @@ void IM_TextEditor::Close()
     	m_actions->OnClose(this);
 
 	UI->RemoveIMWindow(this);
-    xr_delete(m_actions);
-    xr_delete(const_cast<IM_TextEditor*>(this));
+	xr_delete(m_actions);
+	IM_TextEditor* _this = this;
+    xr_delete(_this);
 }
 
 xr_string IM_TextEditor::GetText()

@@ -21,53 +21,53 @@
   <PropertyGroup Condition="'$(Base)'!=''">
     <BCC_ExceptionLocationInfo>true</BCC_ExceptionLocationInfo>
     <OutputExt>dll</OutputExt>
-    <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
     <ILINK_IntermediateOutputPath>x:\intermediate_ed\sound</ILINK_IntermediateOutputPath>
+    <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
     <BCC_OutputDir>x:\intermediate_ed\sound\</BCC_OutputDir>
-    <ILINK_FullDebugInfo>true</ILINK_FullDebugInfo>
     <DynamicRTL>true</DynamicRTL>
-    <BCC_FastExceptionPrologs>true</BCC_FastExceptionPrologs>
+    <ILINK_FullDebugInfo>true</ILINK_FullDebugInfo>
     <BCC_InstructionSet>6</BCC_InstructionSet>
+    <BCC_FastExceptionPrologs>true</BCC_FastExceptionPrologs>
     <BRCC_OutputDir>x:\intermediate_ed\sound\</BRCC_OutputDir>
     <ILINK_AppType>Windows</ILINK_AppType>
-    <DCC_DebugInformation>false</DCC_DebugInformation>
     <ILINK_GenerateImportLibrary>true</ILINK_GenerateImportLibrary>
-    <UsePackages>true</UsePackages>
+    <DCC_DebugInformation>false</DCC_DebugInformation>
     <BCC_DebugLineNumbers>true</BCC_DebugLineNumbers>
-    <DCC_MakeModifiedUnits>true</DCC_MakeModifiedUnits>
+    <UsePackages>true</UsePackages>
     <BCC_ZeroLengthEmptyMemberFuncs>true</BCC_ZeroLengthEmptyMemberFuncs>
-    <BCC_OldForStatementScoping>true</BCC_OldForStatementScoping>
+    <DCC_MakeModifiedUnits>true</DCC_MakeModifiedUnits>
     <FinalOutputDir>x:\stalker_addon\binaries</FinalOutputDir>
-    <PackageImports>rtl.bpi;vcl.bpi;vclx.bpi;bcbsmp.bpi;dbrtl.bpi;adortl.bpi;dsnap.bpi;vcldb.bpi;dsnap.bpi;dsnapcon.bpi;bdertl.bpi;vcldbx.bpi;bcbie.bpi;dsnapcon.bpi;dbexpress.bpi;vclie.bpi;xmlrtl.bpi;inet.bpi;inetdbbde.bpi;inetdbxpress.bpi;webdsnap.bpi;dbxcds.bpi;inetdb.bpi;websnap.bpi;elpackB6.bpi</PackageImports>
-    <TASM_AdditionalSwitches> /w2 x:\intermediate_ed\sound\</TASM_AdditionalSwitches>
+    <BCC_OldForStatementScoping>true</BCC_OldForStatementScoping>
     <BCC_ExtendedErrorInfo>true</BCC_ExtendedErrorInfo>
+    <TASM_AdditionalSwitches> /w2 x:\intermediate_ed\sound\</TASM_AdditionalSwitches>
+    <PackageImports>rtl.bpi;vcl.bpi;vclx.bpi;bcbsmp.bpi;dbrtl.bpi;adortl.bpi;dsnap.bpi;vcldb.bpi;dsnap.bpi;dsnapcon.bpi;bdertl.bpi;vcldbx.bpi;bcbie.bpi;dsnapcon.bpi;dbexpress.bpi;vclie.bpi;xmlrtl.bpi;inet.bpi;inetdbbde.bpi;inetdbxpress.bpi;webdsnap.bpi;dbxcds.bpi;inetdb.bpi;websnap.bpi</PackageImports>
     <DCC_UnitSearchPath>.\;$(BDS)\lib;$(BDS)\lib\obj</DCC_UnitSearchPath>
-    <BRCC_UserSuppliedOptions> -I$(DXSDK_DIR)\Include;$(BDS)\include;$(BDS)\include\vcl;..\utils\ETools;X:\SDK\include;$(BDS)\include\dinkumware</BRCC_UserSuppliedOptions>
-    <ILINK_WinAppType>DLL</ILINK_WinAppType>
     <BCC_GenerateMultithreaded>true</BCC_GenerateMultithreaded>
+    <ILINK_WinAppType>DLL</ILINK_WinAppType>
+    <BRCC_UserSuppliedOptions> -I$(DXSDK_DIR)\Include;$(BDS)\include;$(BDS)\include\vcl;..\utils\ETools;X:\SDK\include;$(BDS)\include\dinkumware</BRCC_UserSuppliedOptions>
     <BCC_DataAlignment>DWord</BCC_DataAlignment>
-    <DCC_DcuOutput>x:\intermediate_ed\sound\</DCC_DcuOutput>
     <BCC_PCHCache>true</BCC_PCHCache>
-    <ILINK_BpiLibOutputDir>x:\stalker_addon\libraries</ILINK_BpiLibOutputDir>
+    <DCC_DcuOutput>x:\intermediate_ed\sound\</DCC_DcuOutput>
     <BCC_IntegerSizedEnums>false</BCC_IntegerSizedEnums>
-    <DCC_IncludePath>.\;$(BDS)\lib;$(BDS)\lib\obj</DCC_IncludePath>
-    <BRCC_IncludePath>$(DXSDK_DIR)\Include;$(BDS)\include;$(BDS)\include\vcl;..\utils\ETools;X:\SDK\include;$(BDS)\include\dinkumware</BRCC_IncludePath>
-    <AllPackageLibs>rtl.lib;vcl.lib;bcbsmp.lib;vclx.lib</AllPackageLibs>
-    <TASM_IncludePath>$(DXSDK_DIR)\Include;$(BDS)\include;$(BDS)\include\vcl;..\utils\ETools;X:\SDK\include;$(BDS)\include\dinkumware</TASM_IncludePath>
+    <ILINK_BpiLibOutputDir>x:\stalker_addon\libraries</ILINK_BpiLibOutputDir>
     <BCC_IncludePath>$(DXSDK_DIR)\Include;$(BDS)\include;$(BDS)\include\vcl;..\utils\ETools;X:\SDK\include;$(BDS)\include\dinkumware</BCC_IncludePath>
-    <ILINK_LibraryPath>X:\SDK\components\ElPack\Code;X:\SDK\components\AlexMX;f:\program files\borland\cbuilder6\lib\release;$(BDS)\Imports;$(BDS)\lib;$(BDS)\lib\obj;$(BDS)\Projects\Lib;$(BDS)\lib\psdk;x:\stalker_addon\libraries;X:\SDK\libraries;$(DXSDK_DIR)\Lib\x86</ILINK_LibraryPath>
-    <BCC_ZeroLengthEmptyBaseClass>true</BCC_ZeroLengthEmptyBaseClass>
+    <TASM_IncludePath>$(DXSDK_DIR)\Include;$(BDS)\include;$(BDS)\include\vcl;..\utils\ETools;X:\SDK\include;$(BDS)\include\dinkumware</TASM_IncludePath>
+    <AllPackageLibs>rtl.lib;vcl.lib;bcbsmp.lib;vclx.lib</AllPackageLibs>
+    <BRCC_IncludePath>$(DXSDK_DIR)\Include;$(BDS)\include;$(BDS)\include\vcl;..\utils\ETools;X:\SDK\include;$(BDS)\include\dinkumware</BRCC_IncludePath>
+    <DCC_IncludePath>.\;$(BDS)\lib;$(BDS)\lib\obj</DCC_IncludePath>
     <BCC_DisableOptimizations>true</BCC_DisableOptimizations>
-    <Multithreaded>true</Multithreaded>
-    <TASM_Defines>_EDITOR _XRSOUNDB XRSOUND_EXPORTS _DEBUG</TASM_Defines>
-    <BRCC_Defines>_EDITOR;_XRSOUNDB;XRSOUND_EXPORTS;_DEBUG</BRCC_Defines>
-    <DCC_ObjOutput>x:\intermediate_ed\sound\</DCC_ObjOutput>
-    <BCC_GenerateDLL>true</BCC_GenerateDLL>
+    <BCC_ZeroLengthEmptyBaseClass>true</BCC_ZeroLengthEmptyBaseClass>
+    <ILINK_LibraryPath>X:\SDK\components\ElPack\Code;X:\SDK\components\AlexMX;f:\program files\borland\cbuilder6\lib\release;$(BDS)\Imports;$(BDS)\lib;$(BDS)\lib\obj;$(BDS)\Projects\Lib;$(BDS)\lib\psdk;x:\stalker_addon\libraries;X:\SDK\libraries;$(DXSDK_DIR)\Lib\x86</ILINK_LibraryPath>
     <BCC_Defines>NO_STRICT;_EDITOR;_XRSOUNDB;XRSOUND_EXPORTS</BCC_Defines>
-    <TASM_Debugging>None</TASM_Debugging>
+    <BCC_GenerateDLL>true</BCC_GenerateDLL>
+    <DCC_ObjOutput>x:\intermediate_ed\sound\</DCC_ObjOutput>
+    <BRCC_Defines>_EDITOR;_XRSOUNDB;XRSOUND_EXPORTS;_DEBUG</BRCC_Defines>
+    <TASM_Defines>_EDITOR _XRSOUNDB XRSOUND_EXPORTS _DEBUG</TASM_Defines>
+    <Multithreaded>true</Multithreaded>
     <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
-    <BCC_SourceDebuggingOn>true</BCC_SourceDebuggingOn>
+    <TASM_Debugging>None</TASM_Debugging>
     <BCC_CallingConvention>stdcall</BCC_CallingConvention>
+    <BCC_SourceDebuggingOn>true</BCC_SourceDebuggingOn>
     <DCC_SymbolReferenceInfo>2</DCC_SymbolReferenceInfo>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Cfg_1)'!=''">
@@ -76,8 +76,8 @@
     <BCC_OutputDir>x:\intermediate_ed\sound\Debug</BCC_OutputDir>
     <BCC_InlineFunctionExpansion>false</BCC_InlineFunctionExpansion>
     <ILINK_DisableIncrementalLinking>true</ILINK_DisableIncrementalLinking>
-    <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
     <DCC_DebugInformation>true</DCC_DebugInformation>
+    <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
     <FinalOutputDir>x:\stalker_addon\binaries</FinalOutputDir>
     <IntermediateOutputDir>x:\intermediate_ed\sound\Debug</IntermediateOutputDir>
     <TASM_DisplaySourceLines>true</TASM_DisplaySourceLines>

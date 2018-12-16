@@ -390,8 +390,9 @@ void IM_PropertyTree::RenderButton(PropItem* item)
         		ButtonValue* V = dynamic_cast<ButtonValue*>(*it);
         		VERIFY(V);
 
-            	V->btn_num = clicked_id;
-            	if(V->OnBtnClick(false)) // what does parameter mean ???
+				V->btn_num = clicked_id;
+				bool dummy = false;
+				if(V->OnBtnClick(dummy)) // what does parameter mean ???
             		Modified();
         	}
 		}
@@ -754,26 +755,24 @@ void IM_PropertyTree::RenderCList(PropItem* item)
 	ImGui::PushID(item->Key());
     if(ImGui::BeginCombo("", item->GetDrawText().c_str()))
     {
-    	CListValue* V = dynamic_cast<CListValue*>(item->GetFrontValue());
+		CListValue* V = dynamic_cast<CListValue*>(item->GetFrontValue());
         VERIFY(V);
 
-        LPSTR current = V->GetValue();
-        item->BeforeEdit<CListValue,LPSTR>(current);
+		xr_string current = V->GetValue();
+		item->BeforeEdit<CListValue,xr_string>(current);
 
         for(u32 i = 0; i < V->item_count; i++)
         {
         	bool selected = V->items[i].compare(current); // isn't very fast, but CList used only in shader editor, so it's no problem
         	if(ImGui::Selectable(V->items[i].c_str(), selected))
             {
-            	LPSTR newval = xr_strdup(V->items[i].c_str());
-                if(V->items[i].length() > (size_t)V->lim)
-                	newval[V->lim] = '\0';
+				xr_string newval = V->items[i];
+				if(V->items[i].length() > (size_t)V->lim)
+					newval[V->lim] = '\0';
 
-            	if(item->AfterEdit<CListValue,LPSTR>(newval))
-                	if(item->ApplyValue<CListValue,LPSTR>(newval))
+				if(item->AfterEdit<CListValue,xr_string>(newval))
+					if(item->ApplyValue<CListValue,LPCSTR>(newval.c_str()))
                     	Modified();
-
-                xr_free(newval);
             }
         }
 
@@ -877,17 +876,10 @@ void TextDelegate::CText_OK(IM_TextEditor* editor)
 	CTextValue* V = dynamic_cast<CTextValue*>(item->GetFrontValue());
     VERIFY(V);
 
-    const xr_string& newvalue = editor->GetText();
-	size_t length = _min((size_t)V->lim, newvalue.length());
-    LPSTR str = xr_alloc<CHAR>(length+1);
-    strncpy(str, newvalue.c_str(), length);
-    str[length] = '\0';
-
-    if(item->AfterEdit<CTextValue,LPCSTR>(str))
-    	if(item->ApplyValue<CTextValue,LPCSTR>(str))
+	xr_string newvalue = editor->GetText().substr(0, V->lim);
+	if(item->AfterEdit<CTextValue,xr_string>(newvalue))
+		if(item->ApplyValue<CTextValue,LPCSTR>(newvalue.c_str()))
         	parent->Modified();
-
-    xr_free(str);
 }
 
 void TextDelegate::OnClose(IM_TextEditor*)
@@ -970,20 +962,20 @@ void IM_PropertyTree::RenderCText(PropItem* item)
 	CTextValue* V = dynamic_cast<CTextValue*>(item->GetFrontValue());
     VERIFY(V);
 
-    LPSTR current = V->GetValue();
-    item->BeforeEdit<CTextValue,LPSTR>(current);
+	xr_string current = V->GetValue();
+	item->BeforeEdit<CTextValue,xr_string>(current);
 
     size_t buf_size = V->lim + 1;
     xr_vector<char> text;
     text.resize(buf_size);
-    strcpy(&*text.begin(), current);
+	strcpy(&*text.begin(), current.c_str());
 
     ImGui::PushID(item->Key());
     if(ImGui::InputText("", &*text.begin(), text.size()))
     {
-    	LPSTR newvalue = &*text.begin();
-        if(item->AfterEdit<CTextValue,LPSTR>(newvalue))
-        	if(item->ApplyValue<CTextValue,LPSTR>(newvalue))
+		xr_string newvalue = &*text.begin();
+		if(item->AfterEdit<CTextValue,xr_string>(newvalue))
+			if(item->ApplyValue<CTextValue,LPCSTR>(newvalue.c_str()))
             	Modified();
     }
     if(ImGui::IsItemClicked(0) && ImGui::IsMouseDoubleClicked(0))

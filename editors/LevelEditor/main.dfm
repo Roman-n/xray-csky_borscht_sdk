@@ -45,7 +45,6 @@ object frmMain: TfrmMain
     BevelOuter = bvNone
     TabOrder = 0
     Visible = False
-    ExplicitLeft = 559
     object paTools: TPanel
       Left = 1
       Top = 1
@@ -146,7 +145,6 @@ object frmMain: TfrmMain
     BevelInner = bvLowered
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitWidth = 797
   end
   object paMain: TPanel
     Left = 0
@@ -156,7 +154,6 @@ object frmMain: TfrmMain
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
-    ExplicitWidth = 555
     object paTopBar: TPanel
       Left = 0
       Top = 0
@@ -165,11 +162,12 @@ object frmMain: TfrmMain
       Align = alLeft
       BevelOuter = bvNone
       TabOrder = 0
+      Visible = False
     end
     object paRender: TPanel
       Left = 25
       Top = 0
-      Width = 530
+      Width = 522
       Height = 394
       Align = alClient
       BevelOuter = bvNone

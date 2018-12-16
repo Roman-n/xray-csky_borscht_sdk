@@ -26,7 +26,7 @@
     <BCC_wdef>true</BCC_wdef>
     <ILINK_AppType>Windows</ILINK_AppType>
     <DCC_DebugInformation>false</DCC_DebugInformation>
-    <ILINK_ObjectSearchPath>Engine\blenders;Editor;..\..\xrCDB;..\..\Layers\xrRenderPC_R1;..\..\Layers\xrRender;Engine;..\..\xrEngine;WildMagic;..\..\common\NvMender2003;..\..\Layers\xrRender\blenders;..\..\Layers\xrRenderDX9;X:\SDK\components\LMD2007\lib\d11;X:\src\editors\ECore\WildMagic</ILINK_ObjectSearchPath>
+    <ILINK_ObjectSearchPath>Engine\blenders;Editor;..\..\xrCDB;..\..\Layers\xrRenderPC_R1;..\..\Layers\xrRender;Engine;..\..\xrEngine;WildMagic;..\..\common\NvMender2003;..\..\Layers\xrRender\blenders;..\..\Layers\xrRenderDX9;X:\SDK\components\LMD2007\lib\d11;X:\src\editors\ECore\WildMagic;ImGui</ILINK_ObjectSearchPath>
     <BCC_wnak>true</BCC_wnak>
     <UsePackages>true</UsePackages>
     <DCC_MakeModifiedUnits>true</DCC_MakeModifiedUnits>
@@ -38,7 +38,7 @@
     <DCC_UnitSearchPath>.\;$(BDS)\lib;$(BDS)\lib\obj</DCC_UnitSearchPath>
     <BCC_wpar>false</BCC_wpar>
     <ILINK_WinAppType>DLL</ILINK_WinAppType>
-    <IncludePath>Engine\blenders;Editor;..\..\xrCDB;..\..\Layers\xrRenderPC_R1;..\..\Layers\xrRender;Engine;..\..\xrEngine;WildMagic;..\..\common\NvMender2003;..\..\Layers\xrRender\blenders;..\..\Layers\xrRenderDX9</IncludePath>
+    <IncludePath>Engine\blenders;Editor;..\..\xrCDB;..\..\Layers\xrRenderPC_R1;..\..\Layers\xrRender;Engine;..\..\xrEngine;WildMagic;..\..\common\NvMender2003;..\..\Layers\xrRender\blenders;..\..\Layers\xrRenderDX9;ImGui</IncludePath>
     <DCC_DcuOutput>x:\intermediate_ed\ecore\</DCC_DcuOutput>
     <BCC_IntegerSizedEnums>false</BCC_IntegerSizedEnums>
     <BCC_IncludePath>..\..\common\NvMender2003;..\..;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\xrCPU_Pipe;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;Engine\Blenders;$(BDS)\include;$(BDS)\include\vcl;X:\SDK\Components\AlexMX;X:\SDK\components\LMD2018\lib\d11;$(BDS)\Include\Mfc;..\xrEProps;..\..\xrCore;..\..\utils\ETools;X:\SDK\include;X:\SDK\include\freemagic;$(BDS)\include\dinkumware</BCC_IncludePath>
@@ -80,12 +80,12 @@
     <TASM_IncludePath>..\..\common\NvMender2003;..\..;..\..\Layers\xrRenderDX9;..\..\Layers\xrRender\blenders;..\..\Layers\xrRender;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\xrCPU_Pipe;..\..\xrEngine;$(DXSDK_DIR)\Include;WildMagic;Editor;Engine;Engine\Blenders;$(BDS)\include;$(BDS)\include\vcl;X:\SDK\Components\AlexMX;X:\SDK\Components\ElPack\Code\Source;$(BDS)\Include\Mfc;..\xrEProps;..\..\xrCore;..\..\utils\ETools;X:\SDK\include;X:\SDK\include\freemagic;$(BDS)\include\dinkumware</TASM_IncludePath>
     <AllPackageLibs>xmlrtl.lib;vclactnband.lib;rtl.lib;vcl.lib;bcbsmp.lib;vclx.lib;editorB.lib;xmlrtl.lib;vclactnband.lib;lmdrtelcore.lib;lmdrtrtlx.lib;lmdrtl.lib</AllPackageLibs>
     <BCC_DisableOptimizations>true</BCC_DisableOptimizations>
-    <ILINK_LibraryPath>..\..\common\NvMender2003;..\..\Layers\xrRender\blenders;..\..\Layers\xrRenderDX9;..\..\xrCPU_Pipe;WildMagic;Editor;Engine\blenders;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\Layers\xrRender;..\..\xrEngine;Engine;$(BDS)\lib;$(BDS)\lib\obj;$(BDS)\Projects\Lib;X:\SDK\components\AlexMX;X:\SDK\components\LMD2018\lib\d11;$(BDS)\Lib\Psdk;x:\SDK\libraries;x:\stalker_addon\libraries;$(DXSDK_DIR)\Lib\x86;X:\src\editors\ECore\WildMagic</ILINK_LibraryPath>
-    <TASM_Defines>_EDITOR _ECOREB XRCDB_EXPORTS _DEBUG</TASM_Defines>
+    <ILINK_LibraryPath>..\..\common\NvMender2003;..\..\Layers\xrRender\blenders;..\..\Layers\xrRenderDX9;..\..\xrCPU_Pipe;WildMagic;Editor;Engine\blenders;..\..\Layers\xrRenderPC_R1;..\..\xrCDB;..\..\Layers\xrRender;..\..\xrEngine;Engine;$(BDS)\lib;$(BDS)\lib\obj;$(BDS)\Projects\Lib;X:\SDK\components\AlexMX;X:\SDK\components\LMD2018\lib\d11;$(BDS)\Lib\Psdk;x:\SDK\libraries;x:\stalker_addon\libraries;$(DXSDK_DIR)\Lib\x86;X:\src\editors\ECore\WildMagic;ImGui</ILINK_LibraryPath>
     <Multithreaded>true</Multithreaded>
+    <TASM_Defines>_EDITOR _ECOREB XRCDB_EXPORTS _DEBUG</TASM_Defines>
     <BCC_Defines>NO_STRICT;_EDITOR;_ECOREB;XRCDB_EXPORTS</BCC_Defines>
-    <BCC_GenerateDLL>true</BCC_GenerateDLL>
     <BRCC_Defines>_EDITOR;_ECOREB;XRCDB_EXPORTS;_DEBUG</BRCC_Defines>
+    <BCC_GenerateDLL>true</BCC_GenerateDLL>
     <TASM_Debugging>None</TASM_Debugging>
     <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
     <BCC_CallingConvention>stdcall</BCC_CallingConvention>
@@ -105,12 +105,36 @@
     <BCC_Defines>_DEBUG;$(BCC_Defines)</BCC_Defines>
     <TASM_Debugging>Full</TASM_Debugging>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Cfg_1)'!='' And '$(FileToCompile)'=='ImGui\imgui.cpp'">
+    <BCC_OldForStatementScoping>false</BCC_OldForStatementScoping>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Cfg_1)'!='' And '$(FileToCompile)'=='ImGui\imgui_demo.cpp'">
+    <BCC_OldForStatementScoping>false</BCC_OldForStatementScoping>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Cfg_1)'!='' And '$(FileToCompile)'=='ImGui\imgui_draw.cpp'">
+    <BCC_OldForStatementScoping>false</BCC_OldForStatementScoping>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Cfg_1)'!='' And '$(FileToCompile)'=='ImGui\imgui_impl_dx9.cpp'">
+    <BCC_OldForStatementScoping>false</BCC_OldForStatementScoping>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Cfg_2)'!=''">
     <BCC_OptimizeForSpeed>true</BCC_OptimizeForSpeed>
     <BCC_OutputDir>x:\intermediate_ed\ecore\Release</BCC_OutputDir>
     <IntermediateOutputDir>x:\intermediate_ed\ecore\Release</IntermediateOutputDir>
     <ILINK_LibraryPath>$(BDS)\lib\release;$(ILINK_LibraryPath)</ILINK_LibraryPath>
     <BCC_Defines>NDEBUG;$(BCC_Defines)</BCC_Defines>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Cfg_2)'!='' And '$(FileToCompile)'=='ImGui\imgui.cpp'">
+    <BCC_OldForStatementScoping>false</BCC_OldForStatementScoping>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Cfg_2)'!='' And '$(FileToCompile)'=='ImGui\imgui_demo.cpp'">
+    <BCC_OldForStatementScoping>false</BCC_OldForStatementScoping>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Cfg_2)'!='' And '$(FileToCompile)'=='ImGui\imgui_draw.cpp'">
+    <BCC_OldForStatementScoping>false</BCC_OldForStatementScoping>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Cfg_2)'!='' And '$(FileToCompile)'=='ImGui\imgui_impl_dx9.cpp'">
+    <BCC_OldForStatementScoping>false</BCC_OldForStatementScoping>
   </PropertyGroup>
   <ProjectExtensions>
     <Borland.Personality>CPlusPlusBuilder.Personality</Borland.Personality>
@@ -632,6 +656,56 @@
     <CppCompile Include="guid.cpp">
       <BuildOrder>0</BuildOrder>
     </CppCompile>
+    <CppCompile Include="ImGui\imgui.cpp">
+      <OptionOverrides>true</OptionOverrides>
+      <HasBuildEvent>true</HasBuildEvent>
+      <BuildOrder>202</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="ImGui\imgui_demo.cpp">
+      <OptionOverrides>true</OptionOverrides>
+      <HasBuildEvent>true</HasBuildEvent>
+      <BuildOrder>203</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="ImGui\imgui_draw.cpp">
+      <OptionOverrides>true</OptionOverrides>
+      <HasBuildEvent>true</HasBuildEvent>
+      <BuildOrder>204</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="ImGui\imgui_impl_dx9.cpp">
+      <OptionOverrides>true</OptionOverrides>
+      <HasBuildEvent>true</HasBuildEvent>
+      <BuildOrder>205</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="ImGui\IM_Canvas.cpp">
+      <DependentOn>ImGui\IM_Canvas.h</DependentOn>
+      <BuildOrder>195</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="ImGui\IM_ChooseForm.cpp">
+      <DependentOn>ImGui\IM_ChooseForm.h</DependentOn>
+      <BuildOrder>196</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="ImGui\IM_Log.cpp">
+      <DependentOn>ImGui\IM_Log.h</DependentOn>
+      <BuildOrder>197</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="ImGui\IM_PropertyTree.cpp">
+      <DependentOn>ImGui\IM_PropertyTree.h</DependentOn>
+      <BuildOrder>198</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="ImGui\IM_TextEditor.cpp">
+      <DependentOn>ImGui\IM_TextEditor.h</DependentOn>
+      <BuildOrder>199</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="ImGui\IM_Tree.cpp">
+      <BuildOrder>200</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="ImGui\IM_Window.cpp">
+      <BuildOrder>201</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="ImGui\utf8.cpp">
+      <DependentOn>ImGui\utf8.h</DependentOn>
+      <BuildOrder>206</BuildOrder>
+    </CppCompile>
     <CppCompile Include="stdafx.cpp">
       <BuildOrder>179</BuildOrder>
     </CppCompile>
@@ -719,10 +793,34 @@
     <FormResources Include="Editor\MinimapEditor.dfm" />
     <FormResources Include="Editor\SoundEditor.dfm" />
     <BuildConfiguration Include="Debug Build">
+      <Key>Cfg_1F:\BORSCHT_engine\xray-csky-imgui\src\editors\ECore\ImGui\imgui.cpp</Key>
+    </BuildConfiguration>
+    <BuildConfiguration Include="Debug Build">
+      <Key>Cfg_1F:\BORSCHT_engine\xray-csky-imgui\src\editors\ECore\ImGui\imgui_impl_dx9.cpp</Key>
+    </BuildConfiguration>
+    <BuildConfiguration Include="Debug Build">
       <Key>Cfg_1</Key>
+    </BuildConfiguration>
+    <BuildConfiguration Include="Debug Build">
+      <Key>Cfg_1F:\BORSCHT_engine\xray-csky-imgui\src\editors\ECore\ImGui\imgui_demo.cpp</Key>
+    </BuildConfiguration>
+    <BuildConfiguration Include="Debug Build">
+      <Key>Cfg_1F:\BORSCHT_engine\xray-csky-imgui\src\editors\ECore\ImGui\imgui_draw.cpp</Key>
+    </BuildConfiguration>
+    <BuildConfiguration Include="Release Build">
+      <Key>Cfg_2F:\BORSCHT_engine\xray-csky-imgui\src\editors\ECore\ImGui\imgui.cpp</Key>
+    </BuildConfiguration>
+    <BuildConfiguration Include="Release Build">
+      <Key>Cfg_2F:\BORSCHT_engine\xray-csky-imgui\src\editors\ECore\ImGui\imgui_impl_dx9.cpp</Key>
     </BuildConfiguration>
     <BuildConfiguration Include="Release Build">
       <Key>Cfg_2</Key>
+    </BuildConfiguration>
+    <BuildConfiguration Include="Release Build">
+      <Key>Cfg_2F:\BORSCHT_engine\xray-csky-imgui\src\editors\ECore\ImGui\imgui_demo.cpp</Key>
+    </BuildConfiguration>
+    <BuildConfiguration Include="Release Build">
+      <Key>Cfg_2F:\BORSCHT_engine\xray-csky-imgui\src\editors\ECore\ImGui\imgui_draw.cpp</Key>
     </BuildConfiguration>
   </ItemGroup>
 </Project>

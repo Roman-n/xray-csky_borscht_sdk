@@ -109,7 +109,8 @@ void IM_ChooseForm::Close()
     	m_on_close(this);
 
 	UI->RemoveIMWindow(this);
-    xr_delete(const_cast<IM_ChooseForm*>(this));
+	IM_ChooseForm* _this = this;
+	xr_delete(_this);
 }
 
 void IM_ChooseForm::SetSelected(shared_str selected)
