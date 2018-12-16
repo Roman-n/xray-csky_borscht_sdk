@@ -39,6 +39,16 @@ template <class T, class P1, class P2, class P3, class P4, class P5, class P6, c
 IC	T*		xr_new		(P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, P7 p7) {
 	return new T(p1,p2,p3,p4,p5,p6,p7);
 }
+// new(8)
+template <class T, class P1, class P2, class P3, class P4, class P5, class P6, class P7, class P8>
+IC	T*		xr_new		(P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, P7 p7, P8 p8) {
+	return new T(p1,p2,p3,p4,p5,p6,p7,p8);
+}
+// new(9)
+template <class T, class P1, class P2, class P3, class P4, class P5, class P6, class P7, class P8, class P9>
+IC	T*		xr_new		(P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, P7 p7, P8 p8, P9 p9) {
+	return new T(p1,p2,p3,p4,p5,p6,p7,p8,p9);
+}
 
 //	#define xr_delete(ptr) if (ptr){delete ptr; ptr=0;}
 template <class T>
