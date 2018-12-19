@@ -162,6 +162,8 @@ protected:
 	float                                           f_length;
 
 	void		Update								(float tm);
+	virtual float UpdatePosition();
+
 public:
                     CPostprocessAnimator            (int id, bool cyclic);
                     CPostprocessAnimator            ();

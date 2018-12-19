@@ -184,6 +184,16 @@ void CPostprocessAnimator::SetCurrentFactor	(float f)
 	VERIFY				(_valid(m_dest_factor));
 };
 
+float CPostprocessAnimator::UpdatePosition()
+{
+	if (m_start_time < 0.0f)
+		m_start_time = Device.fTimeGlobal;
+	if (m_bCyclic && ((Device.fTimeGlobal - m_start_time) > f_length))
+		m_start_time += f_length;
+
+	return Device.fTimeGlobal - m_start_time;
+}
+
 #ifndef _PP_EDITOR_
 BOOL CPostprocessAnimator::Process(SPPInfo &PPInfo)
 {
@@ -191,12 +201,8 @@ BOOL CPostprocessAnimator::Process(SPPInfo &PPInfo)
 		fLifeTime				= 100000;
 
 	CEffectorPP::Process		(PPInfo);
-	
 
-	if(m_start_time<0.0f)m_start_time=Device.fTimeGlobal;
-	if(m_bCyclic &&((Device.fTimeGlobal-m_start_time)>f_length)) m_start_time+=f_length;
-
-	Update					(Device.fTimeGlobal-m_start_time);
+	Update					(UpdatePosition());
 
 	VERIFY				(_valid(m_factor));
 	VERIFY				(_valid(m_factor_speed));
@@ -229,7 +235,7 @@ BOOL CPostprocessAnimator::Process(SPPInfo &PPInfo)
 		m_EffectorParams.noise.fps		*= 100.0f;
 	
 	if (0 == m_Params[pp_vignette_radius]->get_keys_count()) {
-		m_EffectorParams.noise.fps = pp_identity.vignette.x;
+		m_EffectorParams.vignette.x = pp_identity.vignette.x;
 	}
 
 	PPInfo.lerp				(pp_identity, m_EffectorParams, m_factor);
