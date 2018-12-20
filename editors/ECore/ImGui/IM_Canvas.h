@@ -6,8 +6,8 @@
 ECORE_API class IM_Canvas : public IM_Window
 {
 	private:
-    int m_width, m_height;
-   	ID3DTexture2D* m_texture;
+	int m_width, m_height;
+	CRT* m_texture;
     HDC m_hdc;
     HBITMAP m_hbitmap, m_holdbm;
 
