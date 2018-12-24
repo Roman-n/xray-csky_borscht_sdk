@@ -374,9 +374,9 @@ void __stdcall TfrmSoundLib::OnItemsFocused(ListItemsVec& items)
 	ButtonValue* B=0;
     if (m_THM_Current.size()==1)
     {
-        ESoundThumbnail* thm=m_THM_Current.back();
+		ESoundThumbnail* thm=m_THM_Current.back();
         u32 size=0;
-        u32 time=0;
+		float time=0.f;
         PlaySound(thm->SrcName(), size, time);
 
         CanvasValue* C=0;
@@ -388,7 +388,7 @@ void __stdcall TfrmSoundLib::OnItemsFocused(ListItemsVec& items)
         B->OnBtnClickEvent.bind		(this,&TfrmSoundLib::OnAttClick);
         
         PHelper().CreateCaption		(props,"File Length",	shared_str().sprintf("%.2f Kb",float(size)/1024.f));
-        PHelper().CreateCaption		(props,"Total Time", 	shared_str().sprintf("%.2f sec",float(time)/1000.f));
+        PHelper().CreateCaption		(props,"Total Time", 	shared_str().sprintf("%.2f sec",time));
         if (!m_Flags.is(flReadOnly)){
 	        B=PHelper().CreateButton(props,"Control",		"Play,Stop",ButtonValue::flFirstOnly);
     	    B->OnBtnClickEvent.bind	(this,&TfrmSoundLib::OnControlClick);
@@ -410,19 +410,19 @@ void __stdcall TfrmSoundLib::OnItemsFocused(ListItemsVec& items)
 }
 //---------------------------------------------------------------------------
 
-void TfrmSoundLib::PlaySound(LPCSTR name, u32& size, u32& time)
+void TfrmSoundLib::PlaySound(LPCSTR name, u32& size, float& time)
 {
 	string_path fname;
-    FS.update_path			(fname,_game_sounds_,ChangeFileExt(name,".ogg").c_str());
-    FS_File F;
-    if (FS.file_find(fname,F))
-    {
-        m_Snd.create		(name,st_Effect,sg_Undefined);
-        m_Snd.play			(0,sm_2D);
-        CSoundRender_Source* src= (CSoundRender_Source*)m_Snd._handle(); VERIFY(src);
-        size				= F.size;
-        time				= iFloor(src->fTimeTotal/1000.0f);
-    	if (!bAutoPlay)		m_Snd.stop();
+	FS.update_path			(fname,_game_sounds_,ChangeFileExt(name,".ogg").c_str());
+	FS_File F;
+	if (FS.file_find(fname,F))
+	{
+		m_Snd.create		(name,st_Effect,sg_Undefined);
+		m_Snd.play			(0,sm_2D);
+		CSoundRender_Source* src= (CSoundRender_Source*)m_Snd._handle(); VERIFY(src);
+		size				= F.size;
+		time				= src->fTimeTotal;
+		if (!bAutoPlay)		m_Snd.stop();
     }
 }
 
