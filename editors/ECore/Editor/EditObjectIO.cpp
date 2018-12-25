@@ -65,9 +65,21 @@ bool CEditableObject::SaveObject(const char* fname)
     // save object
     IWriter* F			= FS.w_open(fname);
 	if (F){
-        F->open_chunk	(EOBJ_CHUNK_OBJECT_BODY);
-        Save			(*F);
-        F->close_chunk	();
+	#ifdef _EDITOR
+		if(EPrefs->object_flags.is(epoLZHCompress))
+		{
+			CMemoryWriter W;
+			Save			(W);
+			F->w_chunk      (EOBJ_CHUNK_OBJECT_BODY | CFS_CompressMark,
+				W.pointer(), W.size());
+		}
+		else
+	#endif
+		{
+			F->open_chunk	(EOBJ_CHUNK_OBJECT_BODY);
+			Save			(*F);
+			F->close_chunk	();
+		}
 
         FS.w_close		(F);
 

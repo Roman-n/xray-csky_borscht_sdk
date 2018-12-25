@@ -19,9 +19,9 @@ CCustomPreferences::CCustomPreferences()
     	.addFlag("Sounds\\Use\\Hardware", 	ss_Hardware)
         .addFlag("Sounds\\Use\\EAX",        ss_EAX);
 
-    m_Prefs["Objects"].set("editor_prefs", "object_flags", ptFlags, &object_flags, Flags32().zero())
-    	.addFlag("Objects\\Library\\Discard Instance", 		epoDiscardInstance)
-        .addFlag("Objects\\Skeleton\\Draw Joints", 			epoDrawJoints)
+	m_Prefs["Objects"].set("editor_prefs", "object_flags", ptFlags, &object_flags, Flags32().zero())
+		.addFlag("Objects\\Library\\Discard Instance", 		epoDiscardInstance)
+		.addFlag("Objects\\Skeleton\\Draw Joints", 			epoDrawJoints)
 		.addFlag("Objects\\Skeleton\\Draw Bone Axis",		epoDrawBoneAxis)
 		.addFlag("Objects\\Skeleton\\Draw Bone Names",		epoDrawBoneNames)
 		.addFlag("Objects\\Skeleton\\Draw Bone Shapes",		epoDrawBoneShapes)
@@ -30,7 +30,8 @@ CCustomPreferences::CCustomPreferences()
 		.addFlag("Objects\\Show\\Animation Path",			epoDrawAnimPath)
 		.addFlag("Objects\\Show\\LOD",						epoDrawLOD)
 		.addFlag("Objects\\Loading\\Deferred Loading RB",	epoDeffLoadRB)
-		.addFlag("Objects\\Loading\\Deferred Loading CF",	epoDeffLoadCF);
+		.addFlag("Objects\\Loading\\Deferred Loading CF",	epoDeffLoadCF)
+		.addFlag("Objects\\Saving\\LZH Compression",		epoLZHCompress);
 
 	m_Prefs["Scene\\Common\\Recent Count"].set		("editor_prefs", "scene_recent_count", 	ptInteger, 	&scene_recent_count, 10,   0,    25);
     m_Prefs["Scene\\Common\\Undo Level"].set		("editor_prefs", "scene_undo_level", 	ptInteger, 	&scene_undo_level, 	 125,  0,    125);
@@ -189,48 +190,6 @@ void CCustomPreferences::OnKeyboardCommonFileClick(ButtonValue* B, bool& bModif,
 
 void CCustomPreferences::FillProp(PropItemVec& props)
 {
-/*
-    PHelper().CreateFlag32	(props,"Objects\\Library\\Discard Instance",	&object_flags, 	epoDiscardInstance);
-    PHelper().CreateFlag32	(props,"Objects\\Skeleton\\Draw Joints",		&object_flags, 	epoDrawJoints);
-    PHelper().CreateFlag32	(props,"Objects\\Skeleton\\Draw Bone Axis",		&object_flags, 	epoDrawBoneAxis);
-    PHelper().CreateFlag32	(props,"Objects\\Skeleton\\Draw Bone Names",	&object_flags, 	epoDrawBoneNames);
-    PHelper().CreateFlag32	(props,"Objects\\Skeleton\\Draw Bone Shapes",	&object_flags, 	epoDrawBoneShapes);
-    PHelper().CreateFlag32	(props,"Objects\\Show\\Hint",					&object_flags, 	epoShowHint);
-    PHelper().CreateFlag32	(props,"Objects\\Show\\Pivot",					&object_flags, 	epoDrawPivot);
-    PHelper().CreateFlag32	(props,"Objects\\Show\\Animation Path",			&object_flags, 	epoDrawAnimPath);
-    PHelper().CreateFlag32	(props,"Objects\\Show\\LOD",					&object_flags, 	epoDrawLOD);
-    PHelper().CreateFlag32	(props,"Objects\\Loading\\Deffered Loading RB",	&object_flags, 	epoDeffLoadRB);
-    PHelper().CreateFlag32	(props,"Objects\\Loading\\Deffered Loading CF",	&object_flags, 	epoDeffLoadCF);
-
-    PHelper().CreateU32		(props,"Scene\\Common\\Recent Count", 		    &scene_recent_count,0, 		25);
-    PHelper().CreateU32		(props,"Scene\\Common\\Undo Level", 		    &scene_undo_level,	0, 		125);
-    PHelper().CreateFloat	(props,"Scene\\Grid\\Cell Size", 	           	&grid_cell_size,	0.1f,	10.f);
-    PHelper().CreateU32		(props,"Scene\\Grid\\Cell Count", 	           	&grid_cell_count,	10, 	1000);
-
-    PHelper().CreateBOOL	(props,"Tools\\Box Pick\\Limited Depth",		&bp_lim_depth);
-    PHelper().CreateBOOL	(props,"Tools\\Box Pick\\Back Face Culling",	&bp_cull);
-    PHelper().CreateFloat	(props,"Tools\\Box Pick\\Depth Tolerance",		&bp_depth_tolerance,0.f, 	10000.f);
-    PHelper().CreateFloat	(props,"Tools\\Sens\\Move",			          	&tools_sens_move);
-    PHelper().CreateFloat	(props,"Tools\\Sens\\Rotate",		          	&tools_sens_rot);
-    PHelper().CreateFloat	(props,"Tools\\Sens\\Scale",		          	&tools_sens_scale);
-    PHelper().CreateAngle	(props,"Tools\\Snap\\Angle",		          	&snap_angle,		0, 		PI_MUL_2);
-    PHelper().CreateFloat	(props,"Tools\\Snap\\Move",			          	&snap_move, 		0.01f,	1000.f);
-    PHelper().CreateFloat	(props,"Tools\\Snap\\Move To", 		          	&snap_moveto,		0.01f,	1000.f);
-
-    PHelper().CreateFlag32	(props,"Sounds\\Use\\Hardware",					&psSoundFlags, 	ss_Hardware);
-    PHelper().CreateFlag32	(props,"Sounds\\Use\\EAX",						&psSoundFlags, 	ss_EAX);
-
-    PHelper().CreateFloat	(props,"Viewport\\Camera\\Move Sens",		    &cam_sens_move);
-    PHelper().CreateFloat	(props,"Viewport\\Camera\\Rotate Sens",		    &cam_sens_rot);
-    PHelper().CreateFloat	(props,"Viewport\\Camera\\Fly Speed",		    &cam_fly_speed, 	0.01f, 	100.f);
-    PHelper().CreateFloat	(props,"Viewport\\Camera\\Fly Altitude",	    &cam_fly_alt, 		0.f, 	1000.f);
-    PHelper().CreateColor	(props,"Viewport\\Fog\\Color",				    &fog_color	);
-    PHelper().CreateFloat	(props,"Viewport\\Fog\\Fogness",			    &fog_fogness, 		0.f, 	100.f);
-    PHelper().CreateFloat	(props,"Viewport\\Near Plane",				    &view_np, 			0.01f,	10.f);
-    PHelper().CreateFloat	(props,"Viewport\\Far Plane", 				    &view_fp,			10.f, 	10000.f);
-    PHelper().CreateAngle	(props,"Viewport\\FOV",		  				    &view_fov,			deg2rad(0.1f), deg2rad(170.f));
-    PHelper().CreateColor	(props,"Viewport\\Clear Color",		           	&scene_clear_color	);
-*/
 	xr_map<LPCSTR, SPreference>::iterator it, end;
     for(it = m_Prefs.begin(), end = m_Prefs.end(); it != end; it++)
     {
@@ -285,45 +244,6 @@ void CCustomPreferences::Edit()
 
 void CCustomPreferences::Load(CInifile* I)
 {
-/*
-    psDeviceFlags.flags		= R_U32_SAFE	("editor_prefs","device_flags",	psDeviceFlags.flags);
-    psSoundFlags.flags		= R_U32_SAFE	("editor_prefs","sound_flags",	psSoundFlags.flags)
-
-    Tools->m_Settings.flags	= R_U32_SAFE	("editor_prefs","tools_settings",Tools->m_Settings.flags);
-    
-    view_np				= R_FLOAT_SAFE	("editor_prefs","view_np"			,view_np		 	);
-    view_fp				= R_FLOAT_SAFE	("editor_prefs","view_fp"			,view_fp		 	);
-    view_fov			= R_FLOAT_SAFE	("editor_prefs","view_fov"			,view_fov			);
-
-    fog_color			= R_U32_SAFE	("editor_prefs","fog_color"			,fog_color			);
-    fog_fogness			= R_FLOAT_SAFE	("editor_prefs","fog_fogness"		,fog_fogness	 	);
-
-    cam_fly_speed		= R_FLOAT_SAFE	("editor_prefs","cam_fly_speed"		,cam_fly_speed		);
-    cam_fly_alt			= R_FLOAT_SAFE	("editor_prefs","cam_fly_alt"		,cam_fly_alt	 	);
-    cam_sens_rot		= R_FLOAT_SAFE	("editor_prefs","cam_sens_rot"		,cam_sens_rot		);
-    cam_sens_move		= R_FLOAT_SAFE	("editor_prefs","cam_sens_move"		,cam_sens_move		);
-
-    tools_sens_move		= R_FLOAT_SAFE	("editor_prefs","tools_sens_move"	,tools_sens_move  	);
-    tools_sens_rot		= R_FLOAT_SAFE	("editor_prefs","tools_sens_rot"	,tools_sens_rot		);
-    tools_sens_scale	= R_FLOAT_SAFE	("editor_prefs","tools_sens_scale"	,tools_sens_scale	);
-    
-    bp_lim_depth		= R_BOOL_SAFE	("editor_prefs","bp_lim_depth"		,bp_lim_depth		);
-    bp_cull				= R_BOOL_SAFE	("editor_prefs","bp_cull"			,bp_cull		  	);
-    bp_depth_tolerance	= R_FLOAT_SAFE	("editor_prefs","bp_depth_tolerance",bp_depth_tolerance	);
-
-    snap_angle			= R_FLOAT_SAFE	("editor_prefs","snap_angle"		,snap_angle			);
-    snap_move			= R_FLOAT_SAFE	("editor_prefs","snap_move"			,snap_move			);
-    snap_moveto			= R_FLOAT_SAFE	("editor_prefs","snap_moveto"		,snap_moveto	   	);
-
-    grid_cell_size		= R_FLOAT_SAFE	("editor_prefs","grid_cell_size"	,grid_cell_size		);
-    grid_cell_count		= R_U32_SAFE	("editor_prefs","grid_cell_count"	,grid_cell_count   	);
-
-    scene_undo_level	= R_U32_SAFE	("editor_prefs","scene_undo_level"	,scene_undo_level	);
-    scene_recent_count	= R_U32_SAFE	("editor_prefs","scene_recent_count",scene_recent_count	);
-    scene_clear_color	= R_U32_SAFE	("editor_prefs","scene_clear_color"	,scene_clear_color	);
-
-    object_flags.flags	= R_U32_SAFE	("editor_prefs","object_flags"		,object_flags.flags );
-*/
 	xr_map<LPCSTR, SPreference>::iterator p_it, p_end;
     for(p_it = m_Prefs.begin(), p_end = m_Prefs.end(); p_it != p_end; p_it++)
     {
@@ -362,45 +282,6 @@ void CCustomPreferences::Load(CInifile* I)
 
 void CCustomPreferences::Save(CInifile* I)
 {
-/*
-    I->w_u32	("editor_prefs","device_flags",		psDeviceFlags.flags	);
-    I->w_u32	("editor_prefs","sound_flags",		psSoundFlags.flags	);
-
-    I->w_u32	("editor_prefs","tools_settings",	Tools->m_Settings.flags	);
-
-    I->w_float	("editor_prefs","view_np",			view_np			);
-    I->w_float	("editor_prefs","view_fp",			view_fp			);
-    I->w_float	("editor_prefs","view_fov",			view_fov		);
-
-    I->w_u32	("editor_prefs","fog_color",		fog_color		);
-    I->w_float	("editor_prefs","fog_fogness",		fog_fogness		);
-
-    I->w_float	("editor_prefs","cam_fly_speed",	cam_fly_speed	);
-    I->w_float	("editor_prefs","cam_fly_alt",		cam_fly_alt		);
-    I->w_float	("editor_prefs","cam_sens_rot",		cam_sens_rot	);
-    I->w_float	("editor_prefs","cam_sens_move",	cam_sens_move	);
-
-    I->w_float	("editor_prefs","tools_sens_rot",	tools_sens_rot	);
-    I->w_float	("editor_prefs","tools_sens_move",	tools_sens_move	);
-    I->w_float	("editor_prefs","tools_sens_scale",	tools_sens_scale);
-
-    I->w_bool	("editor_prefs","bp_lim_depth",		bp_lim_depth	);
-    I->w_bool	("editor_prefs","bp_cull",			bp_cull			);
-    I->w_float	("editor_prefs","bp_depth_tolerance",bp_depth_tolerance	);
-
-    I->w_float	("editor_prefs","snap_angle",		snap_angle		);
-    I->w_float	("editor_prefs","snap_move",		snap_move		);
-    I->w_float	("editor_prefs","snap_moveto",		snap_moveto		);
-
-    I->w_float	("editor_prefs","grid_cell_size",	grid_cell_size	);
-    I->w_u32	("editor_prefs","grid_cell_count",	grid_cell_count	);
-
-    I->w_u32	("editor_prefs","scene_undo_level",		scene_undo_level	);
-    I->w_u32	("editor_prefs","scene_recent_count",	scene_recent_count	);
-    I->w_u32	("editor_prefs","scene_clear_color",	scene_clear_color 	);
-
-    I->w_u32	("editor_prefs","object_flags",		object_flags.flags);
-*/
 	xr_map<LPCSTR, SPreference>::iterator p_it, p_end;
     for(p_it = m_Prefs.begin(), p_end = m_Prefs.end(); p_it != p_end; p_it++)
     {
