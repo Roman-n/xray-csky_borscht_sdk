@@ -256,7 +256,9 @@ void EScene::Clear(BOOL bEditableToolsOnly)
     m_ScriptCompileDetails	= "bin_x86\\xrDO_Light -f %LEVEL%";
     m_ScriptCompileAIMap	= "bin_x86\\xrAI -f %LEVEL%";
     m_ScriptCompileSpawn	= "bin_x86\\xrAI -s %LEVEL%";
-    m_ScriptRunGame			= "bin_x86\\xrEngine -start server(%LEVEL%/single) client(localhost)";
+	m_ScriptRunGame			= "bin_x86\\xrEngine -start server(%LEVEL%/single) client(localhost)";
+
+	m_CountByName.clear		();
 }
 //----------------------------------------------------
 

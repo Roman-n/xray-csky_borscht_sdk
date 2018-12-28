@@ -298,7 +298,10 @@ protected:
     
 public:
     void            RegisterSubstObjectName  (const xr_string& from, const xr_string& to );
-    bool            GetSubstObjectName       (const xr_string& from, xr_string& to) const;
+	bool            GetSubstObjectName       (const xr_string& from, xr_string& to) const;
+
+public:
+	xr_map<xr_string, int> m_CountByName;
 };
 
 //----------------------------------------------------
