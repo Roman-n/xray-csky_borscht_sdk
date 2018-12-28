@@ -31,11 +31,10 @@ object fraLeftBar: TfraLeftBar
     Color = 10528425
     Constraints.MinWidth = 220
     TabOrder = 0
-    ExplicitWidth = 430
     object paScene: TPanel
       Left = 1
       Top = 1
-      Width = 428
+      Width = 449
       Height = 154
       Hint = 'Scene commands'
       Align = alTop
@@ -61,7 +60,7 @@ object fraLeftBar: TfraLeftBar
         ExplicitWidth = 31
       end
       object sbSceneMin: TExtBtn
-        Left = 436
+        Left = 457
         Top = 2
         Width = 11
         Height = 11
@@ -336,7 +335,6 @@ object fraLeftBar: TfraLeftBar
       Color = 10528425
       TabOrder = 1
       Visible = False
-      ExplicitWidth = 428
       DesignSize = (
         449
         65)
@@ -550,7 +548,6 @@ object fraLeftBar: TfraLeftBar
       Align = alTop
       Color = 10528425
       TabOrder = 2
-      ExplicitWidth = 428
       DesignSize = (
         449
         139)
@@ -3256,7 +3253,6 @@ object fraLeftBar: TfraLeftBar
       Align = alTop
       Color = 10528425
       TabOrder = 3
-      ExplicitWidth = 428
       DesignSize = (
         449
         115)
@@ -3495,8 +3491,6 @@ object fraLeftBar: TfraLeftBar
     Color = 10528425
     Constraints.MinWidth = 220
     TabOrder = 1
-    ExplicitTop = 553
-    ExplicitWidth = 430
   end
   object fsStorage: TFormStorage
     IniSection = 'LeftBar'

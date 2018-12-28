@@ -467,6 +467,13 @@ CCommandVar CommandPaste(CCommandVar p1, CCommandVar p2)
     }
 }
 
+CCommandVar CommandDuplicate(CCommandVar p1, CCommandVar p2)
+{
+	ExecCommand(COMMAND_COPY);
+	ExecCommand(COMMAND_PASTE);
+	return TRUE;
+}
+
 #include "AppendObjectInfoForm.h"
 CCommandVar CommandLoadSelection(CCommandVar p1, CCommandVar p2)
 {
@@ -1059,6 +1066,7 @@ void CLevelMain::RegisterCommands()
 	REGISTER_CMD_SE	    (COMMAND_CUT,              			"Edit\\Cut",					CommandCut,false);
 	REGISTER_CMD_SE	    (COMMAND_COPY,              		"Edit\\Copy",					CommandCopy,false);
 	REGISTER_CMD_SE	    (COMMAND_PASTE,              		"Edit\\Paste",					CommandPaste,false);
+	REGISTER_CMD_SE		(COMMAND_DUPLICATE,					"Edit\\Duplicate",				CommandDuplicate,false);
 	REGISTER_CMD_S	    (COMMAND_LOAD_SELECTION,            CommandLoadSelection);
 	REGISTER_CMD_S	    (COMMAND_SAVE_SELECTION,            CommandSaveSelection);
 	REGISTER_CMD_SE	    (COMMAND_UNDO,              		"Edit\\Undo",					CommandUndo,false);
