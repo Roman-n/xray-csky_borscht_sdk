@@ -198,18 +198,18 @@ void __fastcall TfrmChoseItem::FormShow(TObject *Sender)
                 if (fld_node) fld_node->Expand(false);
             }
         }
-    }else{
-        TElTreeItem* itm_node = FHelper.FindItem(tvItems,m_LastSelection.LowerCase().c_str(),0,0);//,bIgnoreExt);
-        TElTreeItem* fld_node = 0;
+	}else{
+		TElTreeItem* fld_node = 0;
+		TElTreeItem* itm_node = FHelper.FindItem(tvItems,m_LastSelection.LowerCase().c_str(),&fld_node,0);
         if (itm_node){
-            tvItems->Selected = itm_node;
+			tvItems->Selected = itm_node;
             tvItems->EnsureVisible(itm_node);
-            fld_node=itm_node->Parent;
+			fld_node=itm_node->Parent;
             if (fld_node) fld_node->Expand(false);
         }else if (fld_node){
-            tvItems->EnsureVisible(fld_node);
-            fld_node->Expand(false);
-            tvItems->Selected = fld_node;
+			tvItems->EnsureVisible(fld_node);
+			fld_node->Expand(false);
+			tvItems->Selected = fld_node;
         }
     }
     paMulti->Visible = m_Flags.is(cfMultiSelect);
