@@ -113,7 +113,7 @@ bool CFileDialog::ShowModal(HWND owner)
         	DefaultExt.erase(0, 1);
     }
 
-	int ret = -1;
+	int ret;
 	if((GetVersion() & 0xFF) >= 6) // if NT6 or greater
 	{
     	ret = ShowVista(owner);
@@ -235,8 +235,10 @@ int CFileDialog::ShowOld(HWND owner)
 
 int CFileDialog::ShowVista(HWND owner)
 {
-	DefaultDir = tofullpath(DefaultDir);
-	CurrentDir = tofullpath(CurrentDir);
+	if(DefaultDir.length())
+		DefaultDir = tofullpath(DefaultDir);
+	if(CurrentDir.length())
+		CurrentDir = tofullpath(CurrentDir);
     
     if(pSHCreateItemFromParsingName == NULL)
     {
@@ -246,7 +248,7 @@ int CFileDialog::ShowVista(HWND owner)
         R_ASSERT(pSHCreateItemFromParsingName);
     }
 
-    IFileDialog *dlg = NULL;
+    IFileDialog *dlg;
     IFileOpenDialog *odlg = NULL;
     IFileSaveDialog *sdlg = NULL;
 
