@@ -171,6 +171,7 @@ public:
 	virtual void __stdcall			assign_shapes	(CShapeData::shape_def* shapes, u32 cnt);
 };
 add_to_type_list(CSE_Shape)
+#undef script_type_list
 #define script_type_list save_type_list(CSE_Shape)
 
 SERVER_ENTITY_DECLARE_BEGIN(CSE_Spectator,CSE_Abstract)
@@ -179,6 +180,7 @@ SERVER_ENTITY_DECLARE_BEGIN(CSE_Spectator,CSE_Abstract)
 	virtual u8						g_team			();
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_Spectator)
+#undef script_type_list
 #define script_type_list save_type_list(CSE_Spectator)
 
 SERVER_ENTITY_DECLARE_BEGIN(CSE_Temporary,CSE_Abstract)
@@ -187,6 +189,7 @@ SERVER_ENTITY_DECLARE_BEGIN(CSE_Temporary,CSE_Abstract)
 	virtual							~CSE_Temporary	();
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_Temporary)
+#undef script_type_list
 #define script_type_list save_type_list(CSE_Temporary)
 
 SERVER_ENTITY_DECLARE_BEGIN0(CSE_PHSkeleton)
@@ -212,7 +215,8 @@ protected:
 	virtual void					data_save				(NET_Packet &tNetPacket);
 public:
 SERVER_ENTITY_DECLARE_END
-		add_to_type_list(CSE_PHSkeleton)
+add_to_type_list(CSE_PHSkeleton)
+#undef script_type_list
 #define script_type_list save_type_list(CSE_PHSkeleton)
 
 SERVER_ENTITY_DECLARE_BEGIN2(CSE_AbstractVisual,CSE_Abstract,CSE_Visual)
@@ -222,6 +226,7 @@ SERVER_ENTITY_DECLARE_BEGIN2(CSE_AbstractVisual,CSE_Abstract,CSE_Visual)
 	LPCSTR							getStartupAnimation		();
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_AbstractVisual)
+#undef script_type_list
 #define script_type_list save_type_list(CSE_AbstractVisual)
 
 #ifndef AI_COMPILER

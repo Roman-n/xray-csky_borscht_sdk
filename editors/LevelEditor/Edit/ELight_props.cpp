@@ -142,10 +142,10 @@ void CLight::FillAttProp(LPCSTR pref, PropItemVec& items)
     V->OnChangeEvent.bind	(this,&CLight::OnPointDataChange);
     V=PHelper().CreateFloat	(items,	PrepareKey(pref, "Attenuation\\Quadratic"),	&m_Attenuation2,0.f,1.f,0.0001f,6);
     V->OnChangeEvent.bind	(this,&CLight::OnPointDataChange);
-	ButtonValue* B=0;
+	ButtonValue* B;
     B=PHelper().CreateButton(items,	PrepareKey(pref, "Attenuation\\Auto"),"Linear,Quadratic",0);
     B->OnBtnClickEvent.bind	(this,&CLight::OnAutoClick);
-	CanvasValue* C=0;
+	CanvasValue* C;
     C=PHelper().CreateCanvas	(items,	PrepareKey(pref, "Attenuation\\Graphic"),	"", 64);
     C->tag					= (int)this;
     C->OnDrawCanvasEvent.bind(this,&CLight::OnAttenuationDraw);
@@ -166,17 +166,17 @@ void CLight::FillPointProp(LPCSTR pref, PropItemVec& items)
 //    PHelper().CreateFlag32	(items,	PrepareKey(pref,"Flags\\Breakable"),&m_Flags,	CLight::flBreaking);
 
 	FillAttProp			(pref,items);
-    PropValue* 			P=0;
-    ButtonValue* 		B=0;
+	PropValue* 			P;
+	ButtonValue* 		B;
     P=PHelper().CreateFlag32(items,	PrepareKey(pref, "Fuzzy"),				&m_Flags,	ELight::flPointFuzzy);
     P->OnChangeEvent.bind	(this,&CLight::OnFuzzyFlagChange);
 	if (m_Flags.is(ELight::flPointFuzzy)){
         VERIFY				(m_FuzzyData);
         P=PHelper().CreateS16		(items,	PrepareKey(pref, "Fuzzy\\Count"),			&m_FuzzyData->m_PointCount,1,100);
         P->OnChangeEvent.bind		(this,&CLight::OnFuzzyDataChange);
-	    B=PHelper().CreateButton	(items,	PrepareKey(pref, "Fuzzy\\Generate"),"Random",0);
-    	B->OnBtnClickEvent.bind		(this,&CLight::OnFuzzyGenerateClick);
-        P=PHelper().CreateToken8	(items,	PrepareKey(pref, "Fuzzy\\Shape"),		(u8*)&m_FuzzyData->m_ShapeType,	fuzzy_shape_types);
+		B=PHelper().CreateButton	(items,	PrepareKey(pref, "Fuzzy\\Generate"),"Random",0);
+		B->OnBtnClickEvent.bind		(this,&CLight::OnFuzzyGenerateClick);
+		P=PHelper().CreateToken8	(items,	PrepareKey(pref, "Fuzzy\\Shape"),		(u8*)&m_FuzzyData->m_ShapeType,	fuzzy_shape_types);
         P->OnChangeEvent.bind		(this,&CLight::OnFuzzyTypeChange);
         switch (m_FuzzyData->m_ShapeType){
         case CLight::SFuzzyData::fstSphere: 
@@ -216,7 +216,7 @@ void CLight::FillProp(LPCSTR pref, PropItemVec& items)
 {
 	inherited::FillProp(pref,items);
 
-    PropValue* V=0;
+	PropValue* V;
 
     V=PHelper().CreateToken32	(items,	PrepareKey(pref,"Type"),		(u32*)&m_Type,token_light_type);
     V->OnChangeEvent.bind	(this,&CLight::OnTypeChange);

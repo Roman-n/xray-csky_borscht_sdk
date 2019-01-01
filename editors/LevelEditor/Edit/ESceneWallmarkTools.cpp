@@ -539,7 +539,7 @@ void ESceneWallmarkTool::OnSynchronize()
 // allocate
 ESceneWallmarkTool::wallmark*	ESceneWallmarkTool::wm_allocate		()
 {
-	wallmark*			W = 0;
+	wallmark*			W;
 	if (pool.empty())	W = xr_new<wallmark> ();
 	else				{ W = pool.back(); pool.pop_back(); }
 
