@@ -697,6 +697,10 @@ bool CSpawnPoint::CreateSpawnData(LPCSTR entity_ref)
 
 bool CSpawnPoint::GetBox( Fbox& box )
 {
+	ESceneSpawnTool* st = dynamic_cast<ESceneSpawnTool*>(ParentTool);
+	VERIFY(st);
+	bool bHideShape = st->m_Flags.is(ESceneSpawnTool::flHideAttachedObjects);
+	
     switch (m_Type){
     case ptRPoint: 	
         box.set		( PPosition, PPosition );
@@ -715,7 +719,7 @@ bool CSpawnPoint::GetBox( Fbox& box )
         		box.grow	(m_EM_Radius);
         	break;
         	case CShapeData::cfBox:
-        		box.identity();
+				box.identity();
             	box.xform	(FTransform);
         	break;
         	default:
@@ -730,13 +734,13 @@ bool CSpawnPoint::GetBox( Fbox& box )
     	if (m_SpawnData.Valid()){
 			if (m_SpawnData.m_Visual&&m_SpawnData.m_Visual->visual)
             {
-            	box.set		(m_SpawnData.m_Visual->visual->getVisData().box);
-                box.xform	(FTransformRP);
-            }else{
+				box.set		(m_SpawnData.m_Visual->visual->getVisData().box);
+				box.xform	(FTransformRP);
+			}else{
 			    CEditShape* shape	= dynamic_cast<CEditShape*>(m_AttachedObject);
-                if (shape&&!shape->GetShapes().empty()){
-                	CShapeData::ShapeVec& SV	= shape->GetShapes();
-                	box.invalidate();
+				if (!bHideShape&&shape&&!shape->GetShapes().empty()){
+					CShapeData::ShapeVec& SV	= shape->GetShapes();
+					box.invalidate();
                     Fvector p;
                 	for (CShapeData::ShapeIt it=SV.begin(); it!=SV.end(); it++){
                     	switch (it->type){
@@ -763,7 +767,7 @@ bool CSpawnPoint::GetBox( Fbox& box )
         }else{
             box.set		( PPosition, PPosition );
             box.min.x 	-= RPOINT_SIZE;
-            box.min.y 	-= 0;
+			box.min.y 	-= 0;
             box.min.z 	-= RPOINT_SIZE;
             box.max.x 	+= RPOINT_SIZE;
             box.max.y 	+= RPOINT_SIZE*2.f;
@@ -772,7 +776,7 @@ bool CSpawnPoint::GetBox( Fbox& box )
     break;
     default: NODEFAULT;
     }
-    if (m_AttachedObject){ 		
+	if (m_AttachedObject && !bHideShape){
     	Fbox 					bb;
     	m_AttachedObject->GetBox(bb);
         box.merge				(bb);
@@ -835,17 +839,21 @@ void CSpawnPoint::Render( int priority, bool strictB2F )
 	inherited::Render			(priority, strictB2F);
 	Scene->SelectLightsForObject(this);
 
+	ESceneSpawnTool* st	= dynamic_cast<ESceneSpawnTool*>(ParentTool); VERIFY(st);
     
     // render attached object
-    if (m_AttachedObject) 		m_AttachedObject->Render(priority, strictB2F);
-	if (m_SpawnData.Valid())    m_SpawnData.Render(Selected(),FTransformRP,priority, strictB2F);
+	if (m_AttachedObject)
+		if(!st->m_Flags.is(ESceneSpawnTool::flHideAttachedObjects))
+			m_AttachedObject->Render(priority, strictB2F);
+	if (m_SpawnData.Valid())
+		m_SpawnData.Render(Selected(),FTransformRP,priority, strictB2F);
+
 	// render spawn point
     if (1==priority){
         if (strictB2F){
             RCache.set_xform_world(FTransformRP);
             if (m_SpawnData.Valid()){
-                // render icon
-                ESceneSpawnTool* st	= dynamic_cast<ESceneSpawnTool*>(ParentTool); VERIFY(st);
+				// render icon
                 ref_shader s 	   	= st->GetIcon(m_SpawnData.m_Data->name());
                 DU_impl.DrawEntity		(0xffffffff,s);
             }else{
@@ -853,7 +861,6 @@ void CSpawnPoint::Render( int priority, bool strictB2F )
                 {
                     case ptRPoint:
                     {
-                		ESceneSpawnTool* st	= dynamic_cast<ESceneSpawnTool*>(ParentTool); VERIFY(st);
                     	if( NULL==st->get_draw_visual(m_RP_TeamID, m_RP_Type, m_GameType) )
                         {
                             float k = 1.f/(float(m_RP_TeamID+1)/float(MAX_TEAM));
@@ -891,30 +898,6 @@ void CSpawnPoint::Render( int priority, bool strictB2F )
                 }
             }
         }else{
-            ESceneSpawnTool* st = dynamic_cast<ESceneSpawnTool*>(ParentTool); VERIFY(st);
-            if (st->m_Flags.is(ESceneSpawnTool::flShowSpawnType))
-            {
-                AnsiString s_name;
-                if (m_SpawnData.Valid())
-                {
-                    s_name	= m_SpawnData.m_Data->name();
-                }else{
-                    switch (m_Type)
-                    {
-                    case ptRPoint: 	s_name.sprintf("RPoint T:%d",m_RP_TeamID); break;
-                    case ptEnvMod:
-                    	s_name.sprintf("EnvMod V:%3.2f, F:%3.2f",m_EM_ViewDist,m_EM_FogDensity);
-					break;
-                    default: THROW2("CSpawnPoint:: Unknown Type");
-                    }
-                }
-                
-                Fvector D;	D.sub(Device.vCameraPosition,PPosition);
-                float dist 	= D.normalize_magn();
-                if (!st->m_Flags.is(ESceneSpawnTool::flPickSpawnType)||
-                    !Scene->RayPickObject(dist,PPosition,D,OBJCLASS_SCENEOBJECT,0,0))
-                        DU_impl.OutText	(PPosition,s_name.c_str(),0xffffffff,0xff000000);
-            }
             if(Selected())
             {
                 RCache.set_xform_world(Fidentity);
@@ -928,7 +911,6 @@ void CSpawnPoint::Render( int priority, bool strictB2F )
     
 	if(m_Type==ptRPoint)
     {
-        ESceneSpawnTool* st		= dynamic_cast<ESceneSpawnTool*>(ParentTool); VERIFY(st);
         CEditableObject* v		= st->get_draw_visual(m_RP_TeamID, m_RP_Type, m_GameType); 
         if(v)
         	v->Render				(FTransformRP, priority, strictB2F);
@@ -937,7 +919,13 @@ void CSpawnPoint::Render( int priority, bool strictB2F )
 
 bool CSpawnPoint::FrustumPick(const CFrustum& frustum)
 {
-    if (m_AttachedObject&&m_AttachedObject->FrustumPick(frustum)) return true;
+	ESceneSpawnTool* st = dynamic_cast<ESceneSpawnTool*>(ParentTool);
+	VERIFY(st);
+
+	if(!st->m_Flags.is(ESceneSpawnTool::flHideAttachedObjects)&&
+	  m_AttachedObject&&m_AttachedObject->FrustumPick(frustum))
+		return true;
+
     Fbox bb; GetBox(bb);
     u32 mask=0xff;
     return (frustum.testAABB(bb.data(),mask));
@@ -945,8 +933,11 @@ bool CSpawnPoint::FrustumPick(const CFrustum& frustum)
 
 bool CSpawnPoint::RayPick(float& distance, const Fvector& start, const Fvector& direction, SRayPickInfo* pinf)
 {
+	ESceneSpawnTool* st = dynamic_cast<ESceneSpawnTool*>(ParentTool);
+	VERIFY(st);
+
 	bool bPick 	= false;
-    if (m_AttachedObject){
+	if (m_AttachedObject&&!st->m_Flags.is(ESceneSpawnTool::flHideAttachedObjects)){
     	bPick 	= m_AttachedObject->RayPick(distance, start, direction, pinf);
         return 	bPick;
     }
@@ -1426,7 +1417,7 @@ void CSpawnPoint::FillProp(LPCSTR pref, PropItemVec& items)
         	PHelper().CreateFloat	(items, PrepareKey(pref,"Environment Modificator\\Radius"),			&m_EM_Radius, 	EPS_L,10000.f);
         	PHelper().CreateFloat	(items, PrepareKey(pref,"Environment Modificator\\Power"), 			&m_EM_Power, 	EPS,1000.f);
 
-            Flag16Value* FV 		= NULL;
+			Flag16Value* FV;
             
 	        FV = PHelper().CreateFlag16(items, PrepareKey(pref,"Environment Modificator\\View Distance"), &m_EM_Flags, eViewDist);
             FV->OnChangeEvent.bind	 (this,&CSpawnPoint::OnEnvModFlagChange);
