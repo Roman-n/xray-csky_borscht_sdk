@@ -125,7 +125,8 @@ public:
     xr_string		LevelPartPath		(LPCSTR map_name);
     xr_string		LevelPartName		(LPCSTR map_name, ObjClassID cls);
 
-    BOOL			LoadLevelPart		(ESceneToolBase* M, LPCSTR map_name);
+	BOOL			LoadLevelPart		(ESceneToolBase* M, LPCSTR map_name);
+	BOOL			LoadLevelPartStream	(ESceneToolBase* M, LPCSTR map_name);
     BOOL			LoadLevelPartLTX	(ESceneToolBase* M, LPCSTR map_name);
 
     BOOL			LoadLevelPart		(LPCSTR map_name, ObjClassID cls, bool lock);
@@ -136,7 +137,8 @@ public:
 public:
 	bool			ExportGame			(SExportStreams* F);
 
-	bool 			Load				(LPCSTR map_name, bool bUndo);
+	bool			Load				(LPCSTR map_name, bool bUndo);
+	bool 			LoadStream			(LPCSTR map_name, bool bUndo);
 	bool 			LoadLTX				(LPCSTR map_name, bool bUndo);
 
 	void 			Save				(LPCSTR map_name, bool bUndo, bool bForceSaveAll);

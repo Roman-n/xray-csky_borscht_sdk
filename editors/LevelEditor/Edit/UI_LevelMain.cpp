@@ -211,24 +211,9 @@ CCommandVar CommandLoad(CCommandVar p1, CCommandVar p2)
             UI->SetStatus			("Level loading...");
             ExecCommand				(COMMAND_CLEAR);
 
-            if(!FS.exist(temp_fn.c_str()))
-            {
-            	ELog.DlgMsg(mtError, "Can't find map file '%s'", temp_fn.c_str());
-                return FALSE;
-            }
-
-			IReader* R = FS.r_open	(temp_fn.c_str());
-            char ch;
-            R->r(&ch, sizeof(ch));
-            bool is_ltx = (ch=='[');
-            FS.r_close(R);
             bool res;
-            LTools->m_LastFileName	= temp_fn.c_str();
-
-            if(is_ltx)
-            	res = Scene->LoadLTX(temp_fn.c_str(), false);
-            else
-            	res = Scene->Load(temp_fn.c_str(), false);
+			LTools->m_LastFileName	= temp_fn.c_str();
+			res = Scene->Load(temp_fn.c_str(), false);
 
             if (res)
             {

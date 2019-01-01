@@ -210,66 +210,39 @@ void st_LevelOptions::Read(IReader& F)
             m_mapUsage.m_GameType.set					(eGameIDTeamDeathmatch, F.r_s32());
             m_mapUsage.m_GameType.set					(eGameIDArtefactHunt,	F.r_s32());
         }
-    }
+	}
 }
 
 //------------------------------------------------------------------------------------------------
 // Scene
 //------------------------------------------------------------------------------------------------
-BOOL EScene::LoadLevelPartLTX(ESceneToolBase* M, LPCSTR map_name)
-{
-	if(!M->can_use_inifile())
-    	return LoadLevelPart(M, map_name);
-
-	if (FS.exist(map_name))
-    {
-        IReader* R		= FS.r_open	(map_name);
-        VERIFY			(R);
-        char ch;
-        R->r(&ch,sizeof(ch));
-        bool b_is_inifile = (ch=='[');
-        FS.r_close		(R);
-
-        if(!b_is_inifile)
-    		return LoadLevelPart(M, map_name);
-
-		// check locking
-        if (EFS.CheckLocking(map_name,false,false))
-        {
-            M->m_EditFlags.set(ESceneToolBase::flReadonly,TRUE);
-            Msg				("!Level part '%s' locked by <unknown> user.",M->ClassDesc());
-        }else
-        {
-            M->m_EditFlags.set(ESceneToolBase::flReadonly,FALSE);
-			if (M->IsEditable())
-            	EFS.LockFile(map_name);
-        }
-
-        CInifile		ini(map_name);
-
-    	// check level part GUID
-        xrGUID			guid;
-        guid.LoadLTX	(ini,"guid","guid");
-
-        if (guid!=m_GUID)
-        {
-        	EFS.UnlockFile	(map_name);
-            ELog.DlgMsg		(mtError,"Skipping invalid version of level part: '%s\\%s.part'",EFS.ExtractFileName(map_name).c_str(),M->ClassName());
-            return 			FALSE;
-        }
-        // read data
-        M->LoadLTX			(ini);
-
-	    return 				TRUE;
-    }
-    return 					TRUE;
-}
-
 BOOL EScene::LoadLevelPart(ESceneToolBase* M, LPCSTR map_name)
 {
-	if(M->can_use_inifile())
-	    return LoadLevelPartLTX(M, map_name);
-        
+	if(FS.exist(map_name))
+	{
+		IReader* R = FS.r_open(map_name);
+		VERIFY(R);
+		char ch = R->r_u8();
+		FS.r_close(R);
+
+		if(ch == '[')
+		{
+			if(!M->can_use_inifile())
+			{
+				ELog.DlgMsg(mtError, "Cannot load level part '%s', tool doesn't support inifile", map_name);
+				return FALSE;
+            }
+			else
+				return LoadLevelPartLTX(M, map_name);
+		}
+		else
+			return LoadLevelPartStream(M, map_name);
+	}
+	return TRUE;
+}
+
+BOOL EScene::LoadLevelPartStream(ESceneToolBase* M, LPCSTR map_name)
+{
 	if (FS.exist(map_name))
     {
 		// check locking
@@ -314,6 +287,42 @@ BOOL EScene::LoadLevelPart(ESceneToolBase* M, LPCSTR map_name)
 	    return 				TRUE;
     }
     return 					TRUE;
+}
+
+BOOL EScene::LoadLevelPartLTX(ESceneToolBase* M, LPCSTR map_name)
+{
+	if (FS.exist(map_name))
+	{
+		// check locking
+		if (EFS.CheckLocking(map_name,false,false))
+		{
+			M->m_EditFlags.set(ESceneToolBase::flReadonly,TRUE);
+			Msg				("!Level part '%s' locked by <unknown> user.",M->ClassDesc());
+		}else
+		{
+			M->m_EditFlags.set(ESceneToolBase::flReadonly,FALSE);
+			if (M->IsEditable())
+				EFS.LockFile(map_name);
+		}
+
+		CInifile		ini(map_name);
+
+		// check level part GUID
+		xrGUID			guid;
+		guid.LoadLTX	(ini,"guid","guid");
+
+		if (guid!=m_GUID)
+        {
+			EFS.UnlockFile	(map_name);
+			ELog.DlgMsg		(mtError,"Skipping invalid version of level part: '%s\\%s.part'",EFS.ExtractFileName(map_name).c_str(),M->ClassName());
+			return 			FALSE;
+		}
+		// read data
+		M->LoadLTX			(ini);
+
+		return 				TRUE;
+	}
+	return 					TRUE;
 }
 
 BOOL EScene::LoadLevelPart(LPCSTR map_name, ObjClassID cls, bool lock)
@@ -843,106 +852,30 @@ bool EScene::OnLoadAppendObject(CCustomObject* O)
 }
 
 //----------------------------------------------------
-bool EScene::LoadLTX(LPCSTR map_name, bool bUndo)
+bool EScene::Load(LPCSTR map_name, bool bUndo)
 {
-    DWORD version = 0;
-	if (!map_name||(0==map_name[0])) return false;
+	if(!map_name || !map_name[0])
+		return false;
 
-    xr_string 		full_name;
-    full_name 		= map_name;
+	if(FS.exist(map_name))
+	{
+		IReader* R = FS.r_open(map_name); VERIFY(R);
+		char ch = R->r_u8();
+		FS.r_close(R);
 
-	ELog.Msg( mtInformation, "EScene: loading '%s'", map_name);
-    if (FS.exist(full_name.c_str()))
-    {
-        CTimer T; T.Start();
-
-        // lock main level
-        if (!bUndo&&!EFS.CheckLocking(map_name,false,false))
-            EFS.LockFile(map_name,false);
-
-		CInifile	ini(full_name.c_str());
-        version 	= ini.r_u32("version","value");
-
-        if (version!=CURRENT_FILE_VERSION)
-        {
-            ELog.DlgMsg( mtError, "EScene: unsupported file version. Can't load Level.");
-            UI->UpdateScene();
-            return false;
-        }
-
-        m_LevelOp.ReadLTX	(ini);
-
-       	Fvector hpb, pos;
-        pos					= ini.r_fvector3("camera","pos");
-        hpb					= ini.r_fvector3("camera","hpb");
-        Device.m_Camera.Set(hpb,pos);
-        Device.m_Camera.SetStyle(Device.m_Camera.GetStyle());
-		Device.m_Camera.SetStyle(Device.m_Camera.GetStyle());
-
-        m_GUID.LoadLTX			(ini,"guid","guid");
-
-		m_OwnerName				= ini.r_string("level_tag","owner");
-        m_CreateTime			= ini.r_u32("level_tag","create_time");
-
-
-        SceneToolsMapPairIt _I 	= m_SceneTools.begin();
-        SceneToolsMapPairIt _E 	= m_SceneTools.end();
-        for (; _I!=_E; ++_I)
-        {
-            if (_I->second)
-            {
-                {
-                    if (!bUndo && _I->second->IsEnabled() && (_I->first!=OBJCLASS_DUMMY))
-                    {
-                        LoadLevelPartLTX	(_I->second,LevelPartName(map_name,_I->first).c_str());
-                    }
-                }
-            }
-		}
-
-        if(ini.section_exist("snap_objects"))
-        {
-			CInifile::Sect& S 		= ini.r_section("snap_objects");
-            CInifile::SectCIt Si 	= S.Data.begin();
-            CInifile::SectCIt Se 	= S.Data.end();
-            for(;Si!=Se; ++Si)
-            {
-                CCustomObject* 	O = FindObjectByName(Si->first.c_str(),OBJCLASS_SCENEOBJECT);
-                if (!O)
-                    ELog.Msg(mtError,"EScene: Can't find snap object '%s'.",Si->second.c_str());
-                else
-                	m_ESO_SnapObjects.push_back(O);
-            }
-            UpdateSnapList();
-        }
-
-        if(ini.section_exist("scripts"))
-        {
-        	m_ScriptCompileLevel = *ini.r_string_wb("scripts","compile_level");
-            m_ScriptCompileDetails = *ini.r_string_wb("scripts","compile_details");
-            m_ScriptCompileAIMap = *ini.r_string_wb("scripts","compile_aimap");
-            m_ScriptCompileSpawn = *ini.r_string_wb("scripts","compile_spawn");
-            m_ScriptRunGame	   	 = *ini.r_string_wb("scripts","run_game");
-        }
-
-        Msg("EScene: %d objects loaded, %3.2f sec", ObjCount(), T.GetElapsed_sec() );
-
-    	UI->UpdateScene(true);
-
-        SynchronizeObjects();
-
-	    if (!bUndo)
-        	m_RTFlags.set(flRT_Unsaved|flRT_Modified,FALSE);
-        
-		return true;
-    }else
-    {
-    	ELog.Msg(mtError,"Can't find file: '%s'",map_name);
+		if(ch == '[')
+			return LoadLTX(map_name, bUndo);
+		else
+			return LoadStream(map_name, bUndo);
+	}
+	else
+	{
+		ELog.Msg(mtError, "Can't find file: '%s'", map_name);
+		return false;
     }
-	return false;
 }
 
-bool EScene::Load(LPCSTR map_name, bool bUndo)
+bool EScene::LoadStream(LPCSTR map_name, bool bUndo)
 {
     u32 version = 0;
 
@@ -1070,6 +1003,103 @@ bool EScene::Load(LPCSTR map_name, bool bUndo)
     	UI->UpdateScene(true); 
 
 		FS.r_close(F);
+
+        SynchronizeObjects();
+
+	    if (!bUndo)
+        	m_RTFlags.set(flRT_Unsaved|flRT_Modified,FALSE);
+        
+		return true;
+    }else
+    {
+    	ELog.Msg(mtError,"Can't find file: '%s'",map_name);
+    }
+	return false;
+}
+
+bool EScene::LoadLTX(LPCSTR map_name, bool bUndo)
+{
+    DWORD version = 0;
+	if (!map_name||(0==map_name[0])) return false;
+
+    xr_string 		full_name;
+    full_name 		= map_name;
+
+	ELog.Msg( mtInformation, "EScene: loading '%s'", map_name);
+    if (FS.exist(full_name.c_str()))
+    {
+        CTimer T; T.Start();
+
+        // lock main level
+        if (!bUndo&&!EFS.CheckLocking(map_name,false,false))
+            EFS.LockFile(map_name,false);
+
+		CInifile	ini(full_name.c_str());
+        version 	= ini.r_u32("version","value");
+
+        if (version!=CURRENT_FILE_VERSION)
+        {
+            ELog.DlgMsg( mtError, "EScene: unsupported file version. Can't load Level.");
+            UI->UpdateScene();
+            return false;
+        }
+
+        m_LevelOp.ReadLTX	(ini);
+
+       	Fvector hpb, pos;
+        pos					= ini.r_fvector3("camera","pos");
+        hpb					= ini.r_fvector3("camera","hpb");
+        Device.m_Camera.Set(hpb,pos);
+        Device.m_Camera.SetStyle(Device.m_Camera.GetStyle());
+		Device.m_Camera.SetStyle(Device.m_Camera.GetStyle());
+
+        m_GUID.LoadLTX			(ini,"guid","guid");
+
+		m_OwnerName				= ini.r_string("level_tag","owner");
+        m_CreateTime			= ini.r_u32("level_tag","create_time");
+
+
+        SceneToolsMapPairIt _I 	= m_SceneTools.begin();
+        SceneToolsMapPairIt _E 	= m_SceneTools.end();
+        for (; _I!=_E; ++_I)
+		{
+            if (_I->second)
+			{
+				if (!bUndo && _I->second->IsEnabled() && (_I->first!=OBJCLASS_DUMMY))
+				{
+					LoadLevelPart	(_I->second,LevelPartName(map_name,_I->first).c_str());
+				}
+            }
+		}
+
+        if(ini.section_exist("snap_objects"))
+        {
+			CInifile::Sect& S 		= ini.r_section("snap_objects");
+            CInifile::SectCIt Si 	= S.Data.begin();
+            CInifile::SectCIt Se 	= S.Data.end();
+            for(;Si!=Se; ++Si)
+            {
+                CCustomObject* 	O = FindObjectByName(Si->first.c_str(),OBJCLASS_SCENEOBJECT);
+                if (!O)
+                    ELog.Msg(mtError,"EScene: Can't find snap object '%s'.",Si->second.c_str());
+                else
+                	m_ESO_SnapObjects.push_back(O);
+            }
+            UpdateSnapList();
+        }
+
+        if(ini.section_exist("scripts"))
+        {
+        	m_ScriptCompileLevel = *ini.r_string_wb("scripts","compile_level");
+            m_ScriptCompileDetails = *ini.r_string_wb("scripts","compile_details");
+            m_ScriptCompileAIMap = *ini.r_string_wb("scripts","compile_aimap");
+            m_ScriptCompileSpawn = *ini.r_string_wb("scripts","compile_spawn");
+            m_ScriptRunGame	   	 = *ini.r_string_wb("scripts","run_game");
+        }
+
+        Msg("EScene: %d objects loaded, %3.2f sec", ObjCount(), T.GetElapsed_sec() );
+
+    	UI->UpdateScene(true);
 
         SynchronizeObjects();
 
