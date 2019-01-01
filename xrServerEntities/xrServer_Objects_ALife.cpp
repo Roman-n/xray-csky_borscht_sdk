@@ -344,7 +344,12 @@ BOOL is_combat_cover			(shared_str const &table_id)
 			LUA_TTABLE
 		);
 
-	VERIFY2						(result, make_string("bad or missing description in smart_cover [%s]", table_id.c_str()));
+	//VERIFY2						(result, make_string("bad or missing description in smart_cover [%s]", table_id.c_str()));
+	if (!result) {
+		Msg						("no or invalid smart cover description [%s]", temp);
+		return					(TRUE);
+	}
+
 	if (table.type() != LUA_TTABLE) {
 		VERIFY					(table.type() != LUA_TNIL);
 		return					(TRUE);
