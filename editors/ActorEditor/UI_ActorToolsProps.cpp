@@ -327,7 +327,7 @@ void CActorTools::FillMotionProperties(PropItemVec& items, LPCSTR pref, ListItem
     V->OnChangeEvent.bind			(this,&CActorTools::OnMotionRefsChange);
     ButtonValue* B;             
 
-    B=PHelper().CreateButton	(items, PrepareKey(pref,"Export Import"),			"ExportRefs,ImportRefs",ButtonValue::flFirstOnly);
+	B=PHelper().CreateButton	(items, PrepareKey(pref,"Export Import"),			"ExportRefs,ImportRefs",ButtonValue::flFirstOnly);
     B->OnBtnClickEvent.bind		(this,&CActorTools::OnExportImportRefsClick); 
 
     if (m_pEditObject->m_SMotionRefs.size()==0) 
@@ -342,14 +342,14 @@ void CActorTools::FillMotionProperties(PropItemVec& items, LPCSTR pref, ListItem
 	    PHelper().CreateCaption		(items, PrepareKey(pref,"Motion\\Frame\\Start"),	shared_str().sprintf("%d",SM->FrameStart()));
 	    PHelper().CreateCaption		(items, PrepareKey(pref,"Motion\\Frame\\End"),	shared_str().sprintf("%d",SM->FrameEnd()));
 	    PHelper().CreateCaption		(items, PrepareKey(pref,"Motion\\Frame\\Length"),	shared_str().sprintf("%d",SM->Length()));
-        PropValue* P=0;                                              
+        PropValue* P;                                              
         P=PHelper().CreateName		(items,PrepareKey(pref,"Motion\\Name"),		&SM->name, sender);
         P->OnChangeEvent.bind		(this,&CActorTools::OnMotionNameChange);
         PHelper().CreateFloat		(items,PrepareKey(pref,"Motion\\Speed"),	&SM->fSpeed,  0.f,10.f,0.01f,2);
         PHelper().CreateFloat		(items,PrepareKey(pref,"Motion\\Accrue"),	&SM->fAccrue, 0.f,10.f,0.01f,2);
-        PHelper().CreateFloat		(items,PrepareKey(pref,"Motion\\Falloff"), 	&SM->fFalloff,0.f,10.f,0.01f,2);
+		PHelper().CreateFloat		(items,PrepareKey(pref,"Motion\\Falloff"), 	&SM->fFalloff,0.f,10.f,0.01f,2);
 
-        PropValue /**C=0,*/*TV=0;
+		PropValue *TV;
         TV = PHelper().CreateFlag8	(items,PrepareKey(pref,"Motion\\Type FX"),	&SM->m_Flags, esmFX);
         TV->OnChangeEvent.bind	(this,&CActorTools::OnMotionTypeChange);
         m_BoneParts.clear		();
@@ -385,8 +385,8 @@ void CActorTools::FillMotionProperties(PropItemVec& items, LPCSTR pref, ListItem
         {
         	string128 buff;
             sprintf(buff,"Marks\\%d", i);
-            P=PHelper().CreateCaption	(items,PrepareKey(pref, buff), SM->marks[i].name);
-        }
+            PHelper().CreateCaption	(items,PrepareKey(pref, buff), SM->marks[i].name);
+		}
 
     }
 }
@@ -475,17 +475,22 @@ void __stdcall CActorTools::OnBoneCreateDeleteClick(ButtonValue* V, bool& bModif
         }break;
         case 1:
         { //deleet
-        	if(sel_bones.size()!=1)
-            {
-            	Msg("! Select 1 bone please.");
-                return;
+			if(sel_bones.size()!=1)
+			{
+				Msg("!Select 1 bone please.");
+				return;
+			}
+			LPCSTR wmap = *sel_bones[0]->WMap();
+			if(wmap&&wmap[0])
+			{
+				Msg("!Cannot delete bone with assigned vertices");
+				return;
             }
-           if (ELog.DlgMsg(mtConfirmation, TMsgDlgButtons() << mbYes << mbNo, "Delete selected bone?") == mrYes)
-           {
-           		m_pEditObject->DeleteBone(sel_bones[0]);
-            	bModif = true;
-
-           }
+			if (ELog.DlgMsg(mtConfirmation, TMsgDlgButtons() << mbYes << mbNo, "Delete selected bone?") == mrYes)
+			{
+				m_pEditObject->DeleteBone(sel_bones[0]);
+				bModif = true;
+			}
         }break;
         case 2:
         {
@@ -763,15 +768,15 @@ void CActorTools::FillSurfaceProperties(PropItemVec& items, LPCSTR pref, ListIte
 void CActorTools::FillObjectProperties(PropItemVec& items, LPCSTR pref, ListItem* sender)
 {
 	R_ASSERT(m_pEditObject);
-    PropValue* V=0;
     PHelper().CreateFlag32			(items, "Object\\Flags\\Make Progressive",	&m_pEditObject->m_objectFlags,			CEditableObject::eoProgressive);
 
+	PropValue* V;
     V=PHelper().CreateVector		(items, "Object\\Transform\\Position",		&m_pEditObject->a_vPosition, 	-10000,	10000,0.01,4);
     V->OnChangeEvent.bind			(this,&CActorTools::OnChangeTransform);
     V=PHelper().CreateAngle3		(items, "Object\\Transform\\Rotation",		&m_pEditObject->a_vRotate, 		-10000,	10000,0.1,2);
     V->OnChangeEvent.bind			(this,&CActorTools::OnChangeTransform);
-    V=PHelper().CreateCaption		(items, "Object\\Transform\\BBox Min",		shared_str().sprintf("{%3.2f, %3.2f, %3.2f}",VPUSH(m_pEditObject->GetBox().min)));
-    V=PHelper().CreateCaption		(items, "Object\\Transform\\BBox Max",		shared_str().sprintf("{%3.2f, %3.2f, %3.2f}",VPUSH(m_pEditObject->GetBox().max)));
+	PHelper().CreateCaption			(items, "Object\\Transform\\BBox Min",		shared_str().sprintf("{%3.2f, %3.2f, %3.2f}",VPUSH(m_pEditObject->GetBox().min)));
+	PHelper().CreateCaption			(items, "Object\\Transform\\BBox Max",		shared_str().sprintf("{%3.2f, %3.2f, %3.2f}",VPUSH(m_pEditObject->GetBox().max)));
 
 //.    PHelper().CreateChoose		 (items, "Object\\LOD\\Reference",  			&m_pEditObject->m_LODs, smObject);
     PHelper().CreateChoose			(items, "Object\\LOD\\Reference",  			&m_pEditObject->m_LODs, smVisual);
