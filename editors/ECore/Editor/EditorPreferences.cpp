@@ -333,6 +333,9 @@ void CCustomPreferences::Save()
 
 void CCustomPreferences::AppendRecentFile(LPCSTR name)
 {
+	if(scene_recent_count == 0)
+		return;
+		
     for (AStringIt it=scene_recent_list.begin(); it!=scene_recent_list.end(); it++){
     	if (*it==name){
         	scene_recent_list.erase	(it);
