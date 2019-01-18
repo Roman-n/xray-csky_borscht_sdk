@@ -116,7 +116,7 @@ void __fastcall TfraPS::FormShow(TObject *Sender)
 
 void __fastcall TfraPS::FormCreate(TObject *Sender)
 {
-    m_Items 				= TItemList::CreateForm("Particles",paItems, alClient, 0);
+    m_Items 				= TItemList::CreateForm("Particles",paItems, alClient, TItemList::ilFocusOnHover);
     m_Items->SetImages		(ilModeIcons);
     m_Items->SetOnItemsFocusedEvent(TOnILItemsFocused(this,&TfraPS::OnItemFocused));
 }

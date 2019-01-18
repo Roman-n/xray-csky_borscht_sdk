@@ -234,7 +234,7 @@ void __fastcall TfraObject::FormHide(TObject *Sender)
 
 void __fastcall TfraObject::FormCreate(TObject *Sender)
 {
-    m_Items 				= TItemList::CreateForm("Objects", paItems, alClient, 0);
+    m_Items 				= TItemList::CreateForm("Objects", paItems, alClient, TItemList::ilFocusOnHover);
     m_Items->SetOnItemsFocusedEvent(TOnILItemsFocused(this,&TfraObject::OnItemFocused));
 	// fill list
     RefreshList				();

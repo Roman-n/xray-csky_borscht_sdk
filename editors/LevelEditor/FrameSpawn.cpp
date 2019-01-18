@@ -105,7 +105,7 @@ void __fastcall TfraSpawn::FormShow(TObject *Sender)
 
 void __fastcall TfraSpawn::FormCreate(TObject *Sender)
 {
-    m_Items 				= TItemList::CreateForm("Spawns",paItems, alClient, 0);
+    m_Items 				= TItemList::CreateForm("Spawns",paItems, alClient, TItemList::ilFocusOnHover);
     m_Items->SetOnItemsFocusedEvent(TOnILItemsFocused(this,&TfraSpawn::OnItemFocused));
 }
 //---------------------------------------------------------------------------
