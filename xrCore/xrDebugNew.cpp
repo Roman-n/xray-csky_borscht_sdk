@@ -61,7 +61,7 @@ extern bool shared_str_initialized;
 #include <new.h>							// for _set_new_mode
 #include <signal.h>							// for signals
 
-#ifdef DEBUG
+#if defined(DEBUG) || defined(_EDITOR)
 #	define USE_OWN_ERROR_MESSAGE_WINDOW
 #else // DEBUG
 #	define USE_OWN_MINI_DUMP
@@ -90,6 +90,30 @@ void LogStackTrace	(LPCSTR header)
 	for (int i=1; i<g_stackTraceCount; ++i)
 		Msg			("%s",g_stackTrace[i]);
 #endif
+}
+
+static LPSTR logFullName(string_path& fn)
+{
+	extern LPCSTR 			log_name();
+	string_path				log_folder;
+
+	__try {
+		FS.update_path		(log_folder,"$logs$","");
+		if ((log_folder[0] != '\\') && (log_folder[1] != ':')) {
+			string256		current_folder;
+			_getcwd			(current_folder,sizeof(current_folder));
+			
+			string256		relative_path;
+			strcpy_s		(relative_path,log_folder);
+			strconcat		(sizeof(log_folder),log_folder,current_folder,"\\",relative_path);
+		}
+	}
+	__except(EXCEPTION_EXECUTE_HANDLER) {
+		strcpy_s				(log_folder,"logs");
+	}
+
+	strconcat				(sizeof(fn), fn, log_folder, log_name());
+	return					(fn);
 }
 
 void xrDebug::gather_info		(const char *expression, const char *description, const char *argument0, const char *argument1, const char *file, int line, const char *function, LPSTR assertion_info)
@@ -228,6 +252,11 @@ void xrDebug::backend	(const char *expression, const char *description, const ch
 #		ifdef USE_BUG_TRAP
 				BT_SetUserMessage	(assertion_info);
 #		endif // USE_BUG_TRAP
+				if (strstr(GetCommandLine(),"-show_log"))
+				{
+					string_path path;
+					ShellExecute(NULL, NULL, logFullName(path), NULL, NULL, SW_SHOWNORMAL);
+				}
 				DEBUG_INVOKE;
 				break;
 			}
@@ -246,6 +275,11 @@ void xrDebug::backend	(const char *expression, const char *description, const ch
 #		ifdef USE_BUG_TRAP
 			BT_SetUserMessage	(assertion_info);
 #		endif // USE_BUG_TRAP
+		if (strstr(GetCommandLine(),"-show_log"))
+		{
+			string_path path;
+			ShellExecute(NULL, NULL, logFullName(path), NULL, NULL, SW_SHOWNORMAL);
+		}
 		DEBUG_INVOKE;
 #	endif // USE_OWN_ERROR_MESSAGE_WINDOW
 #endif
@@ -339,8 +373,6 @@ int out_of_memory_handler	(size_t size)
 	return					1;
 }
 
-extern LPCSTR log_name();
-
 XRCORE_API string_path g_bug_report_file;
 
 void CALLBACK PreErrorHandler	(INT_PTR)
@@ -349,25 +381,8 @@ void CALLBACK PreErrorHandler	(INT_PTR)
 	if (!xr_FS || !FS.m_Flags.test(CLocatorAPI::flReady))
 		return;
 
-	string_path				log_folder;
-
-	__try {
-		FS.update_path		(log_folder,"$logs$","");
-		if ((log_folder[0] != '\\') && (log_folder[1] != ':')) {
-			string256		current_folder;
-			_getcwd			(current_folder,sizeof(current_folder));
-			
-			string256		relative_path;
-			strcpy_s		(relative_path,log_folder);
-			strconcat		(sizeof(log_folder),log_folder,current_folder,"\\",relative_path);
-		}
-	}
-	__except(EXCEPTION_EXECUTE_HANDLER) {
-		strcpy_s				(log_folder,"logs");
-	}
-
 	string_path				temp;
-	strconcat				(sizeof(temp), temp, log_folder, log_name());
+    logFullName				(temp);
 	BT_AddLogFile			(temp);
 
 	if (*g_bug_report_file)
