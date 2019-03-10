@@ -1468,7 +1468,12 @@ CSE_ALifeObjectPhysic::CSE_ALifeObjectPhysic(LPCSTR caSection) : CSE_ALifeDynami
 
 	m_flags.set					(flUseSwitches,FALSE);
 	m_flags.set					(flSwitchOffline,FALSE);
-	m_flags.set					(flUsedAI_Locations,FALSE);
+	
+		
+	if(pSettings->line_exist(caSection, "used_ai_locations"))
+		m_flags.set(flUsedAI_Locations, pSettings->r_bool(caSection, "used_ai_locations"));
+	else
+		m_flags.set					(flUsedAI_Locations,FALSE);
 	
 #ifdef XRGAME_EXPORTS
 	m_freeze_time				= Device.dwTimeGlobal;
