@@ -91,7 +91,7 @@ void LogStackTrace	(LPCSTR header)
 		Msg			("%s",g_stackTrace[i]);
 #endif
 }
-
+#ifndef M_GCC
 static LPSTR logFullName(string_path& fn)
 {
 	extern LPCSTR 			log_name();
@@ -115,6 +115,7 @@ static LPSTR logFullName(string_path& fn)
 	strconcat				(sizeof(fn), fn, log_folder, log_name());
 	return					(fn);
 }
+#endif
 
 void xrDebug::gather_info		(const char *expression, const char *description, const char *argument0, const char *argument1, const char *file, int line, const char *function, LPSTR assertion_info)
 {
@@ -275,11 +276,13 @@ void xrDebug::backend	(const char *expression, const char *description, const ch
 #		ifdef USE_BUG_TRAP
 			BT_SetUserMessage	(assertion_info);
 #		endif // USE_BUG_TRAP
+		#ifndef M_GCC
 		if (strstr(GetCommandLine(),"-show_log"))
 		{
 			string_path path;
 			ShellExecute(NULL, NULL, logFullName(path), NULL, NULL, SW_SHOWNORMAL);
 		}
+		#endif // M_GCC
 		DEBUG_INVOKE;
 #	endif // USE_OWN_ERROR_MESSAGE_WINDOW
 #endif
