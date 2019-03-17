@@ -861,6 +861,9 @@ CSE_ALifeObject::CSE_ALifeObject			(LPCSTR caSection) : CSE_Abstract(caSection)
 #endif // XRSE_FACTORY_EXPORTS
 	m_flags.set					(flOfflineNoMove,FALSE);
 	seed						(u32(CPU::QPC() & 0xffffffff));
+	
+	if(pSettings->line_exist(caSection, "used_ai_locations"))
+		m_flags.set(flUsedAI_Locations, pSettings->r_bool(caSection, "used_ai_locations"));
 }
 
 #ifdef XRGAME_EXPORTS
@@ -1295,7 +1298,8 @@ CSE_ALifeSpaceRestrictor::CSE_ALifeSpaceRestrictor	(LPCSTR caSection) : CSE_ALif
 {
 	m_flags.set					(flUseSwitches,FALSE);
 	m_space_restrictor_type		= RestrictionSpace::eDefaultRestrictorTypeNone;
-	m_flags.set					(flUsedAI_Locations,FALSE);
+	if(!pSettings->line_exist(caSection, "used_ai_locations"))
+		m_flags.set					(flUsedAI_Locations,FALSE);
 	m_spawn_flags.set			(flSpawnDestroyOnSpawn,FALSE);
 	m_flags.set					(flCheckForSeparator,TRUE);
 }
@@ -1468,11 +1472,8 @@ CSE_ALifeObjectPhysic::CSE_ALifeObjectPhysic(LPCSTR caSection) : CSE_ALifeDynami
 
 	m_flags.set					(flUseSwitches,FALSE);
 	m_flags.set					(flSwitchOffline,FALSE);
-	
 		
-	if(pSettings->line_exist(caSection, "used_ai_locations"))
-		m_flags.set(flUsedAI_Locations, pSettings->r_bool(caSection, "used_ai_locations"));
-	else
+	if(!pSettings->line_exist(caSection, "used_ai_locations"))
 		m_flags.set					(flUsedAI_Locations,FALSE);
 	
 #ifdef XRGAME_EXPORTS
