@@ -166,7 +166,9 @@ public:
     u32				log_confirmation_color;
     // textform style
     u32				textform_background_color;
-    u32				textform_text_color;
+	u32				textform_text_color;
+	//
+	shared_str		screen_font;
 protected:
 	void 			OnKeyboardCommonFileClick	(ButtonValue* value, bool& bModif, bool& bSafe);
 	void 	__stdcall  OnClose	();

@@ -199,16 +199,16 @@ void CCustomPreferences::FillProp(PropItemVec& props)
         	case ptBool: 	PHelper().CreateBOOL	(props, it->first, (BOOL*)R.IntValue); break;
             case ptInteger: PHelper().CreateU32		(props, it->first, R.IntValue, R.IntMin, R.IntMax, R.IntInc); break;
             case ptFloat:	PHelper().CreateFloat	(props, it->first, R.FloatValue, R.FloatMin, R.FloatMax, R.FloatInc, R.FloatDecimal); break;
-            case ptAngle:	PHelper().CreateAngle	(props, it->first, R.FloatValue, R.FloatMin, R.FloatMax, R.FloatInc, R.FloatDecimal); break;
+			case ptAngle:	PHelper().CreateAngle	(props, it->first, R.FloatValue, R.FloatMin, R.FloatMax, R.FloatInc, R.FloatDecimal); break;
             case ptColor:	PHelper().CreateColor	(props, it->first, R.IntValue); break;
             case ptFlags:
-            {
+			{
             	xr_vector<SPreference::SFlag>::iterator fl_it, fl_end;
                 for(fl_it = R.Flags.begin(), fl_end = R.Flags.end(); fl_it != fl_end; fl_it++)
                 	PHelper().CreateFlag32(props, (*fl_it).Name, R.FlagsValue, (*fl_it).Flag);
             }
         }
-    }
+	}
 
     ButtonValue* B = PHelper().CreateButton	(props,"Keyboard\\Common\\File","Load,Save", 0);
     B->OnBtnClickEvent.bind	(this,&CCustomPreferences::OnKeyboardCommonFileClick);
@@ -222,9 +222,27 @@ void CCustomPreferences::FillProp(PropItemVec& props)
                 string128 nm; 		sprintf(nm,"%s%s%s",CMD->Desc(),!SUB_CMD->desc.empty()?"\\":"",SUB_CMD->desc.c_str());
                 ShortcutValue* V 	= PHelper().CreateShortcut(props,PrepareKey("Keyboard\\Shortcuts",nm), &SUB_CMD->shortcut);
                 V->OnValidateResultEvent.bind(CheckValidate);
-            }
-        }
-    }
+			}
+		}
+	}
+
+	// fonts
+	static xr_vector<shared_str> fonts;
+	fonts.clear();
+
+	string_path fn;
+	if(FS.exist(fn, "$game_config$", "fonts.ltx"))
+	{
+		CInifile *ini = CInifile::Create(fn);
+		for(CInifile::RootIt it = ini->sections().begin(); it != ini->sections().end(); it++)
+			fonts.push_back((*it)->Name);
+		CInifile::Destroy(ini);
+	}
+	else
+		fonts.push_back("hud_font_small");
+
+	PHelper().CreateCaption(props, "Style\\Font\\Hint", "Font changes will take effect when you restart editor");
+	PHelper().CreateRList(props, "Style\\Font\\Screen Font", &screen_font, &fonts.front(), fonts.size());
 }
 
 void CCustomPreferences::Edit()
@@ -238,7 +256,7 @@ void CCustomPreferences::Edit()
     m_ItemProps->ShowPropertiesModal();
 
     // save changed options
-    Save							();
+	Save							();
 }
 //---------------------------------------------------------------------------
 
@@ -272,7 +290,9 @@ void CCustomPreferences::Load(CInifile* I)
     sWeather 			= R_STRING_SAFE	("editor_prefs", "weather", shared_str("") );
     env_from_time 		= R_FLOAT_SAFE	("editor_prefs", "weather_from_time", 0.f);
     env_to_time 		= R_FLOAT_SAFE  ("editor_prefs", "weather_to_time", 24.f*60.f*60.f);
-    env_speed			= R_FLOAT_SAFE	("editor_prefs", "weather_time_factor", 12.f);
+	env_speed			= R_FLOAT_SAFE	("editor_prefs", "weather_time_factor", 12.f);
+
+	screen_font			= R_STRING_SAFE ("editor_prefs", "screen_font", shared_str("hud_font_small"));
 
     // load shortcuts
     LoadShortcuts		(I);
@@ -305,7 +325,9 @@ void CCustomPreferences::Save(CInifile* I)
     I->w_string("editor_prefs", "weather",   sWeather.c_str() );
     I->w_float("editor_prefs", "weather_from_time", env_from_time);
     I->w_float("editor_prefs", "weather_to_time", env_to_time);
-    I->w_float("editor_prefs", "weather_time_factor", env_speed);
+	I->w_float("editor_prefs", "weather_time_factor", env_speed);
+
+	I->w_string("editor_prefs", "screen_font", screen_font.c_str() );
 
     // load shortcuts
     SaveShortcuts		(I);

@@ -222,7 +222,13 @@ void CDrawUtilities::OnDeviceCreate()
     vs_TL.create	(FVF::F_TL,RCache.Vertex.Buffer(),RCache.Index.Buffer());
     vs_LIT.create	(FVF::F_LIT,RCache.Vertex.Buffer(),RCache.Index.Buffer());
 
-	m_Font						= xr_new<CGameFont>("hud_font_small");
+#ifdef _EDITOR
+	LPCSTR font_name = EPrefs->screen_font.c_str();
+#else
+	LPCSTR font_name = "hud_font_small";
+#endif
+
+	m_Font						= xr_new<CGameFont>(font_name);
 }
 
 void CDrawUtilities::OnDeviceDestroy()
