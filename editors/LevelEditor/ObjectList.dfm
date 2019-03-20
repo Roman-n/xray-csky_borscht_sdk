@@ -2,8 +2,8 @@ object frmObjectList: TfrmObjectList
   Left = 348
   Top = 415
   Caption = 'Object List'
-  ClientHeight = 469
-  ClientWidth = 395
+  ClientHeight = 512
+  ClientWidth = 470
   Color = clGray
   Constraints.MinHeight = 360
   Constraints.MinWidth = 297
@@ -21,19 +21,21 @@ object frmObjectList: TfrmObjectList
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object Panel1: TPanel
-    Left = 298
+  object paOptions: TPanel
+    Left = 373
     Top = 0
     Width = 97
-    Height = 469
+    Height = 512
     Align = alRight
     BevelInner = bvRaised
     BevelOuter = bvNone
     Color = 10528425
     TabOrder = 0
+    ExplicitLeft = 298
+    ExplicitHeight = 469
     object ebShowSel: TExtBtn
       Left = 1
-      Top = 84
+      Top = 143
       Width = 95
       Height = 19
       Align = alNone
@@ -51,7 +53,7 @@ object frmObjectList: TfrmObjectList
     end
     object ebHideSel: TExtBtn
       Left = 1
-      Top = 104
+      Top = 163
       Width = 95
       Height = 19
       Align = alNone
@@ -68,8 +70,8 @@ object frmObjectList: TfrmObjectList
       OnClick = ebHideSelClick
     end
     object ebShowProperties: TExtBtn
-      Left = 2
-      Top = 125
+      Left = 1
+      Top = 183
       Width = 95
       Height = 19
       Align = alNone
@@ -87,7 +89,7 @@ object frmObjectList: TfrmObjectList
     end
     object rgSO: TRadioGroup
       Left = 1
-      Top = 1
+      Top = 58
       Width = 95
       Height = 81
       Align = alTop
@@ -99,16 +101,18 @@ object frmObjectList: TfrmObjectList
         'Invisible Only')
       TabOrder = 0
       OnClick = rgSOClick
+      ExplicitTop = 1
     end
-    object Panel2: TPanel
+    object paBottom: TPanel
       Left = 1
-      Top = 428
+      Top = 471
       Width = 95
       Height = 40
       Align = alBottom
       BevelOuter = bvNone
       ParentColor = True
       TabOrder = 1
+      ExplicitTop = 428
       object sbRefreshList: TExtBtn
         Left = 1
         Top = 0
@@ -146,20 +150,35 @@ object frmObjectList: TfrmObjectList
         OnClick = sbCloseClick
       end
     end
+    object rgTools: TRadioGroup
+      Left = 1
+      Top = 1
+      Width = 95
+      Height = 57
+      Align = alTop
+      Caption = ' Tools '
+      ItemIndex = 1
+      Items.Strings = (
+        'All'
+        'Current')
+      TabOrder = 2
+      OnClick = rgToolsClick
+      ExplicitLeft = 5
+    end
   end
-  object Panel3: TPanel
+  object paItems: TPanel
     Left = 0
     Top = 0
-    Width = 298
-    Height = 469
+    Width = 373
+    Height = 512
     Align = alClient
     Color = clGray
     TabOrder = 1
     object tvItems: TElTree
       Left = 1
       Top = 1
-      Width = 296
-      Height = 443
+      Width = 371
+      Height = 486
       Align = alClient
       AutoLineHeight = False
       AdjustMultilineHeight = False
@@ -288,22 +307,23 @@ object frmObjectList: TfrmObjectList
       BkColor = clGray
       OnAfterSelectionChange = tvItemsAfterSelectionChange
       OnItemFocused = tvItemsItemFocused
-      OnMouseDown = tvItemsMouseDown
       OnDblClick = tvItemsDblClick
       OnKeyPress = tvItemsKeyPress
     end
-    object Panel4: TPanel
+    object paSearch: TPanel
       Left = 1
-      Top = 444
-      Width = 296
+      Top = 487
+      Width = 371
       Height = 24
       Align = alBottom
       Color = clGray
       TabOrder = 1
+      ExplicitTop = 444
+      ExplicitWidth = 296
       object ElEdit1: TElEdit
         Left = 1
         Top = 1
-        Width = 294
+        Width = 369
         Height = 21
         DoubleBuffered = False
         LineBorderActiveColor = clBlack
@@ -315,11 +335,14 @@ object frmObjectList: TfrmObjectList
         OnEnter = ElEdit1Change
         OnExit = ElEdit1Exit
         OnKeyDown = ElEdit1KeyDown
+        ExplicitWidth = 294
       end
     end
   end
   object fsStorage: TFormStorage
     IniSection = 'Object List'
+    StoredProps.Strings = (
+      'rgTools.ItemIndex')
     StoredValues = <>
     Left = 336
     Top = 160

@@ -426,9 +426,9 @@ void CLevelTool::Render()
 }
 //---------------------------------------------------------------------------
 
-void CLevelTool::ShowObjectList()
+void CLevelTool::ShowObjectList(bool bSearch)
 {
-	if (pObjectListForm) pObjectListForm->ShowObjectList();
+	if (pObjectListForm) pObjectListForm->ShowObjectList(bSearch);
 }
 //---------------------------------------------------------------------------
 

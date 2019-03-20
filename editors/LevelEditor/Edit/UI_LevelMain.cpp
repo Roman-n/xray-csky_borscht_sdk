@@ -26,10 +26,6 @@
 #include "LEClipEditor.h"
 #include "../xrEProps/TextForm.h"
 
-#ifdef _LEVEL_EDITOR
-//.    if (m_Cursor->GetVisible()) RedrawScene();
-#endif
-
 CLevelMain*&	LUI=(CLevelMain*)UI;
 
 CLevelMain::CLevelMain()
@@ -59,12 +55,17 @@ CCommandVar CLevelTool::CommandChangeTarget(CCommandVar p1, CCommandVar p2)
         return 		TRUE;
     }else{
     	return 		FALSE;
-    }
+	}
+}
+CCommandVar CLevelTool::CommandFindObject(CCommandVar p1, CCommandVar p2)
+{
+	if (LUI->GetEState()==esEditScene) ShowObjectList(true);
+	return TRUE;
 }
 CCommandVar CLevelTool::CommandShowObjectList(CCommandVar p1, CCommandVar p2)
 {
-    if (LUI->GetEState()==esEditScene) ShowObjectList();
-    return TRUE;
+	if (LUI->GetEState()==esEditScene) ShowObjectList();
+	return TRUE;
 }
 
 //------------------------------------------------------------------------------
@@ -94,7 +95,7 @@ CCommandVar CLevelTool::CommandEnableTarget(CCommandVar p1, CCommandVar p2)
 {
 	ESceneToolBase* M 	= Scene->GetTool(p1);
     VERIFY					(M);
-    BOOL res				= FALSE;
+    BOOL res;
 	if (p2)
     {
     	res 				= ExecCommand(COMMAND_LOAD_LEVEL_PART,M->ClassID,TRUE);
@@ -1027,6 +1028,7 @@ void CLevelMain::RegisterCommands()
 	REGISTER_CMD_C	    (COMMAND_READONLY_TARGET,          	LTools,CLevelTool::CommandReadonlyTarget);
 	REGISTER_CMD_C	    (COMMAND_MULTI_RENAME_OBJECTS,     	LTools,CLevelTool::CommandMultiRenameObjects);
 
+	REGISTER_CMD_CE	    (COMMAND_FIND_OBJECT,           	"Scene\\Find Object",			LTools,CLevelTool::CommandFindObject, false)
 	REGISTER_CMD_CE	    (COMMAND_SHOW_OBJECTLIST,           "Scene\\Show Object List",		LTools,CLevelTool::CommandShowObjectList, false);
 	// common
 	REGISTER_CMD_S	    (COMMAND_LIBRARY_EDITOR,           	CommandLibraryEditor);
