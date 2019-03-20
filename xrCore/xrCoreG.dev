@@ -28,7 +28,7 @@ Folders=Debug,FS,LZO,Math,Memory
 IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=6
-CompilerSettings=0000000000000000000000000
+CompilerSettings=00000ib000000000000000000
 UnitCount=83
 
 [VersionInfo]

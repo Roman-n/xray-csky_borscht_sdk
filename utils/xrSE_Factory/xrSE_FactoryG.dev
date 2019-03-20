@@ -27,7 +27,7 @@ CommandLine=-wf K:\BORSCHT -nojit
 Folders=dlmalloc,"server entities"
 IncludeVersionInfo=0
 SupportXPThemes=0
-CompilerSet=6
+CompilerSet=8
 CompilerSettings=0000000000000000000000000
 UnitCount=69
 
