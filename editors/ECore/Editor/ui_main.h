@@ -194,8 +194,6 @@ public:
     virtual bool 	ApplyShortCut		(WORD Key, TShiftState Shift)=0;
     virtual bool 	ApplyGlobalShortCut	(WORD Key, TShiftState Shift)=0;
 
-    void			SetGradient			(u32 color){;}
-
     void 			OnDeviceCreate		();
     void			OnDeviceDestroy		();
 

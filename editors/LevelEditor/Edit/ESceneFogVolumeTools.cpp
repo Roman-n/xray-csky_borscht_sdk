@@ -289,7 +289,7 @@ void EFogVolume::FillProp(LPCSTR pref, PropItemVec& values)
             profiles.push_back(fn.c_str());
         }
 
-    	P=PHelper().CreateRList (values, PrepareKey(pref,"profile (ltx)"),	&m_volume_profile,  &*profiles.begin(), profiles.size());
+		PHelper().CreateRList (values, PrepareKey(pref,"profile (ltx)"),	&m_volume_profile,  &*profiles.begin(), profiles.size());
     }
 }
 //----------------------------------------------------
