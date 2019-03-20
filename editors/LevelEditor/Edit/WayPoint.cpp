@@ -58,7 +58,7 @@ void CWayPoint::Render(LPCSTR parent_name, bool bParentSelect)
     p1.set	(m_vPosition.x,m_vPosition.y+WAYPOINT_SIZE*0.85f,m_vPosition.z);
 
     if (bParentSelect){
-        u32 c 	= (m_bSelected)?0xFFFFFFFF:0xFFA0A0A0;
+        u32 c 	= (m_bSelected)?0xFF80FF70:0xFFFFFFFF;
         u32 s 	= 0xFF000000;
 
 	    AnsiString hint	= AnsiString(" ")+parent_name;
