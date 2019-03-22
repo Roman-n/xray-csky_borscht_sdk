@@ -305,7 +305,7 @@ void CSHEngineTools::Load()
         // Load blenders
         {
             IReader*	fs		= F->open_chunk(2);
-            IReader*	chunk	= NULL;
+            IReader*	chunk;
             int			chunk_id= 0;
 
             while ((chunk=fs->open_chunk(chunk_id))!=NULL)

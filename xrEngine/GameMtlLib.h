@@ -31,7 +31,7 @@
 
 #define GAMEMTL_SUBITEM_COUNT			4
 
-#define GAMEMTL_NONE_ID					u32(-1)
+#define GAMEMTL_NONE_ID					-1
 #define GAMEMTL_NONE_IDX				u16(-1)
 #define GAMEMTL_FILENAME				"gamemtl.xr"
 
@@ -293,7 +293,8 @@ public:
     }
 #ifdef _EDITOR
 	// editor
-	SGameMtl*			AppendMaterial	(SGameMtl* parent);
+	SGameMtl*			AppendMaterial	(SGameMtl* parent); // clone
+	SGameMtl*			AppendMaterial	(BOOL dynamic); // create
 	void				RemoveMaterial	(LPCSTR name);
 	IC SGameMtl*		GetMaterialByID	(int ID)
     {
