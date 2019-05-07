@@ -191,11 +191,11 @@ void __fastcall TfrmMain::UpdateCaption()
 //---------------------------------------------------------------------------
 
 void TfrmMain::RefreshBars()
-{
+{/*
     fraTopBar->RefreshBar		();
     fraLeftBar->RefreshBar		();
     fraBottomBar->RefreshBar	();
-/*
+/ *
     miOpenRecent->Clear();
     for(size_t i = 0; i < EPrefs->scene_recent_list.size(); i++)
     {
@@ -206,7 +206,7 @@ void TfrmMain::RefreshBars()
 
         miOpenRecent->Add(item);
     }
-*/
+* /
 	// clear recent file list
     xr_vector<TMenuItem*> recent;
 
@@ -230,8 +230,8 @@ void TfrmMain::RefreshBars()
     }
 
     TMenuItem *separator = xr_new<TMenuItem>(this);
-    separator->Caption = "-";
-    miFile->Insert(10+i, separator);
+	separator->Caption = "-";
+    miFile->Insert(10+i, separator);     */
 }
 //---------------------------------------------------------------------------
 

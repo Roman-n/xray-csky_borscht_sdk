@@ -29,8 +29,8 @@
 	PROP_RTEXT,     // yes
     PROP_STEXT,     // yes
 	PROP_WAVE,
-	PROP_CANVAS,
-	PROP_TIME,
+	PROP_CANVAS,    // yes
+	PROP_TIME,		// yes
 
 	PROP_CTEXT,     // yes
 	PROP_CLIST,     // yes
@@ -69,17 +69,30 @@ void IM_PropertyTree::RenderNode(ImTreeNode& node)
     for(it = node.child->begin(), end = node.child->end(); it != end; it++)
     {
     	ImTreeNode& node = it->second;
-        bool clicked = false;
+		bool clicked = false;
+
+		//bool disabled = node.item ? node.item->m_Flags.is(PropItem::flDisabled) : false;
+
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(8, 3));
+		ImGui::Separator();
+		ImGui::PopStyleVar(1);
 
     	if(node.child) // folder
         {
-        	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow;
+        	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow|ImGuiTreeNodeFlags_DefaultOpen;
 
             if(node.selected)
             	flags |= ImGuiTreeNodeFlags_Selected;
 
-            ImGui::AlignTextToFramePadding();
-        	bool open = ImGui::TreeNodeEx(it->first.c_str(), flags);
+			//if(disabled)
+			//	ImGui::PushStyleColor(ImGuiCol_Text,
+			//	ImGui::GetStyleColorVec4(ImGuiCol_TextDisabled));
+
+			ImGui::AlignTextToFramePadding();
+			bool open = ImGui::TreeNodeEx(it->first.c_str(), flags);
+
+			//if(disabled)
+			//	ImGui::PopStyleColor();
 
             if(ImGui::IsItemClicked())
 				clicked = true;
@@ -103,10 +116,17 @@ void IM_PropertyTree::RenderNode(ImTreeNode& node)
             if(node.selected)
             	flags |= ImGuiTreeNodeFlags_Selected;
 
+			//if(disabled)
+			//	ImGui::PushStyleColor(ImGuiCol_Text,
+			//	ImGui::GetStyleColorVec4(ImGuiCol_TextDisabled));
+
             ImGui::AlignTextToFramePadding();
             if(bullets)
             	ImGui::Bullet();
 			ImGui::Selectable(it->first.c_str(), node.selected);
+
+			//if(disabled)
+			//	ImGui::PopStyleColor();
 
             if(ImGui::IsItemClicked())
 				clicked = true;
@@ -116,7 +136,7 @@ void IM_PropertyTree::RenderNode(ImTreeNode& node)
 	        RenderItem(node);
             ImGui::PopItemWidth();
         	ImGui::NextColumn();
-        }
+		}
 
         if(clicked)
         {
@@ -151,7 +171,7 @@ void IM_PropertyTree::SelectNode(ImTreeNode& node, bool select)
 	}
 }
 
-void IM_PropertyTree::RenderItem(ImTreeNode& node) //PropItem* item)
+void IM_PropertyTree::RenderItem(ImTreeNode& node)
 {
 	PropItem* item = node.item;
 
@@ -161,122 +181,135 @@ void IM_PropertyTree::RenderItem(ImTreeNode& node) //PropItem* item)
         ImGui::NewLine();
 
         return;
-    }
+	}
+
+	bool disabled = item->m_Flags.is(PropItem::flDisabled);
+
+	if(disabled)
+		ImGui::PushStyleColor(ImGuiCol_Text,
+		ImGui::GetStyleColorVec4(ImGuiCol_TextDisabled));
 
     switch(item->Type())
     {
     	case PROP_CAPTION:
         ImGui::AlignTextToFramePadding();
         ImGui::TextUnformatted(codepage2utf8(item->GetDrawText()).c_str());
-        return;
+		break;
 
     	case PROP_BUTTON:
         RenderButton(item);
-        return;
+		break;
 
         case PROP_CHOOSE:
 		ImGui::Selectable(codepage2utf8(item->GetDrawText()).c_str(), false);
-		if(ImGui::IsItemClicked(0) && ImGui::IsMouseDoubleClicked(0))
+		if(ImGui::IsItemClicked(0) && ImGui::IsMouseDoubleClicked(0) && !disabled)
 			OpenChooseForm(item);
-		return;
+		break;
 
 		case PROP_NUMERIC:
         if(editing_node == item->Key())
         	RenderNumeric(item);
         else
         	goto click2edit;
-        return;
+		break;
 
-        case PROP_BOOLEAN:
-        RenderBoolean(item);
-        return;
+		case PROP_BOOLEAN:
+		RenderBoolean(item);
+		break;
 
-        case PROP_FLAG:
+		case PROP_FLAG:
 		RenderFlag(item);
-        return;
+		break;
 
         case PROP_VECTOR:
-        if(editing_node == item->Key())
-        	RenderVector(item);
-        else
-        	goto click2edit;
-		return;
+		if(editing_node == item->Key())
+			RenderVector(item);
+		else
+			goto click2edit;
+		break;
 
-        case PROP_TOKEN:
-        RenderToken(item);
-		return;
+		case PROP_TOKEN:
+		RenderToken(item);
+		break;
 
 		case PROP_RTOKEN:
 		RenderRToken(item);
-		return;
+		break;
 
-        case PROP_RLIST:
-        RenderRList(item);
-        return;
+		case PROP_RLIST:
+		RenderRList(item);
+		break;
 
         case PROP_CLIST:
         RenderCList(item);
-        return;
+		break;
 
         case PROP_COLOR:
         RenderColor(item);
-        return;
+		break;
 
         case PROP_FCOLOR:
         RenderFColor(item);
-        return;
+		break;
 
         case PROP_VCOLOR:
         RenderVColor(item);
-        return;
+		break;
 
-        case PROP_RTEXT:
-        if(editing_node == item->Key())
-        	RenderRText(item);
-        else
-        	goto click2edit;
-        return;
+		case PROP_RTEXT:
+		if(editing_node == item->Key())
+			RenderRText(item);
+		else
+			goto click2edit;
+		break;
 
         case PROP_STEXT:
         if(editing_node == item->Key())
         	RenderSText(item);
         else
         	goto click2edit;
-        return;
+		break;
 
         case PROP_CTEXT:
         if(editing_node == item->Key())
         	RenderCText(item);
         else
         	goto click2edit;
-        return;
+		break;
+
+		case PROP_CANVAS:
+		RenderCanvas(item, node.canvas);
+		break;
 
         case PROP_TIME:
         RenderTime(item);
-        return;
+		break;
 
         case PROP_GAMETYPE:
         if(editing_node == item->Key())
         	RenderGameType(item);
         else
         	goto click2edit;
-        return;
+		break;
 
     	default:
         ImGui::AlignTextToFramePadding();
         ImGui::TextUnformatted(codepage2utf8(item->GetDrawText()).c_str());
-        return;
+		break;
 
-        click2edit:
-        ImGui::AlignTextToFramePadding();
-        ImGui::PushItemWidth(-1);
-        ImGui::PushID(item);
-        if(ImGui::Selectable(codepage2utf8(item->GetDrawText()).c_str()))
+		click2edit:
+		ImGui::AlignTextToFramePadding();
+		ImGui::PushItemWidth(-1);
+		ImGui::PushID(item);
+		if(ImGui::Selectable(codepage2utf8(item->GetDrawText()).c_str()))
         	editing_node = node.item->Key();
-        ImGui::PopID();
+		ImGui::PopID();
 
-        return;
-    }
+		break;
+	}
+
+	if(disabled)
+		ImGui::PopStyleColor();
 }
 
 void IM_PropertyTree::Add(LPCSTR path, PropItem* item)
@@ -287,7 +320,8 @@ void IM_PropertyTree::Add(LPCSTR path, PropItem* item)
 
 void IM_PropertyTree::Clear()
 {
-//	editing_node = NULL;
+	editing_node = NULL;
+	modified = false;
 
 	ClearNode(root);
     selected.clear();
@@ -365,7 +399,14 @@ void IM_PropertyTree::AssignItems(PropItemVec& items, bool full_expand, bool ful
 void IM_PropertyTree::Modified()
 {
 	if(!OnModifiedEvent.empty())
-    	OnModifiedEvent();
+		OnModifiedEvent();
+
+	modified = true;
+}
+
+bool IM_PropertyTree::IsModified()
+{
+    return modified;
 }
 
 void IM_PropertyTree::RenderButton(PropItem* item)
@@ -386,7 +427,9 @@ void IM_PropertyTree::RenderButton(PropItem* item)
             	clicked_id = i;
         }
 
-        if(clicked_id != -1)
+		bool disabled = item->m_Flags.is(PropItem::flDisabled);
+
+		if(clicked_id != -1 && !disabled)
         {
         	PropItem::PropValueVec& values = item->Values();
         	for(PropItem::PropValueIt it = values.begin(); it != values.end(); it++)
@@ -397,7 +440,10 @@ void IM_PropertyTree::RenderButton(PropItem* item)
 				V->btn_num = clicked_id;
 				bool dummy = false;
 				if(V->OnBtnClick(dummy)) // what does parameter mean ???
-            		Modified();
+					Modified();
+
+				if(V->m_Flags.is(ButtonValue::flFirstOnly))
+					break;
         	}
 		}
     }
@@ -452,11 +498,13 @@ void IM_PropertyTree::OpenChooseForm(PropItem* item)
 		V->OnChooseFillEvent(V);
 	}
 
-	IM_ChooseForm* cf = new IM_ChooseForm( // xr_new
+	IM_ChooseForm* cf = xr_new<IM_ChooseForm>(
 		EChooseMode(V->m_ChooseID), V->subitem,
-		V->m_Items, TOnChooseFillItems(NULL), V->m_FillParam,
-		IM_CFCallback(cd, &ChooseDelegate::OnOK), IM_CFCallback(NULL), IM_CFCallback(cd, &ChooseDelegate::OnClose)
+		V->m_Items, TOnChooseFillItems(NULL), V->m_FillParam
 	);
+
+	cf->OnOK = IM_CFCallback(cd, &ChooseDelegate::OnOK);
+	cf->OnClose = IM_CFCallback(cd, &ChooseDelegate::OnClose);
 
 	shared_str val = V->GetValue();
 	item->BeforeEdit<ChooseValue,shared_str>(val);
@@ -478,13 +526,15 @@ void IM_PropertyTree::RenderNumeric(PropItem* item)
 
     VERIFY(u8v || u16v || u32v || s8v || s16v || s32v || fv);
 
+	bool disabled = item->m_Flags.is(PropItem::flDisabled);
+
     ImGui::PushID(item->Key());
     if(fv)
     {
     	float val = fv->GetValue();
         item->BeforeEdit<FloatValue,float>(val);
 
-    	if(ImGui::InputFloat("", &val))
+		if(ImGui::InputFloat("", &val) && !disabled)
         	if(item->AfterEdit<FloatValue,float>(val))
             	if(item->ApplyValue<FloatValue,float>(val))
                 	Modified();
@@ -520,7 +570,7 @@ void IM_PropertyTree::RenderNumeric(PropItem* item)
         	NODEFAULT;
         }
 
-        if(ImGui::InputInt("", &val))
+		if(ImGui::InputInt("", &val) && !disabled)
         {
         	if((u8v || u16v || u32v) && val < 0)
             	val = 0;
@@ -572,8 +622,10 @@ void IM_PropertyTree::RenderBoolean(PropItem* item)
 	item->BeforeEdit<BOOLValue,BOOL>(_value);
     bool value = !!_value;
 
+	bool disabled = item->m_Flags.is(PropItem::flDisabled);
+
     ImGui::PushID(item->Key());
-    if(ImGui::Checkbox("", &value))
+	if(ImGui::Checkbox("", &value) && !disabled)
     {
     	_value = value;
     	if(item->AfterEdit<BOOLValue,BOOL>(_value))
@@ -609,20 +661,22 @@ void IM_PropertyTree::RenderFlag(PropItem* item)
         have_caption = f32->HaveCaption();
     }
 
-    bool modified;
-    ImGui::PushID(item->Key());
-    if(have_caption)
-    {
-    	if(ImGui::Selectable(item->GetDrawText().c_str(), false))
-        {
-        	value = !value;
-            modified = true;
-        }
-    }
-    else
-    	modified = ImGui::Checkbox("", &value);
+	bool modified;
+	ImGui::PushID(item->Key());
+	if(have_caption)
+	{
+		if(ImGui::Selectable(item->GetDrawText().c_str(), false))
+		{
+			value = !value;
+			modified = true;
+		}
+	}
+	else
+		modified = ImGui::Checkbox("", &value);
 
-    if(modified)
+	bool disabled = item->m_Flags.is(PropItem::flDisabled);
+
+	if(modified && !disabled)
     {
     	if(f8) {
 			Flags8 f; f.set(f8->mask, value);
@@ -659,17 +713,20 @@ void IM_PropertyTree::RenderVector(PropItem* item)
     else
     	updated = ImGui::InputFloat3("", (float*)&vec, 4);
 
-    if(updated)
-    {
+	bool disabled = item->m_Flags.is(PropItem::flDisabled);
+
+	if(updated && !disabled)
+	{
 		if(item->AfterEdit<VectorValue,Fvector>(vec))
         	if(item->ApplyValue<VectorValue,Fvector>(vec));
     }
-    ImGui::PopID();
+	ImGui::PopID();
 }
 
 void IM_PropertyTree::RenderToken(PropItem* item)
 {
-	ImGui::PushID(item->Key());
+	// strange but with PushID(item->Key()) combobox doesn't open sometimes
+	ImGui::PushID(item);//->Key());
 	if(ImGui::BeginCombo("", item->GetDrawText().c_str()))
     {
     	u32 current;
@@ -696,10 +753,12 @@ void IM_PropertyTree::RenderToken(PropItem* item)
     	TokenValueCustom* V = dynamic_cast<TokenValueCustom*>(item->GetFrontValue());
         VERIFY(V);
 
+		bool disabled = item->m_Flags.is(PropItem::flDisabled);
+
         xr_token* t = V->token;
         while(t->name)
         {
-            if(ImGui::Selectable(t->name, t->id == (int)current))
+			if(ImGui::Selectable(t->name, t->id == (int)current) && !disabled)
             {
             	if(t8) {
                 	u8 newvalue = u8(t->id);
@@ -755,10 +814,12 @@ void IM_PropertyTree::RenderRToken(PropItem* item)
 		RTokenValueCustom* V = dynamic_cast<RTokenValueCustom*>(item->GetFrontValue());
 		VERIFY(V);
 
+		bool disabled = item->m_Flags.is(PropItem::flDisabled);
+
 		for(u32 i = 0; i < V->token_count; i++)
 		{
 			const xr_rtoken& t = V->token[i];
-			if(ImGui::Selectable(*t.name, t.id == (int)current))
+			if(ImGui::Selectable(*t.name, t.id == (int)current) && !disabled)
 			{
 				if(t8) {
 					u8 newvalue = u8(t.id);
@@ -795,16 +856,18 @@ void IM_PropertyTree::RenderRList(PropItem* item)
         shared_str current = V->GetValue();
         item->BeforeEdit<RListValue,shared_str>(current);
 
+		bool disabled = item->m_Flags.is(PropItem::flDisabled);
+
         for(u32 i = 0; i < V->item_count; i++)
-        {
-        	bool selected = current.equal(V->items[i]);
-        	if(ImGui::Selectable(V->items[i].c_str(), selected))
+		{
+			bool selected = current.equal(V->items[i]);
+			if(ImGui::Selectable(V->items[i].c_str(), selected) && !disabled)
             {
             	shared_str newval = V->items[i];
             	if(item->AfterEdit<RListValue,shared_str>(newval))
                 	if(item->ApplyValue<RListValue,shared_str>(newval))
                     	Modified();
-            }
+			}
         }
 
     	ImGui::EndCombo();
@@ -823,10 +886,12 @@ void IM_PropertyTree::RenderCList(PropItem* item)
 		xr_string current = V->GetValue();
 		item->BeforeEdit<CListValue,xr_string>(current);
 
+		bool disabled = item->m_Flags.is(PropItem::flDisabled);
+
         for(u32 i = 0; i < V->item_count; i++)
         {
-        	bool selected = V->items[i].compare(current); // isn't very fast, but CList used only in shader editor, so it's no problem
-        	if(ImGui::Selectable(V->items[i].c_str(), selected))
+			bool selected = V->items[i].compare(current); // isn't very fast, but CList used only in shader editor, so it's no problem
+			if(ImGui::Selectable(V->items[i].c_str(), selected) && !disabled)
             {
 				xr_string newval = V->items[i];
 				if(V->items[i].length() > (size_t)V->lim)
@@ -853,8 +918,9 @@ void IM_PropertyTree::RenderColor(PropItem* item)
 
     Fcolor fclr; fclr.set(clr);
 
-    ImGui::PushID(item->Key());
-    if(ImGui::ColorEdit4("", (float*)&fclr))
+	ImGui::PushID(item->Key());
+	bool disabled = item->m_Flags.is(PropItem::flDisabled);
+	if(ImGui::ColorEdit4("", (float*)&fclr) && !disabled)
     {
     	clr = fclr.get();
     	if(item->AfterEdit<U32Value,u32>(clr))
@@ -872,8 +938,9 @@ void IM_PropertyTree::RenderFColor(PropItem* item)
     Fcolor clr = V->GetValue();
     item->BeforeEdit<ColorValue,Fcolor>(clr);
 
-    ImGui::PushID(item->Key());
-    if(ImGui::ColorEdit4("", (float*)&clr))
+	ImGui::PushID(item->Key());
+	bool disabled = item->m_Flags.is(PropItem::flDisabled);
+	if(ImGui::ColorEdit4("", (float*)&clr) && !disabled)
     {
     	if(item->AfterEdit<ColorValue,Fcolor>(clr))
         	if(item->ApplyValue<ColorValue,Fcolor>(clr))
@@ -890,9 +957,10 @@ void IM_PropertyTree::RenderVColor(PropItem* item)
     Fvector clr = V->GetValue();
     item->BeforeEdit<VectorValue,Fvector>(clr);
 
-    ImGui::PushID(item->Key());
-    if(ImGui::ColorEdit3("", (float*)&clr))
-    {
+	ImGui::PushID(item->Key());
+	bool disabled = item->m_Flags.is(PropItem::flDisabled);
+	if(ImGui::ColorEdit3("", (float*)&clr) && !disabled)
+	{
     	if(item->AfterEdit<VectorValue,Fvector>(clr))
         	if(item->ApplyValue<VectorValue,Fvector>(clr))
             	Modified();
@@ -904,11 +972,14 @@ struct TextDelegate
 {
 	IM_PropertyTree* parent;
 	PropItem* item;
+	bool disabled;
 
 	TextDelegate(IM_PropertyTree* _parent, PropItem* _item)
 	: parent(_parent),
       item(_item)
-	{}
+	{
+		disabled = item->m_Flags.is(PropItem::flDisabled);
+	}
 
 	void RText_OK(IM_TextEditor* editor);
     void SText_OK(IM_TextEditor* editor);
@@ -919,6 +990,9 @@ struct TextDelegate
 
 void TextDelegate::RText_OK(IM_TextEditor* editor)
 {
+	if(disabled)
+		return;
+
 	shared_str newvalue = editor->GetText().c_str();
     if(item->AfterEdit<RTextValue,shared_str>(newvalue))
     	if(item->ApplyValue<RTextValue,shared_str>(newvalue))
@@ -927,6 +1001,9 @@ void TextDelegate::RText_OK(IM_TextEditor* editor)
 
 void TextDelegate::SText_OK(IM_TextEditor* editor)
 {
+	if(disabled)
+		return;
+
 	xr_string newvalue = editor->GetText();
     if(item->AfterEdit<STextValue,xr_string>(newvalue))
     	if(item->ApplyValue<STextValue,xr_string>(newvalue))
@@ -935,8 +1012,11 @@ void TextDelegate::SText_OK(IM_TextEditor* editor)
 
 void TextDelegate::CText_OK(IM_TextEditor* editor)
 {
+	if(disabled)
+		return;
+
 	CTextValue* V = dynamic_cast<CTextValue*>(item->GetFrontValue());
-    VERIFY(V);
+	VERIFY(V);
 
 	xr_string newvalue = editor->GetText().substr(0, V->lim);
 	if(item->AfterEdit<CTextValue,xr_string>(newvalue))
@@ -965,8 +1045,9 @@ void IM_PropertyTree::RenderRText(PropItem* item)
     text.resize(strlen(*current) + 1 + 4096);
     strcpy(&*text.begin(), *current);
 
-    ImGui::PushID(item->Key());
-    if(ImGui::InputText("", &*text.begin(), text.size()))
+	ImGui::PushID(item->Key());
+	bool disabled = item->m_Flags.is(PropItem::flDisabled);
+	if(ImGui::InputText("", &*text.begin(), text.size()) && !disabled)
     {
     	shared_str newvalue = &*text.begin();
         if(item->AfterEdit<RTextValue,shared_str>(newvalue))
@@ -998,11 +1079,12 @@ void IM_PropertyTree::RenderSText(PropItem* item)
     text.resize(strlen(current.c_str()) + 1 + 4096);
     strcpy(&*text.begin(), current.c_str());
 
-    ImGui::PushID(item->Key());
-    if(ImGui::InputText("", &*text.begin(), text.size()))
-    {
-    	xr_string newvalue = &*text.begin();
-        if(item->AfterEdit<STextValue,xr_string>(newvalue))
+	ImGui::PushID(item->Key());
+	bool disabled = item->m_Flags.is(PropItem::flDisabled);
+	if(ImGui::InputText("", &*text.begin(), text.size()) && !disabled)
+	{
+		xr_string newvalue = &*text.begin();
+		if(item->AfterEdit<STextValue,xr_string>(newvalue))
         	if(item->ApplyValue<STextValue,xr_string>(newvalue))
             	Modified();
     }
@@ -1032,9 +1114,10 @@ void IM_PropertyTree::RenderCText(PropItem* item)
     text.resize(buf_size);
 	strcpy(&*text.begin(), current.c_str());
 
-    ImGui::PushID(item->Key());
-    if(ImGui::InputText("", &*text.begin(), text.size()))
-    {
+	ImGui::PushID(item->Key());
+	bool disabled = item->m_Flags.is(PropItem::flDisabled);
+	if(ImGui::InputText("", &*text.begin(), text.size()) && !disabled)
+	{
 		xr_string newvalue = &*text.begin();
 		if(item->AfterEdit<CTextValue,xr_string>(newvalue))
 			if(item->ApplyValue<CTextValue,LPCSTR>(newvalue.c_str()))
@@ -1051,6 +1134,28 @@ void IM_PropertyTree::RenderCText(PropItem* item)
         UI->AddIMWindow(e);
     }
     ImGui::PopID();
+}
+
+void IM_PropertyTree::RenderCanvas(PropItem* item, IM_Canvas*& c)
+{
+	CanvasValue* V = dynamic_cast<CanvasValue*>(item->GetFrontValue());
+	VERIFY(V);
+
+	if(!c || c->Height() != V->height)
+	{
+		xr_delete(c);
+		c = xr_new<IM_Canvas>(V->height*2, V->height);
+	}
+
+	TCanvas* cv = new TCanvas();
+	cv->Handle = c->BeginPaint();
+
+	V->OnDrawCanvasEvent(V, (void*)cv, Irect().set(0,0,c->Width(),c->Height()));
+
+	c->EndPaint();
+	delete cv;
+
+	c->Render();
 }
 
 void IM_PropertyTree::RenderTime(PropItem* item)
@@ -1085,7 +1190,7 @@ void IM_PropertyTree::RenderTime(PropItem* item)
 	}
     ImGui::PopID();
 
-    if(changed)
+	if(changed && !item->m_Flags.is(PropItem::flDisabled))
     {
     	ftime = (tc[0]*(60*60))+(tc[1]*60)+tc[2];
         if(item->AfterEdit<FloatValue,float>(ftime))

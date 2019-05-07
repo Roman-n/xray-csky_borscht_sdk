@@ -13,12 +13,10 @@
 
 IM_ChooseForm::IM_ChooseForm(
 	EChooseMode mode, int max_select,
-    ChooseItemVec* items, TOnChooseFillItems fill_items, void* fill_param,
-    IM_CFCallback on_ok, IM_CFCallback on_cancel, IM_CFCallback on_close
-    )
-    : m_on_ok(on_ok),
-      m_on_cancel(on_cancel),
-      m_on_close(on_close),
+	ChooseItemVec* items, TOnChooseFillItems fill_items, void* fill_param)
+	: OnOK(NULL),
+	  OnCancel(NULL),
+      OnClose(NULL),
       m_show_thumbnail(true),
       m_thm(THUMB_WIDTH, THUMB_HEIGHT),
       m_current_item(0),
@@ -105,8 +103,8 @@ void IM_ChooseForm::Close()
 	if(m_events && !m_events->on_close.empty())
     	m_events->on_close();
 
-    if(!m_on_close.empty())
-    	m_on_close(this);
+	if(!OnClose.empty())
+		OnClose(this);
 
 	UI->RemoveIMWindow(this);
 	IM_ChooseForm* _this = this;
@@ -237,17 +235,17 @@ void IM_ChooseForm::Render()
 
         if(ImGui::Button("OK", ImVec2(80, 0)))
         {
-        	if(!m_on_ok.empty())
-            	m_on_ok(this);
+			if(!OnOK.empty())
+				OnOK(this);
 
             m_open = false;
         }
 
         ImGui::SameLine();
         if(ImGui::Button("Cancel", ImVec2(80, 0)))
-        {
-        	if(!m_on_cancel.empty())
-            	m_on_cancel(this);
+		{
+			if(!OnCancel.empty())
+				OnCancel(this);
 
             m_open = false;
         }

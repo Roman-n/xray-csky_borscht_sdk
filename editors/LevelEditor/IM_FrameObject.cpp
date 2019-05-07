@@ -10,6 +10,7 @@
 #include "SceneObject.h"
 #include "ESceneObjectTools.h"
 #include "../ECore/Editor/ui_main.h"
+#include "../ECore/Editor/EThumbnail.h"
 
 LPCSTR IM_FrameObject::Current()
 {
@@ -19,7 +20,7 @@ LPCSTR IM_FrameObject::Current()
     	return NULL;
 }
 
-void IM_FrameObject::MultipleAppend(IM_ChooseForm* form)
+void __stdcall IM_FrameObject::MultipleAppend(IM_ChooseForm* form)
 {
 	{
     	Fvector pos={0.f,0.f,0.f};
@@ -40,7 +41,7 @@ void IM_FrameObject::MultipleAppend(IM_ChooseForm* form)
             }
 /*            if (ref->IsDynamic()){
                 ELog.DlgMsg(mtError,"TfraObject:: Can't assign dynamic object.");
-                xr_delete(obj);
+				xr_delete(obj);
                 return;
             }
 */
@@ -49,6 +50,18 @@ void IM_FrameObject::MultipleAppend(IM_ChooseForm* form)
         }         
         UI->ProgressEnd(pb);
     }
+}
+
+void __stdcall IM_FrameObject::SelectObject(IM_ChooseForm* form)
+{
+    m_objects_tree.Select(*form->GetSelected());
+}
+
+void __stdcall IM_FrameObject::DrawThumbnail(LPCSTR name, HDC hdc, const Irect& r)
+{
+	EObjectThumbnail* thm	= xr_new<EObjectThumbnail>(name);
+    thm->Draw				(hdc,r);
+    xr_delete				(thm);
 }
 
 void IM_FrameObject::MultiSelByRefObject(bool clear_prev)
@@ -115,7 +128,7 @@ void IM_FrameObject::RefreshList()
     for(FS_FileSetIt it = objects.begin(), end = objects.end(); it != end; it++)
     {
     	m_objects_tree.Add(codepage2utf8(it->name).c_str(), it->name.c_str());
-    }
+	}
 }
 
 void IM_FrameObject::OnAdd()
@@ -157,11 +170,10 @@ void IM_FrameObject::Render()
     {
         if(ImGui::MenuItem("Multiple Append"))
         {
-        	IM_ChooseForm* cf = new IM_ChooseForm(smObject, 1024,
-            NULL, NULL, NULL,
-            IM_CFCallback(this, &IM_FrameObject::MultipleAppend));
+			IM_ChooseForm* cf = xr_new<IM_ChooseForm>(smObject, 1024);
+			cf->OnOK.bind(this, &IM_FrameObject::MultipleAppend);
 
-            UI->AddIMWindow(cf);
+			UI->AddIMWindow(cf);
         }
 
         ImGui::Separator();
@@ -212,16 +224,17 @@ void IM_FrameObject::Render()
 
     if(ImGui::CollapsingPanel("Current object", &m_show_currentobject))
     {
-    	if(ImGui::MenuItem("Select..."))
-        {
-        	LPCSTR result;
-        	if(TfrmChoseItem::SelectItem(smObject, result, 1, m_objects_tree.GetSelected().c_str()))
-            	m_objects_tree.Select(result, true);
+		if(ImGui::MenuItem("Select..."))
+		{
+			IM_ChooseForm* cf = new IM_ChooseForm(smObject, 1);
+            cf->OnOK.bind(this, &IM_FrameObject::SelectObject);
+			UI->AddIMWindow(cf);
         }
 
         if(ImGui::MenuItem("Refresh list"))
 			RefreshList();
 
+		ImGui::Checkbox("Draw thm", &m_objects_tree.DrawThumbnails);
         ImGui::BeginChild("objects", ImVec2(0,0), true);
         m_objects_tree.Render();
         ImGui::EndChild();

@@ -6,7 +6,9 @@
   <ItemGroup>
     <Projects Include="editors\ActorEditor\ActorEditor.cbproj" />
     <Projects Include="editors\ECore\xrECoreB.cbproj" />
-    <Projects Include="editors\LevelEditor\LevelEditor.cbproj" />
+    <Projects Include="editors\LevelEditor\LevelEditor.cbproj">
+      <Dependencies>editors\ECore\xrECoreB.cbproj</Dependencies>
+    </Projects>
     <Projects Include="editors\ParticleEditor\ParticleEditor.cbproj" />
     <Projects Include="editors\ShaderEditor\ShaderEditor.cbproj" />
     <Projects Include="editors\xrEProps\xrEPropsB.cbproj" />
@@ -92,13 +94,13 @@
   <Target Name="ShaderEditor:Make">
     <MSBuild Projects="editors\ShaderEditor\ShaderEditor.cbproj" Targets="Make" />
   </Target>
-  <Target Name="LevelEditor">
+  <Target Name="LevelEditor" DependsOnTargets="xrECoreB">
     <MSBuild Projects="editors\LevelEditor\LevelEditor.cbproj" Targets="" />
   </Target>
-  <Target Name="LevelEditor:Clean">
+  <Target Name="LevelEditor:Clean" DependsOnTargets="xrECoreB:Clean">
     <MSBuild Projects="editors\LevelEditor\LevelEditor.cbproj" Targets="Clean" />
   </Target>
-  <Target Name="LevelEditor:Make">
+  <Target Name="LevelEditor:Make" DependsOnTargets="xrECoreB:Make">
     <MSBuild Projects="editors\LevelEditor\LevelEditor.cbproj" Targets="Make" />
   </Target>
   <Target Name="Build">

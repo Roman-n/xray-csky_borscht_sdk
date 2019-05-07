@@ -2,6 +2,7 @@
 #define IM_PropertyTreeH
 
 #include "IM_Window.h"
+#include "IM_Canvas.h"
 #include "../../xrEProps/xrEProps.h"
 #include "../../xrEProps/PropertiesListTypes.h"
 
@@ -14,53 +15,66 @@ ECORE_API class IM_PropertyTree : public IM_Window
 {
 	private:
 	char separator;
-    bool multiselect;
-    bool bullets;
+	bool multiselect;
+	bool bullets;
+
+	bool modified;
 
 	struct ImTreeNode
     {
 		xr_map<xr_string,ImTreeNode> * child;
         bool selected;
 
-        PropItem* item;
+		PropItem* item;
+		IM_Canvas* canvas;
 
         ImTreeNode()
         	: child(NULL),
               selected(false),
-              item(NULL)
-        { }
+			  item(NULL),
+			  canvas(NULL)
+		{ }
+
+		void Clear()
+		{
+			if(child)
+				xr_delete(child);
+			if(item)
+				xr_delete(item);
+			if(canvas)
+            	xr_delete(canvas);
+		}
 
         ~ImTreeNode()
-        {
-        	if(child)
-            	xr_delete(child);
-            if(item)
-            	xr_delete(item);
+		{
+			Clear();
         }
     };
 
     ImTreeNode root;
     xr_list<ImTreeNode*> selected;
 
-    shared_str		editing_node;
+	shared_str		editing_node;
 
-    ImTreeNode*		GetNode(LPCSTR path, bool must_exist);
-    void 			RenderNode(ImTreeNode &node);
-    void 			ClearNode(ImTreeNode &node) { node.~ImTreeNode(); }
-    void			SelectNode(ImTreeNode &node, bool select = true);
+	ImTreeNode*		GetNode(LPCSTR path, bool must_exist);
+	void 			RenderNode(ImTreeNode &node);
+	void 			ClearNode(ImTreeNode &node) { node.Clear(); }
+	void			SelectNode(ImTreeNode &node, bool select = true);
 
-    void			RenderItem(ImTreeNode& node);
+	void			RenderItem(ImTreeNode& node);
 
     public:
     IM_PropertyTree(char folder_separator = '\\', bool allow_multiselect = false, bool draw_bullets = true)
     	: separator(folder_separator),
           multiselect(allow_multiselect),
-          bullets(draw_bullets),
-          editing_node(NULL)
+		  bullets(draw_bullets),
+		  modified(false),
+		  editing_node(NULL)
 	{ }
 
     ~IM_PropertyTree()
-    {
+	{
+    	Clear();
     }
 
     void			Add(LPCSTR path, PropItem* item);
@@ -79,7 +93,8 @@ ECORE_API class IM_PropertyTree : public IM_Window
     TOnModifiedEvent OnModifiedEvent;
 
     void			AssignItems(PropItemVec& items, bool full_expand, bool full_sort = false);
-    void			Modified();
+	void			Modified();
+	bool			IsModified();
 
     //
     void			RenderButton(PropItem* item);
@@ -97,7 +112,8 @@ ECORE_API class IM_PropertyTree : public IM_Window
     void			RenderVColor(PropItem* item);
     void			RenderRText(PropItem* item);
     void			RenderSText(PropItem* item);
-    void			RenderCText(PropItem* item);
+	void			RenderCText(PropItem* item);
+	void			RenderCanvas(PropItem* item, IM_Canvas*& c);
     void			RenderTime(PropItem* item);
     void			RenderGameType(PropItem* item);
 

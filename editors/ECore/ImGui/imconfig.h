@@ -70,9 +70,10 @@ namespace ImGui
 #define atanf(a) atan(a)
 #define sqrtf(a) sqrt(a)
 #define expf(a) ::exp(a)
-#define floorf floor
+#define floorf(a) floor(a)
 #define atan2f atan2
 #define logf log
+#define ceilf(a) ceil(a)
 
 #ifdef _ECOREB
 #define IMGUI_API __declspec(dllexport)

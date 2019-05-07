@@ -23,6 +23,9 @@
 
 #include "TextForm.h"
 
+#include "../ImGui/IM_SoundEditor.h"
+#include "../ImGui/IM_ImageEditor.h"
+
 ECommandVec 		ECommands;
 BOOL 				bAllowReceiveCommand	= FALSE;
 BOOL 				bAllowLogCommands		= FALSE;
@@ -284,6 +287,9 @@ CCommandVar CommandInitialize(CCommandVar p1, CCommandVar p2)
 }             
 CCommandVar 	CommandDestroy(CCommandVar p1, CCommandVar p2)
 {
+	imSoundEditor.Close();
+	imImageEditor.Close();
+	
 	EPrefs->env_from_time 	= g_pGamePersistent->Environment().ed_from_time;
     EPrefs->env_to_time     = g_pGamePersistent->Environment().ed_to_time;
     EPrefs->env_speed		= g_pGamePersistent->Environment().fTimeFactor;
@@ -328,7 +334,8 @@ CCommandVar 	CommandSetSettings(CCommandVar p1, CCommandVar p2)
 }             
 CCommandVar 	CommandSoundEditor(CCommandVar p1, CCommandVar p2)
 {
-    TfrmSoundLib::EditLib(AnsiString("Sound Editor"));
+	//TfrmSoundLib::EditLib(AnsiString("Sound Editor"));
+	imSoundEditor.Open();
     return				TRUE;
 }
 CCommandVar 	CommandSyncSounds(CCommandVar p1, CCommandVar p2)
@@ -339,19 +346,21 @@ CCommandVar 	CommandSyncSounds(CCommandVar p1, CCommandVar p2)
 }
 CCommandVar 	CommandImageEditor(CCommandVar p1, CCommandVar p2)
 {
-    TfrmImageLib::EditLib(AnsiString("Image Editor"));
-    return				TRUE;
+	//TfrmImageLib::EditLib(AnsiString("Image Editor"));
+	imImageEditor.Open	(false);
+	return				TRUE;
 }
 
 CCommandVar 	CommandMinimapEditor(CCommandVar p1, CCommandVar p2)
 {
-    TTMinimapEditor::Show   ();
+	TTMinimapEditor::Show   ();
     return				    TRUE;
 }
 
 CCommandVar 	CommandCheckTextures(CCommandVar p1, CCommandVar p2)
 {
-    TfrmImageLib::ImportTextures();
+	//TfrmImageLib::ImportTextures();
+	imImageEditor.Open	(true);
     return				TRUE;
 }
 CCommandVar 	CommandRefreshTextures(CCommandVar p1, CCommandVar p2)

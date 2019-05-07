@@ -14,9 +14,9 @@ ECORE_API class IM_ChooseForm : public IM_Window
 	public:
     SChooseEvents* m_events;
 
-    IM_CFCallback m_on_ok;
-    IM_CFCallback m_on_cancel;
-    IM_CFCallback m_on_close;
+	IM_CFCallback OnOK;
+	IM_CFCallback OnCancel;
+    IM_CFCallback OnClose;
 
     IM_Tree m_items_tree;
     IM_PropertyTree m_props;
@@ -31,8 +31,7 @@ ECORE_API class IM_ChooseForm : public IM_Window
 
 	public:
     IM_ChooseForm(EChooseMode mode, int max_select,
-    ChooseItemVec* items, TOnChooseFillItems fill_items, void* fill_param,
-    IM_CFCallback on_ok = NULL, IM_CFCallback on_cancel = NULL, IM_CFCallback on_close = NULL);
+	ChooseItemVec* items = NULL, TOnChooseFillItems fill_items = NULL, void* fill_param = NULL);
 
     private:
     void OnNodeSelected(shared_str path, shared_str value, bool select);

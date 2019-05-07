@@ -121,8 +121,8 @@ void IM_FrameGroup::Render()
 
         if(ImGui::MenuItem("Select..."))
         {
-			IM_ChooseForm* cf = new IM_ChooseForm(smGroup, 1, NULL, NULL, NULL,
-            IM_CFCallback(this, &IM_FrameGroup::OnGroupSelected));
+			IM_ChooseForm* cf = new IM_ChooseForm(smGroup, 1);
+			cf->OnOK.bind(this, &IM_FrameGroup::OnGroupSelected);
             UI->AddIMWindow(cf);
         }
 
