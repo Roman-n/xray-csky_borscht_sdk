@@ -398,11 +398,11 @@ bool CEditableObject::CheckShaderCompatible()
                 ELog.Msg	(mtError,"        surface: '%s'",(*s_it)->_Name());
                 bRes		= false;
             }
-            if (IsMUStatic() && B->getDescription().CLS != B_TREE && C->flags.bRendering){
-            	ELog.Msg	(mtError,"Object '%s': engine shader '%s' non compatible with compiler shader '%s' on MU-objects",GetName(),(*s_it)->_ShaderName(),(*s_it)->_ShaderXRLCName());
-                ELog.Msg	(mtError,"        surface: '%s'",(*s_it)->_Name());
-                bRes		= false;
-            }
+			//if (IsMUStatic() && B->getDescription().CLS != B_TREE && C->flags.bRendering){
+			//	ELog.Msg	(mtError,"Object '%s': engine shader '%s' non compatible with compiler shader '%s' on MU-objects",GetName(),(*s_it)->_ShaderName(),(*s_it)->_ShaderXRLCName());
+			//    ELog.Msg	(mtError,"        surface: '%s'",(*s_it)->_Name());
+			//    bRes		= false;
+			//}
         }
     }
     return bRes;
