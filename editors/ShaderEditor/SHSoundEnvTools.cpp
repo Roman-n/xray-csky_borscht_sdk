@@ -334,11 +334,11 @@ void CSHSoundEnvTools::RealUpdateProperties()
 	if (m_Env){
         // fill environment
 		CSoundRender_Environment& S	= *m_Env;
-        ButtonValue* B			= 0;
+		ButtonValue* B;
         PHelper().CreateName	(items, "Name",									&S.name,  				m_CurrentItem);
         B=PHelper().CreateButton(items, "Environment\\Set",	"Identity,Reset", 	ButtonValue::flFirstOnly);
         B->OnBtnClickEvent.bind	(this,&CSHSoundEnvTools::OnRevResetClick);
-        PropValue* V=0;
+        PropValue* V;
         V=PHelper().CreateToken32(items,"Environment\\Preset",					&S.Environment	       ,eax_environment);
         V->OnChangeEvent.bind	(this,&CSHSoundEnvTools::OnEnvChange);
         V=PHelper().CreateFloat	(items, "Environment\\Size",					&S.EnvironmentSize     ,EAXLISTENER_MINENVIRONMENTSIZE, 	EAXLISTENER_MAXENVIRONMENTSIZE			,0.01f,	3);

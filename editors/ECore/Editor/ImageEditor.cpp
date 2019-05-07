@@ -121,7 +121,7 @@ void __fastcall TfrmImageLib::ImportTextures()
 	texture_map.clear();
     int new_cnt = ImageLib.GetLocalNewTextures(texture_map);
     if (new_cnt){
-    	if (ELog.DlgMsg(mtInformation,"Found %d new texture(s)",new_cnt))
+    	//if (ELog.DlgMsg(mtInformation,"Found %d new texture(s)",new_cnt))
     		EditLib(AnsiString("Update images"),true);
     }else{
     	ELog.DlgMsg(mtInformation,"Can't find new textures.");

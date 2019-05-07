@@ -1,11 +1,11 @@
 object frmPropertiesEObject: TfrmPropertiesEObject
   Left = 388
   Top = 383
-  Width = 467
-  Height = 363
-  BiDiMode = bdRightToLeft
+  BiDiMode = bdLeftToRight
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Object Properties'
+  ClientHeight = 328
+  ClientWidth = 451
   Color = 10528425
   Constraints.MinHeight = 363
   Constraints.MinWidth = 400
@@ -26,46 +26,39 @@ object frmPropertiesEObject: TfrmPropertiesEObject
   object ElPageControl1: TElPageControl
     Left = 0
     Top = 0
-    Width = 459
-    Height = 334
+    Width = 451
+    Height = 328
     ActiveTabColor = 10528425
-    BorderWidth = 0
     Color = 10528425
-    DrawFocus = False
     Flat = True
     HotTrack = False
     InactiveTabColor = 10528425
-    Multiline = False
-    RaggedRight = False
-    ScrollOpposite = False
     Style = etsAngledTabs
     TabHeight = 15
     TabIndex = 1
     TabPosition = etpBottom
-    HotTrackFont.Charset = DEFAULT_CHARSET
-    HotTrackFont.Color = clBlue
-    HotTrackFont.Height = -11
-    HotTrackFont.Name = 'MS Sans Serif'
-    HotTrackFont.Style = []
     TabBkColor = 10528425
     ActivePage = tsSurfaces
-    FlatTabBorderColor = clBtnShadow
+    ActiveTabFont.Charset = DEFAULT_CHARSET
+    ActiveTabFont.Color = clWindowText
+    ActiveTabFont.Height = -11
+    ActiveTabFont.Name = 'MS Sans Serif'
+    ActiveTabFont.Style = []
     Align = alClient
-    ParentColor = False
     TabOrder = 0
-    UseXPThemes = False
+    TabStop = True
+    ThemeMode = ttmNone
+    DockOrientation = doNoOrient
     object tsBasic: TElTabSheet
       PageControl = ElPageControl1
-      ImageIndex = -1
-      TabVisible = True
       Caption = 'Main Options'
       Color = 10528425
       Visible = False
       object paBasic: TPanel
         Left = 0
         Top = 0
-        Width = 455
-        Height = 317
+        Width = 447
+        Height = 309
         Align = alClient
         BevelOuter = bvLowered
         Color = 10528425
@@ -74,25 +67,23 @@ object frmPropertiesEObject: TfrmPropertiesEObject
     end
     object tsSurfaces: TElTabSheet
       PageControl = ElPageControl1
-      ImageIndex = -1
-      TabVisible = True
       Caption = 'Surfaces'
       Color = 10528425
       object paSurfaces: TPanel
         Left = 0
         Top = 19
-        Width = 319
-        Height = 296
+        Width = 311
+        Height = 290
         Align = alClient
         BevelOuter = bvLowered
         Color = 10528425
         TabOrder = 0
       end
       object Panel2: TPanel
-        Left = 319
+        Left = 311
         Top = 19
         Width = 136
-        Height = 296
+        Height = 290
         Align = alRight
         BevelOuter = bvNone
         ParentColor = True
@@ -101,7 +92,7 @@ object frmPropertiesEObject: TfrmPropertiesEObject
           Left = 0
           Top = 0
           Width = 136
-          Height = 296
+          Height = 290
           Align = alClient
           Caption = ' Texture Details '
           TabOrder = 0
@@ -181,7 +172,7 @@ object frmPropertiesEObject: TfrmPropertiesEObject
       object Panel1: TPanel
         Left = 0
         Top = 0
-        Width = 455
+        Width = 447
         Height = 19
         Align = alTop
         BevelOuter = bvNone

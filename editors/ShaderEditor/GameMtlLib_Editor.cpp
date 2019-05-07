@@ -16,7 +16,7 @@
 //------------------------------------------------------------------------------
 void SGameMtl::FillProp		(PropItemVec& items, ListItem* owner)
 {
-	PropValue* V=0;
+	PropValue* V;
     PHelper().CreateName			(items,	"Name",						        &m_Name, owner);
     PHelper().CreateRText			(items,	"Desc",						        &m_Desc);
 	// flags                                                      	
@@ -99,17 +99,30 @@ BOOL CGameMtlLibrary::UpdateMtlPairs()
 
 SGameMtl* CGameMtlLibrary::AppendMaterial(SGameMtl* parent)
 {
-    SGameMtl* M	= xr_new<SGameMtl>();
-    if (parent)	
-    *M		=*parent;//base params
+	SGameMtl* M	= xr_new<SGameMtl>();
+	*M			=*parent;//base params
+	M->ID		= material_index++;
     
-    M->ID		= material_index++;
-    
-    materials.push_back		(M);
-    UpdateMtlPairs			(M);
-    CopyMtlPairs			(parent, M);
+	materials.push_back		(M);
+	UpdateMtlPairs			(M);
+	CopyMtlPairs			(parent, M);
+
     return 					M;
 }
+
+SGameMtl* CGameMtlLibrary::AppendMaterial(BOOL dynamic)
+{
+	SGameMtl* M = xr_new<SGameMtl>();
+	if(dynamic)
+		M->Flags.set(SGameMtl::flDynamic, TRUE);
+	M->ID = material_index++;
+
+	materials.push_back(M);
+	UpdateMtlPairs(M);
+
+	return M;
+}
+
 void CGameMtlLibrary::RemoveMaterial(LPCSTR name)
 {
     // find material

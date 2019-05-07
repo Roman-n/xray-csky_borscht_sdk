@@ -18,7 +18,8 @@ enum{
     epoDrawLOD			= (1<<7),
     epoDiscardInstance	= (1<<8),
     epoDeffLoadRB		= (1<<9),
-    epoDeffLoadCF		= (1<<10),
+	epoDeffLoadCF		= (1<<10),
+	epoLZHCompress		= (1<<11)
 };
 class ECORE_API CCustomPreferences
 {
@@ -165,7 +166,9 @@ public:
     u32				log_confirmation_color;
     // textform style
     u32				textform_background_color;
-    u32				textform_text_color;
+	u32				textform_text_color;
+	//
+	shared_str		screen_font;
 protected:
 	void 			OnKeyboardCommonFileClick	(ButtonValue* value, bool& bModif, bool& bSafe);
 	void 	__stdcall  OnClose	();

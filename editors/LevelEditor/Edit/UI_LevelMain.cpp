@@ -26,10 +26,6 @@
 #include "LEClipEditor.h"
 #include "../xrEProps/TextForm.h"
 
-#ifdef _LEVEL_EDITOR
-//.    if (m_Cursor->GetVisible()) RedrawScene();
-#endif
-
 CLevelMain*&	LUI=(CLevelMain*)UI;
 
 CLevelMain::CLevelMain()
@@ -59,12 +55,17 @@ CCommandVar CLevelTool::CommandChangeTarget(CCommandVar p1, CCommandVar p2)
         return 		TRUE;
     }else{
     	return 		FALSE;
-    }
+	}
+}
+CCommandVar CLevelTool::CommandFindObject(CCommandVar p1, CCommandVar p2)
+{
+	if (LUI->GetEState()==esEditScene) ShowObjectList(true);
+	return TRUE;
 }
 CCommandVar CLevelTool::CommandShowObjectList(CCommandVar p1, CCommandVar p2)
 {
-    if (LUI->GetEState()==esEditScene) ShowObjectList();
-    return TRUE;
+	if (LUI->GetEState()==esEditScene) ShowObjectList();
+	return TRUE;
 }
 
 //------------------------------------------------------------------------------
@@ -94,7 +95,7 @@ CCommandVar CLevelTool::CommandEnableTarget(CCommandVar p1, CCommandVar p2)
 {
 	ESceneToolBase* M 	= Scene->GetTool(p1);
     VERIFY					(M);
-    BOOL res				= FALSE;
+    BOOL res;
 	if (p2)
     {
     	res 				= ExecCommand(COMMAND_LOAD_LEVEL_PART,M->ClassID,TRUE);
@@ -211,24 +212,9 @@ CCommandVar CommandLoad(CCommandVar p1, CCommandVar p2)
             UI->SetStatus			("Level loading...");
             ExecCommand				(COMMAND_CLEAR);
 
-            if(!FS.exist(temp_fn.c_str()))
-            {
-            	ELog.DlgMsg(mtError, "Can't find map file '%s'", temp_fn.c_str());
-                return FALSE;
-            }
-
-			IReader* R = FS.r_open	(temp_fn.c_str());
-            char ch;
-            R->r(&ch, sizeof(ch));
-            bool is_ltx = (ch=='[');
-            FS.r_close(R);
             bool res;
-            LTools->m_LastFileName	= temp_fn.c_str();
-
-            if(is_ltx)
-            	res = Scene->LoadLTX(temp_fn.c_str(), false);
-            else
-            	res = Scene->Load(temp_fn.c_str(), false);
+			LTools->m_LastFileName	= temp_fn.c_str();
+			res = Scene->Load(temp_fn.c_str(), false);
 
             if (res)
             {
@@ -465,6 +451,13 @@ CCommandVar CommandPaste(CCommandVar p1, CCommandVar p2)
         ELog.DlgMsg		( mtError, "Scene sharing violation" );
         return  		FALSE;
     }
+}
+
+CCommandVar CommandDuplicate(CCommandVar p1, CCommandVar p2)
+{
+	ExecCommand(COMMAND_COPY);
+	ExecCommand(COMMAND_PASTE);
+	return TRUE;
 }
 
 #include "AppendObjectInfoForm.h"
@@ -1032,6 +1025,7 @@ void CLevelMain::RegisterCommands()
 	REGISTER_CMD_C	    (COMMAND_READONLY_TARGET,          	LTools,CLevelTool::CommandReadonlyTarget);
 	REGISTER_CMD_C	    (COMMAND_MULTI_RENAME_OBJECTS,     	LTools,CLevelTool::CommandMultiRenameObjects);
 
+	REGISTER_CMD_CE	    (COMMAND_FIND_OBJECT,           	"Scene\\Find Object",			LTools,CLevelTool::CommandFindObject, false)
 	REGISTER_CMD_CE	    (COMMAND_SHOW_OBJECTLIST,           "Scene\\Show Object List",		LTools,CLevelTool::CommandShowObjectList, false);
 	// common
 	REGISTER_CMD_S	    (COMMAND_LIBRARY_EDITOR,           	CommandLibraryEditor);
@@ -1056,6 +1050,7 @@ void CLevelMain::RegisterCommands()
 	REGISTER_CMD_SE	    (COMMAND_CUT,              			"Edit\\Cut",					CommandCut,false);
 	REGISTER_CMD_SE	    (COMMAND_COPY,              		"Edit\\Copy",					CommandCopy,false);
 	REGISTER_CMD_SE	    (COMMAND_PASTE,              		"Edit\\Paste",					CommandPaste,false);
+	REGISTER_CMD_SE		(COMMAND_DUPLICATE,					"Edit\\Duplicate",				CommandDuplicate,false);
 	REGISTER_CMD_S	    (COMMAND_LOAD_SELECTION,            CommandLoadSelection);
 	REGISTER_CMD_S	    (COMMAND_SAVE_SELECTION,            CommandSaveSelection);
 	REGISTER_CMD_SE	    (COMMAND_UNDO,              		"Edit\\Undo",					CommandUndo,false);

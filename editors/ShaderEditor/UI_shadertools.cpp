@@ -84,7 +84,7 @@ bool CShaderTool::OnCreate()
     EFS.LockFile		(fn);
 
     // create props
-    m_Items				= TItemList::CreateForm		("Items",				fraLeftBar->paItemList,		alClient,TItemList::ilEditMenu|TItemList::ilDragAllowed|TItemList::ilFolderStore);
+    m_Items				= TItemList::CreateForm		("Items",				fraLeftBar->paItemList,		alClient,TItemList::ilEditMenu|TItemList::ilDragAllowed|TItemList::ilFolderStore|TItemList::ilFocusOnHover);
 	m_Items->SetOnItemsFocusedEvent(fastdelegate::bind<TOnILItemsFocused>(this,&CShaderTool::OnItemFocused));
     m_ItemProps 		= TProperties::CreateForm	("Item Properties",		fraLeftBar->paShaderProps,	alClient);
     m_PreviewProps  	= TProperties::CreateForm	("Preview Properties",	fraLeftBar->paPreviewProps,	alClient);

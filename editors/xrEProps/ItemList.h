@@ -84,7 +84,7 @@ private:	// User declarations
 	void 				OutBOOL					(BOOL val, TCanvas* Surface, const TRect& R);
 	void 				OutText					(LPCSTR text, TCanvas* Surface, TRect R, TGraphic* g=0, bool bArrow=false);
 
-    void __fastcall		OnMouseEnter			(TMessage)	{ tvItems->SetFocus(); }
+    void __fastcall		OnMouseEnter			(TMessage)	{ if(m_Flags.is(ilFocusOnHover)) tvItems->SetFocus(); }
 public:
     s32					iLocked;
     Flags32				m_Flags;
@@ -117,7 +117,8 @@ public:		// User declarations
         ilDragCustom	= (1<<3),
         ilFolderStore	= (1<<4),
         ilSuppressIcon 	= (1<<5),
-        ilSuppressStatus= (1<<6),
+		ilSuppressStatus= (1<<6),
+		ilFocusOnHover	= (1<<7),
 
         // internal
         ilRT_FullExpand	= (1<<30),

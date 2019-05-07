@@ -124,10 +124,11 @@ public:
 
     ObjClassID 			CurrentClassID		();
 
-    void				ShowObjectList		();
+    void				ShowObjectList		(bool bSearch = false);
 
     // commands
-    CCommandVar			CommandChangeTarget		(CCommandVar p1, CCommandVar p2);
+	CCommandVar			CommandChangeTarget		(CCommandVar p1, CCommandVar p2);
+	CCommandVar			CommandFindObject		(CCommandVar p1, CCommandVar p2);
 	CCommandVar			CommandShowObjectList	(CCommandVar p1, CCommandVar p2);
     CCommandVar			CommandEnableTarget		(CCommandVar p1, CCommandVar p2);
     CCommandVar			CommandShowTarget		(CCommandVar p1, CCommandVar p2);

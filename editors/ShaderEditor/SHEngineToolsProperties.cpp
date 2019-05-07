@@ -160,7 +160,6 @@ void CSHEngineTools::RealUpdateProperties()
 				P->Owner()->OnDrawTextEvent.bind(this,&CSHEngineTools::MCOnDraw);
             }break;
             case xrPID_CONSTANT:{
-            	sz=sizeof(string64);
             	sz				= sizeof(string64);
                 LPSTR V			= (LPSTR)data.pointer();
                 CListValue* P	= PHelper().CreateCList(items,PrepareKey(marker_text.c_str(),key),V,sz,&*MCString.begin(),MCString.size());

@@ -77,7 +77,7 @@ bool CParticleTool::OnCreate()
     m_PList			= TItemList::CreateForm(	"Items",
     						fraLeftBar->paPSList,
                                                 alClient,
-                                                TItemList::ilEditMenu | TItemList::ilDragAllowed);
+                                                TItemList::ilEditMenu | TItemList::ilDragAllowed | TItemList::ilFocusOnHover);
                                                 
     m_PList->SetOnItemsFocusedEvent	(fastdelegate::bind<TOnILItemsFocused>(this,&CParticleTool::OnParticleItemFocused));
 	m_PList->SetOnItemRenameEvent	(fastdelegate::bind<TOnItemRename>(this,&CParticleTool::OnParticleItemRename));

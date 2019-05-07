@@ -111,10 +111,8 @@ public:
         case 2: return (u8)id2;
         case 3: return (u8)id3;
         default: NODEFAULT;	
-        }
-#ifdef DEBUG
+		}
 		return 0;
-#endif
     }
     void			w_id		(u32 idx, u8 val) {	
         switch(idx){
