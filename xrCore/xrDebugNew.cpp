@@ -242,7 +242,7 @@ void xrDebug::backend	(const char *expression, const char *description, const ch
 #	ifdef USE_OWN_ERROR_MESSAGE_WINDOW
 		int					result = 
 			MessageBox(
-				GetTopWindow(NULL),
+				NULL,//GetTopWindow(NULL),
 				assertion_info,
 				"Fatal Error",
 				MB_CANCELTRYCONTINUE|MB_ICONERROR|MB_SYSTEMMODAL
