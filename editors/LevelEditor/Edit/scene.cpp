@@ -544,7 +544,7 @@ void EScene::FillProp(LPCSTR pref, PropItemVec& items, ObjClassID cls_id)
     B->OnBtnClickEvent.bind		(this,&EScene::OnBuildControlClick);
 
     BOOL enabled				= (m_LevelOp.m_BuildParams.m_quality==ebqCustom);
-    V=PHelper().CreateU8		(items,PrepareKey(pref,"Scene\\Build options\\Lighting\\Hemisphere quality [0-3]"),	&m_LevelOp.m_LightHemiQuality,	0,3);		V->Owner()->Enable(enabled);
+    V=PHelper().CreateU8		(items,PrepareKey(pref,"Scene\\Build options\\Lighting\\Hemisphere quality [0-4]"),	&m_LevelOp.m_LightHemiQuality,	0,4);		V->Owner()->Enable(enabled);
     V=PHelper().CreateU8		(items,PrepareKey(pref,"Scene\\Build options\\Lighting\\Sun shadow quality [0-3]"),	&m_LevelOp.m_LightSunQuality,	0,3);       V->Owner()->Enable(enabled);
 
     // Build Options
