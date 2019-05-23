@@ -1164,9 +1164,9 @@ int SceneBuilder::BuildMaterial(LPCSTR esh_name, LPCSTR csh_name, LPCSTR tx_name
 	VERIFY			(tx_cnt==1);
     
     if (allow_draft&&(Scene->m_LevelOp.m_BuildParams.m_quality==ebqDraft)){
-        Shader_xrLC* c_sh	= Device.ShaderXRLC.Get(csh_name);
-        if (c_sh->flags.bRendering){
-            mtl.shader      = (u16)BuildShader		("def_shaders\\def_vertex");
+		Shader_xrLC* c_sh	= Device.ShaderXRLC.Get(csh_name);
+        if (c_sh && c_sh->flags.bRendering){
+			mtl.shader      = (u16)BuildShader		("def_shaders\\def_vertex");
             mtl.shader_xrlc	= (u16)BuildShaderXRLC	("def_shaders\\def_vertex");
         }else{
             mtl.shader      = (u16)BuildShader		(esh_name);
