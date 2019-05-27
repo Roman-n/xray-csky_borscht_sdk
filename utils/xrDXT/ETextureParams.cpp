@@ -1,6 +1,4 @@
-#include "stdafx.h"
-#pragma hdrstop          
-
+#include "stdafx.h"    
 #include "ETextureParams.h"
 
 xr_token					tparam_token							[ ]={
@@ -62,7 +60,7 @@ xr_token					tbmode_token							[ ]={
 	{ "Use",				STextureParams::tbmUse						},
 	{ 0,					0											}
 };
-/*
+
 void STextureParams::Load(IReader& F)
 {
     R_ASSERT(F.find_chunk(THM_CHUNK_TEXTUREPARAM));
@@ -148,7 +146,7 @@ void STextureParams::Save(IWriter& F)
 	F.w_u8			(fade_delay);
 	F.close_chunk	();
 }
-*/
+
 
 #ifdef _EDITOR
 #include "PropertiesListHelper.h"

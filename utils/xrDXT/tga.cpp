@@ -1,7 +1,5 @@
 // file: targasaver.cpp
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "tga.h"
 /*
 void	tga_save	(LPCSTR name, u32 w, u32 h, void* data, BOOL alpha )
@@ -19,7 +17,7 @@ void	tga_save	(LPCSTR name, u32 w, u32 h, void* data, BOOL alpha )
 	_close		(hf);
 }
 */
-/*
+
 void TGAdesc::maketga( IWriter& fs ){
 	R_ASSERT(data);
 	R_ASSERT(width);
@@ -72,7 +70,7 @@ void TGAdesc::maketga( IWriter& fs ){
 		}
 	}
 }
-*/
+
 /*
 void TGAdesc::maketga( int hf ){
 	R_ASSERT(data);
