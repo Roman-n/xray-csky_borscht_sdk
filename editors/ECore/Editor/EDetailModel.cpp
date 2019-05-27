@@ -136,12 +136,12 @@ bool EDetail::Update	(LPCSTR name)
     }
 
     if(R->SurfaceCount()!=1){
-    	ELog.Msg		(mtError,"Object must contain 1 material.");
-	    Lib.RemoveEditObject(R);
-    	return false;
-    }
+		ELog.DlgMsg		(mtError,"Object must contain 1 material.");
+		Lib.RemoveEditObject(R);
+		return false;
+	}
 	if(R->MeshCount()==0){
-    	ELog.Msg		(mtError,"Object must contain 1 mesh.");
+    	ELog.DlgMsg		(mtError,"Object must contain 1 mesh.");
 	    Lib.RemoveEditObject(R);
     	return false;
     }
