@@ -133,11 +133,12 @@ protected:
     BOOL	ParseLTX				(CInifile* pIni, ObjectList& lst, LPCSTR prefix=0);
 	BOOL 	BuildLTX                ();
     BOOL	ParseGAME				(IWriter& game, IWriter& spawn, ObjectList& lst, LPCSTR prefix=0);
-    BOOL 	BuildGame				();
+	BOOL 	BuildGame				();
 
     BOOL	BuildSceneStat			();
     bool 	BuildHOMModel			();
-    bool 	BuildSOMModel			();
+	bool 	BuildSOMModel			();
+	bool	BuildSoundEnv			();
     bool	BuildAIMap				();
     bool	BuildWallmarks			();
     BOOL 	CompileStatic		   	(bool b_selected_only);
@@ -153,6 +154,7 @@ public:
     BOOL 	MakeDetails				();
     BOOL 	MakeHOM					();
 	BOOL 	MakeSOM					();
+	BOOL	MakeSoundEnv			();
     BOOL	MakeAIMap				();
 
     void	OnRender				();

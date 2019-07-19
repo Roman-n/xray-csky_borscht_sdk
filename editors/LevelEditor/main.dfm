@@ -412,6 +412,10 @@ object frmMain: TfrmMain
         Caption = 'Make Sound Occluder'
         OnClick = miMakeSoundOccluderClick
       end
+      object miMakeSoundEnvironment: TMenuItem
+        Caption = 'Make Sound Environment'
+        OnClick = miMakeSoundEnvironmentClick
+      end
       object miMakeAIMap: TMenuItem
         Caption = 'Make AI-Map'
         OnClick = miMakeAIMapClick

@@ -719,3 +719,9 @@ void __fastcall TfrmMain::About1Click(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
+void __fastcall TfrmMain::miMakeSoundEnvironmentClick(TObject *Sender)
+{
+	ExecCommand(COMMAND_MAKE_SOUND_ENV);
+}
+//---------------------------------------------------------------------------
+
