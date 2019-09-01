@@ -14,6 +14,7 @@
 #pragma link "ExtBtn"          
 #pragma link "MxMenus"
 #pragma link "mxPlacemnt"
+#pragma link "cgauges"
 #pragma resource "*.dfm"     
 TfraBottomBar *fraBottomBar=0;
 //---------------------------------------------------------------------------
@@ -211,7 +212,9 @@ void __fastcall TfraBottomBar::miWeatherClick(TObject *Sender)
                 env.fTimeFactor		= sp;
             }
             TProperties::DestroyForm(P);
-        }
+		}
+
+		UI->RedrawScene();
     }
 }
 //---------------------------------------------------------------------------
