@@ -129,11 +129,6 @@ public:
 	shared_str			sky_texture_env_name;
 	shared_str			clouds_texture_name	;
 
-	/*
-	ref_texture			sky_texture		;
-	ref_texture			sky_texture_env	;
-	ref_texture			clouds_texture	;
-	*/
 	FactoryPtr<IEnvDescriptorRender>	m_pDescriptor;
 
 	Fvector4			clouds_color	;
