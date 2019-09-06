@@ -39,6 +39,18 @@ public:
 };    
 extern CShaderMain*&	PUI;
 
+class CSEPreferences: public CCustomPreferences
+{
+	typedef CCustomPreferences inherited;
+
+	public:
+	shared_str sound_env_wave_name;
+
+	protected:
+	virtual void Load(CInifile *I);
+	virtual void Save(CInifile *I);
+};
+
 #endif //UI_MainCommandH
 
 

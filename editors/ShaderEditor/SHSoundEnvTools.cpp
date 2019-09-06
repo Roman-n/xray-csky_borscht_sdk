@@ -46,9 +46,8 @@ xr_token eax_environment[]		= {
 //------------------------------------------------------------------------------
 CSHSoundEnvTools::CSHSoundEnvTools(ISHInit& init):ISHTools(init)
 {
-    m_Env	 			= 0;
-    m_SoundName			= "alexmx\\beep";
-    OnChangeWAV			(0);
+	m_Env	 			= 0;
+    m_SoundName			= "";
 }
 
 CSHSoundEnvTools::~CSHSoundEnvTools()
@@ -58,6 +57,7 @@ CSHSoundEnvTools::~CSHSoundEnvTools()
 
 void __stdcall CSHSoundEnvTools::OnChangeWAV	(PropValue* prop)
 {
+	((CSEPreferences*)EPrefs)->sound_env_wave_name = m_SoundName;
 
 	BOOL bPlay 		= !!m_PreviewSnd._feedback();
 	m_PreviewSnd.destroy();
@@ -156,8 +156,12 @@ void CSHSoundEnvTools::OnRender()
 
 bool CSHSoundEnvTools::OnCreate()
 {
-    Load							();
-    return true;
+	Load							();
+
+	m_SoundName = ((CSEPreferences*)EPrefs)->sound_env_wave_name;
+	OnChangeWAV(0);
+
+	return true;
 }
 
 void CSHSoundEnvTools::OnDestroy()

@@ -18,7 +18,7 @@ CShaderMain*&	PUI=(CShaderMain*)UI;
 
 CShaderMain::CShaderMain()
 {
-    EPrefs			= xr_new<CCustomPreferences>();
+    EPrefs			= xr_new<CSEPreferences>();
 }
 //---------------------------------------------------------------------------
 
@@ -173,7 +173,7 @@ void CShaderMain::OutUICursorPos()
 void CShaderMain::OutGridSize()
 {
 	VERIFY(fraBottomBar);
-    AnsiString s;
+	AnsiString s;
     s.sprintf("Grid: %1.1f",EPrefs->grid_cell_size);
     fraBottomBar->paGridSquareSize->Caption=s; fraBottomBar->paGridSquareSize->Repaint();
 }
@@ -186,6 +186,20 @@ void CShaderMain::OutInfo()
 void CShaderMain::RealQuit()
 {
 	frmMain->Close();
+}
+//---------------------------------------------------------------------------
+void CSEPreferences::Load(CInifile *I)
+{
+	inherited::Load(I);
+
+	sound_env_wave_name = R_STRING_SAFE("sound_env_tools", "wave_name", shared_str("alexmx\\beep"));
+}
+//---------------------------------------------------------------------------
+void CSEPreferences::Save(CInifile *I)
+{
+	inherited::Save(I);
+
+	I->w_string("sound_env_tools", "wave_name", sound_env_wave_name.c_str());
 }
 //---------------------------------------------------------------------------
 
