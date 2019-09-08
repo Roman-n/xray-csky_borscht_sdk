@@ -5,10 +5,7 @@
 #define EParticlesObjectH
 
 #include "CustomObject.h"
-#include "SpawnPoint.h"
-
-#include "..\..\Layers\xrRender\ParticleEffect.h"
-#include "..\..\Layers\xrRender\ParticleGroup.h"
+#include "..\..\Include\xrRender\ParticleCustom.h"
 
 class EParticlesObject: public CCustomObject
 {
