@@ -17,6 +17,7 @@
 #include "iniStreamImpl.h"
 #include "../Ecore/Editor/EditObject.h"
 #include "IGame_Persistent.h"
+#include "..\..\Include\xrRender\ParticleCustom.h"
 
 
 //----------------------------------------------------
@@ -276,8 +277,19 @@ void CSpawnPoint::SSpawnData::Create(LPCSTR _entity_ref)
 				m_Data->flags().set(M_SPAWN_OBJECT_ASPLAYER,TRUE);
             }
         }
-        m_ClassID 			= pSettings->r_clsid(m_Data->name(),"class");
-    }else{
+		m_ClassID 			= pSettings->r_clsid(m_Data->name(),"class");
+
+		m_IdleParticles = NULL;
+		if(pSettings->line_exist(m_Data->name(), "idle_particles")) // hack. Need really know if it's anomaly zone
+		{
+			shared_str ref = pSettings->r_string(m_Data->name(), "idle_particles");
+			if(ref.size())
+			{
+				IRenderVisual* V = ::Render->model_CreateParticles(*ref);
+				m_IdleParticles = dynamic_cast<IParticleCustom*>(V);
+			}
+		}
+	}else{
     	Log("!Can't create entity: ",_entity_ref);
     }
 
@@ -293,7 +305,14 @@ void CSpawnPoint::SSpawnData::Destroy()
 {
     destroy_entity		(m_Data);
     xr_delete			(m_Visual);
-    xr_delete			(m_Motion);
+	xr_delete			(m_Motion);
+
+	if(m_IdleParticles)
+	{
+		IRenderVisual* tmp = dynamic_cast<IRenderVisual*>(m_IdleParticles);
+		::Render->model_Delete(tmp);
+		m_IdleParticles = NULL;
+	}
 }
 void CSpawnPoint::SSpawnData::get_bone_xform	(LPCSTR name, Fmatrix& xform)
 {
@@ -419,7 +438,7 @@ bool CSpawnPoint::SSpawnData::ExportGame(SExportStreams* F, CSpawnPoint* owner)
 void CSpawnPoint::SSpawnData::OnAnimControlClick(ButtonValue* value, bool& bModif, bool& bSafe)
 {
 	ButtonValue* B				= dynamic_cast<ButtonValue*>(value); R_ASSERT(B);
-    if(m_Visual) switch(B->btn_num)
+	if(m_Visual) switch(B->btn_num)
     {
 //		"First,Play,Pause,Stop,Last",
     	case 0: m_Visual->PlayAnimationFirstFrame(); 	break; // first
@@ -442,8 +461,20 @@ void CSpawnPoint::SSpawnData::OnAnimControlClick(ButtonValue* value, bool& bModi
                 case 3: V->StopAllAnimations();			break; // stop
                 case 4: V->PlayAnimationLastFrame();	break; // last
             }
-        }
-    }
+		}
+	}
+}
+
+void CSpawnPoint::SSpawnData::OnParticleControlClick(ButtonValue* value, bool& bModif, bool& bSafe)
+{
+	ButtonValue* B				= dynamic_cast<ButtonValue*>(value); R_ASSERT(B);
+	if(m_IdleParticles)
+		switch(B->btn_num)
+		{
+			case 0: m_IdleParticles->Play();			break;
+			case 1: m_IdleParticles->Stop(FALSE);		break;
+			case 2: m_IdleParticles->Stop(TRUE);		break;
+		}
 }
 
 void CSpawnPoint::SSpawnData::FillProp(LPCSTR pref, PropItemVec& items)
@@ -451,15 +482,26 @@ void CSpawnPoint::SSpawnData::FillProp(LPCSTR pref, PropItemVec& items)
 	m_Data->FillProp			(pref,items);
 
     if(Scene->m_LevelOp.m_mapUsage.MatchType(eGameIDDeathmatch|eGameIDTeamDeathmatch|eGameIDArtefactHunt|eGameIDCaptureTheArtefact))
-    	PHelper().CreateFlag8		(items, PrepareKey(pref,"MP respawn"), &m_flags, eSDTypeRespawn);
+		PHelper().CreateFlag8(items, PrepareKey(pref,"MP respawn"), &m_flags, eSDTypeRespawn);
 
 	if(m_Visual || m_VisualHelpers.size())
 	{
-		ButtonValue* BV = PHelper().CreateButton	    (	items,
+		ButtonValue* BV = PHelper().CreateButton(items,
 									PrepareKey(pref,m_Data->name(),"Model\\AnimationControl"),
 									"|<<,Play,Pause,Stop,>>|",
 									0);
-   		BV->OnBtnClickEvent.bind			(this,&CSpawnPoint::SSpawnData::OnAnimControlClick);
+
+		BV->OnBtnClickEvent.bind(this,&CSpawnPoint::SSpawnData::OnAnimControlClick);
+	}
+
+	if(m_IdleParticles)
+	{
+		ButtonValue* BV = PHelper().CreateButton(items,
+									PrepareKey(pref,m_Data->name(),"Idle Particles"),
+									"Play,Stop,Stop Deferred",
+									0);
+
+		BV->OnBtnClickEvent.bind(this,&CSpawnPoint::SSpawnData::OnParticleControlClick);
 	}
 }
 
@@ -469,13 +511,16 @@ void CSpawnPoint::SSpawnData::Render(bool bSelected, const Fmatrix& parent,int p
     	::Render->model_Render	(m_Visual->visual,parent,priority,strictB2F,1.f);
 
     if (m_Motion&&m_Motion->animator&&bSelected&&(1==priority)&&(false==strictB2F))
-        m_Motion->animator->DrawPath();
+		m_Motion->animator->DrawPath();
+
+	if(m_IdleParticles)
+		::Render->model_Render(dynamic_cast<IRenderVisual*>(m_IdleParticles),parent,priority,strictB2F,1.f);
 
     RCache.set_xform_world		(Fidentity);
 	Device.SetShader			(Device.m_WireShader);
-    m_Data->on_render			(&DU_impl,this,bSelected,parent,priority,strictB2F);
+	m_Data->on_render			(&DU_impl,this,bSelected,parent,priority,strictB2F);
 
-    if(bSelected)
+	if(bSelected)
     {
         xr_vector<CLE_Visual*>::iterator it 	= m_VisualHelpers.begin();
         xr_vector<CLE_Visual*>::iterator it_e 	= m_VisualHelpers.end();
@@ -524,6 +569,14 @@ void CSpawnPoint::SSpawnData::OnFrame()
 
     	if (m_Motion->animator)
     		m_Motion->animator->Update(Device.fTimeDelta);
+	}
+
+	if(m_IdleParticles)
+	{
+		m_IdleParticles->OnFrame(Device.dwTimeDelta);
+
+//		if(!m_IdleParticles->IsPlaying())
+//			m_IdleParticles->Play();
     }
 
     if (m_Data->m_editor_flags.is(ISE_Abstract::flVisualChange))
@@ -677,7 +730,7 @@ void CSpawnPoint::DetachObject()
 
 bool CSpawnPoint::RefCompare	(LPCSTR ref)
 {
-	return ref&&ref[0]&&m_SpawnData.Valid()?(strcmp(ref,m_SpawnData.m_Data->name())==0):false; 
+	return ref&&ref[0]&&m_SpawnData.Valid()?(strcmp(ref,m_SpawnData.m_Data->name())==0):false;
 }
 
 LPCSTR CSpawnPoint::RefName	() 			
@@ -827,6 +880,18 @@ void CSpawnPoint::OnFrame()
             }
         }
     }
+}
+
+void CSpawnPoint::OnUpdateTransform()
+{
+	inherited::OnUpdateTransform();
+
+	IParticleCustom* P = m_SpawnData.m_IdleParticles;
+	if(P)
+	{
+		Fvector v={0.f,0.f,0.f};
+		P->UpdateParent(_Transform(), v, TRUE);
+	}
 }
 
 bool CSpawnPoint::IsRender()
