@@ -94,9 +94,6 @@ public:
     				CLevelMain 				();
     virtual 		~CLevelMain				();
 
-    void			store_rt_flags			(const CCustomObject* CO);
-    void			restore_rt_flags		(CCustomObject* CO);
-
     virtual LPCSTR	GetCaption				();
 
     virtual void 	ResetStatus				();
