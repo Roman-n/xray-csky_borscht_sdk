@@ -24,8 +24,9 @@ TShiftState ssRBOnly;
 CLevelTool::CLevelTool()
 {
     fFogness	= 0.9f;
-    dwFogColor	= 0xffffffff;
-    m_Flags.zero();
+	dwFogColor	= 0xffffffff;
+	m_Flags.zero();
+    pCurTool	= 0;
 }
 //---------------------------------------------------------------------------
 CLevelTool::~CLevelTool()
@@ -172,7 +173,7 @@ void __fastcall CLevelTool::RealSetAction   (ETAction act)
 void CLevelTool::SetAction(ETAction act)
 {
 	// если мышь захвачена - изменим action после того как она освободится
-	if (UI->IsMouseCaptured()||UI->IsMouseInUse()||!false){
+	if (UI->IsMouseCaptured()||UI->IsMouseInUse()){
 	    m_Flags.set	(flChangeAction,TRUE);
         iNeedAction=act;
     }else
@@ -370,7 +371,7 @@ void CLevelTool::OnFrame()
 	Scene->OnFrame		(Device.fTimeDelta);
     EEditorState est 	= UI->GetEState();
     if ((est==esEditScene)||(est==esEditLibrary)||(est==esEditLightAnim)){
-        if (true/*!UI->IsMouseCaptured()*/)
+        if (!UI->IsMouseCaptured())
         {
             // если нужно изменить target выполняем после того как мышь освободится
             if(m_Flags.is(flChangeTarget)) 		RealSetTarget(iNeedTarget,iNeedSubTarget,false);
