@@ -463,6 +463,8 @@ void CSpawnPoint::SSpawnData::OnAnimControlClick(ButtonValue* value, bool& bModi
             }
 		}
 	}
+
+	bModif = false;
 }
 
 void CSpawnPoint::SSpawnData::OnParticleControlClick(ButtonValue* value, bool& bModif, bool& bSafe)
@@ -475,6 +477,8 @@ void CSpawnPoint::SSpawnData::OnParticleControlClick(ButtonValue* value, bool& b
 			case 1: m_IdleParticles->Stop(FALSE);		break;
 			case 2: m_IdleParticles->Stop(TRUE);		break;
 		}
+
+	bModif = false;
 }
 
 void CSpawnPoint::SSpawnData::FillProp(LPCSTR pref, PropItemVec& items)
