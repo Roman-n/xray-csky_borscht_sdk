@@ -34,7 +34,7 @@ object fraLeftBar: TfraLeftBar
     object paScene: TPanel
       Left = 1
       Top = 1
-      Width = 449
+      Width = 417
       Height = 154
       Hint = 'Scene commands'
       Align = alTop
@@ -43,6 +43,7 @@ object fraLeftBar: TfraLeftBar
       ShowHint = True
       TabOrder = 0
       Visible = False
+      ExplicitWidth = 449
       DesignSize = (
         449
         154)
@@ -60,7 +61,7 @@ object fraLeftBar: TfraLeftBar
         ExplicitWidth = 31
       end
       object sbSceneMin: TExtBtn
-        Left = 457
+        Left = 603
         Top = 2
         Width = 11
         Height = 11
@@ -1618,7 +1619,7 @@ object fraLeftBar: TfraLeftBar
         Top = 18
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show objects'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -1720,7 +1721,7 @@ object fraLeftBar: TfraLeftBar
         Top = 33
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show lights'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -1822,7 +1823,7 @@ object fraLeftBar: TfraLeftBar
         Top = 48
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show sound sources'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -1924,7 +1925,7 @@ object fraLeftBar: TfraLeftBar
         Top = 63
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show sound env zones'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -2026,7 +2027,7 @@ object fraLeftBar: TfraLeftBar
         Top = 78
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show glows'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -2128,7 +2129,7 @@ object fraLeftBar: TfraLeftBar
         Top = 93
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show shapes'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -2230,7 +2231,7 @@ object fraLeftBar: TfraLeftBar
         Top = 108
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show spawn elements'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -2332,7 +2333,7 @@ object fraLeftBar: TfraLeftBar
         Top = 123
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show ways'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -2434,7 +2435,7 @@ object fraLeftBar: TfraLeftBar
         Top = 18
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show sectors'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -2536,7 +2537,7 @@ object fraLeftBar: TfraLeftBar
         Top = 33
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show portals'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -2638,7 +2639,7 @@ object fraLeftBar: TfraLeftBar
         Top = 48
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show groups'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -2740,7 +2741,7 @@ object fraLeftBar: TfraLeftBar
         Top = 63
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show static particles'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -2842,7 +2843,7 @@ object fraLeftBar: TfraLeftBar
         Top = 78
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show details'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -2944,7 +2945,7 @@ object fraLeftBar: TfraLeftBar
         Top = 93
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show AI-Map'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -3046,7 +3047,7 @@ object fraLeftBar: TfraLeftBar
         Top = 108
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show wallmarks'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -3148,7 +3149,7 @@ object fraLeftBar: TfraLeftBar
         Top = 123
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show fog volumes'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
