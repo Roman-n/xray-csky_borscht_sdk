@@ -221,6 +221,7 @@ public:
 	void 			CutSelection        (ObjClassID classfilter);
 	void			CopySelection       (ObjClassID classfilter);
 	void			PasteSelection      ();
+	void			DuplicateSelection	(ObjClassID classfilter);
 
 	void 			SelectLightsForObject(CCustomObject* obj);
 

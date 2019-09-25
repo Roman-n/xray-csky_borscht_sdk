@@ -126,8 +126,8 @@ CCommandVar CLevelTool::CommandShowTarget(CCommandVar p1, CCommandVar p2)
     if(p2)
     	M->m_EditFlags.set(ESceneToolBase::flVisible,TRUE);
     else
-    	M->m_EditFlags.set(ESceneToolBase::flVisible,FALSE);
-        
+		M->m_EditFlags.set(ESceneToolBase::flVisible,FALSE);
+
     return TRUE;
 }
 
@@ -445,7 +445,7 @@ CCommandVar CommandPaste(CCommandVar p1, CCommandVar p2)
 {
     if( !Scene->locked() ){
         Scene->PasteSelection();
-        Scene->UndoSave	();
+		Scene->UndoSave	();
         return 			TRUE;
     } else {
         ELog.DlgMsg		( mtError, "Scene sharing violation" );
@@ -455,9 +455,14 @@ CCommandVar CommandPaste(CCommandVar p1, CCommandVar p2)
 
 CCommandVar CommandDuplicate(CCommandVar p1, CCommandVar p2)
 {
-	ExecCommand(COMMAND_COPY);
-	ExecCommand(COMMAND_PASTE);
-	return TRUE;
+    if( !Scene->locked() ){
+		Scene->DuplicateSelection(LTools->CurrentClassID());
+        Scene->UndoSave	();
+        return 			TRUE;
+    } else {
+        ELog.DlgMsg		( mtError, "Scene sharing violation" );
+        return  		FALSE;
+	}
 }
 
 #include "AppendObjectInfoForm.h"
