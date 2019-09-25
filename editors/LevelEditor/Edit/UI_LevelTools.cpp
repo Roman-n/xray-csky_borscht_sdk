@@ -217,7 +217,7 @@ void __fastcall CLevelTool::ResetSubTarget()
 void CLevelTool::SetTarget(ObjClassID tgt, int sub_tgt)
 {
 	// если мышь захвачена - изменим target после того как она освободится
-	if (UI->IsMouseCaptured()||UI->IsMouseInUse()||!false){
+	if (UI->IsMouseCaptured()||UI->IsMouseInUse()){
 	    m_Flags.set(flChangeTarget,TRUE);
         if(tgt == OBJCLASS_WAY && sub_tgt==2 && target==tgt)
         {
