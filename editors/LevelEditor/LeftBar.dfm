@@ -34,7 +34,7 @@ object fraLeftBar: TfraLeftBar
     object paScene: TPanel
       Left = 1
       Top = 1
-      Width = 417
+      Width = 449
       Height = 154
       Hint = 'Scene commands'
       Align = alTop
@@ -43,7 +43,6 @@ object fraLeftBar: TfraLeftBar
       ShowHint = True
       TabOrder = 0
       Visible = False
-      ExplicitWidth = 449
       DesignSize = (
         449
         154)
@@ -61,7 +60,7 @@ object fraLeftBar: TfraLeftBar
         ExplicitWidth = 31
       end
       object sbSceneMin: TExtBtn
-        Left = 603
+        Left = 635
         Top = 2
         Width = 11
         Height = 11
