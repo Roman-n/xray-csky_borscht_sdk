@@ -32,8 +32,8 @@ void ESoundEnvironment::Construct(LPVOID data)
     
 	add_box					(Fidentity);
 	SetDrawColor			(0x205050FF, 0xFF202020);
-    m_EnvInner				= "";
-    m_EnvOuter				= "";
+	m_EnvInner				= "room";
+    m_EnvOuter				= "open_space";
 }
 
 ESoundEnvironment::~ESoundEnvironment()
