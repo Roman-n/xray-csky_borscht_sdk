@@ -325,7 +325,8 @@ void ESoundSource::FillProp(LPCSTR pref, PropItemVec& values)
 	V=PHelper().CreateFloat		(values,PrepareKey(pref,"Source\\Max dist"),	&m_Params.max_distance,		0.1f,1000.f,0.1f,1);
     V->Owner()->Enable			(FALSE);
 	V=PHelper().CreateFloat		(values,PrepareKey(pref,"Source\\Max ai dist"),	&m_Params.max_ai_distance,	0.1f,1000.f,0.1f,1);
-    V->Owner()->Enable			(FALSE);
+	V->Owner()->Enable			(FALSE);
+	PHelper().CreateCaption		(values, PrepareKey(pref,"Source\\Length"), shared_str().sprintf("%.2f sec", m_Source.get_length_sec()));
 	PHelper().CreateCaption		(values,PrepareKey(pref,"Game\\Active time\\Hint"),	"Zero - play sound looped round the clock.");
 	PHelper().CreateTime		(values,PrepareKey(pref,"Game\\Active time\\From"),	&m_ActiveTime.x);
 	PHelper().CreateTime		(values,PrepareKey(pref,"Game\\Active time\\To"),	&m_ActiveTime.y);
