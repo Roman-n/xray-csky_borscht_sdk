@@ -124,7 +124,11 @@ bool __fastcall TUI::KeyDown (WORD Key, TShiftState Shift)
 //	Log("Dn  ",Shift.Contains(ssShift)?"1":"0");
 
 	if (ImGui::GetIO().WantCaptureKeyboard)
-    	return ImGui::GetIO().KeysDown[Key] = true;
+	{
+		ImGui::GetIO().KeysDown[Key] = true;
+		RedrawScene();
+		return true;
+	}
 
 	if (Device.m_Camera.KeyDown(Key,Shift))
     	return true;
@@ -138,7 +142,11 @@ bool __fastcall TUI::KeyUp   (WORD Key, TShiftState Shift)
 //	m_ShiftState = Shift;
 
 	if (ImGui::GetIO().WantCaptureKeyboard)
-    	return ImGui::GetIO().KeysDown[Key] = false;
+	{
+		ImGui::GetIO().KeysDown[Key] = false;
+		RedrawScene();
+		return false;
+	}
 
 	if (Device.m_Camera.KeyUp(Key,Shift))
     	return true;
@@ -152,7 +160,8 @@ bool __fastcall TUI::KeyPress(WORD Key, TShiftState Shift)
 
     if (ImGui::GetIO().WantCaptureKeyboard)
     {
-    	ImGui::GetIO().AddInputCharacter(Key);
+		ImGui::GetIO().AddInputCharacter(Key);
+		RedrawScene();
         return true;
     }
 
