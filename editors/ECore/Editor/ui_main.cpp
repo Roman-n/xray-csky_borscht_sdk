@@ -30,10 +30,16 @@ static void ImGui_Init(HWND hwnd, IDirect3DDevice9 *d3ddevice)
     ImGuiIO &io = ImGui::GetIO();
     ImFontAtlas &fonts 	= *io.Fonts;
 
-    ImFont *font = fonts.AddFontFromFileTTF("extras\\Anonymous Pro.ttf", 14, NULL, fonts.GetGlyphRangesCyrillic());
-    fonts.AddFontFromFileTTF("extras\\Anonymous Pro.ttf", 24, NULL, fonts.GetGlyphRangesCyrillic());
+	const char* font_name = "extras\\Anonymous Pro.ttf";
+	if(FileExists(font_name))
+	{
+		ImFont *font = fonts.AddFontFromFileTTF(font_name, 14, NULL, fonts.GetGlyphRangesCyrillic());
+		fonts.AddFontFromFileTTF(font_name, 24, NULL, fonts.GetGlyphRangesCyrillic());
 
-    io.FontDefault = font;
+		io.FontDefault = font;
+	}
+	else
+		ELog.Msg(mtError, "Cannot find font file '%s'!", font_name);
 }
 
 static void ImGui_Shutdown(void)
