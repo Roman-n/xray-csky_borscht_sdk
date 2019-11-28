@@ -434,8 +434,6 @@ void CEnvDescriptorMixer::clear	()
 	*/
 }
 
-int get_ref_count(IUnknown* ii);
-
 void CEnvDescriptorMixer::lerp	(CEnvironment* , CEnvDescriptor& A, CEnvDescriptor& B, float f, CEnvModifier& Mdf, float modifier_power)
 {
 	float	modif_power		=	1.f/(modifier_power+1);	// the environment itself
@@ -527,7 +525,8 @@ void CEnvDescriptorMixer::lerp	(CEnvironment* , CEnvDescriptor& A, CEnvDescripto
 	sun_dir.lerp			(A.sun_dir,B.sun_dir,f).normalize();
 	R_ASSERT				( _valid(sun_dir) );
 
-	VERIFY2					(sun_dir.y<0,"Invalid sun direction settings while lerp");}
+	VERIFY2					(sun_dir.y<0,"Invalid sun direction settings while lerp");
+}
 
 //-----------------------------------------------------------------------------
 // Environment IO

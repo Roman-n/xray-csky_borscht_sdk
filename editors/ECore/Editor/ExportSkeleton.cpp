@@ -270,7 +270,7 @@ void CExportSkeleton::SSplit::Save(IWriter& F)
         {
             SSkelVert& pV 	= *v_it;
             pV.sort_by_weight	();
-            float _weight_b0		= 0.0f;
+            float _weight_b0;
 
 			// write vertex
             F.w_u16		(pV.bones[0].id);
@@ -301,7 +301,7 @@ void CExportSkeleton::SSplit::Save(IWriter& F)
         {
             SSkelVert& pV 		= *v_it;
             pV.sort_by_weight	();
-            u32 i				= 0;
+            u32 i;
 
             u32 _bones 			= pV.bones.size();
             R_ASSERT			( m_SkeletonLinkType >= pV.bones.size() );
@@ -493,13 +493,12 @@ void ComputeOBB_RAPID	(Fobb &B, FvectorVec& V, u32 t_cnt)
 void ComputeOBB_WML		(Fobb &B, FvectorVec& V)
 {
     if (V.size()<3) { B.invalidate(); return; }
-    float 	HV				= flt_max;
+
     {
         Wml::Box3<float> 	BOX;
         Wml::MinBox3<float> mb(V.size(), (const Wml::Vector3<float>*) &V.front(), BOX);
         float hv			= BOX.Extents()[0]*BOX.Extents()[1]*BOX.Extents()[2];
-        if (hv<HV){
-        	HV 				= hv;
+		if (hv<flt_max){
             B.m_rotate.i.set(BOX.Axis(0));
             B.m_rotate.j.set(BOX.Axis(1));
             B.m_rotate.k.set(BOX.Axis(2));

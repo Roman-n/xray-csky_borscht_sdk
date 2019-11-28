@@ -4,6 +4,8 @@
 #include "../ECore/Editor/ui_main.h"
 #include "FramePS.h"
 #include "..\..\Layers\xrRender\PSLibrary.h"
+#include "..\..\Layers\xrRender\ParticleEffect.h"
+#include "..\..\Layers\xrRender\ParticleGroup.h"
 #include "Scene.h"
 #include "EParticlesObject.h"
 //---------------------------------------------------------------------------

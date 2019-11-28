@@ -172,10 +172,14 @@ void TfraLeftBar::MaximizeAllFrames()
 
 void TfraLeftBar::ChangeTarget(ObjClassID tgt)
 {
-    for (int i=0; i<paTarget->ControlCount; i++){
-    	TExtBtn* B = dynamic_cast<TExtBtn *>(paTarget->Controls[i]);
-        if (B&&ObjClassID(B->Tag)==tgt)	B->Down = true;
+	for(size_t i = 0; i < m_TargetButtons.size(); i++)
+	{
+		TExtBtn* B = m_TargetButtons[i].first;
+
+		if(B->Tag == tgt)
+        	B->Down = true;
     }
+
     UI->RedrawScene	();
     UpdateBar		();
 }

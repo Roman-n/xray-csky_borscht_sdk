@@ -14,6 +14,7 @@
 #include "CGAUGES.h"
 #include <ExtCtrls.hpp>
 #include <Menus.hpp>
+#include "cgauges.h"
 //---------------------------------------------------------------------------
 class ECORE_API TfraBottomBar : public TFrame
 {

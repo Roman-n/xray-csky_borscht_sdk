@@ -7,6 +7,7 @@
 #include "render.h"
 #include "GameMtlLib.h"
 #include "ResourceManager.h"
+#include "igame_persistent.h" // for environment bug-fix
 
 #pragma package(smart_init)
 
@@ -286,7 +287,8 @@ void CRenderDevice::Reset  	()
 //		fWidth_2			= float(dwWidth/2);
 //		fHeight_2			= float(dwHeight/2);
     Resources->reset_end	();
-    _SetupStates			();
+	_SetupStates			();
+	g_pGamePersistent->Environment().bNeed_re_create_env = TRUE;
     u32 tm_end				= TimerAsync();
     Msg						("*** RESET [%d ms]",tm_end-tm_start);
 }

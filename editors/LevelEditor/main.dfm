@@ -401,7 +401,7 @@ object frmMain: TfrmMain
         Caption = '-'
       end
       object miMakeGame: TMenuItem
-        Caption = 'Make Game'
+        Caption = 'Make Spawn'
         OnClick = miMakeGameClick
       end
       object miMakeDetails: TMenuItem
@@ -415,6 +415,10 @@ object frmMain: TfrmMain
       object miMakeSoundOccluder: TMenuItem
         Caption = 'Make Sound Occluder'
         OnClick = miMakeSoundOccluderClick
+      end
+      object miMakeSoundEnvironment: TMenuItem
+        Caption = 'Make Sound Environment'
+        OnClick = miMakeSoundEnvironmentClick
       end
       object miMakeAIMap: TMenuItem
         Caption = 'Make AI-Map'

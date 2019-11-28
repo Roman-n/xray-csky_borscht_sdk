@@ -12,7 +12,7 @@ typedef void   (__stdcall * DXTMfree)(void *ptr);
 
 struct STextureParams;
 
-DXT_API(int)	DXTCompress(LPCSTR out_name, u8* raw_data, u8* normal_map, u32 w, u32 h, u32 pitch, STextureParams* fmt, u32 depth);
-DXT_API(void)	DXTSetMemHooks(DXTMalloc alloc, DXTMfree free);
+DXT_API(int) DXTCompress(LPCSTR out_name, u8* raw_data, u8* normal_map, u32 w, u32 h, u32 pitch, STextureParams* fmt, u32 depth);
+//DXT_API(void)	DXTSetMemHooks(DXTMalloc alloc, DXTMfree free);
 
 #endif

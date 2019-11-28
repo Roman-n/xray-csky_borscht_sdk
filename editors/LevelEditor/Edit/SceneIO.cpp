@@ -1274,6 +1274,15 @@ void EScene::CutSelection( ObjClassID classfilter )
 	CopySelection( classfilter );
 	RemoveSelection( classfilter );
 }
+
+void EScene::DuplicateSelection( ObjClassID classfilter )
+{
+	string_path fn;
+	GetTempFileName( FS.get_path(_temp_)->m_Path, "clip", 0, fn );
+	SaveSelection( classfilter, fn );
+	LoadSelection( fn );
+	unlink( fn );
+}
 //----------------------------------------------------
 
 void EScene::LoadCompilerError(LPCSTR fn)

@@ -34,7 +34,8 @@ struct st_LevelOptions{
 	shared_str 		m_map_version;
     
     u8	 			m_LightHemiQuality;
-    u8 				m_LightSunQuality;
+	u8 				m_LightSunQuality;
+	float			m_LightSunDispersion;
 
     b_params		m_BuildParams;
 
@@ -220,6 +221,7 @@ public:
 	void 			CutSelection        (ObjClassID classfilter);
 	void			CopySelection       (ObjClassID classfilter);
 	void			PasteSelection      ();
+	void			DuplicateSelection	(ObjClassID classfilter);
 
 	void 			SelectLightsForObject(CCustomObject* obj);
 

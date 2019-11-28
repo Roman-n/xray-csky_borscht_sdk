@@ -68,13 +68,16 @@ BOOL SceneBuilder::BuildGame()
             if (!F.sound_static.stream.save_to	(lev_sound_static.c_str())) bRes = FALSE;
     }
 
-    // save sound envs
+	// save sound envs
+	/*
     {
         xr_string lev_sound_env 			= MakeLevelPath("level.snd_env");
         EFS.MarkFile						(lev_sound_env.c_str(),true);
         if (LSndLib->MakeEnvGeometry		(F.sound_env_geom.stream,false))
             if (!F.sound_env_geom.stream.save_to(lev_sound_env.c_str())) bRes = FALSE;
-    }
+	}
+	*/
+	BuildSoundEnv();
 
     // save static PG
     {
@@ -170,5 +173,18 @@ BOOL SceneBuilder::BuildGame()
     }
 
     return bRes;
+}
+
+bool SceneBuilder::BuildSoundEnv()
+{
+	xr_string lev_sound_env 			= MakeLevelPath("level.snd_env");
+	CMemoryWriter stream;
+
+	EFS.MarkFile						(lev_sound_env.c_str(),true);
+	if (LSndLib->MakeEnvGeometry		(stream,false))
+		if (stream.save_to(lev_sound_env.c_str()))
+			return true;
+
+	return false;
 }
 

@@ -46,9 +46,8 @@ xr_token eax_environment[]		= {
 //------------------------------------------------------------------------------
 CSHSoundEnvTools::CSHSoundEnvTools(ISHInit& init):ISHTools(init)
 {
-    m_Env	 			= 0;
-    m_SoundName			= "alexmx\\beep";
-    OnChangeWAV			(0);
+	m_Env	 			= 0;
+    m_SoundName			= "";
 }
 
 CSHSoundEnvTools::~CSHSoundEnvTools()
@@ -58,14 +57,20 @@ CSHSoundEnvTools::~CSHSoundEnvTools()
 
 void __stdcall CSHSoundEnvTools::OnChangeWAV	(PropValue* prop)
 {
+	((CSEPreferences*)EPrefs)->sound_env_wave_name = m_SoundName;
 
 	BOOL bPlay 		= !!m_PreviewSnd._feedback();
 	m_PreviewSnd.destroy();
 	if (m_SoundName.size()){
     	m_PreviewSnd.create				(*m_SoundName,st_Effect,sg_Undefined);
-        CSoundRender_Source* src= (CSoundRender_Source*)m_PreviewSnd._handle();
-        m_Params.min_distance	= src->m_fMinDist;
-        m_Params.max_distance	= src->m_fMaxDist;
+		CSoundRender_Source* src= (CSoundRender_Source*)m_PreviewSnd._handle();
+		if(src){
+			m_Params.min_distance = src->m_fMinDist;
+			m_Params.max_distance = src->m_fMaxDist;
+        }else{
+			m_Params.min_distance = 1.f;
+			m_Params.max_distance = 10.f;
+        }
     }
 	if (bPlay) 		m_PreviewSnd.play	(0,sm_Looped);
     
@@ -151,8 +156,12 @@ void CSHSoundEnvTools::OnRender()
 
 bool CSHSoundEnvTools::OnCreate()
 {
-    Load							();
-    return true;
+	Load							();
+
+	m_SoundName = ((CSEPreferences*)EPrefs)->sound_env_wave_name;
+	OnChangeWAV(0);
+
+	return true;
 }
 
 void CSHSoundEnvTools::OnDestroy()

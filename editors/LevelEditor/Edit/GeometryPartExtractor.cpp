@@ -106,8 +106,8 @@ bool SBPart::prepare				(SBAdjVec& adjs, u32 bone_face_min)
                 if (!(*f_it)->marked){
                     F					= *f_it;
                     int cnt 			= 0;
-                    for (SBFaceVecIt a_it=F->adjs.begin(); a_it!=F->adjs.end(); a_it++) cnt+=(*a_it)->marked?0:1;
-                    if ((cnt==0)||(cnt>=2))	break;
+					for (SBFaceVecIt a_it=F->adjs.begin(); a_it!=F->adjs.end(); a_it++) cnt+=(*a_it)->marked?0:1;
+					if ((cnt==0)||(cnt>=2))	break;
                 }
             }
             if (!F)						break;
@@ -140,7 +140,7 @@ bool SBPart::prepare				(SBAdjVec& adjs, u32 bone_face_min)
                     SBFace* F				= *f_it;
                     if (-1==F->bone_id){
                         F->marked		= true;
-                        F->bone_id		= 0;
+                        F->bone_id		= -2;
                         face_accum_total++;
                     }
                 } 
@@ -171,10 +171,11 @@ bool SBPart::prepare				(SBAdjVec& adjs, u32 bone_face_min)
             } 
         }
         
-        // calculate bone offset
+		// calculate bone offset
         for (f_it=m_Faces.begin(); f_it!=m_Faces.end(); f_it++){
             SBFace* F					= *f_it;
-        	VERIFY						(F->bone_id!=-1);
+			VERIFY						(F->bone_id!=-1);
+			if(F->bone_id==-2) continue;
             SBBone& B					= m_Bones[F->bone_id];
             for (int k=0; k<3; k++)		B.offset.add(F->o[k]);
         }
@@ -182,7 +183,27 @@ bool SBPart::prepare				(SBAdjVec& adjs, u32 bone_face_min)
             SBBone& B					= *b_it;
             VERIFY						(0!=B.f_cnt);
             B.offset.div				(B.f_cnt*3);
-        }
+		}
+
+		//
+		for (SBFaceVecIt f_it=m_Faces.begin(); f_it!=m_Faces.end(); f_it++) {
+			SBFace* F = *f_it;
+			if (F->bone_id == -2) {
+				Fvector center;
+				center = F->o[0];
+				center.add(F->o[1]).add(F->o[2]).div(3);
+
+				u32 nearest = -1;
+				for (u32 b_it = 0; b_it < m_Bones.size(); b_it++) {
+					if(nearest == -1 || center.distance_to_sqr(m_Bones[b_it].offset) < center.distance_to_sqr(m_Bones[nearest].offset))
+						nearest = b_it;;
+				}
+
+				F->bone_id = nearest;
+			}
+		}
+		//
+
         Fvector& offs					= m_Bones.front().offset;
         for (b_it=m_Bones.begin(); b_it!=m_Bones.end(); b_it++)
             b_it->offset.sub			(offs);

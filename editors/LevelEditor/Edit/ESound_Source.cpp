@@ -325,7 +325,8 @@ void ESoundSource::FillProp(LPCSTR pref, PropItemVec& values)
 	V=PHelper().CreateFloat		(values,PrepareKey(pref,"Source\\Max dist"),	&m_Params.max_distance,		0.1f,1000.f,0.1f,1);
     V->Owner()->Enable			(FALSE);
 	V=PHelper().CreateFloat		(values,PrepareKey(pref,"Source\\Max ai dist"),	&m_Params.max_ai_distance,	0.1f,1000.f,0.1f,1);
-    V->Owner()->Enable			(FALSE);
+	V->Owner()->Enable			(FALSE);
+	PHelper().CreateCaption		(values, PrepareKey(pref,"Source\\Length"), shared_str().sprintf("%.2f sec", m_Source.get_length_sec()));
 	PHelper().CreateCaption		(values,PrepareKey(pref,"Game\\Active time\\Hint"),	"Zero - play sound looped round the clock.");
 	PHelper().CreateTime		(values,PrepareKey(pref,"Game\\Active time\\From"),	&m_ActiveTime.x);
 	PHelper().CreateTime		(values,PrepareKey(pref,"Game\\Active time\\To"),	&m_ActiveTime.y);
@@ -413,10 +414,16 @@ void ESoundSource::ResetSource()
 	m_Source.destroy();
 	if (m_WAVName.size()){ 
     	m_Source.create		(*m_WAVName,st_Effect,sg_Undefined);
-        CSoundRender_Source* src= (CSoundRender_Source*)m_Source._handle();
-        m_Params.min_distance	= src->m_fMinDist;
-        m_Params.max_distance	= src->m_fMaxDist;
-        m_Params.max_ai_distance= src->m_fMaxAIDist;
+		CSoundRender_Source* src= (CSoundRender_Source*)m_Source._handle();
+		if(src){
+			m_Params.min_distance	= src->m_fMinDist;
+			m_Params.max_distance	= src->m_fMaxDist;
+			m_Params.max_ai_distance= src->m_fMaxAIDist;
+		}else{
+			m_Params.min_distance	= 1.f;
+			m_Params.max_distance	= 10.f;
+			m_Params.max_ai_distance= 10.f;
+        }
         ExecCommand			(COMMAND_UPDATE_PROPERTIES);
     }
 	m_Source.set_params(&m_Params);

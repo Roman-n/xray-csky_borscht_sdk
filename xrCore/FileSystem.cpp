@@ -12,11 +12,30 @@
 EFS_Utils*	xr_EFS	= NULL;
 //----------------------------------------------------
 EFS_Utils::EFS_Utils( )
+	: m_BackupLevel(1)
 {
 }
 
 EFS_Utils::~EFS_Utils()
 {
+}
+
+void EFS_Utils::_initialize()
+{
+	char str[64];
+	char *p;
+
+	p = strstr(Core.Params, "-backup ");
+	if(p)
+	{
+		sscanf(p+8, "%[^ ] ", str);
+		m_BackupLevel = atoi(str);
+    }
+}
+
+void EFS_Utils::_destroy()
+{
+
 }
 
 xr_string	EFS_Utils::ExtractFileName(LPCSTR src)

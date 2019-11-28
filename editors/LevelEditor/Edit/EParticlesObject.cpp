@@ -6,7 +6,6 @@
 
 #include "EParticlesObject.h"
 #include "../ECORE/Editor/D3DUtils.h"
-#include "..\..\Layers\xrRender\PSLibrary.h"
 #include "../ECore/Editor/ui_main.h"
 
 #define CPSOBJECT_VERSION  				0x0013

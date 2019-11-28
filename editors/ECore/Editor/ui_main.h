@@ -153,9 +153,9 @@ public:
     void 			EnableSelectionRect	(bool flag );                                               
     void 			UpdateSelectionRect	(const Ivector2& from, const Ivector2& to );
 
-    void 			MouseMultiClickCapture(bool b){m_MouseMultiClickCaptured = b;}
+	void 			MouseMultiClickCapture(bool b){m_MouseMultiClickCaptured = b;}
 
-    bool __fastcall IsMouseCaptured		()	{	return m_MouseCaptured|m_MouseMultiClickCaptured;}
+	bool __fastcall IsMouseCaptured		()	{	return m_MouseCaptured||m_MouseMultiClickCaptured;}
     bool __fastcall IsMouseInUse		()	{	return bMouseInUse;}
 
     bool __fastcall KeyDown     		(WORD Key, TShiftState Shift);

@@ -31,6 +31,8 @@ void CParticleTool::OnParticleItemFocused(ListItemsVec& items)
 	PropItemVec props;
 	m_EditMode	= emEffect;
 
+	PHelper().CreateBOOL		(props, "Auto Play", &((CPEPreferences*)EPrefs)->auto_play);
+
     ButtonValue* B;
 	B=PHelper().CreateButton	(props,"Transform\\Edit",	"Reset",	ButtonValue::flFirstOnly);
     B->OnBtnClickEvent.bind		(this,&CParticleTool::OnControlClick);
@@ -55,12 +57,16 @@ void CParticleTool::OnParticleItemFocused(ListItemsVec& items)
                 	SetCurrentPG	(def);
                     def->FillProp	(GROUP_PREFIX,props,item);
                 }break;
-                default: THROW;
+				default: THROW;
                 }
             }
         }
     }
 	m_ItemProps->AssignItems(props);
+
+	if(((CPEPreferences*)EPrefs)->auto_play)
+    	PlayCurrent();
+
     UI->RedrawScene();
 }
 //------------------------------------------------------------------------------

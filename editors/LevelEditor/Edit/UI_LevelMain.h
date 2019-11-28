@@ -52,7 +52,8 @@ enum {
     COMMAND_MAKE_DETAILS,
 	COMMAND_MAKE_HOM,
     COMMAND_MAKE_SOM,
-    COMMAND_MAKE_AIMAP,
+	COMMAND_MAKE_AIMAP,
+	COMMAND_MAKE_SOUND_ENV,
 
 	COMMAND_INVERT_SELECTION_ALL,
 	COMMAND_SELECT_ALL,
@@ -92,9 +93,6 @@ public:
 public:
     				CLevelMain 				();
     virtual 		~CLevelMain				();
-
-    void			store_rt_flags			(const CCustomObject* CO);
-    void			restore_rt_flags		(CCustomObject* CO);
 
     virtual LPCSTR	GetCaption				();
 

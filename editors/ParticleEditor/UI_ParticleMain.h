@@ -51,6 +51,19 @@ public:
 };    
 extern CParticleMain*&	PUI;
 //---------------------------------------------------------------------------
+
+class CPEPreferences: public CCustomPreferences
+{
+	typedef CCustomPreferences inherited;
+
+	public:
+	BOOL auto_play;
+
+	protected:
+	virtual void Load(CInifile *I);
+	virtual void Save(CInifile *I);
+};
+//---------------------------------------------------------------------------
 #endif //UI_MainCommandH
 
 

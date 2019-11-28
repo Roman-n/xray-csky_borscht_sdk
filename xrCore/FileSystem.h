@@ -5,19 +5,18 @@
 #ifndef FileSystemH
 #define FileSystemH
 
-#define BACKUP_FILE_LEVEL 5
-
 class XRCORE_API EFS_Utils {
 	DEFINE_MAP	(xr_string,void*,HANDLEMap,HANDLEPairIt);
 
-    HANDLEMap 	m_LockFiles;
+	HANDLEMap 	m_LockFiles;
+	int			m_BackupLevel;
 protected:
 	bool 		GetOpenNameInternal		(LPCSTR initial, LPSTR buffer, int sz_buf, bool bMulti=false, LPCSTR offset=0, int start_flt_ext=-1 );
 public:
 				EFS_Utils		();
 	virtual 	~EFS_Utils		();
-	void 		_initialize		(){}
-    void 		_destroy		(){}
+	void 		_initialize		();
+    void 		_destroy		();
 
 	LPCSTR		GenerateName	(LPCSTR base_path, LPCSTR base_name, LPCSTR def_ext, LPSTR out_name);
 

@@ -13,8 +13,6 @@ object fraGroup: TfraGroup
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = True
-  ExplicitWidth = 320
-  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   object paCommands: TPanel
@@ -213,9 +211,9 @@ object fraGroup: TfraGroup
     object MxLabel1: TMxLabel
       Left = 4
       Top = 32
-      Width = 36
+      Width = 39
       Height = 13
-      Caption = 'Curent:'
+      Caption = 'Current:'
       ShadowColor = clGray
       ShadowSize = 0
       ShadowPos = spRightBottom
@@ -297,6 +295,7 @@ object fraGroup: TfraGroup
       Caption = 'Pivot Alignment'
       Color = clGray
       ParentColor = False
+      Transparent = True
       OnClick = ExpandClick
       ExplicitWidth = 73
     end

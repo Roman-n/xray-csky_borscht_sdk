@@ -225,6 +225,7 @@ void CEnvironment::Invalidate()
 	Current[0]				= 0;
 	Current[1]				= 0;
 	if (eff_LensFlare)		eff_LensFlare->Invalidate();
+	if (eff_Rain)			eff_Rain->Invalidate();
 }
 
 float CEnvironment::TimeDiff(float prev, float cur)
@@ -271,17 +272,13 @@ float CEnvironment::NormalizeTime(float tm)
 
 void CEnvironment::SetWeather(shared_str name, bool forced)
 {
-//.	static BOOL bAlready = FALSE;
-//.	if(bAlready)	return;
 	if (name.size())	{
-//.		bAlready = TRUE;
         EnvsMapIt it		= WeatherCycles.find(name);
 		if (it == WeatherCycles.end())
 		{
 			Msg("! Invalid weather name: %s", name.c_str());
 			return;
 		}
-        R_ASSERT3			(it!=WeatherCycles.end(),"Invalid weather name.",*name);
 		CurrentCycleName	= it->first;
 		if (forced)			{Invalidate();			}
 		if (!bWFX){
@@ -296,6 +293,7 @@ void CEnvironment::SetWeather(shared_str name, bool forced)
 #ifndef _EDITOR
 		FATAL				("! Empty weather name");
 #endif
+		Invalidate();
     }
 }
 
@@ -402,7 +400,7 @@ void CEnvironment::SelectEnvs(float gt)
 		// first or forced start
 		SelectEnvs		(CurrentWeather,Current[0],Current[1],gt);
     }else{
-		bool bSelect	= false;
+		bool bSelect;
 		if (Current[0]->exec_time>Current[1]->exec_time){
 			// terminator
 			bSelect		= (gt>Current[1]->exec_time)&&(gt<Current[0]->exec_time);
@@ -417,15 +415,6 @@ void CEnvironment::SelectEnvs(float gt)
 #endif
 		}
     }
-}
-
-int get_ref_count(IUnknown* ii)
-{
-	if(ii){
-		ii->AddRef();
-		return ii->Release();
-	}else
-	return 0;
 }
 
 void CEnvironment::lerp		(float& current_weight)
@@ -466,13 +455,12 @@ void CEnvironment::OnFrame()
         	fGameTime=ed_from_time;
             Current[0]=Current[1]=0;
         }
-    }
-	if (!psDeviceFlags.is(rsEnvironment))		return;
+	}
+	if (!psDeviceFlags.is(rsEnvironment)) return;
 #else
 	if (!g_pGameLevel)		return;
 #endif
 
-//	if (pInput->iGetAsyncKeyState(DIK_O))		SetWeatherFX("surge_day"); 
 	float					current_weight;
 	lerp					(current_weight);
 
@@ -500,7 +488,7 @@ void CEnvironment::OnFrame()
     shared_str l_id						=	(current_weight<0.5f)?Current[0]->lens_flare_id:Current[1]->lens_flare_id;
 	eff_LensFlare->OnFrame				(l_id);
 	shared_str t_id						=	(current_weight<0.5f)?Current[0]->tb_id:Current[1]->tb_id;
-    eff_Thunderbolt->OnFrame			(t_id,CurrentEnv->bolt_period,CurrentEnv->bolt_duration);
+	eff_Thunderbolt->OnFrame			(t_id,CurrentEnv->bolt_period,CurrentEnv->bolt_duration);
 	eff_Rain->OnFrame					();
 
 	// ******************** Environment params (setting)
@@ -610,9 +598,7 @@ SThunderboltCollection* CEnvironment::thunderbolt_collection	(xr_vector<SThunder
 			return			(*i);
 
 	NODEFAULT;
-#ifdef DEBUG
 	return					(0);
-#endif // #ifdef DEBUG
 }
 
 CLensFlareDescriptor* CEnvironment::add_flare					(xr_vector<CLensFlareDescriptor*>& collection, shared_str const& id)

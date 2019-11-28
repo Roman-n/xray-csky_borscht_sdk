@@ -16,9 +16,8 @@ class CSE_Visual;
 class CSE_Motion;
 class CObjectAnimator;
 class ISE_Abstract;
-
 class CEnvModifier;
-
+class IParticleCustom;
 
 class CSpawnPoint : public CCustomObject
 {
@@ -59,9 +58,10 @@ public:
 		CLASS_ID		m_ClassID;
         shared_str 		m_Profile;
 		ISE_Abstract*	m_Data;
-        CLE_Visual*		m_Visual;
+		CLE_Visual*		m_Visual;
         Flags8			m_flags;
-        xr_vector<CLE_Visual*> m_VisualHelpers;
+		xr_vector<CLE_Visual*> m_VisualHelpers;
+		IParticleCustom*m_IdleParticles; // for anomalies
 
         CLE_Motion*		m_Motion;
         CSpawnPoint*	m_owner;
@@ -72,8 +72,9 @@ public:
 			m_Data		= 0;
             m_Visual	= 0;
             m_Motion	= 0;
-            m_owner		= o;
-            m_flags.zero();
+			m_owner		= o;
+			m_flags.zero();
+			m_IdleParticles = 0;
         }
         ~SSpawnData	()
         {
@@ -94,7 +95,8 @@ public:
 
 		void    		Render			(bool bSelected, const Fmatrix& parent,int priority, bool strictB2F);
 		void    		OnFrame			();
-    	void __stdcall	OnAnimControlClick		(ButtonValue* value, bool& bModif, bool& bSafe);  
+		void __stdcall	OnAnimControlClick		(ButtonValue* value, bool& bModif, bool& bSafe);
+		void __stdcall  OnParticleControlClick	(ButtonValue* value, bool& bModif, bool& bSafe);
         
 		virtual void get_bone_xform				(LPCSTR name, Fmatrix& xform);
 	};
@@ -156,6 +158,7 @@ public:
 	virtual bool    GetBox      	(Fbox& box);
 
 	virtual void 	OnFrame			();
+	virtual void	OnUpdateTransform();
 
 	virtual void 	Select			(int  flag);
 

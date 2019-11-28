@@ -126,8 +126,8 @@ CCommandVar CLevelTool::CommandShowTarget(CCommandVar p1, CCommandVar p2)
     if(p2)
     	M->m_EditFlags.set(ESceneToolBase::flVisible,TRUE);
     else
-    	M->m_EditFlags.set(ESceneToolBase::flVisible,FALSE);
-        
+		M->m_EditFlags.set(ESceneToolBase::flVisible,FALSE);
+
     return TRUE;
 }
 
@@ -445,7 +445,7 @@ CCommandVar CommandPaste(CCommandVar p1, CCommandVar p2)
 {
     if( !Scene->locked() ){
         Scene->PasteSelection();
-        Scene->UndoSave	();
+		Scene->UndoSave	();
         return 			TRUE;
     } else {
         ELog.DlgMsg		( mtError, "Scene sharing violation" );
@@ -455,9 +455,14 @@ CCommandVar CommandPaste(CCommandVar p1, CCommandVar p2)
 
 CCommandVar CommandDuplicate(CCommandVar p1, CCommandVar p2)
 {
-	ExecCommand(COMMAND_COPY);
-	ExecCommand(COMMAND_PASTE);
-	return TRUE;
+    if( !Scene->locked() ){
+		Scene->DuplicateSelection(LTools->CurrentClassID());
+        Scene->UndoSave	();
+        return 			TRUE;
+    } else {
+        ELog.DlgMsg		( mtError, "Scene sharing violation" );
+        return  		FALSE;
+	}
 }
 
 #include "AppendObjectInfoForm.h"
@@ -656,23 +661,36 @@ CCommandVar CommandMakeHOM(CCommandVar p1, CCommandVar p2)
 }
 CCommandVar CommandMakeSOM(CCommandVar p1, CCommandVar p2)
 {
-    if( !Scene->locked() ){
-        if (mrYes!=ELog.DlgMsg(mtConfirmation, TMsgDlgButtons()<<mbYes<<mbNo, "Are you sure to export Sound Occlusion Model?"))
-            return				FALSE;
-        BOOL result				= Builder.MakeSOM();
-        if(result){
-        	// load sound occluder
-            IReader *F = FS.r_open(Builder.MakeLevelPath("level.som").c_str());
-            if(F){
-            	::Sound->set_geometry_som(F);
-                FS.r_close		(F);
-            }
-        }
+	if( !Scene->locked() ){
+		if (mrYes!=ELog.DlgMsg(mtConfirmation, TMsgDlgButtons()<<mbYes<<mbNo, "Are you sure to export Sound Occlusion Model?"))
+			return				FALSE;
+		BOOL result				= Builder.MakeSOM();
+		if(result){
+			// load sound occluder
+			IReader *F = FS.r_open(Builder.MakeLevelPath("level.som").c_str());
+			if(F){
+				::Sound->set_geometry_som(F);
+				FS.r_close		(F);
+			}
+		}
 		return					result;
-    }else{
-        ELog.DlgMsg( mtError, "Scene sharing violation" );
-        return 					FALSE;
-    }
+	}else{
+		ELog.DlgMsg( mtError, "Scene sharing violation" );
+		return 					FALSE;
+	}
+}
+CCommandVar CommandMakeSoundEnv(CCommandVar p1, CCommandVar p2)
+{
+	if( !Scene->locked() ){
+		if (mrYes!=ELog.DlgMsg(mtConfirmation, TMsgDlgButtons()<<mbYes<<mbNo, "Are you sure to export Sound Environment?"))
+			return				FALSE;
+
+		BOOL result				= LSndLib->Validate() && Builder.MakeSoundEnv();
+		return					result;
+	}else{
+		ELog.DlgMsg( mtError, "Scene sharing violation" );
+		return 					FALSE;
+	}
 }
 CCommandVar CommandInvertSelectionAll(CCommandVar p1, CCommandVar p2)
 {
@@ -1067,6 +1085,7 @@ void CLevelMain::RegisterCommands()
 	REGISTER_CMD_SE	    (COMMAND_MAKE_DETAILS,              "Compile\\Make Details",        CommandMakeDetails,false);
 	REGISTER_CMD_SE	    (COMMAND_MAKE_HOM,              	"Compile\\Make HOM",	        CommandMakeHOM,false);
 	REGISTER_CMD_SE	    (COMMAND_MAKE_SOM,              	"Compile\\Make SOM",	        CommandMakeSOM,false);
+	REGISTER_CMD_SE	    (COMMAND_MAKE_SOUND_ENV,            "Compile\\Make Sound Environment",	        CommandMakeSoundEnv,false);
 	REGISTER_CMD_SE	    (COMMAND_INVERT_SELECTION_ALL,      "Selection\\Invert", 			CommandInvertSelectionAll,false);
 	REGISTER_CMD_SE	    (COMMAND_SELECT_ALL,              	"Selection\\Select All", 		CommandSelectAll,false);
 	REGISTER_CMD_SE	    (COMMAND_DESELECT_ALL,              "Selection\\Unselect All", 		CommandDeselectAll,false);

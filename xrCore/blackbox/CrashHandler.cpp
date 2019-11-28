@@ -1022,96 +1022,73 @@ LPCTSTR ConvertSimpleException ( DWORD dwExcept )
     switch ( dwExcept )
     {
         case EXCEPTION_ACCESS_VIOLATION         :
-            return ( _T ( "EXCEPTION_ACCESS_VIOLATION" ) ) ;
-        break ;
+			return ( _T ( "EXCEPTION_ACCESS_VIOLATION" ) ) ;
 
         case EXCEPTION_DATATYPE_MISALIGNMENT    :
-            return ( _T ( "EXCEPTION_DATATYPE_MISALIGNMENT" ) ) ;
-        break ;
+			return ( _T ( "EXCEPTION_DATATYPE_MISALIGNMENT" ) ) ;
 
         case EXCEPTION_BREAKPOINT               :
-            return ( _T ( "EXCEPTION_BREAKPOINT" ) ) ;
-        break ;
+			return ( _T ( "EXCEPTION_BREAKPOINT" ) ) ;
 
         case EXCEPTION_SINGLE_STEP              :
-            return ( _T ( "EXCEPTION_SINGLE_STEP" ) ) ;
-        break ;
+			return ( _T ( "EXCEPTION_SINGLE_STEP" ) ) ;
 
         case EXCEPTION_ARRAY_BOUNDS_EXCEEDED    :
-            return ( _T ( "EXCEPTION_ARRAY_BOUNDS_EXCEEDED" ) ) ;
-        break ;
+			return ( _T ( "EXCEPTION_ARRAY_BOUNDS_EXCEEDED" ) ) ;
 
         case EXCEPTION_FLT_DENORMAL_OPERAND     :
-            return ( _T ( "EXCEPTION_FLT_DENORMAL_OPERAND" ) ) ;
-        break ;
+			return ( _T ( "EXCEPTION_FLT_DENORMAL_OPERAND" ) ) ;
 
         case EXCEPTION_FLT_DIVIDE_BY_ZERO       :
-            return ( _T ( "EXCEPTION_FLT_DIVIDE_BY_ZERO" ) ) ;
-        break ;
+			return ( _T ( "EXCEPTION_FLT_DIVIDE_BY_ZERO" ) ) ;
 
         case EXCEPTION_FLT_INEXACT_RESULT       :
-            return ( _T ( "EXCEPTION_FLT_INEXACT_RESULT" ) ) ;
-        break ;
+			return ( _T ( "EXCEPTION_FLT_INEXACT_RESULT" ) ) ;
 
         case EXCEPTION_FLT_INVALID_OPERATION    :
-            return ( _T ( "EXCEPTION_FLT_INVALID_OPERATION" ) ) ;
-        break ;
+			return ( _T ( "EXCEPTION_FLT_INVALID_OPERATION" ) ) ;
 
         case EXCEPTION_FLT_OVERFLOW             :
-            return ( _T ( "EXCEPTION_FLT_OVERFLOW" ) ) ;
-        break ;
+			return ( _T ( "EXCEPTION_FLT_OVERFLOW" ) ) ;
 
         case EXCEPTION_FLT_STACK_CHECK          :
-            return ( _T ( "EXCEPTION_FLT_STACK_CHECK" ) ) ;
-        break ;
+			return ( _T ( "EXCEPTION_FLT_STACK_CHECK" ) ) ;
 
         case EXCEPTION_FLT_UNDERFLOW            :
-            return ( _T ( "EXCEPTION_FLT_UNDERFLOW" ) ) ;
-        break ;
+			return ( _T ( "EXCEPTION_FLT_UNDERFLOW" ) ) ;
 
         case EXCEPTION_INT_DIVIDE_BY_ZERO       :
-            return ( _T ( "EXCEPTION_INT_DIVIDE_BY_ZERO" ) ) ;
-        break ;
+			return ( _T ( "EXCEPTION_INT_DIVIDE_BY_ZERO" ) ) ;
 
         case EXCEPTION_INT_OVERFLOW             :
-            return ( _T ( "EXCEPTION_INT_OVERFLOW" ) ) ;
-        break ;
+			return ( _T ( "EXCEPTION_INT_OVERFLOW" ) ) ;
 
         case EXCEPTION_PRIV_INSTRUCTION         :
-            return ( _T ( "EXCEPTION_PRIV_INSTRUCTION" ) ) ;
-        break ;
+			return ( _T ( "EXCEPTION_PRIV_INSTRUCTION" ) ) ;
 
-        case EXCEPTION_IN_PAGE_ERROR            :
-            return ( _T ( "EXCEPTION_IN_PAGE_ERROR" ) ) ;
-        break ;
+		case EXCEPTION_IN_PAGE_ERROR            :
+			return ( _T ( "EXCEPTION_IN_PAGE_ERROR" ) ) ;
 
         case EXCEPTION_ILLEGAL_INSTRUCTION      :
-            return ( _T ( "EXCEPTION_ILLEGAL_INSTRUCTION" ) ) ;
-        break ;
+			return ( _T ( "EXCEPTION_ILLEGAL_INSTRUCTION" ) ) ;
 
         case EXCEPTION_NONCONTINUABLE_EXCEPTION :
-            return ( _T ( "EXCEPTION_NONCONTINUABLE_EXCEPTION" ) ) ;
-        break ;
+			return ( _T ( "EXCEPTION_NONCONTINUABLE_EXCEPTION" ) ) ;
 
         case EXCEPTION_STACK_OVERFLOW           :
-            return ( _T ( "EXCEPTION_STACK_OVERFLOW" ) ) ;
-        break ;
+			return ( _T ( "EXCEPTION_STACK_OVERFLOW" ) ) ;
 
         case EXCEPTION_INVALID_DISPOSITION      :
-            return ( _T ( "EXCEPTION_INVALID_DISPOSITION" ) ) ;
-        break ;
+			return ( _T ( "EXCEPTION_INVALID_DISPOSITION" ) ) ;
 
         case EXCEPTION_GUARD_PAGE               :
-            return ( _T ( "EXCEPTION_GUARD_PAGE" ) ) ;
-        break ;
+			return ( _T ( "EXCEPTION_GUARD_PAGE" ) ) ;
 
-        case EXCEPTION_INVALID_HANDLE           :
-            return ( _T ( "EXCEPTION_INVALID_HANDLE" ) ) ;
-        break ;
+		case EXCEPTION_INVALID_HANDLE           :
+			return ( _T ( "EXCEPTION_INVALID_HANDLE" ) ) ;
 
         default :
-            return ( NULL ) ;
-        break ;
+			return ( NULL ) ;
     }
 }
 

@@ -19,7 +19,7 @@ CParticleMain*&	PUI=(CParticleMain*)UI;
 
 CParticleMain::CParticleMain()  
 {
-    EPrefs			= xr_new<CCustomPreferences>();
+    EPrefs			= xr_new<CPEPreferences>();
 }
 //---------------------------------------------------------------------------
 
@@ -252,6 +252,18 @@ void CParticleMain::OutInfo()
 void CParticleMain::RealQuit()
 {
 	frmMain->Close();
+}
+//---------------------------------------------------------------------------
+void CPEPreferences::Load(CInifile *I)
+{
+	inherited::Load(I);
+	auto_play = R_BOOL_SAFE("particle_editor", "auto_play", FALSE);
+}
+//---------------------------------------------------------------------------
+void CPEPreferences::Save(CInifile *I)
+{
+	inherited::Save(I);
+	I->w_bool("particle_editor", "auto_play", auto_play);
 }
 //---------------------------------------------------------------------------
 

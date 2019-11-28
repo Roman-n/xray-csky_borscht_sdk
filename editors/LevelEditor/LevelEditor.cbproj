@@ -4,7 +4,7 @@
     <ProjectGuid>{9e89f806-45b6-4b9d-a811-25320e2bb82f}</ProjectGuid>
     <ProjectType>CppVCLApplication</ProjectType>
     <MainSource>LevelEditor.cpp</MainSource>
-    <Config Condition="'$(Config)'==''">Release Build</Config>
+    <Config Condition="'$(Config)'==''">Debug Build</Config>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
     <Base>true</Base>
@@ -83,14 +83,14 @@
     <ILINK_BpiLibOutputDir>X:\stalker_addon\libraries</ILINK_BpiLibOutputDir>
     <TASM_IncludePath>..\..\xrServerEntities;..\..\Layers\xrRender;$(DXSDK_DIR)\Include;Edit;Engine;$(BDS)\Projects;$(BDS)\include\vcl;$(BDS)\include;X:\SDK\Components\alexmx;X:\SDK\Components\ElPack\Code;X:\SDK\Components\ElPack\Code\Source;..\..\xrCore;..\..\xrEngine;..\..\utils\ETools;X:\SDK\include\freemagic;$(BDS)\include\dinkumware</TASM_IncludePath>
     <AllPackageLibs>bcbsmp.lib;xmlrtl.lib;vclactnband.lib;rtl.lib;vcl.lib;bcbsmp.lib;vclx.lib;editorB.lib;xmlrtl.lib;vclactnband.lib;lmdrtelcore.lib;lmdrtrtlx.lib;lmdrtl.lib;dcleditorB.lib</AllPackageLibs>
-    <ILINK_LibraryPath>X:\SDK\components\AlexMX;X:\SDK\components\LMD2018\lib\d11;$(BDS)\Imports;..\..\Layers\xrRender;..\..\xrServerEntities;..\..\xrEngine;Edit;$(BDS)\Projects;$(BDS)\lib;$(BDS)\lib\obj;$(BDS)\Projects\Lib;X:\stalker_addon\libraries;$(DXSDK_DIR)\Lib\x86;X:\SDK\libraries</ILINK_LibraryPath>
     <BCC_DisableOptimizations>true</BCC_DisableOptimizations>
-    <BCC_Defines>NO_STRICT;_EDITOR;_LEVEL_EDITOR</BCC_Defines>
-    <Multithreaded>true</Multithreaded>
-    <BRCC_Defines>_EDITOR;_LEVEL_EDITOR;_DEBUG</BRCC_Defines>
+    <ILINK_LibraryPath>X:\SDK\components\AlexMX;X:\SDK\components\LMD2018\lib\d11;$(BDS)\Imports;..\..\Layers\xrRender;..\..\xrServerEntities;..\..\xrEngine;Edit;$(BDS)\Projects;$(BDS)\lib;$(BDS)\lib\obj;$(BDS)\Projects\Lib;X:\stalker_addon\libraries;$(DXSDK_DIR)\Lib\x86;X:\SDK\libraries</ILINK_LibraryPath>
     <TASM_Defines>_EDITOR _LEVEL_EDITOR _DEBUG</TASM_Defines>
-    <TASM_Debugging>None</TASM_Debugging>
+    <BRCC_Defines>_EDITOR;_LEVEL_EDITOR;_DEBUG</BRCC_Defines>
+    <Multithreaded>true</Multithreaded>
+    <BCC_Defines>NO_STRICT;_EDITOR;_LEVEL_EDITOR</BCC_Defines>
     <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+    <TASM_Debugging>None</TASM_Debugging>
     <BCC_CallingConvention>stdcall</BCC_CallingConvention>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Cfg_1)'!=''">
@@ -99,8 +99,8 @@
     <BCC_OutputDir>x:\intermediate_ed\le\Debug</BCC_OutputDir>
     <BCC_InlineFunctionExpansion>false</BCC_InlineFunctionExpansion>
     <ILINK_DisableIncrementalLinking>true</ILINK_DisableIncrementalLinking>
-    <DCC_DebugInformation>true</DCC_DebugInformation>
     <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+    <DCC_DebugInformation>true</DCC_DebugInformation>
     <IntermediateOutputDir>x:\intermediate_ed\le\Debug</IntermediateOutputDir>
     <TASM_DisplaySourceLines>true</TASM_DisplaySourceLines>
     <BCC_StackFrames>true</BCC_StackFrames>
@@ -556,6 +556,60 @@
       <DependentOn>FrmDBXpacker.h</DependentOn>
       <BuildOrder>141</BuildOrder>
     </CppCompile>
+    <CppCompile Include="IM_FrameAIMap.cpp">
+      <DependentOn>IM_FrameAIMap.h</DependentOn>
+      <BuildOrder>148</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="IM_FrameDetail.cpp">
+      <DependentOn>IM_FrameDetail.h</DependentOn>
+      <BuildOrder>149</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="IM_FrameFogVol.cpp">
+      <DependentOn>IM_FrameFogVol.h</DependentOn>
+      <BuildOrder>150</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="IM_FrameGroup.cpp">
+      <DependentOn>IM_FrameGroup.h</DependentOn>
+      <BuildOrder>151</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="IM_FrameLight.cpp">
+      <DependentOn>IM_FrameLight.h</DependentOn>
+      <BuildOrder>152</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="IM_FrameObject.cpp">
+      <BuildOrder>153</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="IM_FramePortal.cpp">
+      <DependentOn>IM_FramePortal.h</DependentOn>
+      <BuildOrder>154</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="IM_FramePS.cpp">
+      <DependentOn>IM_FramePS.h</DependentOn>
+      <BuildOrder>155</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="IM_FrameSector.cpp">
+      <DependentOn>IM_FrameSector.h</DependentOn>
+      <BuildOrder>156</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="IM_FrameShape.cpp">
+      <DependentOn>IM_FrameShape.h</DependentOn>
+      <BuildOrder>157</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="IM_FrameSpawn.cpp">
+      <DependentOn>IM_FrameSpawn.h</DependentOn>
+      <BuildOrder>158</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="IM_FrameWayPoint.cpp">
+      <DependentOn>IM_FrameWayPoint.h</DependentOn>
+      <BuildOrder>159</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="IM_LeftBar.cpp">
+      <BuildOrder>160</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="IM_TopBar.cpp">
+      <DependentOn>IM_TopBar.h</DependentOn>
+      <BuildOrder>161</BuildOrder>
+    </CppCompile>
     <CppCompile Include="iniStreamImpl.cpp">
       <BuildOrder>142</BuildOrder>
     </CppCompile>
@@ -625,7 +679,7 @@
       <BuildOrder>140</BuildOrder>
     </None>
     <None Include="LevelEditor.todo">
-      <BuildOrder>148</BuildOrder>
+      <BuildOrder>162</BuildOrder>
     </None>
     <ResFiles Include="LevelEditor.res">
       <BuildOrder>114</BuildOrder>

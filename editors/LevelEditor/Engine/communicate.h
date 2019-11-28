@@ -196,7 +196,7 @@ struct b_params
 	{
         // Normals & optimization
         m_sm_angle              = 75.f;
-        m_weld_distance         = 0.005f;
+        m_weld_distance         = 0.001f;
 
         // Light maps
 		m_lm_rms_zero			= 4;

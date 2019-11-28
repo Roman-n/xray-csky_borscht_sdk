@@ -9,37 +9,7 @@
 
 #pragma once
 
-// try detach this DLL from xrCore
-
-#include <stdio.h>
-#include <float.h>
-#include <math.h>
-#include <limits>
-#include <algorithm>
-#include <windows.h>
-
-using std::swap;
-
-#define ICF __forceinline
-#define IC  __inline
-#define ICN __declspec(noinline)
-
-#define XRCORE_API
-#define M_VISUAL
-
-#define VERIFY(expr)    if(!(expr)) { MessageBoxA(NULL, #expr, "xrDXT", MB_ICONHAND); ExitProcess(-1); }
-#define R_ASSERT(expr)	if(!(expr)) { MessageBoxA(NULL, #expr, "xrDXT", MB_ICONHAND); ExitProcess(-1); }
-#define NODEFAULT		{ MessageBoxA(NULL, "nodefault reached", "xrDXT", MB_ICONHAND); ExitProcess(-1); }
-
-#include "..\..\xrCore\vector.h"			// color, vector, etc
-
-class shared_str
-{
-private:
-	class str_value;
-	str_value *value;
-};
-
+#include <xrCore\xrCore.h>
 #include <io.h>
 #include <fcntl.h>
 #include <sys\stat.h>
