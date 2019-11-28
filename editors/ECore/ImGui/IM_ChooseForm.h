@@ -25,7 +25,7 @@ ECORE_API class IM_ChooseForm : public IM_Window
     IM_Canvas m_thm;
 
     xr_vector<shared_str> m_selected;
-    int m_current_item; // for selection list
+    size_t m_current_item; // for selection list
 
     bool m_open;
 
