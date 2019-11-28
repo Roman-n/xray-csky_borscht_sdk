@@ -16,6 +16,13 @@ IM_ImageEditor::IM_ImageEditor()
 	m_title("Image Editor"),
 	m_importmode(false),
 	m_needupdate(false),
+
+	m_showimage(true),
+	m_showcube(true),
+	m_showbump(true),
+	m_shownormal(true),
+	m_showterrain(true),
+
 	m_thm(THUMB_WIDTH, THUMB_HEIGHT)
 {
 	m_items.OnItemsFocused.bind(this, &IM_ImageEditor::OnItemsFocused);
@@ -70,6 +77,37 @@ void IM_ImageEditor::Close()
 	m_open = false;
 }
 
+void IM_ImageEditor::OnShowTypeClick()
+{
+	ListItemsVec items;
+	m_items.GetItems(items);
+
+	for(ListItemsIt it = items.begin(), end = items.end(); it != end; it++)
+	{
+		ListItem *item = *it;
+		ETextureThumbnail *thm = (ETextureThumbnail*)item->m_Object;
+
+		switch(thm->_Format().type)
+		{
+			case STextureParams::ttImage:
+				item->Visible(m_showimage);
+			break;
+			case STextureParams::ttCubeMap:
+				item->Visible(m_showcube);
+			break;
+			case STextureParams::ttBumpMap:
+				item->Visible(m_showbump);
+			break;
+			case STextureParams::ttNormalMap:
+				item->Visible(m_shownormal);
+			break;
+			case STextureParams::ttTerrain:
+				item->Visible(m_showterrain);
+			break;
+        }
+    }
+}
+
 void IM_ImageEditor::Render()
 {
 	if(!m_open)
@@ -94,6 +132,23 @@ void IM_ImageEditor::Render()
     }
 
 	ImGui::Columns(2);
+
+	//ImGui::BeginChild("show_buttons", ImVec2(0,0), true);
+	if(ImGui::Checkbox("Image", &m_showimage))
+		OnShowTypeClick();
+	ImGui::SameLine();
+	if(ImGui::Checkbox("Cube", &m_showcube))
+		OnShowTypeClick();
+	ImGui::SameLine();
+	if(ImGui::Checkbox("Bump", &m_showbump))
+		OnShowTypeClick();
+	ImGui::SameLine();
+	if(ImGui::Checkbox("Normal", &m_shownormal))
+		OnShowTypeClick();
+	ImGui::SameLine();
+	if(ImGui::Checkbox("Terrain", &m_showterrain))
+    	OnShowTypeClick();
+	//ImGui::EndChild();
 
 	ImGui::BeginChild("ItemList", ImVec2(0,0), true);
 	m_items.Render();

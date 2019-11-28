@@ -15,6 +15,12 @@ class IM_ImageEditor : public IM_Window
 	bool m_importmode;
 	bool m_needupdate;
 
+	bool m_showimage;
+	bool m_showcube;
+	bool m_showbump;
+	bool m_shownormal;
+	bool m_showterrain;
+
 	IM_Canvas m_thm;
 	IM_Tree m_items;
 	IM_PropertyTree m_props;
@@ -32,6 +38,8 @@ class IM_ImageEditor : public IM_Window
 	void Open(bool import);
 	void Close();
 	bool IsOpen() { return m_open; }
+
+	void OnShowTypeClick();
 
 	virtual void Render();
 
