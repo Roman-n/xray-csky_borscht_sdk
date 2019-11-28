@@ -193,7 +193,7 @@ void IM_PropertyTree::RenderItem(ImTreeNode& node)
     {
     	case PROP_CAPTION:
         ImGui::AlignTextToFramePadding();
-        ImGui::TextUnformatted(codepage2utf8(item->GetDrawText()).c_str());
+		ImGui::TextUnformatted(GetDrawText(item).c_str());
 		break;
 
     	case PROP_BUTTON:
@@ -294,14 +294,15 @@ void IM_PropertyTree::RenderItem(ImTreeNode& node)
 
     	default:
         ImGui::AlignTextToFramePadding();
-        ImGui::TextUnformatted(codepage2utf8(item->GetDrawText()).c_str());
+		ImGui::TextUnformatted(GetDrawText(item).c_str());
 		break;
 
 		click2edit:
 		ImGui::AlignTextToFramePadding();
 		ImGui::PushItemWidth(-1);
 		ImGui::PushID(item);
-		if(ImGui::Selectable(codepage2utf8(item->GetDrawText()).c_str()))
+
+		if(ImGui::Selectable(GetDrawText(item).c_str()))
         	editing_node = node.item->Key();
 		ImGui::PopID();
 
@@ -310,6 +311,16 @@ void IM_PropertyTree::RenderItem(ImTreeNode& node)
 
 	if(disabled)
 		ImGui::PopStyleColor();
+}
+
+xr_string IM_PropertyTree::GetDrawText(PropItem* item)
+{
+	xr_string text = item->GetDrawText();
+	size_t lf = text.find('\n');
+	if(lf != xr_string::npos)
+		text = text.substr(0,lf) + " ...";
+
+	return codepage2utf8(text);
 }
 
 void IM_PropertyTree::Add(LPCSTR path, PropItem* item)

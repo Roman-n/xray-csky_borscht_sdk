@@ -62,6 +62,7 @@ ECORE_API class IM_PropertyTree : public IM_Window
 	void			SelectNode(ImTreeNode &node, bool select = true);
 
 	void			RenderItem(ImTreeNode& node);
+	xr_string		GetDrawText(PropItem* item);
 
     public:
     IM_PropertyTree(char folder_separator = '\\', bool allow_multiselect = false, bool draw_bullets = true)
