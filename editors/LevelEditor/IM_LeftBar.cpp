@@ -74,7 +74,10 @@ void IM_LeftBar::Render()
 {
 	ImGui::Begin("Level Editor", NULL);
 
-    ImGui::TextUnformatted(&*m_title.begin(), &*m_title.end());
+	ImGui::TextUnformatted(&*m_title.begin(), &*m_title.end());
+	ImGui::SameLine();
+	if(ImGui::SmallButton("ImGui"))
+    	UI->show_demo_window = true;
 
     if(!m_detach_main_menu)
     {

@@ -74,6 +74,8 @@ TUI::TUI()
     m_bHintShowing	= false;
 	m_pHintWindow	= 0;
 	m_LastHint		= "";
+
+	show_demo_window = false;
 }
 //---------------------------------------------------------------------------
 TUI::~TUI()
@@ -434,7 +436,6 @@ void TUI::PrepareRedraw()
         ImGui_ImplDX9_NewFrame();
         ImGui::GetIO().DisplaySize = ImVec2(Device.dwWidth, Device.dwHeight);
 
-    	static bool show_demo_window = true;
     	if(show_demo_window)
     		ImGui::ShowDemoWindow(&show_demo_window);
 
