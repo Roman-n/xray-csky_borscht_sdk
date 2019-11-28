@@ -72,6 +72,8 @@ ECORE_API class IM_Tree : public IM_Window
 
 	void			ShowContextMenu(ImTreeNode& node, bool& removed);
 
+	void			GetItems(ImTreeNode &node, ListItemsVec &result);
+
     public: // properties
 
     bool DrawBullets;
@@ -122,6 +124,8 @@ ECORE_API class IM_Tree : public IM_Window
 
 	void			AssignItems(ListItemsVec& items, bool full_expand, bool full_sort = false);
 	void			GetSelected(ListItemsVec& result);
+
+	void			GetItems(ListItemsVec& result);
 
     virtual void 	Render();
 };

@@ -61,6 +61,12 @@ void IM_Tree::RenderNode(ImTreeNode& parent)
 		bool remove = false;
 		bool rename = false;
 
+		if(node.item && !node.item->Visible())
+		{
+			it++;
+			continue;
+        }
+
 		if(renaming == &node)
 		{
 			ImGui::PushID(*node.name);
@@ -273,6 +279,20 @@ void IM_Tree::ShowContextMenu(ImTreeNode& node, bool& removed)
 		removed);
 }
 
+void IM_Tree::GetItems(ImTreeNode &node, ListItemsVec &result)
+{
+	if(!node.child)
+		return;
+
+	xr_map<xr_string,ImTreeNode>::iterator it, end;
+	for(it = node.child->begin(), end = node.child->end(); it != end; it++)
+	{
+		if(it->second.item)
+			result.push_back(it->second.item);
+		GetItems(it->second, result);
+    }
+}
+
 void IM_Tree::Add(LPCSTR path, LPCSTR value)
 {
 	if(path == NULL) __asm int 3h;
@@ -386,6 +406,11 @@ void IM_Tree::GetSelected(ListItemsVec& result)
 	for(xr_list<ImTreeNode*>::iterator it = selected.begin(); it != selected.end(); it++)
 		if((*it)->item)
 			result.push_back((*it)->item);
+}
+
+void IM_Tree::GetItems(ListItemsVec& result)
+{
+    GetItems(root, result);
 }
 
 void IM_Tree::Render()
