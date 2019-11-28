@@ -358,7 +358,7 @@ void IM_LeftBar::RenderMainMenu()
         if(ImGui::MenuItem("Edit minimap"))
         	ExecCommand(COMMAND_MINIMAP_EDITOR);
         if(ImGui::MenuItem("SyncTHM"))
-        	;
+			; // TODO
 
     	ImGui::EndMenu();
     }
