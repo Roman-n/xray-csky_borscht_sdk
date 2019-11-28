@@ -109,7 +109,7 @@ void IM_LeftBar::Render()
     {
     	ImGui::Columns(2);
 
-		for(DWORD i = OBJCLASS_FIRST_CLASS; i < OBJCLASS_COUNT; i++)
+		for(ObjClassID i = OBJCLASS_FIRST_CLASS; i < OBJCLASS_COUNT; i++)
         {
         	ESceneToolBase *tool = Scene->GetTool(i);
 
