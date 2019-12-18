@@ -15,6 +15,7 @@
 #include "ElBtnCtl.hpp"
 #include "ElCheckCtl.hpp"
 #include "ElPopBtn.hpp"
+#include "ElCGControl.hpp"
 //---------------------------------------------------------------------------
 //refs
 class CSMotion;
@@ -81,8 +82,8 @@ __published:	// IDE-managed Components
 	void __fastcall spinTimeFactorLWChange(TObject *Sender, int Val);
 private:	// User declarations
 	CSMotion*	m_currentEditMotion;
-	void 		draw_marks  (int id);
-    void		set_mark	(int id, int action);
+	void 		draw_marks  (size_t id);
+    void		set_mark	(size_t id, int action);
 public:		// User declarations
     __fastcall TfrmKeyBar(TComponent* Owner);
     static TfrmKeyBar* CreateKeyBar(TWinControl* parent);

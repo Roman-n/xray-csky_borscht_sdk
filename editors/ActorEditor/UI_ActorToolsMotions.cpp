@@ -181,7 +181,7 @@ void EngineModel::PlayMotion(LPCSTR name, u16 slot)
 				for (u16 k=0; k<MAX_PARTS; k++){
                     if (!m_BPPlayItems[k].name.IsEmpty()){
                         MotionID D 	= SA->ID_Motion(m_BPPlayItems[k].name.c_str(),m_BPPlayItems[k].slot);
-                        CBlend* B	= 0;
+                        CBlend* B;
                         if (D.valid()){ 
 							B = SA->LL_PlayCycle(k,D,false,0,0);
                             if (idx==k) m_pBlend = B;
