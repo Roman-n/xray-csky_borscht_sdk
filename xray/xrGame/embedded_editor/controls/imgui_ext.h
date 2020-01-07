@@ -11,6 +11,7 @@ int compare_naturally(const void* a_ptr, const void* b_ptr);
 
 namespace ImGui {
 struct PlotSource {
+	const char* name;
     std::vector<float> samples;
     ImU32 color;
     float scaleMin;

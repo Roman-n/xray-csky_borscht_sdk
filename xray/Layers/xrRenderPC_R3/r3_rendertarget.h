@@ -185,6 +185,9 @@ private:
 	ref_shader				s_combine_volumetric;
 public:
 	ref_shader				s_postprocess;
+	ref_constant			c_brightness;
+	ref_constant			c_fishEye;
+	ref_constant			c_vignette;
    ref_shader           s_postprocess_msaa;
 	ref_geom					g_postprocess;
 	ref_shader				s_menu;
@@ -320,8 +323,4 @@ public:
 	IC void						dbg_addline				(Fvector& P0, Fvector& P1, u32 c)					{}
 	IC void						dbg_addplane			(Fplane& P0,  u32 c)								{}
 #endif
-
-private:
-	ref_constant m_fishEye;
-	ref_constant m_vignette;
 };

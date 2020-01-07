@@ -88,7 +88,7 @@ void        CPostprocessAnimator::Load                            (LPCSTR name)
           {
           IReader* F = FS.r_open (full_path);
           u32 dwVersion = F->r_u32();
-          VERIFY (dwVersion == POSTPROCESS_FILE_VERSION);
+          VERIFY (dwVersion <= POSTPROCESS_FILE_VERSION);
           //load base color
           VERIFY (m_Params[0]);
           m_Params[0]->load (*F);
@@ -307,24 +307,18 @@ CPostProcessParam*  CPostprocessAnimator::GetParam                (pp_params par
     VERIFY (param >= pp_base_color && param <= pp_noise_f);
     return m_Params[param];
 }
+#endif
 void        CPostprocessAnimator::Save                            (LPCSTR name)
 {
     IWriter *W = FS.w_open (name);
     VERIFY (W);
     W->w_u32(POSTPROCESS_FILE_VERSION);
-    m_Params[0]->save (*W);
-    m_Params[1]->save (*W);
-    m_Params[2]->save (*W);
-    m_Params[3]->save (*W);
-    m_Params[4]->save (*W);
-    m_Params[5]->save (*W);
-    m_Params[6]->save (*W);
-    m_Params[7]->save (*W);
-    m_Params[8]->save (*W);
-    m_Params[9]->save (*W);
+	for (auto el: m_Params)
+		el->save (*W);
     FS.w_close (W);
 
 }
+#ifdef _PP_EDITOR_
 //-----------------------------------------------------------------------
 void        CPostprocessAnimator::ResetParam                      (pp_params param)
 {

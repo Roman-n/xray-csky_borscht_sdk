@@ -184,8 +184,8 @@ virtual	BOOL		Process							(float dt, SPPInfo &PPInfo);
 #ifdef _PP_EDITOR_
         CPostProcessParam*  GetParam                (pp_params param);
         void        ResetParam                      (pp_params param);
-        void        Save                            (LPCSTR name);
 #endif /*_PP_EDITOR_*/
+		void        Save							(LPCSTR name);
 };
 
 #ifndef _PP_EDITOR_

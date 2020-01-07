@@ -79,12 +79,12 @@ public:
             return m_Params[pp_noise_g]->envelope(0);
         case 15:
             return m_Params[pp_noise_f]->envelope(0);
-		case 16:
-			return m_Params[pp_fish_eye]->envelope(0);
-		case 17:
-			return m_Params[pp_vignette_radius]->envelope(0);
-		case 18:
-			return m_Params[pp_vignette_softness]->envelope(0);
+        case 16:
+            return m_Params[pp_fish_eye]->envelope(0);
+        case 17:
+            return m_Params[pp_vignette_radius]->envelope(0);
+        case 18:
+            return m_Params[pp_vignette_softness]->envelope(0);
         }
         return nullptr;
     }
@@ -161,49 +161,49 @@ struct PostprocessEditor : public Editor {
 
         float step = m_anim->GetLength() / SAMPLE_COUNT;
         m_plotData.reserve(ENVELOPE_COUNT);
-        m_plotData.push_back({ getSamples(m_data[0], SAMPLE_COUNT, step), IM_COL32(255, 0, 0, 255), 0.0f, 1.0f,
-            getKeys(m_data[0]), true });
-        m_plotData.push_back({ getSamples(m_data[1], SAMPLE_COUNT, step), IM_COL32(0, 255, 0, 255), 0.0f, 1.0f,
-            getKeys(m_data[1]), true });
-        m_plotData.push_back({ getSamples(m_data[2], SAMPLE_COUNT, step), IM_COL32(0, 0, 255, 255), 0.0f, 1.0f,
-            getKeys(m_data[2]), true });
+        m_plotData.push_back({ u8"Base Color: Red", getSamples(m_data[0], SAMPLE_COUNT, step), IM_COL32(255, 0, 0, 255),
+            0.0f, 1.0f, getKeys(m_data[0]), true });
+        m_plotData.push_back({ u8"Base Color: Green", getSamples(m_data[1], SAMPLE_COUNT, step),
+            IM_COL32(0, 255, 0, 255), 0.0f, 1.0f, getKeys(m_data[1]), true });
+        m_plotData.push_back({ u8"Base Color: Blue", getSamples(m_data[2], SAMPLE_COUNT, step),
+            IM_COL32(0, 0, 255, 255), 0.0f, 1.0f, getKeys(m_data[2]), true });
 
-        m_plotData.push_back({ getSamples(m_data[3], SAMPLE_COUNT, step), IM_COL32(255, 0, 0, 255), -1.0f, 1.0f,
-            getKeys(m_data[3]), true });
-        m_plotData.push_back({ getSamples(m_data[4], SAMPLE_COUNT, step), IM_COL32(0, 255, 0, 255), -1.0f, 1.0f,
-            getKeys(m_data[4]), true });
-        m_plotData.push_back({ getSamples(m_data[5], SAMPLE_COUNT, step), IM_COL32(0, 0, 255, 255), -1.0f, 1.0f,
-            getKeys(m_data[5]), true });
+        m_plotData.push_back({ u8"Add Color: Red", getSamples(m_data[3], SAMPLE_COUNT, step), IM_COL32(255, 0, 0, 255),
+            -1.0f, 1.0f, getKeys(m_data[3]), true });
+        m_plotData.push_back({ u8"Add Color: Green", getSamples(m_data[4], SAMPLE_COUNT, step),
+            IM_COL32(0, 255, 0, 255), -1.0f, 1.0f, getKeys(m_data[4]), true });
+        m_plotData.push_back({ u8"Add Color: Blue", getSamples(m_data[5], SAMPLE_COUNT, step), IM_COL32(0, 0, 255, 255),
+            -1.0f, 1.0f, getKeys(m_data[5]), true });
 
-        m_plotData.push_back({ getSamples(m_data[6], SAMPLE_COUNT, step), IM_COL32(255, 0, 0, 255), 0.0f, 1.0f,
-            getKeys(m_data[6]), true });
-        m_plotData.push_back({ getSamples(m_data[7], SAMPLE_COUNT, step), IM_COL32(0, 255, 0, 255), 0.0f, 1.0f,
-            getKeys(m_data[7]), true });
-        m_plotData.push_back({ getSamples(m_data[8], SAMPLE_COUNT, step), IM_COL32(0, 0, 255, 255), 0.0f, 1.0f,
-            getKeys(m_data[8]), true });
-        m_plotData.push_back({ getSamples(m_data[9], SAMPLE_COUNT, step), ImGui::GetColorU32(ImGuiCol_PlotLines), 0.0f,
-            2.0f, getKeys(m_data[9]), true });
+        m_plotData.push_back({ u8"Gray Color: Red", getSamples(m_data[6], SAMPLE_COUNT, step), IM_COL32(255, 0, 0, 255),
+            0.0f, 1.0f, getKeys(m_data[6]), true });
+        m_plotData.push_back({ u8"Gray Color: Green", getSamples(m_data[7], SAMPLE_COUNT, step),
+            IM_COL32(0, 255, 0, 255), 0.0f, 1.0f, getKeys(m_data[7]), true });
+        m_plotData.push_back({ u8"Gray Color: Blue", getSamples(m_data[8], SAMPLE_COUNT, step),
+            IM_COL32(0, 0, 255, 255), 0.0f, 1.0f, getKeys(m_data[8]), true });
+        m_plotData.push_back({ u8"Gray Value", getSamples(m_data[9], SAMPLE_COUNT, step),
+            ImGui::GetColorU32(ImGuiCol_PlotLines), 0.0f, 2.0f, getKeys(m_data[9]), true });
 
-        m_plotData.push_back({ getSamples(m_data[10], SAMPLE_COUNT, step), (ImU32)ImColor::HSV(1 / 7.0f, 0.6f, 0.6f),
-            0.0f, 0.2f, getKeys(m_data[10]), true });
-        m_plotData.push_back({ getSamples(m_data[11], SAMPLE_COUNT, step), (ImU32)ImColor::HSV(2 / 7.0f, 0.6f, 0.6f),
-            0.0f, 0.05f, getKeys(m_data[11]), true });
-        m_plotData.push_back({ getSamples(m_data[12], SAMPLE_COUNT, step), (ImU32)ImColor::HSV(3 / 7.0f, 0.6f, 0.6f),
-            0.0f, 0.05f, getKeys(m_data[12]), true });
+        m_plotData.push_back({ u8"Blur", getSamples(m_data[10], SAMPLE_COUNT, step),
+            (ImU32)ImColor::HSV(1 / 7.0f, 0.6f, 0.6f), 0.0f, 0.2f, getKeys(m_data[10]), true });
+        m_plotData.push_back({ u8"Duality H", getSamples(m_data[11], SAMPLE_COUNT, step),
+            (ImU32)ImColor::HSV(2 / 7.0f, 0.6f, 0.6f), 0.0f, 0.05f, getKeys(m_data[11]), true });
+        m_plotData.push_back({ u8"Duality V", getSamples(m_data[12], SAMPLE_COUNT, step),
+            (ImU32)ImColor::HSV(3 / 7.0f, 0.6f, 0.6f), 0.0f, 0.05f, getKeys(m_data[12]), true });
 
-        m_plotData.push_back({ getSamples(m_data[13], SAMPLE_COUNT, step), (ImU32)ImColor::HSV(4 / 7.0f, 0.6f, 0.6f),
-            0.0f, 2.0f, getKeys(m_data[13]), true });
-        m_plotData.push_back({ getSamples(m_data[14], SAMPLE_COUNT, step), (ImU32)ImColor::HSV(5 / 7.0f, 0.6f, 0.6f),
-            0.0f, 5.0f, getKeys(m_data[14]), true });
-        m_plotData.push_back({ getSamples(m_data[15], SAMPLE_COUNT, step), (ImU32)ImColor::HSV(6 / 7.0f, 0.6f, 0.6f),
-            0.0f, 40.0f, getKeys(m_data[15]), true });
+        m_plotData.push_back({ u8"Noise Intensity", getSamples(m_data[13], SAMPLE_COUNT, step),
+            (ImU32)ImColor::HSV(4 / 7.0f, 0.6f, 0.6f), 0.0f, 2.0f, getKeys(m_data[13]), true });
+        m_plotData.push_back({ u8"Noise Granularity", getSamples(m_data[14], SAMPLE_COUNT, step),
+            (ImU32)ImColor::HSV(5 / 7.0f, 0.6f, 0.6f), 0.0f, 5.0f, getKeys(m_data[14]), true });
+        m_plotData.push_back({ u8"Noise Frequency", getSamples(m_data[15], SAMPLE_COUNT, step),
+            (ImU32)ImColor::HSV(6 / 7.0f, 0.6f, 0.6f), 0.0f, 40.0f, getKeys(m_data[15]), true });
 
-		m_plotData.push_back({ getSamples(m_data[16], SAMPLE_COUNT, step), (ImU32)ImColor::HSV(1.5f / 7.0f, 0.6f, 0.6f),
-			-5.0f, 5.0f, getKeys(m_data[16]), true });
-		m_plotData.push_back({ getSamples(m_data[17], SAMPLE_COUNT, step), (ImU32)ImColor::HSV(2.5f / 7.0f, 0.6f, 0.6f),
-			0.0f, 1.0f, getKeys(m_data[17]), true });
-		m_plotData.push_back({ getSamples(m_data[18], SAMPLE_COUNT, step), (ImU32)ImColor::HSV(3.5 / 7.0f, 0.6f, 0.6f),
-			0.0f, 1.0f, getKeys(m_data[18]), true });
+        m_plotData.push_back({ u8"Fish Eye Intensity", getSamples(m_data[16], SAMPLE_COUNT, step),
+            (ImU32)ImColor::HSV(1.5f / 7.0f, 0.6f, 0.6f), -5.0f, 5.0f, getKeys(m_data[16]), true });
+        m_plotData.push_back({ u8"Vignette Radius", getSamples(m_data[17], SAMPLE_COUNT, step),
+            (ImU32)ImColor::HSV(2.5f / 7.0f, 0.6f, 0.6f), 0.0f, 1.0f, getKeys(m_data[17]), true });
+        m_plotData.push_back({ u8"Vignette Softness", getSamples(m_data[18], SAMPLE_COUNT, step),
+            (ImU32)ImColor::HSV(3.5 / 7.0f, 0.6f, 0.6f), 0.0f, 1.0f, getKeys(m_data[18]), true });
     }
 
     std::vector<float> getSamples(CEnvelope* e, int count, float step)
@@ -253,55 +253,48 @@ struct PostprocessEditor : public Editor {
         if (wnd.Collapsed)
             return true;
 
-        ImGui::Text(u8"Base Color:");
-        ImGui::SameLine();
-        ImGui_ColoredCheckBox("Red##BaseColor", &m_plotData[0].visible, m_plotData[0].color);
-        ImGui::SameLine();
-        ImGui_ColoredCheckBox("Green##BaseColor", &m_plotData[1].visible, m_plotData[1].color);
-        ImGui::SameLine();
-        ImGui_ColoredCheckBox("Blue##BaseColor", &m_plotData[2].visible, m_plotData[2].color);
-
-        ImGui::Text(u8"Add Color:");
-        ImGui::SameLine();
-        ImGui_ColoredCheckBox("Red##AddColor", &m_plotData[3].visible, m_plotData[3].color);
-        ImGui::SameLine();
-        ImGui_ColoredCheckBox("Green##AddColor", &m_plotData[4].visible, m_plotData[4].color);
-        ImGui::SameLine();
-        ImGui_ColoredCheckBox("Blue##AddColor", &m_plotData[5].visible, m_plotData[5].color);
-
-        ImGui::Text(u8"Gray Color:");
-        ImGui::SameLine();
-        ImGui_ColoredCheckBox("Red##GrayColor", &m_plotData[6].visible, m_plotData[6].color);
-        ImGui::SameLine();
-        ImGui_ColoredCheckBox("Green##GrayColor", &m_plotData[7].visible, m_plotData[7].color);
-        ImGui::SameLine();
-        ImGui_ColoredCheckBox("Blue##GrayColor", &m_plotData[8].visible, m_plotData[8].color);
-        ImGui::SameLine();
-        ImGui_ColoredCheckBox("Value##GrayColor", &m_plotData[9].visible, m_plotData[9].color);
-
-        ImGui_ColoredCheckBox("Blur", &m_plotData[10].visible, m_plotData[10].color);
-        ImGui::SameLine();
-        ImGui_ColoredCheckBox("Duality H", &m_plotData[11].visible, m_plotData[11].color);
-        ImGui::SameLine();
-        ImGui_ColoredCheckBox("Duality V", &m_plotData[12].visible, m_plotData[12].color);
-
-        ImGui::Text(u8"Noise:");
-        ImGui::SameLine();
-        ImGui_ColoredCheckBox("Intensity##Noise", &m_plotData[13].visible, m_plotData[13].color);
-        ImGui::SameLine();
-        ImGui_ColoredCheckBox("Granularity##Noise", &m_plotData[14].visible, m_plotData[14].color);
-        ImGui::SameLine();
-        ImGui_ColoredCheckBox("Frequency##Noise", &m_plotData[15].visible, m_plotData[15].color);
-
-		ImGui::Text(u8"Effects:");
-		ImGui::SameLine();
-		ImGui_ColoredCheckBox("Fish Eye Intensity##Effects", &m_plotData[16].visible, m_plotData[16].color);
-		ImGui::SameLine();
-		ImGui_ColoredCheckBox("Vignette Radius##Effects", &m_plotData[17].visible, m_plotData[17].color);
-		ImGui::SameLine();
-		ImGui_ColoredCheckBox("Vignette Softness##Effects", &m_plotData[18].visible, m_plotData[18].color);
-
         ImGui::Columns(2);
+
+        int newSourceSelected = -1;
+        int newKeySelected = -1;
+        for (size_t i = 0, count = m_plotData.size(); i != count; i++) {
+            auto& el = m_plotData[i];
+            ImGui::PushID(el.name);
+            ImGui::PushStyleColor(ImGuiCol_Text, el.color);
+            ImGui::Checkbox("##Visible", &el.visible);
+            ImGui::SameLine();
+            bool b = ImGui::TreeNodeEx(el.name, m_changes.sourceIndex == 0 ? ImGuiTreeNodeFlags_Selected : 0);
+            if (ImGui::IsItemClicked())
+                newSourceSelected = i;
+            ImGui::PopStyleColor();
+            if (b) {
+                for (int iKey = 0; iKey != el.keys.size(); iKey++) {
+                    ImGui::TreeNodeEx((void*)(intptr_t)iKey,
+                        ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen
+                            | (m_changes.keyIndex == 0 ? ImGuiTreeNodeFlags_Selected : 0),
+                        "Key %d", iKey);
+                    if (ImGui::IsItemClicked())
+                        newKeySelected = iKey + (i << 16);
+                }
+                if (ImGui::Button(u8"+")) {
+                    CEnvelope* e = m_data[i];
+                    newKeySelected = e->InsertKey(m_anim->position(), el.scaleMax);
+                    newSourceSelected = i;
+                }
+                ImGui::TreePop();
+            }
+            ImGui::PopID();
+        }
+        if (newSourceSelected != -1 && newSourceSelected != m_changes.sourceIndex) {
+            m_changes.sourceIndex = newSourceSelected;
+            m_changes.keyIndex = -1;
+        }
+        if (newKeySelected != -1) {
+            m_changes.keyIndex = newKeySelected & 0xFFFF;
+            m_changes.sourceIndex = newSourceSelected >> 16;
+        }
+
+        ImGui::NextColumn();
         ImGui::PushItemWidth(-1.0f);
         if (ImGui::Plot2(
                 "##empty", &m_plotData[0], 19, m_anim->position(), m_anim->GetLength(), ImVec2(-1, -50), &m_changes)) {
@@ -314,80 +307,90 @@ struct PostprocessEditor : public Editor {
             m_plotData[m_changes.sourceIndex].samples = getSamples(e, SAMPLE_COUNT, step);
             m_plotData[m_changes.sourceIndex].keys = getKeys(e);
         }
+        if (ImGui::BeginPopupContextItem("menu")) {
+			if (ImGui::MenuItem("Add Key")) {
+
+			}
+			ImGui::EndPopup();
+        }
+
         float position = m_anim->position();
         char buf[32];
         sprintf(buf, "%%.3f/%.3f", m_anim->GetLength());
         if (ImGui::SliderFloat("", &position, 0.0f, m_anim->GetLength(), buf))
             m_anim->setPosition(position);
         ImGui::PopItemWidth();
-        ImGui::NextColumn();
-        if (m_changes.sourceIndex != -1) {
-            ImGui::PushItemWidth(-1.0f);
-            ImGui::Text("--- Envelope ---");
-            CEnvelope* e = m_data[m_changes.sourceIndex];
-            ImGui::Text("Behavior0");
-            ImGui::Combo("##behavior0", &e->behavior[0], "RESET\0CONSTANT\0REPEAT\0OSCILLATE\0OFFSET\0LINEAR\0");
-            ImGui::Text("Behavior1");
-            ImGui::Combo("##behavior1", &e->behavior[1], "RESET\0CONSTANT\0REPEAT\0OSCILLATE\0OFFSET\0LINEAR\0");
-            ImGui::Spacing();
-            ImGui::Text("------ Key -----");
-            auto key = e->keys[m_changes.keyIndex];
-            bool changedKey = false;
-            ImGui::Text("Value");
-            if (ImGui::DragFloat("##Value", &key->value, 0.05f))
-                changedKey = true;
-            ImGui::Text("Time");
-            if (ImGui::DragFloat("##Time", &key->time, 0.05f))
-                changedKey = true;
-            ImGui::Text("Shape");
-            int shape = key->shape;
-            if (ImGui::Combo("##Shape", &shape, "TCB\0HERM\0BEZI\0LINE\0STEP\0BEZ2\0")) {
-                key->shape = shape;
-                changedKey = true;
-            }
-            switch (shape) {
-            case SHAPE_TCB:
-                ImGui::Text("Tension");
-                if (ImGui::DragFloat("##Tension", &key->tension, 0.05f))
-                    changedKey = true;
-                ImGui::Text("Continuity");
-                if (ImGui::DragFloat("##Continuity", &key->continuity, 0.05f))
-                    changedKey = true;
-                ImGui::Text("Bias");
-                if (ImGui::DragFloat("##Bias", &key->bias, 0.05f))
-                    changedKey = true;
-                break;
-            case SHAPE_HERM:
-            case SHAPE_BEZI:
-                ImGui::Text("Param 0");
-                if (ImGui::DragFloat("##Param0", &key->param[0], 0.05f))
-                    changedKey = true;
-                ImGui::Text("Param 1");
-                if (ImGui::DragFloat("##Param1", &key->param[1], 0.05f))
-                    changedKey = true;
-                break;
-            case SHAPE_BEZ2:
-                ImGui::Text("Param 0");
-                if (ImGui::DragFloat("##Param0", &key->param[0], 0.05f))
-                    changedKey = true;
-                ImGui::Text("Param 1");
-                if (ImGui::DragFloat("##Param1", &key->param[1], 0.05f))
-                    changedKey = true;
-                ImGui::Text("Param 2");
-                if (ImGui::DragFloat("##Param2", &key->param[2], 0.05f))
-                    changedKey = true;
-                ImGui::Text("Param 3");
-                if (ImGui::DragFloat("##Param3", &key->param[3], 0.05f))
-                    changedKey = true;
-                break;
-            }
-            ImGui::PopItemWidth();
-            if (changedKey) {
-                float step = m_anim->GetLength() / SAMPLE_COUNT;
-                m_plotData[m_changes.sourceIndex].samples = getSamples(e, SAMPLE_COUNT, step);
-                m_plotData[m_changes.sourceIndex].keys = getKeys(e);
-            }
-        }
+
+        // ImGui::NextColumn();
+        // if (m_changes.sourceIndex != -1) {
+        //    ImGui::PushItemWidth(-1.0f);
+        //    ImGui::Text("--- Envelope ---");
+        //    CEnvelope* e = m_data[m_changes.sourceIndex];
+        //    ImGui::Text("Behavior0");
+        //    ImGui::Combo("##behavior0", &e->behavior[0], "RESET\0CONSTANT\0REPEAT\0OSCILLATE\0OFFSET\0LINEAR\0");
+        //    ImGui::Text("Behavior1");
+        //    ImGui::Combo("##behavior1", &e->behavior[1], "RESET\0CONSTANT\0REPEAT\0OSCILLATE\0OFFSET\0LINEAR\0");
+        //    if (m_changes.keyIndex != -1) {
+        //        ImGui::Spacing();
+        //        ImGui::Text("------ Key -----");
+        //        auto key = e->keys[m_changes.keyIndex];
+        //        bool changedKey = false;
+        //        ImGui::Text("Value");
+        //        if (ImGui::DragFloat("##Value", &key->value, 0.05f))
+        //            changedKey = true;
+        //        ImGui::Text("Time");
+        //        if (ImGui::DragFloat("##Time", &key->time, 0.05f))
+        //            changedKey = true;
+        //        ImGui::Text("Shape");
+        //        int shape = key->shape;
+        //        if (ImGui::Combo("##Shape", &shape, "TCB\0HERM\0BEZI\0LINE\0STEP\0BEZ2\0")) {
+        //            key->shape = shape;
+        //            changedKey = true;
+        //        }
+        //        switch (shape) {
+        //        case SHAPE_TCB:
+        //            ImGui::Text("Tension");
+        //            if (ImGui::DragFloat("##Tension", &key->tension, 0.05f))
+        //                changedKey = true;
+        //            ImGui::Text("Continuity");
+        //            if (ImGui::DragFloat("##Continuity", &key->continuity, 0.05f))
+        //                changedKey = true;
+        //            ImGui::Text("Bias");
+        //            if (ImGui::DragFloat("##Bias", &key->bias, 0.05f))
+        //                changedKey = true;
+        //            break;
+        //        case SHAPE_HERM:
+        //        case SHAPE_BEZI:
+        //            ImGui::Text("Param 0");
+        //            if (ImGui::DragFloat("##Param0", &key->param[0], 0.05f))
+        //                changedKey = true;
+        //            ImGui::Text("Param 1");
+        //            if (ImGui::DragFloat("##Param1", &key->param[1], 0.05f))
+        //                changedKey = true;
+        //            break;
+        //        case SHAPE_BEZ2:
+        //            ImGui::Text("Param 0");
+        //            if (ImGui::DragFloat("##Param0", &key->param[0], 0.05f))
+        //                changedKey = true;
+        //            ImGui::Text("Param 1");
+        //            if (ImGui::DragFloat("##Param1", &key->param[1], 0.05f))
+        //                changedKey = true;
+        //            ImGui::Text("Param 2");
+        //            if (ImGui::DragFloat("##Param2", &key->param[2], 0.05f))
+        //                changedKey = true;
+        //            ImGui::Text("Param 3");
+        //            if (ImGui::DragFloat("##Param3", &key->param[3], 0.05f))
+        //                changedKey = true;
+        //            break;
+        //        }
+        //        ImGui::PopItemWidth();
+        //        if (changedKey) {
+        //            float step = m_anim->GetLength() / SAMPLE_COUNT;
+        //            m_plotData[m_changes.sourceIndex].samples = getSamples(e, SAMPLE_COUNT, step);
+        //            m_plotData[m_changes.sourceIndex].keys = getKeys(e);
+        //        }
+        //    }
+        //}
         ImGui::Columns(1);
 
         if (ImGui::Button(u8"Play"))
@@ -398,6 +401,13 @@ struct PostprocessEditor : public Editor {
         ImGui::SameLine();
         if (ImGui::Button(u8"Stop"))
             m_anim->stop();
+		if (ImGui::Button(u8"Save"))
+		{
+			string_path path;
+			FS.update_path(path, "$game_anims$", m_name.c_str());
+			m_anim->Save(path);
+			m_changed = false;
+		}
 
         return true;
     }

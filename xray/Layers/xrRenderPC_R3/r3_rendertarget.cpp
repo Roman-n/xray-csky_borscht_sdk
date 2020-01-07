@@ -930,6 +930,10 @@ CRenderTarget::CRenderTarget		()
 
 	// PP
 	s_postprocess.create				("postprocess");
+	R_constant_table& T0 = *(s_postprocess->E[0]->passes[0]->constants);
+	c_brightness = T0.get("c_brightness");
+	c_fishEye = T0.get("c_fishEye");
+	c_vignette = T0.get("c_vignette");
 	g_postprocess.create				(D3DFVF_XYZRHW|D3DFVF_DIFFUSE|D3DFVF_SPECULAR|D3DFVF_TEX3,RCache.Vertex.Buffer(),RCache.QuadIB);
 
 	// Menu
@@ -939,9 +943,6 @@ CRenderTarget::CRenderTarget		()
 	// 
 	dwWidth		= Device.dwWidth;
 	dwHeight	= Device.dwHeight;
-
-	m_fishEye = RCache.get_c("c_fishEye");
-	m_fishEye = RCache.get_c("c_vignette");
 }
 
 CRenderTarget::~CRenderTarget	()

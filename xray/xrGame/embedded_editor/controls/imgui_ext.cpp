@@ -87,11 +87,6 @@ bool Plot2(const char* label, const PlotSource* data, int dataCount, float curre
 
     const ImVec2 label_size = CalcTextSize(label, NULL, true);
     graphSize = CalcItemSize(graphSize, CalcItemWidth(), label_size.y + (style.FramePadding.y * 2));
-    // if (graphSize.x == 0.0f)
-    //    graphSize.x = CalcItemWidth();
-    // if (graphSize.y == 0.0f)
-    //    graphSize.y = label_size.y + (style.FramePadding.y * 2);
-
     const ImRect frame_bb(window->DC.CursorPos, window->DC.CursorPos + ImVec2(graphSize.x, graphSize.y));
     const ImRect inner_bb(frame_bb.Min + style.FramePadding, frame_bb.Max - style.FramePadding);
     const ImRect total_bb(

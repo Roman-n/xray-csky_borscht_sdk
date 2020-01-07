@@ -54,13 +54,13 @@ KeyIt CEnvelope::FindKey(float t, float eps)
     return keys.end();
 }
 
-void CEnvelope::InsertKey(float t, float val)
+int CEnvelope::InsertKey(float t, float val)
 {	
 	KeyIt k_it = keys.begin();
 	for (; k_it!=keys.end(); k_it++){
     	if (fsimilar((*k_it)->time,t,EPS_L)){ 
         	(*k_it)->value= val;
-            return;
+            return k_it - keys.begin();
         }
         // insert before
     	if ((*k_it)->time>t) break;
@@ -72,7 +72,7 @@ void CEnvelope::InsertKey(float t, float val)
     K->shape	= SHAPE_TCB; 
     behavior[0]	= BEH_CONSTANT;
     behavior[1]	= BEH_CONSTANT;
-    keys.insert	(k_it,K);
+    return keys.insert(k_it,K) - keys.begin();
 }
 
 void CEnvelope::DeleteKey(float t)
