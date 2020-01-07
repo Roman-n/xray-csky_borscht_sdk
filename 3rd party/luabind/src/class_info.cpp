@@ -33,12 +33,24 @@ namespace luabind
 	
 		class_info result(L);
 	
+		detail::class_rep* rep = nullptr;
 		o.pushvalue();
-		detail::object_rep* obj = static_cast<detail::object_rep*>(lua_touserdata(L, -1));
+		detail::object_rep* obj = detail::is_class_object(L, -1);
+		if (obj)
+			rep = obj->crep();
+		else if (detail::is_class_rep(L, -1))
+			rep = static_cast<detail::class_rep*>(lua_touserdata(L, -1));
 		lua_pop(L, 1);
 
-		result.name = obj->crep()->name();
-		obj->crep()->get_table(L);
+		if (!rep) {
+			result.name = "wrong object";
+			result.attributes = newtable(L);
+			result.methods = newtable(L);
+			return result;
+		}
+
+		result.name = rep->name();
+		rep->get_table(L);
 		result.methods.set();
 
 		result.attributes = newtable(L);
@@ -47,8 +59,8 @@ namespace luabind
 		
 		unsigned int index = 1;
 		
-		for (map_type::const_iterator i = obj->crep()->properties().begin();
-				i != obj->crep()->properties().end(); ++i)
+		for (map_type::const_iterator i = rep->properties().begin();
+				i != rep->properties().end(); ++i)
 		{
 			result.attributes[index] = i->first;
 		}

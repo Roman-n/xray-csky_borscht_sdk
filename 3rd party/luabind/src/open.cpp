@@ -27,6 +27,8 @@
 
 namespace luabind {
 
+	void bind_class_info(lua_State* L);
+
     void open(lua_State* L)
     {
         // get the global class registry, or create one if it doesn't exist
@@ -62,6 +64,8 @@ namespace luabind {
         lua_pushstring(L, "class");
         lua_pushcclosure(L, detail::create_class::stage1, 0);
         lua_settable(L, LUA_GLOBALSINDEX);
+
+		bind_class_info(L);
     }
 
 } // namespace luabind
