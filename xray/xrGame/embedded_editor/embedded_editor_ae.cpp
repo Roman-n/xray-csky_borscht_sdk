@@ -18,12 +18,14 @@ static CSE_ALifeDynamicObjectVisual* sobj = nullptr;
 static CObject* obj = nullptr;
 static xr_set<u16> opened_motions;
 static xr_vector<xr_vector<shared_str>> animations;
+static u16 selected_bone = -1;
 
 void ShowAnimated(IKinematicsAnimated* v);
 void ShowKinematics(IKinematics* v);
 void ShowMainWindow(bool& show);
 void ShowMotionWindow(u16 motion);
 void refresh_animations();
+void showBoneProps();
 
 void ShowAeWindow(bool& show)
 {
@@ -31,6 +33,8 @@ void ShowAeWindow(bool& show)
     for (auto& el : opened_motions) {
         ShowMotionWindow(el);
     }
+    if (selected_bone != -1)
+        showBoneProps();
 }
 
 void ShowAnimated(IKinematicsAnimated* ka)
@@ -54,6 +58,32 @@ void ShowAnimated(IKinematicsAnimated* ka)
     }
 }
 
+static u16 new_selected_node = -1;
+void drawBone(u16 bone, IKinematics* k)
+{
+    ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick
+        | ((bone == selected_bone) ? ImGuiTreeNodeFlags_Selected : 0);
+
+    const auto& data = k->LL_GetData(bone);
+    if (data.children.empty()) {
+        nodeFlags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen; // ImGuiTreeNodeFlags_Bullet
+        ImGui::TreeNodeEx(
+            (void*)(intptr_t)bone, nodeFlags, "%s (faces: %lu)", data.name.data(), data.child_faces.size());
+        if (ImGui::IsItemClicked())
+            new_selected_node = bone;
+    } else {
+        bool open = ImGui::TreeNodeEx(
+            (void*)(intptr_t)bone, nodeFlags, "%s (faces: %lu)", data.name.data(), data.child_faces.size());
+        if (ImGui::IsItemClicked())
+            new_selected_node = bone;
+        if (open) {
+            for (const auto* child : data.children)
+                drawBone(child->GetSelfID(), k);
+            ImGui::TreePop();
+        }
+    }
+}
+
 void ShowKinematics(IKinematics* k)
 {
     ImGui::Spacing();
@@ -61,6 +91,9 @@ void ShowKinematics(IKinematics* k)
     sprintf(buf, "Bones: %d", k->LL_BoneCount());
     if (ImGui::CollapsingHeader(buf)) {
         CInifile* ini = k->LL_UserData();
+        u16 root = k->LL_GetBoneRoot();
+        drawBone(root, k);
+        selected_bone = new_selected_node;
     }
 }
 
@@ -145,7 +178,8 @@ void ShowMotionWindow(u16 motion)
     if (motion >= count)
         return;
     static int cur = -1;
-    if (ImGui_ListBox("", &cur,
+    if (ImGui_ListBox(
+            "", &cur,
             [](void* data, int idx, const char** out_text) -> bool {
                 xr_vector<shared_str>* anims = (xr_vector<shared_str>*)data;
                 *out_text = (*anims)[idx].c_str();
@@ -172,4 +206,32 @@ void refresh_animations()
         for (const auto& el : *(el.motion_map()))
             animations[i][el.second] = el.first;
     }
+}
+
+void showBoneProps()
+{
+    bool show = true;
+    ImguiWnd wnd("Bone", &show);
+    if (wnd.Collapsed)
+        return;
+    if (!obj)
+        return;
+    IKinematics* k = obj->Visual()->dcast_PKinematics();
+    if (!k)
+        return;
+    if (k->LL_BoneCount() <= selected_bone)
+        return;
+    auto& data = k->LL_GetData(selected_bone);
+    ImGui::Text("%s", data.name.data());
+    ImGui::Separator();
+    ImGui::Text("Scale");
+    bool changed = false;
+    if (ImGui::DragFloat("x##scale", &data.bind_transform.i.x, 0.01f))
+        changed = true;
+    if (ImGui::DragFloat("y##scale", &data.bind_transform.j.y, 0.01f))
+        changed = true;
+    if (ImGui::DragFloat("z##scale", &data.bind_transform.k.z, 0.01f))
+        changed = true;
+    if (changed)
+        k->LL_GetData(k->LL_GetBoneRoot()).CalculateM2B(Fidentity);
 }
