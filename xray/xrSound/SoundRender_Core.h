@@ -39,7 +39,6 @@ public:
 	typedef	std::pair<ref_sound_data_ptr,float>	event;                                               
 	xr_vector<event>					s_events;
 public:
-	BOOL								bPresent;
 	BOOL								bUserEnvironment;
     BOOL	 							bEAX;					// Boolean variable to indicate presence of EAX Extension 
     BOOL								bDeferredEAX;
@@ -83,7 +82,7 @@ public:
 	virtual								~CSoundRender_Core		();
 
 	// General
-	virtual void  						_initialize				(int stage)=0;
+	virtual bool  						_initialize				(int stage)=0;
 	virtual void						_clear					( )=0;
 	virtual void						_restart				( );
 

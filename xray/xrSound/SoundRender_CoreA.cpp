@@ -73,7 +73,7 @@ void  CSoundRender_CoreA::_restart()
 */
 }
 
-void CSoundRender_CoreA::_initialize(int stage)
+bool CSoundRender_CoreA::_initialize(int stage)
 {
 	if(stage==0)
 	{
@@ -83,8 +83,9 @@ void CSoundRender_CoreA::_initialize(int stage)
 		{ 
 			CHECK_OR_EXIT			(0,"OpenAL: Can't create sound device.");
 			xr_delete				(pDeviceList);
+			return false;
 		}
-		return;
+		return true;
 	}
 	
 	pDeviceList->SelectBestDevice	();
@@ -95,8 +96,7 @@ void CSoundRender_CoreA::_initialize(int stage)
 	if (pDevice == NULL)
 	{
 		CHECK_OR_EXIT			(0,"SOUND: OpenAL: Failed to create device.");
-		bPresent				= FALSE;
-		return;
+		return false;
 	}
 
     // Get the device specifier.
@@ -107,9 +107,8 @@ void CSoundRender_CoreA::_initialize(int stage)
     pContext					= alcCreateContext	(pDevice,NULL);
 	if (0==pContext){
 		CHECK_OR_EXIT			(0,"SOUND: OpenAL: Failed to create context.");
-		bPresent				= FALSE;
 		alcCloseDevice			(pDevice); pDevice = 0;
-		return;
+		return false;
 	}
     
     // clear errors
@@ -140,7 +139,8 @@ void CSoundRender_CoreA::_initialize(int stage)
         bEAX 					= EAXTestSupport(FALSE);
     }
 
-    inherited::_initialize		(stage);
+	if (!inherited::_initialize(stage))
+		return false;
 
 	if(stage==1)//first initialize
 	{
@@ -161,13 +161,13 @@ void CSoundRender_CoreA::_initialize(int stage)
 			}
 		}
 	}
+
+	return true;
 }
 
 void CSoundRender_CoreA::set_master_volume(float f )
 {
-	if (bPresent)				{
-		A_CHK				    (alListenerf	(AL_GAIN,f));
-	}
+	A_CHK				    (alListenerf	(AL_GAIN,f));
 }
 
 void CSoundRender_CoreA::_clear	()
