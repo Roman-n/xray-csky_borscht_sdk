@@ -40,7 +40,7 @@ private:
 	mutable bool				m_actuality;
 
 private:
-			u8					m_space_restrictor_type;
+	RestrictionSpace::ERestrictorTypes m_space_restrictor_type;
 private:
 	IC		void				actual				(bool value) const;
 			void				prepare				() const;
