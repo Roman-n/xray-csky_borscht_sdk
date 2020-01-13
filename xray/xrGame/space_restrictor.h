@@ -60,7 +60,8 @@ public:
 	virtual	CSpaceRestrictor	*cast_restrictor	() {return this;}
 	virtual	bool				register_schedule	() const {return false;}
 
-	IC RestrictionSpace::ERestrictorTypes restrictor_type() const; 
+	IC RestrictionSpace::ERestrictorTypes restrictor_type() const;
+	void change_restrictor_type(RestrictionSpace::ERestrictorTypes type) { m_space_restrictor_type = type; }
 
 public:
 #ifdef DEBUG

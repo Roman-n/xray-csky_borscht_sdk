@@ -136,6 +136,12 @@ void CSpaceRestrictionHolder::register_restrictor				(CSpaceRestrictor *space_re
 	}
 	
 	CSpaceRestrictionShape	*shape = xr_new<CSpaceRestrictionShape>(space_restrictor,restrictor_type != RestrictionSpace::eDefaultRestrictorTypeNone);
+	if (shape->border().empty()) {
+		Msg("! change restrictor_type of %s to eRestrictorTypeNone because has no border", space_restrictor->cName().c_str());
+		space_restrictor->change_restrictor_type(RestrictionSpace::eRestrictorTypeNone);
+		xr_delete(shape);
+		return;
+	}
 	RESTRICTIONS::iterator	I = m_restrictions.find(space_restrictors);
 	if (I == m_restrictions.end()) {
 		CSpaceRestrictionBridge	*bridge = xr_new<CSpaceRestrictionBridge>(shape);
