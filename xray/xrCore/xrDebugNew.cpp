@@ -151,6 +151,7 @@ void xrDebug::do_exit	(const std::string &message)
 	TerminateProcess	(GetCurrentProcess(),1);
 }
 
+char assertion_info[16384];
 void xrDebug::backend	(const char *expression, const char *description, const char *argument0, const char *argument1, const char *file, int line, const char *function, bool &ignore_always)
 {
 	static xrCriticalSection CS
@@ -162,8 +163,6 @@ void xrDebug::backend	(const char *expression, const char *description, const ch
 	CS.Enter			();
 
 	error_after_dialog	= true;
-
-	string4096			assertion_info;
 
 	gather_info			(expression, description, argument0, argument1, file, line, function, assertion_info);
 
