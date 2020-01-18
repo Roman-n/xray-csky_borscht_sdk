@@ -450,11 +450,12 @@ void CLevelSpawnConstructor::generate_artefact_spawn_positions	()
 		if (!zone)
 			continue;
 
-//		if (!level_graph().valid_vertex_position(zone->o_Position)) {
-//			zone->m_artefact_spawn_count	= 0;
-//			zone->m_artefact_position_offset		= m_level_points.size();
-//			continue;
-//		}
+		if (!level_graph().valid_vertex_position(zone->o_Position)) {
+			Msg("! anomaly [%s] is not on ai-node, remove artefact spawn ability", zone->name_replace());
+			zone->m_artefact_spawn_count	= 0;
+			zone->m_artefact_position_offset		= m_level_points.size();
+			continue;
+		}
 
 		zone->m_tNodeID						= level_graph().vertex(zone->m_tNodeID,zone->o_Position);
 		if (!level_graph().valid_vertex_position(zone->o_Position) || !level_graph().inside(zone->m_tNodeID,zone->o_Position))
