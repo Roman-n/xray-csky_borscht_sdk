@@ -137,8 +137,6 @@ void CBuild::Light_prepare()
 	for (u32 m=0; m<mu_models().size(); m++)	mu_models()[m]->calc_faceopacity();
 }
 
-
-//.#define CFORM_ONLY
 #ifdef LOAD_GL_DATA
 void net_light ();
 #endif
@@ -184,9 +182,7 @@ void CBuild::Run	(LPCSTR P)
 	FPU::m64r					();
 	Phase						("Adaptive HT...");
 	mem_Compact					();
-#ifndef CFORM_ONLY
 	xrPhase_AdaptiveHT			();
-#endif
 
 	//****************************************** Building normals
 	FPU::m64r					();
@@ -201,10 +197,6 @@ void CBuild::Run	(LPCSTR P)
 	Phase						("Building collision database...");
 	mem_Compact					();
 	BuildCForm					();
-
-#ifdef CFORM_ONLY
-	return;
-#endif
 
 	BuildPortals				(*fs);
 
@@ -222,6 +214,9 @@ void CBuild::Run	(LPCSTR P)
 	mem_Compact					();
 	Light_prepare				();
 	BuildRapid					(TRUE);
+
+	if (lc_global_data()->cformOnly())
+		return;
 
 	//****************************************** GLOBAL-ILLUMINATION
 	if (b_radiosity)			

@@ -47,6 +47,7 @@ class	XRLC_LIGHT_API xrLC_GlobalData
 		bool							_b_lmap_rgba;
 		u32								_numThread;
 		bool							m_skipAhtTesselate;
+		bool                            m_cformOnly = false;
 public:
 
 public:
@@ -100,6 +101,8 @@ IC		void						b_nosun_set		(bool v){	_b_nosun = v; }
 		void						setNumThread(u32 v) { _numThread = v; }
 		bool						skipAhtTesselate() { return m_skipAhtTesselate; }
 		void						setSkipAhtTesselate(bool v) { m_skipAhtTesselate = v; }
+		bool						cformOnly() const{ return m_cformOnly; }
+		void						setCformOnly(bool v) { m_cformOnly = v; }
 
 private:
 //std::pair<u32,u32>					get_id		( const _face * v ) const;

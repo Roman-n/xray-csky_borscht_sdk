@@ -32,8 +32,9 @@ static const char* h_str =
 	"-lmap_quality == lightmap quality\n"
 	"-lmap_rgba    == save lightmaps with lossless format\n"
 	"-thread <COUNT> == multi-threaded light implicit\n"
-	"-f<NAME>      == compile level in GameData\\Levels\\<NAME>\\\n"
 	"-skip_aht_tess == skip Adaptive HT Tesselating stage\n"
+	"-cform_only   == make *.cform only\n"
+	"-f <NAME>     == compile level in GameData\\Levels\\<NAME>\\\n"
 	"\n"
 	"NOTE: The last key is required for any functionality\n";
 
@@ -111,6 +112,7 @@ void Startup(LPSTR     lpCmdLine)
 	lc_global_data()->b_skip_invalid_set(strstr(cmd, "-skipinvalid") != nullptr);
 	lc_global_data()->b_lmap_rgba_set(strstr(cmd, "-lmap_rgba") != nullptr);
 	lc_global_data()->setSkipAhtTesselate(strstr(cmd, "-skip_aht_tess") != nullptr);
+	lc_global_data()->setCformOnly(strstr(cmd, "-cform_only"));
 	const char* threadOption = strstr(cmd, "-thread");
 	u32 numThread = 0;
 	if (threadOption)
