@@ -46,11 +46,6 @@
 #define _realloc_dbg(p,s,x,f,l)  realloc(p,s)
 #endif
 #include <objbase.h>
-#ifndef __MINGW32__
-//#include <atlconv.h>
-#else
-#define T2A(x) x
-#endif
 #include <mmsystem.h>
 
 #include "OpenAL32.h"
@@ -1872,7 +1867,7 @@ void getDefaultPlaybackDeviceNames(char *longName, char *shortName, unsigned int
 		#endif
 		#endif // !defined(_WIN64)
 		if ((shortName != NULL) && (strlen(outputInfo.szPname) <= len)) {
-			strcpy(shortName, T2A(outputInfo.szPname));
+			strcpy(shortName, outputInfo.szPname);
 		}
 	}
 }
@@ -1944,7 +1939,7 @@ void getDefaultCaptureDeviceNames(char *longName, char *shortName, unsigned int 
 		#endif
 		#endif // !defined(_WIN64)
 		if ((shortName != NULL) && (strlen(inputInfo.szPname) <= len)) {
-			strcpy(shortName, T2A(inputInfo.szPname));
+			strcpy(shortName, inputInfo.szPname);
 		}
 	}
 }
