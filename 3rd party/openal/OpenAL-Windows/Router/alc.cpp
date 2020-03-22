@@ -47,7 +47,7 @@
 #endif
 #include <objbase.h>
 #ifndef __MINGW32__
-#include <atlconv.h>
+//#include <atlconv.h>
 #else
 #define T2A(x) x
 #endif
@@ -529,18 +529,18 @@ ALvoid CleanDeviceSpecifierList()
 	while (strlen((const char *)list) > 0) {
 		strcpy(newListPtr, list);
 		advancePtr = TRUE;
-		if (strstr(newListPtr, T2A("DirectSound3D")) != NULL) {
-			if (strstr(copyList, T2A("Generic Hardware")) != NULL) {
+		if (strstr(newListPtr, "DirectSound3D") != NULL) {
+			if (strstr(copyList, "Generic Hardware") != NULL) {
 				advancePtr = FALSE;
 			}
 		}
-		if (strstr(newListPtr, T2A("DirectSound")) != NULL) {
-			if (strstr(copyList, T2A("Generic Software")) != NULL) {
+		if (strstr(newListPtr, "DirectSound") != NULL) {
+			if (strstr(copyList, "Generic Software") != NULL) {
 				advancePtr = FALSE;
 			}
 		}
 		if (strstr(newListPtr, "MMSYSTEM") != NULL) {
-			if (strstr(copyList, T2A("Generic Software")) != NULL) {
+			if (strstr(copyList, "Generic Software") != NULL) {
 				advancePtr = FALSE;
 			}
 		}
@@ -1671,11 +1671,11 @@ ALCAPI ALCdevice* ALCAPIENTRY alcOpenDevice(const ALCchar* deviceName)
 	//
 	// map legacy names to new generic names
 	// DirectSound3D mapped above to ALC_DEFAULT_DEVICE_SPECIFIER
-	if ((strcmp(newDeviceName, T2A("")) == 0) && ((!deviceName) || (strcmp((char *)deviceName, T2A("DirectSound3D"))))) {
-		strcpy(newDeviceName, T2A("Generic Hardware"));
+	if ((strcmp(newDeviceName, "") == 0) && ((!deviceName) || (strcmp((char *)deviceName, "DirectSound3D")))) {
+		strcpy(newDeviceName, "Generic Hardware");
 	}
-	if (strcmp(newDeviceName, T2A("DirectSound")) == 0) {
-		strcpy(newDeviceName, T2A("Generic Software"));
+	if (strcmp(newDeviceName, "DirectSound") == 0) {
+		strcpy(newDeviceName, "Generic Software");
 	}
 
 	//
@@ -2037,13 +2037,13 @@ ALCAPI const ALCchar* ALCAPIENTRY alcGetString(ALCdevice* device, ALenum param)
 					}
 				}
 				if (strlen(mixerDevice)) { // test short device name (mixerDevice) next, with partial matches potentially...
-					if (strstr(mixerDevice, T2A("Audigy")) != NULL) {
+					if (strstr(mixerDevice, "Audigy") != NULL) {
 						acceptPartial = true;
-						strcpy(mixerDevice, T2A("Audigy"));
+						strcpy(mixerDevice, "Audigy");
 					}
-					if (strstr(mixerDevice, T2A("X-Fi")) != NULL) {
+					if (strstr(mixerDevice, "X-Fi") != NULL) {
 						acceptPartial = true;
-						strcpy(mixerDevice, T2A("X-Fi"));
+						strcpy(mixerDevice, "X-Fi");
 					}
 
 					dll = FindDllWithMatchingSpecifier(_T("*oal.dll"), mixerDevice, acceptPartial, actualName);
@@ -2062,15 +2062,15 @@ ALCAPI const ALCchar* ALCAPIENTRY alcGetString(ALCdevice* device, ALenum param)
                 // Try to find a default version.
                 //
 
-                dll = FindDllWithMatchingSpecifier(_T("*oal.dll"), T2A("DirectSound3D"));
+                dll = FindDllWithMatchingSpecifier(_T("*oal.dll"), "DirectSound3D");
                 if(dll)
                 {
-                    strcpy((char*)alcDefaultDeviceSpecifier, T2A("DirectSound3D"));
+                    strcpy((char*)alcDefaultDeviceSpecifier, "DirectSound3D");
                     FreeLibrary(dll);
                     break;
                 }
 
-                dll = FindDllWithMatchingSpecifier(_T("*oal.dll"), T2A("DirectSound"));
+                dll = FindDllWithMatchingSpecifier(_T("*oal.dll"), "DirectSound");
                 if(dll)
                 {
                     strcpy((char*)alcDefaultDeviceSpecifier, "DirectSound");
@@ -2078,7 +2078,7 @@ ALCAPI const ALCchar* ALCAPIENTRY alcGetString(ALCdevice* device, ALenum param)
                     break;
                 }
 
-                dll = FindDllWithMatchingSpecifier(_T("*oal.dll"), T2A("MMSYSTEM"));
+                dll = FindDllWithMatchingSpecifier(_T("*oal.dll"), "MMSYSTEM");
                 if(dll)
                 {
                     strcpy((char*)alcDefaultDeviceSpecifier, "MMSYSTEM");
@@ -2086,18 +2086,18 @@ ALCAPI const ALCchar* ALCAPIENTRY alcGetString(ALCdevice* device, ALenum param)
                     break;
                 }
 
-				 dll = FindDllWithMatchingSpecifier(_T("*oal.dll"), T2A("Generic Hardware"), true);
+				 dll = FindDllWithMatchingSpecifier(_T("*oal.dll"), "Generic Hardware", true);
 				if(dll)
                 {
-                    strcpy((char*)alcDefaultDeviceSpecifier, T2A("Generic Hardware"));
+                    strcpy((char*)alcDefaultDeviceSpecifier, "Generic Hardware");
                     FreeLibrary(dll);
                     break;
                 }
 
-				dll = FindDllWithMatchingSpecifier(_T("*oal.dll"), T2A("Generic Software"), true);
+				dll = FindDllWithMatchingSpecifier(_T("*oal.dll"), "Generic Software", true);
 				if(dll)
                 {
-                    strcpy((char*)alcDefaultDeviceSpecifier, T2A("Generic Software"));
+                    strcpy((char*)alcDefaultDeviceSpecifier, "Generic Software");
                     FreeLibrary(dll);
                     break;
                 }
@@ -2156,13 +2156,13 @@ ALCAPI const ALCchar* ALCAPIENTRY alcGetString(ALCdevice* device, ALenum param)
 					}
 				}
 				if (strlen(mixerDevice)) { // look for short device (mixerDevice)
-					if (strstr(mixerDevice, T2A("Audigy")) != NULL) {
+					if (strstr(mixerDevice, "Audigy") != NULL) {
 						acceptPartial = true;
-						strcpy(mixerDevice, T2A("Audigy"));
+						strcpy(mixerDevice, "Audigy");
 					}
-					if (strstr(mixerDevice, T2A("X-Fi")) != NULL) {
+					if (strstr(mixerDevice, "X-Fi") != NULL) {
 						acceptPartial = true;
-						strcpy(mixerDevice, T2A("X-Fi"));
+						strcpy(mixerDevice, "X-Fi");
 					}
 					dll = FindDllWithMatchingSpecifier(_T("*oal.dll"), mixerDevice, acceptPartial, actualName, true);
 					if(dll)
