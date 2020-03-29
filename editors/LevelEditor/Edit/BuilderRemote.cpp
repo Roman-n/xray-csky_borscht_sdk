@@ -589,18 +589,17 @@ BOOL SceneBuilder::BuildMesh(	const Fmatrix& parent,
         u32 dwInvalidFaces 	= 0;
 	    for (IntIt f_it=face_lst.begin(); f_it!=face_lst.end(); ++f_it)
         {
-			st_Face& face = mesh->m_Faces[*f_it];
-            float _a		= CalcArea(mesh->m_Vertices[face.pv[0].pindex],mesh->m_Vertices[face.pv[1].pindex],mesh->m_Vertices[face.pv[2].pindex]);
-	    	if (!_valid(_a) || (_a<EPS_S))
+            st_Face& face = mesh->m_Faces[*f_it];
+            Fvector p0,p1,p2;
+            real_transform.transform_tiny(p0,mesh->m_Vertices[face.pv[0].pindex]);
+            real_transform.transform_tiny(p1,mesh->m_Vertices[face.pv[1].pindex]);
+            real_transform.transform_tiny(p2,mesh->m_Vertices[face.pv[2].pindex]);
+            float _a        = CalcArea(p0,p1,p2);
+            if (!_valid(_a) || (_a<EPS_S))
             {
-            	Fvector p0,p1,p2;
+                Tools->m_DebugDraw.AppendWireFace(p0,p1,p2);
 
-    			real_transform.transform_tiny(p0,mesh->m_Vertices[face.pv[0].pindex]);
-    			real_transform.transform_tiny(p1,mesh->m_Vertices[face.pv[1].pindex]);
-    			real_transform.transform_tiny(p2,mesh->m_Vertices[face.pv[2].pindex]);
-            	Tools->m_DebugDraw.AppendWireFace(p0,p1,p2);
-
-            	dwInvalidFaces++;
+                dwInvalidFaces++;
                 continue;
             }
             R_ASSERT				(face_it<face_cnt);
