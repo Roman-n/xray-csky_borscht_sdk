@@ -162,8 +162,12 @@ CCommandVar CActorTools::CommandExportDM(CCommandVar p1, CCommandVar p2)
 	CCommandVar res 				= FALSE;
     xr_string fn=p1.IsString()?xr_string(p1):xr_string("");
     if (p1.IsString()||EFS.GetSaveName("$game_dm$",fn)){
-        if (0!=(res=ExportDM(fn.c_str())))	ELog.Msg(mtInformation,"Export complete.");
-        else        		    			ELog.Msg(mtError,"Export failed.");
+        if (0!=(res=ExportDM(fn.c_str())))
+        	ELog.Msg(mtInformation,"Export complete."),
+            ELog.Msg(mtInformation, "        %s", fn.c_str());
+        else
+        	ELog.Msg(mtError,"Export failed."),
+            ELog.Msg(mtError, "        %s", fn.c_str());
     }
     return res;
 }
@@ -172,8 +176,12 @@ CCommandVar CActorTools::CommandExportOBJ(CCommandVar p1, CCommandVar p2)
 	CCommandVar res 				= FALSE;
     xr_string fn=p1.IsString()?xr_string(p1):xr_string("");
     if (p1.IsString()||EFS.GetSaveName("$import$",fn,0,5)){
-        if (0!=(res=ExportOBJ(fn.c_str())))	ELog.Msg(mtInformation,"Export complete.");
-        else        		    			ELog.Msg(mtError,"Export failed.");
+        if (0!=(res=ExportOBJ(fn.c_str())))
+        	ELog.Msg(mtInformation,"Export complete."),
+        	ELog.Msg(mtInformation, "        %s", fn.c_str());
+        else
+        	ELog.Msg(mtError,"Export failed."),
+            ELog.Msg(mtError, "        %s", fn.c_str());
     }
     return res;
 }
@@ -182,8 +190,12 @@ CCommandVar CActorTools::CommandExportOGF(CCommandVar p1, CCommandVar p2)
 	CCommandVar res 				= FALSE;
     xr_string fn=p1.IsString()?xr_string(p1):xr_string("");
     if (p1.IsString()||EFS.GetSaveName("$game_meshes$",fn,0,0)){
-        if (0!=(res=ATools->ExportOGF(fn.c_str())))	ELog.Msg(mtInformation,"Export complete.");
-        else		        		    			ELog.Msg(mtError,"Export failed.");
+        if (0!=(res=ATools->ExportOGF(fn.c_str())))
+        	ELog.Msg(mtInformation,"Export complete."),
+            ELog.Msg(mtInformation, "        %s", fn.c_str());
+        else
+        	ELog.Msg(mtError,"Export failed."),
+            ELog.Msg(mtError, "        %s", fn.c_str());
     }
     return res;
 }
@@ -192,8 +204,12 @@ CCommandVar CActorTools::CommandExportOMF(CCommandVar p1, CCommandVar p2)
 	CCommandVar res 				= FALSE;
     xr_string fn=p1.IsString()?xr_string(p1):xr_string("");
     if (p1.IsString()||EFS.GetSaveName("$game_meshes$",fn,0,1)){
-        if (0!=(res=ExportOMF(fn.c_str())))	ELog.Msg(mtInformation,"Export complete.");
-        else        		    			ELog.Msg(mtError,"Export failed.");
+        if (0!=(res=ExportOMF(fn.c_str())))
+        	ELog.Msg(mtInformation,"Export complete."),
+            ELog.Msg(mtInformation, "        %s", fn.c_str());
+        else
+        	ELog.Msg(mtError,"Export failed."),
+            ELog.Msg(mtError, "        %s", fn.c_str());
     }
     return res;
 }
@@ -202,8 +218,12 @@ CCommandVar CActorTools::CommandExportCPP(CCommandVar p1, CCommandVar p2)
 	CCommandVar res 				= FALSE;
     xr_string fn=p1.IsString()?xr_string(p1):xr_string("");
     if (p1.IsString()||EFS.GetSaveName(_import_,fn,0,7)){
-        if (0!=(res=ExportCPP(fn.c_str())))	ELog.Msg(mtInformation,"Export complete.");
-        else        		    			ELog.Msg(mtError,"Export failed.");
+        if (0!=(res=ExportCPP(fn.c_str())))
+        	ELog.Msg(mtInformation,"Export complete."),
+            ELog.Msg(mtInformation, "        %s", fn.c_str());
+        else
+        	ELog.Msg(mtError,"Export failed."),
+            ELog.Msg(mtError, "        %s", fn.c_str());
     }
     return res;
 }
@@ -376,18 +396,18 @@ void CActorMain::RegisterCommands()
     REGISTER_SUB_CMD_END;
 }                                                                    
 
-char* CActorMain::GetCaption()
+LPCSTR CActorMain::GetCaption()
 {
 	return ATools->GetEditFileName().IsEmpty()?"noname":ATools->GetEditFileName().c_str();
 }
 
-bool __fastcall CActorMain::ApplyShortCut(WORD Key, TShiftState Shift)
+bool CActorMain::ApplyShortCut(WORD Key, TShiftState Shift)
 {
     return inherited::ApplyShortCut(Key,Shift);
 }
 //---------------------------------------------------------------------------
 
-bool __fastcall CActorMain::ApplyGlobalShortCut(WORD Key, TShiftState Shift)
+bool CActorMain::ApplyGlobalShortCut(WORD Key, TShiftState Shift)
 {
     return inherited::ApplyGlobalShortCut(Key,Shift);
 }
@@ -465,30 +485,10 @@ void CActorMain::RealQuit()
 	frmMain->Close();
 }
 //---------------------------------------------------------------------------
-
-void CAEPreferences::Load(CInifile* I)
-{
-	inherited::Load(I);
-
-    bAlwaysShowKeyBar12		= R_BOOL_SAFE	("ae_prefs","always_show_keybar12"		,bAlwaysShowKeyBar12		);
-    bAlwaysShowKeyBar34		= R_BOOL_SAFE	("ae_prefs","always_show_keybar34"		,bAlwaysShowKeyBar34		);
-}
-
-void CAEPreferences::Save(CInifile* I)
-{
-	inherited::Save(I);
-
-    I->w_bool	("ae_prefs","always_show_keybar12",		bAlwaysShowKeyBar12			);
-    I->w_bool	("ae_prefs","always_show_keybar34",		bAlwaysShowKeyBar34			);
-
-}
 extern ECORE_API BOOL g_force16BitTransformQuant;
-void CAEPreferences::FillProp(PropItemVec& props)
+CAEPreferences::CAEPreferences()
 {
-	inherited::FillProp(props);
-
-    PHelper().CreateBOOL	(props,"Keybar\\show footsteps 12",	&bAlwaysShowKeyBar12);
-    PHelper().CreateBOOL	(props,"Keybar\\show footsteps 34",	&bAlwaysShowKeyBar34);
-
-    PHelper().CreateBOOL	(props,"Tools\\MotionExport\\Force 16bit MotionT",	&g_force16BitTransformQuant);
+	m_Prefs["Keybar\\show footsteps 12"].set("ae_prefs", "always_show_keybar12", ptBool, &bAlwaysShowKeyBar12, FALSE);
+	m_Prefs["Keybar\\show footsteps 34"].set("ae_prefs", "always_show_keybar34", ptBool, &bAlwaysShowKeyBar34, FALSE);
+	m_Prefs["Tools\\MotionExport\\Force 16bit MotionT"].set("ae_prefs", "force_16bit_motiont", ptBool, &g_force16BitTransformQuant, FALSE);
 }

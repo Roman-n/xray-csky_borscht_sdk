@@ -42,6 +42,14 @@ void EFS_Utils::MarkFile(LPCSTR fn, bool bDeleteSource)
 	xr_string ext = strext(fn);
 	ext.insert		(1,"~");
 	xr_string backup_fn = EFS.ChangeFileExt(fn,ext.c_str());
+
+	int tilde_cnt = 0;
+	for(size_t i = 0; i < backup_fn.length(); i++)
+		tilde_cnt += backup_fn[i] == '~';
+
+	if(FS.exist(backup_fn.c_str()) && tilde_cnt < m_BackupLevel)
+    	MarkFile(backup_fn.c_str(), true);
+
 	if (bDeleteSource){
 		FS.file_rename(fn,backup_fn.c_str(),true);
 	}else{

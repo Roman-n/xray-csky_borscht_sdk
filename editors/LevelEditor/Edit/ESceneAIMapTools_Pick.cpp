@@ -57,8 +57,8 @@ int ESceneAIMapTool::RaySelect(int flag, float& distance, const Fvector& start, 
         case estAIMapNode:{
             SAINode * N = PickNode(start, direction, distance);
             if (N&&!bDistanceOnly){ 
-                if (flag==-1) 	N->flags.invert(SAINode::flSelected); 
-                N->flags.set	(SAINode::flSelected,flag); 
+                if (flag==-1) 	SelectNode(N, !N->flags.is(SAINode::flSelected));
+                else 			SelectNode(N, flag);
                 count++;
             }
         }break;
@@ -80,8 +80,8 @@ int ESceneAIMapTool::FrustumSelect(int flag, const CFrustum& frustum)
                 u32 mask 	= 0xffff;
                 Fbox bb; bb.set(N.Pos,N.Pos); bb.min.sub(m_Params.fPatchSize*0.35f); bb.max.add(m_Params.fPatchSize*0.35f);
                 if (frustum.testSAABB(N.Pos,m_Params.fPatchSize,bb.data(),mask)){
-                    if (-1==flag)	(*it)->flags.invert(SAINode::flSelected);
-                    else			(*it)->flags.set(SAINode::flSelected,flag);
+                	if (flag==-1) 	SelectNode(*it, !(*it)->flags.is(SAINode::flSelected));
+                	else 			SelectNode(*it, flag);
                     count++;
                 }
             }

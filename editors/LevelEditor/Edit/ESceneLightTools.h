@@ -23,6 +23,8 @@ protected:
 	enum{
     	flShowSun			= (1<<31),
         flShowControlName	= (1<<30),
+        flWthrSunDir		= (1<<29),
+        flWthrHemi			= (1<<28)
     };
     Flags32				m_Flags;
 	// hemisphere
@@ -77,7 +79,7 @@ public:
     AnsiString			GenLightControlName		();
     xr_rtoken*   		FindLightControl		(int id);
     RTokenVecIt	   		FindLightControlIt		(LPCSTR name);
-    xr_rtoken*   		FindLightControl		(LPCSTR name){RTokenVecIt it = FindLightControlIt(name); return it!=lcontrols.end()?it:0;}
+    xr_rtoken*   		FindLightControl		(LPCSTR name){RTokenVecIt it = FindLightControlIt(name); return it!=lcontrols.end()?&*it:0;}
     void				AppendLightControl		(LPCSTR name, u32* idx=0);
     void				RemoveLightControl		(LPCSTR name);
 

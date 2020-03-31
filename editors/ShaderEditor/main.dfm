@@ -1,8 +1,8 @@
 object frmMain: TfrmMain
-  Left = -795
-  Top = 245
-  Width = 770
-  Height = 452
+  Left = 405
+  Top = 348
+  ClientHeight = 417
+  ClientWidth = 754
   Color = clBtnFace
   Constraints.MinHeight = 446
   Constraints.MinWidth = 660
@@ -23,15 +23,28 @@ object frmMain: TfrmMain
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
+  object spLeftBar: TSplitter
+    Left = 512
+    Top = 0
+    Width = 4
+    Height = 400
+    Align = alRight
+    Color = 10528425
+    ParentColor = False
+    ExplicitLeft = 520
+    ExplicitHeight = 406
+  end
   object paLeftBar: TPanel
-    Left = 524
+    Left = 516
     Top = 0
     Width = 238
-    Height = 401
+    Height = 400
     Align = alRight
     BevelInner = bvLowered
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitLeft = 524
+    ExplicitHeight = 406
     object paTools: TPanel
       Left = 1
       Top = 1
@@ -39,6 +52,9 @@ object frmMain: TfrmMain
       Height = 16
       Align = alTop
       TabOrder = 0
+      DesignSize = (
+        236
+        16)
       object APHeadLabel2: TLabel
         Left = 1
         Top = 1
@@ -46,17 +62,20 @@ object frmMain: TfrmMain
         Height = 13
         Align = alTop
         Alignment = taCenter
+        AutoSize = False
         Caption = 'Toolbar'
         Color = clGray
         ParentColor = False
         OnClick = TopClick
       end
       object sbToolsMin: TExtBtn
-        Left = 223
+        Left = 224
         Top = 2
         Width = 11
         Height = 11
         Align = alNone
+        Anchors = [akTop, akRight]
+        Constraints.MinHeight = 11
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -71,6 +90,7 @@ object frmMain: TfrmMain
           FFFFFF000000000000000000FFFFFF000000FFFFFFFFFFFFFFFFFFFFFFFF0000
           00000000FFFFFF000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000FFFFFF00
           0000}
+        Layout = blGlyphRight
         ParentFont = False
         OnClick = sbToolsMinClick
       end
@@ -120,26 +140,30 @@ object frmMain: TfrmMain
   end
   object paBottomBar: TPanel
     Left = 0
-    Top = 401
-    Width = 762
+    Top = 400
+    Width = 754
     Height = 17
     Align = alBottom
     BevelInner = bvLowered
     BevelOuter = bvNone
     TabOrder = 1
+    ExplicitTop = 406
+    ExplicitWidth = 762
   end
   object paMain: TPanel
     Left = 0
     Top = 0
-    Width = 524
-    Height = 401
+    Width = 512
+    Height = 400
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
+    ExplicitWidth = 520
+    ExplicitHeight = 406
     object paTopBar: TPanel
       Left = 0
       Top = 0
-      Width = 524
+      Width = 520
       Height = 18
       Align = alTop
       BevelOuter = bvNone
@@ -148,8 +172,8 @@ object frmMain: TfrmMain
     object paRender: TPanel
       Left = 0
       Top = 18
-      Width = 524
-      Height = 383
+      Width = 520
+      Height = 388
       Align = alClient
       BevelOuter = bvNone
       Color = 4868682
@@ -184,7 +208,8 @@ object frmMain: TfrmMain
     Version = 1
     OnSavePlacement = fsStorageSavePlacement
     StoredProps.Strings = (
-      'paLeftBar.Tag')
+      'paLeftBar.Tag'
+      'paLeftBar.Width')
     StoredValues = <>
     Left = 161
     Top = 33

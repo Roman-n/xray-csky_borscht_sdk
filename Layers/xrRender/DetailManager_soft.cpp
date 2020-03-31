@@ -3,6 +3,9 @@
 
 #include "detailmanager.h"
 
+#include "igame_persistent.h"
+#include "environment.h"
+
 const u32	vs_size				= 3000;
 
 void CDetailManager::soft_Load		()
@@ -25,6 +28,15 @@ void CDetailManager::soft_Render	()
 	// float	fPhaseRange	= PI/16;
 	// float	fPhaseX		= _sin(Device.fTimeGlobal*0.1f)	*fPhaseRange;
 	// float	fPhaseZ		= _sin(Device.fTimeGlobal*0.11f)*fPhaseRange;
+
+    u32 C = 0xFFFFFFFF;
+
+	if(psDeviceFlags.test(rsEnvironment))
+    {
+    	Fvector sun = g_pGamePersistent->Environment().CurrentEnv->sun_color;
+        sun.mul(0.5f);
+		C = color_rgba_f(sun.x, sun.y, sun.z, 1.f);
+    }
 
 	// Get index-stream
 	_IndexStream&	_IS		= RCache.Index;
@@ -85,7 +97,6 @@ void CDetailManager::soft_Render	()
 
 					// Transfer vertices
 					{
-						u32					C = 0xffffffff;
 						CDetail::fvfVertexIn	*srcIt = Object.vertices, *srcEnd = Object.vertices+Object.number_vertices;
 						CDetail::fvfVertexOut	*dstIt = vDest;
 

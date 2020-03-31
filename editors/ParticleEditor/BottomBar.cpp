@@ -7,7 +7,7 @@
 #include "ui_main.h"
 #include "igame_persistent.h"
 #include "environment.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
+#include "../xrEProps/PropertiesListHelper.h"
 #include "../xrEProps/PropertiesList.h"
 
 //---------------------------------------------------------------------------
@@ -15,6 +15,7 @@
 #pragma link "ExtBtn"          
 #pragma link "MxMenus"
 #pragma link "mxPlacemnt"
+#pragma link "cgauges"
 #pragma resource "*.dfm"     
 TfraBottomBar *fraBottomBar=0;
 //---------------------------------------------------------------------------
@@ -91,7 +92,7 @@ void __fastcall TfraBottomBar::fsStorageRestorePlacement(TObject *Sender)
     mi				= xr_new<TMenuItem>((TComponent*)0);
     mi->Caption 	= "-";
     miWeather->Add	(mi);
-/*
+
     // append weathers
     CEnvironment::EnvsMapIt _I=g_pGamePersistent->Environment().WeatherCycles.begin();
     CEnvironment::EnvsMapIt _E=g_pGamePersistent->Environment().WeatherCycles.end();
@@ -102,7 +103,7 @@ void __fastcall TfraBottomBar::fsStorageRestorePlacement(TObject *Sender)
 	    mi->RadioItem	= true;
         miWeather->Add	(mi);
     }
-*/
+
     mi				= xr_new<TMenuItem>((TComponent*)0);
     mi->Caption 	= "-";
     miWeather->Add	(mi);
@@ -179,7 +180,6 @@ void __fastcall TfraBottomBar::pmOptionsPopup(TObject *Sender)
 
 void __fastcall TfraBottomBar::miWeatherClick(TObject *Sender)
 {
-/*
     TMenuItem* mi = dynamic_cast<TMenuItem*>(Sender);
     if (mi){
     	if (mi->Tag==0){
@@ -211,9 +211,10 @@ void __fastcall TfraBottomBar::miWeatherClick(TObject *Sender)
                 env.fTimeFactor		= sp;
             }
             TProperties::DestroyForm(P);
-        }
+		}
+
+		UI->RedrawScene();
     }
-*/    
 }
 //---------------------------------------------------------------------------
 

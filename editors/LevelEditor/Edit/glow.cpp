@@ -76,31 +76,31 @@ void CGlow::Render(int priority, bool strictB2F)
     	if (!m_bDefLoad) OnDeviceCreate();
         ESceneGlowTool* gt 		= dynamic_cast<ESceneGlowTool*>(ParentTool);
         VERIFY					(gt);
-        RCache.set_xform_world	(Fidentity);
+		RCache.set_xform_world	(Fidentity);
 
         if (gt->m_Flags.is(ESceneGlowTool::flTestVisibility))
         { 
-            Fvector D;
-            D.sub(Device.vCameraPosition,PPosition);
+			Fvector D;
+			D.sub(Device.vCameraPosition,PPosition);
             float dist 	= D.normalize_magn();
             if (!Scene->RayPickObject(dist,PPosition,D,OBJCLASS_SCENEOBJECT,0,0)){
                 if (m_GShader){	Device.SetShader(m_GShader);
                 }else{			Device.SetShader(Device.m_WireShader);}
-                m_RenderSprite.Render(PPosition,m_fRadius,m_Flags.is(gfFixedSize));
+				m_RenderSprite.Render(GetPosition(),m_fRadius,m_Flags.is(gfFixedSize));
                 DU_impl.DrawRomboid(PPosition, VIS_RADIUS, 0x00FF8507);
-            }else{
+			}else{
                 // рендерим bounding sphere
                 Device.SetShader(Device.m_WireShader);
-                DU_impl.DrawRomboid(PPosition, VIS_RADIUS, 0x00FF8507);
-            }
+				DU_impl.DrawRomboid(PPosition, VIS_RADIUS, 0x00FF8507);
+			}
         }else{
             if (m_GShader){	Device.SetShader(m_GShader);
-            }else{			Device.SetShader(Device.m_WireShader);}
-            m_RenderSprite.Render(PPosition,m_fRadius,m_Flags.is(gfFixedSize));
-        }
+			}else{			Device.SetShader(Device.m_WireShader);}
+			m_RenderSprite.Render(GetPosition(),m_fRadius,m_Flags.is(gfFixedSize));
+		}
         if( Selected() ){
             Fbox bb; GetBox(bb);
-            u32 clr = 0xFFFFFFFF;
+            u32 clr = Locked()?0xFFFF0000:0xFFFFFFFF;
             Device.SetShader(Device.m_WireShader);
             DU_impl.DrawSelectionBox(bb,&clr);
             if (gt->m_Flags.is(ESceneGlowTool::flDrawCross))
@@ -114,7 +114,7 @@ void CGlow::Render(int priority, bool strictB2F)
 
 bool CGlow::FrustumPick(const CFrustum& frustum)
 {
-    return (frustum.testSphere_dirty(PPosition,m_fRadius))?true:false;
+	return (frustum.testSphere_dirty(GetPosition(),m_fRadius))?true:false;
 }
 
 bool CGlow::RayPick(float& distance, const Fvector& start, const Fvector& direction, SRayPickInfo* pinf)

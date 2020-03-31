@@ -65,9 +65,21 @@ bool CEditableObject::SaveObject(const char* fname)
     // save object
     IWriter* F			= FS.w_open(fname);
 	if (F){
-        F->open_chunk	(EOBJ_CHUNK_OBJECT_BODY);
-        Save			(*F);
-        F->close_chunk	();
+	#ifdef _EDITOR
+		if(EPrefs->object_flags.is(epoLZHCompress))
+		{
+			CMemoryWriter W;
+			Save			(W);
+			F->w_chunk      (EOBJ_CHUNK_OBJECT_BODY | CFS_CompressMark,
+				W.pointer(), W.size());
+		}
+		else
+	#endif
+		{
+			F->open_chunk	(EOBJ_CHUNK_OBJECT_BODY);
+			Save			(*F);
+			F->close_chunk	();
+		}
 
         FS.w_close		(F);
 
@@ -381,7 +393,7 @@ bool CEditableObject::Load(IReader& F)
                 }
 				if (!bBPok)	m_BoneParts.clear();
                 if (!m_BoneParts.empty()&&!VerifyBoneParts())
-                    Log		("!Invalid bone parts. Found duplicate bones in object '%s'.",GetName());
+                    Msg		("!Invalid bone parts. Found missing or duplicate bones in object '%s'.",GetName());
             }else if (F.find_chunk(EOBJ_CHUNK_BONEPARTS2)){
                 m_BoneParts.resize(F.r_u32());
                 for (BPIt bp_it=m_BoneParts.begin(); bp_it!=m_BoneParts.end(); bp_it++){
@@ -391,7 +403,7 @@ bool CEditableObject::Load(IReader& F)
                         F.r_stringZ(*s_it);
                 }
                 if (!m_BoneParts.empty()&&!VerifyBoneParts())
-                    Log			("!Invalid bone parts. Found duplicate bones in object '%s'.",GetName());
+                    Msg			("!Invalid bone parts. Found missing or duplicate bones in object '%s'.",GetName());
             }
         }
 
@@ -417,6 +429,7 @@ bool CEditableObject::Load(IReader& F)
 		if (!bRes) break;
 		UpdateBox		();
 		VerifyMeshNames	();
+        OnDeviceCreate	();
 	}while(0);
 
 	return bRes;

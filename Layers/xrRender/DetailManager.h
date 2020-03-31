@@ -11,16 +11,8 @@
 #include "detailmodel.h"
 
 #ifdef _EDITOR
-//.	#include	"ESceneClassList.h"
+	#include	"ESceneClassList.h"
 	const int	dm_max_decompress	= 14;
-	class CCustomObject;
-	typedef u32	ObjClassID;
-
-    typedef xr_list<CCustomObject*> 		ObjectList;
-    typedef ObjectList::iterator 			ObjectIt;
-    typedef xr_map<ObjClassID,ObjectList> 	ObjectMap;
-    typedef ObjectMap::iterator 			ObjectPairIt;
-
 #else
 	const int	dm_max_decompress	= 7;
 #endif

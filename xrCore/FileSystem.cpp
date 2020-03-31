@@ -7,15 +7,35 @@
 
 #include "cderr.h"
 #include "commdlg.h"
+#include "FileDialog.h"
 
 EFS_Utils*	xr_EFS	= NULL;
 //----------------------------------------------------
 EFS_Utils::EFS_Utils( )
+	: m_BackupLevel(1)
 {
 }
 
 EFS_Utils::~EFS_Utils()
 {
+}
+
+void EFS_Utils::_initialize()
+{
+	char str[64];
+	char *p;
+
+	p = strstr(Core.Params, "-backup ");
+	if(p)
+	{
+		sscanf(p+8, "%[^ ] ", str);
+		m_BackupLevel = atoi(str);
+    }
+}
+
+void EFS_Utils::_destroy()
+{
+
 }
 
 xr_string	EFS_Utils::ExtractFileName(LPCSTR src)
@@ -66,7 +86,7 @@ xr_string	EFS_Utils::ChangeFileExt(const xr_string& src, LPCSTR ext)
 }
 
 //----------------------------------------------------
-LPCSTR MakeFilter(string1024& dest, LPCSTR info, LPCSTR ext)
+int MakeFilter(string1024& dest, LPCSTR info, LPCSTR ext)
 {
 	ZeroMemory(dest,sizeof(dest));
     if (ext){
@@ -88,8 +108,9 @@ LPCSTR MakeFilter(string1024& dest, LPCSTR info, LPCSTR ext)
             strcpy_s			(dst, sizeof(dest) - (dst - dest), buf);
             dst				+= (xr_strlen(buf)+1);
         }
+        return icnt;
     }
-	return dest;
+	return 0;
 }
 
 //------------------------------------------------------------------------------
@@ -99,11 +120,8 @@ bool EFS_Utils::GetOpenNameInternal( LPCSTR initial,  LPSTR buffer, int sz_buf, 
 {
 	VERIFY				(buffer&&(sz_buf>0));
 	FS_Path& P			= *FS.get_path(initial);
-	string1024 			flt;
-	MakeFilter			(flt,P.m_FilterCaption?P.m_FilterCaption:"",P.m_DefExt);
-
-	OPENFILENAME 		ofn;
-	Memory.mem_fill		( &ofn, 0, sizeof(ofn) );
+	string1024 flt;
+	int flt_cnt 		= MakeFilter(flt,P.m_FilterCaption?P.m_FilterCaption:"",P.m_DefExt);
 
     if (xr_strlen(buffer))
     {
@@ -119,65 +137,68 @@ bool EFS_Utils::GetOpenNameInternal( LPCSTR initial,  LPSTR buffer, int sz_buf, 
              }
         }
     }
-    ofn.lStructSize		= sizeof(OPENFILENAME);
-	ofn.hwndOwner 		= GetForegroundWindow();
-	ofn.lpstrDefExt 	= P.m_DefExt;
-	ofn.lpstrFile 		= buffer;
-	ofn.nMaxFile 		= sz_buf;
-	ofn.lpstrFilter 	= flt;
-	ofn.nFilterIndex 	= start_flt_ext+2;
-    ofn.lpstrTitle      = "Open a File";
-    string512 path; 
-	strcpy_s				(path,(offset&&offset[0])?offset:P.m_Path);
-	ofn.lpstrInitialDir = path;
-	ofn.Flags =         OFN_PATHMUSTEXIST	|
-                        OFN_FILEMUSTEXIST	|
-                        OFN_HIDEREADONLY	|
-                        OFN_FILEMUSTEXIST	|
-                        OFN_NOCHANGEDIR		|
-                        (bMulti?OFN_ALLOWMULTISELECT|OFN_EXPLORER:0);
-                        
-    ofn.FlagsEx			= OFN_EX_NOPLACESBAR;
+
+    CFileDialog fd(CFileDialog::fdOpen);
+
+	fd.Caption 			= "Open a File";
+
+	if(strstr(Core.Params, "-dont_remember_last_folder"))
+	{
+		string512 path;
+		strcpy_s			(path,(offset&&offset[0])?offset:P.m_Path);
+		fd.CurrentDir 		= path;
+		fd.CurrentFile		= buffer;
+		fd.DefaultDir		= path;
+	}
+
+    fd.SetFilters(flt);
+    if(start_flt_ext >= 0)
+    {
+    	if(flt_cnt > 1)
+    		fd.DefaultFilter = start_flt_ext + 1; // MakeFilter creates first filter that accepts all extensions
+        else
+        	fd.DefaultFilter = start_flt_ext;
+    }
+    if(P.m_DefExt)
+    {
+    	string64 defext;
+    	_GetItem(P.m_DefExt, 0, defext, ';');
+        fd.DefaultExt = defext;
+    }
+
+    fd.PathMustExist 	= true;
+    fd.FileMustExist 	= true;
+    fd.NoChangeDir   	= true;
+    fd.Multiselect   	= bMulti;
+    fd.NoPlacesBar   	= true;
     
-	bool bRes 			= !!GetOpenFileName( &ofn );
+	bool bRes 			= fd.ShowModal(GetForegroundWindow());
     if (!bRes)
     {
-	    u32 err 		= CommDlgExtendedError();
+	    u32 err 		= GetLastError();
 	    switch(err)
         {
-        	case FNERR_BUFFERTOOSMALL:
-            	Log("Too many files selected.");
+        	case ERROR_INSUFFICIENT_BUFFER:
+            	Log("!Too many files selected.");
             break;
         }
+        return false;
 	}
-    if (bRes && bMulti)
+    if (bMulti)
     {
-    	Log				("buff=",buffer);
-		int cnt			= _GetItemCount(buffer,0x0);
-        if (cnt>1)
+    	buffer[0] = '\0';
+
+		int count = fd.GetResultCount();
+        for(int i = 0; i < count; i++)
         {
-//.            string64  	buf;
-//.            string64  	dir;
-//.			string4096		buf;
-            char 		dir	  [255*255];
-            char 		buf	  [255*255];
-            char 		fns	  [255*255];
-
-            strcpy_s		(dir, buffer);
-            strcpy_s		(fns, dir);
-            strcat		(fns, "\\");
-            strcat		(fns, _GetItem	(buffer,1,buf,0x0));
-
-            for (int i=2; i<cnt; i++)
-            {
-                strcat	(fns,",");
-                strcat	(fns,dir);
-                strcat	(fns,"\\");
-                strcat	(fns,_GetItem(buffer,i,buf,0x0));
-            }
-            strcpy_s		(buffer, sz_buf, fns);
+            strcat_s(buffer, sz_buf, fd.GetResult(i).c_str());
+            strcat_s(buffer, sz_buf, ",");
         }
     }
+    else
+		if(!fd.GetResult(buffer, sz_buf))
+        	Log("!File name too long");
+        
     strlwr				(buffer);
     return 				bRes;
 }
@@ -186,9 +207,8 @@ bool EFS_Utils::GetSaveName( LPCSTR initial, string_path& buffer, LPCSTR offset,
 {
 	FS_Path& P			= *FS.get_path(initial);
 	string1024 flt;
-	MakeFilter(flt,P.m_FilterCaption?P.m_FilterCaption:"",P.m_DefExt);
-	OPENFILENAME ofn;
-	Memory.mem_fill		( &ofn, 0, sizeof(ofn) );
+	int flt_cnt 		= MakeFilter(flt,P.m_FilterCaption?P.m_FilterCaption:"",P.m_DefExt);
+
     if (xr_strlen(buffer)){ 
         string_path		dr;
         if (!(buffer[0]=='\\' && buffer[1]=='\\')){ // if !network
@@ -196,26 +216,46 @@ bool EFS_Utils::GetSaveName( LPCSTR initial, string_path& buffer, LPCSTR offset,
             if (0==dr[0])	P._update(buffer,buffer); 
         }
     }
-	ofn.hwndOwner 		= GetForegroundWindow();
-	ofn.lpstrDefExt 	= P.m_DefExt;
-	ofn.lpstrFile 		= buffer;
-	ofn.lpstrFilter 	= flt;
-	ofn.lStructSize 	= sizeof(ofn);
-	ofn.nMaxFile 		= sizeof(buffer);
-	ofn.nFilterIndex 	= start_flt_ext+2;
-    ofn.lpstrTitle      = "Save a File";
-    string512 path; strcpy_s(path,(offset&&offset[0])?offset:P.m_Path);
-	ofn.lpstrInitialDir = path;
-	ofn.Flags 			= OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_NOCHANGEDIR;
-    ofn.FlagsEx			= OFN_EX_NOPLACESBAR;
 
-	bool bRes = !!GetSaveFileName( &ofn );
-    if (!bRes){
-	    u32 err = CommDlgExtendedError();
+    CFileDialog fd(CFileDialog::fdSave);
+
+    fd.Caption			= "Save a File";
+    fd.SetFilters		(flt);
+    if(start_flt_ext >= 0)
+    {
+    	if(flt_cnt > 1)
+    		fd.DefaultFilter	= start_flt_ext + 1;
+        else
+        	fd.DefaultFilter	= start_flt_ext;
+    }
+    if(P.m_DefExt)
+    {
+    	string64 defext;
+    	_GetItem(P.m_DefExt, 0, defext, ';');
+        fd.DefaultExt = defext;
+	}
+
+	if(strstr(Core.Params, "-dont_remember_last_folder"))
+	{
+		string512 path; strcpy_s(path,(offset&&offset[0])?offset:P.m_Path);
+		fd.CurrentDir		= path;
+		fd.DefaultDir		= path;
+	}
+
+    fd.OverwritePrompt	= true;
+    fd.NoChangeDir		= true;
+    fd.NoPlacesBar		= true;
+
+	bool bRes = fd.ShowModal(GetForegroundWindow());
+	if (!bRes){
+	    u32 err = GetLastError();
 	    switch(err){
-        case FNERR_BUFFERTOOSMALL: 	Log("Too many file selected."); break;
+        case ERROR_INSUFFICIENT_BUFFER: 	Log("!Too many files selected."); break;
         }
 	}
+    if (bRes)
+    	strcpy_s(buffer, sizeof(buffer), fd.GetResult().c_str());
+
     strlwr(buffer);
 	return bRes;
 }

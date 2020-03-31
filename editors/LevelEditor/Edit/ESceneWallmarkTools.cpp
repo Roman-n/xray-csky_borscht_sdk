@@ -219,7 +219,7 @@ void ESceneWallmarkTool::OnRender(int priority, bool strictB2F)
                                 w_start					= w_verts;
                             }
                             // real fill buffer
-                            FVF::LIT* S		= W->verts.begin()+t_idx*3;
+                            FVF::LIT* S		= &W->verts.front()+t_idx*3;
                         	for (int k=0; k<3; k++,S++,w_verts++){
                                 w_verts->p.set	(S->p);
                                 w_verts->color	= C;
@@ -539,7 +539,7 @@ void ESceneWallmarkTool::OnSynchronize()
 // allocate
 ESceneWallmarkTool::wallmark*	ESceneWallmarkTool::wm_allocate		()
 {
-	wallmark*			W = 0;
+	wallmark*			W;
 	if (pool.empty())	W = xr_new<wallmark> ();
 	else				{ W = pool.back(); pool.pop_back(); }
 
@@ -662,11 +662,11 @@ int	ESceneWallmarkTool::ObjectCount()
 
 BOOL ESceneWallmarkTool::AddWallmark_internal(const Fvector& start, const Fvector& dir, shared_str sh, shared_str tx, float width, float height, float rotate)
 {
-	if (ObjectCount()>=MAX_WALLMARK_COUNT){
+/*	if (ObjectCount()>=MAX_WALLMARK_COUNT){
     	ELog.DlgMsg			(mtError,"Maximum wallmark per level is reached [Max: %d].",MAX_WALLMARK_COUNT);
     	return FALSE;
     }
-    
+    */
     if (0==sh.size()){
     	ELog.DlgMsg			(mtError,"Select texture before add wallmark.");
     	return 				FALSE;

@@ -31,10 +31,10 @@ bool ESceneObjectTool::LoadLTX(CInifile& ini)
     m_AppendRandomMaxRotation = ini.r_fvector3	("AppendRandom", "AppendRandomMaxRotation");
     u32 cnt =   ini.r_u32		("AppendRandom", "AppendRandomObjects_size");
 
-    for (int i=0; i<cnt; ++i)
-    {
-        string128 			buff;
-        sprintf				(buff,"object_name_%d",i);
+	for (u32 i=0; i<cnt; ++i)
+	{
+		string128 			buff;
+		sprintf				(buff,"object_name_%u",i);
         shared_str s		= ini.r_string("AppendRandom", buff);
         m_AppendRandomObjects.push_back	(s);
     }

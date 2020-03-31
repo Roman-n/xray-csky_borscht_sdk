@@ -14,29 +14,38 @@
 
 extern bool shared_str_initialized;
 
-#ifdef __BORLANDC__
-    #	include "d3d9.h"
-    #	include "d3dx9.h"
-    #	include "D3DX_Wrapper.h"
-    #	pragma comment(lib,"EToolsB.lib")
-    #	define DEBUG_INVOKE	DebugBreak()
-        static BOOL			bException	= TRUE;
-    #   define USE_BUG_TRAP
-#else
+#ifdef M_BORLAND
+	#	include <new>
+	#	include "d3d9.h"
+	#	pragma warn -8010
+	#	include "d3dx9.h"
+    #	pragma warn .8010
+	#	define DEBUG_INVOKE	DebugBreak()
+//	#   define USE_BUG_TRAP
+
+	#	pragma link "dxerr9B.lib"
+#endif
+
+#ifdef M_GCC
+	#	include <new>
+	#	include "d3d9.h"
+	#	include "d3dx9.h"
+	#	define DEBUG_INVOKE	DebugBreak()
+//	#   define USE_BUG_TRAP
+#endif
+
+#ifdef M_VISUAL
     #   define USE_BUG_TRAP
     #	define DEBUG_INVOKE	__asm int 3
-        static BOOL			bException	= FALSE;
+    
+    #ifndef _M_AMD64
+	#	pragma comment(lib,"dxerr9.lib")
+	#endif
 #endif
 
 #ifndef USE_BUG_TRAP
 #	include <exception>
 #endif // #ifndef USE_BUG_TRAP
-
-#ifndef _M_AMD64
-#	ifndef __BORLANDC__
-#		pragma comment(lib,"dxerr9.lib")
-#	endif
-#endif
 
 #include <dbghelp.h>						// MiniDump flags
 
@@ -52,7 +61,7 @@ extern bool shared_str_initialized;
 #include <new.h>							// for _set_new_mode
 #include <signal.h>							// for signals
 
-#ifdef DEBUG
+#if defined(DEBUG) || defined(_EDITOR)
 #	define USE_OWN_ERROR_MESSAGE_WINDOW
 #else // DEBUG
 #	define USE_OWN_MINI_DUMP
@@ -62,22 +71,51 @@ XRCORE_API	xrDebug		Debug;
 
 static bool	error_after_dialog = false;
 
+#ifndef M_GCC
 extern void BuildStackTrace();
 extern char g_stackTrace[100][4096];
 extern int	g_stackTraceCount;
+#endif
 
 void LogStackTrace	(LPCSTR header)
 {
+#ifndef M_GCC
 	if (!shared_str_initialized)
 		return;
 
-	BuildStackTrace	();		
+	BuildStackTrace	();
 
 	Msg				("%s",header);
 
 	for (int i=1; i<g_stackTraceCount; ++i)
 		Msg			("%s",g_stackTrace[i]);
+#endif
 }
+#ifndef M_GCC
+static LPSTR logFullName(string_path& fn)
+{
+	extern LPCSTR 			log_name();
+	string_path				log_folder;
+
+	__try {
+		FS.update_path		(log_folder,"$logs$","");
+		if ((log_folder[0] != '\\') && (log_folder[1] != ':')) {
+			string256		current_folder;
+			_getcwd			(current_folder,sizeof(current_folder));
+			
+			string256		relative_path;
+			strcpy_s		(relative_path,log_folder);
+			strconcat		(sizeof(log_folder),log_folder,current_folder,"\\",relative_path);
+		}
+	}
+	__except(EXCEPTION_EXECUTE_HANDLER) {
+		strcpy_s				(log_folder,"logs");
+	}
+
+	strconcat				(sizeof(fn), fn, log_folder, log_name());
+	return					(fn);
+}
+#endif
 
 void xrDebug::gather_info		(const char *expression, const char *description, const char *argument0, const char *argument1, const char *file, int line, const char *function, LPSTR assertion_info)
 {
@@ -134,6 +172,7 @@ void xrDebug::gather_info		(const char *expression, const char *description, con
 #endif // USE_MEMORY_MONITOR
 
 	if (!IsDebuggerPresent() && !strstr(GetCommandLine(),"-no_call_stack_assert")) {
+#ifndef M_GCC
 		if (shared_str_initialized)
 			Msg			("stack trace:\n");
 
@@ -141,7 +180,7 @@ void xrDebug::gather_info		(const char *expression, const char *description, con
 		buffer			+= sprintf(buffer,"stack trace:%s%s",endline,endline);
 #endif // USE_OWN_ERROR_MESSAGE_WINDOW
 
-		BuildStackTrace	();		
+		BuildStackTrace	();
 
 		for (int i=2; i<g_stackTraceCount; ++i) {
 			if (shared_str_initialized)
@@ -154,6 +193,7 @@ void xrDebug::gather_info		(const char *expression, const char *description, con
 
 		if (shared_str_initialized)
 			FlushLog	();
+#endif // M_GCC
 
 		os_clipboard::copy_to_clipboard	(assertion_info);
 	}
@@ -202,7 +242,7 @@ void xrDebug::backend	(const char *expression, const char *description, const ch
 #	ifdef USE_OWN_ERROR_MESSAGE_WINDOW
 		int					result = 
 			MessageBox(
-				GetTopWindow(NULL),
+				NULL,//GetTopWindow(NULL),
 				assertion_info,
 				"Fatal Error",
 				MB_CANCELTRYCONTINUE|MB_ICONERROR|MB_SYSTEMMODAL
@@ -213,6 +253,11 @@ void xrDebug::backend	(const char *expression, const char *description, const ch
 #		ifdef USE_BUG_TRAP
 				BT_SetUserMessage	(assertion_info);
 #		endif // USE_BUG_TRAP
+				if (strstr(GetCommandLine(),"-show_log"))
+				{
+					string_path path;
+					ShellExecute(NULL, NULL, logFullName(path), NULL, NULL, SW_SHOWNORMAL);
+				}
 				DEBUG_INVOKE;
 				break;
 			}
@@ -231,6 +276,13 @@ void xrDebug::backend	(const char *expression, const char *description, const ch
 #		ifdef USE_BUG_TRAP
 			BT_SetUserMessage	(assertion_info);
 #		endif // USE_BUG_TRAP
+		#ifndef M_GCC
+		if (strstr(GetCommandLine(),"-show_log"))
+		{
+			string_path path;
+			ShellExecute(NULL, NULL, logFullName(path), NULL, NULL, SW_SHOWNORMAL);
+		}
+		#endif // M_GCC
 		DEBUG_INVOKE;
 #	endif // USE_OWN_ERROR_MESSAGE_WINDOW
 #endif
@@ -246,10 +298,10 @@ LPCSTR xrDebug::error2string	(long code)
 	LPCSTR				result	= 0;
 	static	string1024	desc_storage;
 
-#ifdef _M_AMD64
-#else
-	result				= DXGetErrorDescription9	(code);
+#if !defined(_M_AMD64)
+	result				= DXGetErrorDescription9(code);
 #endif
+
 	if (0==result) 
 	{
 		FormatMessage	(FORMAT_MESSAGE_FROM_SYSTEM,0,code,0,desc_storage,sizeof(desc_storage)-1,0);
@@ -324,8 +376,6 @@ int out_of_memory_handler	(size_t size)
 	return					1;
 }
 
-extern LPCSTR log_name();
-
 XRCORE_API string_path g_bug_report_file;
 
 void CALLBACK PreErrorHandler	(INT_PTR)
@@ -334,25 +384,8 @@ void CALLBACK PreErrorHandler	(INT_PTR)
 	if (!xr_FS || !FS.m_Flags.test(CLocatorAPI::flReady))
 		return;
 
-	string_path				log_folder;
-
-	__try {
-		FS.update_path		(log_folder,"$logs$","");
-		if ((log_folder[0] != '\\') && (log_folder[1] != ':')) {
-			string256		current_folder;
-			_getcwd			(current_folder,sizeof(current_folder));
-			
-			string256		relative_path;
-			strcpy_s		(relative_path,log_folder);
-			strconcat		(sizeof(log_folder),log_folder,current_folder,"\\",relative_path);
-		}
-	}
-	__except(EXCEPTION_EXECUTE_HANDLER) {
-		strcpy_s				(log_folder,"logs");
-	}
-
 	string_path				temp;
-	strconcat				(sizeof(temp), temp, log_folder, log_name());
+    logFullName				(temp);
 	BT_AddLogFile			(temp);
 
 	if (*g_bug_report_file)
@@ -441,7 +474,7 @@ please Submit Bug or save report and email it manually (button More...).\
 }
 #endif // USE_BUG_TRAP
 
-#if 1
+#ifdef M_VISUAL // if 1
 extern void BuildStackTrace(struct _EXCEPTION_POINTERS *pExceptionInfo);
 typedef LONG WINAPI UnhandledExceptionFilterType(struct _EXCEPTION_POINTERS *pExceptionInfo);
 typedef LONG ( __stdcall *PFNCHFILTFN ) ( EXCEPTION_POINTERS * pExPtrs ) ;
@@ -664,27 +697,10 @@ LONG WINAPI UnhandledFilter	(_EXCEPTION_POINTERS *pExceptionInfo)
 #endif
 
 //////////////////////////////////////////////////////////////////////
-#ifdef M_BORLAND
-	namespace std{
-		extern new_handler _RTLENTRY _EXPFUNC set_new_handler( new_handler new_p );
-	};
-
-	static void __cdecl def_new_handler() 
-    {
-		FATAL		("Out of memory.");
-    }
-
-    void	xrDebug::_initialize		(const bool &dedicated)
-    {
-		handler							= 0;
-		m_on_dialog						= 0;
-        std::set_new_handler			(def_new_handler);	// exception-handler for 'out of memory' condition
-//		::SetUnhandledExceptionFilter	(UnhandledFilter);	// exception handler to all "unhandled" exceptions
-    }
-#else
+#ifdef M_VISUAL
     typedef int		(__cdecl * _PNH)( size_t );
-    _CRTIMP int		__cdecl _set_new_mode( int );
-    _CRTIMP _PNH	__cdecl _set_new_handler( _PNH );
+	_CRTIMP int		__cdecl _set_new_mode( int );
+	_CRTIMP _PNH	__cdecl _set_new_handler( _PNH );
 
 #ifndef USE_BUG_TRAP
 	void _terminate		()
@@ -898,4 +914,21 @@ LONG WINAPI UnhandledFilter	(_EXCEPTION_POINTERS *pExceptionInfo)
 		std::terminate		();
 #endif // 0
 	}
+#else // ifdef M_VISUAL
+
+// somewhat portable code
+
+static void __cdecl def_new_handler()
+{
+	FATAL		("Out of memory.");
+}
+
+void	xrDebug::_initialize		(const bool &dedicated)
+{
+	handler							= 0;
+	m_on_dialog						= 0;
+	std::set_new_handler			(def_new_handler);	// exception-handler for 'out of memory' condition
+//	::SetUnhandledExceptionFilter	(UnhandledFilter);	// exception handler to all "unhandled" exceptions
+}
+
 #endif

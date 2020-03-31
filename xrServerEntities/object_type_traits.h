@@ -25,7 +25,7 @@
 			template <typename P> static detail::no	select(...);\
 			enum { value = sizeof(detail::yes) == sizeof(select<T>(0)) };\
 		};
-
+/*
 	template <bool expression, typename T1, typename T2>
 	struct _if {
 		template <bool>
@@ -40,7 +40,13 @@
 
 		typedef typename selector<expression>::result result;
 	};
-
+*/
+	template <bool expression, typename T1, typename T2>
+	struct _if
+	{
+    	using result = typename std::conditional<expression, T1, T2>::type;
+	};
+/*
 	template <typename T1, typename T2>
 	struct is_type {
 		template <typename T>
@@ -55,6 +61,15 @@
 
 		enum { value = selector<T2>::value, };
 	};
+*/
+template <typename T1, typename T2>
+struct is_type
+{
+    enum
+    {
+        value = std::is_same<T1, T2>::value,
+    };
+};
 
 	template <typename T>
 	struct type {
@@ -99,7 +114,7 @@
 		template <typename T> struct remove_const<T const>{
 			typedef T type; 
 		};
-
+/*
 		template <typename T>
 		struct is_void {
 			template <typename P>
@@ -109,6 +124,15 @@
 			struct select<void> {enum { value = true}; };
 			
 			enum { value = select<T>::value};
+		};
+*/
+		template <typename T>
+		struct is_void
+		{
+    		enum
+    		{
+        		value = std::is_same<void, T>::value
+    		};
 		};
 
 		template <typename T> struct is_const{

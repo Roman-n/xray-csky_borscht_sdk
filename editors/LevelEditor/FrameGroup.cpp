@@ -68,7 +68,7 @@ void __fastcall TfraGroup::ebSelectClick(TObject *Sender)
 	LPCSTR 		nm;
     xr_string N	= lbCurrent->Caption.c_str();
     if (TfrmChoseItem::SelectItem(smGroup,nm,1,N.c_str()))
-        ParentTools->SetCurrentObject(nm);	
+		ParentTools->SetCurrentObject(nm ? nm : "");
 }
 //---------------------------------------------------------------------------
 
@@ -118,7 +118,7 @@ void __fastcall TfraGroup::seSelPercentKeyPress(TObject *Sender, char &Key)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfraGroup::MultiSelByRefObject ( bool clear_prev )
+void TfraGroup::MultiSelByRefObject ( bool clear_prev )
 {
     ObjectList 	objlist;
     LPU32Vec 	sellist;

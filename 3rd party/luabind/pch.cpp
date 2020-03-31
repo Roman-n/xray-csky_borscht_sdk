@@ -10,10 +10,10 @@ namespace boost
 #ifdef NDEBUG
 
 namespace std {
-	void terminate			()
-	{
-		abort				();
-	}
+//	void terminate			()
+//	{
+//		abort				();
+//	}
 } // namespace std
 
 #endif // #ifdef NDEBUG

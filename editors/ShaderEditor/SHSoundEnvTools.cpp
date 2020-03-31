@@ -46,9 +46,8 @@ xr_token eax_environment[]		= {
 //------------------------------------------------------------------------------
 CSHSoundEnvTools::CSHSoundEnvTools(ISHInit& init):ISHTools(init)
 {
-    m_Env	 			= 0;
-    m_SoundName			= "alexmx\\beep";
-    OnChangeWAV			(0);
+	m_Env	 			= 0;
+    m_SoundName			= "";
 }
 
 CSHSoundEnvTools::~CSHSoundEnvTools()
@@ -56,22 +55,28 @@ CSHSoundEnvTools::~CSHSoundEnvTools()
 }
 //---------------------------------------------------------------------------
 
-void CSHSoundEnvTools::OnChangeWAV	(PropValue* prop)
+void __stdcall CSHSoundEnvTools::OnChangeWAV	(PropValue* prop)
 {
+	((CSEPreferences*)EPrefs)->sound_env_wave_name = m_SoundName;
 
 	BOOL bPlay 		= !!m_PreviewSnd._feedback();
 	m_PreviewSnd.destroy();
 	if (m_SoundName.size()){
     	m_PreviewSnd.create				(*m_SoundName,st_Effect,sg_Undefined);
-        CSoundRender_Source* src= (CSoundRender_Source*)m_PreviewSnd._handle();
-        m_Params.min_distance	= src->m_fMinDist;
-        m_Params.max_distance	= src->m_fMaxDist;
+		CSoundRender_Source* src= (CSoundRender_Source*)m_PreviewSnd._handle();
+		if(src){
+			m_Params.min_distance = src->m_fMinDist;
+			m_Params.max_distance = src->m_fMaxDist;
+        }else{
+			m_Params.min_distance = 1.f;
+			m_Params.max_distance = 10.f;
+        }
     }
 	if (bPlay) 		m_PreviewSnd.play	(0,sm_Looped);
     
 }
 
-void CSHSoundEnvTools::OnControlClick(ButtonValue* V, bool& bModif, bool& bSafe)
+void __stdcall CSHSoundEnvTools::OnControlClick(ButtonValue* V, bool& bModif, bool& bSafe)
 {
 
     switch (V->btn_num){
@@ -151,8 +156,12 @@ void CSHSoundEnvTools::OnRender()
 
 bool CSHSoundEnvTools::OnCreate()
 {
-    Load							();
-    return true;
+	Load							();
+
+	m_SoundName = ((CSEPreferences*)EPrefs)->sound_env_wave_name;
+	OnChangeWAV(0);
+
+	return true;
 }
 
 void CSHSoundEnvTools::OnDestroy()
@@ -251,7 +260,7 @@ LPCSTR CSHSoundEnvTools::AppendItem(LPCSTR folder_name, LPCSTR parent_name)
     return *S->name;
 }
 
-void CSHSoundEnvTools::OnRenameItem(LPCSTR old_full_name, LPCSTR new_full_name, EItemType type)
+void __stdcall CSHSoundEnvTools::OnRenameItem(LPCSTR old_full_name, LPCSTR new_full_name, EItemType type)
 {
 	if (type==TYPE_OBJECT){
         ApplyChanges	();
@@ -262,7 +271,7 @@ void CSHSoundEnvTools::OnRenameItem(LPCSTR old_full_name, LPCSTR new_full_name, 
     }
 }
 
-void CSHSoundEnvTools::OnRemoveItem(LPCSTR name, EItemType type, bool& res)
+void __stdcall CSHSoundEnvTools::OnRemoveItem(LPCSTR name, EItemType type, bool& res)
 {
 	if (type==TYPE_OBJECT){
         R_ASSERT		(name && name[0]);
@@ -290,7 +299,7 @@ void CSHSoundEnvTools::ResetCurrentItem()
 	UseEnvironment	();
 }
 
-void __fastcall CSHSoundEnvTools::OnRevResetClick(ButtonValue* V, bool& bModif, bool& bSafe)
+void __stdcall CSHSoundEnvTools::OnRevResetClick(ButtonValue* V, bool& bModif, bool& bSafe)
 {
     switch (V->btn_num){
     case 0: m_Env->set_identity();	break;
@@ -300,7 +309,7 @@ void __fastcall CSHSoundEnvTools::OnRevResetClick(ButtonValue* V, bool& bModif, 
     Modified();
 }
 
-void __fastcall CSHSoundEnvTools::OnEnvSizeChange(PropValue* sender)
+void __stdcall CSHSoundEnvTools::OnEnvSizeChange(PropValue* sender)
 {
     CSoundRender_Environment 	test_env=*m_Env;
     test_env.EnvironmentSize	= m_EnvSrc.EnvironmentSize;
@@ -314,7 +323,7 @@ void __fastcall CSHSoundEnvTools::OnEnvSizeChange(PropValue* sender)
     ExecCommand					(COMMAND_UPDATE_PROPERTIES);
 }
 
-void __fastcall CSHSoundEnvTools::OnEnvChange(PropValue* sender)
+void __stdcall CSHSoundEnvTools::OnEnvChange(PropValue* sender)
 {
     CSound_environment* E		= m_Env;
     Sound->set_environment		(m_Env->Environment,&E);
@@ -334,11 +343,11 @@ void CSHSoundEnvTools::RealUpdateProperties()
 	if (m_Env){
         // fill environment
 		CSoundRender_Environment& S	= *m_Env;
-        ButtonValue* B			= 0;
+		ButtonValue* B;
         PHelper().CreateName	(items, "Name",									&S.name,  				m_CurrentItem);
         B=PHelper().CreateButton(items, "Environment\\Set",	"Identity,Reset", 	ButtonValue::flFirstOnly);
         B->OnBtnClickEvent.bind	(this,&CSHSoundEnvTools::OnRevResetClick);
-        PropValue* V=0;
+        PropValue* V;
         V=PHelper().CreateToken32(items,"Environment\\Preset",					&S.Environment	       ,eax_environment);
         V->OnChangeEvent.bind	(this,&CSHSoundEnvTools::OnEnvChange);
         V=PHelper().CreateFloat	(items, "Environment\\Size",					&S.EnvironmentSize     ,EAXLISTENER_MINENVIRONMENTSIZE, 	EAXLISTENER_MAXENVIRONMENTSIZE			,0.01f,	3);

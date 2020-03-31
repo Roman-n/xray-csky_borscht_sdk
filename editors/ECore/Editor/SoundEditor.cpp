@@ -118,19 +118,19 @@ void TfrmSoundLib::AppendModif(LPCSTR nm)
 }
 //---------------------------------------------------------------------------
 
-void TfrmSoundLib::RemoveSound(LPCSTR fname, EItemType type, bool& res)
+void __stdcall TfrmSoundLib::RemoveSound(LPCSTR fname, EItemType type, bool& res)
 {
 	// delete it from modif map
-    FS_FileSetIt it=modif_map.find(FS_File(fname));
-    if (it!=modif_map.end()) modif_map.erase(it);
+	FS_FileSetIt it=modif_map.find(FS_File(fname));
+	if (it!=modif_map.end()) modif_map.erase(it);
 	// remove sound source
 	res = SndLib->RemoveSound(fname,type);
 }
 //---------------------------------------------------------------------------
 
-void TfrmSoundLib::RenameSound(LPCSTR p0, LPCSTR p1, EItemType type)
+void __stdcall TfrmSoundLib::RenameSound(LPCSTR p0, LPCSTR p1, EItemType type)
 {
-    // rename sound source
+	// rename sound source
 	SndLib->RenameSound(p0,p1,type);
 	// delete old from map
     FS_FileSetIt old_it=modif_map.find(FS_File(p0)); 
@@ -255,9 +255,9 @@ void __fastcall TfrmSoundLib::fsStorageSavePlacement(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmSoundLib::OnControlClick(ButtonValue* V, bool& bModif, bool& bSafe)
+void __stdcall TfrmSoundLib::OnControlClick(ButtonValue* V, bool& bModif, bool& bSafe)
 {
-    switch (V->btn_num){
+	switch (V->btn_num){
     case 0: m_Snd.play(0,sm_2D); 	break;
     case 1: m_Snd.stop();			break;
     case 2:{ 
@@ -269,7 +269,7 @@ void __fastcall TfrmSoundLib::OnControlClick(ButtonValue* V, bool& bModif, bool&
 }
 //------------------------------------------------------------------------------
 
-void __fastcall TfrmSoundLib::OnControl2Click(ButtonValue* V, bool& bModif, bool& bSafe)
+void __stdcall TfrmSoundLib::OnControl2Click(ButtonValue* V, bool& bModif, bool& bSafe)
 {
     switch (V->btn_num){
     case 0:{
@@ -291,7 +291,7 @@ void TfrmSoundLib::DestroyUsedTHM()
 
 #define X_GRID 10
 #define Y_GRID 5
-void  TfrmSoundLib::OnAttenuationDraw(CanvasValue* sender, void* _canvas, const Irect& _rect)
+void __stdcall TfrmSoundLib::OnAttenuationDraw(CanvasValue* sender, void* _canvas, const Irect& _rect)
 {
 	TCanvas* canvas 	= (TCanvas*)_canvas;
     const TRect& rect	= *((TRect*)&_rect);
@@ -351,7 +351,7 @@ void __stdcall TfrmSoundLib::OnAttClick(ButtonValue* V, bool& bModif, bool& bSaf
 	}
 }
 
-void __fastcall TfrmSoundLib::OnItemsFocused(ListItemsVec& items)
+void __stdcall TfrmSoundLib::OnItemsFocused(ListItemsVec& items)
 {
 	PropItemVec props;
 
@@ -374,9 +374,9 @@ void __fastcall TfrmSoundLib::OnItemsFocused(ListItemsVec& items)
 	ButtonValue* B=0;
     if (m_THM_Current.size()==1)
     {
-        ESoundThumbnail* thm=m_THM_Current.back();
+		ESoundThumbnail* thm=m_THM_Current.back();
         u32 size=0;
-        u32 time=0;
+		float time=0.f;
         PlaySound(thm->SrcName(), size, time);
 
         CanvasValue* C=0;
@@ -388,7 +388,7 @@ void __fastcall TfrmSoundLib::OnItemsFocused(ListItemsVec& items)
         B->OnBtnClickEvent.bind		(this,&TfrmSoundLib::OnAttClick);
         
         PHelper().CreateCaption		(props,"File Length",	shared_str().sprintf("%.2f Kb",float(size)/1024.f));
-        PHelper().CreateCaption		(props,"Total Time", 	shared_str().sprintf("%.2f sec",float(time)/1000.f));
+        PHelper().CreateCaption		(props,"Total Time", 	shared_str().sprintf("%.2f sec",time));
         if (!m_Flags.is(flReadOnly)){
 	        B=PHelper().CreateButton(props,"Control",		"Play,Stop",ButtonValue::flFirstOnly);
     	    B->OnBtnClickEvent.bind	(this,&TfrmSoundLib::OnControlClick);
@@ -410,19 +410,19 @@ void __fastcall TfrmSoundLib::OnItemsFocused(ListItemsVec& items)
 }
 //---------------------------------------------------------------------------
 
-void TfrmSoundLib::PlaySound(LPCSTR name, u32& size, u32& time)
+void TfrmSoundLib::PlaySound(LPCSTR name, u32& size, float& time)
 {
 	string_path fname;
-    FS.update_path			(fname,_game_sounds_,ChangeFileExt(name,".ogg").c_str());
-    FS_File F;
-    if (FS.file_find(fname,F))
-    {
-        m_Snd.create		(name,st_Effect,sg_Undefined);
-        m_Snd.play			(0,sm_2D);
-        CSoundRender_Source* src= (CSoundRender_Source*)m_Snd._handle(); VERIFY(src);
-        size				= F.size;
-        time				= iFloor(src->fTimeTotal/1000.0f);
-    	if (!bAutoPlay)		m_Snd.stop();
+	FS.update_path			(fname,_game_sounds_,ChangeFileExt(name,".ogg").c_str());
+	FS_File F;
+	if (FS.file_find(fname,F))
+	{
+		m_Snd.create		(name,st_Effect,sg_Undefined);
+		m_Snd.play			(0,sm_2D);
+		CSoundRender_Source* src= (CSoundRender_Source*)m_Snd._handle(); VERIFY(src);
+		size				= F.size;
+		time				= src->fTimeTotal;
+		if (!bAutoPlay)		m_Snd.stop();
     }
 }
 
@@ -436,7 +436,7 @@ void TfrmSoundLib::OnFrame()
     }
 }
 
-void __fastcall TfrmSoundLib::OnSyncCurrentClick(ButtonValue* V, bool& bModif, bool& bSafe)
+void __stdcall TfrmSoundLib::OnSyncCurrentClick(ButtonValue* V, bool& bModif, bool& bSafe)
 {
 //.
 	THMIt it 	= m_THM_Current.begin();

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="xrCore"
 	ProjectGUID="{A0F7D1FB-59A7-4717-A7E4-96F37E91998E}"
 	RootNamespace="xrCore"
@@ -121,8 +121,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="..\..\..\binaries"
-			IntermediateDirectory="..\..\..\intermediate\$(ConfigurationName)\$(ProjectName)"
+			OutputDirectory="..\..\binaries"
+			IntermediateDirectory="..\..\intermediate\$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="2"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			CharacterSet="2"
@@ -186,7 +186,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="..\..\sdk\libraries;..\..\..\libraries"
+				AdditionalLibraryDirectories="..\..\sdk\libraries;..\..\libraries"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/$(ProjectName).pdb"
 				GenerateMapFile="false"
@@ -196,7 +196,7 @@
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				LinkTimeCodeGeneration="1"
-				ImportLibrary="..\..\..\libraries\$(ProjectName).lib"
+				ImportLibrary="..\..\libraries\$(ProjectName).lib"
 				TargetMachine="0"
 			/>
 			<Tool
@@ -896,6 +896,14 @@
 			Name="FS"
 			>
 			<File
+				RelativePath=".\FileDialog.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FileDialog.h"
+				>
+			</File>
+			<File
 				RelativePath="FileSystem.cpp"
 				>
 			</File>
@@ -1275,10 +1283,6 @@
 			</File>
 			<File
 				RelativePath=".\xrMemory_pure.h"
-				>
-			</File>
-			<File
-				RelativePath="xrMemory_subst_borland.cpp"
 				>
 			</File>
 			<File

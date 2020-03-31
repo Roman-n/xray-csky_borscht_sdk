@@ -34,6 +34,7 @@ __published:	// IDE-managed Components
 	TD3DWindow *D3DWindow;
 	TExtBtn *ebAllMin;
 	TExtBtn *ebAllMax;
+	TSplitter *spLeftBar;
         void __fastcall FormCreate(TObject *Sender);
     void __fastcall D3DWindowResize(TObject *Sender);
     void __fastcall D3DWindowKeyDown(TObject *Sender, WORD &Key,

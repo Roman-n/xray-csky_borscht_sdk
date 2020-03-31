@@ -11,6 +11,67 @@ CCustomPreferences* EPrefs=0;
 
 CCustomPreferences::CCustomPreferences()
 {
+	m_Prefs["Tools"].set("editor_prefs", "tools_settings", ptFlags, &Tools->m_Settings, Tools->m_Settings);
+    
+    m_Prefs["Device"].set("editor_prefs", "device_flags", ptFlags, &psDeviceFlags, psDeviceFlags);
+
+	m_Prefs["Sounds"].set("editor_prefs", "sounds_flags", ptFlags, &psSoundFlags, psSoundFlags)
+    	.addFlag("Sounds\\Use\\Hardware", 	ss_Hardware)
+        .addFlag("Sounds\\Use\\EAX",        ss_EAX);
+
+	m_Prefs["Objects"].set("editor_prefs", "object_flags", ptFlags, &object_flags, Flags32().zero())
+		.addFlag("Objects\\Library\\Discard Instance", 		epoDiscardInstance)
+		.addFlag("Objects\\Skeleton\\Draw Joints", 			epoDrawJoints)
+		.addFlag("Objects\\Skeleton\\Draw Bone Axis",		epoDrawBoneAxis)
+		.addFlag("Objects\\Skeleton\\Draw Bone Names",		epoDrawBoneNames)
+		.addFlag("Objects\\Skeleton\\Draw Bone Shapes",		epoDrawBoneShapes)
+		.addFlag("Objects\\Show\\Hint",						epoShowHint)
+		.addFlag("Objects\\Show\\Pivot",					epoDrawPivot)
+		.addFlag("Objects\\Show\\Animation Path",			epoDrawAnimPath)
+		.addFlag("Objects\\Show\\LOD",						epoDrawLOD)
+		.addFlag("Objects\\Loading\\Deferred Loading RB",	epoDeffLoadRB)
+		.addFlag("Objects\\Loading\\Deferred Loading CF",	epoDeffLoadCF)
+		.addFlag("Objects\\Saving\\LZH Compression",		epoLZHCompress);
+
+	m_Prefs["Scene\\Common\\Recent Count"].set		("editor_prefs", "scene_recent_count", 	ptInteger, 	&scene_recent_count, 10,   0,    25);
+    m_Prefs["Scene\\Common\\Undo Level"].set		("editor_prefs", "scene_undo_level", 	ptInteger, 	&scene_undo_level, 	 125,  0,    125);
+    m_Prefs["Scene\\Grid\\Cell Size"].set			("editor_prefs", "grid_cell_size", 		ptFloat, 	&grid_cell_size,     1.0f, 0.1f, 10.f);
+    m_Prefs["Scene\\Grid\\Cell Count"].set			("editor_prefs", "grid_cell_count",		ptInteger, 	&grid_cell_count,    100,  10,   1000);
+
+    m_Prefs["Tools\\Box Pick\\Limited Depth"].set	("editor_prefs", "bp_lim_depth",		ptBool,		&bp_lim_depth, 		TRUE);
+    m_Prefs["Tools\\Box Pick\\Backface Culling"].set("editor_prefs", "bp_cull",				ptBool,		&bp_cull,       	TRUE);
+    m_Prefs["Tools\\Box Pick\\Depth Tolerance"].set	("editor_prefs", "bp_depth_tolerance",	ptFloat,	&bp_depth_tolerance, 0.1f, 0.f, 10000.f);
+    m_Prefs["Tools\\Sens\\Move"].set				("editor_prefs", "tools_sens_move",		ptFloat,	&tools_sens_move, 	0.3f);
+    m_Prefs["Tools\\Sens\\Rotate"].set				("editor_prefs", "tools_sens_rot",		ptFloat,	&tools_sens_rot, 	0.3f);
+    m_Prefs["Tools\\Sens\\Scale"].set				("editor_prefs", "tools_sens_scale",	ptFloat,	&tools_sens_scale, 	0.3f);
+    m_Prefs["Tools\\Snap\\Angle"].set				("editor_prefs", "snap_angle",			ptAngle,	&snap_angle, 		deg2rad(5.f), 0, PI_MUL_2);
+    m_Prefs["Tools\\Snap\\Move"].set				("editor_prefs", "snap_move",			ptFloat,	&snap_move, 		0.1f, 0.01f, 1000.f);
+    m_Prefs["Tools\\Snap\\Move To"].set				("editor_prefs", "snap_moveto",			ptFloat,	&snap_moveto, 		0.5f, 0.01f, 1000.f);
+
+    m_Prefs["Viewport\\Camera\\Move Sens"].set		("editor_prefs", "cam_sens_move",		ptFloat,	&cam_sens_move, 	0.6f);
+    m_Prefs["Viewport\\Camera\\Rotate Sens"].set	("editor_prefs", "cam_sens_rot",		ptFloat,	&cam_sens_rot, 		0.6f);
+    m_Prefs["Viewport\\Camera\\Free Fly Speed"].set	("editor_prefs", "cam_free_fly_speed",	ptFloat,	&cam_free_fly_speed, 5.0f, 0.01f, 100.f);
+    m_Prefs["Viewport\\Camera\\Fly Speed"].set		("editor_prefs", "cam_fly_speed",		ptFloat,	&cam_fly_speed, 	5.0f, 0.01f, 100.f);
+    m_Prefs["Viewport\\Camera\\Fly Altitude"].set	("editor_prefs", "cam_fly_alt",			ptFloat,	&cam_fly_alt,		1.8f, 0.f, 1000.f);
+    m_Prefs["Viewport\\Fog\\Color"].set				("editor_prefs", "fog_color",			ptColor,	&fog_color,			0x00555555);
+    m_Prefs["Viewport\\Fog\\Fogness"].set			("editor_prefs", "fog_fogness",			ptFloat,	&fog_fogness,		0.9f, 0.f, 100.f);
+    m_Prefs["Viewport\\Near Plane"].set				("editor_prefs", "view_np",				ptFloat,	&view_np,			0.1f, 0.01f, 10.f);
+    m_Prefs["Viewport\\Far Plane"].set				("editor_prefs", "view_fp",				ptFloat,	&view_fp,			1500.f, 10.f, 10000.f);
+    m_Prefs["Viewport\\FOV"].set					("editor_prefs", "view_fov",			ptAngle,	&view_fov,			deg2rad(60.f), deg2rad(0.1f), deg2rad(170.f));
+    m_Prefs["Viewport\\Clear Color"].set			("editor_prefs", "scene_clear_color",	ptColor,	&scene_clear_color,	DEFAULT_CLEARCOLOR);
+
+    m_Prefs["Style\\Log\\Default Color"].set		("styles", "log_default_color", 		ptColor,	&log_default_color, 0x00E8E8E8);
+    m_Prefs["Style\\Log\\Error Color"].set			("styles", "log_error_color", 			ptColor,	&log_error_color,   0x00FFC4C4);
+    m_Prefs["Style\\Log\\Info Color"].set			("styles", "log_info_color",			ptColor,	&log_info_color,    0x00E7FFE6);
+    m_Prefs["Style\\Log\\Confirmation Color"].set	("styles", "log_confirmation_color",	ptColor,	&log_confirmation_color,    0x00E7E6FF);
+
+    m_Prefs["Style\\Text Form\\Background Color"].set("styles", "textform_background_color",	ptColor,	&textform_background_color, 0x00A0A0A0);
+    m_Prefs["Style\\Text Form\\Text Color"].set		("styles", "textform_text_color",		ptColor,	&textform_text_color,		0x00000000);
+
+    m_Prefs["Weather\\Raindrop Collision Detection"].set("editor_prefs", "weather_raindrop_collision", ptBool, &raindrop_collision, TRUE);
+
+    // it is necessary to set default values there?
+    /*
 	// view
     view_np				= 0.1f;
     view_fp				= 1500.f;
@@ -44,6 +105,7 @@ CCustomPreferences::CCustomPreferences()
     scene_clear_color	= DEFAULT_CLEARCOLOR;
     // objects
     object_flags.zero	();
+    */
 }
 //---------------------------------------------------------------------------
 
@@ -65,7 +127,7 @@ void CCustomPreferences::ApplyValues()
     UI->m_MouseSS	= 0.02f*tools_sens_scale*tools_sens_scale;
 
     Device.m_Camera.SetSensitivity	(cam_sens_move, cam_sens_rot);
-    Device.m_Camera.SetFlyParams	(cam_fly_speed, cam_fly_alt);
+    Device.m_Camera.SetFlyParams	(cam_free_fly_speed, cam_fly_speed, cam_fly_alt);
 
     ExecCommand		(COMMAND_UPDATE_GRID);
 }
@@ -80,8 +142,17 @@ void __stdcall CCustomPreferences::OnClose	()
 
 void CheckValidate(ShortcutValue*, const xr_shortcut& new_val, bool& result)
 {
-	result 					= true; 
-    ECommandVec& cmds		= GetEditorCommands();
+	result 					= true;
+
+	if(new_val.similar(xr_shortcut(0, FALSE, FALSE, FALSE)))
+		return;
+
+	if(new_val.key==0) { // key == 0 && ext != 0 - invalid
+		result = false;
+		return;
+	}
+
+	ECommandVec& cmds		= GetEditorCommands();
     for (u32 cmd_idx=0; cmd_idx<cmds.size(); cmd_idx++){
     	SECommand*& CMD		= cmds[cmd_idx];
         if (CMD&&CMD->editable){
@@ -109,7 +180,7 @@ void CCustomPreferences::OnKeyboardCommonFileClick(ButtonValue* B, bool& bModif,
     break;
     case 1:
         if(EFS.GetSaveName("$import$", fn, NULL, 6)){
-		    CInifile* 	I 	= xr_new<CInifile>(fn.c_str(), FALSE, TRUE, TRUE);
+		    CInifile* 	I 	= xr_new<CInifile>(fn.c_str(), FALSE, FALSE, TRUE);
 		    SaveShortcuts	(I);
             xr_delete		(I);
         }
@@ -119,47 +190,26 @@ void CCustomPreferences::OnKeyboardCommonFileClick(ButtonValue* B, bool& bModif,
 
 void CCustomPreferences::FillProp(PropItemVec& props)
 {
-    PHelper().CreateFlag32	(props,"Objects\\Library\\Discard Instance",	&object_flags, 	epoDiscardInstance);
-    PHelper().CreateFlag32	(props,"Objects\\Skeleton\\Draw Joints",		&object_flags, 	epoDrawJoints);
-    PHelper().CreateFlag32	(props,"Objects\\Skeleton\\Draw Bone Axis",		&object_flags, 	epoDrawBoneAxis);
-    PHelper().CreateFlag32	(props,"Objects\\Skeleton\\Draw Bone Names",	&object_flags, 	epoDrawBoneNames);
-    PHelper().CreateFlag32	(props,"Objects\\Skeleton\\Draw Bone Shapes",	&object_flags, 	epoDrawBoneShapes);
-    PHelper().CreateFlag32	(props,"Objects\\Show\\Hint",					&object_flags, 	epoShowHint);
-    PHelper().CreateFlag32	(props,"Objects\\Show\\Pivot",					&object_flags, 	epoDrawPivot);
-    PHelper().CreateFlag32	(props,"Objects\\Show\\Animation Path",			&object_flags, 	epoDrawAnimPath);
-    PHelper().CreateFlag32	(props,"Objects\\Show\\LOD",					&object_flags, 	epoDrawLOD);
-    PHelper().CreateFlag32	(props,"Objects\\Loading\\Deffered Loading RB",	&object_flags, 	epoDeffLoadRB);
-    PHelper().CreateFlag32	(props,"Objects\\Loading\\Deffered Loading CF",	&object_flags, 	epoDeffLoadCF);
+	xr_map<LPCSTR, SPreference>::iterator it, end;
+    for(it = m_Prefs.begin(), end = m_Prefs.end(); it != end; it++)
+    {
+    	SPreference& R = it->second;
+    	switch(R.Type)
+        {
+        	case ptBool: 	PHelper().CreateBOOL	(props, it->first, (BOOL*)R.IntValue); break;
+            case ptInteger: PHelper().CreateU32		(props, it->first, R.IntValue, R.IntMin, R.IntMax, R.IntInc); break;
+            case ptFloat:	PHelper().CreateFloat	(props, it->first, R.FloatValue, R.FloatMin, R.FloatMax, R.FloatInc, R.FloatDecimal); break;
+			case ptAngle:	PHelper().CreateAngle	(props, it->first, R.FloatValue, R.FloatMin, R.FloatMax, R.FloatInc, R.FloatDecimal); break;
+            case ptColor:	PHelper().CreateColor	(props, it->first, R.IntValue); break;
+            case ptFlags:
+			{
+            	xr_vector<SPreference::SFlag>::iterator fl_it, fl_end;
+                for(fl_it = R.Flags.begin(), fl_end = R.Flags.end(); fl_it != fl_end; fl_it++)
+                	PHelper().CreateFlag32(props, (*fl_it).Name, R.FlagsValue, (*fl_it).Flag);
+            }
+        }
+	}
 
-    PHelper().CreateU32		(props,"Scene\\Common\\Recent Count", 		    &scene_recent_count,0, 		25);
-    PHelper().CreateU32		(props,"Scene\\Common\\Undo Level", 		    &scene_undo_level,	0, 		125);
-    PHelper().CreateFloat	(props,"Scene\\Grid\\Cell Size", 	           	&grid_cell_size,	0.1f,	10.f);
-    PHelper().CreateU32		(props,"Scene\\Grid\\Cell Count", 	           	&grid_cell_count,	10, 	1000);
-
-    PHelper().CreateBOOL	(props,"Tools\\Box Pick\\Limited Depth",		&bp_lim_depth);
-    PHelper().CreateBOOL	(props,"Tools\\Box Pick\\Back Face Culling",	&bp_cull);
-    PHelper().CreateFloat	(props,"Tools\\Box Pick\\Depth Tolerance",		&bp_depth_tolerance,0.f, 	10000.f);
-    PHelper().CreateFloat	(props,"Tools\\Sens\\Move",			          	&tools_sens_move);
-    PHelper().CreateFloat	(props,"Tools\\Sens\\Rotate",		          	&tools_sens_rot);
-    PHelper().CreateFloat	(props,"Tools\\Sens\\Scale",		          	&tools_sens_scale);
-    PHelper().CreateAngle	(props,"Tools\\Snap\\Angle",		          	&snap_angle,		0, 		PI_MUL_2);
-    PHelper().CreateFloat	(props,"Tools\\Snap\\Move",			          	&snap_move, 		0.01f,	1000.f);
-    PHelper().CreateFloat	(props,"Tools\\Snap\\Move To", 		          	&snap_moveto,		0.01f,	1000.f);
-
-    PHelper().CreateFlag32	(props,"Sounds\\Use\\Hardware",					&psSoundFlags, 	ss_Hardware);
-    PHelper().CreateFlag32	(props,"Sounds\\Use\\EAX",						&psSoundFlags, 	ss_EAX);        
-
-    PHelper().CreateFloat	(props,"Viewport\\Camera\\Move Sens",		    &cam_sens_move);
-    PHelper().CreateFloat	(props,"Viewport\\Camera\\Rotate Sens",		    &cam_sens_rot);
-    PHelper().CreateFloat	(props,"Viewport\\Camera\\Fly Speed",		    &cam_fly_speed, 	0.01f, 	100.f);
-    PHelper().CreateFloat	(props,"Viewport\\Camera\\Fly Altitude",	    &cam_fly_alt, 		0.f, 	1000.f);
-    PHelper().CreateColor	(props,"Viewport\\Fog\\Color",				    &fog_color	);
-    PHelper().CreateFloat	(props,"Viewport\\Fog\\Fogness",			    &fog_fogness, 		0.f, 	100.f);
-    PHelper().CreateFloat	(props,"Viewport\\Near Plane",				    &view_np, 			0.01f,	10.f);
-    PHelper().CreateFloat	(props,"Viewport\\Far Plane", 				    &view_fp,			10.f, 	10000.f);
-    PHelper().CreateAngle	(props,"Viewport\\FOV",		  				    &view_fov,			deg2rad(0.1f), deg2rad(170.f));
-    PHelper().CreateColor	(props,"Viewport\\Clear Color",		           	&scene_clear_color	);
-    
     ButtonValue* B = PHelper().CreateButton	(props,"Keyboard\\Common\\File","Load,Save", 0);
     B->OnBtnClickEvent.bind	(this,&CCustomPreferences::OnKeyboardCommonFileClick);
     ECommandVec& cmds		= GetEditorCommands();
@@ -172,9 +222,27 @@ void CCustomPreferences::FillProp(PropItemVec& props)
                 string128 nm; 		sprintf(nm,"%s%s%s",CMD->Desc(),!SUB_CMD->desc.empty()?"\\":"",SUB_CMD->desc.c_str());
                 ShortcutValue* V 	= PHelper().CreateShortcut(props,PrepareKey("Keyboard\\Shortcuts",nm), &SUB_CMD->shortcut);
                 V->OnValidateResultEvent.bind(CheckValidate);
-            }
-        }
-    }
+			}
+		}
+	}
+
+	// fonts
+	static xr_vector<shared_str> fonts;
+	fonts.clear();
+
+	string_path fn;
+	if(FS.exist(fn, "$game_config$", "fonts.ltx"))
+	{
+		CInifile *ini = CInifile::Create(fn);
+		for(CInifile::RootIt it = ini->sections().begin(); it != ini->sections().end(); it++)
+			fonts.push_back((*it)->Name);
+		CInifile::Destroy(ini);
+	}
+	else
+		fonts.push_back("hud_font_small");
+
+	PHelper().CreateCaption(props, "Style\\Font\\Hint", "Font changes will take effect when you restart editor");
+	PHelper().CreateRList(props, "Style\\Font\\Screen Font", &screen_font, &fonts.front(), fonts.size());
 }
 
 void CCustomPreferences::Edit()
@@ -188,49 +256,26 @@ void CCustomPreferences::Edit()
     m_ItemProps->ShowPropertiesModal();
 
     // save changed options
-    Save							();
+	Save							();
 }
 //---------------------------------------------------------------------------
 
 void CCustomPreferences::Load(CInifile* I)
 {
-    psDeviceFlags.flags		= R_U32_SAFE	("editor_prefs","device_flags",	psDeviceFlags.flags);
-    psSoundFlags.flags		= R_U32_SAFE	("editor_prefs","sound_flags",	psSoundFlags.flags)
-
-    Tools->m_Settings.flags	= R_U32_SAFE	("editor_prefs","tools_settings",Tools->m_Settings.flags);
-    
-    view_np				= R_FLOAT_SAFE	("editor_prefs","view_np"			,view_np		 	);
-    view_fp				= R_FLOAT_SAFE	("editor_prefs","view_fp"			,view_fp		 	);
-    view_fov			= R_FLOAT_SAFE	("editor_prefs","view_fov"			,view_fov			);
-
-    fog_color			= R_U32_SAFE	("editor_prefs","fog_color"			,fog_color			);
-    fog_fogness			= R_FLOAT_SAFE	("editor_prefs","fog_fogness"		,fog_fogness	 	);
-
-    cam_fly_speed		= R_FLOAT_SAFE	("editor_prefs","cam_fly_speed"		,cam_fly_speed		);
-    cam_fly_alt			= R_FLOAT_SAFE	("editor_prefs","cam_fly_alt"		,cam_fly_alt	 	);
-    cam_sens_rot		= R_FLOAT_SAFE	("editor_prefs","cam_sens_rot"		,cam_sens_rot		);
-    cam_sens_move		= R_FLOAT_SAFE	("editor_prefs","cam_sens_move"		,cam_sens_move		);
-
-    tools_sens_move		= R_FLOAT_SAFE	("editor_prefs","tools_sens_move"	,tools_sens_move  	);
-    tools_sens_rot		= R_FLOAT_SAFE	("editor_prefs","tools_sens_rot"	,tools_sens_rot		);
-    tools_sens_scale	= R_FLOAT_SAFE	("editor_prefs","tools_sens_scale"	,tools_sens_scale	);
-    
-    bp_lim_depth		= R_BOOL_SAFE	("editor_prefs","bp_lim_depth"		,bp_lim_depth		);
-    bp_cull				= R_BOOL_SAFE	("editor_prefs","bp_lim_depth"		,bp_cull		  	);
-    bp_depth_tolerance	= R_FLOAT_SAFE	("editor_prefs","tools_sens_rot"	,bp_depth_tolerance	);
-
-    snap_angle			= R_FLOAT_SAFE	("editor_prefs","snap_angle"		,snap_angle			);
-    snap_move			= R_FLOAT_SAFE	("editor_prefs","snap_move"			,snap_move			);
-    snap_moveto			= R_FLOAT_SAFE	("editor_prefs","snap_moveto"		,snap_moveto	   	);
-
-    grid_cell_size		= R_FLOAT_SAFE	("editor_prefs","grid_cell_size"	,grid_cell_size		);
-    grid_cell_count		= R_U32_SAFE	("editor_prefs","grid_cell_count"	,grid_cell_count   	);
-
-    scene_undo_level	= R_U32_SAFE	("editor_prefs","scene_undo_level"	,scene_undo_level	);
-    scene_recent_count	= R_U32_SAFE	("editor_prefs","scene_recent_count",scene_recent_count	);
-    scene_clear_color	= R_U32_SAFE	("editor_prefs","scene_clear_color"	,scene_clear_color	);
-
-    object_flags.flags	= R_U32_SAFE	("editor_prefs","object_flags"		,object_flags.flags );
+	xr_map<LPCSTR, SPreference>::iterator p_it, p_end;
+    for(p_it = m_Prefs.begin(), p_end = m_Prefs.end(); p_it != p_end; p_it++)
+    {
+    	SPreference& R = p_it->second;
+        switch(R.Type)
+        {
+        	case ptBool: *R.IntValue = R_BOOL_SAFE(R.Section, R.Name, R.IntDefault); break;
+            case ptFloat:
+            case ptAngle: *R.FloatValue = R_FLOAT_SAFE(R.Section, R.Name, R.FloatDefault); break;
+            case ptInteger:
+            case ptColor: *R.IntValue = R_U32_SAFE(R.Section, R.Name, R.IntDefault); break;
+            case ptFlags: R.FlagsValue->flags = R_U32_SAFE(R.Section, R.Name, R.FlagsDefault.flags); break;
+        }
+    }
 
 	// read recent list    
     for (u32 i=0; i<scene_recent_count; i++){
@@ -242,7 +287,13 @@ void CCustomPreferences::Load(CInifile* I)
 	        	scene_recent_list.push_back(*fn);
         }
     }
-    sWeather = R_STRING_SAFE	("editor_prefs", "weather", shared_str("") );
+    sWeather 			= R_STRING_SAFE	("editor_prefs", "weather", shared_str("") );
+    env_from_time 		= R_FLOAT_SAFE	("editor_prefs", "weather_from_time", 0.f);
+    env_to_time 		= R_FLOAT_SAFE  ("editor_prefs", "weather_to_time", 24.f*60.f*60.f);
+	env_speed			= R_FLOAT_SAFE	("editor_prefs", "weather_time_factor", 12.f);
+
+	screen_font			= R_STRING_SAFE ("editor_prefs", "screen_font", shared_str("hud_font_small"));
+
     // load shortcuts
     LoadShortcuts		(I);
 
@@ -251,50 +302,33 @@ void CCustomPreferences::Load(CInifile* I)
 
 void CCustomPreferences::Save(CInifile* I)
 {
-    I->w_u32	("editor_prefs","device_flags",		psDeviceFlags.flags	);
-    I->w_u32	("editor_prefs","sound_flags",		psSoundFlags.flags	);
-
-    I->w_u32	("editor_prefs","tools_settings",	Tools->m_Settings.flags	);
-
-    I->w_float	("editor_prefs","view_np",			view_np			);
-    I->w_float	("editor_prefs","view_fp",			view_fp			);
-    I->w_float	("editor_prefs","view_fov",			view_fov		);
-
-    I->w_u32	("editor_prefs","fog_color",		fog_color		);
-    I->w_float	("editor_prefs","fog_fogness",		fog_fogness		);
-
-    I->w_float	("editor_prefs","cam_fly_speed",	cam_fly_speed	);
-    I->w_float	("editor_prefs","cam_fly_alt",		cam_fly_alt		);
-    I->w_float	("editor_prefs","cam_sens_rot",		cam_sens_rot	);
-    I->w_float	("editor_prefs","cam_sens_move",	cam_sens_move	);
-
-    I->w_float	("editor_prefs","tools_sens_rot",	tools_sens_rot	);
-    I->w_float	("editor_prefs","tools_sens_move",	tools_sens_move	);
-    I->w_float	("editor_prefs","tools_sens_scale",	tools_sens_scale);
-
-    I->w_bool	("editor_prefs","bp_lim_depth",		bp_lim_depth	);
-    I->w_bool	("editor_prefs","bp_lim_depth",		bp_cull			);
-    I->w_float	("editor_prefs","bp_depth_tolerance",bp_depth_tolerance	);
-
-    I->w_float	("editor_prefs","snap_angle",		snap_angle		);
-    I->w_float	("editor_prefs","snap_move",		snap_move		);
-    I->w_float	("editor_prefs","snap_moveto",		snap_moveto		);
-
-    I->w_float	("editor_prefs","grid_cell_size",	grid_cell_size	);
-    I->w_u32	("editor_prefs","grid_cell_count",	grid_cell_count	);
-
-    I->w_u32	("editor_prefs","scene_undo_level",		scene_undo_level	);
-    I->w_u32	("editor_prefs","scene_recent_count",	scene_recent_count	);
-    I->w_u32	("editor_prefs","scene_clear_color",	scene_clear_color 	);
-
-    I->w_u32	("editor_prefs","object_flags",		object_flags.flags);
+	xr_map<LPCSTR, SPreference>::iterator p_it, p_end;
+    for(p_it = m_Prefs.begin(), p_end = m_Prefs.end(); p_it != p_end; p_it++)
+    {
+    	SPreference& R = p_it->second;
+    	switch(R.Type)
+        {
+        	case ptBool: 	I->w_bool(R.Section, R.Name, !!(*R.IntValue)); break;
+            case ptAngle:
+            case ptFloat: 	I->w_float(R.Section, R.Name, *R.FloatValue); break;
+            case ptInteger:
+            case ptColor:	I->w_u32(R.Section, R.Name, *R.IntValue); break;
+            case ptFlags:   I->w_u32(R.Section, R.Name, R.FlagsValue->flags); break;
+        }
+    }
 
     for (AStringIt it=scene_recent_list.begin(); it!=scene_recent_list.end(); it++){
     	AnsiString L; L.sprintf("recent_files_%d",it-scene_recent_list.begin());
     	AnsiString V; V.sprintf("\"%s\"",it->c_str());
 		I->w_string("editor_prefs",L.c_str(),V.c_str());
     }
-    I->w_string("editor_prefs","weather",   sWeather.c_str() );
+    I->w_string("editor_prefs", "weather",   sWeather.c_str() );
+    I->w_float("editor_prefs", "weather_from_time", env_from_time);
+    I->w_float("editor_prefs", "weather_to_time", env_to_time);
+	I->w_float("editor_prefs", "weather_time_factor", env_speed);
+
+	I->w_string("editor_prefs", "screen_font", screen_font.c_str() );
+
     // load shortcuts
     SaveShortcuts		(I);
     UI->SaveSettings	(I);
@@ -321,6 +355,9 @@ void CCustomPreferences::Save()
 
 void CCustomPreferences::AppendRecentFile(LPCSTR name)
 {
+	if(scene_recent_count == 0)
+		return;
+		
     for (AStringIt it=scene_recent_list.begin(); it!=scene_recent_list.end(); it++){
     	if (*it==name){
         	scene_recent_list.erase	(it);

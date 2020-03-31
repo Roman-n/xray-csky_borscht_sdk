@@ -10,7 +10,7 @@
 #include "d3dutils.h"
 #include "ui_main.h"
 #include "render.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
+#include "../xrEProps/PropertiesListHelper.h"
 #include "ResourceManager.h"
 #include "ImageManager.h"
 
@@ -244,7 +244,17 @@ void CEditableObject::RenderLOD(const Fmatrix& parent)
 
 xr_string CEditableObject::GetLODTextureName()
 {
-    string512 nm; 	strcpy	(nm,m_LibName.c_str()); _ChangeSymbol(nm,'\\','_');
+	string_path base;
+    FS.update_path(base, _objects_, "");
+
+    string512 nm;
+    strcpy(nm,EFS.ExcludeBasePath(m_LibName.c_str(), base).c_str());
+
+    if(char* ext = strext(nm))
+    	*ext = '\0';
+
+    _ChangeSymbol(nm,'\\','_');
+
 	xr_string 	l_name;
     l_name 			= xr_string("lod_")+nm;
     return ImageLib.UpdateFileName(l_name);
@@ -252,6 +262,8 @@ xr_string CEditableObject::GetLODTextureName()
 
 void CEditableObject::OnDeviceCreate()
 {
+	if(!EPrefs->object_flags.is(epoDeffLoadRB))
+    	DefferedLoadRP();
 }
 
 void CEditableObject::OnDeviceDestroy()
@@ -276,6 +288,11 @@ void CEditableObject::DefferedLoadRP()
     if (m_objectFlags.is(eoUsingLOD))
     	m_LODShader.create(GetLODShaderName(),l_name.c_str());
     m_LoadState.set(LS_RBUFFERS,TRUE);
+
+    // create surfaces shaders
+    SurfaceVec::iterator it, end;
+    for(it = m_Surfaces.begin(), end = m_Surfaces.end(); it != end; it++)
+    	(*it)->OnDeviceCreate();
 }
 void CEditableObject::DefferedUnloadRP()
 {
@@ -284,7 +301,7 @@ void CEditableObject::DefferedUnloadRP()
 	vs_SkeletonGeom.destroy();
     // удалить буфера
 	for (EditMeshIt _M=m_Meshes.begin(); _M!=m_Meshes.end(); _M++)
-    	if (*_M) (*_M)->GenerateRenderBuffers();
+    	if (*_M) (*_M)->UnloadRenderBuffers();
 	// удалить shaders
     for(SurfaceIt s_it=m_Surfaces.begin(); s_it!=m_Surfaces.end(); s_it++)
         (*s_it)->OnDeviceDestroy();
@@ -346,7 +363,7 @@ bool CEditableObject::PrepareOMF(IWriter& F)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall CEditableObject::OnChangeTransform(PropValue*)
+void __stdcall CEditableObject::OnChangeTransform(PropValue*)
 {
 	UI->RedrawScene();
 }
@@ -368,12 +385,24 @@ bool CEditableObject::CheckShaderCompatible()
         Shader_xrLC* 	C = Device.ShaderXRLC.Get(*(*s_it)->m_ShaderXRLCName);
         if (!B||!C){
         	ELog.Msg	(mtError,"Object '%s': invalid or missing shader [E:'%s', C:'%s']",GetName(),(*s_it)->_ShaderName(),(*s_it)->_ShaderXRLCName());
+            ELog.Msg	(mtError,"        surface: '%s'",(*s_it)->_Name());
             bRes 		= false;
         }else{
             if (!BE(B->canBeLMAPped(),!C->flags.bLIGHT_Vertex)){
                 ELog.Msg	(mtError,"Object '%s': engine shader '%s' non compatible with compiler shader '%s'",GetName(),(*s_it)->_ShaderName(),(*s_it)->_ShaderXRLCName());
+                ELog.Msg	(mtError,"        surface: '%s'",(*s_it)->_Name());
                 bRes 		= false;
             }
+            if (IsStatic() && B->getDescription().CLS == B_TREE){
+            	ELog.Msg	(mtError,"Object '%s': engine shader '%s' not compatible with static objects",GetName(),(*s_it)->_ShaderName());
+                ELog.Msg	(mtError,"        surface: '%s'",(*s_it)->_Name());
+                bRes		= false;
+            }
+			//if (IsMUStatic() && B->getDescription().CLS != B_TREE && C->flags.bRendering){
+			//	ELog.Msg	(mtError,"Object '%s': engine shader '%s' non compatible with compiler shader '%s' on MU-objects",GetName(),(*s_it)->_ShaderName(),(*s_it)->_ShaderXRLCName());
+			//    ELog.Msg	(mtError,"        surface: '%s'",(*s_it)->_Name());
+			//    bRes		= false;
+			//}
         }
     }
     return bRes;

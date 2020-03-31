@@ -13,7 +13,8 @@ int 			TfrmItemDialog::res=-1;
 __fastcall TfrmItemDialog::TfrmItemDialog(TComponent* Owner)
     : TForm(Owner)
 {
-	res		= -1;
+	DEFINE_INI	(fsStorage);
+	res			= -1;
 }
 //---------------------------------------------------------------------------
 

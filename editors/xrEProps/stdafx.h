@@ -15,7 +15,7 @@ namespace CDB{
 	class MODEL;
 };
 
-#include "../../xrServerEntities/xrEProps.h"
+#include "xrEProps.h"
 
 #include "FolderLib.h"                 
 
@@ -28,7 +28,9 @@ namespace CDB{
 // libs
 #pragma comment		(lib,"xrSoundB.lib")
 #pragma comment		(lib,"xrCoreB.lib")
-#pragma comment		(lib,"EToolsB.lib")
+
+#define INI_NAME(buf)		(FS.update_path(buf, "$local_root$", GetIniFileName().c_str()))
+#define DEFINE_INI(storage)	{string_path buf; INI_NAME(buf); storage->IniFileName=buf;}
 
 #endif //stdafxH
 

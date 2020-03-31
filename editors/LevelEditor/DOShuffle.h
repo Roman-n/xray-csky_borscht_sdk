@@ -19,6 +19,7 @@
 #include "ExtBtn.hpp"
 #include "MXCtrls.hpp"
 #include "mxPlacemnt.hpp"
+#include "ElTreeInplaceEditors.hpp"
 //---------------------------------------------------------------------------
 // refs
 class TfrmOneColor;
@@ -36,17 +37,19 @@ __published:	// IDE-managed Components
 	TExtBtn *ebAppendIndex;
 	TExtBtn *ebMultiClear;
 	TPanel *Panel2;
+	TSplitter *Splitter1;
 	TElTree *tvItems;
 	TPanel *paObject;
+	TPanel *paObjectProps;
+	TMxPanel *paImage;
 	TPanel *Panel1;
 	TExtBtn *ebAddObject;
 	TExtBtn *ebDelObject;
 	TExtBtn *ebLoadList;
 	TExtBtn *ebSaveList;
 	TExtBtn *ebClearList;
-	TPanel *paObjectProps;
-	TSplitter *Splitter1;
-	TMxPanel *paImage;
+	TSplitter *Splitter2;
+	TSplitter *Splitter3;
     void __fastcall FormKeyDown(TObject *Sender, WORD &Key,
           TShiftState Shift);
     void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
@@ -77,6 +80,10 @@ __published:	// IDE-managed Components
 	void __fastcall FormDestroy(TObject *Sender);
 	void __fastcall fsStorageRestorePlacement(TObject *Sender);
 	void __fastcall fsStorageSavePlacement(TObject *Sender);
+	void __fastcall sbDOMouseWheelUp(TObject *Sender, TShiftState Shift,
+          TPoint &MousePos, bool &Handled);
+	void __fastcall sbDOMouseWheelDown(TObject *Sender, TShiftState Shift,
+          TPoint &MousePos, bool &Handled);
 private:	// User declarations
 	static TfrmDOShuffle* form;
     TElTreeItem* FDragItem;
@@ -88,6 +95,8 @@ private:	// User declarations
     void __stdcall  OnObjectPropsModified();
     
     xr_vector<TfrmOneColor*> color_indices;
+
+    int m_OneColorHeight;
 
     void InitItemsList(const char* nm=0);
 	TElTreeItem* FindItem(const char* s);

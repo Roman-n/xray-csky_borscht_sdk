@@ -24,10 +24,7 @@
 #include "../xrEProps/NumericVector.h"
 #include "LevelPreferences.h"
 #include "LEClipEditor.h"
-
-#ifdef _LEVEL_EDITOR
-//.    if (m_Cursor->GetVisible()) RedrawScene();
-#endif
+#include "../xrEProps/TextForm.h"
 
 CLevelMain*&	LUI=(CLevelMain*)UI;
 
@@ -58,12 +55,17 @@ CCommandVar CLevelTool::CommandChangeTarget(CCommandVar p1, CCommandVar p2)
         return 		TRUE;
     }else{
     	return 		FALSE;
-    }
+	}
+}
+CCommandVar CLevelTool::CommandFindObject(CCommandVar p1, CCommandVar p2)
+{
+	if (LUI->GetEState()==esEditScene) ShowObjectList(true);
+	return TRUE;
 }
 CCommandVar CLevelTool::CommandShowObjectList(CCommandVar p1, CCommandVar p2)
 {
-    if (LUI->GetEState()==esEditScene) ShowObjectList();
-    return TRUE;
+	if (LUI->GetEState()==esEditScene) ShowObjectList();
+	return TRUE;
 }
 
 //------------------------------------------------------------------------------
@@ -93,7 +95,7 @@ CCommandVar CLevelTool::CommandEnableTarget(CCommandVar p1, CCommandVar p2)
 {
 	ESceneToolBase* M 	= Scene->GetTool(p1);
     VERIFY					(M);
-    BOOL res				= FALSE;
+    BOOL res;
 	if (p2)
     {
     	res 				= ExecCommand(COMMAND_LOAD_LEVEL_PART,M->ClassID,TRUE);
@@ -124,8 +126,8 @@ CCommandVar CLevelTool::CommandShowTarget(CCommandVar p1, CCommandVar p2)
     if(p2)
     	M->m_EditFlags.set(ESceneToolBase::flVisible,TRUE);
     else
-    	M->m_EditFlags.set(ESceneToolBase::flVisible,FALSE);
-        
+		M->m_EditFlags.set(ESceneToolBase::flVisible,FALSE);
+
     return TRUE;
 }
 
@@ -210,18 +212,9 @@ CCommandVar CommandLoad(CCommandVar p1, CCommandVar p2)
             UI->SetStatus			("Level loading...");
             ExecCommand				(COMMAND_CLEAR);
 
-			IReader* R = FS.r_open	(temp_fn.c_str());
-            char ch;
-            R->r(&ch, sizeof(ch));
-            bool is_ltx = (ch=='[');
-            FS.r_close(R);
             bool res;
-            LTools->m_LastFileName	= temp_fn.c_str();
-
-            if(is_ltx)
-            	res = Scene->LoadLTX(temp_fn.c_str(), false);
-            else
-            	res = Scene->Load(temp_fn.c_str(), false);
+			LTools->m_LastFileName	= temp_fn.c_str();
+			res = Scene->Load(temp_fn.c_str(), false);
 
             if (res)
             {
@@ -286,15 +279,7 @@ CCommandVar CommandSave(CCommandVar p1, CCommandVar p2)
                 xr_strlwr		(temp_fn);
 
                 UI->SetStatus	("Level saving...");
-
-                if(LUI->m_rt_object_props->section_exist(temp_fn.c_str()))
-                {
-                    CInifile::Sect& S 	= LUI->m_rt_object_props->r_section(temp_fn.c_str());
-                    S.Data.clear		();
-                }
-
                 Scene->SaveLTX	(temp_fn.c_str(), false, (p2==66));
-
                 UI->ResetStatus	();
                 // set new name
                 if (0!=xr_strcmp(Tools->m_LastFileName.c_str(),temp_fn.c_str()))
@@ -330,6 +315,7 @@ CCommandVar CommandClear(CCommandVar p1, CCommandVar p2)
         ExecCommand				(COMMAND_CHANGE_ACTION,etaSelect,estDefault);
 	    ExecCommand				(COMMAND_UPDATE_PROPERTIES);
         Scene->UndoSave			();
+        ::Sound->set_geometry_som(NULL); // move to scene.cpp ?
         return 					TRUE;
     } else {
         ELog.DlgMsg( mtError, "Scene sharing violation" );
@@ -459,12 +445,24 @@ CCommandVar CommandPaste(CCommandVar p1, CCommandVar p2)
 {
     if( !Scene->locked() ){
         Scene->PasteSelection();
-        Scene->UndoSave	();
+		Scene->UndoSave	();
         return 			TRUE;
     } else {
         ELog.DlgMsg		( mtError, "Scene sharing violation" );
         return  		FALSE;
     }
+}
+
+CCommandVar CommandDuplicate(CCommandVar p1, CCommandVar p2)
+{
+    if( !Scene->locked() ){
+		Scene->DuplicateSelection(LTools->CurrentClassID());
+        Scene->UndoSave	();
+        return 			TRUE;
+    } else {
+        ELog.DlgMsg		( mtError, "Scene sharing violation" );
+        return  		FALSE;
+	}
 }
 
 #include "AppendObjectInfoForm.h"
@@ -663,13 +661,36 @@ CCommandVar CommandMakeHOM(CCommandVar p1, CCommandVar p2)
 }
 CCommandVar CommandMakeSOM(CCommandVar p1, CCommandVar p2)
 {
-    if( !Scene->locked() ){
-        if (mrYes==ELog.DlgMsg(mtConfirmation, TMsgDlgButtons()<<mbYes<<mbNo, "Are you sure to export Sound Occlusion Model?"))
-            return				Builder.MakeSOM();
-    }else{
-        ELog.DlgMsg( mtError, "Scene sharing violation" );
-    }
-    return 						FALSE;
+	if( !Scene->locked() ){
+		if (mrYes!=ELog.DlgMsg(mtConfirmation, TMsgDlgButtons()<<mbYes<<mbNo, "Are you sure to export Sound Occlusion Model?"))
+			return				FALSE;
+		BOOL result				= Builder.MakeSOM();
+		if(result){
+			// load sound occluder
+			IReader *F = FS.r_open(Builder.MakeLevelPath("level.som").c_str());
+			if(F){
+				::Sound->set_geometry_som(F);
+				FS.r_close		(F);
+			}
+		}
+		return					result;
+	}else{
+		ELog.DlgMsg( mtError, "Scene sharing violation" );
+		return 					FALSE;
+	}
+}
+CCommandVar CommandMakeSoundEnv(CCommandVar p1, CCommandVar p2)
+{
+	if( !Scene->locked() ){
+		if (mrYes!=ELog.DlgMsg(mtConfirmation, TMsgDlgButtons()<<mbYes<<mbNo, "Are you sure to export Sound Environment?"))
+			return				FALSE;
+
+		BOOL result				= LSndLib->Validate() && Builder.MakeSoundEnv();
+		return					result;
+	}else{
+		ELog.DlgMsg( mtError, "Scene sharing violation" );
+		return 					FALSE;
+	}
 }
 CCommandVar CommandInvertSelectionAll(CCommandVar p1, CCommandVar p2)
 {
@@ -752,6 +773,39 @@ CCommandVar CommandHideAll(CCommandVar p1, CCommandVar p2)
 	    return 					FALSE;
     }
 }
+CCommandVar CommandLockAll(CCommandVar p1, CCommandVar p2)
+{
+    if( !Scene->locked() ){
+        Scene->LockObjects		(bool(p1),LTools->CurrentClassID(),false);
+        Scene->UndoSave			();
+	    return 					TRUE;
+    }else{
+        ELog.DlgMsg				( mtError, "Scene sharing violation" );
+	    return 					FALSE;
+    }
+}
+CCommandVar CommandLockSel(CCommandVar p1, CCommandVar p2)
+{
+    if( !Scene->locked() ){
+        Scene->LockObjects		(bool(p1),LTools->CurrentClassID(),true,true);
+        Scene->UndoSave			();
+	    return 					TRUE;
+    }else{
+        ELog.DlgMsg				( mtError, "Scene sharing violation" );
+	    return 					FALSE;
+    }
+}
+CCommandVar CommandLockUnsel(CCommandVar p1, CCommandVar p2)
+{
+    if( !Scene->locked() ){
+        Scene->LockObjects		(bool(p1),LTools->CurrentClassID(),true,false);
+        Scene->UndoSave			();
+        return					TRUE;
+   }else{
+        ELog.DlgMsg				( mtError, "Scene sharing violation" );                   
+	    return 					FALSE;
+    }
+}
 CCommandVar CommandSetSnapObjects(CCommandVar p1, CCommandVar p2)
 {
     if( !Scene->locked() ){
@@ -807,6 +861,51 @@ CCommandVar CommandRefreshSnapObjects(CCommandVar p1, CCommandVar p2)
     fraLeftBar->UpdateSnapList();
     return 						TRUE;
 }
+CCommandVar CommandEditSnapObjects(CCommandVar p1, CCommandVar p2)
+{
+	if(Scene->locked())
+    {
+    	ELog.DlgMsg(mtError, "Scene sharing violation");
+        return FALSE;
+    }
+
+	AnsiString snap_list;
+    ObjectList *list = Scene->GetSnapList(true);
+
+    if(list && !list->empty())
+    {
+    	ObjectIt I = list->begin();
+
+        while(I != list->end())
+        {
+        	snap_list += AnsiString((*I)->Name) + "\r\n";
+        	I++;
+        }
+    }
+
+    if(TfrmText::RunEditor(snap_list, "Snap list"))
+    {
+    	Scene->ClearSnapList(true);
+
+        char *s = xr_strdup(snap_list.c_str()), *t;
+
+        t = strtok(s, "\r\n");
+		while(t)
+        {
+        	CCustomObject *o = Scene->FindObjectByName(t, OBJCLASS_SCENEOBJECT);
+
+            if(o)
+            	Scene->AddToSnapList(o, false);
+
+            t = strtok(NULL, "\r\n");
+        }
+
+        xr_free(s);
+    }
+
+    fraLeftBar->UpdateSnapList();
+	return TRUE;
+}
 CCommandVar CommandRefreshSoundEnvs(CCommandVar p1, CCommandVar p2)
 {
     ::Sound->refresh_env_library();
@@ -818,6 +917,24 @@ CCommandVar CommandRefreshSoundEnvGeometry(CCommandVar p1, CCommandVar p2)
     LSndLib->RefreshEnvGeometry();
     return 						TRUE;
 }
+CCommandVar CommandLoadSoundOccluder(CCommandVar p1, CCommandVar p2)
+{
+	xr_string path;
+	if(EFS.GetOpenName("$level$", path))
+    {
+    	IReader *F 				= FS.r_open(path.c_str());
+		if(F)
+        {
+        	::Sound->set_geometry_som(F);
+            FS.r_close			(F);
+            return				TRUE;
+        }
+        else
+        	return				FALSE;
+    }
+    else
+    	return					FALSE;
+}
 CCommandVar CommandShowContextMenu(CCommandVar p1, CCommandVar p2)
 {
     LUI->ShowContextMenu		(p1);
@@ -826,9 +943,7 @@ CCommandVar CommandShowContextMenu(CCommandVar p1, CCommandVar p2)
 //------        
 CCommandVar CommandRefreshUIBar(CCommandVar p1, CCommandVar p2)
 {
-    fraTopBar->RefreshBar		();
-    fraLeftBar->RefreshBar		();
-    fraBottomBar->RefreshBar	();
+    frmMain->RefreshBars		();
     return 						TRUE;
 }
 CCommandVar CommandRestoreUIBar(CCommandVar p1, CCommandVar p2)
@@ -869,6 +984,40 @@ CCommandVar CommandToggleAiMapVisibility(CCommandVar p1, CCommandVar p2)
     return 						TRUE;
 }
 
+CCommandVar CommandRunScript(CCommandVar p1, CCommandVar p2)
+{
+	if (!p1.IsString())
+    	return					FALSE;
+
+	string_path fp;
+    FS.update_path				(fp, _temp_, "$$temp.bat");
+
+    IWriter* F = FS.w_open		(fp);
+    if (!F){
+    	ELog.Msg				(mtError, "Can't open file '%s'", fp);
+        return					FALSE;
+    }
+
+	F->w_string					(xr_string(p1).c_str());
+    FS.w_close					(F);
+
+	xr_string level;
+    (level = "LEVEL=") += *Scene->m_LevelOp.m_FNLevelPath;
+
+    const char* env[] = {
+    	level.c_str(),
+        NULL
+    };
+
+    unsigned code = spawnle		(P_WAIT, fp, fp, NULL, env);
+    if(code != 0)
+    	ELog.DlgMsg				(mtError, "Error %u", code);
+
+    FS.file_delete				(fp);
+    
+	return						TRUE;
+}
+
 void CLevelMain::RegisterCommands()
 {
 	inherited::RegisterCommands	();
@@ -897,6 +1046,7 @@ void CLevelMain::RegisterCommands()
 	REGISTER_CMD_C	    (COMMAND_READONLY_TARGET,          	LTools,CLevelTool::CommandReadonlyTarget);
 	REGISTER_CMD_C	    (COMMAND_MULTI_RENAME_OBJECTS,     	LTools,CLevelTool::CommandMultiRenameObjects);
 
+	REGISTER_CMD_CE	    (COMMAND_FIND_OBJECT,           	"Scene\\Find Object",			LTools,CLevelTool::CommandFindObject, false)
 	REGISTER_CMD_CE	    (COMMAND_SHOW_OBJECTLIST,           "Scene\\Show Object List",		LTools,CLevelTool::CommandShowObjectList, false);
 	// common
 	REGISTER_CMD_S	    (COMMAND_LIBRARY_EDITOR,           	CommandLibraryEditor);
@@ -921,6 +1071,7 @@ void CLevelMain::RegisterCommands()
 	REGISTER_CMD_SE	    (COMMAND_CUT,              			"Edit\\Cut",					CommandCut,false);
 	REGISTER_CMD_SE	    (COMMAND_COPY,              		"Edit\\Copy",					CommandCopy,false);
 	REGISTER_CMD_SE	    (COMMAND_PASTE,              		"Edit\\Paste",					CommandPaste,false);
+	REGISTER_CMD_SE		(COMMAND_DUPLICATE,					"Edit\\Duplicate",				CommandDuplicate,false);
 	REGISTER_CMD_S	    (COMMAND_LOAD_SELECTION,            CommandLoadSelection);
 	REGISTER_CMD_S	    (COMMAND_SAVE_SELECTION,            CommandSaveSelection);
 	REGISTER_CMD_SE	    (COMMAND_UNDO,              		"Edit\\Undo",					CommandUndo,false);
@@ -937,6 +1088,7 @@ void CLevelMain::RegisterCommands()
 	REGISTER_CMD_SE	    (COMMAND_MAKE_DETAILS,              "Compile\\Make Details",        CommandMakeDetails,false);
 	REGISTER_CMD_SE	    (COMMAND_MAKE_HOM,              	"Compile\\Make HOM",	        CommandMakeHOM,false);
 	REGISTER_CMD_SE	    (COMMAND_MAKE_SOM,              	"Compile\\Make SOM",	        CommandMakeSOM,false);
+	REGISTER_CMD_SE	    (COMMAND_MAKE_SOUND_ENV,            "Compile\\Make Sound Environment",	        CommandMakeSoundEnv,false);
 	REGISTER_CMD_SE	    (COMMAND_INVERT_SELECTION_ALL,      "Selection\\Invert", 			CommandInvertSelectionAll,false);
 	REGISTER_CMD_SE	    (COMMAND_SELECT_ALL,              	"Selection\\Select All", 		CommandSelectAll,false);
 	REGISTER_CMD_SE	    (COMMAND_DESELECT_ALL,              "Selection\\Unselect All", 		CommandDeselectAll,false);
@@ -944,14 +1096,19 @@ void CLevelMain::RegisterCommands()
 	REGISTER_CMD_SE	    (COMMAND_HIDE_UNSEL,              	"Visibility\\Hide Unselected",	CommandHideUnsel,false);
 	REGISTER_CMD_SE	    (COMMAND_HIDE_SEL,              	"Visibility\\Hide Selected", 	CommandHideSel,false);
 	REGISTER_CMD_SE	    (COMMAND_HIDE_ALL,              	"Visibility\\Hide All", 		CommandHideAll,false);
+	REGISTER_CMD_S	    (COMMAND_LOCK_ALL,              	CommandLockAll);
+	REGISTER_CMD_S	    (COMMAND_LOCK_SEL,             		CommandLockSel);
+	REGISTER_CMD_S	    (COMMAND_LOCK_UNSEL,              	CommandLockUnsel);
 	REGISTER_CMD_S		(COMMAND_SET_SNAP_OBJECTS,          CommandSetSnapObjects);
 	REGISTER_CMD_S	    (COMMAND_ADD_SEL_SNAP_OBJECTS,      CommandAddSelSnapObjects);
 	REGISTER_CMD_S	    (COMMAND_DEL_SEL_SNAP_OBJECTS,      CommandDelSelSnapObjects);
 	REGISTER_CMD_S	    (COMMAND_CLEAR_SNAP_OBJECTS,        CommandClearSnapObjects);
 	REGISTER_CMD_S	    (COMMAND_SELECT_SNAP_OBJECTS,       CommandSelectSnapObjects);
+    REGISTER_CMD_S		(COMMAND_EDIT_SNAP_OBJECTS,			CommandEditSnapObjects);
 	REGISTER_CMD_S	    (COMMAND_REFRESH_SNAP_OBJECTS,      CommandRefreshSnapObjects);
 	REGISTER_CMD_S	    (COMMAND_REFRESH_SOUND_ENVS,        CommandRefreshSoundEnvs);
 	REGISTER_CMD_S	    (COMMAND_REFRESH_SOUND_ENV_GEOMETRY,CommandRefreshSoundEnvGeometry);
+    REGISTER_CMD_S		(COMMAND_LOAD_SOUND_OCCLUDER,		CommandLoadSoundOccluder);
 	REGISTER_CMD_S	    (COMMAND_SHOWCONTEXTMENU,           CommandShowContextMenu);
 	REGISTER_CMD_S	    (COMMAND_REFRESH_UI_BAR,            CommandRefreshUIBar);
 	REGISTER_CMD_S	    (COMMAND_RESTORE_UI_BAR,            CommandRestoreUIBar);
@@ -961,21 +1118,22 @@ void CLevelMain::RegisterCommands()
 	REGISTER_CMD_S	    (COMMAND_CREATE_SOUND_LIB,          CommandCreateSoundLib);
 	REGISTER_CMD_SE	    (COMMAND_TOGGLE_AIMAP_VISIBILITY,   "Visibility\\Toggle AIMap",			CommandToggleAiMapVisibility,true);
 	REGISTER_CMD_S	    (COMMAND_SHOW_CLIP_EDITOR,			CommandShowClipEditor);
-    
+    REGISTER_CMD_S		(COMMAND_RUN_SCRIPT,				CommandRunScript);
+
 }
 
-char* CLevelMain::GetCaption()
+LPCSTR CLevelMain::GetCaption()
 {
 	return Tools->m_LastFileName.IsEmpty()?"noname":Tools->m_LastFileName.c_str();
 }
 
-bool __fastcall CLevelMain::ApplyShortCut(WORD Key, TShiftState Shift)
+bool CLevelMain::ApplyShortCut(WORD Key, TShiftState Shift)
 {
     return inherited::ApplyShortCut(Key,Shift);
 }
 //---------------------------------------------------------------------------
 
-bool __fastcall CLevelMain::ApplyGlobalShortCut(WORD Key, TShiftState Shift)
+bool CLevelMain::ApplyGlobalShortCut(WORD Key, TShiftState Shift)
 {
     return inherited::ApplyGlobalShortCut(Key,Shift);
 }
@@ -1179,46 +1337,15 @@ void CLevelMain::RealQuit()
 	frmMain->Close();
 }
 //---------------------------------------------------------------------------
-
-#define INI_RTP_NAME(buf) 		{FS.update_path(buf,"$local_root$","rt_object_props.ltx");}
-
 void CLevelMain::SaveSettings(CInifile* I)
 {
-	m_rt_object_props->save_as();
-    
 	inherited::SaveSettings(I);
     SSceneSummary::Save(I);
 }
 void CLevelMain::LoadSettings(CInifile* I)
 {
-	string_path			fn;
-	INI_RTP_NAME		(fn);
-	m_rt_object_props = CInifile::Create(fn,FALSE);
-	m_rt_object_props->save_at_end(FALSE);
-    
 	inherited::LoadSettings(I);
     SSceneSummary::Load(I);
 }
-
-void CLevelMain::store_rt_flags(const CCustomObject* CO)
-{
-    if(LTools->m_LastFileName.Length() && CO->Name)
-    {
-   	m_rt_object_props->remove_line(LTools->m_LastFileName.c_str(), CO->Name);
-	if(CO->Selected() || !CO->Visible())
-    	m_rt_object_props->w_u32(LTools->m_LastFileName.c_str(), CO->Name, CO->m_RT_Flags.get()&(CCustomObject::flRT_Selected|CCustomObject::flRT_Visible));
-    }
-}
-
-void CLevelMain::restore_rt_flags(CCustomObject* CO)
-{
-	if(CO->Name && LTools->m_LastFileName.Length() && m_rt_object_props->line_exist(LTools->m_LastFileName.c_str(), CO->Name))
-    {
-		u32 fl = m_rt_object_props->r_u32(LTools->m_LastFileName.c_str(), CO->Name);
-        CO->m_RT_Flags.set	(CCustomObject::flRT_Visible|CCustomObject::flRT_Selected, FALSE);
-        CO->m_RT_Flags.or	(fl);
-    }
-}
-
 //---------------------------------------------------------------------------
 

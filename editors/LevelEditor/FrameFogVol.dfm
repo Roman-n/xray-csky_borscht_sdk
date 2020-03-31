@@ -35,6 +35,7 @@ object fraFogVol: TfraFogVol
       Caption = 'Commands'
       Color = clGray
       ParentColor = False
+      OnClick = ExpandClick
     end
     object ExtBtn2: TExtBtn
       Left = 205
@@ -58,6 +59,7 @@ object fraFogVol: TfraFogVol
         00000000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00
         0000}
       ParentFont = False
+      OnClick = PaneMinClick
     end
     object ebGroup: TExtBtn
       Left = 2

@@ -32,7 +32,6 @@ TfrmMain *frmMain;
 #include "GameMtlLib.h"
 #include "../../xrSound/soundrender_source.h"
 #include "../ECore/Editor/render.h"
-#include "ResourceManager.h"
 #include "../xrEProps/EditorChooseEvents.h"
 
 
@@ -50,6 +49,8 @@ __fastcall TfrmMain::TfrmMain(TComponent* Owner)
 	fraLeftBar->Parent      = paLeftBar;
 	if (paLeftBar->Tag > 0) paLeftBar->Parent = paTopBar;
 	else paLeftBar->Parent 	= frmMain;
+
+    spLeftBar->Visible      = paLeftBar->Tag == 0;
 
 	Device.SetHandle		(Handle,D3DWindow->Handle);
     EnableReceiveCommands	();
@@ -109,9 +110,13 @@ void __fastcall TfrmMain::sbToolsMinClick(TObject *Sender)
     if (paLeftBar->Tag > 0){
         paLeftBar->Parent = frmMain;
         paLeftBar->Tag    = 0;
+
+        spLeftBar->Show	  ();
     }else{
         paLeftBar->Parent = paTopBar;
         paLeftBar->Tag    = 1;
+
+        spLeftBar->Hide   ();
     }
 }
 //---------------------------------------------------------------------------
@@ -123,6 +128,8 @@ void __fastcall TfrmMain::TopClick(TObject *Sender)
         paLeftBar->Parent = frmMain;
         paLeftBar->Height = paLeftBar->Tag;
         paLeftBar->Tag    = 0;
+
+        spLeftBar->Show	  ();
     }
 }
 //---------------------------------------------------------------------------

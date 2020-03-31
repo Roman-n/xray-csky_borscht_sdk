@@ -5,7 +5,7 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#ifdef __BORLANDC__
+#ifdef _EDITOR
 	#pragma comment(lib,"xrCoreB.lib")
 #else
 	#pragma comment(lib,"xrCore.lib")

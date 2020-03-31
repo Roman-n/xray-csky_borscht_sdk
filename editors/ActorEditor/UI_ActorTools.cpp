@@ -169,7 +169,7 @@ bool CActorTools::OnCreate()
 {
 	inherited::OnCreate	();
     // props
-    m_ObjectItems 		= TItemList::CreateForm("",fraLeftBar->paObjectProps,alClient,TItemList::ilDragCustom|TItemList::ilMultiSelect|TItemList::ilSuppressStatus);
+    m_ObjectItems 		= TItemList::CreateForm("",fraLeftBar->paObjectProps,alClient,TItemList::ilDragCustom|TItemList::ilMultiSelect|TItemList::ilSuppressStatus|TItemList::ilFocusOnHover);
 	m_ObjectItems->SetOnItemsFocusedEvent(fastdelegate::bind<TOnILItemsFocused>(this,&CActorTools::OnObjectItemFocused));
     m_Props 			= TProperties::CreateForm("",fraLeftBar->paItemProps,alClient,fastdelegate::bind<TOnModifiedEvent>(this,&CActorTools::OnItemModified));
     m_PreviewObject.OnCreate();
@@ -216,7 +216,7 @@ bool CActorTools::IfModified(){
 }
 //---------------------------------------------------------------------------
 
-void CActorTools::OnObjectModified()
+void __stdcall CActorTools::OnObjectModified()
 {
     m_Flags.set				(flUpdateGeometry,TRUE);
     OnGeometryModified		();
@@ -278,19 +278,20 @@ void CActorTools::Render()
         }
     }
 
-//    if (psDeviceFlags.is(rsEnvironment)) g_pGamePersistent->Environment().RenderLast	();
+    if (psDeviceFlags.is(rsEnvironment)){
+    	g_pGamePersistent->Environment().RenderFlares	();
+    	g_pGamePersistent->Environment().RenderLast	();
+    }
 
     inherited::Render		();
 }
 //---------------------------------------------------------------------------
 void CActorTools::RenderEnvironment()
 {
-/*
     if (psDeviceFlags.is(rsEnvironment)){
         g_pGamePersistent->Environment().RenderSky	();
         g_pGamePersistent->Environment().RenderClouds	();
     }
-*/    
 }
 
 void CActorTools::OnFrame()
@@ -593,7 +594,7 @@ bool CActorTools::ExportDM(LPCSTR name)
 {
 	VERIFY(m_bReady);
     if (m_pEditObject){
-    	EDetail DM;
+    	EDetail DM = EDetail(false);
         if (!DM.Update(m_pEditObject->GetName())) return false;
         DM.Export(name);
         return true;
@@ -611,7 +612,7 @@ void CActorTools::OnShowHint(AStringVec& SS)
 {
 }
 
-void CActorTools::OnItemModified()
+void __stdcall CActorTools::OnItemModified()
 {
 	switch(m_EditMode){
     case emObject:      OnObjectModified();		break;
@@ -622,7 +623,7 @@ void CActorTools::OnItemModified()
     }
 }
 
-void __fastcall CActorTools::OnBoneModified(void)
+void __stdcall CActorTools::OnBoneModified(void)
 {
 	Modified				();
 	RefreshSubProperties	();
@@ -892,8 +893,8 @@ bool CActorTools::BatchConvert(LPCSTR fn)
     if (ini->section_exist("ogf"))
     {
     	CInifile::Sect& sect	= ini->r_section("ogf");
-        Msg						("Start converting %d items...",sect.Data.size());
-        for (CInifile::Item* it=sect.Data.begin(); it!=sect.Data.end(); it++){
+		Msg						("Start converting %d items...",sect.Data.size());
+		for (CInifile::SectCIt it=sect.Data.begin(); it!=sect.Data.end(); it++){
         	string_path 		src_name;
             string_path 		tgt_name;
             FS.update_path		(src_name,_objects_,		it->first.c_str());
@@ -919,7 +920,7 @@ bool CActorTools::BatchConvert(LPCSTR fn)
     {
     	CInifile::Sect& sect	= ini->r_section("omf");
         Msg						("Start converting %d items...",sect.Data.size());
-        for (CInifile::Item* it=sect.Data.begin(); it!=sect.Data.end(); ++it)
+        for (CInifile::SectCIt it=sect.Data.begin(); it!=sect.Data.end(); ++it)
         {
         	string_path 		src_name;
             string_path 		tgt_name;
@@ -976,7 +977,7 @@ LPCSTR CActorTools::ExtractMotionName(LPCSTR full_name, LPCSTR prefix)
     {
         LPCSTR mot_nm		   	= strstr(full_name, _templ);
     	mot_nm 					+= xr_strlen(_templ);
-        u32 ii = 0;
+
          while(isdigit(*mot_nm))
         {
             ++mot_nm;

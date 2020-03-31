@@ -45,6 +45,10 @@ namespace CPU {
 #ifdef M_BORLAND
 	XRCORE_API u64 __fastcall	GetCLK				(void);
 #endif
+
+#ifdef M_GCC
+	XRCORE_API u64				GetCLK				(void);
+#endif
 };
 
 extern XRCORE_API	void	_initialize_cpu			();

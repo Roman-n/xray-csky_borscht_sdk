@@ -476,6 +476,9 @@ int ESceneAIMapTool::BuildNodes(const Fvector& pos, int sz, bool bIC)
 
 void ESceneAIMapTool::BuildNodes(bool bFromSelectedOnly)
 {
+	BOOL bHideNodes			= m_Flags.is(flHideNodes);
+    if(m_Flags.is(flHideNodesWhileGenerating)) m_Flags.set(flHideNodes,TRUE);
+
 	// begin
 	m_Nodes.reserve	(1024*1024);
 
@@ -519,10 +522,10 @@ void ESceneAIMapTool::BuildNodes(bool bFromSelectedOnly)
         }
     	if (bFromSelectedOnly){
 	        // select neighbour nodes
-            if (N->n1) N->n1->flags.set(SAINode::flSelected,TRUE);
-            if (N->n2) N->n2->flags.set(SAINode::flSelected,TRUE);
-            if (N->n3) N->n3->flags.set(SAINode::flSelected,TRUE);
-            if (N->n4) N->n4->flags.set(SAINode::flSelected,TRUE);
+            if (N->n1) SelectNode(N->n1, true);
+            if (N->n2) SelectNode(N->n2, true);
+            if (N->n3) SelectNode(N->n3, true);
+            if (N->n4) SelectNode(N->n4, true);
         }
         
         if (k%512==0) {
@@ -538,6 +541,9 @@ void ESceneAIMapTool::BuildNodes(bool bFromSelectedOnly)
         }
     }
     UI->ProgressEnd(pb);
+
+    // restore original value
+    m_Flags.set				(flHideNodes,bHideNodes);
 }
 
 SAINode* ESceneAIMapTool::GetNode(Fvector vAt, bool bIC)	// return node's index

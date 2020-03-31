@@ -31,11 +31,13 @@ USEFORM("ObjectList.cpp", frmObjectList);
 USEFORM("previewimage.cpp", frmPreviewImage);
 USEFORM("PropertiesEObject.cpp", frmPropertiesEObject);
 USEFORM("Splash.cpp", frmSplash);
+USEFORM("Edit\AppendObjectInfoForm.cpp", frmAppendObjectInfo);
 USEFORM("FrmDBXpacker.cpp", DB_packer);
 USEFORM("RightForm.cpp", frmRight);
 USEFORM("FrameFogVol.cpp", fraFogVol);
-USEFORM("Edit\AppendObjectInfoForm.cpp", frmAppendObjectInfo);
 USEFORM("LEClipEditor.cpp", ClipMaker);
+USEFORM("FormCoord.cpp", frmCoord);
+USEFORM("FormAbout.cpp", AboutForm);
 //---------------------------------------------------------------------------
 WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int)
 {
@@ -51,7 +53,7 @@ WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int)
         frmSplash->SetStatus	("Core initializing...");
 
     	Core._initialize		("level",ELogCallback);
-         CEditableMesh::m_bDraftMeshMode = TRUE;
+        if(!strstr(Core.Params,"-hq")) CEditableMesh::m_bDraftMeshMode = TRUE;
         Application->Initialize	();
                                        
         frmSplash->SetStatus	("Loading...");
@@ -65,6 +67,8 @@ WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int)
         TfrmLog::CreateLog		();
 		Application->CreateForm(__classid(TfrmMain), &frmMain);
 		Application->CreateForm(__classid(TfrmRight), &frmRight);
+		Application->CreateForm(__classid(TfrmCoord), &frmCoord);
+		Application->CreateForm(__classid(TAboutForm), &AboutForm);
 		frmMain->SetHInst		(hInst);
 
 		xr_delete(frmSplash);

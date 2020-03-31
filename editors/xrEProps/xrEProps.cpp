@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#include "../../xrServerEntities/xrEProps.h"
+#include "xrEProps.h"
 
 USEFORM("ChoseForm.cpp", frmChoseItem);
 USEFORM("ItemDialog.cpp", frmItemDialog);
@@ -18,6 +18,28 @@ void XR_EPROPS_API CheckWindowPos(TForm* form)
 	if (form->Top+form->Height>Screen->Height)	form->Top 	= Screen->Height-form->Height;
 	if (form->Left<0) 							form->Left	= 0;
 	if (form->Top<0) 							form->Top 	= 0;
+}
+//---------------------------------------------------------------------------
+
+AnsiString GetIniFileName(void)
+{
+	const char * exe_name = strrchr(Application->ExeName.c_str(), '\\');
+
+    if(exe_name)
+    {
+    	exe_name++; // skip slash
+
+		if(stricmp(exe_name, "ActorEditor.exe") == 0)
+    		return "actor.ini";
+    	if(stricmp(exe_name, "ParticleEditor.exe") == 0)
+    		return "particle.ini";
+    	if(stricmp(exe_name, "ShaderEditor.exe") == 0)
+    		return "shader.ini";
+    	if(stricmp(exe_name, "LevelEditor.exe") == 0)
+    		return "level.ini";
+    }
+
+    return "xrEProps.ini";
 }
 //---------------------------------------------------------------------------
 

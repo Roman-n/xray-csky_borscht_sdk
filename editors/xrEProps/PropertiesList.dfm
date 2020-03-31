@@ -1,11 +1,11 @@
 object Properties: TProperties
   Left = 638
   Top = 43
-  Width = 424
-  Height = 329
-  BiDiMode = bdRightToLeft
+  BiDiMode = bdLeftToRight
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Properties'
+  ClientHeight = 294
+  ClientWidth = 408
   Color = clGray
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -26,36 +26,31 @@ object Properties: TProperties
   object Bevel1: TBevel
     Left = 0
     Top = 0
-    Width = 416
+    Width = 408
     Height = 1
     Align = alTop
     Shape = bsFrame
+    ExplicitWidth = 416
   end
   object spFolders: TSplitter
     Left = 0
     Top = 1
     Width = 2
-    Height = 275
-    Cursor = crHSplit
+    Height = 274
     Color = 4934475
     ParentColor = False
     Visible = False
+    ExplicitHeight = 275
   end
   object tvProperties: TElTree
     Left = 2
     Top = 1
-    Width = 414
-    Height = 275
-    Cursor = crDefault
-    LeftPosition = 0
+    Width = 406
+    Height = 274
     HeaderPopupMenu = pmSystem
-    DragCursor = crDrag
     Align = alClient
     AlwaysKeepSelection = False
-    AutoCollapse = False
     AutoLineHeight = False
-    DockOrientation = doNoOrient
-    DefaultSectionWidth = 120
     AdjustMultilineHeight = False
     BorderStyle = bsNone
     BorderSides = []
@@ -111,7 +106,6 @@ object Properties: TProperties
     CustomCheckboxes = True
     CustomPlusMinus = True
     DrawFocusRect = False
-    ExpandOnDblClick = False
     ExplorerEditMode = True
     FilteredVisibility = True
     FocusedSelectColor = 10526880
@@ -122,41 +116,29 @@ object Properties: TProperties
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     FullRowSelect = False
-    GradientSteps = 64
     HeaderColor = 7368816
     HeaderHeight = 17
     HeaderHotTrack = False
     HeaderSections.Data = {
-      F4FFFFFF02000000FC479F1100400000FFFFFFFF000001000100696F7D000000
-      32000000102700000000001114B295040000000000000E400000000000000140
-      00000000000000000001000000000000E1A80E4003A90E4028A90E404BA90E40
-      6EA90E4094A90E40BAA90E40E0A90E4002AA0E4029AA0E404FAA0E406FAA0E40
-      9AAA0E40CAAA0E40F0AA0E4010AB0E4039AB0E40040000004B65790001000000
-      000000000000000000FC479F1100400000FFFFFFFF000001010100696F590000
-      00320000001027000000000011ECB695040100000000000E4000000000000001
-      4000000000000000000001000000000000E1A80E4003A90E4028A90E404BA90E
-      406EA90E4094A90E40BAA90E40E0A90E4002AA0E4029AA0E404FAA0E406FAA0E
-      409AAA0E40CAAA0E40F0AA0E4010AB0E4039AB0E400600000056616C75650001
+      F1FFFFFF020000000000000000000000FFFFFFFF00000100010000007D000000
+      32000000102700000000000014B2950400000000000000000000000000000100
+      0000000000000000000100000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000040000004B65790001000000
+      0000000000000000000000000000000000FFFFFFFF0000010101000000590000
+      00320000001027000000000000ECB69504010000000000000000000000000001
+      0000000000000000000001000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000600000056616C75650001
       000000000000000000000000}
     HeaderFlat = True
-    HeaderFont.Charset = DEFAULT_CHARSET
-    HeaderFont.Color = clWindowText
-    HeaderFont.Height = -11
-    HeaderFont.Name = 'MS Sans Serif'
-    HeaderFont.Style = []
     HorizontalLines = True
     HorzDivLinesColor = 7368816
-    HorzScrollBarStyles.ShowTrackHint = False
     HorzScrollBarStyles.Width = 17
     HorzScrollBarStyles.ButtonSize = 16
     HorzScrollBarStyles.UseSystemMetrics = False
-    HorzScrollBarStyles.UseXPThemes = False
-    IgnoreEnabled = False
-    IncrementalSearch = False
+    HorzScrollBarStyles.ThemeMode = ttmNone
     ItemIndent = 14
-    KeepSelectionWithinLevel = False
-    LineBorderActiveColor = clBlack
-    LineBorderInactiveColor = clBlack
     LineHeight = 17
     LinesColor = clBtnShadow
     LinesStyle = psSolid
@@ -169,9 +151,7 @@ object Properties: TProperties
       E0E0E0E0E0E0E0E0E0808080808080808080808080E0E0E0E0E0E0E0E0E0E0E0
       E0E0E0E0808080808080808080E0E0E0E0E0E0E0E0E0E0E0E0E0E0E080808080
       8080808080808080808080808080808080808080808080808080}
-    MouseFrameSelect = True
     MultiSelect = False
-    OwnerDrawMask = '~~@~~'
     ParentFont = False
     ParentShowHint = False
     PlusMinusTransparent = True
@@ -185,12 +165,9 @@ object Properties: TProperties
       E0808080808080808080808080E0E0E0E0E0E080808080808080808080808080
       8080808080808080808080808080808080808080808080808080}
     QuickEditMode = True
-    ScrollbarOpposite = False
     ShowColumns = True
-    ShowCheckboxes = True
     ShowHint = False
     ShowImages = False
-    ShowLeafButton = False
     ShowLines = False
     SortType = stCustom
     StoragePath = '\Tree'
@@ -198,7 +175,6 @@ object Properties: TProperties
     StripedEvenColor = 8158332
     StripedItems = True
     TabOrder = 0
-    TabStop = True
     Tracking = False
     TrackColor = 10526880
     VertDivLinesColor = 7368816
@@ -207,9 +183,8 @@ object Properties: TProperties
     VertScrollBarStyles.Width = 17
     VertScrollBarStyles.ButtonSize = 16
     VertScrollBarStyles.UseSystemMetrics = False
-    VertScrollBarStyles.UseXPThemes = False
-    VirtualityLevel = vlNone
-    UseXPThemes = False
+    VertScrollBarStyles.ThemeMode = ttmNone
+    ThemeMode = ttmNone
     TextColor = clBtnText
     BkColor = clGray
     OnHeaderColumnResize = tvPropertiesHeaderColumnResize
@@ -228,7 +203,7 @@ object Properties: TProperties
     Top = 19
     Width = 90
     Height = 17
-    LWSensitivity = 0.01
+    LWSensitivity = 0.010000000000000000
     BtnColor = 12171705
     ButtonKind = bkLightWave
     ButtonWidth = 15
@@ -237,6 +212,8 @@ object Properties: TProperties
     BorderStyle = bsNone
     Color = 10526880
     Ctl3D = True
+    BiDiMode = bdLeftToRight
+    ParentBiDiMode = False
     ParentCtl3D = False
     TabOrder = 1
     Visible = False
@@ -245,8 +222,8 @@ object Properties: TProperties
   end
   object paButtons: TPanel
     Left = 0
-    Top = 276
-    Width = 416
+    Top = 275
+    Width = 408
     Height = 19
     Align = alBottom
     BevelOuter = bvNone
@@ -256,9 +233,10 @@ object Properties: TProperties
     object Bevel2: TBevel
       Left = 0
       Top = 0
-      Width = 416
+      Width = 408
       Height = 1
       Align = alTop
+      ExplicitWidth = 416
     end
     object ebOK: TExtBtn
       Left = 2
@@ -308,8 +286,10 @@ object Properties: TProperties
     Top = 42
     Width = 89
     Height = 15
+    BiDiMode = bdLeftToRight
     BorderStyle = bsNone
     Color = 10526880
+    ParentBiDiMode = False
     TabOrder = 3
     Visible = False
     OnDblClick = edTextDblClick
@@ -334,9 +314,11 @@ object Properties: TProperties
     Height = 15
     TabStop = False
     HotKey = 0
+    BiDiMode = bdLeftToRight
     BorderStyle = bsNone
     Color = 10526880
     Ctl3D = False
+    ParentBiDiMode = False
     ParentCtl3D = False
     TabOrder = 5
     Visible = False
@@ -431,6 +413,11 @@ object Properties: TProperties
   end
   object ElTreeInplaceEdit1: TElTreeInplaceEdit
     Types = [sftText]
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
     Left = 112
     Top = 56
   end

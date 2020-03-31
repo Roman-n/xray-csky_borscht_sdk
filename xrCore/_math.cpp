@@ -11,44 +11,16 @@
 #define MMNOJOY
 #include <mmsystem.h>
 
+#ifdef M_GCC
+#include <intrin.h>
+#endif
+
 // Initialized on startup
 XRCORE_API	Fmatrix			Fidentity;
 XRCORE_API	Dmatrix			Didentity;
 XRCORE_API	CRandom			Random;
 
-#ifdef _M_AMD64
-u16			getFPUsw()		{ return 0;	}
-
-namespace	FPU 
-{
-	XRCORE_API void 	m24		(void)	{
-		_control87	( _PC_24,   MCW_PC );
-		_control87	( _RC_CHOP, MCW_RC );
-	}
-	XRCORE_API void 	m24r	(void)	{
-		_control87	( _PC_24,   MCW_PC );
-		_control87	( _RC_NEAR, MCW_RC );
-	}
-	XRCORE_API void 	m53		(void)	{
-		_control87	( _PC_53,   MCW_PC );
-		_control87	( _RC_CHOP, MCW_RC );
-	}
-	XRCORE_API void 	m53r	(void)	{
-		_control87	( _PC_53,   MCW_PC );
-		_control87	( _RC_NEAR, MCW_RC );
-	}
-	XRCORE_API void 	m64		(void)	{
-		_control87	( _PC_64,   MCW_PC );
-		_control87	( _RC_CHOP, MCW_RC );
-	}
-	XRCORE_API void 	m64r	(void)	{
-		_control87	( _PC_64,   MCW_PC );
-		_control87	( _RC_NEAR, MCW_RC );
-	}
-
-	void		initialize		()				{}
-};
-#else
+#if defined(M_IX86) && (defined(M_BORLAND) || defined(M_VISUAL))
 u16 getFPUsw() 
 {
 	u16		SW;
@@ -121,6 +93,38 @@ namespace FPU
 		::Random.seed	( u32(CPU::GetCLK()%(1i64<<32i64)) );
 	}
 };
+#else // portable code
+u16			getFPUsw()		{ return 0;	}
+
+namespace	FPU 
+{
+	XRCORE_API void 	m24		(void)	{
+		_control87	( _PC_24,   _MCW_PC );
+		_control87	( _RC_CHOP, _MCW_RC );
+	}
+	XRCORE_API void 	m24r	(void)	{
+		_control87	( _PC_24,   _MCW_PC );
+		_control87	( _RC_NEAR, _MCW_RC );
+	}
+	XRCORE_API void 	m53		(void)	{
+		_control87	( _PC_53,   _MCW_PC );
+		_control87	( _RC_CHOP, _MCW_RC );
+	}
+	XRCORE_API void 	m53r	(void)	{
+		_control87	( _PC_53,   _MCW_PC );
+		_control87	( _RC_NEAR, _MCW_RC );
+	}
+	XRCORE_API void 	m64		(void)	{
+		_control87	( _PC_64,   _MCW_PC );
+		_control87	( _RC_CHOP, _MCW_RC );
+	}
+	XRCORE_API void 	m64r	(void)	{
+		_control87	( _PC_64,   _MCW_PC );
+		_control87	( _RC_NEAR, _MCW_RC );
+	}
+
+	void		initialize		()				{}
+};
 #endif
 
 namespace CPU 
@@ -150,6 +154,13 @@ namespace CPU
 	{
 		_asm    db 0x0F;
 		_asm    db 0x31;
+	}
+#endif
+
+#ifdef M_GCC
+	u64 GetCLK(void)
+	{
+		return __rdtsc();
 	}
 #endif
 
@@ -200,7 +211,7 @@ namespace CPU
 		clk_per_milisec	=	clk_per_second/1000;
 		clk_per_microsec	=	clk_per_milisec/1000;
 
-		_control87	( _PC_64,   MCW_PC );
+		_control87	( _PC_64,   _MCW_PC );
 //		_control87	( _RC_CHOP, MCW_RC );
 		double a,b;
 		a = 1;		b = double(clk_per_second);
@@ -252,7 +263,16 @@ void _initialize_cpu	(void)
 void _initialize_cpu_thread	()
 {
 }
-#else
+#endif
+
+#ifdef M_GCC
+void _initialize_cpu_thread ()
+{
+	// TODO
+}
+#endif
+
+#ifdef M_VISUAL
 // per-thread initialization
 #include <xmmintrin.h>
 #define _MM_DENORMALS_ZERO_MASK 0x0040
@@ -272,6 +292,7 @@ void _initialize_cpu_thread	()
 	// fpu & sse 
 	FPU::m24r	();
 #endif  // XRCORE_STATIC
+
 	if (CPU::ID.feature&_CPU_FEATURE_SSE)	{
 		//_mm_setcsr ( _mm_getcsr() | (_MM_FLUSH_ZERO_ON+_MM_DENORMALS_ZERO_ON) );
 		_MM_SET_FLUSH_ZERO_MODE			(_MM_FLUSH_ZERO_ON);
@@ -300,6 +321,7 @@ void	thread_name	(const char* name)
 	tn.szName		= name;
 	tn.dwThreadID	= DWORD(-1);
 	tn.dwFlags		= 0;
+#ifndef M_GCC
 	__try
 	{
 		RaiseException(0x406D1388,0,sizeof(tn)/sizeof(DWORD),(DWORD*)&tn);
@@ -307,6 +329,7 @@ void	thread_name	(const char* name)
 	__except(EXCEPTION_CONTINUE_EXECUTION)
 	{
 	}
+#endif
 }
 #pragma pack(pop)
 

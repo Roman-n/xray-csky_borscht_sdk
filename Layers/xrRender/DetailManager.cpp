@@ -231,7 +231,7 @@ void CDetailManager::UpdateVisibleM()
 					float	alpha_i		= 1.f - alpha;
 					float	dist_sq_rcp	= 1.f / dist_sq;
 
-					S.frame			= Device.dwFrame+Random.randI(15,30);
+					S.frame			= Device.dwFrame+::Random.randI(15,30);
 					for (int sp_id=0; sp_id<dm_obj_in_slot; sp_id++){
 						SlotPart&			sp	= S.G		[sp_id];
 						if (sp.id==DetailSlot::ID_Empty)	continue;
@@ -308,8 +308,10 @@ void __stdcall	CDetailManager::MT_CALC		()
 #endif    
 
 	MT.Enter					();
-	if (m_frame_calc!=Device.dwFrame)	
+	if (m_frame_calc!=Device.dwFrame)
+#ifndef _EDITOR
 		if ((m_frame_rendered+1)==Device.dwFrame) //already rendered
+#endif
 		{
 			Fvector		EYE				= Device.vCameraPosition;
 			int s_x	= iFloor			(EYE.x/dm_slot_size+.5f);

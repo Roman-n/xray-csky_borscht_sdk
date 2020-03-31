@@ -633,7 +633,7 @@ void CInifile::w_string( LPCSTR S, LPCSTR L, LPCSTR V, LPCSTR comment)
 	// section
 	string256			sect;
 	_parse				(sect,S);
-	_strlwr				(sect);
+	strlwr				(sect);
 	
 	if (!section_exist(sect))	
 	{
@@ -696,7 +696,7 @@ void	CInifile::w_u32			( LPCSTR S, LPCSTR L, u32				V, LPCSTR comment )
 void	CInifile::w_u64			( LPCSTR S, LPCSTR L, u64				V, LPCSTR comment )
 {
 	string128 temp; 
-#ifndef _EDITOR
+#ifdef M_VISUAL
 	_ui64toa_s			(V, temp, sizeof(temp), 10);
 #else
     _ui64toa			(V, temp, 10);
@@ -707,7 +707,7 @@ void	CInifile::w_u64			( LPCSTR S, LPCSTR L, u64				V, LPCSTR comment )
 void	CInifile::w_s64			( LPCSTR S, LPCSTR L, s64				V, LPCSTR comment )
 {
 	string128			temp;
-#ifndef _EDITOR
+#ifdef M_VISUAL
 	_i64toa_s			(V, temp, sizeof(temp), 10);
 #else
     _i64toa				(V, temp, 10);

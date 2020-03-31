@@ -1,8 +1,8 @@
 object fraLeftBar: TfraLeftBar
   Left = 0
   Top = 0
-  Width = 443
-  Height = 487
+  Width = 451
+  Height = 304
   HorzScrollBar.ButtonSize = 1
   HorzScrollBar.ParentColor = False
   HorzScrollBar.Visible = False
@@ -20,376 +20,21 @@ object fraLeftBar: TfraLeftBar
   ParentColor = False
   ParentFont = False
   TabOrder = 0
-  object ExtBtn11: TExtBtn
-    Left = 4
-    Top = 34
-    Width = 14
-    Height = 12
-    Hint = 'Clear snap list'
-    Align = alNone
-    BevelShow = False
-    HotTrack = True
-    HotColor = 15790320
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'MS Sans Serif'
-    Font.Style = []
-    Glyph.Data = {
-      36060000424D3606000000000000360000002800000020000000100000000100
-      18000000000000060000120B0000120B00000000000000000000FFFFFFFFFFFF
-      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF99A8ACC8D0D4
-      C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C8D0D4C8D0D4C8D0D4CCCCCCC9C9C9C9C9C9CBCBCBC8D0D4C8D0D4C8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C8D0D4DCDCDD9C9C9C4E4E4E424242434343494949979797DCDDDEC8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C9D1D53131317A7A7AB4B4B4C9C9C9CACACADBDBDB8D8D8D2121219C9C9CC8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      D0D6D9CECECECAD2D5494949000000000000202020C9C9C9CACACA1515159090
-      90C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      BDBDBDBDBDBD2E2E2E000000000000000000000000050505ACACAC9F9F9F2424
-      24C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACCCD3D6
-      6C6C6C9F9F9F000000505050CED4D80000000000000000009797974141413838
-      38D5D5D5C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      B2B2B22C2C2C0000000000003434340B0B0B0303030000004242422E2E2E9696
-      96949494C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      5C5C5C9898988686865151511A1A1A1D1D1D1919195F5F5F6F6F6FA1A1A14C4C
-      4CAAAAAAC8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      AFAFAF5858588989898A8A8AB0B0B0ABABABABABAB9595957D7D7D616161BFBF
-      BFC9D1D5C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C9D1D5DCDCDD9797978989896161616161616161618282829C9C9CD9D9D9C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8AC99A8AC
-      99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8
-      AC99A8AC99A8ACFFFFFF99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99
-      A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8ACFFFFFF}
-    NumGlyphs = 2
-    ParentFont = False
-    ParentShowHint = False
-    ShowHint = True
-  end
-  object ExtBtn12: TExtBtn
-    Left = 4
-    Top = 19
-    Width = 14
-    Height = 12
-    Hint = 'Clear snap list'
-    Align = alNone
-    BevelShow = False
-    HotTrack = True
-    HotColor = 15790320
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'MS Sans Serif'
-    Font.Style = []
-    Glyph.Data = {
-      36060000424D3606000000000000360000002800000020000000100000000100
-      18000000000000060000120B0000120B00000000000000000000FFFFFFFFFFFF
-      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF99A8ACC8D0D4
-      C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C8D0D4C8D0D4C8D0D4CCCCCCC9C9C9C9C9C9CBCBCBC8D0D4C8D0D4C8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C8D0D4DCDCDD9C9C9C4E4E4E424242434343494949979797DCDDDEC8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C9D1D53131317A7A7AB4B4B4C9C9C9CACACADBDBDB8D8D8D2121219C9C9CC8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      D0D6D9CECECECAD2D5494949000000000000202020C9C9C9CACACA1515159090
-      90C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      BDBDBDBDBDBD2E2E2E000000000000000000000000050505ACACAC9F9F9F2424
-      24C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACCCD3D6
-      6C6C6C9F9F9F000000505050CED4D80000000000000000009797974141413838
-      38D5D5D5C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      B2B2B22C2C2C0000000000003434340B0B0B0303030000004242422E2E2E9696
-      96949494C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      5C5C5C9898988686865151511A1A1A1D1D1D1919195F5F5F6F6F6FA1A1A14C4C
-      4CAAAAAAC8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      AFAFAF5858588989898A8A8AB0B0B0ABABABABABAB9595957D7D7D616161BFBF
-      BFC9D1D5C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C9D1D5DCDCDD9797978989896161616161616161618282829C9C9CD9D9D9C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8AC99A8AC
-      99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8
-      AC99A8AC99A8ACFFFFFF99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99
-      A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8ACFFFFFF}
-    NumGlyphs = 2
-    ParentFont = False
-    ParentShowHint = False
-    ShowHint = True
-  end
-  object ExtBtn13: TExtBtn
-    Left = 4
-    Top = 18
-    Width = 14
-    Height = 12
-    Hint = 'Clear snap list'
-    Align = alNone
-    BevelShow = False
-    HotTrack = True
-    HotColor = 15790320
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'MS Sans Serif'
-    Font.Style = []
-    Glyph.Data = {
-      36060000424D3606000000000000360000002800000020000000100000000100
-      18000000000000060000120B0000120B00000000000000000000FFFFFFFFFFFF
-      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF99A8ACC8D0D4
-      C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C8D0D4C8D0D4C8D0D4CCCCCCC9C9C9C9C9C9CBCBCBC8D0D4C8D0D4C8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C8D0D4DCDCDD9C9C9C4E4E4E424242434343494949979797DCDDDEC8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C9D1D53131317A7A7AB4B4B4C9C9C9CACACADBDBDB8D8D8D2121219C9C9CC8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      D0D6D9CECECECAD2D5494949000000000000202020C9C9C9CACACA1515159090
-      90C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      BDBDBDBDBDBD2E2E2E000000000000000000000000050505ACACAC9F9F9F2424
-      24C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACCCD3D6
-      6C6C6C9F9F9F000000505050CED4D80000000000000000009797974141413838
-      38D5D5D5C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      B2B2B22C2C2C0000000000003434340B0B0B0303030000004242422E2E2E9696
-      96949494C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      5C5C5C9898988686865151511A1A1A1D1D1D1919195F5F5F6F6F6FA1A1A14C4C
-      4CAAAAAAC8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      AFAFAF5858588989898A8A8AB0B0B0ABABABABABAB9595957D7D7D616161BFBF
-      BFC9D1D5C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C9D1D5DCDCDD9797978989896161616161616161618282829C9C9CD9D9D9C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8AC99A8AC
-      99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8
-      AC99A8AC99A8ACFFFFFF99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99
-      A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8ACFFFFFF}
-    NumGlyphs = 2
-    ParentFont = False
-    ParentShowHint = False
-    ShowHint = True
-  end
-  object ExtBtn14: TExtBtn
-    Left = 4
-    Top = 33
-    Width = 14
-    Height = 12
-    Hint = 'Clear snap list'
-    Align = alNone
-    BevelShow = False
-    HotTrack = True
-    HotColor = 15790320
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'MS Sans Serif'
-    Font.Style = []
-    Glyph.Data = {
-      36060000424D3606000000000000360000002800000020000000100000000100
-      18000000000000060000120B0000120B00000000000000000000FFFFFFFFFFFF
-      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF99A8ACC8D0D4
-      C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C8D0D4C8D0D4C8D0D4CCCCCCC9C9C9C9C9C9CBCBCBC8D0D4C8D0D4C8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C8D0D4DCDCDD9C9C9C4E4E4E424242434343494949979797DCDDDEC8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C9D1D53131317A7A7AB4B4B4C9C9C9CACACADBDBDB8D8D8D2121219C9C9CC8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      D0D6D9CECECECAD2D5494949000000000000202020C9C9C9CACACA1515159090
-      90C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      BDBDBDBDBDBD2E2E2E000000000000000000000000050505ACACAC9F9F9F2424
-      24C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACCCD3D6
-      6C6C6C9F9F9F000000505050CED4D80000000000000000009797974141413838
-      38D5D5D5C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      B2B2B22C2C2C0000000000003434340B0B0B0303030000004242422E2E2E9696
-      96949494C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      5C5C5C9898988686865151511A1A1A1D1D1D1919195F5F5F6F6F6FA1A1A14C4C
-      4CAAAAAAC8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      AFAFAF5858588989898A8A8AB0B0B0ABABABABABAB9595957D7D7D616161BFBF
-      BFC9D1D5C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C9D1D5DCDCDD9797978989896161616161616161618282829C9C9CD9D9D9C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8AC99A8AC
-      99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8
-      AC99A8AC99A8ACFFFFFF99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99
-      A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8ACFFFFFF}
-    NumGlyphs = 2
-    ParentFont = False
-    ParentShowHint = False
-    ShowHint = True
-  end
-  object ExtBtn15: TExtBtn
-    Left = 4
-    Top = 49
-    Width = 14
-    Height = 12
-    Hint = 'Clear snap list'
-    Align = alNone
-    BevelShow = False
-    HotTrack = True
-    HotColor = 15790320
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'MS Sans Serif'
-    Font.Style = []
-    Glyph.Data = {
-      36060000424D3606000000000000360000002800000020000000100000000100
-      18000000000000060000120B0000120B00000000000000000000FFFFFFFFFFFF
-      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF99A8ACC8D0D4
-      C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C8D0D4C8D0D4C8D0D4CCCCCCC9C9C9C9C9C9CBCBCBC8D0D4C8D0D4C8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C8D0D4DCDCDD9C9C9C4E4E4E424242434343494949979797DCDDDEC8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C9D1D53131317A7A7AB4B4B4C9C9C9CACACADBDBDB8D8D8D2121219C9C9CC8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      D0D6D9CECECECAD2D5494949000000000000202020C9C9C9CACACA1515159090
-      90C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      BDBDBDBDBDBD2E2E2E000000000000000000000000050505ACACAC9F9F9F2424
-      24C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACCCD3D6
-      6C6C6C9F9F9F000000505050CED4D80000000000000000009797974141413838
-      38D5D5D5C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      B2B2B22C2C2C0000000000003434340B0B0B0303030000004242422E2E2E9696
-      96949494C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      5C5C5C9898988686865151511A1A1A1D1D1D1919195F5F5F6F6F6FA1A1A14C4C
-      4CAAAAAAC8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      AFAFAF5858588989898A8A8AB0B0B0ABABABABABAB9595957D7D7D616161BFBF
-      BFC9D1D5C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C9D1D5DCDCDD9797978989896161616161616161618282829C9C9CD9D9D9C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4
-      C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0
-      D4C8D0D4C8D0D4FFFFFF99A8ACC8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8
-      D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4C8D0D4FFFFFF99A8AC99A8AC
-      99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8
-      AC99A8AC99A8ACFFFFFF99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99
-      A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8AC99A8ACFFFFFF}
-    NumGlyphs = 2
-    ParentFont = False
-    ParentShowHint = False
-    ShowHint = True
-  end
   object paLeftBar: TPanel
     Left = 0
     Top = 0
-    Width = 220
+    Width = 451
     Height = 553
+    Align = alTop
     BevelInner = bvLowered
     BevelOuter = bvNone
     Color = 10528425
-    Constraints.MaxWidth = 220
     Constraints.MinWidth = 220
     TabOrder = 0
     object paScene: TPanel
       Left = 1
       Top = 1
-      Width = 218
+      Width = 449
       Height = 154
       Hint = 'Scene commands'
       Align = alTop
@@ -397,10 +42,14 @@ object fraLeftBar: TfraLeftBar
       ParentShowHint = False
       ShowHint = True
       TabOrder = 0
+      Visible = False
+      DesignSize = (
+        449
+        154)
       object APHeadLabel2: TLabel
         Left = 1
         Top = 1
-        Width = 216
+        Width = 447
         Height = 13
         Align = alTop
         Alignment = taCenter
@@ -408,13 +57,15 @@ object fraLeftBar: TfraLeftBar
         Color = clGray
         ParentColor = False
         OnClick = PanelMaximizeClick
+        ExplicitWidth = 31
       end
       object sbSceneMin: TExtBtn
-        Left = 205
+        Left = 635
         Top = 2
         Width = 11
         Height = 11
         Align = alNone
+        Anchors = [akTop, akRight]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -431,6 +82,7 @@ object fraLeftBar: TfraLeftBar
           0000}
         ParentFont = False
         OnClick = PanelMimimizeClickClick
+        ExplicitLeft = 415
       end
       object ebSceneFile: TExtBtn
         Left = 2
@@ -677,15 +329,19 @@ object fraLeftBar: TfraLeftBar
     object paEdit: TPanel
       Left = 1
       Top = 155
-      Width = 218
+      Width = 449
       Height = 65
       Align = alTop
       Color = 10528425
       TabOrder = 1
+      Visible = False
+      DesignSize = (
+        449
+        65)
       object lbTools: TLabel
         Left = 1
         Top = 1
-        Width = 216
+        Width = 447
         Height = 13
         Align = alTop
         Alignment = taCenter
@@ -693,13 +349,15 @@ object fraLeftBar: TfraLeftBar
         Color = clGray
         ParentColor = False
         OnClick = PanelMaximizeClick
+        ExplicitWidth = 26
       end
       object sbEditMin: TExtBtn
-        Left = 205
+        Left = 436
         Top = 2
         Width = 11
         Height = 11
         Align = alNone
+        Anchors = [akTop, akRight]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -716,12 +374,13 @@ object fraLeftBar: TfraLeftBar
           0000}
         ParentFont = False
         OnClick = PanelMimimizeClickClick
+        ExplicitLeft = 415
       end
       object ExtBtn7: TExtBtn
         Left = 2
-        Top = 16
-        Width = 107
-        Height = 15
+        Top = 14
+        Width = 103
+        Height = 19
         Align = alNone
         BevelShow = False
         HotTrack = True
@@ -751,7 +410,7 @@ object fraLeftBar: TfraLeftBar
       object ExtBtn8: TExtBtn
         Left = 2
         Top = 31
-        Width = 107
+        Width = 103
         Height = 15
         Align = alNone
         BevelShow = False
@@ -779,9 +438,9 @@ object fraLeftBar: TfraLeftBar
         OnMouseDown = ExtBtn8MouseDown
       end
       object ExtBtn10: TExtBtn
-        Left = 110
+        Left = 112
         Top = 16
-        Width = 107
+        Width = 139
         Height = 15
         Align = alNone
         BevelShow = False
@@ -812,7 +471,7 @@ object fraLeftBar: TfraLeftBar
       object ebProperties: TExtBtn
         Left = 2
         Top = 47
-        Width = 107
+        Width = 103
         Height = 15
         Align = alNone
         BevelShow = False
@@ -830,9 +489,9 @@ object fraLeftBar: TfraLeftBar
         OnClick = ebPropertiesClick
       end
       object ebMultiRename: TExtBtn
-        Left = 110
-        Top = 34
-        Width = 107
+        Left = 112
+        Top = 47
+        Width = 137
         Height = 15
         Align = alNone
         BevelShow = False
@@ -849,15 +508,49 @@ object fraLeftBar: TfraLeftBar
         ParentFont = False
         OnClick = ebMultiRenameClick
       end
+      object ExtBtn3: TExtBtn
+        Left = 112
+        Top = 31
+        Width = 139
+        Height = 15
+        Align = alNone
+        BevelShow = False
+        HotTrack = True
+        HotColor = 15790320
+        BtnColor = 10528425
+        Caption = 'Locking'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        Glyph.Data = {
+          DE000000424DDE00000000000000360000002800000007000000070000000100
+          180000000000A8000000120B0000120B00000000000000000000FFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000FFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFF000000FFFFFFFFFFFFFFFFFF000000FFFFFFFFFFFFFFFFFF00
+          0000FFFFFFFFFFFF000000000000000000FFFFFFFFFFFF000000FFFFFF000000
+          000000000000000000000000FFFFFF0000000000000000000000000000000000
+          00000000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00
+          0000}
+        Kind = knMinimize
+        Margin = 3
+        ParentFont = False
+        Spacing = 3
+        OnMouseDown = ExtBtn3MouseDown
+      end
     end
     object paTarget: TPanel
       Left = 1
       Top = 220
-      Width = 218
+      Width = 449
       Height = 139
       Align = alTop
       Color = 10528425
       TabOrder = 2
+      DesignSize = (
+        449
+        139)
       object ebTargetObject: TExtBtn
         Left = 17
         Top = 17
@@ -1437,7 +1130,7 @@ object fraLeftBar: TfraLeftBar
       object lbEditMode: TLabel
         Left = 1
         Top = 1
-        Width = 216
+        Width = 447
         Height = 13
         Align = alTop
         Alignment = taCenter
@@ -1445,13 +1138,15 @@ object fraLeftBar: TfraLeftBar
         Color = clGray
         ParentColor = False
         OnClick = PanelMaximizeClick
+        ExplicitWidth = 48
       end
       object sbTargetMin: TExtBtn
-        Left = 205
+        Left = 436
         Top = 2
         Width = 11
         Height = 11
         Align = alNone
+        Anchors = [akTop, akRight]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -1468,6 +1163,7 @@ object fraLeftBar: TfraLeftBar
           0000}
         ParentFont = False
         OnClick = PanelMimimizeClickClick
+        ExplicitLeft = 415
       end
       object ebTargetGroup: TExtBtn
         Left = 127
@@ -1922,7 +1618,7 @@ object fraLeftBar: TfraLeftBar
         Top = 18
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show objects'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -2024,7 +1720,7 @@ object fraLeftBar: TfraLeftBar
         Top = 33
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show lights'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -2126,7 +1822,7 @@ object fraLeftBar: TfraLeftBar
         Top = 48
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show sound sources'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -2228,7 +1924,7 @@ object fraLeftBar: TfraLeftBar
         Top = 63
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show sound env zones'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -2330,7 +2026,7 @@ object fraLeftBar: TfraLeftBar
         Top = 78
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show glows'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -2432,7 +2128,7 @@ object fraLeftBar: TfraLeftBar
         Top = 93
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show shapes'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -2534,7 +2230,7 @@ object fraLeftBar: TfraLeftBar
         Top = 108
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show spawn elements'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -2636,7 +2332,7 @@ object fraLeftBar: TfraLeftBar
         Top = 123
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show ways'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -2738,7 +2434,7 @@ object fraLeftBar: TfraLeftBar
         Top = 18
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show sectors'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -2840,7 +2536,7 @@ object fraLeftBar: TfraLeftBar
         Top = 33
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show portals'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -2942,7 +2638,7 @@ object fraLeftBar: TfraLeftBar
         Top = 48
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show groups'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -3044,7 +2740,7 @@ object fraLeftBar: TfraLeftBar
         Top = 63
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show static particles'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -3146,7 +2842,7 @@ object fraLeftBar: TfraLeftBar
         Top = 78
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show details'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -3248,7 +2944,7 @@ object fraLeftBar: TfraLeftBar
         Top = 93
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show AI-Map'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -3350,7 +3046,7 @@ object fraLeftBar: TfraLeftBar
         Top = 108
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show wallmarks'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -3452,7 +3148,7 @@ object fraLeftBar: TfraLeftBar
         Top = 123
         Width = 16
         Height = 16
-        Hint = 'Clear snap list'
+        Hint = 'Show fog volumes'
         Align = alNone
         AllowAllUp = True
         BevelShow = False
@@ -3548,35 +3244,32 @@ object fraLeftBar: TfraLeftBar
         ShowHint = True
         OnClick = btEnableObjectClick
       end
-      object Bevel3: TBevel
-        Left = 109
-        Top = 18
-        Width = 2
-        Height = 120
-        Shape = bsSpacer
-        Style = bsRaised
-      end
     end
     object paSnapList: TPanel
       Left = 1
       Top = 359
-      Width = 218
+      Width = 449
       Height = 115
       Align = alTop
       Color = 10528425
       TabOrder = 3
+      DesignSize = (
+        449
+        115)
       object Bevel2: TBevel
         Left = 2
         Top = 46
-        Width = 215
+        Width = 457
         Height = 18
+        Anchors = [akLeft, akTop, akRight]
         Shape = bsTopLine
         Style = bsRaised
+        ExplicitWidth = 436
       end
       object Label1: TLabel
         Left = 1
         Top = 1
-        Width = 216
+        Width = 447
         Height = 13
         Align = alTop
         Alignment = taCenter
@@ -3584,13 +3277,15 @@ object fraLeftBar: TfraLeftBar
         Color = clGray
         ParentColor = False
         OnClick = PanelMaximizeClick
+        ExplicitWidth = 44
       end
       object ExtBtn16: TExtBtn
-        Left = 205
+        Left = 436
         Top = 2
         Width = 11
         Height = 11
         Align = alNone
+        Anchors = [akTop, akRight]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -3607,14 +3302,16 @@ object fraLeftBar: TfraLeftBar
           0000}
         ParentFont = False
         OnClick = PanelMimimizeClickClick
+        ExplicitLeft = 415
       end
       object ebUseSnapList: TExtBtn
         Left = 2
         Top = 31
-        Width = 215
+        Width = 457
         Height = 15
         Align = alNone
         AllowAllUp = True
+        Anchors = [akLeft, akTop, akRight]
         BevelShow = False
         HotTrack = True
         HotColor = 15790320
@@ -3629,13 +3326,15 @@ object fraLeftBar: TfraLeftBar
         Margin = 13
         ParentFont = False
         OnClick = ebUseSnapListClick
+        ExplicitWidth = 436
       end
       object ExtBtn1: TExtBtn
         Left = 2
         Top = 16
-        Width = 215
+        Width = 457
         Height = 15
         Align = alNone
+        Anchors = [akLeft, akTop, akRight]
         BevelShow = False
         HotTrack = True
         HotColor = 15790320
@@ -3659,12 +3358,15 @@ object fraLeftBar: TfraLeftBar
         ParentFont = False
         Spacing = 3
         OnMouseDown = ExtBtn1MouseDown
+        ExplicitWidth = 436
       end
       object Bevel1: TBevel
         Left = 2
         Top = 64
-        Width = 215
+        Width = 457
         Height = 57
+        Anchors = [akLeft, akTop, akRight]
+        ExplicitWidth = 436
       end
       object ebSnapListMode: TExtBtn
         Left = 15
@@ -3706,12 +3408,13 @@ object fraLeftBar: TfraLeftBar
         OnClick = ebSnapListModeClick
       end
       object ebModeInvert: TExtBtn
-        Left = 83
+        Left = 152
         Top = 49
-        Width = 37
+        Width = 155
         Height = 14
         Hint = 'Clear snap list'
         Align = alNone
+        Anchors = [akLeft, akTop, akRight]
         BevelShow = False
         HotTrack = True
         HotColor = 15790320
@@ -3736,12 +3439,32 @@ object fraLeftBar: TfraLeftBar
         ParentShowHint = False
         ShowHint = True
         OnClick = ebClearSnapClick
+        ExplicitWidth = 134
+      end
+      object ebSnapListEdit: TExtBtn
+        Left = 354
+        Top = 49
+        Width = 98
+        Height = 14
+        Hint = 'Manually edit snap list'
+        Align = alNone
+        AllowAllUp = True
+        Anchors = [akTop, akRight]
+        BevelShow = False
+        HotTrack = True
+        HotColor = 15790320
+        Caption = 'Edit...'
+        ParentShowHint = False
+        ShowHint = True
+        OnClick = ebSnapListEditClick
+        ExplicitLeft = 333
       end
       object lbSnapList: TListBox
         Left = 4
         Top = 66
-        Width = 210
+        Width = 454
         Height = 52
+        Anchors = [akLeft, akTop, akRight]
         BorderStyle = bsNone
         Color = clGray
         ExtendedSelect = False
@@ -3754,17 +3477,18 @@ object fraLeftBar: TfraLeftBar
         ParentFont = False
         Sorted = True
         TabOrder = 0
+        OnDblClick = lbSnapListDblClick
       end
     end
   end
   object paFrames: TPanel
     Left = 0
-    Top = 560
-    Width = 220
+    Top = 263
+    Width = 451
     Height = 41
+    Align = alBottom
     BevelOuter = bvLowered
     Color = 10528425
-    Constraints.MaxWidth = 220
     Constraints.MinWidth = 220
     TabOrder = 1
   end
@@ -3913,6 +3637,13 @@ object fraLeftBar: TfraLeftBar
       Caption = 'Export selection as Obj'
       OnClick = e1Click
     end
+    object N29: TMenuItem
+      Caption = '-'
+    end
+    object miRun: TMenuItem
+      Caption = 'Run'
+      OnClick = miRunClick
+    end
   end
   object pmToolsEdit: TMxPopupMenu
     Alignment = paCenter
@@ -3927,8 +3658,8 @@ object fraLeftBar: TfraLeftBar
     SepLColor = 13158600
     LeftMargin = 10
     Style = msOwnerDraw
-    Left = 189
-    Top = 169
+    Left = 277
+    Top = 97
     object N19: TMenuItem
       Caption = '-'
     end
@@ -3950,6 +3681,13 @@ object fraLeftBar: TfraLeftBar
       OnClick = ebDeleteClick
     end
     object N20: TMenuItem
+      Caption = '-'
+    end
+    object miDuplicate: TMenuItem
+      Caption = 'Duplicate'
+      OnClick = ebDuplicateClick
+    end
+    object N2: TMenuItem
       Caption = '-'
     end
     object Undo1: TMenuItem
@@ -3974,8 +3712,8 @@ object fraLeftBar: TfraLeftBar
     SepLColor = 13158600
     LeftMargin = 10
     Style = msOwnerDraw
-    Left = 189
-    Top = 185
+    Left = 269
+    Top = 65
     object N18: TMenuItem
       Caption = '-'
     end
@@ -4005,8 +3743,8 @@ object fraLeftBar: TfraLeftBar
     SepLColor = 13158600
     LeftMargin = 10
     Style = msOwnerDraw
-    Left = 213
-    Top = 187
+    Left = 317
+    Top = 99
     object N17: TMenuItem
       Caption = '-'
     end
@@ -4090,6 +3828,31 @@ object fraLeftBar: TfraLeftBar
     Style = msOwnerDraw
     Left = 221
     Top = 9
+    object miCopy: TMenuItem
+      Caption = 'Copy (selection)'
+      GroupIndex = 1
+      OnClick = ebCopyClick
+    end
+    object miPaste2: TMenuItem
+      Caption = 'Paste (selection)'
+      Enabled = False
+      GroupIndex = 1
+      OnClick = ebPasteClick
+    end
+    object miCut: TMenuItem
+      Caption = 'Cut (selection)'
+      GroupIndex = 1
+      OnClick = ebCutClick
+    end
+    object miDuplicate2: TMenuItem
+      Caption = 'Duplicate (selection)'
+      GroupIndex = 1
+      OnClick = ebDuplicateClick
+    end
+    object N28: TMenuItem
+      Caption = '-'
+      GroupIndex = 1
+    end
     object miVisibility: TMenuItem
       Caption = 'Visibility'
       GroupIndex = 1
@@ -4116,46 +3879,32 @@ object fraLeftBar: TfraLeftBar
     object Locking1: TMenuItem
       Caption = 'Locking'
       GroupIndex = 1
-      object LockSelected1: TMenuItem
+      object miLockSelected: TMenuItem
         Caption = 'Lock Selected'
+        OnClick = miLockSelectedClick
       end
-      object MenuItem1: TMenuItem
+      object miLockUnselected: TMenuItem
         Caption = 'Lock Unselected'
+        OnClick = miLockUnselectedClick
       end
-      object MenuItem2: TMenuItem
+      object miLockAll: TMenuItem
         Caption = 'Lock All'
+        OnClick = miLockAllClick
       end
       object N6: TMenuItem
         Caption = '-'
       end
-      object MenuItem5: TMenuItem
+      object miUnlockSelected: TMenuItem
         Caption = 'Unlock Selected'
+        OnClick = miUnlockSelectedClick
       end
-      object MenuItem6: TMenuItem
+      object miUnlockUnselected: TMenuItem
         Caption = 'Unlock Unselected'
+        OnClick = miUnlockUnselectedClick
       end
-      object MenuItem7: TMenuItem
+      object miUnlockAll: TMenuItem
         Caption = 'Unlock All'
-      end
-    end
-    object Edit1: TMenuItem
-      Caption = 'Edit'
-      GroupIndex = 1
-      OnClick = ebCopyClick
-      object miCopy: TMenuItem
-        Caption = 'Copy (selection)'
-        GroupIndex = 1
-      end
-      object miPaste2: TMenuItem
-        Caption = 'Paste (selection)'
-        Enabled = False
-        GroupIndex = 1
-        OnClick = ebPasteClick
-      end
-      object miCut: TMenuItem
-        Caption = 'Cut (selection)'
-        GroupIndex = 1
-        OnClick = ebCutClick
+        OnClick = miUnlockAllClick
       end
     end
     object N4: TMenuItem
@@ -4227,6 +3976,25 @@ object fraLeftBar: TfraLeftBar
     object MenuItem34: TMenuItem
       Caption = 'Clear Error List'
       OnClick = miClearErrorListClick
+    end
+    object N16: TMenuItem
+      Caption = '-'
+    end
+    object miCompileLevel: TMenuItem
+      Caption = 'Compile level'
+      OnClick = miCompileLevelClick
+    end
+    object miCompileDetails: TMenuItem
+      Caption = 'Compile details'
+      OnClick = miCompileDetailsClick
+    end
+    object miCompileAIMap: TMenuItem
+      Caption = 'Compile AI-map'
+      OnClick = miCompileAIMapClick
+    end
+    object miCompileSpawn: TMenuItem
+      Caption = 'Compile spawn'
+      OnClick = miCompileSpawnClick
     end
   end
   object pmObjects: TMxPopupMenu
@@ -4358,6 +4126,56 @@ object fraLeftBar: TfraLeftBar
     object UpdateEnvironmentGeometry1: TMenuItem
       Caption = 'Refresh Environment Geometry'
       OnClick = UpdateEnvironmentGeometry1Click
+    end
+    object LoadSoundOccluder1: TMenuItem
+      Caption = 'Load Sound Occluder'
+      OnClick = LoadSoundOccluder1Click
+    end
+  end
+  object pmToolsLocking: TMxPopupMenu
+    Alignment = paCenter
+    AutoPopup = False
+    TrackButton = tbLeftButton
+    MarginStartColor = 10921638
+    MarginEndColor = 2763306
+    BKColor = 10528425
+    SelColor = clBlack
+    SelFontColor = 10526880
+    SepHColor = 1644825
+    SepLColor = 13158600
+    LeftMargin = 10
+    Style = msOwnerDraw
+    Left = 317
+    Top = 99
+    object MenuItem1: TMenuItem
+      Caption = '-'
+    end
+    object MenuItem2: TMenuItem
+      Caption = 'Lock Selected'
+      OnClick = miLockSelectedClick
+    end
+    object MenuItem5: TMenuItem
+      Caption = 'Lock Unselected'
+      OnClick = miLockUnselectedClick
+    end
+    object MenuItem6: TMenuItem
+      Caption = 'Lock All'
+      OnClick = miLockAllClick
+    end
+    object MenuItem7: TMenuItem
+      Caption = '-'
+    end
+    object MenuItem18: TMenuItem
+      Caption = 'Unlock Selected'
+      OnClick = miUnlockSelectedClick
+    end
+    object UnlockUnselected1: TMenuItem
+      Caption = 'Unlock Unselected'
+      OnClick = miUnlockUnselectedClick
+    end
+    object UnlockAll1: TMenuItem
+      Caption = 'Unlock All'
+      OnClick = miUnlockAllClick
     end
   end
 end

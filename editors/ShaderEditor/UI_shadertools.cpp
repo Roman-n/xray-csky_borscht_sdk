@@ -84,7 +84,7 @@ bool CShaderTool::OnCreate()
     EFS.LockFile		(fn);
 
     // create props
-    m_Items				= TItemList::CreateForm		("Items",				fraLeftBar->paItemList,		alClient,TItemList::ilEditMenu|TItemList::ilDragAllowed|TItemList::ilFolderStore);
+    m_Items				= TItemList::CreateForm		("Items",				fraLeftBar->paItemList,		alClient,TItemList::ilEditMenu|TItemList::ilDragAllowed|TItemList::ilFolderStore|TItemList::ilFocusOnHover);
 	m_Items->SetOnItemsFocusedEvent(fastdelegate::bind<TOnILItemsFocused>(this,&CShaderTool::OnItemFocused));
     m_ItemProps 		= TProperties::CreateForm	("Item Properties",		fraLeftBar->paShaderProps,	alClient);
     m_PreviewProps  	= TProperties::CreateForm	("Preview Properties",	fraLeftBar->paPreviewProps,	alClient);
@@ -126,18 +126,20 @@ void CShaderTool::OnDestroy()
 
 void CShaderTool::RenderEnvironment()
 {
-/*    if (psDeviceFlags.is(rsEnvironment)){
+    if (psDeviceFlags.is(rsEnvironment)){
         g_pGamePersistent->Environment().RenderSky	();
         g_pGamePersistent->Environment().RenderClouds	();
     }
-*/    
 }
 
 void CShaderTool::Render()
 {
     PrepareLighting		();
 	Current()->OnRender	();
-//    if (psDeviceFlags.is(rsEnvironment)) g_pGamePersistent->Environment().RenderLast	();
+    if (psDeviceFlags.is(rsEnvironment)){
+    	g_pGamePersistent->Environment().RenderFlares	();
+    	g_pGamePersistent->Environment().RenderLast	();
+    }
     inherited::Render	();
 }
 
@@ -325,7 +327,7 @@ void CShaderTool::RealUpdateList()
 	m_Flags.set(flRefreshList,FALSE);
 }
 
-void __fastcall CShaderTool::OnItemFocused(ListItemsVec& items)
+void __stdcall CShaderTool::OnItemFocused(ListItemsVec& items)
 {
 	LPCSTR name				= 0;
     Current()->m_CurrentItem= 0;

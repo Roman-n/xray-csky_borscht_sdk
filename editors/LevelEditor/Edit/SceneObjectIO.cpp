@@ -47,7 +47,8 @@ bool CSceneObject::LoadLTX(CInifile& ini, LPCSTR sect_name)
             if(!bRes)
             {
                 if(mr == mrNone)
-                    mr = ELog.DlgMsg(mtConfirmation,TMsgDlgButtons() << mbYes << mbNo, "Object not found. Do you want to select it from library?");
+                    mr = ELog.DlgMsg(mtConfirmation,TMsgDlgButtons() << mbYes << mbNo,
+                    "Object [%s] not found. Do you want to select it from library?", ref_name.c_str());
                 else
                     mr = mrNone;
 

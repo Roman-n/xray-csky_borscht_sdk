@@ -599,11 +599,11 @@ void DoStackTrace ( LPTSTR szString  ,
         if ( FALSE == g_cSym.SymInitialize ( hProcess ,
                                              NULL     ,
                                              FALSE     ) )
-        {
-            TRACE ( "DiagAssert : Unable to initialize the "
-                    "symbol engine!!!\n" ) ;
+		{
 #ifdef _DEBUG
-            DebugBreak ( ) ;
+			TRACE ( "DiagAssert : Unable to initialize the "
+					"symbol engine!!!\n" ) ;
+			DebugBreak ( ) ;
 #endif
         }
         else

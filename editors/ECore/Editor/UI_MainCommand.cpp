@@ -263,14 +263,17 @@ CCommandVar CommandInitialize(CCommandVar p1, CCommandVar p2)
             ExecCommand	(COMMAND_RENDER_FOCUS);
             ExecCommand	(COMMAND_CHANGE_ACTION, etaSelect);
             ExecCommand	(COMMAND_RENDER_RESIZE);
-/*
+
             if(bWeather && EPrefs->sWeather.size() )
             {
                 psDeviceFlags.set(rsEnvironment, TRUE);
                 g_pGamePersistent->Environment().SetWeather(EPrefs->sWeather, true);
 
             }
-*/
+
+            g_pGamePersistent->Environment().ed_from_time = EPrefs->env_from_time;
+            g_pGamePersistent->Environment().ed_to_time = EPrefs->env_to_time;
+            g_pGamePersistent->Environment().fTimeFactor = EPrefs->env_speed;
         }else{
         	res			= FALSE;
         }
@@ -281,6 +284,9 @@ CCommandVar CommandInitialize(CCommandVar p1, CCommandVar p2)
 }             
 CCommandVar 	CommandDestroy(CCommandVar p1, CCommandVar p2)
 {
+	EPrefs->env_from_time 	= g_pGamePersistent->Environment().ed_from_time;
+    EPrefs->env_to_time     = g_pGamePersistent->Environment().ed_to_time;
+    EPrefs->env_speed		= g_pGamePersistent->Environment().fTimeFactor;
     ExecCommand			(COMMAND_SAVE_UI_BAR);
     EPrefs->OnDestroy	();
     ExecCommand			(COMMAND_CLEAR);
@@ -601,13 +607,52 @@ CCommandVar 	CommandAssignMacro(CCommandVar p1, CCommandVar p2)
     }
     return FALSE;
 }
+CCommandVar		CommandToggleFullscreen(CCommandVar p1, CCommandVar p2)
+{
+	static bool fullscreen = false;
+    static int top, left, width, height;
+
+	TForm* frmMain = Application->MainForm;
+
+    if(fullscreen)
+    {
+    	SetWindowLong(frmMain->Handle, GWL_STYLE, WS_OVERLAPPEDWINDOW|WS_VISIBLE);
+        ShowWindow(frmMain->Handle, SW_RESTORE);
+
+        frmMain->Top = top;
+        frmMain->Left = left;
+        frmMain->Width = width;
+        frmMain->Height = height;
+
+        fullscreen = false;
+    }
+    else
+    {
+    	top = frmMain->Top;
+        left = frmMain->Left;
+        width = frmMain->Width;
+        height = frmMain->Height;
+
+        ShowWindow(frmMain->Handle, SW_MAXIMIZE);
+        SetWindowLong(frmMain->Handle, GWL_STYLE, WS_VISIBLE);
+
+        frmMain->Top = 0;
+        frmMain->Left = 0;
+        frmMain->Width = Screen->Width;
+        frmMain->Height = Screen->Height;
+
+        fullscreen = true;
+    }
+
+	return TRUE;
+}
 
 void TUI::RegisterCommands()
 {
 	REGISTER_CMD_S		(COMMAND_INITIALIZE,			CommandInitialize);
 	REGISTER_CMD_S		(COMMAND_DESTROY,        		CommandDestroy);
-	REGISTER_CMD_SE		(COMMAND_EXIT,               	"Exit",					CommandExit,		true);
-	REGISTER_CMD_S		(COMMAND_QUIT,           		CommandQuit);
+	REGISTER_CMD_S		(COMMAND_EXIT,               	CommandExit);
+	REGISTER_CMD_SE		(COMMAND_QUIT,           		"Quit",					CommandQuit,		true);
 	REGISTER_CMD_SE		(COMMAND_EDITOR_PREF,    		"Editor Preference",	CommandEditorPrefs, false);
 	REGISTER_SUB_CMD_SE	(COMMAND_CHANGE_ACTION,  		"Change Action",      	CommandChangeAction,false);
     	APPEND_SUB_CMD	("Select",						etaSelect,	0);
@@ -670,6 +715,7 @@ void TUI::RegisterCommands()
     	APPEND_SUB_CMD	("Slot #8",						xr_string(""),0);
     REGISTER_SUB_CMD_END;
     REGISTER_CMD_S	    (COMMAND_ASSIGN_MACRO, 			CommandAssignMacro);
+    REGISTER_CMD_SE		(COMMAND_TOGGLE_FULLSCREEN,		"Toggle Fullscreen",	CommandToggleFullscreen,false);
 }                                                                        
 
 //---------------------------------------------------------------------------

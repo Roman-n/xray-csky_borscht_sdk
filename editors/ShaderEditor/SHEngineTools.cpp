@@ -112,7 +112,7 @@ xr_token preview_obj_token[]={
 	{ 0,				0			}
 };
 
-bool CSHEngineTools::OnPreviewObjectRefChange(PropValue* sender, u32& new_val)
+bool __stdcall CSHEngineTools::OnPreviewObjectRefChange(PropValue* sender, u32& new_val)
 {                                                                              
     LPCSTR fn=0;
     m_bCustomEditObject = false; 
@@ -305,7 +305,7 @@ void CSHEngineTools::Load()
         // Load blenders
         {
             IReader*	fs		= F->open_chunk(2);
-            IReader*	chunk	= NULL;
+            IReader*	chunk;
             int			chunk_id= 0;
 
             while ((chunk=fs->open_chunk(chunk_id))!=NULL)
@@ -480,7 +480,7 @@ LPCSTR CSHEngineTools::GenerateConstantName(LPSTR name)
     return name;
 }
 
-void CSHEngineTools::FillChooseTemplate(ChooseItemVec& items, void* param)
+void __stdcall CSHEngineTools::FillChooseTemplate(ChooseItemVec& items, void* param)
 {
     for (TemplateIt it=m_TemplatePalette.begin(); it!=m_TemplatePalette.end(); it++) 
         items.push_back(SChooseItem((*it)->getComment(),""));

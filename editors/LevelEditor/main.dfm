@@ -1,8 +1,8 @@
 object frmMain: TfrmMain
-  Left = 426
-  Top = 417
-  Width = 770
-  Height = 452
+  Left = 314
+  Top = 248
+  ClientHeight = 411
+  ClientWidth = 789
   Color = clBtnFace
   Constraints.MinHeight = 446
   Constraints.MinWidth = 660
@@ -12,6 +12,7 @@ object frmMain: TfrmMain
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   KeyPreview = True
+  Menu = mmMainMenu
   OldCreateOrder = False
   Position = poDefault
   Scaled = False
@@ -23,11 +24,21 @@ object frmMain: TfrmMain
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
+  object spLeftBar: TSplitter
+    Left = 547
+    Top = 0
+    Width = 4
+    Height = 394
+    Align = alRight
+    Color = clMedGray
+    ParentColor = False
+    ExplicitLeft = 555
+  end
   object paLeftBar: TPanel
-    Left = 524
+    Left = 551
     Top = 0
     Width = 238
-    Height = 401
+    Height = 394
     Align = alRight
     BevelInner = bvLowered
     BevelOuter = bvNone
@@ -39,6 +50,9 @@ object frmMain: TfrmMain
       Height = 16
       Align = alTop
       TabOrder = 0
+      DesignSize = (
+        236
+        16)
       object APHeadLabel2: TLabel
         Left = 1
         Top = 1
@@ -50,6 +64,7 @@ object frmMain: TfrmMain
         Color = clGray
         ParentColor = False
         OnClick = TopClick
+        ExplicitWidth = 36
       end
       object sbToolsMin: TExtBtn
         Left = 223
@@ -57,6 +72,7 @@ object frmMain: TfrmMain
         Width = 11
         Height = 13
         Align = alNone
+        Anchors = [akTop, akRight]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -120,8 +136,8 @@ object frmMain: TfrmMain
   end
   object paBottomBar: TPanel
     Left = 0
-    Top = 401
-    Width = 762
+    Top = 394
+    Width = 789
     Height = 17
     Align = alBottom
     BevelInner = bvLowered
@@ -131,25 +147,25 @@ object frmMain: TfrmMain
   object paMain: TPanel
     Left = 0
     Top = 0
-    Width = 524
-    Height = 401
+    Width = 547
+    Height = 394
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
     object paTopBar: TPanel
       Left = 0
       Top = 0
-      Width = 524
-      Height = 18
-      Align = alTop
+      Width = 25
+      Height = 394
+      Align = alLeft
       BevelOuter = bvNone
       TabOrder = 0
     end
     object paRender: TPanel
-      Left = 0
-      Top = 18
-      Width = 524
-      Height = 383
+      Left = 25
+      Top = 0
+      Width = 522
+      Height = 394
       Align = alClient
       BevelOuter = bvNone
       Color = 4868682
@@ -184,7 +200,8 @@ object frmMain: TfrmMain
     Version = 1
     OnSavePlacement = fsStorageSavePlacement
     StoredProps.Strings = (
-      'paLeftBar.Tag')
+      'paLeftBar.Tag'
+      'paLeftBar.Width')
     StoredValues = <>
     Left = 161
     Top = 33
@@ -194,5 +211,358 @@ object frmMain: TfrmMain
     OnTimer = tmRefreshTimer
     Left = 129
     Top = 33
+  end
+  object mmMainMenu: TMainMenu
+    Left = 192
+    Top = 32
+    object miFile: TMenuItem
+      Caption = 'File'
+      object miClear: TMenuItem
+        Caption = 'Clear'
+        OnClick = miClearClick
+      end
+      object miOpen: TMenuItem
+        Caption = 'Open'
+        OnClick = miOpenClick
+      end
+      object miSave: TMenuItem
+        Caption = 'Save'
+        OnClick = miSaveClick
+      end
+      object miSaveAs: TMenuItem
+        Caption = 'Save As...'
+        OnClick = miSaveAsClick
+      end
+      object N3: TMenuItem
+        Caption = '-'
+      end
+      object miOpenSelection: TMenuItem
+        Caption = 'Open Selection'
+        OnClick = miOpenSelectionClick
+      end
+      object miSaveSelection: TMenuItem
+        Caption = 'Save Selection As...'
+        OnClick = miSaveSelectionClick
+      end
+      object N2: TMenuItem
+        Caption = '-'
+      end
+      object miMakePack: TMenuItem
+        Caption = 'Make Pack'
+        OnClick = miMakePackClick
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object miQuit: TMenuItem
+        Caption = 'Quit'
+        OnClick = miQuitClick
+      end
+    end
+    object Edit1: TMenuItem
+      Caption = 'Edit'
+      object miUndo: TMenuItem
+        Caption = 'Undo'
+        OnClick = miUndoClick
+      end
+      object miRedo: TMenuItem
+        Caption = 'Redo'
+        OnClick = miRedoClick
+      end
+      object N5: TMenuItem
+        Caption = '-'
+      end
+      object miCut: TMenuItem
+        Caption = 'Cut'
+        OnClick = miCutClick
+      end
+      object miCopy: TMenuItem
+        Caption = 'Copy'
+        OnClick = miCopyClick
+      end
+      object miPaste: TMenuItem
+        Caption = 'Paste'
+        OnClick = miPasteClick
+      end
+      object miDelete: TMenuItem
+        Caption = 'Delete'
+        OnClick = miDeleteClick
+      end
+      object N6: TMenuItem
+        Caption = '-'
+      end
+      object miSelectAll: TMenuItem
+        Caption = 'Select All'
+        OnClick = miSelectAllClick
+      end
+      object miDeselectAll: TMenuItem
+        Caption = 'Deselect All'
+        OnClick = miDeselectAllClick
+      end
+      object miInvertSelection: TMenuItem
+        Caption = 'Invert Selection'
+        OnClick = miInvertSelectionClick
+      end
+      object N7: TMenuItem
+        Caption = '-'
+      end
+      object HideSelected1: TMenuItem
+        Caption = 'Hide Selected'
+        OnClick = HideSelected1Click
+      end
+      object HideUnselected1: TMenuItem
+        Caption = 'Hide Unselected'
+        OnClick = HideUnselected1Click
+      end
+      object HideAll1: TMenuItem
+        Caption = 'Hide All'
+        OnClick = HideAll1Click
+      end
+      object Unhideall1: TMenuItem
+        Caption = 'Unhide all'
+        OnClick = Unhideall1Click
+      end
+      object N21: TMenuItem
+        Caption = '-'
+      end
+      object MultiRename1: TMenuItem
+        Caption = 'Multi Rename'
+        OnClick = MultiRename1Click
+      end
+      object N20: TMenuItem
+        Caption = '-'
+      end
+      object Properties1: TMenuItem
+        Caption = 'Properties'
+        OnClick = Properties1Click
+      end
+    end
+    object Scene1: TMenuItem
+      Caption = 'Scene'
+      object Options1: TMenuItem
+        Caption = 'Options'
+        OnClick = Options1Click
+      end
+      object N8: TMenuItem
+        Caption = '-'
+      end
+      object Validate1: TMenuItem
+        Caption = 'Validate'
+        OnClick = Validate1Click
+      end
+      object N9: TMenuItem
+        Caption = '-'
+      end
+      object SummaryInfo1: TMenuItem
+        Caption = 'Summary Info'
+        OnClick = SummaryInfo1Click
+      end
+      object HighlightTexture1: TMenuItem
+        Caption = 'Highlight Texture...'
+        OnClick = HighlightTexture1Click
+      end
+      object N10: TMenuItem
+        Caption = '-'
+      end
+      object ClearDebugDraw1: TMenuItem
+        Caption = 'Clear Debug Draw'
+        OnClick = ClearDebugDraw1Click
+      end
+      object N11: TMenuItem
+        Caption = '-'
+      end
+      object ExportentireSceneasObj1: TMenuItem
+        Caption = 'Export entire Scene as Obj'
+        OnClick = ExportentireSceneasObj1Click
+      end
+      object Exportselection1: TMenuItem
+        Caption = 'Export selection as Obj'
+        OnClick = Exportselection1Click
+      end
+      object N4: TMenuItem
+        Caption = '-'
+      end
+      object miRun: TMenuItem
+        Caption = 'Run'
+        OnClick = miRunClick
+      end
+    end
+    object Compile1: TMenuItem
+      Caption = 'Compile'
+      object miBuild: TMenuItem
+        Caption = 'Build'
+        OnClick = miBuildClick
+      end
+      object N12: TMenuItem
+        Caption = '-'
+      end
+      object miMakeGame: TMenuItem
+        Caption = 'Make Spawn'
+        OnClick = miMakeGameClick
+      end
+      object miMakeDetails: TMenuItem
+        Caption = 'Make Details'
+        OnClick = miMakeDetailsClick
+      end
+      object miMakeHOM: TMenuItem
+        Caption = 'Make HOM'
+        OnClick = miMakeHOMClick
+      end
+      object miMakeSoundOccluder: TMenuItem
+        Caption = 'Make Sound Occluder'
+        OnClick = miMakeSoundOccluderClick
+      end
+      object miMakeSoundEnvironment: TMenuItem
+        Caption = 'Make Sound Environment'
+        OnClick = miMakeSoundEnvironmentClick
+      end
+      object miMakeAIMap: TMenuItem
+        Caption = 'Make AI-Map'
+        OnClick = miMakeAIMapClick
+      end
+      object N13: TMenuItem
+        Caption = '-'
+      end
+      object ImportErrorList1: TMenuItem
+        Caption = 'Import Error List'
+        OnClick = ImportErrorList1Click
+      end
+      object ExportErrorList1: TMenuItem
+        Caption = 'Export Error List'
+        OnClick = ExportErrorList1Click
+      end
+      object ClearErrorList1: TMenuItem
+        Caption = 'Clear Error List'
+        OnClick = ClearErrorList1Click
+      end
+      object N22: TMenuItem
+        Caption = '-'
+      end
+      object miCompileLevel: TMenuItem
+        Caption = 'Compile level'
+        OnClick = miCompileLevelClick
+      end
+      object miCompileDetails: TMenuItem
+        Caption = 'Compile details'
+        OnClick = miCompileDetailsClick
+      end
+      object miCompileAIMap: TMenuItem
+        Caption = 'Compile AI-map'
+        OnClick = miCompileAIMapClick
+      end
+      object miCompileSpawn: TMenuItem
+        Caption = 'Compile spawn'
+        OnClick = miCompileSpawnClick
+      end
+    end
+    object Objects1: TMenuItem
+      Caption = 'Objects'
+      object LibraryEditor1: TMenuItem
+        Caption = 'Library Editor'
+        OnClick = LibraryEditor1Click
+      end
+      object N14: TMenuItem
+        Caption = '-'
+      end
+      object ReloadObjects1: TMenuItem
+        Caption = 'Reload Objects'
+        OnClick = ReloadObjects1Click
+      end
+      object CleanLibrary1: TMenuItem
+        Caption = 'Clean Library'
+        OnClick = CleanLibrary1Click
+      end
+      object ClipEditor1: TMenuItem
+        Caption = 'Clip Editor'
+        OnClick = ClipEditor1Click
+      end
+    end
+    object Images1: TMenuItem
+      Caption = 'Images'
+      object ImageEditor1: TMenuItem
+        Caption = 'Image Editor'
+        OnClick = ImageEditor1Click
+      end
+      object N15: TMenuItem
+        Caption = '-'
+      end
+      object ReloadTextures1: TMenuItem
+        Caption = 'Reload Textures'
+        OnClick = ReloadTextures1Click
+      end
+      object N16: TMenuItem
+        Caption = '-'
+      end
+      object SychronizeTextures1: TMenuItem
+        Caption = 'Sychronize Textures'
+        OnClick = SychronizeTextures1Click
+      end
+      object CheckNewTextures1: TMenuItem
+        Caption = 'Check New Textures'
+        OnClick = CheckNewTextures1Click
+      end
+      object N17: TMenuItem
+        Caption = '-'
+      end
+      object EditMinimap1: TMenuItem
+        Caption = 'Edit Minimap'
+        OnClick = EditMinimap1Click
+      end
+      object SynchronizeTHM1: TMenuItem
+        Caption = 'Synchronize THM'
+        OnClick = SynchronizeTHM1Click
+      end
+    end
+    object Sounds1: TMenuItem
+      Caption = 'Sounds'
+      object SoundEditor1: TMenuItem
+        Caption = 'Sound Editor'
+        OnClick = SoundEditor1Click
+      end
+      object N18: TMenuItem
+        Caption = '-'
+      end
+      object SynchronizeSounds1: TMenuItem
+        Caption = 'Synchronize Sounds'
+        OnClick = SynchronizeSounds1Click
+      end
+      object N19: TMenuItem
+        Caption = '-'
+      end
+      object RefreshEnvironmentLibrary1: TMenuItem
+        Caption = 'Refresh Environment Library'
+        OnClick = RefreshEnvironmentLibrary1Click
+      end
+      object RefreshEnvironmentGeometry1: TMenuItem
+        Caption = 'Refresh Environment Geometry'
+        OnClick = RefreshEnvironmentGeometry1Click
+      end
+      object LoadSoundOccluder1: TMenuItem
+        Caption = 'Load Sound Occluder'
+        OnClick = LoadSoundOccluder1Click
+      end
+    end
+    object Other1: TMenuItem
+      Caption = 'Other'
+      object LightAnimEditor1: TMenuItem
+        Caption = 'Light Anim Editor'
+        OnClick = LightAnimEditor1Click
+      end
+      object ObjectList1: TMenuItem
+        Caption = 'Object List'
+        OnClick = ObjectList1Click
+      end
+      object Preferences1: TMenuItem
+        Caption = 'Preferences'
+        OnClick = Preferences1Click
+      end
+      object N23: TMenuItem
+        Caption = '-'
+      end
+      object About1: TMenuItem
+        Caption = 'About...'
+        OnClick = About1Click
+      end
+    end
   end
 end

@@ -1,11 +1,11 @@
 object fraAIMap: TfraAIMap
-  Left = 608
-  Top = 307
+  Left = 918
+  Top = 206
   VertScrollBar.Visible = False
   Align = alClient
   BorderStyle = bsNone
-  ClientHeight = 333
-  ClientWidth = 222
+  ClientHeight = 346
+  ClientWidth = 213
   Color = 10528425
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clBlack
@@ -18,15 +18,18 @@ object fraAIMap: TfraAIMap
   object paObjectList: TPanel
     Left = 0
     Top = 0
-    Width = 222
-    Height = 64
+    Width = 213
+    Height = 117
     Align = alTop
     ParentColor = True
     TabOrder = 0
+    DesignSize = (
+      213
+      117)
     object Label2: TLabel
       Left = 1
       Top = 1
-      Width = 220
+      Width = 211
       Height = 13
       Align = alTop
       Alignment = taCenter
@@ -36,11 +39,12 @@ object fraAIMap: TfraAIMap
       OnClick = ExpandClick
     end
     object ExtBtn2: TExtBtn
-      Left = 205
+      Left = 200
       Top = 2
       Width = 11
       Height = 11
       Align = alNone
+      Anchors = [akTop, akRight]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -78,11 +82,12 @@ object fraAIMap: TfraAIMap
       OnClick = ebGenerateMapClick
     end
     object ebSmoothNodes: TExtBtn
-      Left = 109
+      Left = 102
       Top = 16
       Width = 107
       Height = 15
       Align = alNone
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -97,11 +102,12 @@ object fraAIMap: TfraAIMap
       OnClick = ebSmoothNodesClick
     end
     object ExtBtn6: TExtBtn
-      Left = 109
+      Left = 102
       Top = 32
       Width = 107
       Height = 15
       Align = alNone
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -153,19 +159,71 @@ object fraAIMap: TfraAIMap
       ParentFont = False
       OnClick = ebResetSelectedClick
     end
+    object ebLoadErrorList: TExtBtn
+      Left = 0
+      Top = 80
+      Width = 97
+      Height = 17
+      Align = alNone
+      BevelShow = False
+      HotTrack = True
+      HotColor = 15790320
+      Caption = 'Load Error List'
+      OnClick = ebLoadErrorListClick
+    end
+    object ebSelectErrorNodes: TExtBtn
+      Left = 106
+      Top = 80
+      Width = 105
+      Height = 17
+      Align = alNone
+      Anchors = [akTop]
+      BevelShow = False
+      HotTrack = True
+      HotColor = 15790320
+      Caption = 'Select Error Nodes'
+      OnClick = ebSelectErrorNodesClick
+    end
+    object ebClearErrorList: TExtBtn
+      Left = 0
+      Top = 96
+      Width = 97
+      Height = 17
+      Align = alNone
+      BevelShow = False
+      HotTrack = True
+      HotColor = 15790320
+      Caption = 'Clear Error List'
+      OnClick = ebClearErrorListClick
+    end
+    object Label4: TLabel
+      Left = 1
+      Top = 64
+      Width = 210
+      Height = 13
+      Alignment = taCenter
+      Anchors = [akLeft, akTop, akRight]
+      AutoSize = False
+      Caption = 'AI Map Errors'
+      Color = clGray
+      ParentColor = False
+    end
   end
   object paLink: TPanel
     Left = 0
-    Top = 64
-    Width = 222
-    Height = 269
-    Align = alClient
+    Top = 117
+    Width = 213
+    Height = 232
+    Align = alTop
     ParentColor = True
     TabOrder = 1
+    DesignSize = (
+      213
+      232)
     object Label3: TLabel
       Left = 1
       Top = 1
-      Width = 220
+      Width = 211
       Height = 13
       Align = alTop
       Alignment = taCenter
@@ -175,11 +233,12 @@ object fraAIMap: TfraAIMap
       OnClick = ExpandClick
     end
     object ExtBtn4: TExtBtn
-      Left = 205
+      Left = 200
       Top = 2
       Width = 11
       Height = 11
       Align = alNone
+      Anchors = [akTop, akRight]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -199,7 +258,7 @@ object fraAIMap: TfraAIMap
     end
     object ebModeAppend: TExtBtn
       Left = 6
-      Top = 215
+      Top = 55
       Width = 46
       Height = 15
       Align = alNone
@@ -220,7 +279,7 @@ object fraAIMap: TfraAIMap
     end
     object ebModeRemove: TExtBtn
       Left = 6
-      Top = 230
+      Top = 70
       Width = 46
       Height = 15
       Align = alNone
@@ -240,11 +299,12 @@ object fraAIMap: TfraAIMap
     end
     object ebUp: TExtBtn
       Tag = 1
-      Left = 82
-      Top = 215
+      Left = 78
+      Top = 55
       Width = 24
       Height = 15
       Align = alNone
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -268,11 +328,12 @@ object fraAIMap: TfraAIMap
     end
     object ebDown: TExtBtn
       Tag = 3
-      Left = 82
-      Top = 245
+      Left = 78
+      Top = 85
       Width = 24
       Height = 15
       Align = alNone
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -295,11 +356,12 @@ object fraAIMap: TfraAIMap
       OnClick = ebSideClick
     end
     object ebLeft: TExtBtn
-      Left = 58
-      Top = 230
+      Left = 55
+      Top = 70
       Width = 24
       Height = 15
       Align = alNone
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -323,11 +385,12 @@ object fraAIMap: TfraAIMap
     end
     object ebRight: TExtBtn
       Tag = 2
-      Left = 106
-      Top = 230
+      Left = 100
+      Top = 70
       Width = 24
       Height = 15
       Align = alNone
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -351,11 +414,12 @@ object fraAIMap: TfraAIMap
     end
     object ebFull: TExtBtn
       Tag = 4
-      Left = 82
-      Top = 230
+      Left = 78
+      Top = 70
       Width = 24
       Height = 15
       Align = alNone
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -387,7 +451,7 @@ object fraAIMap: TfraAIMap
     end
     object ebModeInvert: TExtBtn
       Left = 6
-      Top = 245
+      Top = 85
       Width = 46
       Height = 15
       Align = alNone
@@ -406,25 +470,31 @@ object fraAIMap: TfraAIMap
       FlatAlwaysEdge = True
     end
     object Label5: TLabel
-      Left = 5
-      Top = 199
-      Width = 78
+      Left = 1
+      Top = 36
+      Width = 211
       Height = 13
-      Caption = 'Link Commands:'
+      Alignment = taCenter
+      Anchors = [akLeft, akTop, akRight]
+      AutoSize = False
+      Caption = 'Link Commands'
+      Color = clGray
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
-      Font.Style = [fsUnderline]
+      Font.Style = []
+      ParentColor = False
       ParentFont = False
     end
     object ebIgnoreConstraints: TExtBtn
-      Left = 2
+      Left = 3
       Top = 16
-      Width = 215
+      Width = 100
       Height = 15
       Align = alNone
       AllowAllUp = True
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -436,18 +506,18 @@ object fraAIMap: TfraAIMap
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = []
-      Margin = 13
       NumGlyphs = 4
       ParentFont = False
       Spacing = 3
     end
     object ebAutoLink: TExtBtn
-      Left = 2
-      Top = 31
-      Width = 215
+      Left = 108
+      Top = 16
+      Width = 99
       Height = 15
       Align = alNone
       AllowAllUp = True
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -460,23 +530,17 @@ object fraAIMap: TfraAIMap
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = []
-      Margin = 13
       NumGlyphs = 4
       ParentFont = False
       Spacing = 3
     end
-    object Bevel2: TBevel
-      Left = 1
-      Top = 48
-      Width = 215
-      Height = 2
-    end
     object ExtBtn1: TExtBtn
-      Left = 137
-      Top = 215
+      Left = 128
+      Top = 55
       Width = 77
       Height = 15
       Align = alNone
+      Anchors = [akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -493,11 +557,12 @@ object fraAIMap: TfraAIMap
     end
     object ExtBtn5: TExtBtn
       Tag = 1
-      Left = 137
-      Top = 230
+      Left = 128
+      Top = 70
       Width = 77
       Height = 15
       Align = alNone
+      Anchors = [akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -514,11 +579,12 @@ object fraAIMap: TfraAIMap
     end
     object ExtBtn3: TExtBtn
       Tag = 2
-      Left = 137
-      Top = 245
+      Left = 128
+      Top = 85
       Width = 77
       Height = 15
       Align = alNone
+      Anchors = [akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -534,12 +600,13 @@ object fraAIMap: TfraAIMap
       OnClick = ebSelLinkClick
     end
     object btnIgnoreMaterialClear: TExtBtn
-      Left = 171
-      Top = 81
+      Left = 170
+      Top = 121
       Width = 37
       Height = 14
       Hint = 'Clear snap list'
       Align = alNone
+      Anchors = [akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -567,10 +634,11 @@ object fraAIMap: TfraAIMap
     end
     object Label1: TLabel
       Left = 1
-      Top = 65
-      Width = 208
+      Top = 105
+      Width = 217
       Height = 13
       Alignment = taCenter
+      Anchors = [akLeft, akTop, akRight]
       AutoSize = False
       Caption = 'Ignore materials'
       Color = clGray
@@ -579,7 +647,7 @@ object fraAIMap: TfraAIMap
     end
     object btnAddIgnoredMaterial: TExtBtn
       Left = 11
-      Top = 81
+      Top = 121
       Width = 30
       Height = 14
       Hint = 'add material to ignore list'
@@ -600,9 +668,10 @@ object fraAIMap: TfraAIMap
     end
     object lbIgnoreMaterialsList: TListBox
       Left = 4
-      Top = 98
-      Width = 210
+      Top = 138
+      Width = 206
       Height = 87
+      Anchors = [akLeft, akTop, akRight]
       BorderStyle = bsNone
       Color = clGray
       ExtendedSelect = False
@@ -624,7 +693,6 @@ object fraAIMap: TfraAIMap
     Version = 15
     StoredProps.Strings = (
       'paObjectList.Tag'
-      'paObjectList.Height'
       'paLink.Tag'
       'paLink.Height'
       'ebModeAppend.Down'

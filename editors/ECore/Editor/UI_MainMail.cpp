@@ -3,6 +3,8 @@
 #pragma hdrstop
 
 #include "ui_main.h"
+
+#if USE_MAILSLOT
 //---------------------------------------------------------------------------
 
 bool TUI::CreateMailslot()
@@ -109,5 +111,7 @@ void TUI::SendMail(LPCSTR name, LPCSTR dest, LPCSTR msg)
 	if (!fResult) return;
 }
 //---------------------------------------------------------------------------
+
+#endif // if USE_MAILSLOT
 
 

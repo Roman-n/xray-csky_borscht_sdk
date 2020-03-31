@@ -172,10 +172,14 @@ void TfraLeftBar::MaximizeAllFrames()
 
 void TfraLeftBar::ChangeTarget(ObjClassID tgt)
 {
-    for (int i=0; i<paTarget->ControlCount; i++){
-    	TExtBtn* B = dynamic_cast<TExtBtn *>(paTarget->Controls[i]);
-        if (B&&ObjClassID(B->Tag)==tgt)	B->Down = true;
+	for(size_t i = 0; i < m_TargetButtons.size(); i++)
+	{
+		TExtBtn* B = m_TargetButtons[i].first;
+
+		if(B->Tag == tgt)
+        	B->Down = true;
     }
+
     UI->RedrawScene	();
     UpdateBar		();
 }
@@ -554,7 +558,7 @@ void __fastcall TfraLeftBar::RemoveSelectedFromList1Click(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfraLeftBar::UpdateSnapList()
+void TfraLeftBar::UpdateSnapList()
 {
 	lbSnapList->Items->Clear();
     ObjectList* lst = Scene->GetSnapList(true);
@@ -756,6 +760,102 @@ void __fastcall TfraLeftBar::btEnableObjectClick(TObject *Sender)
 void __fastcall TfraLeftBar::ClipEditor1Click(TObject *Sender)
 {
 	ExecCommand				(COMMAND_SHOW_CLIP_EDITOR);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraLeftBar::lbSnapListDblClick(TObject *Sender)
+{
+	ExecCommand				(COMMAND_EDIT_SNAP_OBJECTS);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraLeftBar::ebSnapListEditClick(TObject *Sender)
+{
+	ExecCommand				(COMMAND_EDIT_SNAP_OBJECTS);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraLeftBar::LoadSoundOccluder1Click(TObject *Sender)
+{
+	ExecCommand				(COMMAND_LOAD_SOUND_OCCLUDER);
+}
+//---------------------------------------------------------------------------
+void __fastcall TfraLeftBar::ebDuplicateClick(TObject *Sender)
+{
+	ExecCommand				(COMMAND_DUPLICATE);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraLeftBar::miLockSelectedClick(TObject *Sender)
+{
+	ExecCommand				(COMMAND_LOCK_SEL,TRUE);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraLeftBar::miLockUnselectedClick(TObject *Sender)
+{
+	ExecCommand				(COMMAND_LOCK_UNSEL,TRUE);	
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraLeftBar::miLockAllClick(TObject *Sender)
+{
+	ExecCommand				(COMMAND_LOCK_ALL,TRUE);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraLeftBar::miUnlockSelectedClick(TObject *Sender)
+{
+	ExecCommand				(COMMAND_LOCK_SEL,FALSE);	
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraLeftBar::miUnlockUnselectedClick(TObject *Sender)
+{
+	ExecCommand				(COMMAND_LOCK_UNSEL,FALSE);	
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraLeftBar::miUnlockAllClick(TObject *Sender)
+{
+	ExecCommand				(COMMAND_LOCK_ALL,FALSE);	
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraLeftBar::ExtBtn3MouseDown(TObject *Sender,
+      TMouseButton Button, TShiftState Shift, int X, int Y)
+{
+	FHelper.ShowPPMenu(pmToolsLocking,dynamic_cast<TExtBtn*>(Sender));
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraLeftBar::miRunClick(TObject *Sender)
+{
+	ExecCommand(COMMAND_RUN_SCRIPT, Scene->m_ScriptRunGame);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraLeftBar::miCompileLevelClick(TObject *Sender)
+{
+	ExecCommand(COMMAND_RUN_SCRIPT, Scene->m_ScriptCompileLevel);	
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraLeftBar::miCompileDetailsClick(TObject *Sender)
+{
+	ExecCommand(COMMAND_RUN_SCRIPT, Scene->m_ScriptCompileDetails);	
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraLeftBar::miCompileAIMapClick(TObject *Sender)
+{
+	ExecCommand(COMMAND_RUN_SCRIPT, Scene->m_ScriptCompileAIMap);	
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfraLeftBar::miCompileSpawnClick(TObject *Sender)
+{
+	ExecCommand(COMMAND_RUN_SCRIPT, Scene->m_ScriptCompileSpawn);	
 }
 //---------------------------------------------------------------------------
 

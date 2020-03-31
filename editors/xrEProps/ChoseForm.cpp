@@ -13,6 +13,7 @@
 #pragma link "mxPlacemnt"
 #pragma link "ElXPThemedControl"
 #pragma link "Gradient"
+#pragma link "ElTreeInplaceEditors"
 #pragma resource "*.dfm"
 TfrmChoseItem*				TfrmChoseItem::form			= 0;
 AnsiString 					TfrmChoseItem::select_item	= "";
@@ -135,9 +136,10 @@ void __fastcall TfrmChoseItem::FillItems(u32 choose_id)
 __fastcall TfrmChoseItem::TfrmChoseItem(TComponent* Owner)
     : TForm(Owner)
 {
+	DEFINE_INI				(fsStorage);
 	tvItems->MultiSelect 	= false;
     m_Flags.assign			(cfAllowNone);
-    tvItems->ShowCheckboxes = false;
+    tvItems->ShowCheckBoxes = false;
     grdFon->Caption 		= "";
 }
 //---------------------------------------------------------------------------
@@ -181,7 +183,7 @@ void __fastcall TfrmChoseItem::FormKeyDown(TObject *Sender, WORD &Key,
 
 void __fastcall TfrmChoseItem::FormShow(TObject *Sender)
 {
-    tvItems->ShowCheckboxes 	= m_Flags.is(cfMultiSelect);
+    tvItems->ShowCheckBoxes 	= m_Flags.is(cfMultiSelect);
 	int itm_cnt = _GetItemCount(m_LastSelection.c_str());
 	if (m_Flags.is(cfMultiSelect)){
 	    string256 T;
@@ -196,18 +198,18 @@ void __fastcall TfrmChoseItem::FormShow(TObject *Sender)
                 if (fld_node) fld_node->Expand(false);
             }
         }
-    }else{
-        TElTreeItem* itm_node = FHelper.FindItem(tvItems,m_LastSelection.LowerCase().c_str(),0,0);//,bIgnoreExt);
-        TElTreeItem* fld_node = 0;
+	}else{
+		TElTreeItem* fld_node = 0;
+		TElTreeItem* itm_node = FHelper.FindItem(tvItems,m_LastSelection.LowerCase().c_str(),&fld_node,0);
         if (itm_node){
-            tvItems->Selected = itm_node;
+			tvItems->Selected = itm_node;
             tvItems->EnsureVisible(itm_node);
-            fld_node=itm_node->Parent;
+			fld_node=itm_node->Parent;
             if (fld_node) fld_node->Expand(false);
         }else if (fld_node){
-            tvItems->EnsureVisible(fld_node);
-            fld_node->Expand(false);
-            tvItems->Selected = fld_node;
+			tvItems->EnsureVisible(fld_node);
+			fld_node->Expand(false);
+			tvItems->Selected = fld_node;
         }
     }
     paMulti->Visible = m_Flags.is(cfMultiSelect);

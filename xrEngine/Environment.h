@@ -45,6 +45,9 @@ public:
 	Fvector3			hemi_color;
 	Flags16				use_flags;
 
+    u8					shape_type;
+    Fobb				obb;
+
 	void				load		(IReader* fs, u32 version);
 	float				sum			(CEnvModifier&	_another, Fvector3& view);
 };
@@ -75,10 +78,10 @@ public:
 		typedef xr_vector<ref_sound>	sounds_type;
 
 		void					load					(CInifile& config, LPCSTR sect);
-		ref_sound&				get_rnd_sound			()	{return sounds()[Random.randI(sounds().size())];}
-		u32						get_rnd_sound_time		()	{return (m_sound_period.z < m_sound_period.w) ? Random.randI(m_sound_period.z,m_sound_period.w) : 0;}
-		u32						get_rnd_sound_first_time()	{return (m_sound_period.x < m_sound_period.y) ? Random.randI(m_sound_period.x,m_sound_period.y) : 0;}
-		float					get_rnd_sound_dist		()	{return (m_sound_dist.x < m_sound_dist.y) ? Random.randF(m_sound_dist.x, m_sound_dist.y) : 0;}
+		ref_sound&				get_rnd_sound			()	{return sounds()[::Random.randI(sounds().size())];}
+		u32						get_rnd_sound_time		()	{return (m_sound_period.z < m_sound_period.w) ? ::Random.randI(m_sound_period.z,m_sound_period.w) : 0;}
+		u32						get_rnd_sound_first_time()	{return (m_sound_period.x < m_sound_period.y) ? ::Random.randI(m_sound_period.x,m_sound_period.y) : 0;}
+		float					get_rnd_sound_dist		()	{return (m_sound_dist.x < m_sound_dist.y) ? ::Random.randF(m_sound_dist.x, m_sound_dist.y) : 0;}
 		INGAME_EDITOR_VIRTUAL	~SSndChannel			()	{}
 		inline INGAME_EDITOR_VIRTUAL sounds_type& sounds()  {return m_sounds;}
 
@@ -105,8 +108,8 @@ public:
 								CInifile& effects_config,
 								const shared_str& section
 							);
-	IC SEffect*				get_rnd_effect		()	{return effects().empty()?0:effects()[Random.randI(effects().size())];}
-	IC u32					get_rnd_effect_time ()	{return Random.randI(m_effect_period.x, m_effect_period.y);}
+	IC SEffect*				get_rnd_effect		()	{return effects().empty()?0:effects()[::Random.randI(effects().size())];}
+	IC u32					get_rnd_effect_time ()	{return ::Random.randI(m_effect_period.x, m_effect_period.y);}
 
 	INGAME_EDITOR_VIRTUAL	SEffect*		create_effect			(CInifile& config, LPCSTR id);
 	INGAME_EDITOR_VIRTUAL	SSndChannel*	create_sound_channel	(CInifile& config, LPCSTR id);
@@ -126,11 +129,6 @@ public:
 	shared_str			sky_texture_env_name;
 	shared_str			clouds_texture_name	;
 
-	/*
-	ref_texture			sky_texture		;
-	ref_texture			sky_texture_env	;
-	ref_texture			clouds_texture	;
-	*/
 	FactoryPtr<IEnvDescriptorRender>	m_pDescriptor;
 
 	Fvector4			clouds_color	;
@@ -267,7 +265,7 @@ public:
 
 	EnvsMap					WeatherCycles;
 	EnvsMap					WeatherFXs;
-	xr_vector<CEnvModifier>	Modifiers;
+	xr_list<CEnvModifier>	Modifiers;
 	EnvAmbVec				Ambients;
 
 	CEffect_Rain*			eff_Rain;
@@ -292,6 +290,9 @@ public:
 
 	void					mods_load			();
 	void					mods_unload			();
+
+    CEnvModifier*			new_modifier		();
+    void					remove_modifier		(CEnvModifier *ptr);
 
 	void					OnFrame				();
 	void					lerp				(float& current_weight);

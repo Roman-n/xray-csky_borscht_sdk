@@ -31,6 +31,8 @@ void CParticleTool::OnParticleItemFocused(ListItemsVec& items)
 	PropItemVec props;
 	m_EditMode	= emEffect;
 
+	PHelper().CreateBOOL		(props, "Auto Play", &((CPEPreferences*)EPrefs)->auto_play);
+
     ButtonValue* B;
 	B=PHelper().CreateButton	(props,"Transform\\Edit",	"Reset",	ButtonValue::flFirstOnly);
     B->OnBtnClickEvent.bind		(this,&CParticleTool::OnControlClick);
@@ -55,12 +57,16 @@ void CParticleTool::OnParticleItemFocused(ListItemsVec& items)
                 	SetCurrentPG	(def);
                     def->FillProp	(GROUP_PREFIX,props,item);
                 }break;
-                default: THROW;
+				default: THROW;
                 }
             }
         }
     }
 	m_ItemProps->AssignItems(props);
+
+	if(((CPEPreferences*)EPrefs)->auto_play)
+    	PlayCurrent();
+
     UI->RedrawScene();
 }
 //------------------------------------------------------------------------------
@@ -87,12 +93,19 @@ void CParticleTool::RealUpdateProperties()
             I->SetIcon(2);
         }
 	}
+	bool was_playing;
+    switch(m_EditMode) {
+    	case emEffect:	was_playing = m_EditPE->IsPlaying(); break;
+        case emGroup:	was_playing = m_EditPG->IsPlaying(); break;
+        default:		was_playing = false;
+    }
 	m_PList->AssignItems(items,false,true);
     if(_item_to_select_after_edit.Length())
     {
     	m_PList->SelectItem(_item_to_select_after_edit.c_str(),true,false,true);
         _item_to_select_after_edit = "";
     }
-    
+    if (was_playing)
+    	PlayCurrent();
 }
 

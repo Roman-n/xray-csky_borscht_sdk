@@ -5,6 +5,8 @@
 #include "motion.h"
 
 // refs
+class CAnimationPath;
+
 class ENGINE_API CObjectAnimator
 {
 private:
@@ -41,7 +43,13 @@ public:
 	float				GetLength		();
 	// Update
 	void				Update			(float dt);
+
+#ifdef _EDITOR
+protected:
+    CAnimationPath*		m_MotionPath;
+public:
     void				DrawPath		();
+#endif
 };
 
 #endif //ObjectAnimatorH

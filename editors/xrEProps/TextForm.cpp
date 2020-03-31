@@ -18,6 +18,7 @@
 __fastcall TfrmText::TfrmText(TComponent* Owner)
     : TForm(Owner)
 {
+	DEFINE_INI		(fsStorage);
 	m_Text 			= 0;
     OnApplyClick 	= 0;
     OnCloseClick	= 0;
@@ -95,7 +96,7 @@ TfrmText* __fastcall TfrmText::CreateForm(AnsiString& txt, LPCSTR caption, u32 f
 bool __fastcall TfrmText::RunEditor(AnsiString& txt, LPCSTR caption, u32 flags, int lim, LPCSTR apply_name, TOnApplyClick on_apply, TOnCloseClick on_close, TOnCodeInsight on_insight)
 {
 	TfrmText* form			= xr_new<TfrmText>((TComponent*)0);
-	form 					= xr_new<TfrmText>((TComponent*)0);
+
     form->Caption			= caption;
     form->m_Text			= &txt;
     form->mmText->ReadOnly	= flags&flReadOnly;
@@ -107,7 +108,11 @@ bool __fastcall TfrmText::RunEditor(AnsiString& txt, LPCSTR caption, u32 flags, 
     form->OnCloseClick		= on_close;
     form->OnCodeInsight		= on_insight;
 
-	return (form->ShowModal()==mrOk);
+    TModalResult result = form->ShowModal();
+
+    xr_delete(form);
+
+	return result==mrOk;
 }
 //---------------------------------------------------------------------------
 
@@ -245,6 +250,18 @@ void __fastcall TfrmText::FormDeactivate(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
+void __fastcall TfrmText::fsStorageRestorePlacement(TObject *Sender)
+{
+	TIniFile *ini = fsStorage->IniFile;
 
+    if(ini)
+    {
+    	TColor bgColor = TColor(bgr2rgb(mmText->Color));
+        TColor textColor = TColor(bgr2rgb(mmText->Font->Color));
 
+        mmText->Color = TColor(rgb2bgr(ini->ReadInteger("styles", "textform_background_color", bgColor)));
+        mmText->Font->Color = TColor(rgb2bgr(ini->ReadInteger("styles", "textform_text_color", textColor)));
+    }
+}
+//---------------------------------------------------------------------------
 

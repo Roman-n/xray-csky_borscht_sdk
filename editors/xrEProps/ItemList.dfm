@@ -1,11 +1,11 @@
 object ItemList: TItemList
   Left = 376
   Top = 239
-  Width = 320
-  Height = 526
-  BiDiMode = bdRightToLeft
+  BiDiMode = bdLeftToRight
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Item list'
+  ClientHeight = 491
+  ClientWidth = 304
   Color = clGray
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -24,17 +24,11 @@ object ItemList: TItemList
   object tvItems: TElTree
     Left = 0
     Top = 0
-    Width = 312
-    Height = 475
-    Cursor = crDefault
-    LeftPosition = 0
+    Width = 304
+    Height = 474
     HeaderPopupMenu = pmSystem
-    DragCursor = crDrag
     Align = alClient
-    AutoCollapse = False
     AutoLineHeight = False
-    DockOrientation = doNoOrient
-    DefaultSectionWidth = 120
     AdjustMultilineHeight = False
     BorderStyle = bsNone
     BorderSides = []
@@ -102,37 +96,25 @@ object ItemList: TItemList
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     FullRowSelect = False
-    GradientSteps = 64
     HeaderColor = 7368816
     HeaderHeight = 17
     HeaderHotTrack = False
     HeaderSections.Data = {
-      F4FFFFFF01000000EC1EE00C001C0000FFFFFFFF000001010000656EC3000000
-      0000000010270000000101344014FF040000000001007465FFFFFFFF00000149
-      000000000000000000010000000000006D202A4E333B0D0A09544D656E754974
-      656D202A52656672657368466F726D313B0D0A095450616E656C202A70615374
-      617475733B0D0A0954426576656C202A42657665060000004974656D73000100
+      F1FFFFFF010000000000000000000000FFFFFFFF0000010100000000C3000000
+      0000000010270000000101004014FF040000000001000000FFFFFFFF00000100
+      0000000000000000000100000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000060000004974656D73000100
       0000000000000000000000}
     HeaderFlat = True
-    HeaderFont.Charset = DEFAULT_CHARSET
-    HeaderFont.Color = clWindowText
-    HeaderFont.Height = -11
-    HeaderFont.Name = 'MS Sans Serif'
-    HeaderFont.Style = []
     HorizontalLines = True
     HorzDivLinesColor = 7368816
-    HorzScrollBarStyles.ShowTrackHint = False
-    HorzScrollBarStyles.Width = 17
+    HorzScrollBarStyles.Width = 15
     HorzScrollBarStyles.ButtonSize = 16
     HorzScrollBarStyles.UseSystemMetrics = False
-    HorzScrollBarStyles.UseXPThemes = False
-    IgnoreEnabled = False
-    IncrementalSearch = False
+    HorzScrollBarStyles.ThemeMode = ttmNone
     InplaceEditorDelay = 0
     ItemIndent = 14
-    KeepSelectionWithinLevel = False
-    LineBorderActiveColor = clBlack
-    LineBorderInactiveColor = clBlack
     LineHeight = 17
     LinesColor = clBtnShadow
     LinesStyle = psSolid
@@ -145,8 +127,6 @@ object ItemList: TItemList
       E0E0E0E0E0E0E0E0E0808080808080808080808080E0E0E0E0E0E0E0E0E0E0E0
       E0E0E0E0808080808080808080E0E0E0E0E0E0E0E0E0E0E0E0E0E0E080808080
       8080808080808080808080808080808080808080808080808080}
-    MouseFrameSelect = True
-    OwnerDrawMask = '~~@~~'
     ParentFont = False
     ParentShowHint = False
     PlusMinusTransparent = True
@@ -160,11 +140,8 @@ object ItemList: TItemList
       E0808080808080808080808080E0E0E0E0E0E080808080808080808080808080
       8080808080808080808080808080808080808080808080808080}
     QuickEditMode = True
-    ScrollbarOpposite = False
     ShowColumns = True
-    ShowCheckboxes = True
     ShowHint = False
-    ShowLeafButton = False
     ShowLines = False
     SortType = stCustom
     StoragePath = '\Tree'
@@ -173,17 +150,15 @@ object ItemList: TItemList
     StripedEvenColor = 8158332
     StripedItems = True
     TabOrder = 0
-    TabStop = True
     Tracking = False
     TrackColor = 10526880
     VertDivLinesColor = 7368816
     VertScrollBarStyles.ShowTrackHint = True
-    VertScrollBarStyles.Width = 17
+    VertScrollBarStyles.Width = 15
     VertScrollBarStyles.ButtonSize = 16
     VertScrollBarStyles.UseSystemMetrics = False
-    VertScrollBarStyles.UseXPThemes = False
-    VirtualityLevel = vlNone
-    UseXPThemes = False
+    VertScrollBarStyles.ThemeMode = ttmNone
+    ThemeMode = ttmNone
     TextColor = clBtnText
     BkColor = clGray
     OnHeaderResize = tvItemsHeaderResize
@@ -201,8 +176,8 @@ object ItemList: TItemList
   end
   object paStatus: TPanel
     Left = 0
-    Top = 475
-    Width = 312
+    Top = 474
+    Width = 304
     Height = 17
     Align = alBottom
     Alignment = taLeftJustify
@@ -213,11 +188,12 @@ object ItemList: TItemList
     object Bevel2: TBevel
       Left = 0
       Top = 0
-      Width = 312
+      Width = 304
       Height = 2
       Align = alTop
       Shape = bsTopLine
       Style = bsRaised
+      ExplicitWidth = 312
     end
   end
   object fsStorage: TFormStorage
@@ -229,6 +205,8 @@ object ItemList: TItemList
   end
   object pmSystem: TMxPopupMenu
     Alignment = paCenter
+    BiDiMode = bdLeftToRight
+    ParentBiDiMode = False
     MarginStartColor = 10921638
     MarginEndColor = 2763306
     BKColor = 10528425
@@ -286,6 +264,12 @@ object ItemList: TItemList
     Types = [sftText]
     OnAfterOperation = InplaceEditAfterOperation
     OnValidateResult = InplaceEditValidateResult
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    CharCase = eecNormal
     Left = 112
     Top = 80
   end

@@ -12,7 +12,7 @@
 #pragma pack(push,4)
 #include "xrServer_Space.h"
 #	include "../xrCDB/xrCDB.h"
-#include "ShapeData.h"
+#include "../editors/LevelEditor/engine/ShapeData.h"
 #include "gametype_chooser.h"
 
 class NET_Packet;
@@ -20,16 +20,16 @@ class CDUInterface;
 
 #ifndef _EDITOR
     #ifndef XRGAME_EXPORTS
-		#include "../../engine/xrSound/Sound.h"
+		#include "../../xrSound/Sound.h"
     #endif
 #endif
 
-#include "xrEProps.h"
+#include "../editors/xrEProps/xrEProps.h"
 
 #ifndef XRGAME_EXPORTS
-	#include "..\..\Include\xrRender\DrawUtils.h"
+	#include "../../Include/xrRender/DrawUtils.h"
 #else
-	#include "..\Include\xrRender\DrawUtils.h"
+	#include "../Include/xrRender/DrawUtils.h"
 #endif
 #pragma warning(push)
 #pragma warning(disable:4005)
@@ -68,6 +68,7 @@ public:
 	virtual CSE_Visual* __stdcall	visual					() = 0;
 };
 add_to_type_list(CSE_Visual)
+#undef script_type_list
 #define script_type_list save_type_list(CSE_Visual)
 
 SERVER_ENTITY_DECLARE_BEGIN0(CSE_Motion)
@@ -91,6 +92,7 @@ public:
 	virtual CSE_Motion* __stdcall	motion					() = 0;
 };
 add_to_type_list(CSE_Motion)
+#undef script_type_list
 #define script_type_list save_type_list(CSE_Motion)
 
 struct ISE_AbstractLEOwner{

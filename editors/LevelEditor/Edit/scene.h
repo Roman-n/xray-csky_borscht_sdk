@@ -34,7 +34,8 @@ struct st_LevelOptions{
 	shared_str 		m_map_version;
     
     u8	 			m_LightHemiQuality;
-    u8 				m_LightSunQuality;
+	u8 				m_LightSunQuality;
+	float			m_LightSunDispersion;
 
     b_params		m_BuildParams;
 
@@ -62,6 +63,13 @@ public:
 	mapObject_D						    	mapRenderObjects;
 public:
 	st_LevelOptions	m_LevelOp;
+
+    // BAT scripts to run compilers and engine
+    xr_string		m_ScriptCompileLevel;
+    xr_string		m_ScriptCompileDetails;
+    xr_string		m_ScriptCompileAIMap;
+    xr_string		m_ScriptCompileSpawn;
+    xr_string		m_ScriptRunGame;
 protected:
 	bool m_Valid;
 	int m_Locked;
@@ -118,7 +126,8 @@ public:
     xr_string		LevelPartPath		(LPCSTR map_name);
     xr_string		LevelPartName		(LPCSTR map_name, ObjClassID cls);
 
-    BOOL			LoadLevelPart		(ESceneToolBase* M, LPCSTR map_name);
+	BOOL			LoadLevelPart		(ESceneToolBase* M, LPCSTR map_name);
+	BOOL			LoadLevelPartStream	(ESceneToolBase* M, LPCSTR map_name);
     BOOL			LoadLevelPartLTX	(ESceneToolBase* M, LPCSTR map_name);
 
     BOOL			LoadLevelPart		(LPCSTR map_name, ObjClassID cls, bool lock);
@@ -129,7 +138,8 @@ public:
 public:
 	bool			ExportGame			(SExportStreams* F);
 
-	bool 			Load				(LPCSTR map_name, bool bUndo);
+	bool			Load				(LPCSTR map_name, bool bUndo);
+	bool 			LoadStream			(LPCSTR map_name, bool bUndo);
 	bool 			LoadLTX				(LPCSTR map_name, bool bUndo);
 
 	void 			Save				(LPCSTR map_name, bool bUndo, bool bForceSaveAll);
@@ -191,7 +201,7 @@ public:
     void 			SelectSnapList		();
     void 			UpdateSnapList 	   	();
     void			UpdateSnapListReal	();
-	virtual ObjectList* 	GetSnapList			(bool bIgnoreUse);
+	virtual ObjectList* 	GetSnapList			(bool bIgnoreUse, ObjClassID for_tool=OBJCLASS_DUMMY);
 
 	virtual CCustomObject*	RayPickObject 		(float dist, const Fvector& start, const Fvector& dir, ObjClassID classfilter, SRayPickInfo* pinf, ObjectList* from_list);
 	int 			BoxPickObjects		(const Fbox& box, SBoxPickInfoVec& pinf, ObjectList* from_list);
@@ -204,12 +214,14 @@ public:
 	int 			FrustumSelect       (int flag, ObjClassID classfilter=OBJCLASS_DUMMY);
 	void			SelectObjects       (bool flag, ObjClassID classfilter=OBJCLASS_DUMMY);
 	void 			ShowObjects         (bool flag, ObjClassID classfilter=OBJCLASS_DUMMY, bool bAllowSelectionFlag=false, bool bSelFlag=true);
+	int 			LockObjects         (bool flag, ObjClassID classfilter=OBJCLASS_DUMMY, bool bAllowSelectionFlag=false, bool bSelFlag=true);
 	void			InvertSelection     (ObjClassID classfilter);
 	int 			SelectionCount      (bool testflag, ObjClassID classfilter);
 	void			RemoveSelection     (ObjClassID classfilter);
 	void 			CutSelection        (ObjClassID classfilter);
 	void			CopySelection       (ObjClassID classfilter);
 	void			PasteSelection      ();
+	void			DuplicateSelection	(ObjClassID classfilter);
 
 	void 			SelectLightsForObject(CCustomObject* obj);
 
@@ -290,7 +302,10 @@ protected:
     
 public:
     void            RegisterSubstObjectName  (const xr_string& from, const xr_string& to );
-    bool            GetSubstObjectName       (const xr_string& from, xr_string& to) const;
+	bool            GetSubstObjectName       (const xr_string& from, xr_string& to) const;
+
+public:
+	xr_map<xr_string, int> m_CountByName;
 };
 
 //----------------------------------------------------

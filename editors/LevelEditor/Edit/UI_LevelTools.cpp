@@ -24,8 +24,9 @@ TShiftState ssRBOnly;
 CLevelTool::CLevelTool()
 {
     fFogness	= 0.9f;
-    dwFogColor	= 0xffffffff;
-    m_Flags.zero();
+	dwFogColor	= 0xffffffff;
+	m_Flags.zero();
+    pCurTool	= 0;
 }
 //---------------------------------------------------------------------------
 CLevelTool::~CLevelTool()
@@ -159,7 +160,7 @@ bool __fastcall CLevelTool::KeyPress  (WORD Key, TShiftState Shift)
 }
 //---------------------------------------------------------------------------
 
-void CLevelTool::RealSetAction   (ETAction act)
+void __fastcall CLevelTool::RealSetAction   (ETAction act)
 {
 	inherited::SetAction(act);
     if (pCurTool)
@@ -169,10 +170,10 @@ void CLevelTool::RealSetAction   (ETAction act)
     m_Flags.set	(flChangeAction,FALSE);
 }
 
-void __fastcall CLevelTool::SetAction(ETAction act)
+void CLevelTool::SetAction(ETAction act)
 {
 	// если мышь захвачена - изменим action после того как она освободится
-	if (UI->IsMouseCaptured()||UI->IsMouseInUse()||!false){
+	if (UI->IsMouseCaptured()||UI->IsMouseInUse()){
 	    m_Flags.set	(flChangeAction,TRUE);
         iNeedAction=act;
     }else
@@ -213,10 +214,10 @@ void __fastcall CLevelTool::ResetSubTarget()
 	pCurTool->ResetSubTarget();
 }
 //---------------------------------------------------------------------------
-void __fastcall CLevelTool::SetTarget(ObjClassID tgt, int sub_tgt)
+void CLevelTool::SetTarget(ObjClassID tgt, int sub_tgt)
 {
 	// если мышь захвачена - изменим target после того как она освободится
-	if (UI->IsMouseCaptured()||UI->IsMouseInUse()||!false){
+	if (UI->IsMouseCaptured()||UI->IsMouseInUse()){
 	    m_Flags.set(flChangeTarget,TRUE);
         if(tgt == OBJCLASS_WAY && sub_tgt==2 && target==tgt)
         {
@@ -307,7 +308,7 @@ void CLevelTool::OnPropsClose()
 }
 //---------------------------------------------------------------------------
 
-void __fastcall CLevelTool::OnPropsModified()
+void __stdcall CLevelTool::OnPropsModified()
 {
 	Scene->Modified();
 //	Scene->UndoSave();
@@ -344,20 +345,16 @@ void CLevelTool::ZoomObject(BOOL bSelectedOnly)
 
 void CLevelTool::GetCurrentFog(u32& fog_color, float& s_fog, float& e_fog)
 {
-/*
 	if (psDeviceFlags.is(rsEnvironment)&&psDeviceFlags.is(rsFog)){
         s_fog				= g_pGamePersistent->Environment().CurrentEnv->fog_near;
         e_fog				= g_pGamePersistent->Environment().CurrentEnv->fog_far;
         Fvector& f_clr		= g_pGamePersistent->Environment().CurrentEnv->fog_color;
         fog_color 			= color_rgba_f(f_clr.x,f_clr.y,f_clr.z,1.f);
     }else{
-*/    
         s_fog				= psDeviceFlags.is(rsFog)?(1.0f - fFogness)* 0.85f * UI->ZFar():0.99f*UI->ZFar();
         e_fog				= psDeviceFlags.is(rsFog)?0.91f * UI->ZFar():UI->ZFar();
         fog_color 			= dwFogColor;
-/*
     }
-*/    
 }
 //---------------------------------------------------------------------------
 
@@ -369,12 +366,12 @@ LPCSTR CLevelTool::GetInfo()
 }
 //---------------------------------------------------------------------------
 
-void __fastcall CLevelTool::OnFrame()
+void CLevelTool::OnFrame()
 {
 	Scene->OnFrame		(Device.fTimeDelta);
     EEditorState est 	= UI->GetEState();
     if ((est==esEditScene)||(est==esEditLibrary)||(est==esEditLightAnim)){
-        if (true/*!UI->IsMouseCaptured()*/)
+        if (!UI->IsMouseCaptured())
         {
             // если нужно изменить target выполняем после того как мышь освободится
             if(m_Flags.is(flChangeTarget)) 		RealSetTarget(iNeedTarget,iNeedSubTarget,false);
@@ -388,7 +385,7 @@ void __fastcall CLevelTool::OnFrame()
 }
 //---------------------------------------------------------------------------
 #include "d3dutils.h"
-void __fastcall CLevelTool::RenderEnvironment()
+void CLevelTool::RenderEnvironment()
 {
     // draw sky
     EEditorState est 		= UI->GetEState();
@@ -397,13 +394,13 @@ void __fastcall CLevelTool::RenderEnvironment()
     case esEditScene:		
     	if (psDeviceFlags.is(rsEnvironment))
         { 
-//.    		g_pGamePersistent->Environment().RenderSky	();
-//.    		g_pGamePersistent->Environment().RenderClouds	();
+    		g_pGamePersistent->Environment().RenderSky	();
+    		g_pGamePersistent->Environment().RenderClouds	();
         }
     }
 }
 
-void __fastcall CLevelTool::Render()
+void CLevelTool::Render()
 {
 	// Render update
     ::Render->Calculate		();
@@ -416,7 +413,10 @@ void __fastcall CLevelTool::Render()
     case esEditLightAnim:
     case esEditScene:
     	Scene->Render(Device.m_Camera.GetTransform()); 
-//.	    if (psDeviceFlags.is(rsEnvironment)) g_pGamePersistent->Environment().RenderLast	();
+	    if (psDeviceFlags.is(rsEnvironment)) {
+        	g_pGamePersistent->Environment().RenderFlares ();
+        	g_pGamePersistent->Environment().RenderLast	();
+        }
     break;
     case esBuildLevel:  	Builder.OnRender();				break;
     }
@@ -427,9 +427,9 @@ void __fastcall CLevelTool::Render()
 }
 //---------------------------------------------------------------------------
 
-void CLevelTool::ShowObjectList()
+void CLevelTool::ShowObjectList(bool bSearch)
 {
-	if (pObjectListForm) pObjectListForm->ShowObjectList();
+	if (pObjectListForm) pObjectListForm->ShowObjectList(bSearch);
 }
 //---------------------------------------------------------------------------
 
@@ -447,12 +447,12 @@ bool CLevelTool::IsModified()
 //---------------------------------------------------------------------------
 
 #include "../ECore/Editor/EditMesh.h"
-bool CLevelTool::RayPick(const Fvector& start, const Fvector& dir, float& dist, Fvector* pt, Fvector* n)
+bool CLevelTool::RealRayPick(const Fvector& start, const Fvector& dir, float& dist, Fvector* pt, Fvector* n, ObjectList* ol)
 {
     if (Scene->ObjCount()&&(UI->GetEState()==esEditScene)){
         SRayPickInfo pinf;
         pinf.inf.range	= dist;
-        if (Scene->RayPickObject(dist, start,dir,OBJCLASS_SCENEOBJECT,&pinf,0)){ 
+        if (Scene->RayPickObject(dist, start,dir,OBJCLASS_SCENEOBJECT,&pinf,ol)){
         	dist		= pinf.inf.range;
         	if (pt) 	pt->set(pinf.pt); 
             if (n){	
@@ -473,5 +473,15 @@ bool CLevelTool::RayPick(const Fvector& start, const Fvector& dir, float& dist, 
         if (n)	n->set(N);
         return true;
     }else return false;
+}
+
+bool CLevelTool::RayPick(const Fvector& start, const Fvector& dir, float& dist, Fvector* pt, Fvector* n)
+{
+	return RealRayPick(start, dir, dist, pt, n, NULL);
+}
+
+bool CLevelTool::RayPickFromSnap(const Fvector& start, const Fvector& dir, float& dist, Fvector* pt, Fvector* n)
+{
+    return RealRayPick(start, dir, dist, pt, n, Scene->GetSnapList(true, OBJCLASS_SCENEOBJECT));
 }
 

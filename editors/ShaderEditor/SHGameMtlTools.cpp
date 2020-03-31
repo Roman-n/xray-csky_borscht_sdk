@@ -3,7 +3,7 @@
 #pragma hdrstop
 
 #include "SHGameMtlTools.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
+#include "../xrEProps/PropertiesListHelper.h"
 #include "ui_shadermain.h"
 #include "../xrEProps/folderlib.h"
 #include "UI_ShaderTools.h"
@@ -136,10 +136,10 @@ LPCSTR CSHGameMtlTools::AppendItem(LPCSTR folder_name, LPCSTR parent_name)
     }
     AnsiString pref		= parent_name?AnsiString(parent_name):AnsiString(folder_name)+M;
     m_LastSelection		= FHelper.GenerateName(pref.c_str(),2,fastdelegate::bind<TFindObjectByName>(this,&CSHGameMtlTools::ItemExist),false,true);
-    SGameMtl* S 		= GMLib.AppendMaterial(parent);
-    S->m_Name			= m_LastSelection.c_str();
-    if (!parent)		S->Flags.set (SGameMtl::flDynamic,0==strcmp(M,"Dynamic"));
-    ExecCommand			(COMMAND_UPDATE_LIST);
+	SGameMtl* S = parent ? GMLib.AppendMaterial(parent) : GMLib.AppendMaterial(strcmp(M, "Dynamic") == 0);
+	S->m_Name			= m_LastSelection.c_str();
+
+	ExecCommand			(COMMAND_UPDATE_LIST);
     ExecCommand			(COMMAND_UPDATE_PROPERTIES);
 	Modified			();
     return *S->m_Name;

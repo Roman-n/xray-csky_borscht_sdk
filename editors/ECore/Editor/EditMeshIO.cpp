@@ -207,18 +207,18 @@ bool CEditableMesh::LoadMesh(IReader& F){
 
 #ifdef _EDITOR
     if (!EPrefs->object_flags.is(epoDeffLoadRB)){
-        GenerateFNormals	();
-        GenerateAdjacency	();
-	    GenerateVNormals	(0);
+//        GenerateFNormals	();
+//        GenerateAdjacency	();
+//	    GenerateVNormals	(0);
 		GenerateRenderBuffers();
-        UnloadFNormals		();
-        UnloadAdjacency		();
-	    UnloadVNormals		();
+//        UnloadFNormals		();
+//        UnloadAdjacency		();
+//	    UnloadVNormals		();
     }
     if (!EPrefs->object_flags.is(epoDeffLoadCF)) GenerateCFModel();       
 #endif
-	OptimizeMesh(false);
-    RebuildVMaps();
+//	OptimizeMesh(false);
+//    RebuildVMaps();
 
 	return true;
 }

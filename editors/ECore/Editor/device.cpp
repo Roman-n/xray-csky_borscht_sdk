@@ -2,12 +2,12 @@
 #include "stdafx.h"
 #pragma hdrstop
 #include "gamefont.h"
-#include "dxerr8.h"
 #include "ImageManager.h"
 #include "ui_main.h"
 #include "render.h"
 #include "GameMtlLib.h"
 #include "ResourceManager.h"
+#include "igame_persistent.h" // for environment bug-fix
 
 #pragma package(smart_init)
 
@@ -144,10 +144,13 @@ bool CRenderDevice::Create()
 	if (FS.exist(sh))
 		F				= FS.r_open(0,sh);
 	Resources			= xr_new<CResourceManager>	();
+	Resources->DeferredLoad(psDeviceFlags.is(rsDeffLoadResources));
 
     // if build options - load textures immediately
-    if (strstr(Core.Params,"-build")||strstr(Core.Params,"-ebuild"))
+    if (strstr(Core.Params,"-build")||strstr(Core.Params,"-ebuild")) {
         Device.Resources->DeferredLoad(FALSE);
+        psDeviceFlags.set(rsDeffLoadResources,FALSE);
+    }
 
     _Create				(F);
 	FS.r_close			(F);
@@ -246,7 +249,7 @@ void CRenderDevice::_Destroy(BOOL	bKeepTextures)
 }
 
 //---------------------------------------------------------------------------
-void __fastcall CRenderDevice::Resize(int w, int h)
+void CRenderDevice::Resize(int w, int h)
 {
     m_RealWidth 	= w;
     m_RealHeight 	= h;
@@ -284,7 +287,8 @@ void CRenderDevice::Reset  	()
 //		fWidth_2			= float(dwWidth/2);
 //		fHeight_2			= float(dwHeight/2);
     Resources->reset_end	();
-    _SetupStates			();
+	_SetupStates			();
+	g_pGamePersistent->Environment().bNeed_re_create_env = TRUE;
     u32 tm_end				= TimerAsync();
     Msg						("*** RESET [%d ms]",tm_end-tm_start);
 }
@@ -424,5 +428,10 @@ void CRenderDevice::time_factor(float v)
 {
 	 Timer.time_factor(v);
 	 TimerGlobal.time_factor(v);
+}
+
+void CRenderDevice::DeferredLoadResources(bool bDeferredLoad)
+{
+	Resources->DeferredLoad(bDeferredLoad);
 }
 

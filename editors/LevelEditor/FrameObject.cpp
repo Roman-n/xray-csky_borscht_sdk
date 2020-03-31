@@ -26,14 +26,14 @@ __fastcall TfraObject::TfraObject(TComponent* Owner,ESceneObjectTool* parent_too
     ParentTools	= parent_tools;
 }
 //---------------------------------------------------------------------------
-void TfraObject::OnDrawObjectThumbnail(LPCSTR name, HDC hdc, const Irect &r)
+void __stdcall TfraObject::OnDrawObjectThumbnail(LPCSTR name, HDC hdc, const Irect &r)
 {
 	EObjectThumbnail* thm	= xr_new<EObjectThumbnail>(name);
     thm->Draw				(hdc,r);
     xr_delete				(thm);
 }
 //---------------------------------------------------------------------------
-void __fastcall TfraObject::OnItemFocused(ListItemsVec& items)
+void __stdcall TfraObject::OnItemFocused(ListItemsVec& items)
 {
 	VERIFY(items.size()<=1);
     m_Current 			= 0;
@@ -70,7 +70,7 @@ void __fastcall TfraObject::ebDeselectByRefsClick(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfraObject::MultiSelByRefObject ( bool clear_prev )
+void TfraObject::MultiSelByRefObject ( bool clear_prev )
 {
     ObjectList 	objlist;
     LPU32Vec 	sellist;
@@ -130,10 +130,10 @@ void TfraObject::SelByRefObject( bool flag )
 void __fastcall TfraObject::ebMultiAppendClick(TObject *Sender)
 {
 	LPCSTR N;
-    if (TfrmChoseItem::SelectItem(smObject,N,32,0)){
+    if (TfrmChoseItem::SelectItem(smObject,N,1024,0)){
     	Fvector pos={0.f,0.f,0.f};
     	Fvector up={0.f,1.f,0.f};
-        Scene->SelectObjects(false,OBJCLASS_SCENEOBJECT);
+//		Scene->SelectObjects(false,OBJCLASS_SCENEOBJECT); // Issue #200
 	    AStringVec lst;
     	_SequenceToList(lst,N);
         SPBItem* pb = UI->ProgressStart(lst.size(),"Append object: ");
@@ -155,6 +155,7 @@ void __fastcall TfraObject::ebMultiAppendClick(TObject *Sender)
 */
             obj->MoveTo(pos,up);
             Scene->AppendObject( obj );
+            obj->Select(FALSE); // Issue #200
         }         
         UI->ProgressEnd(pb);
     }
@@ -233,7 +234,7 @@ void __fastcall TfraObject::FormHide(TObject *Sender)
 
 void __fastcall TfraObject::FormCreate(TObject *Sender)
 {
-    m_Items 				= TItemList::CreateForm("Objects", paItems, alClient, 0);
+    m_Items 				= TItemList::CreateForm("Objects", paItems, alClient, TItemList::ilFocusOnHover);
     m_Items->SetOnItemsFocusedEvent(TOnILItemsFocused(this,&TfraObject::OnItemFocused));
 	// fill list
     RefreshList				();

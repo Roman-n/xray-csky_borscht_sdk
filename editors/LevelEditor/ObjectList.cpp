@@ -10,6 +10,7 @@
 #pragma package(smart_init)
 #pragma link "mxPlacemnt"
 #pragma link "ElEdits"
+#pragma link "ElTreeInplaceEditors"
 #pragma resource "*.dfm"
 //---------------------------------------------------------------------------
 TfrmObjectList* TfrmObjectList::CreateForm(TWinControl* parent)
@@ -25,9 +26,12 @@ void TfrmObjectList::DestroyForm(TfrmObjectList*& obj_list)
     xr_delete(obj_list);
 }
 
-void __fastcall TfrmObjectList::ShowObjectList()
+void __fastcall TfrmObjectList::ShowObjectList(bool bSearch)
 {
 	Show();
+
+	if(bSearch)
+		ElEdit1->SetFocus();
 }
 
 void __fastcall TfrmObjectList::ShowObjectListModal()
@@ -47,10 +51,11 @@ void __fastcall TfrmObjectList::UpdateObjectList()
 
 //---------------------------------------------------------------------------
 __fastcall TfrmObjectList::TfrmObjectList(TComponent* Owner)
-    : TForm(Owner)
+	: TForm(Owner)
 {
+	DEFINE_INI(fsStorage);
 	bLockUpdate = false;
-    find_node	= NULL;
+	find_node	= NULL;
 }
 
 void __fastcall TfrmObjectList::sbCloseClick(TObject *Sender)
@@ -62,7 +67,8 @@ void __fastcall TfrmObjectList::sbCloseClick(TObject *Sender)
 void __fastcall TfrmObjectList::FormShow(TObject *Sender)
 {
     obj_count = 0;
-    m_cur_cls = OBJCLASS_DUMMY;
+	m_cur_cls = OBJCLASS_DUMMY;
+	m_bAllTools = rgTools->ItemIndex == 0;
 	tvItems->FilteredVisibility = ((rgSO->ItemIndex==1)||(rgSO->ItemIndex==2));
     InitListBox();
 	// check window position
@@ -104,19 +110,20 @@ TElTreeItem* TfrmObjectList::AddFolder(LPCSTR name, void* data, TElTreeItem* par
     else
     	node 			= tvItems->Items->AddObject(parent_node, name, NULL);
         
-    node->ParentStyle 	= false;
+	node->ParentFontStyle = false;
     node->Bold 			= true;
-    return 				node;
+	return 				node;
 }
 
 TElTreeItem* TfrmObjectList::AddObject(TElTreeItem* node, LPCSTR name, void* obj, TColor color)
 {
     TElTreeItem* ret 	= tvItems->Items->AddChildObject(node, name, obj);
 
-    ret->ParentColors 	= false;
-    node->ParentStyle = false;
-    ret->Color			= color;
-    ret->BkColor		= clGray;
+	ret->ParentColors 	= false;
+	node->ParentFontStyle = false;
+	ret->Color			= color;
+	ret->BkColor		= clGray;
+	ret->RowBkColor		= clGray;
 
     return ret;
 }
@@ -172,7 +179,7 @@ void __fastcall TfrmObjectList::InitListBox()
 	storeExpandedItems		();
     tvItems->IsUpdating 	= true;
     tvItems->Items->Clear	();
-    m_cur_cls 				= LTools->CurrentClassID();
+	m_cur_cls 				= m_bAllTools ? OBJCLASS_DUMMY : LTools->CurrentClassID();
     string1024				str_name;
     
     for(SceneToolsMapPairIt it=Scene->FirstTool(); it!=Scene->LastTool(); ++it)
@@ -183,8 +190,8 @@ void __fastcall TfrmObjectList::InitListBox()
         	if (it->first==OBJCLASS_DUMMY)
             	continue;
 
-            TElTreeItem* tool_node	= FindFolderByType(it->first);
-            if (!tool_node)
+			TElTreeItem* tool_node	= FindFolderByType(it->first);
+			if (!tool_node)
             {
                 AnsiString 			name;
                 name.sprintf		("%ss",it->second->ClassDesc());
@@ -198,7 +205,7 @@ void __fastcall TfrmObjectList::InitListBox()
             {
                 for(ObjectIt _F = lst.begin();_F!=lst.end();++_F)
                 {
-                    TElTreeItem* group_profile_node     = NULL;
+                    TElTreeItem* group_profile_node;
                     
                     gen_group_name				((CGroupObject*)(*_F), str_name);
             		group_profile_node			= AddFolder(str_name, NULL, tool_node);
@@ -213,10 +220,10 @@ void __fastcall TfrmObjectList::InitListBox()
                     for (ObjectIt _G=grp_lst.begin(); _G!=grp_lst.end(); ++_G)
                     {
                     	gen_object_name		(*_G, str_name, true);
-                        TElTreeItem* obj	= AddObject	(	grp_node, 
-                        									str_name, 
-                                                			(void*)(*_G), 
-                                                			(*_G)->m_CO_Flags.test(CCustomObject::flObjectInGroupUnique)?clBlack:TColor(0x00a9a6a0));
+						AddObject	(	grp_node,
+										str_name,
+										(void*)(*_G),
+										(*_G)->m_CO_Flags.test(CCustomObject::flObjectInGroupUnique)?clBlack:TColor(0x00a9a6a0));
                     }
                 }
                 for (TElTreeItem* chield = tool_node->GetFirstChild(); chield; chield = tool_node->GetNextChild(chield))
@@ -255,7 +262,7 @@ void __fastcall TfrmObjectList::InitListBox()
     obj_count 				= Scene->ObjCount();
     find_node				= NULL;
 
-    restoreExpandedItems	();
+	restoreExpandedItems	();
 }
 
 void TfrmObjectList::UpdateState()
@@ -280,9 +287,9 @@ void TfrmObjectList::UpdateState()
         TElTreeItem* parent_node	=  node->Parent;
         CCustomObject* PO			= (parent_node && parent_node->Data)?(CCustomObject*)parent_node->Data : NULL;
             
-        CCustomObject* O 			= (CCustomObject*)node->Data;
-            
-        node->ParentStyle 			= false;
+		CCustomObject* O 			= (CCustomObject*)node->Data;
+
+		node->ParentFontStyle		= false;
         node->StrikeOut 			= !O->Visible();
 
         if(rgSO->ItemIndex==1) 	
@@ -325,7 +332,7 @@ void TfrmObjectList::UpdateState()
 
     tvItems->IsUpdating 	= false;
 
-    if (need_sort) 
+	if (need_sort)
     	tvItems->Sort		(true);
     
     if (first_sel_node && sel_count==1) 
@@ -341,7 +348,7 @@ void TfrmObjectList::UpdateSelection()
         Scene->SelectObjects( false, OBJCLASS_DUMMY/*m_cur_cls*/);
         
         for(TElTreeItem* node = tvItems->GetNextSelected(0); node; node=tvItems->GetNextSelected(node))
-        {
+		{
             if(node->Data)
             {
             	CCustomObject* O = (CCustomObject*)(node->Data);
@@ -395,8 +402,8 @@ BOOL bForceInitListBox = FALSE;
 void __fastcall TfrmObjectList::sbRefreshListClick(TObject *Sender)
 {
     if((Scene->ObjCount()!=obj_count)||(m_cur_cls!=LTools->CurrentClassID()) || bForceInitListBox)
-    {
-	    InitListBox();
+	{
+		InitListBox();
         bForceInitListBox = FALSE;
     }else
     	UpdateState();
@@ -448,7 +455,7 @@ void __fastcall TfrmObjectList::tvItemsKeyPress(TObject *Sender,
     }
 }
 //---------------------------------------------------------------------------
-#include "xr_input.h"
+
 void __fastcall TfrmObjectList::tvItemsItemFocused(TObject *Sender)
 {
     UpdateSelection();
@@ -486,33 +493,37 @@ void TfrmObjectList::ProcessFindItemInList(TElTreeItem* from, AnsiString str)
     	if(NULL==node->Data)
         	continue;
             
-        CCustomObject* O 			= (CCustomObject*)node->Data;
+		CCustomObject* O 			= (CCustomObject*)node->Data;
         if( strstr(O->FName.c_str(), str.c_str()) )
         {
             if(find_node)
             {
                 find_node->ParentColors 	= stored_parent_colors;
-                find_node->BkColor			= storred_bk_color;
-            }
-            stored_parent_colors		= node->ParentColors;
-            storred_bk_color			= node->BkColor;
-            find_node 					= node;
+				find_node->BkColor			= stored_bk_color;
+				find_node->RowBkColor		= stored_row_color;
+			}
+			stored_parent_colors		= node->ParentColors;
+			stored_bk_color				= node->BkColor;
+			stored_row_color			= node->RowBkColor;
+			find_node 					= node;
 
-            find_node->MakeVisible		();
-            find_node->ParentColors 	= false;
-            find_node->BkColor			= clYellow;
+			find_node->MakeVisible		();
+			find_node->ParentColors 	= false;
+			find_node->BkColor			= clYellow;
+			find_node->RowBkColor		= clYellow;
 
-            bfound						= true;
-            break;
-         }
-	}                
+			bfound						= true;
+			break;
+		 }
+	}
 
-    if(!bfound && find_node)
-    {
-        find_node->ParentColors 	= stored_parent_colors;
-        find_node->BkColor			= storred_bk_color;
-    	find_node = NULL;
-    }
+	if(!bfound && find_node)
+	{
+		find_node->ParentColors 	= stored_parent_colors;
+		find_node->BkColor			= stored_bk_color;
+		find_node->RowBkColor		= stored_bk_color;
+		find_node = NULL;
+	}
 }
 
 void __fastcall TfrmObjectList::ElEdit1Exit(TObject *Sender)
@@ -520,14 +531,12 @@ void __fastcall TfrmObjectList::ElEdit1Exit(TObject *Sender)
     if(find_node)
     {
         find_node->ParentColors 	= stored_parent_colors;
-        find_node->BkColor			= storred_bk_color;
-    }
+		find_node->BkColor			= stored_bk_color;
+		find_node->RowBkColor		= stored_row_color;
+	}
 //.    find_node = NULL;
 }
 //---------------------------------------------------------------------------
-
-//---------------------------------------------------------------------------
-
 
 void __fastcall TfrmObjectList::ElEdit1KeyDown(TObject *Sender, WORD &Key,
       TShiftState Shift)
@@ -541,17 +550,10 @@ void __fastcall TfrmObjectList::ElEdit1KeyDown(TObject *Sender, WORD &Key,
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmObjectList::tvItemsMouseDown(TObject *Sender,
-      TMouseButton Button, TShiftState Shift, int X, int Y)
+void __fastcall TfrmObjectList::rgToolsClick(TObject *Sender)
 {
-    TElTreeItem* node 		= tvItems->GetNodeAt(X,Y);
-    if(node && NULL==node->Data)
-    {
-        if(node->Expanded)
-            node->Collapse(Button==mbRight);
-        else
-            node->Expand(Button==mbRight);
-    }
+	m_bAllTools = rgTools->ItemIndex == 0;
+	InitListBox();
 }
 //---------------------------------------------------------------------------
 

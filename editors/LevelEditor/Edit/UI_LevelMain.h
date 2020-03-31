@@ -13,10 +13,12 @@ enum {
 	COMMAND_SHOW_TARGET,
 
 	COMMAND_SHOW_OBJECTLIST,
+	COMMAND_FIND_OBJECT,
     COMMAND_MULTI_RENAME_OBJECTS,
 
 	COMMAND_REFRESH_SOUND_ENVS,
     COMMAND_REFRESH_SOUND_ENV_GEOMETRY,
+    COMMAND_LOAD_SOUND_OCCLUDER,
     
 	COMMAND_CLEAN_LIBRARY,
     COMMAND_LIBRARY_EDITOR,
@@ -31,6 +33,7 @@ enum {
 	COMMAND_CUT,
 	COMMAND_COPY,
 	COMMAND_PASTE,
+	COMMAND_DUPLICATE,
 	COMMAND_LOAD_SELECTION,
 	COMMAND_SAVE_SELECTION,
     COMMAND_LOAD_LEVEL_PART, 
@@ -49,7 +52,8 @@ enum {
     COMMAND_MAKE_DETAILS,
 	COMMAND_MAKE_HOM,
     COMMAND_MAKE_SOM,
-    COMMAND_MAKE_AIMAP,
+	COMMAND_MAKE_AIMAP,
+	COMMAND_MAKE_SOUND_ENV,
 
 	COMMAND_INVERT_SELECTION_ALL,
 	COMMAND_SELECT_ALL,
@@ -58,6 +62,9 @@ enum {
 	COMMAND_HIDE_UNSEL,
 	COMMAND_HIDE_SEL,
 	COMMAND_HIDE_ALL,
+    COMMAND_LOCK_ALL,
+    COMMAND_LOCK_SEL,
+    COMMAND_LOCK_UNSEL,
 
     COMMAND_SET_SNAP_OBJECTS,
     COMMAND_ADD_SEL_SNAP_OBJECTS,
@@ -65,11 +72,14 @@ enum {
     COMMAND_CLEAR_SNAP_OBJECTS,
 	COMMAND_SELECT_SNAP_OBJECTS,
 	COMMAND_REFRESH_SNAP_OBJECTS,
+    COMMAND_EDIT_SNAP_OBJECTS,
 
     COMMAND_LOAD_FIRSTRECENT,
 
     COMMAND_SHOWCONTEXTMENU,
     COMMAND_SHOW_CLIP_EDITOR,
+
+    COMMAND_RUN_SCRIPT
 };
 //------------------------------------------------------------------------------
 
@@ -79,16 +89,12 @@ class CLevelMain: public TUI{
     virtual void 	RealUpdateScene			();
     virtual void 	RealQuit				();
 public:
-	CInifile*		m_rt_object_props;
     C3DCursor*   	m_Cursor;
 public:
     				CLevelMain 				();
     virtual 		~CLevelMain				();
 
-    void			store_rt_flags			(const CCustomObject* CO);
-    void			restore_rt_flags		(CCustomObject* CO);
-
-    virtual LPSTR	GetCaption				();
+    virtual LPCSTR	GetCaption				();
 
     virtual void 	ResetStatus				();
     virtual void 	SetStatus				(LPSTR s, bool bOutLog=true);

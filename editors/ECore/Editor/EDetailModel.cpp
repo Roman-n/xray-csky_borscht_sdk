@@ -22,7 +22,7 @@ void EDetail::EVertexIn::remapUV(const fvfVertexIn& src, const Fvector2& offs, c
     ImageLib.MergedTextureRemapUV(u,v,src.u,src.v, offs, scale, bRotate);
 }
 
-EDetail::EDetail()
+EDetail::EDetail(bool lib)
 {
 	shader				= 0;
 	m_Flags.zero		();
@@ -35,6 +35,8 @@ EDetail::EDetail()
 	number_vertices		= 0;
 	indices				= 0;
 	number_indices		= 0;
+
+    m_bLoadFromLibrary = lib;
 }
 
 EDetail::~EDetail()
@@ -45,7 +47,8 @@ EDetail::~EDetail()
 void EDetail::Unload()
 {
 	CDetail::Unload		();
-    Lib.RemoveEditObject(m_pRefs);
+    if(m_bLoadFromLibrary) Lib.RemoveEditObject(m_pRefs);
+    else xr_delete(m_pRefs);
     OnDeviceDestroy		();
 }
 
@@ -111,26 +114,41 @@ IC BOOL isEqual(U16Vec& ind, u16 v[3])
 
 bool EDetail::Update	(LPCSTR name)
 {
-	m_sRefs				= name;
+	m_sRefs = name;
+
     // update link
-    CEditableObject* R	= Lib.CreateEditObject(name);
-    if (!R){
- 		ELog.Msg		(mtError,"Can't load detail object '%s'.", name);
-        return false;
+    CEditableObject* R;
+
+    if(m_bLoadFromLibrary) {
+    	R = Lib.CreateEditObject(name);
+        if(!R) {
+        	ELog.Msg(mtError, "Can't load detail object '%s'.", name);
+            return false;
+        }
     }
+    else {
+    	R = xr_new<CEditableObject>(name);
+        if(!R->Load(name)) {
+        	ELog.Msg(mtError, "Can't load detail object '%s'.", name);
+            xr_delete(R);
+            return false;
+        }
+    }
+
     if(R->SurfaceCount()!=1){
-    	ELog.Msg		(mtError,"Object must contain 1 material.");
-	    Lib.RemoveEditObject(R);
-    	return false;
-    }
+		ELog.DlgMsg		(mtError,"Object must contain 1 material.");
+		Lib.RemoveEditObject(R);
+		return false;
+	}
 	if(R->MeshCount()==0){
-    	ELog.Msg		(mtError,"Object must contain 1 mesh.");
+    	ELog.DlgMsg		(mtError,"Object must contain 1 mesh.");
 	    Lib.RemoveEditObject(R);
     	return false;
     }
 
-    Lib.RemoveEditObject(m_pRefs);
-    m_pRefs				= R;
+    if(m_bLoadFromLibrary) Lib.RemoveEditObject(m_pRefs);
+    else xr_delete(m_pRefs);
+    m_pRefs = R;
 
     // fill geometry
     CEditableMesh* M	= *m_pRefs->FirstMesh();
@@ -141,10 +159,10 @@ bool EDetail::Update	(LPCSTR name)
     u32 idx			= 0;
     for (u32 f_id=0; f_id<M->GetFCount(); f_id++)
     {
-        st_Face& F 	= M->GetFaces()[f_id];
+		const st_Face& F 	= M->GetFaces()[f_id];
     	u16 ind[3];
     	for (int k=0; k<3; k++,idx++){
-            Fvector& P  = M->GetVertices()[F.pv[k].pindex];
+            const Fvector& P  = M->GetVertices()[F.pv[k].pindex];
             st_VMapPt&vm= M->GetVMRefs()[F.pv[k].vmref].pts[0];
             Fvector2& uv= M->GetVMaps()[vm.vmap_index]->getUV(vm.index);
         	ind[k]		= _AddVert	(P,uv.x,uv.y);
@@ -158,7 +176,7 @@ bool EDetail::Update	(LPCSTR name)
     }
 	number_indices 		= inds.size();
 	indices				= (u16*)xr_malloc(number_indices*sizeof(u16));
-    Memory.mem_copy		(indices,inds.begin(),number_indices*sizeof(u16));
+	Memory.mem_copy		(indices,&inds.front(),number_indices*sizeof(u16));
 
 	bv_bb.getsphere		(bv_sphere.P,bv_sphere.R);
 

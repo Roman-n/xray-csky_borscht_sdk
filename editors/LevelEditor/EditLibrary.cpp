@@ -246,7 +246,7 @@ void TfrmEditLibrary::OnModified()
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TfrmEditLibrary::OnItemsFocused(ListItemsVec& items)
+void __stdcall TfrmEditLibrary::OnItemsFocused(ListItemsVec& items)
 {
 	xr_delete		(m_Thm);
 //    bool mt			= false;
@@ -255,11 +255,11 @@ void __fastcall TfrmEditLibrary::OnItemsFocused(ListItemsVec& items)
     if (b_one /*&& FHelper.IsObject(items[0])*/ && UI->ContainEState(esEditLibrary))
     {
         // change thm
-        ListItem* prop 			= items[0];
-        VERIFY					(prop);
-        AnsiString nm			= prop->Key();
-        string_path 			thm_fn;
-        ebRenameObject->Enabled = !bReadOnly;
+		ListItem* prop 			= items[0];
+		VERIFY					(prop);
+		AnsiString nm			= prop->Key();
+		string_path 			thm_fn;
+		ebRenameObject->Enabled = !bReadOnly;
         ebRemoveObject->Enabled = !bReadOnly;
 //		ebExportLWO->Enabled 	= !bReadOnly;
 
@@ -376,6 +376,7 @@ void __fastcall TfrmEditLibrary::ebMakeThmClick(TObject *Sender)
     ListItemsIt it 				= sel_items.begin();
     ListItemsIt it_e 			= sel_items.end();
 
+    SPBItem* PB = UI->ProgressStart(sel_items.size(), "Creating thumbnails...");
     for( ;it!=it_e; ++it)
     {
         ListItem* item			= *it;
@@ -397,7 +398,20 @@ void __fastcall TfrmEditLibrary::ebMakeThmClick(TObject *Sender)
             ELog.DlgMsg(mtError,"Can't create thumbnail. Set preview mode.");
         }
 		Lib.RemoveEditObject(obj);
+
+        PB->Inc(item->Key());
 	}
+    UI->ProgressEnd(PB);
+
+    // Refresh paImage
+    if(sel_items.size() > 1)
+    {
+    	ListItemsVec last_item;
+        last_item.push_back(sel_items.back());
+        OnItemsFocused(last_item);
+    }
+    else
+    	OnItemsFocused(sel_items);
 
 /*
     TElTreeItem* node 			= m_Items->GetSelected();
@@ -423,7 +437,6 @@ void __fastcall TfrmEditLibrary::ebMakeThmClick(TObject *Sender)
 		Lib.RemoveEditObject(obj);
     }
 */
-    ELog.DlgMsg(mtInformation,"Done.");
 }
 //---------------------------------------------------------------------------
 
@@ -719,11 +732,10 @@ void __fastcall TfrmEditLibrary::paImagePaint(TObject *Sender)
 
 void __fastcall TfrmEditLibrary::ebExportLWOClick(TObject *Sender)
 {
-    TElTreeItem* node 				= m_Items->GetSelected();
-    if (node&&FHelper.IsObject(node))
+    ListItemsVec selected;
+    if (m_Items->GetSelected(NULL, selected, false) == 1)
     {
-    	AnsiString 					name;
-        FHelper.MakeName			(node,0,name,false);
+    	AnsiString 					name = selected[0]->Key();
         xr_string 					save_nm;
 
         if (EFS.GetSaveName(_import_,save_nm,0,1))
@@ -744,7 +756,7 @@ void __fastcall TfrmEditLibrary::ebExportLWOClick(TObject *Sender)
 			Lib.RemoveEditObject		(obj);
 	    }
     }else{
-        ELog.DlgMsg						(mtInformation, "Select object to export.");
+        ELog.DlgMsg						(mtInformation, "Select one object to export.");
     }
 }
 

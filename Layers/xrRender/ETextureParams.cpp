@@ -152,7 +152,7 @@ void STextureParams::Save(IWriter& F)
 
 
 #ifdef _EDITOR
-#include "../../xrServerEntities/PropertiesListHelper.h"
+#include "../../editors/xrEProps/PropertiesListHelper.h"
 
 void STextureParams::OnTypeChange(PropValue* prop)
 {
@@ -201,7 +201,33 @@ void STextureParams::FillProp(LPCSTR base_name, PropItemVec& items, PropValue::T
         if (tbmUse==bump_mode || tbmUseParallax==bump_mode)
         {
         	AnsiString path;
-            path = base_name;
+
+            if(bump_name.equal(NULL) || bump_name.equal(""))
+            {
+            	// try guess bump name
+                if(strext(base_name))
+                	path = AnsiString(base_name, (int)(strext(base_name)-base_name));
+                else
+                	path = base_name;
+
+				AnsiString prefix;
+                if(path.Pos("\\") == 0 && path.Pos("_"))
+                {
+                	// add folder to path if not present (e.g. importing)
+                	prefix = path.SubString(1, path.Pos("_")-1);
+                    path = prefix + "\\" + path;
+                }
+                else if(path.Pos("\\"))
+                	prefix = path.SubString(1, path.Pos("\\")-1);
+
+                if(FS.exist(_game_textures_, (path + "_bump.dds").c_str()))
+                	path = path + "_bump";
+                else if(!FS.exist(_game_textures_, (path + ".dds").c_str()))
+                	path = prefix;
+            }
+            else
+            	path = bump_name.c_str();
+
         	PHelper().CreateChoose	(items, "Bump\\Texture",			&bump_name,			smTexture, path.c_str());
         }
         
@@ -211,7 +237,7 @@ void STextureParams::FillProp(LPCSTR base_name, PropItemVec& items, PropValue::T
         PHelper().CreateFloat	   	(items, "Details\\Scale",			&detail_scale,		0.1f,10000.f,0.1f,2);
 
         PHelper().CreateToken32		(items, "Material\\Base",			(u32*)&material,	tmtl_token);
-        PHelper().CreateFloat	   	(items, "Material\\Weight",			&material_weight	);
+        PHelper().CreateFloat	   	(items, "Material\\Weight",			&material_weight,	0.0f,100.f);
         
 //		PHelper().CreateFlag32		(items, "Flags\\Binary Alpha",		&flags,				flBinaryAlpha);
         PHelper().CreateFlag32		(items, "Flags\\Dither",			&flags,				flDitherColor);
@@ -248,7 +274,7 @@ void STextureParams::FillProp(LPCSTR base_name, PropItemVec& items, PropValue::T
         PHelper().CreateFloat	   	(items, "Details\\Scale",			&detail_scale,		0.1f,10000.f,0.1f,2);
 
         PHelper().CreateToken32		(items, "Material\\Base",			(u32*)&material,	tmtl_token);
-        PHelper().CreateFloat	   	(items, "Material\\Weight",			&material_weight	);
+        PHelper().CreateFloat	   	(items, "Material\\Weight",			&material_weight,	0.0f,100.f);
 
         P = PHelper().CreateFlag32	(items, "Flags\\Implicit Lighted",	&flags,				flImplicitLighted);  P->Owner()->Enable(false);
     break;

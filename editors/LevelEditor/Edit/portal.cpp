@@ -77,16 +77,16 @@ void CPortal::Render(int priority, bool strictB2F)
 			col.set			(m_SectorFront->sector_color);
 	        if (!Selected())col.mul_rgb(0.7f);
 		    Device.SetRS(D3DRS_CULLMODE,D3DCULL_CCW);
-    	    DU_impl.DrawPrimitiveL	(D3DPT_TRIANGLEFAN, V.size()-2, V.begin(), V.size(), col.get(), true, false);
-		    Device.SetRS(D3DRS_CULLMODE,D3DCULL_CCW);
-        }
-        // back
+			DU_impl.DrawPrimitiveL	(D3DPT_TRIANGLEFAN, V.size()-2, &V.front(), V.size(), col.get(), true, false);
+			Device.SetRS(D3DRS_CULLMODE,D3DCULL_CCW);
+		}
+		// back
 		if (m_SectorBack){
 			col.set			(m_SectorBack->sector_color);
-	        if (!Selected())col.mul_rgb(0.7f);
-		    Device.SetRS(D3DRS_CULLMODE,D3DCULL_CW);
-    	    DU_impl.DrawPrimitiveL	(D3DPT_TRIANGLEFAN, V.size()-2, V.begin(), V.size(), col.get(), true, false);
-		    Device.SetRS(D3DRS_CULLMODE,D3DCULL_CCW);
+			if (!Selected())col.mul_rgb(0.7f);
+			Device.SetRS(D3DRS_CULLMODE,D3DCULL_CW);
+			DU_impl.DrawPrimitiveL	(D3DPT_TRIANGLEFAN, V.size()-2, &V.front(), V.size(), col.get(), true, false);
+			Device.SetRS(D3DRS_CULLMODE,D3DCULL_CCW);
         }
 		col.set				(1.f,1.f,1.f,1.f);
 		Device.RenderNearer(0.0002);
@@ -94,7 +94,7 @@ void CPortal::Render(int priority, bool strictB2F)
     	// render portal edges
     	EScenePortalTool* lt = dynamic_cast<EScenePortalTool*>(ParentTool); VERIFY(lt);
         FvectorVec& src_ln 	= (lt->m_Flags.is(EScenePortalTool::flDrawSimpleModel))?m_SimplifyVertices:m_Vertices;
-        DU_impl.DrawPrimitiveL	(D3DPT_LINESTRIP, src_ln.size(), src_ln.begin(), src_ln.size(), col.get(), true, true);
+		DU_impl.DrawPrimitiveL	(D3DPT_LINESTRIP, src_ln.size(), &src_ln.front(), src_ln.size(), col.get(), true, true);
         Device.ResetNearer	();
         DU_impl.DrawFaceNormal	(m_Center,m_Normal,1,0xFFFFFFFF);
         DU_impl.DrawFaceNormal	(m_Center,m_Normal,1,0x00000000);
@@ -120,7 +120,7 @@ void CPortal::Move( Fvector& amount ){
 //------------------------------------------------------------------------------
 
 bool CPortal::FrustumPick(const CFrustum& frustum){
-	if (frustum.testPolyInside(m_Vertices.begin(),m_Vertices.size())) return true;
+	if (frustum.testPolyInside(&m_Vertices.front(),m_Vertices.size())) return true;
     return false;
 }
 //------------------------------------------------------------------------------
@@ -298,7 +298,7 @@ void CPortal::Simplify()
     Fvector rkNormal;
     // compute plane
     Fplane P;
-	Mgc::OrthogonalPlaneFit(m_Vertices.size(), (Mgc::Vector3*)m_Vertices.begin(), (Mgc::Vector3&)rkOffset, (Mgc::Vector3&)rkNormal);
+	Mgc::OrthogonalPlaneFit(m_Vertices.size(), (Mgc::Vector3*)&m_Vertices.front(), (Mgc::Vector3&)rkOffset, (Mgc::Vector3&)rkNormal);
     P.build(rkOffset, rkNormal);
     // project points
 	Fmatrix		mView;
@@ -319,7 +319,7 @@ void CPortal::Simplify()
         points[k].set(p.x,p.y);
     }
     // compute 2D Convex Hull
-    Mgc::ConvexHull2D Hull(points.size(),(const Mgc::Vector2*)points.begin());
+	Mgc::ConvexHull2D Hull(points.size(),(const Mgc::Vector2*)&points.front());
 //    Hull.ByDivideAndConquer();
     Hull.ByIncremental();
     Hull.RemoveCollinear();
@@ -498,7 +498,7 @@ bool CPortal::LoadStream(IReader& F)
 
     R_ASSERT(F.find_chunk(PORTAL_CHUNK_VERTICES));
 	m_Vertices.resize(F.r_u16());
-	F.r				(m_Vertices.begin(), m_Vertices.size()*sizeof(Fvector));
+	F.r				(&m_Vertices.front(), m_Vertices.size()*sizeof(Fvector));
 
     if (m_Vertices.size()<3){
         ELog.Msg( mtError, "Portal: '%s' can't create.\nInvalid portal. (m_Vertices.size()<3)", Name);
@@ -531,8 +531,8 @@ void CPortal::SaveStream(IWriter& F)
     }
 
 	F.open_chunk	(PORTAL_CHUNK_VERTICES);
-    F.w_u16			((u16)m_Vertices.size());
-    F.w				(m_Vertices.begin(),m_Vertices.size()*sizeof(Fvector));
+	F.w_u16			((u16)m_Vertices.size());
+	F.w				(&m_Vertices.front(),m_Vertices.size()*sizeof(Fvector));
 	F.close_chunk	();
 }
 //------------------------------------------------------------------------------

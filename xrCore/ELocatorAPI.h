@@ -75,6 +75,10 @@ public:
 
 	int							file_list			(FS_FileSet& dest, LPCSTR path, u32 flags=FS_ListFiles, LPCSTR mask=0);
 //.    void						update_path			(xr_string& dest, LPCSTR initial, LPCSTR src);
+
+	xr_vector<LPSTR>*			file_list_open		(LPCSTR initial, LPCSTR folder, u32 flags=FS_ListFiles);
+	xr_vector<LPSTR>*			file_list_open		(LPCSTR path, u32 flags=FS_ListFiles);
+    void						file_list_close		(xr_vector<LPSTR>*& list);
 };
 
 extern XRCORE_API	CLocatorAPI*					xr_FS;

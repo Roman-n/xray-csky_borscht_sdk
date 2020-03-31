@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #pragma hdrstop
 
+#include <colorpicker/FSColorPicker.h>
 #include "ColorPicker.h"
 
 class CTCD{
@@ -18,7 +19,6 @@ public:
 };
 static CTCD TCD;
 
-extern "C" DLL_API bool FSColorPickerExecute(u32* currentColor, LPDWORD originalColor, const int initialExpansionState);
 bool SelectColor(u32* currentcolor, bool bDefaultPicker){
 	VERIFY(currentcolor);
 	if (bDefaultPicker){
@@ -30,7 +30,7 @@ bool SelectColor(u32* currentcolor, bool bDefaultPicker){
         return false;
     }else{
     	u32 clr=*currentcolor;
-  	    if (FSColorPickerExecute(&clr, 0, 0)){
+  	    if (FSColorPickerDoModal(&clr, 0, 0)){
         	*currentcolor = clr;
          	return true;
         }
@@ -49,7 +49,7 @@ bool SelectColorWin(u32* currentcolor, bool bDefaultPicker){
         return false;
     }else{
         u32 cur = bgr2rgb(*currentcolor);
-        if (FSColorPickerExecute(&cur, 0, 0)){
+        if (FSColorPickerDoModal(&cur, 0, 0)){
 			*currentcolor = rgb2bgr(cur);
         	return true;
         }

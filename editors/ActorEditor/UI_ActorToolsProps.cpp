@@ -13,7 +13,7 @@
 #include "../xrEProps/ItemList.h"
 //------------------------------------------------------------------------------
 
-void CActorTools::OnObjectItemFocused(ListItemsVec& items)
+void __stdcall CActorTools::OnObjectItemFocused(ListItemsVec& items)
 {
 	PropItemVec props;
 	m_EditMode	= emObject;
@@ -59,7 +59,7 @@ void CActorTools::OnObjectItemFocused(ListItemsVec& items)
 }
 //------------------------------------------------------------------------------
 
-void CActorTools::PMMotionItemClick(TObject *Sender)
+void __stdcall CActorTools::PMMotionItemClick(TObject *Sender)
 {
 	R_ASSERT(m_pEditObject);
     TMenuItem* mi = dynamic_cast<TMenuItem*>(Sender);
@@ -70,13 +70,13 @@ void CActorTools::PMMotionItemClick(TObject *Sender)
     }
 }
 
-void CActorTools::OnChangeTransform(PropValue* sender)
+void __stdcall CActorTools::OnChangeTransform(PropValue* sender)
 {
     OnMotionKeysModified();
 	UI->RedrawScene();
 }
 //------------------------------------------------------------------------------
-void CActorTools::OnExportImportRefsClick(ButtonValue* V, bool& bModif, bool& bSafe)
+void __stdcall CActorTools::OnExportImportRefsClick(ButtonValue* V, bool& bModif, bool& bSafe)
 {
     switch (V->btn_num)
     {
@@ -122,7 +122,7 @@ void CActorTools::OnExportImportRefsClick(ButtonValue* V, bool& bModif, bool& bS
     };
 }
 
-void CActorTools::OnMotionEditClick(ButtonValue* V, bool& bModif, bool& bSafe)
+void __stdcall CActorTools::OnMotionEditClick(ButtonValue* V, bool& bModif, bool& bSafe)
 {
 	R_ASSERT(m_pEditObject);
     xr_string fn;
@@ -209,19 +209,19 @@ void CActorTools::RealUpdateProperties()
 }
 //------------------------------------------------------------------------------
                                
-void CActorTools::OnMotionTypeChange(PropValue* sender)
+void __stdcall CActorTools::OnMotionTypeChange(PropValue* sender)
 {
 	RefreshSubProperties();
 }
 //------------------------------------------------------------------------------
                         
-void CActorTools::OnMotionNameChange(PropValue* V)
+void __stdcall CActorTools::OnMotionNameChange(PropValue* V)
 {
     OnMotionKeysModified();
 }
 //------------------------------------------------------------------------------
 
-void CActorTools::OnMotionControlClick(ButtonValue* V, bool& bModif, bool& bSafe)
+void __stdcall CActorTools::OnMotionControlClick(ButtonValue* V, bool& bModif, bool& bSafe)
 {
     switch (V->btn_num){
     case 0: PlayMotion();	break;
@@ -231,7 +231,7 @@ void CActorTools::OnMotionControlClick(ButtonValue* V, bool& bModif, bool& bSafe
     bModif = false;
 }
 //------------------------------------------------------------------------------
-void CActorTools::OnMarksControlClick12(ButtonValue* V, bool& bModif, bool& bSafe)
+void __stdcall CActorTools::OnMarksControlClick12(ButtonValue* V, bool& bModif, bool& bSafe)
 {
     switch (V->btn_num)
     {
@@ -242,7 +242,7 @@ void CActorTools::OnMarksControlClick12(ButtonValue* V, bool& bModif, bool& bSaf
 }
 //------------------------------------------------------------------------------
 
-void CActorTools::OnMarksControlClick34(ButtonValue* V, bool& bModif, bool& bSafe)
+void __stdcall CActorTools::OnMarksControlClick34(ButtonValue* V, bool& bModif, bool& bSafe)
 {
     switch (V->btn_num)
     {
@@ -253,7 +253,7 @@ void CActorTools::OnMarksControlClick34(ButtonValue* V, bool& bModif, bool& bSaf
 }
 //------------------------------------------------------------------------------
 
-void  CActorTools::OnMotionRefsChange(PropValue* sender)
+void __stdcall CActorTools::OnMotionRefsChange(PropValue* sender)
 {
     u32 set_cnt		= _GetItemCount(m_tmp_mot_refs.c_str());
 
@@ -271,7 +271,7 @@ void  CActorTools::OnMotionRefsChange(PropValue* sender)
 	ExecCommand				(COMMAND_UPDATE_PROPERTIES);
 }
 
-void  CActorTools::OnBoxAxisClick(ButtonValue* V, bool& bModif, bool& bSafe)
+void __stdcall CActorTools::OnBoxAxisClick(ButtonValue* V, bool& bModif, bool& bSafe)
 {
 	CBone* BONE 			= (CBone*)V->tag;
     switch (V->btn_num){
@@ -280,10 +280,11 @@ void  CActorTools::OnBoxAxisClick(ButtonValue* V, bool& bModif, bool& bSafe)
     case 2: BONE->shape.box.m_rotate.k.set(0,0,1); break;
     }
     Fvector::generate_orthonormal_basis_normalized(BONE->shape.box.m_rotate.k,BONE->shape.box.m_rotate.j,BONE->shape.box.m_rotate.i);
-	ExecCommand				(COMMAND_UPDATE_PROPERTIES);
+	//ExecCommand				(COMMAND_UPDATE_PROPERTIES);
+	RefreshSubProperties		();
 }
 
-void  CActorTools::OnCylinderAxisClick(ButtonValue* V, bool& bModif, bool& bSafe)
+void __stdcall CActorTools::OnCylinderAxisClick(ButtonValue* V, bool& bModif, bool& bSafe)
 {
 	CBone* BONE 			= (CBone*)V->tag;
     switch (V->btn_num){
@@ -291,7 +292,8 @@ void  CActorTools::OnCylinderAxisClick(ButtonValue* V, bool& bModif, bool& bSafe
     case 1: BONE->shape.cylinder.m_direction.set(0,1,0); break;
     case 2: BONE->shape.cylinder.m_direction.set(0,0,1); break;
     }
-	ExecCommand				(COMMAND_UPDATE_PROPERTIES);
+	//ExecCommand				(COMMAND_UPDATE_PROPERTIES);
+	RefreshSubProperties		();
 }
 
 void CActorTools::FillMotionProperties(PropItemVec& items, LPCSTR pref, ListItem* sender)
@@ -327,7 +329,7 @@ void CActorTools::FillMotionProperties(PropItemVec& items, LPCSTR pref, ListItem
     V->OnChangeEvent.bind			(this,&CActorTools::OnMotionRefsChange);
     ButtonValue* B;             
 
-    B=PHelper().CreateButton	(items, PrepareKey(pref,"Export Import"),			"ExportRefs,ImportRefs",ButtonValue::flFirstOnly);
+	B=PHelper().CreateButton	(items, PrepareKey(pref,"Export Import"),			"ExportRefs,ImportRefs",ButtonValue::flFirstOnly);
     B->OnBtnClickEvent.bind		(this,&CActorTools::OnExportImportRefsClick); 
 
     if (m_pEditObject->m_SMotionRefs.size()==0) 
@@ -342,14 +344,14 @@ void CActorTools::FillMotionProperties(PropItemVec& items, LPCSTR pref, ListItem
 	    PHelper().CreateCaption		(items, PrepareKey(pref,"Motion\\Frame\\Start"),	shared_str().sprintf("%d",SM->FrameStart()));
 	    PHelper().CreateCaption		(items, PrepareKey(pref,"Motion\\Frame\\End"),	shared_str().sprintf("%d",SM->FrameEnd()));
 	    PHelper().CreateCaption		(items, PrepareKey(pref,"Motion\\Frame\\Length"),	shared_str().sprintf("%d",SM->Length()));
-        PropValue* P=0;                                              
+        PropValue* P;                                              
         P=PHelper().CreateName		(items,PrepareKey(pref,"Motion\\Name"),		&SM->name, sender);
         P->OnChangeEvent.bind		(this,&CActorTools::OnMotionNameChange);
         PHelper().CreateFloat		(items,PrepareKey(pref,"Motion\\Speed"),	&SM->fSpeed,  0.f,10.f,0.01f,2);
         PHelper().CreateFloat		(items,PrepareKey(pref,"Motion\\Accrue"),	&SM->fAccrue, 0.f,10.f,0.01f,2);
-        PHelper().CreateFloat		(items,PrepareKey(pref,"Motion\\Falloff"), 	&SM->fFalloff,0.f,10.f,0.01f,2);
+		PHelper().CreateFloat		(items,PrepareKey(pref,"Motion\\Falloff"), 	&SM->fFalloff,0.f,10.f,0.01f,2);
 
-        PropValue /**C=0,*/*TV=0;
+		PropValue *TV;
         TV = PHelper().CreateFlag8	(items,PrepareKey(pref,"Motion\\Type FX"),	&SM->m_Flags, esmFX);
         TV->OnChangeEvent.bind	(this,&CActorTools::OnMotionTypeChange);
         m_BoneParts.clear		();
@@ -385,8 +387,8 @@ void CActorTools::FillMotionProperties(PropItemVec& items, LPCSTR pref, ListItem
         {
         	string128 buff;
             sprintf(buff,"Marks\\%d", i);
-            P=PHelper().CreateCaption	(items,PrepareKey(pref, buff), SM->marks[i].name);
-        }
+            PHelper().CreateCaption	(items,PrepareKey(pref, buff), SM->marks[i].name);
+		}
 
     }
 }
@@ -418,23 +420,25 @@ xr_token shape_types[]={
 static const LPCSTR axis[3]=
 { "Axis X", "Axis Y", "Axis Z" };
 
-void  CActorTools::OnJointTypeChange(PropValue* V)
+void __stdcall CActorTools::OnJointTypeChange(PropValue* V)
 {
-	ExecCommand(COMMAND_UPDATE_PROPERTIES);
+	//ExecCommand(COMMAND_UPDATE_PROPERTIES);
+	RefreshSubProperties();
 }
-void  CActorTools::OnShapeTypeChange(PropValue* V)
+void __stdcall CActorTools::OnShapeTypeChange(PropValue* V)
 {
 	UI->RedrawScene();
-	ExecCommand(COMMAND_UPDATE_PROPERTIES);
+	//ExecCommand(COMMAND_UPDATE_PROPERTIES);
+	RefreshSubProperties();
 }
-void  CActorTools::OnBindTransformChange(PropValue* V)
+void __stdcall CActorTools::OnBindTransformChange(PropValue* V)
 {
 	R_ASSERT(m_pEditObject);
     m_pEditObject->OnBindTransformChange();
 	UI->RedrawScene();
 }
 
-void  CActorTools::OnBoneShapeClick(ButtonValue* V, bool& bModif, bool& bSafe)
+void __stdcall CActorTools::OnBoneShapeClick(ButtonValue* V, bool& bModif, bool& bSafe)
 {
 	R_ASSERT(m_pEditObject);
     switch (V->btn_num){
@@ -460,7 +464,7 @@ void GetBindAbsolutePosition(CBone* B, Fmatrix& dest)
 }
 #include "../xrEprops/ChoseForm.h"
 
-void  CActorTools::OnBoneCreateDeleteClick(ButtonValue* V, bool& bModif, bool& bSafe)
+void __stdcall CActorTools::OnBoneCreateDeleteClick(ButtonValue* V, bool& bModif, bool& bSafe)
 {
 	R_ASSERT(m_pEditObject);
     BoneVec 		sel_bones;
@@ -475,17 +479,22 @@ void  CActorTools::OnBoneCreateDeleteClick(ButtonValue* V, bool& bModif, bool& b
         }break;
         case 1:
         { //deleet
-        	if(sel_bones.size()!=1)
-            {
-            	Msg("! Select 1 bone please.");
-                return;
+			if(sel_bones.size()!=1)
+			{
+				Msg("!Select 1 bone please.");
+				return;
+			}
+			LPCSTR wmap = *sel_bones[0]->WMap();
+			if(wmap&&wmap[0])
+			{
+				Msg("!Cannot delete bone with assigned vertices");
+				return;
             }
-           if (ELog.DlgMsg(mtConfirmation, TMsgDlgButtons() << mbYes << mbNo, "Delete selected bone?") == mrYes)
-           {
-           		m_pEditObject->DeleteBone(sel_bones[0]);
-            	bModif = true;
-
-           }
+			if (ELog.DlgMsg(mtConfirmation, TMsgDlgButtons() << mbYes << mbNo, "Delete selected bone?") == mrYes)
+			{
+				m_pEditObject->DeleteBone(sel_bones[0]);
+				bModif = true;
+			}
         }break;
         case 2:
         {
@@ -531,7 +540,7 @@ void  CActorTools::OnBoneCreateDeleteClick(ButtonValue* V, bool& bModif, bool& b
     }
 }
 
-bool CActorTools::OnBoneNameAfterEdit	(PropValue* sender, shared_str& edit_val)
+bool __stdcall CActorTools::OnBoneNameAfterEdit(PropValue* sender, shared_str& edit_val)
 {
 	R_ASSERT(m_pEditObject);
     BoneVec 		sel_bones;
@@ -545,29 +554,31 @@ bool CActorTools::OnBoneNameAfterEdit	(PropValue* sender, shared_str& edit_val)
     return true;
 }
 
-void  CActorTools::OnBoneEditClick(ButtonValue* V, bool& bModif, bool& bSafe)
+void __stdcall CActorTools::OnBoneEditClick(ButtonValue* V, bool& bModif, bool& bSafe)
 {
 	R_ASSERT(m_pEditObject);
     switch (V->btn_num){
     case 0:
     	m_pEditObject->GotoBindPose();
-		ExecCommand(COMMAND_UPDATE_PROPERTIES);
-	    bModif = false;
-    break;
-    case 1:
-    	if (ELog.DlgMsg(mtConfirmation,"Are you sure to reset IK data?")==mrYes)
+		//ExecCommand(COMMAND_UPDATE_PROPERTIES);
+		RefreshSubProperties();
+		bModif = false;
+	break;
+	case 1:
+		if (ELog.DlgMsg(mtConfirmation,"Are you sure to reset IK data?")==mrYes)
 			m_pEditObject->ResetBones();
-	    bModif = true;
-    break;
-    case 2:
-		m_pEditObject->ClampByLimits(false); 
-		ExecCommand(COMMAND_UPDATE_PROPERTIES);
-	    bModif = false;
-    break;
+		bModif = true;
+	break;
+	case 2:
+		m_pEditObject->ClampByLimits(false);
+		//ExecCommand(COMMAND_UPDATE_PROPERTIES);
+		RefreshSubProperties();
+		bModif = false;
+	break;
 	}
 }
 
-void  CActorTools::OnBoneFileClick(ButtonValue* V, bool& bModif, bool& bSafe)
+void __stdcall CActorTools::OnBoneFileClick(ButtonValue* V, bool& bModif, bool& bSafe)
 {              
 	R_ASSERT(m_pEditObject);
     switch (V->btn_num){
@@ -598,7 +609,7 @@ void  CActorTools::OnBoneFileClick(ButtonValue* V, bool& bModif, bool& bSafe)
 	}
 }
 
-void  CActorTools::OnBoneLimitsChange(PropValue* sender)
+void __stdcall CActorTools::OnBoneLimitsChange(PropValue* sender)
 {
 	m_pEditObject->ClampByLimits(true);
 }
@@ -630,9 +641,9 @@ void CActorTools::FillBoneProperties(PropItemVec& items, LPCSTR pref, ListItem* 
 //.		PHelper().CreateCaption		(items, PrepareKey(pref,"Bone\\Influence"),					shared_str().sprintf("%d vertices",0));
 		PHelper().CreateChoose		(items,	PrepareKey(pref,"Bone\\Game Material"),				&BONE->game_mtl, smGameMaterial);
         PHelper().CreateFloat	 	(items, PrepareKey(pref,"Bone\\Mass"),						&BONE->mass, 			0.f, 10000.f);
-        PHelper().CreateVector		(items, PrepareKey(pref,"Bone\\Center Of Mass"),			&BONE->center_of_mass, 	-10000.f, 10000.f);
-        V=PHelper().CreateVector 	(items, PrepareKey(pref,"Bone\\Bind Position"),				&BONE->_RestOffset(),	-10000.f, 10000.f);	V->OnChangeEvent.bind	(this,&CActorTools::OnBindTransformChange);
-        V=PHelper().CreateAngle3 	(items, PrepareKey(pref,"Bone\\Bind Rotation"),				&BONE->_RestRotate());						V->OnChangeEvent.bind	(this,&CActorTools::OnBindTransformChange);
+        PHelper().CreateVector		(items, PrepareKey(pref,"Bone\\Center Of Mass"),			&BONE->center_of_mass, 	-10000.f, 10000.f, 0.01f, 4);
+        V=PHelper().CreateVector 	(items, PrepareKey(pref,"Bone\\Bind Position"),				&BONE->_RestOffset(),	-10000.f, 10000.f, 0.01f, 4);	V->OnChangeEvent.bind	(this,&CActorTools::OnBindTransformChange);
+        V=PHelper().CreateAngle3 	(items, PrepareKey(pref,"Bone\\Bind Rotation"),				&BONE->_RestRotate(),	flt_min, flt_max, 0.01f, 2);	V->OnChangeEvent.bind	(this,&CActorTools::OnBindTransformChange);
         PHelper().CreateFlag16		(items, PrepareKey(pref,"Bone\\Shape\\Flags\\No Pickable"),	&BONE->shape.flags, SBoneShape::sfNoPickable);
         PHelper().CreateFlag16		(items, PrepareKey(pref,"Bone\\Shape\\Flags\\No Physics"),	&BONE->shape.flags, SBoneShape::sfNoPhysics);
         PHelper().CreateFlag16		(items, PrepareKey(pref,"Bone\\Shape\\Flags\\Remove After Break"),	&BONE->shape.flags,SBoneShape::sfRemoveAfterBreak);
@@ -641,18 +652,18 @@ void CActorTools::FillBoneProperties(PropItemVec& items, LPCSTR pref, ListItem* 
 		V=PHelper().CreateToken16	(items,	PrepareKey(pref,"Bone\\Shape\\Type"),				&BONE->shape.type, shape_types);			V->OnChangeEvent.bind	(this,&CActorTools::OnShapeTypeChange);
         switch (BONE->shape.type){
         case SBoneShape::stBox:
-	        PHelper().CreateVector	(items, PrepareKey(pref,"Bone\\Shape\\Box\\Center"),		&BONE->shape.box.m_translate, -10000.f, 10000.f);
+	        PHelper().CreateVector	(items, PrepareKey(pref,"Bone\\Shape\\Box\\Center"),		&BONE->shape.box.m_translate, -10000.f, 10000.f, 0.01f, 4);
 	        B=PHelper().CreateButton(items, PrepareKey(pref,"Bone\\Shape\\Box\\Align Axis"),	"X,Y,Z",0);
             B->OnBtnClickEvent.bind	(this,&CActorTools::OnBoxAxisClick);
             B->tag 					= (int)BONE;
-	        PHelper().CreateVector	(items, PrepareKey(pref,"Bone\\Shape\\Box\\Half Size"),  	&BONE->shape.box.m_halfsize, 0.f, 1000.f);
+	        PHelper().CreateVector	(items, PrepareKey(pref,"Bone\\Shape\\Box\\Half Size"),  	&BONE->shape.box.m_halfsize, 0.f, 1000.f, 0.01f, 4);
         break;
         case SBoneShape::stSphere:
-	        PHelper().CreateVector	(items, PrepareKey(pref,"Bone\\Shape\\Sphere\\Position"),	&BONE->shape.sphere.P, -10000.f, 10000.f);
+	        PHelper().CreateVector	(items, PrepareKey(pref,"Bone\\Shape\\Sphere\\Position"),	&BONE->shape.sphere.P, -10000.f, 10000.f, 0.01f, 4);
 	        PHelper().CreateFloat  	(items, PrepareKey(pref,"Bone\\Shape\\Sphere\\Radius"),  	&BONE->shape.sphere.R, 0.f, 1000.f);
         break;
         case SBoneShape::stCylinder:
-	        PHelper().CreateVector	(items, PrepareKey(pref,"Bone\\Shape\\Cylinder\\Center"),	&BONE->shape.cylinder.m_center, -10000.f, 10000.f);
+	        PHelper().CreateVector	(items, PrepareKey(pref,"Bone\\Shape\\Cylinder\\Center"),	&BONE->shape.cylinder.m_center, -10000.f, 10000.f, 0.01f, 4);
 	        B=PHelper().CreateButton(items, PrepareKey(pref,"Bone\\Shape\\Cylinder\\Align Axis"),"X,Y,Z",0);
             B->OnBtnClickEvent.bind	(this,&CActorTools::OnCylinderAxisClick);
             B->tag 					= (int)BONE;
@@ -763,15 +774,15 @@ void CActorTools::FillSurfaceProperties(PropItemVec& items, LPCSTR pref, ListIte
 void CActorTools::FillObjectProperties(PropItemVec& items, LPCSTR pref, ListItem* sender)
 {
 	R_ASSERT(m_pEditObject);
-    PropValue* V=0;
     PHelper().CreateFlag32			(items, "Object\\Flags\\Make Progressive",	&m_pEditObject->m_objectFlags,			CEditableObject::eoProgressive);
 
-    V=PHelper().CreateVector		(items, "Object\\Transform\\Position",		&m_pEditObject->a_vPosition, 	-10000,	10000,0.01,2);
+	PropValue* V;
+    V=PHelper().CreateVector		(items, "Object\\Transform\\Position",		&m_pEditObject->a_vPosition, 	-10000,	10000,0.01,4);
     V->OnChangeEvent.bind			(this,&CActorTools::OnChangeTransform);
-    V=PHelper().CreateAngle3		(items, "Object\\Transform\\Rotation",		&m_pEditObject->a_vRotate, 		-10000,	10000,0.1,1);
+    V=PHelper().CreateAngle3		(items, "Object\\Transform\\Rotation",		&m_pEditObject->a_vRotate, 		-10000,	10000,0.1,2);
     V->OnChangeEvent.bind			(this,&CActorTools::OnChangeTransform);
-    V=PHelper().CreateCaption		(items, "Object\\Transform\\BBox Min",		shared_str().sprintf("{%3.2f, %3.2f, %3.2f}",VPUSH(m_pEditObject->GetBox().min)));
-    V=PHelper().CreateCaption		(items, "Object\\Transform\\BBox Max",		shared_str().sprintf("{%3.2f, %3.2f, %3.2f}",VPUSH(m_pEditObject->GetBox().max)));
+	PHelper().CreateCaption			(items, "Object\\Transform\\BBox Min",		shared_str().sprintf("{%3.2f, %3.2f, %3.2f}",VPUSH(m_pEditObject->GetBox().min)));
+	PHelper().CreateCaption			(items, "Object\\Transform\\BBox Max",		shared_str().sprintf("{%3.2f, %3.2f, %3.2f}",VPUSH(m_pEditObject->GetBox().max)));
 
 //.    PHelper().CreateChoose		 (items, "Object\\LOD\\Reference",  			&m_pEditObject->m_LODs, smObject);
     PHelper().CreateChoose			(items, "Object\\LOD\\Reference",  			&m_pEditObject->m_LODs, smVisual);

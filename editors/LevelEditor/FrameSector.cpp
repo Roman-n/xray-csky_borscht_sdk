@@ -16,6 +16,7 @@
 __fastcall TfraSector::TfraSector(TComponent* Owner)
         : TForm(Owner)
 {
+	DEFINE_INI(fsStorage);
 }
 //---------------------------------------------------------------------------
 void __fastcall TfraSector::PanelMinClick(TObject *Sender)

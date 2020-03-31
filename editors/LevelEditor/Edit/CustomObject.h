@@ -19,6 +19,7 @@ class CCustomMotion;
 class SAnimParams;
 struct SSceneSummary;
 class ESceneCustomOTool;
+class CAnimationPath;
 
 struct SExportStreamItem{
 	int					chunk;
@@ -45,6 +46,7 @@ class ECORE_API CCustomObject
 
 	SAnimParams*	m_MotionParams;
     COMotion*		m_Motion;
+    CAnimationPath* m_MotionPath;
 
     // private animation methods
     void 			AnimationOnFrame	();
@@ -54,9 +56,9 @@ class ECORE_API CCustomObject
     void			AnimationUpdate		(float t);
 public:
 	enum{
-    	flSelected_notused			= (1<<0),
-    	flVisible_notused			= (1<<1),
-    	flLocked_notused			= (1<<2),
+    	flSelected					= (1<<0),
+    	flVisible					= (1<<1),
+    	flLocked					= (1<<2),
     	flMotion					= (1<<3),
     	flRenderAnyWayIfSelected	= (1<<4),
         flObjectInGroup				= (1<<5),
@@ -70,9 +72,7 @@ public:
 	enum{
         flRT_Valid			= (1<<0),
         flRT_UpdateTransform= (1<<1),
-        flRT_NeedSelfDelete	= (1<<2),
-    	flRT_Selected		= (1<<3),
-    	flRT_Visible		= (1<<4),
+        flRT_NeedSelfDelete	= (1<<2)
     };
     Flags32			m_RT_Flags;
 public:
@@ -129,8 +129,9 @@ public:
     BOOL 			Editable		() const ;
     
 	IC BOOL 		Motionable		()const {return m_CO_Flags.is(flMotion); 	}
-	IC BOOL 		Visible			()const {return m_RT_Flags.is(flRT_Visible);	}
-	IC BOOL 		Selected		()const {return m_RT_Flags.is(flRT_Selected);}
+	IC BOOL 		Visible			()const {return m_CO_Flags.is(flVisible);	}
+	IC BOOL 		Selected		()const {return m_CO_Flags.is(flSelected);}
+    IC BOOL			Locked			()const {return m_CO_Flags.is(flLocked);}
     IC BOOL			Valid			()const {return m_RT_Flags.is(flRT_Valid);}
     IC BOOL			IsDeleted		()const {return m_RT_Flags.is(flRT_NeedSelfDelete);}
 
@@ -142,6 +143,7 @@ public:
 
 	virtual void 	Select			(int  flag);
 	virtual void 	Show			(BOOL flag);
+    virtual void	Lock			(BOOL flag);
     void			SetValid		(BOOL flag)	{m_RT_Flags.set(flRT_Valid,flag);}
     void			SetRenderIfSelected(BOOL flag){m_CO_Flags.set(flRenderAnyWayIfSelected,flag);}
 

@@ -502,7 +502,7 @@ void __fastcall TClipMaker::BPMouseUp(TObject *Sender,
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TClipMaker::OnClipItemFocused(ListItemsVec& items)
+void __stdcall TClipMaker::OnClipItemFocused(ListItemsVec& items)
 {
 	if (!items.empty()){
 	    for (ListItemsIt it=items.begin(); it!=items.end(); it++){
@@ -517,20 +517,20 @@ void __fastcall TClipMaker::OnClipItemFocused(ListItemsVec& items)
 }
 //------------------------------------------------------------------------------
 
-void __fastcall TClipMaker::OnNameChange(PropValue* V)
+void __stdcall TClipMaker::OnNameChange(PropValue* V)
 {
 	VERIFY(sel_clip);
     RepaintClips();
 }
 //------------------------------------------------------------------------------
 
-void __fastcall TClipMaker::OnClipLengthChange(PropValue* V)
+void __stdcall TClipMaker::OnClipLengthChange(PropValue* V)
 {
 	UpdateClips		();
 }
 //------------------------------------------------------------------------------
 
-void __fastcall TClipMaker::OnZoomChange(PropValue* V)
+void __stdcall TClipMaker::OnZoomChange(PropValue* V)
 {
 	UpdateClips		();
 }

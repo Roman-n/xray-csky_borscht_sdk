@@ -1,12 +1,11 @@
 object frmDOShuffle: TfrmDOShuffle
-  Left = 676
-  Top = 239
-  Width = 325
-  Height = 454
+  Left = 732
+  Top = 253
   BorderIcons = [biSystemMenu]
   Caption = 'Detail objects'
+  ClientHeight = 488
+  ClientWidth = 369
   Color = 10528425
-  Constraints.MaxWidth = 325
   Constraints.MinHeight = 454
   Constraints.MinWidth = 325
   Font.Charset = DEFAULT_CHARSET
@@ -24,19 +23,28 @@ object frmDOShuffle: TfrmDOShuffle
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object paTools: TPanel
-    Left = 158
+  object Splitter2: TSplitter
+    Left = 161
     Top = 0
-    Width = 159
-    Height = 420
-    Align = alRight
+    Width = 5
+    Height = 488
+    ExplicitHeight = 494
+  end
+  object paTools: TPanel
+    Left = 166
+    Top = 0
+    Width = 203
+    Height = 488
+    Align = alClient
     BevelOuter = bvNone
     ParentColor = True
     TabOrder = 0
+    ExplicitWidth = 211
+    ExplicitHeight = 494
     object Panel3: TPanel
       Left = 0
       Top = 0
-      Width = 159
+      Width = 211
       Height = 19
       Align = alTop
       BevelOuter = bvNone
@@ -95,8 +103,8 @@ object frmDOShuffle: TfrmDOShuffle
     object sbDO: TScrollBox
       Left = 0
       Top = 19
-      Width = 159
-      Height = 401
+      Width = 211
+      Height = 475
       VertScrollBar.ButtonSize = 11
       VertScrollBar.Increment = 10
       VertScrollBar.Size = 11
@@ -105,21 +113,23 @@ object frmDOShuffle: TfrmDOShuffle
       Align = alClient
       BorderStyle = bsNone
       TabOrder = 1
+      OnMouseWheelDown = sbDOMouseWheelDown
+      OnMouseWheelUp = sbDOMouseWheelUp
     end
   end
   object Panel2: TPanel
     Left = 0
     Top = 0
-    Width = 158
-    Height = 420
-    Align = alClient
+    Width = 161
+    Height = 488
+    Align = alLeft
     BevelOuter = bvNone
     ParentColor = True
     TabOrder = 1
     object Splitter1: TSplitter
       Left = 0
       Top = 241
-      Width = 158
+      Width = 161
       Height = 3
       Cursor = crVSplit
       Align = alTop
@@ -129,22 +139,14 @@ object frmDOShuffle: TfrmDOShuffle
     object tvItems: TElTree
       Left = 0
       Top = 244
-      Width = 158
-      Height = 157
-      Cursor = crDefault
-      LeftPosition = 0
-      DragCursor = crDrag
+      Width = 161
+      Height = 225
       Align = alClient
       AlwaysKeepSelection = False
-      AutoCollapse = False
       AutoExpand = True
-      DockOrientation = doNoOrient
-      DefaultSectionWidth = 120
-      BorderSides = [ebsLeft, ebsRight, ebsTop, ebsBottom]
       Color = clGray
       DragAllowed = True
       DrawFocusRect = False
-      ExplorerEditMode = False
       Flat = True
       FocusedSelectColor = 10526880
       FocusedSelectTextColor = clBlack
@@ -154,90 +156,73 @@ object frmDOShuffle: TfrmDOShuffle
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       FullRowSelect = False
-      GradientSteps = 64
       HeaderHeight = 19
       HeaderHotTrack = False
       HeaderSections.Data = {
-        F4FFFFFF0700000054AFA80F00000000FFFFFFFF000001010100545378000000
-        000000001027000000010028401C7A03000000000000295C0000000000000143
-        00000000000000000001000000000000455F444952293B2E2E2F2E2E2F78725F
-        3364613B2E2E2F2E2E2F787252656E6465723B24284D414749435F53575F4449
-        52293B242845544F4F4C535F4449522990000000010000000001000000000000
-        00000000000054AFA80F00000000FFFFFFFF0000010101005453780000000000
-        00001027000000010028F4410610010000000000295C00000000000001430000
-        0000000000000001000000000000455F444952293B2E2E2F2E2E2F78725F3364
-        613B2E2E2F2E2E2F787252656E6465723B24284D414749435F53575F44495229
-        3B242845544F4F4C535F44495229900000000100000000010000000000000000
-        0000000054AFA80F00000000FFFFFFFF00000101010054537800000000000000
-        1027000000010028A86C620E020000000000295C000000000000014300000000
-        000000000001000000000000455F444952293B2E2E2F2E2E2F78725F3364613B
-        2E2E2F2E2E2F787252656E6465723B24284D414749435F53575F444952293B24
-        2845544F4F4C535F444952299000000001000000000100000000000000000000
-        000054AFA80F00000000FFFFFFFF000001010100545378000000000000001027
-        0000000100280051320F030000000000295C0000000000000143000000000000
-        00000001000000000000455F444952293B2E2E2F2E2E2F78725F3364613B2E2E
-        2F2E2E2F787252656E6465723B24284D414749435F53575F444952293B242845
-        544F4F4C535F4449522990000000010000000001000000000000000000000000
-        54AFA80F00000000FFFFFFFF0000010101005453780000000000000010270000
-        000100287802F702040000000000295C00000000000001430000000000000000
-        0001000000000000455F444952293B2E2E2F2E2E2F78725F3364613B2E2E2F2E
-        2E2F787252656E6465723B24284D414749435F53575F444952293B242845544F
-        4F4C535F444952299000000001000000000100000000000000000000000054AF
-        A80F00000000FFFFFFFF00000101010054537800000000000000102700000001
-        0028B4E1DA04050000000000295C000000000000014300000000000000000001
-        000000000000455F444952293B2E2E2F2E2E2F78725F3364613B2E2E2F2E2E2F
-        787252656E6465723B24284D414749435F53575F444952293B242845544F4F4C
-        535F444952299000000001000000000100000000000000000000000054AFA80F
-        00000000FFFFFFFF000001010100545378000000000000001027000000010028
-        288C870D060000000000295C0000000000000143000000000000000000010000
-        00000000455F444952293B2E2E2F2E2E2F78725F3364613B2E2E2F2E2E2F7872
-        52656E6465723B24284D414749435F53575F444952293B242845544F4F4C535F
-        4449522990000000010000000001000000000000000000000000}
-      HeaderFont.Charset = DEFAULT_CHARSET
-      HeaderFont.Color = clWindowText
-      HeaderFont.Height = -11
-      HeaderFont.Name = 'MS Sans Serif'
-      HeaderFont.Style = []
+        F1FFFFFF070000000000000000000000FFFFFFFF000001010100000078000000
+        000000001027000000010000401C7A0300000000000000000000000000000100
+        0000000000000000000100000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000010000000001000000000000
+        0000000000000000000000000000FFFFFFFF0000010101000000780000000000
+        00001027000000010000F4410610010000000000000000000000000001000000
+        0000000000000001000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000100000000010000000000000000
+        000000000000000000000000FFFFFFFF00000101010000007800000000000000
+        1027000000010000A86C620E0200000000000000000000000000010000000000
+        0000000000010000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000001000000000100000000000000000000
+        00000000000000000000FFFFFFFF000001010100000078000000000000001027
+        0000000100000051320F03000000000000000000000000000100000000000000
+        0000000100000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000010000000001000000000000000000000000
+        0000000000000000FFFFFFFF0000010101000000780000000000000010270000
+        000100007802F702040000000000000000000000000001000000000000000000
+        0001000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000100000000010000000000000000000000000000
+        000000000000FFFFFFFF00000101010000007800000000000000102700000001
+        0000B4E1DA040500000000000000000000000000010000000000000000000001
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000001000000000100000000000000000000000000000000
+        00000000FFFFFFFF000001010100000078000000000000001027000000010000
+        288C870D06000000000000000000000000000100000000000000000000010000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000010000000001000000000000000000000000}
       HorizontalLines = True
       HorzDivLinesColor = 7368816
-      HorzScrollBarStyles.ShowTrackHint = False
       HorzScrollBarStyles.Width = 17
       HorzScrollBarStyles.ButtonSize = 14
       HorzScrollBarStyles.UseSystemMetrics = False
-      HorzScrollBarStyles.UseXPThemes = False
-      IgnoreEnabled = False
-      IncrementalSearch = False
+      HorzScrollBarStyles.ThemeMode = ttmNone
       ItemIndent = 14
-      KeepSelectionWithinLevel = False
-      LineBorderActiveColor = clBlack
-      LineBorderInactiveColor = clBlack
       LineHeight = 16
       LinesColor = clBlack
-      MouseFrameSelect = True
       MultiSelect = False
-      OwnerDrawMask = '~~@~~'
       ParentFont = False
       PlusMinusTransparent = True
-      ScrollbarOpposite = False
-      ScrollTracking = True
+      HorzScrollTracking = True
+      VertScrollTracking = True
       ShowButtons = False
       ShowImages = False
-      ShowLeafButton = False
       ShowLines = False
       ShowRootButtons = False
       SortMode = smAdd
       StoragePath = '\Tree'
       TabOrder = 0
-      TabStop = True
       Tracking = False
       TrackColor = clBlack
       VertScrollBarStyles.ShowTrackHint = True
       VertScrollBarStyles.Width = 17
       VertScrollBarStyles.ButtonSize = 14
       VertScrollBarStyles.UseSystemMetrics = False
-      VertScrollBarStyles.UseXPThemes = False
-      VirtualityLevel = vlNone
-      UseXPThemes = False
+      VertScrollBarStyles.ThemeMode = ttmNone
+      ThemeMode = ttmNone
       TextColor = clBtnText
       BkColor = clGray
       OnItemFocused = tvItemsItemFocused
@@ -249,27 +234,36 @@ object frmDOShuffle: TfrmDOShuffle
     object paObject: TPanel
       Left = 0
       Top = 0
-      Width = 158
+      Width = 161
       Height = 241
       Align = alTop
       BevelOuter = bvNone
       Constraints.MinHeight = 240
       ParentColor = True
       TabOrder = 1
-      object paObjectProps: TPanel
+      object Splitter3: TSplitter
         Left = 0
         Top = 158
-        Width = 158
-        Height = 83
+        Width = 161
+        Height = 4
+        Cursor = crVSplit
+        Align = alTop
+      end
+      object paObjectProps: TPanel
+        Left = 0
+        Top = 162
+        Width = 161
+        Height = 79
         Align = alClient
         BevelOuter = bvNone
+        Constraints.MinHeight = 50
         ParentColor = True
         TabOrder = 0
       end
       object paImage: TMxPanel
         Left = 0
         Top = 0
-        Width = 158
+        Width = 161
         Height = 158
         Align = alTop
         BevelOuter = bvLowered
@@ -281,13 +275,14 @@ object frmDOShuffle: TfrmDOShuffle
     end
     object Panel1: TPanel
       Left = 0
-      Top = 401
-      Width = 158
+      Top = 469
+      Width = 161
       Height = 19
       Align = alBottom
       BevelOuter = bvNone
       ParentColor = True
       TabOrder = 2
+      ExplicitTop = 475
       object ebAddObject: TExtBtn
         Left = 1
         Top = 1
@@ -406,6 +401,8 @@ object frmDOShuffle: TfrmDOShuffle
     OnSavePlacement = fsStorageSavePlacement
     OnRestorePlacement = fsStorageRestorePlacement
     StoredProps.Strings = (
+      'Panel2.Width'
+      'paImage.Height'
       'paObject.Height')
     StoredValues = <
       item

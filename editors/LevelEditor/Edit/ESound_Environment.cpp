@@ -32,8 +32,8 @@ void ESoundEnvironment::Construct(LPVOID data)
     
 	add_box					(Fidentity);
 	SetDrawColor			(0x205050FF, 0xFF202020);
-    m_EnvInner				= "";
-    m_EnvOuter				= "";
+	m_EnvInner				= "room";
+    m_EnvOuter				= "open_space";
 }
 
 ESoundEnvironment::~ESoundEnvironment()
@@ -50,13 +50,16 @@ void ESoundEnvironment::OnUpdateTransform()
 bool ESoundEnvironment::LoadLTX(CInifile& ini, LPCSTR sect_name)
 {
 	u32 version 	= ini.r_u32(sect_name, "version");
-
     if(version!=SOUND_ENV_VERSION)
     {
         ELog.DlgMsg	(mtError, "ESoundSource: Unsupported version.");
         return 		false;
-    }
+	}
+
 	inherited::LoadLTX			(ini, sect_name);
+
+	m_EnvInner		= ini.r_string(sect_name, "env_inner");
+	m_EnvOuter		= ini.r_string(sect_name, "env_outer");
 
 	return 			true;
 }

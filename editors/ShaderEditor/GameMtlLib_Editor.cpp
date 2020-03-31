@@ -4,8 +4,8 @@
 
 #include "GameMtlLib.h"
 #include "xr_trims.h"
-#include "../../xrServerEntities/PropertiesListTypes.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
+#include "../xrEProps/PropertiesListTypes.h"
+#include "../xrEProps/PropertiesListHelper.h"
 #include "../xrEProps/FolderLib.h"
 #include "LeftBar.h"
 #include "../xrEProps/ChoseForm.h"
@@ -16,7 +16,7 @@
 //------------------------------------------------------------------------------
 void SGameMtl::FillProp		(PropItemVec& items, ListItem* owner)
 {
-	PropValue* V=0;
+	PropValue* V;
     PHelper().CreateName			(items,	"Name",						        &m_Name, owner);
     PHelper().CreateRText			(items,	"Desc",						        &m_Desc);
 	// flags                                                      	
@@ -99,17 +99,30 @@ BOOL CGameMtlLibrary::UpdateMtlPairs()
 
 SGameMtl* CGameMtlLibrary::AppendMaterial(SGameMtl* parent)
 {
-    SGameMtl* M	= xr_new<SGameMtl>();
-    if (parent)	
-    *M		=*parent;//base params
+	SGameMtl* M	= xr_new<SGameMtl>();
+	*M			=*parent;//base params
+	M->ID		= material_index++;
     
-    M->ID		= material_index++;
-    
-    materials.push_back		(M);
-    UpdateMtlPairs			(M);
-    CopyMtlPairs			(parent, M);
+	materials.push_back		(M);
+	UpdateMtlPairs			(M);
+	CopyMtlPairs			(parent, M);
+
     return 					M;
 }
+
+SGameMtl* CGameMtlLibrary::AppendMaterial(BOOL dynamic)
+{
+	SGameMtl* M = xr_new<SGameMtl>();
+	if(dynamic)
+		M->Flags.set(SGameMtl::flDynamic, TRUE);
+	M->ID = material_index++;
+
+	materials.push_back(M);
+	UpdateMtlPairs(M);
+
+	return M;
+}
+
 void CGameMtlLibrary::RemoveMaterial(LPCSTR name)
 {
     // find material
@@ -125,7 +138,7 @@ void CGameMtlLibrary::RemoveMaterial(LPCSTR name)
 //------------------------------------------------------------------------------
 // material pair routines
 //------------------------------------------------------------------------------
-void __fastcall SGameMtlPair::OnFlagChange(PropValue* sender)
+void __stdcall SGameMtlPair::OnFlagChange(PropValue* sender)
 {
 	bool bChecked = sender->Owner()->m_Flags.is(PropItem::flCBChecked);
     u32 mask=0;
@@ -186,7 +199,7 @@ BOOL SGameMtlPair::SetParent(int parent)
     return TRUE;
 }
 
-void __fastcall SGameMtlPair::FillChooseMtl(ChooseItemVec& items, void* param)
+void __stdcall SGameMtlPair::FillChooseMtl(ChooseItemVec& items, void* param)
 {
     for (GameMtlIt m0_it=m_Owner->FirstMaterial(); m0_it!=m_Owner->LastMaterial(); m0_it++){
         SGameMtl* M0 		= *m0_it;
@@ -199,7 +212,7 @@ void __fastcall SGameMtlPair::FillChooseMtl(ChooseItemVec& items, void* param)
     }
 }
 
-void __fastcall SGameMtlPair::OnParentClick(ButtonValue* V, bool& bModif, bool& bSafe)
+void __stdcall SGameMtlPair::OnParentClick(ButtonValue* V, bool& bModif, bool& bSafe)
 {
     bModif = false;
     switch (V->btn_num){
@@ -229,7 +242,7 @@ void __fastcall SGameMtlPair::OnParentClick(ButtonValue* V, bool& bModif, bool& 
 	}
 }
 
-void __fastcall SGameMtlPair::OnCommandClick(ButtonValue* V, bool& bModif, bool& bSafe)
+void __stdcall SGameMtlPair::OnCommandClick(ButtonValue* V, bool& bModif, bool& bSafe)
 {
     bModif = false;
     switch (V->btn_num){

@@ -157,20 +157,20 @@ void EngineModel::PlayMotion(LPCSTR name, u16 slot)
         if (motion_ID.valid()){
             CMotionDef* mdef 	= SA->LL_GetMotionDef(motion_ID); VERIFY(mdef);
             if (mdef->flags&esmFX){
-                for (int k=0; k<MAX_PARTS; k++){
+				for (u16 k=0; k<MAX_PARTS; k++){
                     if (!m_BPPlayItems[k].name.IsEmpty()){
                         MotionID D 		= SA->ID_Motion(m_BPPlayItems[k].name.c_str(),m_BPPlayItems[k].slot);
-                        if (D.valid()) 	SA->LL_PlayCycle((u16)k,D,false,0,0);
+						if (D.valid()) 	SA->LL_PlayCycle(k,D,false,0,0);
                     }
                 }        
                 m_pBlend = SA->PlayFX(motion_ID,1.f);
             }else{	
                 u16 idx 		= mdef->bone_or_part;
                 R_ASSERT((idx==BI_NONE)||(idx<MAX_PARTS));
-                if (BI_NONE==idx){
-                	for (int k=0; k<MAX_PARTS; k++){ 
+				if (BI_NONE==idx){
+					for (u16 k=0; k<MAX_PARTS; k++){
                 		m_BPPlayItems[k].name 	= name;
-	                    m_BPPlayItems[k].slot	= slot;
+						m_BPPlayItems[k].slot	= slot;
                     }
                 }else{	
 	                m_BPPlayItems[idx].name		= name;
@@ -178,12 +178,12 @@ void EngineModel::PlayMotion(LPCSTR name, u16 slot)
                 }
                 m_pBlend		= 0;
 
-                for (int k=0; k<MAX_PARTS; k++){
+				for (u16 k=0; k<MAX_PARTS; k++){
                     if (!m_BPPlayItems[k].name.IsEmpty()){
                         MotionID D 	= SA->ID_Motion(m_BPPlayItems[k].name.c_str(),m_BPPlayItems[k].slot);
-                        CBlend* B	= 0;
+                        CBlend* B;
                         if (D.valid()){ 
-                            B = SA->LL_PlayCycle((u16)k,D,false,0,0);
+							B = SA->LL_PlayCycle(k,D,false,0,0);
                             if (idx==k) m_pBlend = B;
                         }
                     }
@@ -232,8 +232,8 @@ void EngineModel::RestoreParams(TFormStorage* s)
 
 void EngineModel::SaveParams(TFormStorage* s)
 {
-    for (int k=0; k<MAX_PARTS; k++){
-	    s->WriteString	("bp_cache_name_"+AnsiString(k),	m_BPPlayItems[k].name);
+	for (u16 k=0; k<MAX_PARTS; k++){
+		s->WriteString	("bp_cache_name_"+AnsiString(k),	m_BPPlayItems[k].name);
 	    s->WriteString	("bp_cache_slot_"+AnsiString(k),	m_BPPlayItems[k].slot);
     }
 }
@@ -256,7 +256,7 @@ void CActorTools::OnMotionKeysModified()
     OnMotionDefsModified();
 }
 
-void CActorTools::OnMotionDefsModified()
+void __stdcall CActorTools::OnMotionDefsModified()
 {
 	Modified			();
 	m_Flags.set			(flUpdateMotionDefs,TRUE);
@@ -321,6 +321,12 @@ bool CActorTools::SaveMotions(LPCSTR name, bool bSelOnly)
 
 void CActorTools::MakePreview()
 {
+	if (!VerifyMotionRefs())
+    {
+    	fraLeftBar->SetRenderStyle(false);
+    	return;
+    }
+
 	if (m_pEditObject){
         CMemoryWriter F;
 		m_Flags.set		(flUpdateGeometry|flUpdateMotionDefs|flUpdateMotionKeys,FALSE);
@@ -421,4 +427,31 @@ void CActorTools::RemoveMarksChannel(bool b12)
 
         ExecCommand					(COMMAND_UPDATE_PROPERTIES);
     }
+}
+
+bool CActorTools::VerifyMotionRefs()
+{
+	bool result = true;
+
+	if(m_pEditObject)
+    {
+    	if(m_pEditObject->IsSkeleton() && m_pEditObject->m_SMotionRefs.size())
+        {
+        	xr_vector<shared_str>::iterator it, end;
+			it  = m_pEditObject->m_SMotionRefs.begin();
+            end = m_pEditObject->m_SMotionRefs.end();
+
+			for(; it != end; it++)
+            {
+            	string_path fn;
+            	if(!FS.exist(fn, _game_meshes_, (*it).c_str(), ".omf"))
+                {
+                	ELog.Msg(mtError, "Can't find motion file '%s'.", (*it).c_str());
+                    result = false;
+                }
+            }
+        }
+    }
+
+    return result;
 }

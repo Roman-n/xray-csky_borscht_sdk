@@ -8,6 +8,7 @@
 #include "customobject.h"
 #include "UI_LevelMain.h"
 #include "../ECore/Editor/D3DUtils.h"
+#include "../ECore/Editor/AnimationPath.h"
 #include "motion.h"
 
 #define CUSTOMOBJECT_CHUNK_PARAMS 		0xF900
@@ -25,13 +26,14 @@ CCustomObject::CCustomObject(LPVOID data, LPCSTR name)
     ClassID 	= OBJCLASS_DUMMY;
     ParentTool	= 0;
     if (name) 	FName = name;
-    m_CO_Flags.assign	(0);
-    m_RT_Flags.assign(flRT_Valid|flRT_Visible);
+    m_CO_Flags.assign(flVisible);
+    m_RT_Flags.assign(flRT_Valid);
     m_pOwnerObject	= 0;
     ResetTransform	();
     m_RT_Flags.set	(flRT_UpdateTransform,TRUE);
     m_Motion		= NULL;
     m_MotionParams 	= NULL;
+    m_MotionPath	= NULL;
     FPosition.set	(0,0,0);
     FScale.set		(1,1,1);
     FRotation.set	(0,0,0);
@@ -42,6 +44,7 @@ CCustomObject::~CCustomObject()
 {
 	xr_delete				(m_Motion);
     xr_delete				(m_MotionParams);
+    xr_delete				(m_MotionPath);
 }
 
 bool CCustomObject::IsRender()
@@ -68,9 +71,9 @@ void CCustomObject::OnUpdateTransform()
 
 void CCustomObject::Select( int flag )
 {
-    if (m_RT_Flags.is(flRT_Visible) && (!!m_RT_Flags.is(flRT_Selected)!=flag))
+    if (m_CO_Flags.is(flVisible) && (!!m_CO_Flags.is(flSelected)!=flag))
     {
-        m_RT_Flags.set		(flRT_Selected,(flag==-1)?(m_RT_Flags.is(flRT_Selected)?FALSE:TRUE):flag);
+        m_CO_Flags.set		(flSelected,(flag==-1)?(m_CO_Flags.is(flSelected)?FALSE:TRUE):flag);
         UI->RedrawScene		();
         ExecCommand			(COMMAND_UPDATE_PROPERTIES);
     }
@@ -78,14 +81,18 @@ void CCustomObject::Select( int flag )
 
 void CCustomObject::Show( BOOL flag )
 {
-	m_RT_Flags.set	   	(flRT_Visible,flag);
+	m_CO_Flags.set	   	(flVisible,flag);
 
-    if (!m_RT_Flags.is(flRT_Visible)) 
-    	m_RT_Flags.set(flRT_Selected, FALSE);
+    if (!m_CO_Flags.is(flVisible))
+    	m_CO_Flags.set(flSelected, FALSE);
         
     UI->RedrawScene();
 };
 
+void CCustomObject::Lock( BOOL flag )
+{
+	m_CO_Flags.set		(flLocked,flag);
+}
 
 BOOL   CCustomObject::Editable() const 
 {
@@ -96,7 +103,14 @@ BOOL   CCustomObject::Editable() const
 
 bool  CCustomObject::LoadLTX(CInifile& ini, LPCSTR sect_name)
 {
-	m_CO_Flags.assign	(ini.r_u32(sect_name, "co_flags") );
+	u32 flags;
+
+    if(ini.line_exist(sect_name, "co_flags2"))
+    	flags = ini.r_u32(sect_name, "co_flags2");
+    else
+    	flags = ini.r_u32(sect_name, "co_flags") | flVisible;
+
+	m_CO_Flags.assign	(flags);
 
 	FName				= ini.r_string(sect_name, "name");
     FPosition			= ini.r_fvector3 	(sect_name, "position");
@@ -116,7 +130,6 @@ bool  CCustomObject::LoadLTX(CInifile& ini, LPCSTR sect_name)
   */
 //        m_MotionParams->t_current = ini.r_float		(sect_name, "motion_params_t");
     }
-   	LUI->restore_rt_flags	(this);
 	return true;
 }
 
@@ -156,14 +169,14 @@ bool CCustomObject::LoadStream(IReader& F)
     }
 
 	UpdateTransform	();
-
-   	LUI->restore_rt_flags	(this);
+    
 	return true;
 }
 
 void CCustomObject::SaveLTX(CInifile& ini, LPCSTR sect_name)
 {
-	ini.w_u32		(sect_name, "co_flags", m_CO_Flags.get());
+	ini.w_u32		(sect_name, "co_flags", m_CO_Flags.get());	// for backward-compatibility reasons
+    ini.w_u32		(sect_name, "co_flags2", m_CO_Flags.get());
 
 	ini.w_string	(sect_name, "name", FName.c_str());
 
@@ -185,7 +198,6 @@ void CCustomObject::SaveLTX(CInifile& ini, LPCSTR sect_name)
         ini.w_float		(sect_name, "motion_params_t", m_MotionParams->t_current);
     }
 */
-   	LUI->store_rt_flags	(this);
 }
 
 void CCustomObject::SaveStream(IWriter& F)
@@ -216,7 +228,6 @@ void CCustomObject::SaveStream(IWriter& F)
         F.w_float		(m_MotionParams->t_current);
         F.close_chunk	();
     }
-   	LUI->store_rt_flags	(this);
 }
 //----------------------------------------------------
 #include "ESceneCustomOTools.h"

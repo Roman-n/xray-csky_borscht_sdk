@@ -19,24 +19,26 @@
 #include "mxPlacemnt.hpp"
 #include "ESceneClassList.h"
 #include "ElEdits.hpp"
+#include "ElTreeInplaceEditors.hpp"
 
 //---------------------------------------------------------------------------
 class TfrmObjectList : public TForm
 {
 __published:	// IDE-managed Components
-    TPanel *Panel1;
+	TPanel *paOptions;
 	TRadioGroup *rgSO;
 	TExtBtn *ebShowSel;
 	TExtBtn *ebHideSel;
 	TFormStorage *fsStorage;
-	TPanel *Panel2;
+	TPanel *paBottom;
 	TExtBtn *sbRefreshList;
 	TExtBtn *sbClose;
 	TExtBtn *ebShowProperties;
-	TPanel *Panel3;
+	TPanel *paItems;
 	TElTree *tvItems;
-	TPanel *Panel4;
+	TPanel *paSearch;
 	TElEdit *ElEdit1;
+	TRadioGroup *rgTools;
     void __fastcall         sbCloseClick		(TObject *Sender);
     void __fastcall         FormShow			(TObject *Sender);
     void __fastcall         ebHideSelClick		(TObject *Sender);
@@ -55,11 +57,11 @@ __published:	// IDE-managed Components
 	void __fastcall ElEdit1Exit(TObject *Sender);
 	void __fastcall ElEdit1KeyDown(TObject *Sender, WORD &Key,
           TShiftState Shift);
-	void __fastcall tvItemsMouseDown(TObject *Sender, TMouseButton Button,
-          TShiftState Shift, int X, int Y);
+	void __fastcall rgToolsClick(TObject *Sender);
 private:	// User declarations
     int 					obj_count;
-    ObjClassID 				m_cur_cls;
+	ObjClassID 				m_cur_cls;
+	bool					m_bAllTools;
     void __fastcall 		InitListBox			();
     TElTreeItem* 			FindObjectByType	(int type, void *obj);
     TElTreeItem* 			FindFolderByType	(int type);
@@ -70,7 +72,8 @@ private:	// User declarations
     bool 					bLockUpdate;
     TElTreeItem* 			find_node;
     bool 					stored_parent_colors;
-    TColor					storred_bk_color;
+	TColor					stored_bk_color;
+	TColor					stored_row_color;
     void					ProcessFindItemInList(TElTreeItem* from, AnsiString str);
 
     struct SFolderStore{
@@ -86,7 +89,7 @@ public:		// User declarations
 	static TfrmObjectList* 	CreateForm			(TWinControl* parent=0);
 	static void 			DestroyForm			(TfrmObjectList*& obj_list);
     void __fastcall 		ShowObjectListModal	();
-    void __fastcall 		ShowObjectList		();
+    void __fastcall 		ShowObjectList		(bool bSearch = false);
 	void __fastcall 		HideObjectList		();
 	void __fastcall 		UpdateObjectList	();
 };

@@ -292,15 +292,15 @@ void xrLoad(LPCSTR name, bool draft_mode)
 		H.size_y			= 1.f;
 		H.aabb				= LevelBB;
 		
-		typedef BYTE NodeLink[3];
 		for (u32 i=0; i<N; i++) {
-			NodeLink			id;
+			u32					id;
 			u16 				pl;
 			SNodePositionOld 	_np;
 			NodePosition 		np;
 			
 			for (int j=0; j<4; ++j) {
-				F->r			(&id,3);
+				F->r			(&id,4);
+				if(id != 0xffffffff) R_ASSERT2(id < 0x00ffffff, "Too many nodes!");
 				g_nodes[i].n[j]	= (*LPDWORD(&id)) & 0x00ffffff;
 			}
 

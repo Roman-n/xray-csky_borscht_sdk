@@ -101,7 +101,9 @@ public:
     virtual bool __fastcall 	KeyPress    (WORD Key, TShiftState Shift);
 
     virtual bool		Pick				(TShiftState Shift);
+    		bool		RealRayPick			(const Fvector& start, const Fvector& dir, float& dist, Fvector* pt, Fvector* n, ObjectList* ol=0);
 	virtual bool 		RayPick				(const Fvector& start, const Fvector& dir, float& dist, Fvector* pt, Fvector* n);
+    virtual bool		RayPickFromSnap		(const Fvector& start, const Fvector& dir, float& dist, Fvector* pt, Fvector* n);
 
     virtual void		ShowProperties		(LPCSTR focused_item);
     virtual void		UpdateProperties	(BOOL bForced){m_Flags.set(flUpdateProperties|flUpdateObjectList,TRUE); if (bForced) OnFrame();}
@@ -118,10 +120,11 @@ public:
 
     ObjClassID 			CurrentClassID		();
 
-    void				ShowObjectList		();
+    void				ShowObjectList		(bool bSearch = false);
 
     // commands
-    CCommandVar			CommandChangeTarget		(CCommandVar p1, CCommandVar p2);
+	CCommandVar			CommandChangeTarget		(CCommandVar p1, CCommandVar p2);
+	CCommandVar			CommandFindObject		(CCommandVar p1, CCommandVar p2);
 	CCommandVar			CommandShowObjectList	(CCommandVar p1, CCommandVar p2);
     CCommandVar			CommandEnableTarget		(CCommandVar p1, CCommandVar p2);
     CCommandVar			CommandShowTarget		(CCommandVar p1, CCommandVar p2);

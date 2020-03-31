@@ -5,7 +5,7 @@
 #ifndef SpawnPointH
 #define SpawnPointH
 
-#define SPAWNPOINT_VERSION   			0x0017
+#define SPAWNPOINT_VERSION   			0x0018
 
 #include "../../xrServerEntities/LevelGameDef.h"
 #include "../../xrServerEntities/xrServer_Objects_abstract.h"
@@ -16,7 +16,8 @@ class CSE_Visual;
 class CSE_Motion;
 class CObjectAnimator;
 class ISE_Abstract;
-
+class CEnvModifier;
+class IParticleCustom;
 
 class CSpawnPoint : public CCustomObject
 {
@@ -27,7 +28,8 @@ public:
     class CLE_Visual
     {
     public:
-        static bool     g_tmp_lock;
+        static xr_map<xr_string, xr_string> replaced_visuals;
+
     	CSE_Visual*		source;
         IRenderVisual*	visual;
         void 			OnChangeVisual			();
@@ -56,9 +58,10 @@ public:
 		CLASS_ID		m_ClassID;
         shared_str 		m_Profile;
 		ISE_Abstract*	m_Data;
-        CLE_Visual*		m_Visual;
+		CLE_Visual*		m_Visual;
         Flags8			m_flags;
-        xr_vector<CLE_Visual*> m_VisualHelpers;
+		xr_vector<CLE_Visual*> m_VisualHelpers;
+		IParticleCustom*m_IdleParticles; // for anomalies
 
         CLE_Motion*		m_Motion;
         CSpawnPoint*	m_owner;
@@ -69,8 +72,9 @@ public:
 			m_Data		= 0;
             m_Visual	= 0;
             m_Motion	= 0;
-            m_owner		= o;
-            m_flags.zero();
+			m_owner		= o;
+			m_flags.zero();
+			m_IdleParticles = 0;
         }
         ~SSpawnData	()
         {
@@ -91,7 +95,8 @@ public:
 
 		void    		Render			(bool bSelected, const Fmatrix& parent,int priority, bool strictB2F);
 		void    		OnFrame			();
-    	void __stdcall	OnAnimControlClick		(ButtonValue* value, bool& bModif, bool& bSafe);  
+		void __stdcall	OnAnimControlClick		(ButtonValue* value, bool& bModif, bool& bSafe);
+		void __stdcall  OnParticleControlClick	(ButtonValue* value, bool& bModif, bool& bSafe);
         
 		virtual void get_bone_xform				(LPCSTR name, Fmatrix& xform);
 	};
@@ -117,6 +122,9 @@ public:
             u32		m_EM_SkyColor;
             u32		m_EM_HemiColor;
             Flags16	m_EM_Flags;
+
+            u8		m_EM_ShapeType;
+            CEnvModifier* m_EM_Ptr;
         };
     };
 
@@ -143,12 +151,14 @@ public:
     virtual LPCSTR	RefName			();
 
     bool			CreateSpawnData	(LPCSTR entity_ref);
+    virtual bool	IsRender		();
 	virtual void    Render      	( int priority, bool strictB2F );
 	virtual bool    RayPick     	( float& distance,	const Fvector& start,	const Fvector& direction, SRayPickInfo* pinf = NULL );
     virtual bool 	FrustumPick		( const CFrustum& frustum );
 	virtual bool    GetBox      	(Fbox& box);
 
 	virtual void 	OnFrame			();
+	virtual void	OnUpdateTransform();
 
 	virtual void 	Select			(int  flag);
 

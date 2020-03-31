@@ -87,6 +87,7 @@ void CCustomObject::OnAttach(CCustomObject* owner)
 
 void CCustomObject::Move(Fvector& amount)
 {
+	R_ASSERT(!Locked());
     UI->UpdateScene();
     Fvector v=PPosition;
     Fvector r=PRotation;
@@ -107,6 +108,7 @@ void CCustomObject::Move(Fvector& amount)
 
 void CCustomObject::MoveTo(const Fvector& pos, const Fvector& up)
 {
+	R_ASSERT(!Locked());
     UI->UpdateScene();
     Fvector v=PPosition;
     v.set(pos);
@@ -120,6 +122,7 @@ void CCustomObject::MoveTo(const Fvector& pos, const Fvector& up)
 
 void CCustomObject::RotatePivot(const Fmatrix& prev_inv, const Fmatrix& current)
 {
+	R_ASSERT(!Locked());
     Fmatrix 		Ol,On;
     Ol.mul			(prev_inv,FTransformRP);
     On.mul			(current,Ol);
@@ -131,6 +134,7 @@ void CCustomObject::RotatePivot(const Fmatrix& prev_inv, const Fmatrix& current)
 
 void CCustomObject::RotateParent(Fvector& axis, float angle)
 {
+	R_ASSERT(!Locked());
     UI->UpdateScene();
     Fvector r	= PRotation;
     r.mad		(axis,angle);
@@ -139,6 +143,7 @@ void CCustomObject::RotateParent(Fvector& axis, float angle)
 
 void CCustomObject::RotateLocal(Fvector& axis, float angle)
 {
+	R_ASSERT(!Locked());
     Fmatrix m;
     Fvector r;
     m.rotation(axis,angle);
@@ -149,6 +154,7 @@ void CCustomObject::RotateLocal(Fvector& axis, float angle)
 
 void CCustomObject::ScalePivot( const Fmatrix& prev_inv, const Fmatrix& current, Fvector& amount )
 {
+	R_ASSERT(!Locked());
     UI->UpdateScene();
     Fvector p	= PPosition;
     Fvector s	= PScale;
@@ -167,6 +173,7 @@ void CCustomObject::ScalePivot( const Fmatrix& prev_inv, const Fmatrix& current,
 
 void CCustomObject::Scale( Fvector& amount )
 {
+	R_ASSERT(!Locked());
     UI->UpdateScene();
     Fvector s	= PScale;
 	s.add(amount);
@@ -205,11 +212,11 @@ void CCustomObject::FillProp(LPCSTR pref, PropItemVec& items)
     PropValue* V;
     V = PHelper().CreateNameCB	(items, PrepareKey(pref, "Name"),&FName,NULL,NULL,RTextValue::TOnAfterEditEvent(this,&CCustomObject::OnObjectNameAfterEdit));
     V->OnChangeEvent.bind		(this,&CCustomObject::OnNameChange);
-    V = PHelper().CreateVector	(items, PrepareKey(pref,"Transform\\Position"),	&PPosition,	-10000,	10000,0.01,2);
+    V = PHelper().CreateVector	(items, PrepareKey(pref,"Transform\\Position"),	&PPosition,	-10000,	10000,0.01,4);
     V->OnChangeEvent.bind		(this,&CCustomObject::OnNumChangePosition);
-    V = PHelper().CreateAngle3	(items, PrepareKey(pref,"Transform\\Rotation"),	&PRotation,	-10000,	10000,0.1,1);
+    V = PHelper().CreateAngle3	(items, PrepareKey(pref,"Transform\\Rotation"),	&PRotation,	-10000,	10000,0.1,2);
     V->OnChangeEvent.bind		(this,&CCustomObject::OnNumChangeRotation);
-    V = PHelper().CreateVector	(items, PrepareKey(pref,"Transform\\Scale"),	&PScale, 	0.01,	10000,0.01,2);
+    V = PHelper().CreateVector	(items, PrepareKey(pref,"Transform\\Scale"),	&PScale, 	0.01,	10000,0.01,4);
     V->OnChangeEvent.bind		(this,&CCustomObject::OnNumChangeScale);
 
     if(m_CO_Flags.test(flObjectInGroup))

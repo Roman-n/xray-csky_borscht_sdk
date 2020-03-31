@@ -28,8 +28,8 @@ SThunderboltDesc::~SThunderboltDesc()
     //::Render->model_Delete	(l_model);
 	m_GradientTop->m_pFlare->DestroyShader();
 	m_GradientCenter->m_pFlare->DestroyShader();
-    //m_GradientTop.hShader.destroy	();
-    //m_GradientCenter.hShader.destroy();
+	//m_GradientTop.hShader.destroy	();
+	//m_GradientCenter.hShader.destroy();
     snd.destroy					();
 
 	xr_delete					(m_GradientTop);
@@ -70,13 +70,6 @@ void SThunderboltDesc::load						(CInifile& pIni, shared_str const& sect)
 	LPCSTR m_name;
 	m_name						= pIni.r_string(sect,"lightning_model");
 	m_pRender->CreateModel		(m_name);
-
-	/*
-    IReader* F			= 0;
-	F					= FS.r_open("$game_meshes$",m_name); R_ASSERT2(F,"Empty 'lightning_model'.");
-	l_model				= ::Render->model_CreateDM(F);
-    FS.r_close			(F);
-	*/
 
     // sound
 	m_name				= pIni.r_string(sect,"sound");
@@ -180,7 +173,7 @@ void CEffect_Thunderbolt::Bolt(shared_str id, float period, float lt)
 {
 	VERIFY					(id.size());
 	state 		            = stWorking;
-	life_time	            = lt+Random.randF(-lt*0.5f,lt*0.5f);
+	life_time	            = lt+::Random.randF(-lt*0.5f,lt*0.5f);
     current_time            = 0.f;
 
     current		            = g_pGamePersistent->Environment().thunderbolt_collection(collection, id)->GetRandomDesc(); VERIFY(current);
@@ -191,13 +184,13 @@ void CEffect_Thunderbolt::Bolt(shared_str id, float period, float lt)
 	CEnvironment&			environment = g_pGamePersistent->Environment();
     environment.CurrentEnv->sun_dir.getHP			(sun_h,sun_p);
     float alt	            = environment.p_var_alt;//Random.randF(environment.p_var_alt.x,environment.p_var_alt.y);
-    float lng	            = Random.randF(sun_h-environment.p_var_long+PI,sun_h+environment.p_var_long+PI); 
-    float dist	            = Random.randF(FAR_DIST*environment.p_min_dist,FAR_DIST*.95f);
+	float lng	            = ::Random.randF(sun_h-environment.p_var_long+PI,sun_h+environment.p_var_long+PI);
+	float dist	            = ::Random.randF(FAR_DIST*environment.p_min_dist,FAR_DIST*.95f);
     current_direction.setHP	(lng,alt);
     pos.mad		            (Device.vCameraPosition,current_direction,dist);
-    dev.x		            = Random.randF(-environment.p_tilt,environment.p_tilt);
-    dev.y		            = Random.randF(0,PI_MUL_2);
-    dev.z		            = Random.randF(-environment.p_tilt,environment.p_tilt);
+	dev.x		            = ::Random.randF(-environment.p_tilt,environment.p_tilt);
+	dev.y		            = ::Random.randF(0,PI_MUL_2);
+	dev.z		            = ::Random.randF(-environment.p_tilt,environment.p_tilt);
     XF.setXYZi	            (dev);               
 
     Fvector light_dir 		= {0.f,-1.f,0.f};
@@ -211,12 +204,12 @@ void CEffect_Thunderbolt::Bolt(shared_str id, float period, float lt)
     XF.translate_over		(pos);
     current_xform.mul_43	(XF,S);
 
-    float next_v			= Random.randF();
+	float next_v			= ::Random.randF();
 
     if (next_v<environment.p_second_prop){
 	    next_lightning_time = Device.fTimeGlobal+lt+EPS_L;
     }else{
-	    next_lightning_time = Device.fTimeGlobal+period+Random.randF(-period*0.3f,period*0.3f);
+		next_lightning_time = Device.fTimeGlobal+period+::Random.randF(-period*0.3f,period*0.3f);
 		current->snd.play_no_feedback		(0,0,dist/300.f,&pos,0,0,&Fvector2().set(dist/2,dist*2.f));
     }
 
@@ -229,7 +222,7 @@ void CEffect_Thunderbolt::OnFrame(shared_str id, float period, float duration)
 	BOOL enabled			= !!(id.size());
 	if (bEnabled!=enabled){
     	bEnabled			= enabled;
-	    next_lightning_time = Device.fTimeGlobal+period+Random.randF(-period*0.5f,period*0.5f);
+		next_lightning_time = Device.fTimeGlobal+period+::Random.randF(-period*0.5f,period*0.5f);
     }else if (bEnabled&&(Device.fTimeGlobal>next_lightning_time)){ 
     	if (state==stIdle && !!(id.size())) Bolt(id,period,duration);
     }
@@ -273,65 +266,6 @@ void CEffect_Thunderbolt::Render()
 	if (state==stWorking)
 	{
 		m_pRender->Render(*this);
-
-		/*
-    	VERIFY	(current);
-
-        // lightning model
-        float dv			= lightning_phase*0.5f;
-        dv					= (lightning_phase>0.5f)?Random.randI(2)*0.5f:dv;
-
-		RCache.set_CullMode	(CULL_NONE);
-        u32					v_offset,i_offset;
-        u32					vCount_Lock		= current->l_model->number_vertices;
-        u32					iCount_Lock		= current->l_model->number_indices;
-        IRender_DetailModel::fvfVertexOut* v_ptr= (IRender_DetailModel::fvfVertexOut*) 	RCache.Vertex.Lock	(vCount_Lock, hGeom_model->vb_stride, v_offset);
-        u16*				i_ptr				=										RCache.Index.Lock	(iCount_Lock, i_offset);
-        // XForm verts
-        current->l_model->transfer(current_xform,v_ptr,0xffffffff,i_ptr,0,0.f,dv);
-        // Flush if needed
-        RCache.Vertex.Unlock(vCount_Lock,hGeom_model->vb_stride);
-        RCache.Index.Unlock	(iCount_Lock);
-        RCache.set_xform_world(Fidentity);
-        RCache.set_Shader	(current->l_model->shader);
-        RCache.set_Geometry	(hGeom_model);
-        RCache.Render		(D3DPT_TRIANGLELIST,v_offset,0,vCount_Lock,i_offset,iCount_Lock/3);
-		RCache.set_CullMode	(CULL_CCW);
-
-        // gradient
-        Fvector				vecSx, vecSy;
-        u32					VS_Offset;
-        FVF::LIT *pv		= (FVF::LIT*) RCache.Vertex.Lock(8,hGeom_gradient.stride(),VS_Offset);
-        // top
-        {
-            u32 c_val		= iFloor(current->m_GradientTop.fOpacity*lightning_phase*255.f);
-            u32 c			= color_rgba(c_val,c_val,c_val,c_val);
-            vecSx.mul		(Device.vCameraRight, 	current->m_GradientTop.fRadius.x*lightning_size);
-            vecSy.mul		(Device.vCameraTop, 	-current->m_GradientTop.fRadius.y*lightning_size);
-            pv->set			(current_xform.c.x+vecSx.x-vecSy.x, current_xform.c.y+vecSx.y-vecSy.y, current_xform.c.z+vecSx.z-vecSy.z, c, 0, 0); pv++;
-            pv->set			(current_xform.c.x+vecSx.x+vecSy.x, current_xform.c.y+vecSx.y+vecSy.y, current_xform.c.z+vecSx.z+vecSy.z, c, 0, 1); pv++;
-            pv->set			(current_xform.c.x-vecSx.x-vecSy.x, current_xform.c.y-vecSx.y-vecSy.y, current_xform.c.z-vecSx.z-vecSy.z, c, 1, 0); pv++;
-            pv->set			(current_xform.c.x-vecSx.x+vecSy.x, current_xform.c.y-vecSx.y+vecSy.y, current_xform.c.z-vecSx.z+vecSy.z, c, 1, 1); pv++;
-        }
-        // center
-        {
-            u32 c_val		= iFloor(current->m_GradientTop.fOpacity*lightning_phase*255.f);
-            u32 c			= color_rgba(c_val,c_val,c_val,c_val);
-            vecSx.mul		(Device.vCameraRight, 	current->m_GradientCenter.fRadius.x*lightning_size);
-            vecSy.mul		(Device.vCameraTop, 	-current->m_GradientCenter.fRadius.y*lightning_size);
-            pv->set			(lightning_center.x+vecSx.x-vecSy.x, lightning_center.y+vecSx.y-vecSy.y, lightning_center.z+vecSx.z-vecSy.z, c, 0, 0); pv++;
-            pv->set			(lightning_center.x+vecSx.x+vecSy.x, lightning_center.y+vecSx.y+vecSy.y, lightning_center.z+vecSx.z+vecSy.z, c, 0, 1); pv++;
-            pv->set			(lightning_center.x-vecSx.x-vecSy.x, lightning_center.y-vecSx.y-vecSy.y, lightning_center.z-vecSx.z-vecSy.z, c, 1, 0); pv++;
-            pv->set			(lightning_center.x-vecSx.x+vecSy.x, lightning_center.y-vecSx.y+vecSy.y, lightning_center.z-vecSx.z+vecSy.z, c, 1, 1); pv++;
-        }
-        RCache.Vertex.Unlock	(8,hGeom_gradient.stride());
-        RCache.set_xform_world	(Fidentity);
-        RCache.set_Geometry		(hGeom_gradient);
-        RCache.set_Shader		(current->m_GradientTop.hShader);
-        RCache.Render			(D3DPT_TRIANGLELIST,VS_Offset, 0,4,0,2);
-        RCache.set_Shader		(current->m_GradientCenter.hShader);
-        RCache.Render			(D3DPT_TRIANGLELIST,VS_Offset+4, 0,4,0,2);
-		*/
     }
 }
 

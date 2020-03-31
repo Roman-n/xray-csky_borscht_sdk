@@ -147,6 +147,8 @@ struct SFillPropData{
         VERIFY					(level_ids.empty());
         for (k = 0; Ini->r_line("levels",k,&N,&V); ++k)
             level_ids.push_back	(Ini->r_string_wb(N,"caption"));
+            
+        level_ids.push_back("$exit$");
 
         // story names
 		{
@@ -196,7 +198,7 @@ struct SFillPropData{
 			smart_covers.push_back	(luabind::object_cast<LPCSTR>(I.key()));
 
 		std::sort				(smart_covers.begin(), smart_covers.end(), logical_string_predicate());
-    }
+	}
 
     void		unload			()
     {
@@ -241,7 +243,7 @@ void CSE_ALifeTraderAbstract::FillProps	(LPCSTR pref, PropItemVec& items)
 		&m_sCharacterProfile, 
 		&*fp_data.character_profiles.begin(), fp_data.character_profiles.size());
 	
-	value->OnChangeEvent.bind	(this,&CSE_ALifeTraderAbstract::OnChangeProfile);
+	PHelper().SetChangeEvent(value, fastdelegate::MakeDelegate(this,&CSE_ALifeTraderAbstract::OnChangeProfile));
 #	endif // #ifdef XRSE_FACTORY_EXPORTS
 }
 #endif // #ifndef XRGAME_EXPORTS
@@ -342,7 +344,12 @@ BOOL is_combat_cover			(shared_str const &table_id)
 			LUA_TTABLE
 		);
 
-	VERIFY2						(result, make_string("bad or missing description in smart_cover [%s]", table_id.c_str()));
+	//VERIFY2						(result, make_string("bad or missing description in smart_cover [%s]", table_id.c_str()));
+	if (!result) {
+		Msg						("no or invalid smart cover description [%s]", temp);
+		return					(TRUE);
+	}
+
 	if (table.type() != LUA_TTABLE) {
 		VERIFY					(table.type() != LUA_TNIL);
 		return					(TRUE);
@@ -447,7 +454,7 @@ void CSE_SmartCover::FillProps	(LPCSTR pref, PropItemVec& items)
 #	ifdef XRSE_FACTORY_EXPORTS
 	PHelper().CreateFloat		(items, PrepareKey(pref,*s_name,"hold position time"), 	&m_hold_position_time,	0.f, 60.f);
 	RListValue *value			= PHelper().CreateRList	 	(items,	PrepareKey(pref,*s_name,"description"),			&m_description,			&*fp_data.smart_covers.begin(),	fp_data.smart_covers.size());
-	value->OnChangeEvent.bind	(this,&CSE_SmartCover::OnChangeDescription);
+	PHelper().SetChangeEvent	(value, fastdelegate::MakeDelegate(this,&CSE_SmartCover::OnChangeDescription));
  
 	PHelper().CreateFloat		(items, PrepareKey(pref,*s_name,"enter min enemy distance"),&m_enter_min_enemy_distance,	0.f, 100.f);
 	PHelper().CreateFloat		(items, PrepareKey(pref,*s_name,"exit min enemy distance"),	&m_exit_min_enemy_distance,		0.f, 100.f);
@@ -610,6 +617,10 @@ void CSE_SmartCover::fill_visuals()
 {
 	delete_data(m_visuals);
 
+	shared_str preview = pSettings->line_exist(name(), "preview_visual")
+		? pSettings->r_string(name(), "preview_visual")
+		: "characters\\neutral\\neutral_wolf.ogf";
+
 	xr_vector<SSCDrawHelper>::iterator I = m_draw_data.begin();
 	xr_vector<SSCDrawHelper>::iterator E = m_draw_data.end();
 	for ( ; I != E; ++I) {
@@ -617,7 +628,7 @@ void CSE_SmartCover::fill_visuals()
 			return;
 
 		CSE_Visual *visual			= xr_new<CSE_SmartVisual>();
-		visual->set_visual			("actors\\stalker_neutral\\stalker_neutral_1");
+		visual->set_visual			(preview.c_str());
 
 		if (I->animation_id.size() == 0) {
 			Msg						("cover [%s] doesn't have idle_2_fire animation", I->string_identifier.c_str());
@@ -850,6 +861,9 @@ CSE_ALifeObject::CSE_ALifeObject			(LPCSTR caSection) : CSE_Abstract(caSection)
 #endif // XRSE_FACTORY_EXPORTS
 	m_flags.set					(flOfflineNoMove,FALSE);
 	seed						(u32(CPU::QPC() & 0xffffffff));
+	
+	if(pSettings->line_exist(caSection, "used_ai_locations"))
+		m_flags.set(flUsedAI_Locations, pSettings->r_bool(caSection, "used_ai_locations"));
 }
 
 #ifdef XRGAME_EXPORTS
@@ -1284,7 +1298,8 @@ CSE_ALifeSpaceRestrictor::CSE_ALifeSpaceRestrictor	(LPCSTR caSection) : CSE_ALif
 {
 	m_flags.set					(flUseSwitches,FALSE);
 	m_space_restrictor_type		= RestrictionSpace::eDefaultRestrictorTypeNone;
-	m_flags.set					(flUsedAI_Locations,FALSE);
+	if(!pSettings->line_exist(caSection, "used_ai_locations"))
+		m_flags.set					(flUsedAI_Locations,FALSE);
 	m_spawn_flags.set			(flSpawnDestroyOnSpawn,FALSE);
 	m_flags.set					(flCheckForSeparator,TRUE);
 }
@@ -1457,7 +1472,9 @@ CSE_ALifeObjectPhysic::CSE_ALifeObjectPhysic(LPCSTR caSection) : CSE_ALifeDynami
 
 	m_flags.set					(flUseSwitches,FALSE);
 	m_flags.set					(flSwitchOffline,FALSE);
-	m_flags.set					(flUsedAI_Locations,FALSE);
+		
+	if(!pSettings->line_exist(caSection, "used_ai_locations"))
+		m_flags.set					(flUsedAI_Locations,FALSE);
 	
 #ifdef XRGAME_EXPORTS
 	m_freeze_time				= Device.dwTimeGlobal;
@@ -1922,7 +1939,7 @@ void CSE_ALifeObjectHangingLamp::load(NET_Packet &tNetPacket)
 
 void CSE_ALifeObjectHangingLamp::OnChangeFlag(PropValue* sender)
 {
-	set_editor_flag				(flUpdateProperties);
+	set_editor_flag					(flUpdateProperties);
 }
 
 #ifndef XRGAME_EXPORTS
@@ -1931,16 +1948,18 @@ void CSE_ALifeObjectHangingLamp::FillProps	(LPCSTR pref, PropItemVec& values)
 	inherited1::FillProps		(pref,values);
 	inherited2::FillProps		(pref,values);
 
-    PropValue* P				= 0;
+    Flag16Value* P				= 0;
+    PropValue::TOnChange E		= fastdelegate::MakeDelegate(this,&CSE_ALifeObjectHangingLamp::OnChangeFlag);
+    
 	PHelper().CreateFlag16		(values, PrepareKey(pref,*s_name,"Flags\\Physic"),		&flags,			flPhysic);
 	PHelper().CreateFlag16		(values, PrepareKey(pref,*s_name,"Flags\\Cast Shadow"),	&flags,			flCastShadow);
 	PHelper().CreateFlag16		(values, PrepareKey(pref,*s_name,"Flags\\Allow R1"),	&flags,			flR1);
 	PHelper().CreateFlag16		(values, PrepareKey(pref,*s_name,"Flags\\Allow R2"),	&flags,			flR2);
 	P=PHelper().CreateFlag16	(values, PrepareKey(pref,*s_name,"Flags\\Allow Ambient"),&flags,			flPointAmbient);
-    P->OnChangeEvent.bind		(this,&CSE_ALifeObjectHangingLamp::OnChangeFlag);
+    PHelper().SetChangeEvent	(P,E);
 	// 
 	P=PHelper().CreateFlag16	(values, PrepareKey(pref,*s_name,"Light\\Type"), 		&flags,				flTypeSpot, "Point", "Spot");
-    P->OnChangeEvent.bind		(this,&CSE_ALifeObjectHangingLamp::OnChangeFlag);
+    PHelper().SetChangeEvent	(P,E);
 	PHelper().CreateColor		(values, PrepareKey(pref,*s_name,"Light\\Main\\Color"),			&color);
     PHelper().CreateFloat		(values, PrepareKey(pref,*s_name,"Light\\Main\\Brightness"),	&brightness,		0.1f, 5.f);
 	PHelper().CreateChoose		(values, PrepareKey(pref,*s_name,"Light\\Main\\Color Animator"),&color_animator, 	smLAnim);

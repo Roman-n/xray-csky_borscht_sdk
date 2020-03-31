@@ -14,9 +14,7 @@ CImageManager ImageLib;
 extern bool IsFormatRegister(LPCSTR ext);
 extern FIBITMAP* Surface_Load(char* full_name);
 
-extern "C" __declspec(dllimport)
-int DXTCompress	(LPCSTR out_name, u8* raw_data, u8* ext_data, u32 w, u32 h, u32 pitch,
-					STextureParams* options, u32 depth);
+#include "../../utils/xrDXT/DXT.h"
 
 bool IsValidSize(u32 w, u32 h){
 	if (!btwIsPow2(h)) return false;
@@ -39,7 +37,7 @@ bool Surface_Load(LPCSTR full_name, U32Vec& data, u32& w, u32& h, u32& a)
         h 					= img.dwHeight;
         a					= img.bAlpha;
         data.resize			(w*h);
-		CopyMemory			(data.begin(),img.pData,sizeof(u32)*data.size());
+		CopyMemory			(&data.front(),img.pData,sizeof(u32)*data.size());
 		if (!IsValidSize(w,h))	ELog.Msg(mtError,"Texture (%s) - invalid size: [%d, %d]",full_name,w,h);
         return true;
     }else{
@@ -49,7 +47,7 @@ bool Surface_Load(LPCSTR full_name, U32Vec& data, u32& w, u32& h, u32& a)
             h 				= FreeImage_GetHeight(bm);
 		    u32 w4			= w*4;
             data.resize		(w*h);
-            for (int y=h-1; y>=0; y--) CopyMemory(data.begin()+(h-y-1)*w,FreeImage_GetScanLine(bm,y),w4);
+			for (int y=h-1; y>=0; y--) CopyMemory(&data.front()+(h-y-1)*w,FreeImage_GetScanLine(bm,y),w4);
             a				= FIC_RGBALPHA==FreeImage_GetColorType(bm);
             FreeImage_Unload	(bm);
 			if (!IsValidSize(w,h))	ELog.Msg(mtError,"Texture (%s) - invalid size: [%d, %d]",full_name,w,h);
@@ -76,7 +74,7 @@ void CImageManager::MakeThumbnailImage(ETextureThumbnail* THM, u32* data, u32 w,
 	THM->m_TexParams.width = w;
 	THM->m_TexParams.height= h;
     THM->m_TexParams.flags.set(STextureParams::flHasAlpha,a);
-	imf_Process(THM->m_Pixels.begin(),THUMB_WIDTH,THUMB_HEIGHT,data,THM->_Width(),THM->_Height(),imf_box);
+	imf_Process(&THM->m_Pixels.front(),THUMB_WIDTH,THUMB_HEIGHT,data,THM->_Width(),THM->_Height(),imf_box);
     THM->VFlip();
 }
 
@@ -98,9 +96,9 @@ void CImageManager::CreateTextureThumbnail(ETextureThumbnail* THM, const AnsiStr
     if (!Surface_Load(fn.c_str(),data,w,h,a))
     {
     	ELog.Msg(mtError,"Can't load texture '%s'.\nCheck file existence",fn.c_str());
-     	return;
+		return;
     }
-    MakeThumbnailImage(THM,data.begin(),w,h,a);
+	MakeThumbnailImage(THM,&data.front(),w,h,a);
 
 
     // выставить начальные параметры
@@ -133,7 +131,7 @@ void CImageManager::CreateGameTexture(LPCSTR src_name, ETextureThumbnail* thumb)
     U32Vec data;
     u32 w, h, a;
     if (!Surface_Load(base_name,data,w,h,a)) return;
-    MakeGameTexture(THM,game_name,data.begin());
+	MakeGameTexture(THM,game_name,&data.front());
 
     FS.set_file_age(game_name, base_age);
     if (!thumb) xr_delete(THM);
@@ -203,9 +201,9 @@ bool CImageManager::MakeGameTexture(ETextureThumbnail* THM, LPCSTR game_name, u3
         xr_delete			(NM_THM);
         if (false==e_res)	return false;
     }
-    // compress
+	// compress
     
-    int res 	= DXTCompress(game_name, (u8*)load_data, (u8*)(ext_data.empty()?0:ext_data.begin()), w, h, w4, &THM->m_TexParams, 4);
+	int res 	= DXTCompress(game_name, (u8*)load_data, (u8*)(ext_data.empty()?0:&ext_data.front()), w, h, w4, &THM->m_TexParams, 4);
     if (1!=res){
     	if (-1000!=res){ //. Special for Oles (glos<10%) 
             FS.file_delete	(game_name);
@@ -266,7 +264,7 @@ void CImageManager::SafeCopyLocalToServer(FS_FileSet& files)
             u32 w,h,a;
 		    R_ASSERT	(Surface_Load(src_name,data,w,h,a));
             CImage* I 	= xr_new<CImage>();
-            I->Create	(w,h,data.begin());
+			I->Create	(w,h,&data.front());
             I->Vflip	();
             I->SaveTGA	(dest_name);
             xr_delete	(I);
@@ -337,8 +335,8 @@ void CImageManager::SynchronizeTextures(bool sync_thm, bool sync_game, bool bFor
                 string_path 			game_name;
                 strconcat				(sizeof(game_name), game_name, base_name.c_str(), ".dds");
 
-                FS.update_path			(game_name,_game_textures_,game_name);
-                if (MakeGameTexture(THM,game_name,data.begin()))
+				FS.update_path			(game_name,_game_textures_,game_name);
+				if (MakeGameTexture(THM,game_name,&data.front()))
                 {
                     if (sync_list) 		sync_list->push_back(base_name.c_str());
                     if (modif_map) 		modif_map->insert(*it);
@@ -435,7 +433,7 @@ int CImageManager::GetTexturesRaw(FS_FileSet& files, BOOL bFolders)
 //------------------------------------------------------------------------------
 int CImageManager::GetLocalNewTextures(FS_FileSet& files)
 {
-    return FS.file_list(files,_import_,FS_ListFiles|FS_RootOnly,"*.tga,*.bmp");
+	return FS.file_list(files,_import_,FS_ListFiles|FS_RootOnly,"*.tga,*.bmp");
 }
 //------------------------------------------------------------------------------
 // проверяет соответствие размера текстур
@@ -457,7 +455,7 @@ BOOL CImageManager::CheckCompliance(LPCSTR fname, int& compl)
     u32* pScaled     = (u32*)(xr_malloc((w_2)*(h_2)*4));
     u32* pRestored   = (u32*)(xr_malloc(w*h*4));
     try {
-    	imf_Process     (pScaled,	w_2,h_2,data.begin(),w,h,imf_lanczos3	);
+		imf_Process     (pScaled,	w_2,h_2,&data.front(),w,h,imf_lanczos3	);
         imf_Process		(pRestored,	w,h,pScaled,w_2,h_2,imf_filter 		    );
     } catch (...)
     {
@@ -538,7 +536,7 @@ BOOL _ApplyBorders(U32Vec& pixels, u32 w, u32 h, u32 ref)
         U32Vec result;
         result.resize(w*h);
 
-        CopyMemory(result.begin(),pixels.begin(),w*h*4);
+		CopyMemory(&result.front(),&*pixels.begin(),w*h*4);
         for (u32 y=0; y<h; y++){
             for (u32 x=0; x<w; x++){
                 if (color_get_A(pixels[y*w+x])==0) {
@@ -561,7 +559,7 @@ BOOL _ApplyBorders(U32Vec& pixels, u32 w, u32 h, u32 ref)
                 }
             }
         }
-        CopyMemory(pixels.begin(),result.begin(),h*w*4);
+		CopyMemory(&pixels.front(),&*result.begin(),h*w*4);
     } catch (...)
     {
         Msg("* ERROR: ApplyBorders");
@@ -591,10 +589,10 @@ BOOL CImageManager::CreateOBJThumbnail(LPCSTR tex_name, CEditableObject* obj, in
 //	EPrefs.scene_clear_color 	= 	0x00333333;
 
 	U32Vec pixels;
-    u32 w=512,h=512;
+	u32 w=512,h=512;
     if (Device.MakeScreenshot(pixels,w,h)){
         EObjectThumbnail tex(tex_name,false);
-        tex.CreateFromData(pixels.begin(),w,h,obj->GetFaceCount(),obj->GetVertexCount());
+		tex.CreateFromData(&pixels.front(),w,h,obj->GetFaceCount(),obj->GetVertexCount());
         tex.Save(age);
     }else{
     	bResult = FALSE;
@@ -627,11 +625,12 @@ void CImageManager::RemoveTexture(LPCSTR fname, EItemType type, bool& res)
             // source
             FS.file_delete		(_textures_,src_name.c_str());
             // thumbnail
-            FS.file_delete		(_textures_,thm_name.c_str());
+            FS.file_delete		(_game_textures_,thm_name.c_str());
             // game
             FS.file_delete		(_game_textures_,game_name.c_str());
             // game 2
             FS.file_delete		(_game_textures_,game_name2.c_str());
+            res					= true;
             return;
         }
     }
@@ -694,7 +693,7 @@ BOOL CImageManager::CreateSmallerCubeMap(LPCSTR src_name, LPCSTR dst_name)
 	    U32Vec sm_data	(sm_wf*sm_h,0);
 		SPBItem* PB		= UI->ProgressStart(1.f,"Cube Map: scale image...");
         CTimer T; T.Start();
-        ETOOLS::SimplifyCubeMap	(data.begin(),w,h,sm_data.begin(),sm_w,sm_h,16.f,pb_callback,PB);
+		ETOOLS::SimplifyCubeMap	(&data.front(),w,h,&*sm_data.begin(),sm_w,sm_h,16.f,pb_callback,PB);
         float tm_scm	= T.GetElapsed_sec();
 		UI->ProgressEnd	(PB);
         // write texture
@@ -710,11 +709,36 @@ BOOL CImageManager::CreateSmallerCubeMap(LPCSTR src_name, LPCSTR dst_name)
         tp.flags.zero	();
 		if (!MakeGameTexture(out_name,&*sm_data.begin(),tp))
         	return FALSE;
-        ELog.DlgMsg(mtInformation,"Smaller cubemap successfylly created [%3.2f sec].",tm_scm);
+        ELog.Msg(mtInformation,"Smaller cubemap successfylly created [%3.2f sec].",tm_scm);
         return TRUE;
     }else{
         ELog.Msg(mtError,"Can't load texture '%s'.",src_name);
     }
     return FALSE;
+}
+
+static void * __stdcall xrDXT_malloc(size_t size)
+{
+	return xr_malloc(size);
+}
+
+static void __stdcall xrDXT_free(void *ptr)
+{
+	xr_free(ptr);
+}
+
+CImageManager::CImageManager()
+{
+//	DXTSetMemHooks(xrDXT_malloc, xrDXT_free);
+	typedef void (__stdcall *DXTSetMemHooks)(DXTMalloc, DXTMfree);
+
+    DXTSetMemHooks pDXTSetMemHooks;
+    HMODULE hmDXTdll = GetModuleHandle("DXT.dll");
+    if(hmDXTdll)
+    {
+    	pDXTSetMemHooks = (DXTSetMemHooks)GetProcAddress(hmDXTdll, "_DXTSetMemHooks@8");
+        if(pDXTSetMemHooks)
+        	pDXTSetMemHooks(xrDXT_malloc, xrDXT_free);
+    }
 }
 

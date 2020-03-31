@@ -19,7 +19,9 @@
 
 #include "ItemListHelper.h"
 #include "FolderLib.h"
-#include "../../xrServerEntities/PropertiesListTypes.h"
+#include "PropertiesListTypes.h"
+#include "ElTreeInplaceEditors.hpp"
+#include "ElComponent.hpp"
           
 class XR_EPROPS_API TItemList: public TForm
 {
@@ -81,6 +83,8 @@ private:	// User declarations
 
 	void 				OutBOOL					(BOOL val, TCanvas* Surface, const TRect& R);
 	void 				OutText					(LPCSTR text, TCanvas* Surface, TRect R, TGraphic* g=0, bool bArrow=false);
+
+    void __fastcall		OnMouseEnter			(TMessage)	{ if(m_Flags.is(ilFocusOnHover)) tvItems->SetFocus(); }
 public:
     s32					iLocked;
     Flags32				m_Flags;
@@ -100,6 +104,10 @@ protected:
     FolderStoreMap		FolderStore;
 protected:     
     void __stdcall 		RenameItem				(LPCSTR fn0, LPCSTR fn1, EItemType type);
+
+    BEGIN_MESSAGE_MAP
+    	VCL_MESSAGE_HANDLER(CM_MOUSEENTER, TMessage, OnMouseEnter);
+    END_MESSAGE_MAP(TForm);
 public:		// User declarations
 	enum{
     	// set
@@ -109,7 +117,8 @@ public:		// User declarations
         ilDragCustom	= (1<<3),
         ilFolderStore	= (1<<4),
         ilSuppressIcon 	= (1<<5),
-        ilSuppressStatus= (1<<6),
+		ilSuppressStatus= (1<<6),
+		ilFocusOnHover	= (1<<7),
 
         // internal
         ilRT_FullExpand	= (1<<30),

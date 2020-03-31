@@ -74,7 +74,7 @@ void	xrMemory::_initialize	(BOOL bDebug)
 		mem_fill32	= xrMemFill32_x86;
 	}
 
-#ifndef M_BORLAND
+#ifdef M_VISUAL
 	if (!strstr(Core.Params,"-pure_alloc")) {
 		// initialize POOLs
 		u32	element		= mem_pools_ebase;

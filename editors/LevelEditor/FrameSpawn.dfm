@@ -67,6 +67,9 @@ object fraSpawn: TfraSpawn
     Align = alTop
     ParentColor = True
     TabOrder = 1
+    DesignSize = (
+      217
+      51)
     object Label1: TLabel
       Left = 1
       Top = 1
@@ -85,6 +88,7 @@ object fraSpawn: TfraSpawn
       Width = 11
       Height = 11
       Align = alNone
+      Anchors = [akTop, akRight]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -109,6 +113,7 @@ object fraSpawn: TfraSpawn
       Height = 15
       Align = alNone
       AllowAllUp = True
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -128,6 +133,7 @@ object fraSpawn: TfraSpawn
       Width = 215
       Height = 15
       Align = alNone
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -149,6 +155,9 @@ object fraSpawn: TfraSpawn
     Align = alTop
     Color = 10528425
     TabOrder = 2
+    DesignSize = (
+      217
+      47)
     object Label5: TLabel
       Left = 5
       Top = 16
@@ -163,6 +172,7 @@ object fraSpawn: TfraSpawn
       Width = 27
       Height = 14
       Align = alNone
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       Caption = '+'
@@ -180,6 +190,7 @@ object fraSpawn: TfraSpawn
       Width = 27
       Height = 14
       Align = alNone
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       Caption = '-'
@@ -209,6 +220,7 @@ object fraSpawn: TfraSpawn
       Width = 11
       Height = 11
       Align = alNone
+      Anchors = [akTop, akRight]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -232,6 +244,7 @@ object fraSpawn: TfraSpawn
       Width = 27
       Height = 14
       Align = alNone
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       Caption = '=%'
@@ -248,12 +261,14 @@ object fraSpawn: TfraSpawn
       Top = 28
       Width = 45
       Height = 16
+      Anchors = [akTop, akRight]
     end
     object Label2: TLabel
       Left = 201
       Top = 30
       Width = 8
       Height = 13
+      Anchors = [akTop, akRight]
       Caption = '%'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
@@ -268,6 +283,7 @@ object fraSpawn: TfraSpawn
       Width = 27
       Height = 14
       Align = alNone
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       Caption = '+%'
@@ -300,6 +316,7 @@ object fraSpawn: TfraSpawn
       AutoSize = False
       BorderStyle = bsNone
       Color = 12698049
+      Anchors = [akTop, akRight]
       TabOrder = 0
       OnKeyPress = seSelPercentKeyPress
     end

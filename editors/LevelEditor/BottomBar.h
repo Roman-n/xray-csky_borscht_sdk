@@ -14,6 +14,7 @@
 #include "CGAUGES.h"
 #include <ExtCtrls.hpp>
 #include <Menus.hpp>
+#include "cgauges.h"
 //---------------------------------------------------------------------------
 class ECORE_API TfraBottomBar : public TFrame
 {
@@ -82,6 +83,7 @@ __published:	// IDE-managed Components
 	TMenuItem *N501;
 	TMenuItem *N021;
 	TMenuItem *N1001;
+	TMenuItem *miDeferredTextureLoading;
     void __fastcall ClickOptionsMenuItem(TObject *Sender);
     void __fastcall QualityClick(TObject *Sender);
     void __fastcall fsStorageRestorePlacement(TObject *Sender);
@@ -95,6 +97,7 @@ __published:	// IDE-managed Components
 	void __fastcall ebMacroMouseDown(TObject *Sender, TMouseButton Button,
           TShiftState Shift, int X, int Y);
 	void __fastcall N501Click(TObject *Sender);
+	void __fastcall paCameraDblClick(TObject *Sender);
 private:	// User declarations
 	void __fastcall MacroAssignClick(TObject *Sender);
 	void __fastcall MacroClearClick(TObject *Sender);

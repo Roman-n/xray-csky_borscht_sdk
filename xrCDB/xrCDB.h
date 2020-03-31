@@ -13,11 +13,6 @@
 #else
 #define XRCDB_API __declspec(dllimport)
 #endif
-#ifdef M_VISUAL
-#define ALIGN(a) __declspec(align(a))
-#else
-#define ALIGN(a)
-#endif
 
 // forward declarations
 class CFrustum;
@@ -180,7 +175,7 @@ namespace CDB
 						non_copyable	() {}
 	private:
 						non_copyable	(const non_copyable &) {}
-						non_copyable	&operator=		(const non_copyable &) {}
+						non_copyable	&operator=		(const non_copyable &) { return *this; }
 	};
 
 #pragma warning(push)

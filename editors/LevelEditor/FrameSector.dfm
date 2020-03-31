@@ -28,6 +28,9 @@ object fraSector: TfraSector
     Color = 10528425
     TabOrder = 1
     Visible = False
+    DesignSize = (
+      218
+      88)
     object ebAddMesh: TExtBtn
       Left = 87
       Top = 51
@@ -35,6 +38,7 @@ object fraSector: TfraSector
       Height = 15
       Align = alNone
       AllowAllUp = True
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -94,6 +98,7 @@ object fraSector: TfraSector
       Height = 15
       Align = alNone
       AllowAllUp = True
+      Anchors = [akTop]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -153,6 +158,7 @@ object fraSector: TfraSector
       Height = 15
       Align = alNone
       AllowAllUp = True
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -230,6 +236,7 @@ object fraSector: TfraSector
       Width = 11
       Height = 11
       Align = alNone
+      Anchors = [akTop, akRight]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -254,6 +261,7 @@ object fraSector: TfraSector
       Height = 15
       Align = alNone
       AllowAllUp = True
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -318,6 +326,7 @@ object fraSector: TfraSector
       Height = 15
       Align = alNone
       AllowAllUp = True
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -378,12 +387,16 @@ object fraSector: TfraSector
     Align = alTop
     Color = 10528425
     TabOrder = 0
+    DesignSize = (
+      218
+      94)
     object ebValidate: TExtBtn
       Left = 2
       Top = 16
       Width = 215
       Height = 15
       Align = alNone
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -415,6 +428,7 @@ object fraSector: TfraSector
       Width = 11
       Height = 11
       Align = alNone
+      Anchors = [akTop, akRight]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -438,6 +452,7 @@ object fraSector: TfraSector
       Width = 215
       Height = 15
       Align = alNone
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -457,6 +472,7 @@ object fraSector: TfraSector
       Width = 215
       Height = 15
       Align = alNone
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -476,6 +492,7 @@ object fraSector: TfraSector
       Width = 215
       Height = 15
       Align = alNone
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320
@@ -494,6 +511,7 @@ object fraSector: TfraSector
       Top = 60
       Width = 215
       Height = 2
+      Anchors = [akLeft, akTop, akRight]
     end
     object ebDistributeObjects: TExtBtn
       Left = 2
@@ -501,6 +519,7 @@ object fraSector: TfraSector
       Width = 215
       Height = 15
       Align = alNone
+      Anchors = [akLeft, akTop, akRight]
       BevelShow = False
       HotTrack = True
       HotColor = 15790320

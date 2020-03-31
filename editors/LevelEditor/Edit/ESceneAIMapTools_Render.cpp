@@ -127,6 +127,15 @@ void ESceneAIMapTool::OnRender(int priority, bool strictB2F)
                 if (cnt) Device.DP	(D3DPT_TRIANGLELIST,m_RGeom,vBase,cnt/3);
                 Device.SetRS		(D3DRS_CULLMODE,		D3DCULL_CCW);
             }
+
+            // render error list
+            Device.SetShader(Device.m_WireShader);
+            
+            xr_vector<Fvector>::iterator it, end;
+			for(it = m_ErrorNodes.begin(), end = m_ErrorNodes.end(); it != end; it++){
+            	DU_impl.DrawCross(*it, m_Params.fPatchSize, 0x0000FFCC, FALSE);
+                DU_impl.OutText(*it, "Invalid node", 0xFFFFFFFF, 0xFF000000);
+            }
         }else{
 /*            // render snap
             if (m_Flags.is(flDrawSnapObjects))

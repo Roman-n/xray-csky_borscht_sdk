@@ -64,7 +64,7 @@ public:
 	virtual								~CSoundRender_Core		();
 
 	// General
-	virtual void  						_initialize				(int stage)=0;
+	virtual void  						_initialize				( )=0;
 	virtual void						_clear					( )=0;
 	virtual void						_restart				( );
 

@@ -101,7 +101,7 @@ bool __fastcall TUI::KeyPress(WORD Key, TShiftState Shift)
 }
 //----------------------------------------------------
 
-void TUI::MousePress(TShiftState Shift, int X, int Y)
+void __fastcall TUI::MousePress(TShiftState Shift, int X, int Y)
 {
 	if (!m_bReady) return;
     if (m_MouseCaptured) return;
@@ -132,7 +132,7 @@ void TUI::MousePress(TShiftState Shift, int X, int Y)
     RedrawScene();
 }
 
-void TUI::MouseRelease(TShiftState Shift, int X, int Y)
+void __fastcall TUI::MouseRelease(TShiftState Shift, int X, int Y)
 {
 	if (!m_bReady) return;
 
@@ -161,7 +161,7 @@ void TUI::MouseRelease(TShiftState Shift, int X, int Y)
     RedrawScene		();
 }
 //----------------------------------------------------
-void TUI::MouseMove(TShiftState Shift, int X, int Y)
+void __fastcall TUI::MouseMove(TShiftState Shift, int X, int Y)
 {
 	if (!m_bReady) return;
     m_ShiftState = Shift;
@@ -433,8 +433,10 @@ void TUI::OnFrame()
 	// show hint
     ShowObjectHint		();
 	ResetBreak			();
+#if USE_MAILSLOT
 	// check mail
     CheckMailslot		();
+#endif
     // OnFrame
     TfrmImageLib::OnFrame();
     TfrmSoundLib::OnFrame();
@@ -442,7 +444,7 @@ void TUI::OnFrame()
     // Progress
     ProgressDraw		();
 }
-void TUI::Idle()         
+void __fastcall TUI::Idle()         
 {
 	VERIFY(m_bReady);
     Device.b_is_Active  = Application->Active;
@@ -530,10 +532,12 @@ bool TUI::OnCreate(TD3DWindow* w, TPanel* p)
 
     m_bReady		= true;
 
+#if USE_MAILSLOT
     if (!CreateMailslot()){
     	ELog.DlgMsg	(mtError,"Can't create mail slot.\nIt's possible two Editors started.");
         return 		false;
     }
+#endif
 
     if (!FS.path_exist(_local_root_)){
     	ELog.DlgMsg	(mtError,"Undefined Editor local directory.");

@@ -6,6 +6,8 @@
 #include "UI_MainCommand.h"
 #include "IInputReceiver.h"
 
+#define USE_MAILSLOT 0
+
 // refs
 class CCustomObject;
 class TUI_Tools;
@@ -72,9 +74,6 @@ protected:
 
     void PrepareRedraw	();
     void Redraw			();
-protected:
-    void D3D_CreateStateBlocks();
-    void D3D_DestroyStateBlocks();
 public:
     virtual void OutUICursorPos	()=0;
 	virtual void OutGridSize	()=0;
@@ -134,7 +133,7 @@ public:
     virtual bool 	OnCreate		(TD3DWindow* w, TPanel* p);
     virtual void 	OnDestroy		();
 
-    virtual char* 	GetCaption		()=0;
+    virtual LPCSTR 	GetCaption		()=0;
 
     bool 			IsModified		();
 
@@ -150,9 +149,9 @@ public:
     void 			EnableSelectionRect	(bool flag );                                               
     void 			UpdateSelectionRect	(const Ivector2& from, const Ivector2& to );
 
-    void 			MouseMultiClickCapture(bool b){m_MouseMultiClickCaptured = b;}
+	void 			MouseMultiClickCapture(bool b){m_MouseMultiClickCaptured = b;}
 
-    bool __fastcall IsMouseCaptured		()	{	return m_MouseCaptured|m_MouseMultiClickCaptured;}
+	bool __fastcall IsMouseCaptured		()	{	return m_MouseCaptured||m_MouseMultiClickCaptured;}
     bool __fastcall IsMouseInUse		()	{	return bMouseInUse;}
 
     bool __fastcall KeyDown     		(WORD Key, TShiftState Shift);
@@ -192,16 +191,16 @@ public:
     virtual bool 	ApplyShortCut		(WORD Key, TShiftState Shift)=0;
     virtual bool 	ApplyGlobalShortCut	(WORD Key, TShiftState Shift)=0;
 
-    void			SetGradient			(u32 color){;}
-
     void 			OnDeviceCreate		();
     void			OnDeviceDestroy		();
 
+#if USE_MAILSLOT
     // mailslot
 	bool 			CreateMailslot		();
 	void 			CheckMailslot		();
 	void 			OnReceiveMail		(LPCSTR msg);
 	void 			SendMail			(LPCSTR name, LPCSTR dest, LPCSTR msg);
+#endif
 
     void			CheckWindowPos		(TForm* form);
 

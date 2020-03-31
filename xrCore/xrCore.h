@@ -17,7 +17,7 @@
 	#define XRAY_EXCEPTIONS		1	// XRAY
 #else
 	// "release"
-	#if defined(_CPPUNWIND)
+	#if defined(_CPPUNWIND) && !defined(_EDITOR)
 		#error Please disable exceptions...
 	#endif
 	#define _HAS_EXCEPTIONS		1	// STL
@@ -26,7 +26,7 @@
 	#pragma warning(disable:4530)
 #endif
 
-#if !defined(_MT)
+#if !defined(_MT) && !defined(__GNUC__)
 	// multithreading disabled
 	#error Please enable multi-threaded library...
 #endif
@@ -43,8 +43,7 @@
 */
 
 // *** try to minimize code bloat of STLport
-#ifdef __BORLANDC__
-#else
+#ifndef M_BORLAND
 	#ifdef XRCORE_EXPORTS				// no exceptions, export allocator and common stuff
 	#define _STLP_DESIGNATED_DLL	1
 	#define _STLP_USE_DECLSPEC		1
@@ -63,6 +62,7 @@
 #include <string.h>
 #include <typeinfo.h>
 //#include <process.h>
+#include <float.h>
 
 #ifndef DEBUG
 	#ifdef _DEBUG
@@ -84,14 +84,16 @@
 // inline control - redefine to use compiler's heuristics ONLY
 // it seems "IC" is misused in many places which cause code-bloat
 // ...and VC7.1 really don't miss opportunities for inline :)
-#ifdef _EDITOR
+#ifdef M_BORLAND
 #	define __forceinline	inline
 #endif
-#define _inline			inline
+#ifndef M_GCC
+#	define _inline			inline
+#endif
 #define __inline		inline
 #define IC				inline
 #define ICF				__forceinline			// !!! this should be used only in critical places found by PROFILER
-#ifdef _EDITOR
+#ifdef M_BORLAND
 #	define ICN
 #else
 #	define ICN			__declspec (noinline)	
@@ -100,45 +102,32 @@
 #ifndef DEBUG
 	#pragma inline_depth	( 254 )
 	#pragma inline_recursion( on )
-	#ifndef __BORLANDC__
+	#ifndef M_BORLAND
 		#pragma intrinsic	(abs, fabs, fmod, sin, cos, tan, asin, acos, atan, sqrt, exp, log, log10, strcat)
 	#endif
 #endif
 
 #include <time.h>
-// work-around dumb borland compiler
-#ifdef __BORLANDC__
+
+#ifdef M_BORLAND
 	#define ALIGN(a)
 
 	#include <assert.h>
 	#include <utime.h>
 	#define _utimbuf utimbuf
-	#define MODULE_NAME 		"xrCoreB.dll"
+	#define MODULE_NAME 	"xrCoreB.dll"
+#endif
 
-	// function redefinition
-    #define fabsf(a) fabs(a)
-    #define sinf(a) sin(a)
-    #define asinf(a) asin(a)
-    #define cosf(a) cos(a)
-    #define acosf(a) acos(a)
-    #define tanf(a) tan(a)
-    #define atanf(a) atan(a)
-    #define sqrtf(a) sqrt(a)
-    #define expf(a) ::exp(a)
-    #define floorf floor
-    #define atan2f atan2
-    #define logf log
-	// float redefine
-	#define _PC_24 PC_24
-	#define _PC_53 PC_53
-	#define _PC_64 PC_64
-	#define _RC_CHOP RC_CHOP
-	#define _RC_NEAR RC_NEAR
-    #define _MCW_EM MCW_EM
-#else
+#ifdef M_VISUAL
 	#define ALIGN(a)		__declspec(align(a))
 	#include <sys\utime.h>
 	#define MODULE_NAME 	"xrCore.dll"
+#endif
+
+#ifdef M_GCC
+	#define ALIGN(a)		__attribute__((aligned(a)))
+	#include <sys\utime.h>
+	#define	MODULE_NAME		"xrCoreG.dll"
 #endif
 
 

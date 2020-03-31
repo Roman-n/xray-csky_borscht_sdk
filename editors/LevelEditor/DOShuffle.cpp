@@ -16,6 +16,7 @@
 #include "../ECore/Editor/ImageManager.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
+#pragma link "ElTreeInplaceEditors"
 #pragma resource "*.dfm"
 TfrmDOShuffle *TfrmDOShuffle::form=0;
 
@@ -37,7 +38,7 @@ bool __fastcall TfrmDOShuffle::Run()
 }
 //---------------------------------------------------------------------------
 
-void TfrmDOShuffle::OnObjectPropsModified()
+void __stdcall TfrmDOShuffle::OnObjectPropsModified()
 {
 	bObjectModif = true;
 //	TElTreeItem* N 		= tvItems->Selected;
@@ -51,6 +52,8 @@ void __fastcall TfrmDOShuffle::FormCreate(TObject *Sender)
 	m_ObjectProps 		= TProperties::CreateForm("Objects",paObjectProps,alClient,fastdelegate::bind<TOnChooseClose>(this,&TfrmDOShuffle::OnObjectPropsModified));
     bTHMLockRepaint		= false;
     bLockFocused		= false;
+
+    m_OneColorHeight	= 50;
 }
 //---------------------------------------------------------------------------
 
@@ -96,6 +99,7 @@ void TfrmDOShuffle::FillData()
             VERIFY(dd);
 	        OneColor->AppendObject(dd->GetName(),dd);
         }
+        OneColor->Height = m_OneColorHeight;
     }
     // redraw
     tvItems->IsUpdating = false;
@@ -152,7 +156,7 @@ TElTreeItem* TfrmDOShuffle::FindItem(const char* s)
 TElTreeItem* TfrmDOShuffle::AddItem(TElTreeItem* node, const char* name, void* obj)
 {
     TElTreeItem* obj_node = tvItems->Items->AddChildObject(node, name, obj);
-    obj_node->ParentStyle = false;
+	obj_node->ParentFontStyle = false;
     obj_node->Bold = false;
     return obj_node;
 }
@@ -167,15 +171,17 @@ void __fastcall TfrmDOShuffle::FormKeyDown(TObject *Sender, WORD &Key,
 
 void __fastcall TfrmDOShuffle::FormClose(TObject *Sender, TCloseAction &Action)
 {
-    ModalResult = ApplyChanges()?mrOk:mrCancel;
+    TModalResult result = ApplyChanges()?mrOk:mrCancel;
 
 	ClearIndexForms();
 
-    if (ModalResult==mrOk)
+    if (result==mrOk)
 		DM->InvalidateCache();
 
 	Action = caFree;
     form = 0;
+
+    ModalResult = result;
 }
 //---------------------------------------------------------------------------
 
@@ -274,41 +280,45 @@ void __fastcall TfrmDOShuffle::tvMultiStartDrag(TObject *Sender,
 void __fastcall TfrmDOShuffle::ebAddObjectClick(TObject *Sender)
 {
 	LPCSTR S;
-    if (TfrmChoseItem::SelectItem(smObject,S,8)){
-	    AStringVec lst;
+	if (TfrmChoseItem::SelectItem(smObject,S,8)){
+		AStringVec lst;
 		_SequenceToList(lst, S);
-        for (AStringIt s_it=lst.begin(); s_it!=lst.end(); s_it++)
-        	if (!FindItem(s_it->c_str())){
-                if (tvItems->Items->Count>=dm_max_objects){
-                    ELog.DlgMsg(mtInformation,"Maximum detail objects in scene '%d'",dm_max_objects);
-                    return;
-                }
-             	AddItem(0,s_it->c_str(),(void*)DM->AppendDO(s_it->c_str()));
-            }
-    }
+		for (AStringIt s_it=lst.begin(); s_it!=lst.end(); s_it++)
+			if (!FindItem(s_it->c_str())){
+				if (tvItems->Items->Count>=dm_max_objects){
+					ELog.DlgMsg(mtInformation,"Maximum detail objects in scene '%d'",dm_max_objects);
+					return;
+				}
+         
+        EDetail *D = DM->AppendDO(s_it->c_str());
+        if(D)       
+					AddItem(0,s_it->c_str(),(void*)D);
+			}
+	}
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmDOShuffle::ebDelObjectClick(TObject *Sender)
 {
 	if (tvItems->Selected){
-        LPCSTR name			= AnsiString(tvItems->Selected->Text).c_str();
-        DM->RemoveDO		(name);
-        bObjectModif		= true;
-    	bColorIndModif 		= true;
+		LPCSTR name			= AnsiString(tvItems->Selected->Text).c_str();
+		DM->RemoveDO		(name);
+		bObjectModif		= true;
+		bColorIndModif 		= true;
 		for (u32 k=0; k<color_indices.size(); k++)
-    		color_indices[k]->RemoveObject(name);
-        tvItems->Selected->Delete();
-    }
+			color_indices[k]->RemoveObject(name);
+		tvItems->Selected->Delete();
+	}
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmDOShuffle::ebAppendIndexClick(TObject *Sender)
 {
-    bColorIndModif = true;
+	bColorIndModif = true;
 	color_indices.push_back(xr_new<TfrmOneColor>((TComponent*)0));
 	color_indices.back()->Parent = sbDO;
-    color_indices.back()->ShowIndex(this);
+	color_indices.back()->ShowIndex(this);
+	color_indices.back()->Height = m_OneColorHeight;
 }
 //---------------------------------------------------------------------------
 
@@ -323,8 +333,8 @@ void __fastcall TfrmDOShuffle::ebMultiClearClick(TObject *Sender)
 {
 	bColorIndModif = true;
 	for (u32 k=0; k<color_indices.size(); k++)
-    	xr_delete(color_indices[k]);
-    color_indices.clear();
+		xr_delete(color_indices[k]);
+	color_indices.clear();
 }
 //---------------------------------------------------------------------------
 
@@ -332,26 +342,26 @@ void __fastcall TfrmDOShuffle::tvItemsDragDrop(TObject *Sender,
       TObject *Source, int X, int Y)
 {
 	TfrmOneColor* OneColor = (TfrmOneColor*)((TElTree*)Source)->Parent;
-    if (OneColor&&OneColor->FDragItem){
-    	OneColor->FDragItem->Delete();
+	if (OneColor&&OneColor->FDragItem){
+		OneColor->FDragItem->Delete();
 		bColorIndModif = true;
-    }
+	}
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmDOShuffle::tvItemsDragOver(TObject *Sender,
       TObject *Source, int X, int Y, TDragState State, bool &Accept)
 {
-    Accept = false;
-    if (Source == tvItems) return;
-    Accept = true;
+	Accept = false;
+	if (Source == tvItems) return;
+	Accept = true;
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmDOShuffle::tvItemsStartDrag(TObject *Sender,
       TDragObject *&DragObject)
 {
-    FDragItem = tvItems->ItemFocused;
+	FDragItem = tvItems->ItemFocused;
 }
 //---------------------------------------------------------------------------
 
@@ -359,8 +369,9 @@ void __fastcall TfrmDOShuffle::ebSaveListClick(TObject *Sender)
 {
 	xr_string fname;
 	if (EFS.GetSaveName(_detail_objects_,fname)){
+		ApplyChanges();
 		DM->ExportColorIndices(fname.c_str());
-    }
+	}
 }
 //---------------------------------------------------------------------------
 
@@ -370,36 +381,68 @@ void __fastcall TfrmDOShuffle::ebLoadListClick(TObject *Sender)
 	if (EFS.GetOpenName(_detail_objects_,fname)){
 		if (DM->ImportColorIndices(fname.c_str())){
 			bColorIndModif 		= true;
-	        DM->InvalidateSlots	();
+			DM->InvalidateSlots	();
 			ClearIndexForms		();
-        	FillData			();
-        }
-    }
+			FillData			();
+		}
+	}
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmDOShuffle::ebClearListClick(TObject *Sender)
 {
-    DM->InvalidateSlots		();
-    DM->ClearColorIndices	();
-    ClearIndexForms			();
-    FillData				();
+	DM->InvalidateSlots		();
+	DM->ClearColorIndices	();
+	ClearIndexForms			();
+	FillData				();
 	bColorIndModif 			= true;
-    bObjectModif			= true;
-    UI->RedrawScene			();
+	bObjectModif			= true;
+	UI->RedrawScene			();
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmDOShuffle::fsStorageRestorePlacement(TObject *Sender)
 {
+	m_OneColorHeight = fsStorage->ReadInteger("one_color_height", 50);
 	m_ObjectProps->RestoreParams(fsStorage);
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmDOShuffle::fsStorageSavePlacement(TObject *Sender)
 {
+	fsStorage->WriteInteger("one_color_height", m_OneColorHeight);
 	m_ObjectProps->SaveParams(fsStorage);
 }
 //---------------------------------------------------------------------------
 
+
+void __fastcall TfrmDOShuffle::sbDOMouseWheelUp(TObject *Sender,
+      TShiftState Shift, TPoint &MousePos, bool &Handled)
+{
+	m_OneColorHeight++;
+	if(m_OneColorHeight > 250)
+		m_OneColorHeight = 250;
+
+	xr_vector<TfrmOneColor*>::iterator it, end;
+	for(it = color_indices.begin(), end = color_indices.end(); it != end; it++)
+	{
+		(*it)->Height = m_OneColorHeight;
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmDOShuffle::sbDOMouseWheelDown(TObject *Sender,
+      TShiftState Shift, TPoint &MousePos, bool &Handled)
+{
+	m_OneColorHeight--;
+	if(m_OneColorHeight < 35)
+		m_OneColorHeight = 35;
+
+	xr_vector<TfrmOneColor*>::iterator it, end;
+	for(it = color_indices.begin(), end = color_indices.end(); it != end; it++)
+	{
+		(*it)->Height = m_OneColorHeight;
+	}
+}
+//---------------------------------------------------------------------------
 

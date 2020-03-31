@@ -6,7 +6,6 @@
 
 #include "EParticlesObject.h"
 #include "../ECORE/Editor/D3DUtils.h"
-#include "..\..\Layers\xrRender\PSLibrary.h"
 #include "../ECore/Editor/ui_main.h"
 
 #define CPSOBJECT_VERSION  				0x0013
@@ -37,7 +36,7 @@ void EParticlesObject::Construct(LPVOID data)
 
 EParticlesObject::~EParticlesObject()
 {
-	::Render->model_Delete	(dynamic_cast<IRenderVisual*>(m_Particles) );
+	Compile(NULL); // delete visual
 }
 //----------------------------------------------------
 
@@ -90,7 +89,7 @@ void EParticlesObject::Render(int priority, bool strictB2F)
                 if( Selected() )
                 {
                     Fbox bb; GetBox(bb);
-                    u32 clr = 0xFFFFFFFF;
+                    u32 clr = Locked()?0xFFFF0000:0xFFFFFFFF;
                     DU_impl.DrawSelectionBox(bb,&clr);
                 }
             }
@@ -110,7 +109,7 @@ void EParticlesObject::RenderSingle()
 
 bool EParticlesObject::FrustumPick(const CFrustum& frustum)
 {
-    return (frustum.testSphere_dirty(PPosition,PSOBJECT_SIZE))?true:false;
+	return (frustum.testSphere_dirty(GetPosition(),PSOBJECT_SIZE))?true:false;
 }
 //----------------------------------------------------
 
@@ -256,7 +255,10 @@ bool EParticlesObject::ExportGame(SExportStreams* F)
 
 bool EParticlesObject::Compile(LPCSTR ref_name)
 {
-	::Render->model_Delete	(dynamic_cast<IRenderVisual*>(m_Particles) );
+	IRenderVisual* tmp = dynamic_cast<IRenderVisual*>(m_Particles);
+	::Render->model_Delete(tmp);
+	m_Particles = NULL;
+
     if (ref_name)
     {
     	IRenderVisual* base = ::Render->model_CreateParticles(ref_name);

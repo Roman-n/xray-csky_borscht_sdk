@@ -24,8 +24,11 @@
 #define NOBITMAP
 #include <mmreg.h>
 
+#pragma pack(push, 8)
+#define OV_EXCLUDE_STATIC_CALLBACKS
 #include <vorbis/codec.h>
 #include <vorbis/vorbisfile.h>
+#pragma pack(pop)
 
 #include "../xrCDB/xrCDB.h"
 #include "sound.h"

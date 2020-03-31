@@ -7,8 +7,6 @@
 
 #pragma warn -pck
 
-#define sqrtf(a) sqrt(a)
-
 #define smart_cast dynamic_cast
 
 #ifndef O_SEQUENTIAL
@@ -46,7 +44,7 @@ __inline long _lseek(int handle, long offset, int fromwhere){ return ::lseek(han
 #ifdef _dup
 #undef _dup
 #endif
-#define fmodf fmod
+
 __inline int _dup    (int handle)                           { return ::dup(handle);}
 __inline float modff(float a, float *b){
 	double x,y;
@@ -91,7 +89,9 @@ __inline float expf	(float val)                           	{ return ::exp(val);}
 
 // DirectX headers
 #include <d3d9.h>
+#pragma warn -8010
 #include <d3dx9.h>
+#pragma warn .8010
 #include "..\..\Layers\xrRender\xrD3dDefs.h"
 
 #include <dinput.h>
@@ -101,15 +101,13 @@ __inline float expf	(float val)                           	{ return ::exp(val);}
 #include "..\..\xrEngine\fmesh.h"
 #include "..\..\xrEngine\_d3d_extensions.h"
 
-#include "D3DX_Wrapper.h"
-
 DEFINE_VECTOR		(AnsiString,AStringVec,AStringIt);
 DEFINE_VECTOR		(AnsiString*,LPAStringVec,LPAStringIt);
 
-#include "..\..\..\xrServerEntities\xrEProps.h"
-#include "..\..\xrCore\Log.h"
-#include "editor\engine.h"
-#include "..\..\xrEngine\defines.h"
+#include "../../xrEProps/xrEProps.h"
+#include "../../xrCore/Log.h"
+#include "editor/engine.h"
+#include "../../xrEngine/defines.h"
 
 struct str_pred : public std::binary_function<char*, char*, bool>
 {

@@ -77,7 +77,7 @@ bool CParticleTool::OnCreate()
     m_PList			= TItemList::CreateForm(	"Items",
     						fraLeftBar->paPSList,
                                                 alClient,
-                                                TItemList::ilEditMenu | TItemList::ilDragAllowed);
+                                                TItemList::ilEditMenu | TItemList::ilDragAllowed | TItemList::ilFocusOnHover);
                                                 
     m_PList->SetOnItemsFocusedEvent	(fastdelegate::bind<TOnILItemsFocused>(this,&CParticleTool::OnParticleItemFocused));
 	m_PList->SetOnItemRenameEvent	(fastdelegate::bind<TOnItemRename>(this,&CParticleTool::OnParticleItemRename));
@@ -135,12 +135,10 @@ void CParticleTool::OnItemModified()
 
 void CParticleTool::RenderEnvironment()
 {
-/*
     if (psDeviceFlags.is(rsEnvironment)){
         g_pGamePersistent->Environment().RenderSky	();
         g_pGamePersistent->Environment().RenderClouds	();
     }
-*/    
 }
 
 void CParticleTool::Render()
@@ -178,7 +176,11 @@ void CParticleTool::Render()
     if (m_Flags.is(flAnimatedPath))
     	m_ParentAnimator->DrawPath();
 
-//.    if (psDeviceFlags.is(rsEnvironment)) g_pGamePersistent->Environment().RenderLast	();
+    if (psDeviceFlags.is(rsEnvironment)){
+    	g_pGamePersistent->Environment().RenderFlares	();
+    	g_pGamePersistent->Environment().RenderLast	();
+    }
+    
     inherited::Render	();
 }
 
@@ -488,7 +490,6 @@ bool CParticleTool::Validate(bool bMsg)
 
     if (bMsg){
         if (error_cnt>0)ELog.DlgMsg	(mtError,"Validation FAILED! Found %d error's.",error_cnt);
-        else			ELog.DlgMsg	(mtInformation,"Validation OK.");
     }
     return error_cnt==0;
 }
@@ -703,7 +704,7 @@ void CParticleTool::OnShowHint(AStringVec& SS)
 {
 }
 
-bool CParticleTool::MouseStart(TShiftState Shift)
+bool __fastcall CParticleTool::MouseStart(TShiftState Shift)
 {
 	inherited::MouseStart(Shift);
 	switch(m_Action){
@@ -741,13 +742,13 @@ bool CParticleTool::MouseStart(TShiftState Shift)
 	return m_bHiddenMode;
 }
 
-bool CParticleTool::MouseEnd(TShiftState Shift)
+bool __fastcall CParticleTool::MouseEnd(TShiftState Shift)
 {
 	inherited::MouseEnd(Shift);
 	return true;
 }
 
-void CParticleTool::MouseMove(TShiftState Shift)
+void __fastcall CParticleTool::MouseMove(TShiftState Shift)
 {
 	inherited::MouseMove(Shift);
 	switch(m_Action){

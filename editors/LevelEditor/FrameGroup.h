@@ -56,6 +56,10 @@ __published:	// IDE-managed Components
 	TMenuItem *MakeThumbnail1;
 	TMenuItem *SaveAs1;
 	TMenuItem *N2;
+	TLabel *Label3;
+	TExtBtn *ExtBtn4;
+	TExtBtn *ExtBtn8;
+	TExtBtn *ExtBtn9;
     void __fastcall PaneMinClick(TObject *Sender);
     void __fastcall ExpandClick(TObject *Sender);
 	void __fastcall ebMakeGroupClick(TObject *Sender);

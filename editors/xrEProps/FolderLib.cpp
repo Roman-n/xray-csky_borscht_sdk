@@ -2,7 +2,7 @@
 #pragma hdrstop
 
 #include "FolderLib.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
+#include "PropertiesListHelper.h"
 
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
@@ -277,7 +277,7 @@ AnsiString CFolderHelper::ReplacePart(AnsiString old_name, AnsiString ren_part, 
 //---------------------------------------------------------------------------
 // Drag'n'Drop
 //---------------------------------------------------------------------------
-void CFolderHelper::DragDrop(TObject *Sender, TObject* Source, int X, int Y, TOnItemRename after_drag)
+void __fastcall CFolderHelper::DragDrop(TObject *Sender, TObject* Source, int X, int Y, TOnItemRename after_drag)
 {
 	R_ASSERT(after_drag);
 
@@ -355,7 +355,7 @@ void CFolderHelper::DragDrop(TObject *Sender, TObject* Source, int X, int Y, TOn
  }
 //---------------------------------------------------------------------------
 
-void CFolderHelper::DragOver(TObject *Sender, TObject *Source, int X, int Y, TDragState State, bool &Accept)
+void __fastcall CFolderHelper::DragOver(TObject *Sender, TObject *Source, int X, int Y, TDragState State, bool &Accept)
 {
 	TElTree* tv = dynamic_cast<TElTree*>(Sender); VERIFY(Sender);
 	TElTreeItem* tgt;
@@ -390,7 +390,7 @@ void CFolderHelper::DragOver(TObject *Sender, TObject *Source, int X, int Y, TDr
 }
 //---------------------------------------------------------------------------
 
-void CFolderHelper::StartDrag(TObject *Sender, TDragObject *&DragObject)
+void __fastcall CFolderHelper::StartDrag(TObject *Sender, TDragObject *&DragObject)
 {
 	TElTree* tv = dynamic_cast<TElTree*>(Sender); VERIFY(Sender);
 	drag_items.clear		();

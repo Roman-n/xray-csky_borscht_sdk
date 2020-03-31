@@ -155,7 +155,7 @@ void ESceneCustomOTool::RemoveSelection()
     ObjectIt _F = m_Objects.begin();
     while(_F!=m_Objects.end())
     {
-        if((*_F)->Selected() && !(*_F)->m_CO_Flags.test(CCustomObject::flObjectInGroup))
+        if((*_F)->Selected() && !(*_F)->Locked() && !(*_F)->m_CO_Flags.test(CCustomObject::flObjectInGroup))
         {
             if ((*_F)->OnSelectionRemove())
             {
@@ -167,6 +167,9 @@ void ESceneCustomOTool::RemoveSelection()
                 _F++;
             }
         }else{
+        	if((*_F)->Selected() && (*_F)->Locked() && !(*_F)->m_CO_Flags.test(CCustomObject::flObjectInGroup))
+            	ELog.Msg(mtError, "Cannot delete locked object '%s'", (*_F)->Name);
+                
             _F++;
         }
     }
@@ -259,12 +262,29 @@ int ESceneCustomOTool::GetQueryObjects(ObjectList& lst, int iSel, int iVis, int 
     for(ObjectIt _F = m_Objects.begin();_F!=m_Objects.end();_F++)
     {
         if(	((iSel==-1)||((*_F)->Selected()==iSel))&&
-            ((iVis==-1)||((*_F)->Visible()==iVis)) )
+            ((iVis==-1)||((*_F)->Visible()==iVis))&&
+            ((iLock==-1)||((*_F)->Locked()==iLock)) )
             {
                 lst.push_back(*_F);
                 count++;
         	}
     }
+    return count;
+}
+
+int ESceneCustomOTool::LockObjects(bool flag, bool bAllowSelectionFlag, bool bSelFlag)
+{
+	int count=0;
+    for(ObjectIt _F = m_Objects.begin();_F!=m_Objects.end();_F++)
+        if(bAllowSelectionFlag){
+            if((*_F)->Selected()==bSelFlag){
+                (*_F)->Lock( flag );
+                count++;
+            }
+        }else{
+            (*_F)->Lock( flag );
+            count++;
+        }
     return count;
 }
 
@@ -287,14 +307,15 @@ void setEditable(PropItemVec& items, u32 start_idx, bool bEditableTool, bool bOb
 {
 	PropItemIt it 	= items.begin()+start_idx;
 	PropItemIt it_e = items.end();
-	u32 idx=0;
     
     bool bEditableObject = bEditableTool && (!bObjectInGroup || (bObjectInGroup&&bObjectInGroupUnique) );
     
-    for(; it!=it_e;++it,++idx)
+    for(; it!=it_e;++it)
     {
-        bool bEnabledItem 	= bEditableObject;
-        if(!bEnabledItem && idx==4 && bObjectInGroup)
+        bool bEnabledItem = bEditableObject && (*it)->Enabled();
+
+        // force enable "in group editable"
+        if(bObjectInGroup && !bEnabledItem && strstr((*it)->Key(), "In group editable"))
             bEnabledItem = true;
             
     	(*it)->Enable(bEnabledItem);

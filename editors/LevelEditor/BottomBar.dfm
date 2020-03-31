@@ -1,8 +1,8 @@
 object fraBottomBar: TfraBottomBar
   Left = 0
   Top = 0
-  Width = 443
-  Height = 270
+  Width = 451
+  Height = 304
   VertScrollBar.Visible = False
   Align = alClient
   Color = 10528425
@@ -11,12 +11,13 @@ object fraBottomBar: TfraBottomBar
   object paBottomBar: TPanel
     Left = 0
     Top = 0
-    Width = 443
+    Width = 451
     Height = 17
     Align = alTop
     BevelOuter = bvLowered
     ParentColor = True
     TabOrder = 0
+    ExplicitWidth = 443
     object paInfo: TPanel
       Left = 95
       Top = 1
@@ -97,12 +98,13 @@ object fraBottomBar: TfraBottomBar
         ParentColor = True
         ParentFont = False
         TabOrder = 3
+        OnDblClick = paCameraDblClick
       end
     end
     object paStatusBar: TPanel
       Left = 219
       Top = 1
-      Width = 141
+      Width = 228
       Height = 15
       Align = alClient
       BevelOuter = bvNone
@@ -123,7 +125,7 @@ object fraBottomBar: TfraBottomBar
       object paStatus: TPanel
         Left = 48
         Top = 0
-        Width = 93
+        Width = 180
         Height = 15
         Align = alClient
         Alignment = taLeftJustify
@@ -137,7 +139,7 @@ object fraBottomBar: TfraBottomBar
         ParentFont = False
         TabOrder = 1
         object cgProgress: TCGauge
-          Left = -36
+          Left = 51
           Top = 2
           Width = 127
           Height = 11
@@ -410,6 +412,12 @@ object fraBottomBar: TfraBottomBar
       end
       object miRenderWithTextures: TMenuItem
         Caption = 'Textures'
+        Checked = True
+        GroupIndex = 4
+        OnClick = ClickOptionsMenuItem
+      end
+      object miDeferredTextureLoading: TMenuItem
+        Caption = 'Deferred Texture Loading'
         Checked = True
         GroupIndex = 4
         OnClick = ClickOptionsMenuItem

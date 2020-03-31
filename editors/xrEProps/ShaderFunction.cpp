@@ -56,6 +56,7 @@ u32 GetTokenValFromName(const LPCSTR val, const xr_token *token_list)
 __fastcall TfrmShaderFunction::TfrmShaderFunction(TComponent* Owner)
     : TForm(Owner)
 {
+	DEFINE_INI(fsStorage);
 	FillMenuFromToken(pmFunction, function_token, stFunctionClick);
 }
 //---------------------------------------------------------------------------

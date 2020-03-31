@@ -4,12 +4,12 @@
 #include "EditObject.h"
 #include "EditMesh.h"
 #include "ui_main.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
+#include "../xrEProps/PropertiesListHelper.h"
 #include "ItemListHelper.h"
 #include "motion.h"
 #include "bone.h"
 
-void CEditableObject::OnChangeShader(PropValue*)
+void  __stdcall CEditableObject::OnChangeShader(PropValue*)
 {
     OnDeviceDestroy	();
     UI->RedrawScene	();

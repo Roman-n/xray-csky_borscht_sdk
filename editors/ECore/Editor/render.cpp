@@ -133,7 +133,7 @@ void 	CRender::set_Transform	(Fmatrix* M)
 void			CRender::add_Visual   		(IRenderVisual* visual)			{ Models->RenderSingle	(dynamic_cast<dxRender_Visual*>(visual),current_matrix,1.f);}
 IRenderVisual*	CRender::model_Create		(LPCSTR name, IReader* data)		{ return Models->Create(name,data);		}
 IRenderVisual*	CRender::model_CreateChild	(LPCSTR name, IReader* data)		{ return Models->CreateChild(name,data);}
-void 			CRender::model_Delete		(IRenderVisual* &V, BOOL bDiscard)	{ Models->Delete(dynamic_cast<dxRender_Visual*>(V),bDiscard);			}
+void 			CRender::model_Delete		(IRenderVisual* &V, BOOL bDiscard)	{ dxRender_Visual* vis = dynamic_cast<dxRender_Visual*>(V); Models->Delete(vis,bDiscard); V = NULL; }
 IRenderVisual*	CRender::model_Duplicate	(IRenderVisual* V)					{ return Models->Instance_Duplicate(dynamic_cast<dxRender_Visual*>(V));	}
 void 			CRender::model_Render		(IRenderVisual* m_pVisual, const Fmatrix& mTransform, int priority, bool strictB2F, float m_fLOD){Models->Render(dynamic_cast<dxRender_Visual*>(m_pVisual), mTransform, priority, strictB2F, m_fLOD);}
 void 			CRender::model_RenderSingle	(IRenderVisual* m_pVisual, const Fmatrix& mTransform, float m_fLOD){Models->RenderSingle(dynamic_cast<dxRender_Visual*>(m_pVisual), mTransform, m_fLOD);}
@@ -173,14 +173,7 @@ HRESULT	CRender::shader_compile			(
 {
 	D3DXMACRO						defines			[128];
 	int								def_it			= 0;
-	CONST D3DXMACRO*                pDefines		= (CONST D3DXMACRO*)	_pDefines;
-	if (pDefines)	{
-		// transfer existing defines
-		for (;;def_it++)	{
-			if (0==pDefines[def_it].Name)	break;
-			defines[def_it]			= pDefines[def_it];
-		}
-	}
+
 	// options
 	if (m_skinning<0)		{
 		defines[def_it].Name		=	"SKIN_NONE";
@@ -202,6 +195,17 @@ HRESULT	CRender::shader_compile			(
 		defines[def_it].Definition	=	"1";
 		def_it						++;
 	}
+    if (3==m_skinning)		{
+    	defines[def_it].Name		=	"SKIN_3";
+        defines[def_it].Definition	=	"1";
+        def_it						++;
+    }
+    if (4==m_skinning)		{
+    	defines[def_it].Name		=	"SKIN_4";
+        defines[def_it].Definition	=	"1";
+        def_it						++;
+    }
+
 	// finish
 	defines[def_it].Name			=	0;
 	defines[def_it].Definition		=	0;
@@ -211,13 +215,10 @@ HRESULT	CRender::shader_compile			(
 	LPD3DXBUFFER*                   ppShader		= (LPD3DXBUFFER*)		_ppShader;
 	LPD3DXBUFFER*                   ppErrorMsgs		= (LPD3DXBUFFER*)		_ppErrorMsgs;
 	LPD3DXCONSTANTTABLE*            ppConstantTable	= (LPD3DXCONSTANTTABLE*)_ppConstantTable;
-//.	return D3DXCompileShader		(pSrcData,SrcDataLen,defines,pInclude,pFunctionName,pTarget,Flags,ppShader,ppErrorMsgs,ppConstantTable);
 #ifdef D3DXSHADER_USE_LEGACY_D3DX9_31_DLL //	December 2006 and later
-	HRESULT		_result	= D3DXCompileShader(pSrcData,SrcDataLen,defines,pInclude,pFunctionName,pTarget,Flags|D3DXSHADER_USE_LEGACY_D3DX9_31_DLL,ppShader,ppErrorMsgs,ppConstantTable);
-#else
-	HRESULT		_result	= D3DXCompileShader(pSrcData,SrcDataLen,defines,pInclude,pFunctionName,pTarget,Flags,ppShader,ppErrorMsgs,ppConstantTable);
+	Flags |= D3DXSHADER_USE_LEGACY_D3DX9_31_DLL;
 #endif
-	return _result;
+	return D3DXCompileShader(pSrcData,SrcDataLen,defines,pInclude,pFunctionName,pTarget,Flags,ppShader,ppErrorMsgs,ppConstantTable);
 }
 
 void					CRender::reset_begin			()
@@ -228,4 +229,5 @@ void					CRender::reset_end				()
 {
 	Target			=	xr_new<CRenderTarget>			();
 }
+
 

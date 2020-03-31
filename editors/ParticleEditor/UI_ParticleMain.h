@@ -30,7 +30,7 @@ public:
     				CParticleMain 			();
     virtual 		~CParticleMain			();
 
-    virtual LPSTR	GetCaption				();
+    virtual LPCSTR	GetCaption				();
 
     virtual void 	ResetStatus				();
     virtual void 	SetStatus				(LPSTR s, bool bOutLog);
@@ -50,6 +50,19 @@ public:
 	virtual	void	RegisterCommands		(); 
 };    
 extern CParticleMain*&	PUI;
+//---------------------------------------------------------------------------
+
+class CPEPreferences: public CCustomPreferences
+{
+	typedef CCustomPreferences inherited;
+
+	public:
+	BOOL auto_play;
+
+	protected:
+	virtual void Load(CInifile *I);
+	virtual void Save(CInifile *I);
+};
 //---------------------------------------------------------------------------
 #endif //UI_MainCommandH
 
