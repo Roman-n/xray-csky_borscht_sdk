@@ -127,10 +127,12 @@ void SceneBuilder::SaveBuildAsObject()
 
 	IWriter* Fm		= FS.w_open(fn_material.c_str());
 
-    for(u32 i=0;i<l_materials.size(); ++i)
-    {
-    	b_material& m		= l_materials[i];
-        b_texture&	t 		= l_textures[m.surfidx];
+	xr_vector<b_material>::iterator m_it = l_materials.begin(),
+									m_end = l_materials.end();
+	for(; m_it != m_end; m_it++)
+	{
+		b_material& m		= *m_it;
+		b_texture&	t 		= l_textures[m.surfidx];
 	    _splitpath			(t.name, 0, tex_path, tex_name, 0 );
 
         sprintf				(tmp,"newmtl %s", tex_name);
@@ -160,13 +162,13 @@ void SceneBuilder::SaveBuildAsObject()
     F->w_string				("g default");
 
 	//vertices
-	u32						idx;
+	int						idx;
 	u32						total_vertices = 0;
 	u32						total_tcs = 0;
 	for(idx=0; idx<l_vert_it; ++idx)
 	{
 		const b_vertex& it	= l_verts[idx];
-        sprintf				(tmp,"v %f %f %f",it.x*100.0f, it.y*100.0f, it.z*100.0f);
+		sprintf				(tmp,"v %f %f %f",it.x*100.0f, it.y*100.0f, -it.z*100.0f);
 		F->w_string			(tmp);
 
 	}
@@ -200,25 +202,30 @@ void SceneBuilder::SaveBuildAsObject()
         	last_texture 		= &t;
         }
 
-        sprintf				(tmp,"f %d/%d %d/%d %d/%d", it.v[0]+1, idx*3+1,
-        												it.v[1]+1, idx*3+2,
-                                                        it.v[2]+1, idx*3+3);
+		sprintf				(tmp,"f %d/%d %d/%d %d/%d", it.v[2]+1, idx*3+3,
+														it.v[1]+1, idx*3+2,
+														it.v[0]+1, idx*3+1);
 		tmpFaces.w_string	(tmp);
 	}
 	total_vertices += l_vert_it;
 
-    for (idx=0; idx<l_mu_models.size(); ++idx)
+	xr_vector<b_mu_reference>::iterator mu_it = l_mu_refs.begin(),
+										mu_end = l_mu_refs.end();
+	for (; mu_it != mu_end; mu_it++)
 	{
-        const b_mu_model&	m = l_mu_models[idx];
+		const b_mu_reference& r = *mu_it;
+		const b_mu_model& m = l_mu_models[r.model_index];
 
-		for(u32 vi=0; vi<m.m_iVertexCount; ++vi)
+		for(int vi=0; vi<m.m_iVertexCount; ++vi)
 		{
-			const b_vertex& it	= m.m_pVertices[vi];
-			sprintf				(tmp,"v %f %f %f",it.x*100.0f, it.y*100.0f, it.z*100.0f);
+			Fvector p;
+			r.transform.transform_tiny(p, m.m_pVertices[vi]);
+
+			sprintf				(tmp,"v %f %f %f",p.x*100.0f, p.y*100.0f, -p.z*100.0f);
 			F->w_string			(tmp);
 		}
         //TC-s
-		for(u32 fi=0; fi<m.m_iFaceCount; ++fi)
+		for(int fi=0; fi<m.m_iFaceCount; ++fi)
 		{
 			const b_face& it	= m.m_pFaces[fi];
             sprintf				(tmp,"vt %f %f", it.t[0].x, /*_abs*/(1.f-it.t[0].y));
@@ -242,106 +249,23 @@ void SceneBuilder::SaveBuildAsObject()
                 tmpFaces.w_string	(tmp);
                 last_texture 		= &t;
 			}
-        	sprintf			(tmp,"f %d/%d %d/%d %d/%d", it.v[0]+1+total_vertices, fi*3+1+total_tcs,
+			sprintf			(tmp,"f %d/%d %d/%d %d/%d", it.v[2]+1+total_vertices, fi*3+3+total_tcs,
         												it.v[1]+1+total_vertices, fi*3+2+total_tcs,
-                                                        it.v[2]+1+total_vertices, fi*3+3+total_tcs);
-/*
-			sprintf				(tmp,"f %d %d %d",	it.v[0]+1+total_vertices,
-													it.v[1]+1+total_vertices,
-													it.v[2]+1+total_vertices );
-*/
+														it.v[0]+1+total_vertices, fi*3+1+total_tcs);
+
 			tmpFaces.w_string	(tmp);
 		}
-        total_tcs				+= m.m_iFaceCount*3;
+		total_tcs      += m.m_iFaceCount*3;
 		total_vertices += m.m_iVertexCount;
-    }
+	}
 	F->w(tmpFaces.pointer(),tmpFaces.size());
 
-	//uv
-//                sprintf			(tmp,"vt %f %f",v_it->UV.x,_abs(1.f-v_it->UV.y));		F.w_string	(tmp);
-
-	//normals
-//                sprintf			(tmp,"vn %f %f %f",mV.x,mV.y,mV.z);		F.w_string	(tmp);
-
-	//g
-//                sprintf			(tmp,"vg %f %f %f",mV.x,mV.y,mV.z);		F.w_string	(tmp);
-
-	//b
-//                sprintf			(tmp,"vb %f %f %f",mV.x,mV.y,mV.z);		F.w_string	(tmp);
-
-
-
-
-/*
-    string512 	tmp,tex_path,tex_name;
-    // write mtl
-    for (SplitIt split_it=m_Splits.begin(); split_it!=m_Splits.end(); split_it++)
-	{
-	    _splitpath			((*split_it)->m_Surf->_Texture(), 0, 0, tex_name, 0 );
-    	sprintf				(tmp,"newmtl %s",tex_name);
-		F.w_string			(tmp);
-
-	    _splitpath			((*split_it)->m_Surf->_Texture(), 0, tex_path, tex_name, 0 );
-        strconcat			(sizeof(tex_path),tex_path,tex_path,"\\",tex_name,".tga");
-    	sprintf				(tmp,"map_Kd %s",tex_path);
-		F.w_string	(tmp);
-    }
-    sprintf					(tmp,"mtllib %s",name);
-	F.w_string				(tmp);
-
-    // write mtl
-    u32 v_offs				= 0;
-    for (split_it=m_Splits.begin(); split_it!=m_Splits.end(); split_it++){
-	    _splitpath			((*split_it)->m_Surf->_Texture(), 0, 0, tex_name, 0 );
-        sprintf				(tmp,"g %d",split_it-m_Splits.begin());				F.w_string	(tmp);
-        sprintf				(tmp,"usemtl %s",tex_name);							F.w_string	(tmp);
-        Fvector 			mV;
-        Fmatrix 			mZ;
-        mZ.mirrorZ			();
-        for (COGFCPIt it=(*split_it)->m_Parts.begin(); it!=(*split_it)->m_Parts.end(); it++){
-            CObjectOGFCollectorPacked* part = *it;
-            // vertices
-            OGFVertVec& VERTS	= part->getV_Verts();
-            OGFVertIt 			v_it;
-            for (v_it=VERTS.begin(); v_it!=VERTS.end(); v_it++){
-            	mZ.transform_tiny(mV,v_it->P);
-                sprintf			(tmp,"v %f %f %f",mV.x,mV.y,mV.z); 		F.w_string	(tmp);
-            }
-            for (v_it=VERTS.begin(); v_it!=VERTS.end(); v_it++){
-                sprintf			(tmp,"vt %f %f",v_it->UV.x,_abs(1.f-v_it->UV.y));		F.w_string	(tmp);
-            }
-            for (v_it=VERTS.begin(); v_it!=VERTS.end(); v_it++){
-            	mZ.transform_dir(mV,v_it->N);
-                sprintf			(tmp,"vn %f %f %f",mV.x,mV.y,mV.z);		F.w_string	(tmp);
-            }
-            for (v_it=VERTS.begin(); v_it!=VERTS.end(); v_it++){
-            	mZ.transform_dir(mV,v_it->T);
-                sprintf			(tmp,"vg %f %f %f",mV.x,mV.y,mV.z);		F.w_string	(tmp);
-            }
-            for (v_it=VERTS.begin(); v_it!=VERTS.end(); v_it++){
-            	mZ.transform_dir(mV,v_it->B);
-                sprintf			(tmp,"vb %f %f %f",mV.x,mV.y,mV.z);		F.w_string	(tmp);
-            }
-            // faces
-            OGFFaceVec& FACES	= part->getV_Faces();
-            OGFFaceIt 			f_it;
-            for (f_it=FACES.begin(); f_it!=FACES.end(); f_it++){
-                sprintf			(tmp,"f %d/%d/%d %d/%d/%d %d/%d/%d",v_offs+f_it->v[2]+1,v_offs+f_it->v[2]+1,v_offs+f_it->v[2]+1,
-                                                                    v_offs+f_it->v[1]+1,v_offs+f_it->v[1]+1,v_offs+f_it->v[1]+1,
-                                                                    v_offs+f_it->v[0]+1,v_offs+f_it->v[0]+1,v_offs+f_it->v[0]+1); 	F.w_string	(tmp);
-            }
-	        v_offs  			+= VERTS.size();
-        }
-    }
-}
-*/
-//---
     FS.w_close		(F);
 }
 
 void SceneBuilder::SaveBuild()
 {
-    xr_string fn	= MakeLevelPath("build.prj");
+	xr_string fn	= MakeLevelPath("build.prj");
 	IWriter* F		= FS.w_open(fn.c_str());
     if (F){
         F->open_chunk	(EB_Version);
@@ -506,8 +430,7 @@ BOOL SceneBuilder::BuildMesh(	const Fmatrix& parent,
                                 b_face* faces,
                                 int& face_cnt,
                                 int& face_it,
-                                u32* smgroups,
-                                const Fmatrix& real_transform)
+								u32* smgroups)
 {
 	BOOL bResult = TRUE;
     int point_offs;
@@ -529,13 +452,13 @@ BOOL SceneBuilder::BuildMesh(	const Fmatrix& parent,
 		{
             N.set(0,0,0);
             IntVec& a_lst = (*mesh->m_Adjs)[pt];
-            VERIFY(a_lst.size());
-            for (IntIt i_it=a_lst.begin(); i_it!=a_lst.end(); i_it++)
-                N.add((*mesh->m_FaceNormals)[*i_it]);
-            N.normalize_safe();
-            parent.transform_dir(N);
-            l_vnormals.push_back(N);
-        }
+			VERIFY(a_lst.size());
+			for (IntIt i_it=a_lst.begin(); i_it!=a_lst.end(); i_it++)
+				N.add((*mesh->m_FaceNormals)[*i_it]);
+			N.normalize_safe();
+			parent.transform_dir(N);
+			l_vnormals.push_back(N);
+		}
 	    // unload mesh normals
 	    mesh->UnloadAdjacency();
 	    mesh->UnloadFNormals();
@@ -591,9 +514,9 @@ BOOL SceneBuilder::BuildMesh(	const Fmatrix& parent,
         {
             st_Face& face = mesh->m_Faces[*f_it];
             Fvector p0,p1,p2;
-            real_transform.transform_tiny(p0,mesh->m_Vertices[face.pv[0].pindex]);
-            real_transform.transform_tiny(p1,mesh->m_Vertices[face.pv[1].pindex]);
-            real_transform.transform_tiny(p2,mesh->m_Vertices[face.pv[2].pindex]);
+			parent.transform_tiny(p0,mesh->m_Vertices[face.pv[0].pindex]);
+			parent.transform_tiny(p1,mesh->m_Vertices[face.pv[1].pindex]);
+			parent.transform_tiny(p2,mesh->m_Vertices[face.pv[2].pindex]);
             float _a        = CalcArea(p0,p1,p2);
             if (!_valid(_a) || (_a<EPS_S))
             {
@@ -680,39 +603,23 @@ BOOL SceneBuilder::BuildObject(CSceneObject* obj)
 	CEditableObject *O = obj->GetReference();
     AnsiString temp;
     temp.sprintf("Building object: %s",obj->Name);
-    UI->SetStatus(temp.c_str());
+	UI->SetStatus(temp.c_str());
 
-    Fmatrix T 			= obj->_Transform();
-	
-	Fmatrix cv 			= Fidentity;
-
-	if(m_save_as_object)
-	{
-		cv.k.z 			= -1.f;
-
-		Fmatrix 	TM;
-
-        TM.mul		( Fmatrix().mul(cv,T), cv );
-        TM.mulB_44	( cv );
-		T 			= TM;
-	}
+	const Fmatrix& T = obj->_Transform();
 
 	// parse mesh data
     for(EditMeshIt M=O->FirstMesh();M!=O->LastMesh();M++){
 		CSector* S = PortalUtils.FindSector(obj,*M);
 	    int sect_num = S?S->m_sector_num:m_iDefaultSectorNum;
-    	if (!BuildMesh(T,O,*M,sect_num,l_verts,l_vert_cnt,l_vert_it,l_faces,l_face_cnt,l_face_it,l_smgroups,obj->_Transform())) return FALSE;
+		if (!BuildMesh(T,O,*M,sect_num,l_verts,l_vert_cnt,l_vert_it,l_faces,l_face_cnt,l_face_it,l_smgroups)) return FALSE;
         // fill DI vertices
         for (u32 pt_id=0; pt_id<(*M)->GetVCount(); pt_id++)
 		{
-        	Fvector						v_res1, v_res2;
-        	const Fvector&	v_src 		= (*M)->m_Vertices[pt_id];
+			Fvector v_res;
+			const Fvector& v_src = (*M)->m_Vertices[pt_id];
 
-            Fvector 			tmp;
-            cv.transform_tiny	( tmp , 	v_src );
-            T.transform_tiny	( v_res1, 	tmp );
-
-          	l_scene_stat->add_svert(v_res1);
+			T.transform_tiny( v_res, v_src );
+			l_scene_stat->add_svert(v_res);
         }
     }
     return TRUE;
@@ -739,7 +646,7 @@ BOOL SceneBuilder::BuildMUObject(CSceneObject* obj)
     int sect_num 		= S?S->m_sector_num:m_iDefaultSectorNum;
 
     // build model
-    if (-1==model_idx || m_save_as_object)
+    if (-1==model_idx)
     {
 	    // build LOD
         int	lod_id 		= BuildObjectLOD(Fidentity,O,sect_num);
@@ -759,27 +666,9 @@ BOOL SceneBuilder::BuildMUObject(CSceneObject* obj)
         M.m_pVertices			= xr_alloc<b_vertex>(M.m_iVertexCount);
         M.m_smgroups			= xr_alloc<u32>(M.m_iFaceCount);
 		// parse mesh data
-		Fmatrix T;
-		T.identity();
-
-		if(m_save_as_object)
-		{
-			T 					= obj->_Transform();
-			
-			Fmatrix cv 			= Fidentity;
-
-			cv.k.z 				= -1.f;
-
-			Fmatrix 			TM;
-
-			TM.mul				( Fmatrix().mul(cv,T), cv );
-			TM.mulB_44			( cv );
-			T 					= TM;
-		}
-
-	    for(EditMeshIt MESH=O->FirstMesh();MESH!=O->LastMesh();++MESH)
-	    	if (!BuildMesh(T, O, *MESH, sect_num, M.m_pVertices, M.m_iVertexCount, vert_it, M.m_pFaces, M.m_iFaceCount, face_it, M.m_smgroups, obj->_Transform()))
-            	return FALSE;
+		for(EditMeshIt MESH=O->FirstMesh();MESH!=O->LastMesh();++MESH)
+			if (!BuildMesh(Fidentity, O, *MESH, sect_num, M.m_pVertices, M.m_iVertexCount, vert_it, M.m_pFaces, M.m_iFaceCount, face_it, M.m_smgroups))
+				return FALSE;
 
         M.m_iFaceCount			= face_it;
         M.m_iVertexCount		= vert_it;
@@ -1340,7 +1229,7 @@ BOOL SceneBuilder::CompileStatic(bool b_selected_only)
     }
 	UI->ProgressEnd(pb);
 // process lods
-	if (bResult&&!l_lods.empty())
+	if (bResult&&!l_lods.empty()&&!m_save_as_object)
     {
         SPBItem* pb = UI->ProgressStart(l_lods.size()*2,"Merge LOD textures...");
         Fvector2Vec			offsets;
