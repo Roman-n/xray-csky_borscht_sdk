@@ -18,6 +18,10 @@ public:
     IC LPCSTR			ClassDesc				(){return "Way";}
     IC int				RenderPriority			(){return 1;}
 
+	int					RaySelectPoint			(int flag, float& distance, const Fvector& start, const Fvector& direction, BOOL bDistanceOnly);
+	int					FrustumSelectPoint		(int flag, const CFrustum& frustum);
+	void				SelectPoints			(bool flag);
+
     virtual void		Clear					(bool bSpecific=false){inherited::Clear(bSpecific);}
     // IO
     virtual bool   		IsNeedSave				(){return inherited::IsNeedSave();}
