@@ -767,19 +767,27 @@ void __fastcall TfrmEditLibrary::ebImportClick(TObject *Sender)
     if (EFS.GetOpenName(_import_,open_nm,true))
     {
     	// remove selected object
-        ResetSelected			();
+		ResetSelected			();
+
 		// load
     	AStringVec 				lst;
         _SequenceToList       	(lst,open_nm.c_str());
 		bool bNeedUpdate		= false;
+
         // folder name
-        AnsiString 				folder;
+		AnsiString 				folder;
+		RStringVec				sel_items;
+		m_Items->GetSelected	(sel_items);
+		if(sel_items.size())
+		{
+			TElTreeItem *item = FHelper.FindItem(m_Items->tvItems, *sel_items[0]);
+			VERIFY(item);
 
-
-        ListItemsVec 				sel_items;
-        m_Items->GetSelected		(NULL, sel_items, false);
-        if(sel_items.size())
-       		FHelper.GetFolderName	(sel_items[0]->Key(), folder);
+			if(FHelper.IsObject(item))
+				FHelper.GetFolderName(*sel_items[0], folder);
+			else
+				folder = AnsiString(*sel_items[0]) + '\\';
+		}
 
 		xr_string m_LastSelection;
         for (AStringIt it=lst.begin(); it!=lst.end(); ++it)
@@ -820,7 +828,7 @@ void __fastcall TfrmEditLibrary::ebImportClick(TObject *Sender)
 			InitObjects			();
             m_Items->SelectItem	(m_LastSelection.c_str(),true,false,true);
         }
-    }
+	}
 }
 //---------------------------------------------------------------------------
 
