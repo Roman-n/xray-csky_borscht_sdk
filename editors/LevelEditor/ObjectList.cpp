@@ -271,7 +271,6 @@ void TfrmObjectList::UpdateState()
 
 	tvItems->OnItemSelectedChange 	= 0;
 
-    TElTreeItem* sel_node 			= NULL;
     u32 sel_count					= 0;
     TElTreeItem* first_sel_node 	= NULL;
     bool need_sort					= false;
@@ -304,8 +303,8 @@ void TfrmObjectList::UpdateState()
         if (O->Selected())			
         {
             ++sel_count;
-            sel_node				= node;
-            if(first_sel_node==NULL && O->Visible())
+
+			if(first_sel_node==NULL && O->Visible())
                first_sel_node		= node;
         }
 
