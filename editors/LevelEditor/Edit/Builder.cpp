@@ -32,7 +32,8 @@ SceneBuilder::SceneBuilder()
     l_scene_stat		= 0;
     l_verts				= 0;
     l_faces				= 0;
-    l_smgroups			= 0;
+	l_smgroups			= 0;
+	l_vnormals			= 0;
     l_vert_cnt			= 0;
     l_face_cnt 			= 0;
 	l_vert_it	 		= 0;
