@@ -619,6 +619,11 @@ u32 vertex_id	(Fvector position)
 	return	(ai().level_graph().vertex_id(position));
 }
 
+u32 guess_vertex_id(u32 current_vertex_id, Fvector position)
+{
+    return (ai().level_graph().vertex(current_vertex_id, position));
+}
+
 u32 render_get_dx_level()
 {
 	return ::Render->get_dx_level();
@@ -718,6 +723,7 @@ void CLevel::script_register(lua_State *L)
 		def("remove_complex_effector",			&remove_complex_effector),
 		
 		def("vertex_id",						&vertex_id),
+		def("guess_vertex_id",					&guess_vertex_id),
 
 		def("game_id",							&GameID)
 	],
