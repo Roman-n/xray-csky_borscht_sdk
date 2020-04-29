@@ -2503,7 +2503,7 @@ extern "C" void dJointSetAMotorAxis (dxJointAMotor *joint, int anum, int rel,
 {
   dAASSERT(joint && anum >= 0 && anum <= 2 && rel >= 0 && rel <= 2);
   dUASSERT(joint->vtable == &__damotor_vtable,"joint is not an amotor");
-  dUASSERT(!(!joint->node[1].body &&  (joint->flags & dJOINT_REVERSE) && rel == 1),"no first body, can't set axis rel=1");
+  dUASSERT(!(!joint->node[0].body &&  (joint->flags & dJOINT_REVERSE) && rel == 1),"no first body, can't set axis rel=1");
   dUASSERT(!(!joint->node[1].body && !(joint->flags & dJOINT_REVERSE) && rel == 2),"no second body, can't set axis rel=2");
   if (anum < 0) anum = 0;
   if (anum > 2) anum = 2;
