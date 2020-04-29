@@ -42,6 +42,8 @@ void ErrorLog(LPCSTR caMessage)
 		}
 #	endif // #ifndef USE_LUA_STUDIO
 #endif // #ifdef USE_DEBUGGER
+
+	FATAL("lua error_log");
 }
 
 void FlushLogs()
