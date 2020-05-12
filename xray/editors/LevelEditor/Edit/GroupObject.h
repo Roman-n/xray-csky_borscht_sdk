@@ -22,8 +22,8 @@ class CGroupObject: public CCustomObject
     bool			LL_AppendObject		(CCustomObject* object);
     bool			AppendObjectLoadCB	(CCustomObject* object);
     shared_str		m_ReferenceName;
-	void __stdcall  ReferenceChange		(PropValue* sender);
-	void __stdcall  OnFreezeAllClick	(ButtonValue* sender, bool& bModif, bool& bSafe);
+	void            ReferenceChange		(PropValue* sender);
+	void            OnFreezeAllClick	(ButtonValue* sender, bool& bModif, bool& bSafe);
     void			ClearInternal			(ObjectsInGroup& v);
 public:
     void			Clear1				(){ClearInternal(m_ObjectsInGroup);};

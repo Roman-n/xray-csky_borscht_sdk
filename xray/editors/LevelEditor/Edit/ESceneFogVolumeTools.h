@@ -49,7 +49,7 @@ public:
 class EFogVolume: public CEditShape
 {
 	typedef CCustomObject inherited;
-    void __stdcall 		OnChangeEnvs	(PropValue* prop);
+    void         		OnChangeEnvs	(PropValue* prop);
 public:
 	u8					m_volumeType;
     u32					m_group_id;

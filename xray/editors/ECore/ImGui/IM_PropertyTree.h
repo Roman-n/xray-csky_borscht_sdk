@@ -88,7 +88,7 @@ class ECORE_API IM_PropertyTree : public IM_Window
     u32 			GetSelectedCount();
 
     // for compatibility with xrEProps property list
-    typedef fastdelegate::FastDelegate1<Eltree::TElTreeItem*> TOnItemFocused;
+    typedef fastdelegate::FastDelegate<void(Eltree::TElTreeItem*)> TOnItemFocused;
 
     TOnItemFocused	OnItemFocused;
     TOnModifiedEvent OnModifiedEvent;

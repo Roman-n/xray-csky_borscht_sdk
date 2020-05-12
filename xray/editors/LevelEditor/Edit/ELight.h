@@ -80,19 +80,19 @@ public:
     SFuzzyData*		m_FuzzyData;
 
     virtual void	OnUpdateTransform();
-    void __stdcall 	OnTypeChange	(PropValue* value);
+    void         	OnTypeChange	(PropValue* value);
 
-    void __stdcall  OnFuzzyFlagChange	(PropValue* value);
-    void __stdcall 	OnFuzzyDataChange	(PropValue* value);
-    void __stdcall 	OnFuzzyTypeChange	(PropValue* value);
+    void            OnFuzzyFlagChange	(PropValue* value);
+    void         	OnFuzzyDataChange	(PropValue* value);
+    void         	OnFuzzyTypeChange	(PropValue* value);
 
-    void __stdcall 	OnFuzzyGenerateClick(ButtonValue* value, bool& bModif, bool& bSafe);
-    void __stdcall 	OnAutoClick		(ButtonValue* value, bool& bModif, bool& bSafe);
-    void __stdcall 	OnNeedUpdate	(PropValue* value);
+    void         	OnFuzzyGenerateClick(ButtonValue* value, bool& bModif, bool& bSafe);
+    void         	OnAutoClick		(ButtonValue* value, bool& bModif, bool& bSafe);
+    void         	OnNeedUpdate	(PropValue* value);
 
-    void __stdcall 	OnPointDataChange(PropValue* value);
-    void __stdcall  OnAttenuationDraw(CanvasValue* sender, void* canvas, const Irect& rect);
-    void __stdcall 	OnPointDataTestEqual(CanvasValue* a, CanvasValue* b, bool& res);
+    void         	OnPointDataChange(PropValue* value);
+    void            OnAttenuationDraw(CanvasValue* sender, void* canvas, const Irect& rect);
+    void         	OnPointDataTestEqual(CanvasValue* a, CanvasValue* b, bool& res);
 protected:
 //    virtual Fvector& GetPosition	()						{ return m_D3D.position; 	}
 //    virtual void 	SetPosition		(const Fvector& pos)	{ m_D3D.position.set(pos);	UpdateTransform();}

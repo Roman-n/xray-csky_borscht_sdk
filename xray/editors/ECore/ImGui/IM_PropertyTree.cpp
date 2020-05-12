@@ -479,8 +479,8 @@ class ChooseDelegate
           item(itm)
     {}
 
-    void __stdcall OnOK(IM_ChooseForm* form);
-    void __stdcall OnClose(IM_ChooseForm* form);
+    void OnOK(IM_ChooseForm* form);
+    void OnClose(IM_ChooseForm* form);
 };
 
 void ChooseDelegate::OnOK(IM_ChooseForm* form)
@@ -992,11 +992,11 @@ struct TextDelegate
 		disabled = item->m_Flags.is(PropItem::flDisabled);
 	}
 
-	void __stdcall RText_OK(IM_TextEditor* editor);
-    void __stdcall SText_OK(IM_TextEditor* editor);
-    void __stdcall CText_OK(IM_TextEditor* editor);
+	void RText_OK(IM_TextEditor* editor);
+    void SText_OK(IM_TextEditor* editor);
+    void CText_OK(IM_TextEditor* editor);
 
-    void __stdcall OnClose(IM_TextEditor*);
+    void OnClose(IM_TextEditor*);
 };
 
 void TextDelegate::RText_OK(IM_TextEditor* editor)

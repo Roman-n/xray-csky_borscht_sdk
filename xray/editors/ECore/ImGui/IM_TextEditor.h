@@ -3,7 +3,7 @@
 
 #include "IM_Window.h"
 
-typedef fastdelegate::FastDelegate1<class IM_TextEditor*> IM_TECallback;
+typedef fastdelegate::FastDelegate<void(class IM_TextEditor*)> IM_TECallback;
 struct IM_TEActions;
 
 class ECORE_API IM_TextEditor : public IM_Window

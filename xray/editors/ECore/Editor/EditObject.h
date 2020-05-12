@@ -233,8 +233,8 @@ protected:
     void			DefferedLoadRP			();
     void			DefferedUnloadRP		();
 
-	void __stdcall  OnChangeTransform		(PropValue* prop);
-    void __stdcall 	OnChangeShader			(PropValue* prop);
+	void            OnChangeTransform		(PropValue* prop);
+    void         	OnChangeShader			(PropValue* prop);
 public:
 	enum{
 	    LS_RBUFFERS	= (1<<0),

@@ -35,9 +35,9 @@ class IM_FrameObject : public IM_Window
 
     LPCSTR Current();
 
-	void __stdcall MultipleAppend(IM_ChooseForm* form);
-	void __stdcall SelectObject(IM_ChooseForm* form);
-	void __stdcall DrawThumbnail(LPCSTR name, HDC hdc, const Irect& rect);
+	void MultipleAppend(IM_ChooseForm* form);
+	void SelectObject(IM_ChooseForm* form);
+	void DrawThumbnail(LPCSTR name, HDC hdc, const Irect& rect);
 
     void MultiSelByRefObject(bool clear_prev);
     void SelByRefObject(bool flag);

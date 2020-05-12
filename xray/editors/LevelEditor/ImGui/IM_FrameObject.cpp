@@ -61,7 +61,7 @@ void _SequenceToList(AStringVec& lst, LPCSTR in, char separator=',')
 }
 #endif
 
-void __stdcall IM_FrameObject::MultipleAppend(IM_ChooseForm* form)
+void IM_FrameObject::MultipleAppend(IM_ChooseForm* form)
 {
 	{
     	Fvector pos={0.f,0.f,0.f};
@@ -93,12 +93,12 @@ void __stdcall IM_FrameObject::MultipleAppend(IM_ChooseForm* form)
     }
 }
 
-void __stdcall IM_FrameObject::SelectObject(IM_ChooseForm* form)
+void IM_FrameObject::SelectObject(IM_ChooseForm* form)
 {
     m_objects_tree.Select(*form->GetSelected());
 }
 
-void __stdcall IM_FrameObject::DrawThumbnail(LPCSTR name, HDC hdc, const Irect& r)
+void IM_FrameObject::DrawThumbnail(LPCSTR name, HDC hdc, const Irect& r)
 {
 	EObjectThumbnail* thm	= xr_new<EObjectThumbnail>(name);
     thm->Draw				(hdc,r);

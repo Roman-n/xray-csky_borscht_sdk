@@ -170,7 +170,7 @@ public:
 	//
 	shared_str		screen_font;
 protected:
-	void 	__stdcall  OnKeyboardCommonFileClick	(ButtonValue* value, bool& bModif, bool& bSafe);
+	void 	        OnKeyboardCommonFileClick	(ButtonValue* value, bool& bModif, bool& bSafe);
 	void 	__stdcall  OnClose	();
     void			ApplyValues			();
 

@@ -88,7 +88,7 @@ public:
 //	IC operator 	LPCSTR 			()							{VERIFY(type==tpStr);return s.c_str();}
 };
 
-typedef fastdelegate::FastDelegate2<CCommandVar,CCommandVar,CCommandVar> TECommandEvent;
+typedef fastdelegate::FastDelegate<CCommandVar(CCommandVar,CCommandVar)> TECommandEvent;
 
 struct SECommand;
 
@@ -135,8 +135,8 @@ ECORE_API BOOL				LoadShortcuts			(CInifile* ini);
 ECORE_API BOOL				SaveShortcuts			(CInifile* ini);
 ECORE_API BOOL				AllowLogCommands		();
 
-#define BIND_CMD_EVENT_S(a) 						fastdelegate::bind<TECommandEvent>(a)
-#define BIND_CMD_EVENT_C(a,b)						fastdelegate::bind<TECommandEvent>(a,&b)
+#define BIND_CMD_EVENT_S(a) 						fastdelegate::MakeDelegate(a)
+#define BIND_CMD_EVENT_C(a,b)						fastdelegate::MakeDelegate(a,&b)
 
 #define REGISTER_CMD_S(id,cmd)  					RegisterCommand(id, xr_new<SECommand>(#id,"",false,false,BIND_CMD_EVENT_S(cmd),id,false));
 #define REGISTER_CMD_C(id,owner,cmd) 				RegisterCommand(id, xr_new<SECommand>(#id,"",false,false,BIND_CMD_EVENT_C(owner,cmd),id,false));

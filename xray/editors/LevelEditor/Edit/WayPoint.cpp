@@ -397,7 +397,7 @@ CWayPoint* CWayObject::AppendWayPoint()
 {
 	for (WPIt it=m_WayPoints.begin(); it!=m_WayPoints.end(); it++)
     	(*it)->Select(0);
-    m_WayPoints.push_back(xr_new<CWayPoint>(FHelper.GenerateName("wp",2,fastdelegate::bind<TFindObjectByName>(this,&CWayObject::FindWPByName),false,false).c_str()));
+    m_WayPoints.push_back(xr_new<CWayPoint>(FHelper.GenerateName("wp",2,TFindObjectByName(this,&CWayObject::FindWPByName),false,false).c_str()));
     m_WayPoints.back()->m_bSelected=true;
     return m_WayPoints.back();
 }
@@ -781,7 +781,7 @@ void CWayObject::FillProp(LPCSTR pref, PropItemVec& items)
         	CWayPoint* W = *it;
             if ((*it)->m_bSelected)
             {
-            	PHelper().CreateNameCB	(items, PrepareKey(pref,"Way Point\\Name"),&W->m_Name,0,0,fastdelegate::bind<RTextValue::TOnAfterEditEvent>(this,&CWayObject::OnWayPointNameAfterEdit));
+            	PHelper().CreateNameCB	(items, PrepareKey(pref,"Way Point\\Name"),&W->m_Name,0,0,RTextValue::TOnAfterEditEvent(this,&CWayObject::OnWayPointNameAfterEdit));
                 PHelper().CreateVector	(items, PrepareKey(pref,"Way Point\\Transform\\Position"),	&W->m_vPosition,	-10000,	10000, 0.01, 2);
                 
                 for (WPLIt l_it=W->m_Links.begin(); l_it!=W->m_Links.end(); l_it++)

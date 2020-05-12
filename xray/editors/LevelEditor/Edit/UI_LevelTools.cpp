@@ -363,7 +363,7 @@ void CLevelTool::OnPropsClose()
 }
 //---------------------------------------------------------------------------
 
-void __stdcall CLevelTool::OnPropsModified()
+void CLevelTool::OnPropsModified()
 {
 	Scene->Modified();
 //	Scene->UndoSave();

@@ -19,8 +19,8 @@ class EParticlesObject: public CCustomObject
     IParticleCustom*	m_Particles;
 	GameTypeChooser		m_GameType;
 
-	void __stdcall  	OnRefChange			(PropValue* V);
-	void __stdcall  	OnControlClick		(ButtonValue* sender, bool& bModif, bool& bSafe);
+	void            	OnRefChange			(PropValue* V);
+	void              	OnControlClick		(ButtonValue* sender, bool& bModif, bool& bSafe);
 public:
 	                	EParticlesObject   	(LPVOID data, LPCSTR name);
     void            	Construct   		(LPVOID data);

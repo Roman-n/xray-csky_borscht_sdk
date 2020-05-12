@@ -18,13 +18,13 @@ enum EItemType{
 	TYPE_OBJECT	= 1
 };
 
-typedef fastdelegate::FastDelegate1<ListItemsVec&> 				TOnILItemsFocused;
-typedef fastdelegate::FastDelegate0<>							TOnILCloseEvent;      
-typedef fastdelegate::FastDelegate3<LPCSTR, LPCSTR, EItemType>	TOnItemRename;
-typedef fastdelegate::FastDelegate3<LPCSTR, EItemType, bool&>	TOnItemRemove;
-typedef fastdelegate::FastDelegate0<>							TOnItemAfterRemove;
-typedef fastdelegate::FastDelegate0<> 							TOnCloseEvent;
-typedef fastdelegate::FastDelegate0<>		  					TOnModifiedEvent;
+typedef fastdelegate::FastDelegate<void(ListItemsVec&)> 		    TOnILItemsFocused;
+typedef fastdelegate::FastDelegate<void()>							TOnILCloseEvent;      
+typedef fastdelegate::FastDelegate<void(LPCSTR, LPCSTR, EItemType)>	TOnItemRename;
+typedef fastdelegate::FastDelegate<void(LPCSTR, EItemType, bool&)>	TOnItemRemove;
+typedef fastdelegate::FastDelegate<void()>							TOnItemAfterRemove;
+typedef fastdelegate::FastDelegate<void()> 							TOnCloseEvent;
+typedef fastdelegate::FastDelegate<void()>		  					TOnModifiedEvent;
 
 #ifdef __BORLANDC__
 #	include "mxPlacemnt.hpp"
@@ -33,7 +33,7 @@ typedef fastdelegate::FastDelegate0<>		  					TOnModifiedEvent;
 	void XR_EPROPS_API CheckWindowPos(TForm* form);
 	//---------------------------------------------------------------------------
 #else
-typedef fastdelegate::FastDelegate1<ListItem*> 				    TOnILItemFocused;    
+typedef fastdelegate::FastDelegate<void(ListItem*)>				    TOnILItemFocused;    
 #endif
 
 //------------------------------------------------------------------------------
@@ -69,20 +69,20 @@ public:
 public:
 //------------------------------------------------------------------------------
 // predefind event routines
-    virtual bool 				__stdcall 	FvectorRDOnAfterEdit(PropValue* sender, Fvector& edit_val)=0;
-    virtual void 				__stdcall 	FvectorRDOnBeforeEdit(PropValue* sender,Fvector& edit_val)=0;
-    virtual void 				__stdcall 	FvectorRDOnDraw		(PropValue* sender, xr_string& draw_val)=0;
-    virtual bool 				__stdcall 	floatRDOnAfterEdit	(PropValue* sender,	float& edit_val)=0;
-    virtual void 				__stdcall 	floatRDOnBeforeEdit	(PropValue* sender,	float& edit_val)=0;
-    virtual void 				__stdcall 	floatRDOnDraw		(PropValue* sender, xr_string& draw_val)=0;    
+    virtual bool 				         	FvectorRDOnAfterEdit(PropValue* sender, Fvector& edit_val)=0;
+    virtual void 				         	FvectorRDOnBeforeEdit(PropValue* sender,Fvector& edit_val)=0;
+    virtual void 				         	FvectorRDOnDraw		(PropValue* sender, xr_string& draw_val)=0;
+    virtual bool 				         	floatRDOnAfterEdit	(PropValue* sender,	float& edit_val)=0;
+    virtual void 				         	floatRDOnBeforeEdit	(PropValue* sender,	float& edit_val)=0;
+    virtual void 				         	floatRDOnDraw		(PropValue* sender, xr_string& draw_val)=0;    
 // R-name edit
-    virtual void				__stdcall  	NameBeforeEdit		(PropValue* sender, shared_str& edit_val)=0;
-    virtual bool 				__stdcall  	NameAfterEdit		(PropValue* sender, shared_str& edit_val)=0;
-    virtual void 				__stdcall  	NameDraw			(PropValue* sender, xr_string& draw_val)=0;
+    virtual void				          	NameBeforeEdit		(PropValue* sender, shared_str& edit_val)=0;
+    virtual bool 				          	NameAfterEdit		(PropValue* sender, shared_str& edit_val)=0;
+    virtual void 				          	NameDraw			(PropValue* sender, xr_string& draw_val)=0;
 // C-name edit
-    virtual void				__stdcall  	CNameBeforeEdit		(PropValue* sender, xr_string& edit_val)=0;
-    virtual bool 				__stdcall  	CNameAfterEdit		(PropValue* sender, xr_string& edit_val)=0;
-    virtual void 				__stdcall  	CNameDraw			(PropValue* sender, xr_string& draw_val)=0;
+    virtual void				          	CNameBeforeEdit		(PropValue* sender, xr_string& edit_val)=0;
+    virtual bool 				          	CNameAfterEdit		(PropValue* sender, xr_string& edit_val)=0;
+    virtual void 				          	CNameDraw			(PropValue* sender, xr_string& draw_val)=0;
 public:
     virtual CaptionValue*  		__stdcall	CreateCaption	    (PropItemVec& items, shared_str key, shared_str val)=0;
     virtual CanvasValue*		__stdcall	CreateCanvas	    (PropItemVec& items, shared_str key, shared_str val, int height)=0;

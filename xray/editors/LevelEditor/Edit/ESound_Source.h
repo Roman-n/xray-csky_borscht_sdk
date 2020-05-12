@@ -18,9 +18,9 @@ class ESoundSource: public CCustomObject
     u32				m_NextTime;
     u32				m_StopTime;
     // edit events
-    void __stdcall 	OnChangeWAV		(PropValue* prop);
-    void __stdcall 	OnChangeSource	(PropValue* prop);
-	void __stdcall  OnControlClick	(ButtonValue* sender, bool& bModif, bool& bSafe);
+    void         	OnChangeWAV		(PropValue* prop);
+    void         	OnChangeSource	(PropValue* prop);
+	void            OnControlClick	(ButtonValue* sender, bool& bModif, bool& bSafe);
     void			ResetSource		();
     enum{
     	flLooped	= (1<<0),

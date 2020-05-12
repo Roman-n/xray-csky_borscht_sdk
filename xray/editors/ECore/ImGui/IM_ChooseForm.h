@@ -7,7 +7,7 @@
 #include "IM_PropertyTree.h"
 #include "IM_Canvas.h"
 
-typedef fastdelegate::FastDelegate1<class IM_ChooseForm*> IM_CFCallback;
+typedef fastdelegate::FastDelegate<void(class IM_ChooseForm*)> IM_CFCallback;
 
 class ECORE_API IM_ChooseForm : public IM_Window
 {
@@ -34,7 +34,7 @@ class ECORE_API IM_ChooseForm : public IM_Window
 	ChooseItemVec* items = NULL, TOnChooseFillItems fill_items = NULL, void* fill_param = NULL);
 
     private:
-    void __stdcall OnNodeSelected(shared_str path, shared_str value, bool select);
+    void OnNodeSelected(shared_str path, shared_str value, bool select);
 
     public:
     void Close();

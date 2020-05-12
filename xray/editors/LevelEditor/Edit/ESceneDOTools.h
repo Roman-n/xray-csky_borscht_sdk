@@ -71,8 +71,8 @@ class EDetailManager:
 
     DetailSlot&			GetSlot			(u32 sx, u32 sz);
 
-    void __stdcall 		OnDensityChange		(PropValue* prop);
-    void __stdcall 		OnBaseTextureChange	(PropValue* prop);
+    void         		OnDensityChange		(PropValue* prop);
+    void         		OnBaseTextureChange	(PropValue* prop);
 protected:
     // controls
     virtual void 		CreateControls			();

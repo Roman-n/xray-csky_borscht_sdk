@@ -21,7 +21,7 @@ class IM_FrameGroup : public IM_Window
     {
     }
 
-    void __stdcall OnGroupSelected(IM_ChooseForm* form);
+    void OnGroupSelected(IM_ChooseForm* form);
 
     void MultiSelByRefObject(bool clear_prev);
     void SelByRefObject(bool flag);

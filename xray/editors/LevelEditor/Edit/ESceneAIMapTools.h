@@ -225,7 +225,7 @@ public:
 	void 				ResetNodes				();
     void				SelectNodesByLink		(int link);
 
-    void __stdcall      OnPatchSizeChanged		(PropValue*);
+    void                OnPatchSizeChanged		(PropValue*);
     void				SelectErrorNodes		();
 
     void				SelectNode				(SAINode *node, bool select);

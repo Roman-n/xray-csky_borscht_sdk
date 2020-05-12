@@ -92,17 +92,17 @@ public:
 	Fmatrix 		FITransform;
 
     CCustomObject*	m_pOwnerObject;
-	bool __stdcall  OnObjectNameAfterEdit	(PropValue* sender, shared_str& edit_val);
-    void __stdcall 	OnTransformChange		(PropValue* value); 
-	void __stdcall  OnMotionableChange		(PropValue* sender);
-    void __stdcall 	OnMotionCommandsClick	(ButtonValue* value, bool& bModif, bool& bSafe);
-    void __stdcall 	OnMotionFilesClick		(ButtonValue* value, bool& bModif, bool& bSafe);
-    void __stdcall 	OnMotionControlClick	(ButtonValue* value, bool& bModif, bool& bSafe);
-    void __stdcall 	OnMotionFrameChange		(PropValue* value);
-	void __stdcall 	OnMotionKeyTimeChange	(PropValue* value);
+	bool            OnObjectNameAfterEdit	(PropValue* sender, shared_str& edit_val);
+    void         	OnTransformChange		(PropValue* value); 
+	void            OnMotionableChange		(PropValue* sender);
+    void         	OnMotionCommandsClick	(ButtonValue* value, bool& bModif, bool& bSafe);
+    void         	OnMotionFilesClick		(ButtonValue* value, bool& bModif, bool& bSafe);
+    void         	OnMotionControlClick	(ButtonValue* value, bool& bModif, bool& bSafe);
+    void         	OnMotionFrameChange		(PropValue* value);
+	void         	OnMotionKeyTimeChange	(PropValue* value);
 
-    void __stdcall 	OnMotionCurrentFrameChange(PropValue* value); 
-    void __stdcall 	OnMotionCameraViewChange(PropValue* value); 
+    void         	OnMotionCurrentFrameChange(PropValue* value); 
+    void         	OnMotionCameraViewChange(PropValue* value); 
 public:
 	LPCSTR			GetName			() const {return *FName; }
 	void			SetName			(LPCSTR N){string256 tmp; strcpy(tmp,N); strlwr(tmp); FName=tmp;}
@@ -112,12 +112,12 @@ public:
     virtual void 	SetPosition		(const Fvector& pos)	{ FPosition.set(pos);	UpdateTransform();}
 	virtual void 	SetRotation		(const Fvector& rot)	{ FRotation.set(rot);	UpdateTransform();}
     virtual void 	SetScale		(const Fvector& scale)	{ FScale.set(scale);	UpdateTransform();}
-    void __stdcall 	OnNameChange		(PropValue* sender);
-    void __stdcall 	OnChangeIngroupUnique(PropValue* sender);
+    void         	OnNameChange		(PropValue* sender);
+    void         	OnChangeIngroupUnique(PropValue* sender);
  protected:   
-    void __stdcall 	OnNumChangePosition	(PropValue* sender);
-    void __stdcall 	OnNumChangeRotation	(PropValue* sender);
-    void __stdcall 	OnNumChangeScale	(PropValue* sender);
+    void         	OnNumChangePosition	(PropValue* sender);
+    void         	OnNumChangeRotation	(PropValue* sender);
+    void         	OnNumChangeScale	(PropValue* sender);
 
     virtual void	DeleteThis		(){m_RT_Flags.set(flRT_NeedSelfDelete,TRUE);}
 public:

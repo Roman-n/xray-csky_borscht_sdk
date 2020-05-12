@@ -9,7 +9,7 @@
 #include "MxMenus.hpp"
 #endif
 
-typedef fastdelegate::FastDelegate2<LPCSTR,bool&> TFindObjectByName;     
+typedef fastdelegate::FastDelegate<void(LPCSTR,bool&)> TFindObjectByName;     
 
 class XR_EPROPS_API CFolderHelper{
 #ifndef NO_VCL

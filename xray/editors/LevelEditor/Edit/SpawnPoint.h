@@ -91,7 +91,7 @@ public:
 
 		void    		Render			(bool bSelected, const Fmatrix& parent,int priority, bool strictB2F);
 		void    		OnFrame			();
-    	void __stdcall	OnAnimControlClick		(ButtonValue* value, bool& bModif, bool& bSafe);  
+    	void        	OnAnimControlClick		(ButtonValue* value, bool& bModif, bool& bSafe);  
         
 		virtual void __stdcall get_bone_xform				(LPCSTR name, Fmatrix& xform);
 	};
@@ -122,12 +122,12 @@ public:
 
     shared_str		SectionToEditor			(shared_str);
     shared_str		EditorToSection			(shared_str);
-	void __stdcall	OnProfileChange			(PropValue* prop);
-	void __stdcall	OnRPointTypeChange		(PropValue* prop);
+	void        	OnProfileChange			(PropValue* prop);
+	void        	OnRPointTypeChange		(PropValue* prop);
     
-	void __stdcall	OnEnvModFlagChange		(PropValue* prop);
-	void __stdcall	OnFillChooseItems		(ChooseValue*);
-    void __stdcall	OnFillRespawnItemProfile(ChooseValue*);
+	void        	OnEnvModFlagChange		(PropValue* prop);
+	void        	OnFillChooseItems		(ChooseValue*);
+    void        	OnFillRespawnItemProfile(ChooseValue*);
     bool 			OnAppendObject			(CCustomObject* object);
 protected:
     virtual void 	SetPosition		(const Fvector& pos);

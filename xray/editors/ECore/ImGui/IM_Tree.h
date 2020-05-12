@@ -6,8 +6,8 @@
 #include <xrServerEntities/xrEProps.h>
 #include <xrServerEntities/ItemListTypes.h>
 
-typedef fastdelegate::FastDelegate3<shared_str,shared_str,bool> IM_TOnNodeSelected;
-typedef fastdelegate::FastDelegate3<LPCSTR,HDC,const Irect&> IM_TOnDrawThumbnail;
+typedef fastdelegate::FastDelegate<void(shared_str,shared_str,bool)> IM_TOnNodeSelected;
+typedef fastdelegate::FastDelegate<void(LPCSTR,HDC,const Irect&)> IM_TOnDrawThumbnail;
 
 class ECORE_API IM_Tree : public IM_Window
 {
