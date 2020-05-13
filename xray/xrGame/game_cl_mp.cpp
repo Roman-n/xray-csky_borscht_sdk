@@ -1479,7 +1479,7 @@ void game_cl_mp::OnConnected()
 	}
 };
 
-void __stdcall game_cl_mp::sending_screenshot_callback(file_transfer::sending_status_t status, u32 bytes_sent, u32 data_size)
+void game_cl_mp::sending_screenshot_callback(file_transfer::sending_status_t status, u32 bytes_sent, u32 data_size)
 {
 	switch (status)
 	{
@@ -1639,7 +1639,7 @@ void game_cl_mp::PrepareToReceiveFile(ClientID const & from_client, shared_str c
 }
 
 
-void __stdcall	game_cl_mp::fr_callback_binder::receiving_file_callback(
+void game_cl_mp::fr_callback_binder::receiving_file_callback(
 															file_transfer::receiving_status_t status,
 															u32 bytes_received,
 															u32 data_size){

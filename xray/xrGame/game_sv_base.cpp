@@ -262,7 +262,7 @@ struct player_exporter
 		p_to_send = P;
 		to_ps = to_playerstate;
 	};
-	void __stdcall count_players(IClient* client)
+	void count_players(IClient* client)
 	{
 		xrClientData* tmp_client = static_cast<xrClientData*>(client);
 		if (!tmp_client->net_Ready ||
@@ -272,7 +272,7 @@ struct player_exporter
 		}
 		++counter;
 	}
-	void __stdcall export_players(IClient* client)
+	void export_players(IClient* client)
 	{
 		string64		p_name;
 
@@ -324,9 +324,9 @@ void game_sv_GameState::net_Export_State						(NET_Packet& P, ClientID to)
 	game_PlayerState*	tmp_ps = tmp_client->ps;
 	
 	player_exporter		tmp_functor(to, tmp_ps, &P);
-	fastdelegate::FastDelegate1<IClient*, void> pcounter;
+	fastdelegate::FastDelegate<void(IClient*)> pcounter;
 	pcounter.bind(&tmp_functor, &player_exporter::count_players);
-	fastdelegate::FastDelegate1<IClient*, void> exporter;
+	fastdelegate::FastDelegate<void(IClient*)> exporter;
 	exporter.bind(&tmp_functor, &player_exporter::export_players);
 	
 	m_server->ForEachClientDo(pcounter);
@@ -911,7 +911,7 @@ public:
 		id_entity_victim = id_entity;
 	}
 
-	bool __stdcall PredicateDelVictim(GameEvent* const ge)
+	bool PredicateDelVictim(GameEvent* const ge)
 	{
 		bool ret_val = false;
 		switch (ge->type)
@@ -928,7 +928,7 @@ public:
 		};
 		return ret_val;
 	}
-	bool __stdcall PredicateForAll(GameEvent* const ge)
+	bool PredicateForAll(GameEvent* const ge)
 	{
 		Msg("- Erasing [%d] event before start.", ge->type);
 		return true;

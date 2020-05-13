@@ -67,10 +67,10 @@ private:
 
 	void						OnNextTaskClicked		();
 	void 						OnPrevTaskClicked		();
-	void xr_stdcall				OnShowSecondTaskWnd		(CUIWindow* w, void* d);
+	void						OnShowSecondTaskWnd		(CUIWindow* w, void* d);
 
-	void xr_stdcall				OnTask1DbClicked		(CUIWindow*, void*);
-	void xr_stdcall				OnTask2DbClicked		(CUIWindow*, void*);
+	void						OnTask1DbClicked		(CUIWindow*, void*);
+	void						OnTask2DbClicked		(CUIWindow*, void*);
 
 };
 

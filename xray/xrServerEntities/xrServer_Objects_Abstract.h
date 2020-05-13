@@ -42,8 +42,8 @@ public:
 };
 
 SERVER_ENTITY_DECLARE_BEGIN0(CSE_Visual)
-    void __stdcall					OnChangeVisual			(PropValue* sender);  
-    void __stdcall					OnChangeAnim			(PropValue* sender);  
+    void							OnChangeVisual			(PropValue* sender);  
+    void							OnChangeAnim			(PropValue* sender);  
 
 public:
 	shared_str						visual_name;
@@ -71,7 +71,7 @@ add_to_type_list(CSE_Visual)
 #define script_type_list save_type_list(CSE_Visual)
 
 SERVER_ENTITY_DECLARE_BEGIN0(CSE_Motion)
-	void __stdcall	OnChangeMotion	(PropValue* sender);  
+	void							OnChangeMotion	(PropValue* sender);  
 public:
 	shared_str						motion_name;
 public:

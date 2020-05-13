@@ -2170,7 +2170,7 @@ void game_sv_CaptureTheArtefact::ActorDeliverArtefactOnBase(CSE_ActorMP *actor, 
 
 void game_sv_CaptureTheArtefact::StartNewRound()
 {
-	fastdelegate::FastDelegate1<IClient*, void> tmp_functor;
+	fastdelegate::FastDelegate<void(IClient*)> tmp_functor;
 	tmp_functor.bind(this, &game_sv_CaptureTheArtefact::PrepareClientForNewRound);
 	m_server->ForEachClientDoSender(tmp_functor);
 	MoveLifeActors();

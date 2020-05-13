@@ -315,7 +315,7 @@ public:
 private:
 	typedef xr_vector<visual_data>	visuals_collection;
 
-	void __stdcall					OnChangeDescription				(PropValue* sender);
+	void							OnChangeDescription				(PropValue* sender);
 
 private:
 	mutable visuals_collection		m_visuals;
@@ -470,7 +470,7 @@ add_to_type_list(CSE_ALifeObjectPhysic)
 
 SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeObjectHangingLamp,CSE_ALifeDynamicObjectVisual,CSE_PHSkeleton)
 
-    void __stdcall 					OnChangeFlag	(PropValue* sender);
+    void		 					OnChangeFlag	(PropValue* sender);
     enum{
         flPhysic					= (1<<0),
 		flCastShadow				= (1<<1),

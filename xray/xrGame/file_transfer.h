@@ -34,8 +34,8 @@ enum ft_command_t		//command byte to M_FILE_TRANSFER message ...
 	receive_rejected	=	0x02	//this command send by dest site, if he doesn't want file..
 };
 
-typedef fastdelegate::FastDelegate3<sending_status_t, u32, u32> sending_state_callback_t;
-typedef fastdelegate::FastDelegate3<receiving_status_t, u32, u32> receiving_state_callback_t;
+typedef fastdelegate::FastDelegate<void(sending_status_t, u32, u32)> sending_state_callback_t;
+typedef fastdelegate::FastDelegate<void(receiving_status_t, u32, u32)> receiving_state_callback_t;
 
 void make_reject_packet(NET_Packet& packet, ClientID const & client);
 void make_abort_packet(NET_Packet& packet, ClientID const & client);

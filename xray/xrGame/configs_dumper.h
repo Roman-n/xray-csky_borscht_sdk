@@ -25,8 +25,8 @@ private:
 class configs_dumper : public ISheduled
 {
 public:
-	typedef fastdelegate::FastDelegate3<u8 const*, u32, u32, void>	complete_callback_t;
-	typedef fastdelegate::FastDelegate1< long >						yield_callback_t;
+	typedef fastdelegate::FastDelegate<void(u8 const*, u32, u32)>	complete_callback_t;
+	typedef fastdelegate::FastDelegate<void(long)>					yield_callback_t;
 
 							configs_dumper		();
 	virtual					~configs_dumper		();
@@ -43,8 +43,8 @@ private:
 	void					compress_configs	();
 
 	static void				dumper_thread		(void* my_ptr);
-	void __stdcall			yield_cb			(long progress);
-	void __stdcall			switch_thread		();
+	void					yield_cb			(long progress);
+	void					switch_thread		();
 
 	bool const				is_active			() const { return m_state == ds_active; };
 

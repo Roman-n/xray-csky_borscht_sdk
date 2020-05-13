@@ -471,15 +471,15 @@ void CAI_Stalker::net_Destroy()
 	m_pPhysics_support->in_NetDestroy	();
 
 	Device.remove_from_seq_parallel	(
-		fastdelegate::FastDelegate0<>(
+		fastdelegate::FastDelegate<void()>(
 			this,
 			&CAI_Stalker::update_object_handler
 		)
 	);
 
 #ifdef DEBUG
-	fastdelegate::FastDelegate0<>	f = fastdelegate::FastDelegate0<>(this,&CAI_Stalker::update_object_handler);
-	xr_vector<fastdelegate::FastDelegate0<> >::const_iterator	I;
+	fastdelegate::FastDelegate<void()>	f = fastdelegate::FastDelegate<void()>(this,&CAI_Stalker::update_object_handler);
+	xr_vector<fastdelegate::FastDelegate<void()> >::const_iterator	I;
 	I	= std::find(Device.seqParallel.begin(),Device.seqParallel.end(),f);
 	VERIFY							(I == Device.seqParallel.end());
 #endif // DEBUG
@@ -655,13 +655,13 @@ void CAI_Stalker::UpdateCL()
 
 	if (g_Alive()) {
 		if (g_mt_config.test(mtObjectHandler) && CObjectHandler::planner().initialized()) {
-			fastdelegate::FastDelegate0<>								f = fastdelegate::FastDelegate0<>(this,&CAI_Stalker::update_object_handler);
+			fastdelegate::FastDelegate<void()>								f = fastdelegate::FastDelegate<void()>(this,&CAI_Stalker::update_object_handler);
 #ifdef DEBUG
-			xr_vector<fastdelegate::FastDelegate0<> >::const_iterator	I;
+			xr_vector<fastdelegate::FastDelegate<void()> >::const_iterator	I;
 			I	= std::find(Device.seqParallel.begin(),Device.seqParallel.end(),f);
 			VERIFY							(I == Device.seqParallel.end());
 #endif
-			Device.seqParallel.push_back	(fastdelegate::FastDelegate0<>(this,&CAI_Stalker::update_object_handler));
+			Device.seqParallel.push_back	(fastdelegate::FastDelegate<void()>(this,&CAI_Stalker::update_object_handler));
 		}
 		else {
 			START_PROFILE("stalker/client_update/object_handler")
@@ -775,7 +775,7 @@ void CAI_Stalker::shedule_Update		( u32 DT )
 		memory().visual().check_visibles();
 #endif
 		if (g_mt_config.test(mtAiVision))
-			Device.seqParallel.push_back(fastdelegate::FastDelegate0<>(this,&CCustomMonster::Exec_Visibility));
+			Device.seqParallel.push_back(fastdelegate::FastDelegate<void()>(this,&CCustomMonster::Exec_Visibility));
 		else {
 			START_PROFILE("stalker/schedule_update/vision")
 			Exec_Visibility				();

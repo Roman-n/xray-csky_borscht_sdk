@@ -45,12 +45,12 @@ public:
 protected:
 			void				Register_callbacks();
 
-			void  xr_stdcall	nothing();
-			void  xr_stdcall	press_escape();
-			void  xr_stdcall	press_commit();
+			void	nothing();
+			void  	press_escape();
+			void  	press_commit();
 
 protected:
-	typedef  fastdelegate::FastDelegate0<void>		Callback;
+	typedef  fastdelegate::FastDelegate<void()>		Callback;
 
 	enum								{ EDIT_BUF_SIZE = 256 };
 	text_editor::line_edit_control*		m_editor_control;

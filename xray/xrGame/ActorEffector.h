@@ -23,7 +23,7 @@ public:
 	IC void					hud_camera_Matrix		(Fmatrix& M){M.set(m_cam_info_hud.r, m_cam_info_hud.n, m_cam_info_hud.d, m_cam_info_hud.p);}
 };
 
-typedef fastdelegate::FastDelegate0<float>		GET_KOEFF_FUNC;
+typedef fastdelegate::FastDelegate<float()>		GET_KOEFF_FUNC;
 
 void AddEffector		(CActor* A, int type, const shared_str& sect_name);
 void AddEffector		(CActor* A, int type, const shared_str& sect_name, float factor);
@@ -43,7 +43,7 @@ public:
 				void			SetPP		(CEffectorPP* p)				{m_pe=p;}
 				void			SetCam		(CEffectorCam* p)				{m_ce=p;}
 	virtual		BOOL			Valid		()								{return m_ce||m_pe;};
-	virtual	float xr_stdcall	GetFactor	()								=0;
+	virtual	float				GetFactor	()								=0;
 };
 
 class CAnimatorCamEffector :public CEffectorCam
@@ -94,7 +94,7 @@ protected:
 public:
 						CAnimatorCamLerpEffectorConst	();
 	void				SetFactor						(float v)		{m_factor=v; clamp(m_factor,0.0f,1.0f);}
-	float	xr_stdcall	GetFactor						()				{return m_factor;}
+	float				GetFactor						()				{return m_factor;}
 };
 
 class CCameraEffectorControlled :public CAnimatorCamLerpEffector
@@ -124,7 +124,7 @@ public:
 
 	virtual		BOOL			Valid				();
 				BOOL			InWork				();
-	virtual	float xr_stdcall	GetFactor			();
+	virtual	float				GetFactor			();
 };
 
 

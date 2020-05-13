@@ -149,7 +149,7 @@ void DBG_PH_NetRelcase( CObject* obj );
 struct CFunctionGraph
 {
 public:
-	typedef fastdelegate::FastDelegate1<float,float> type_function;
+	typedef fastdelegate::FastDelegate<float(float)> type_function;
 private:
 	CStatGraph						*m_stat_graph																																					;
 	type_function					m_function																																						;

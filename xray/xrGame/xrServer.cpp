@@ -324,7 +324,7 @@ void xrServer::Update	()
 	}
 }
 
-void _stdcall xrServer::SendUpdateTo(IClient* client)
+void xrServer::SendUpdateTo(IClient* client)
 {
 	xrClientData*	xr_client = static_cast<xrClientData*>(client);
 	VERIFY			(xr_client);
@@ -445,7 +445,7 @@ void xrServer::SendUpdatesToAll()
 	
 	KickCheaters();
 
-	fastdelegate::FastDelegate1<IClient*,void> sendtofd;
+	fastdelegate::FastDelegate<void(IClient*)> sendtofd;
 	sendtofd.bind(this, &xrServer::SendUpdateTo);
 
 	NET_Packet* pCurUpdatePacket	= &(m_aUpdatePackets[0]);

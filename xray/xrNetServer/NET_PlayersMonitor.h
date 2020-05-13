@@ -62,7 +62,7 @@ public:
 		//Msg("-S- Leaving from csPlayers [%d]", GetCurrentThreadId());
 		csPlayers.Leave();
 	}
-	void ForEachClientDo				(fastdelegate::FastDelegate1<IClient*, void> & fast_delegate)
+	void ForEachClientDo				(fastdelegate::FastDelegate<void(IClient*)> & fast_delegate)
 	{
 		//Msg("-S- Entering to csPlayers [%d]", GetCurrentThreadId());
 		csPlayers.Enter();

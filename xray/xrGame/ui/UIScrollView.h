@@ -27,7 +27,7 @@ enum {eVertFlip=(1<<0),eNeedRecalc=(1<<1),eFixedScrollBar=(1<<2),eItemsSelectabe
 
 virtual void		RecalcSize			();
 		void		UpdateScroll		();	
-		void __stdcall	OnScrollV		(CUIWindow*, void*);
+		void		OnScrollV		(CUIWindow*, void*);
 		void		SetRightIndention	(float val);
 		void		SetLeftIndention	(float val);
 		void		SetUpIndention		(float val);
@@ -70,7 +70,7 @@ IC			bool	NeedShowScrollBar	();		// no comment
 			float	Scroll2ViewV		();		// calculate scale for scroll position
 	CUIScrollBar*	ScrollBar			() {return m_VScrollBar;}
 	
-	typedef fastdelegate::FastDelegate2<CUIWindow*,CUIWindow*,bool>		cmp_function;
+	typedef fastdelegate::FastDelegate<bool(CUIWindow*,CUIWindow*)>		cmp_function;
 	cmp_function	m_sort_function;
 
 };

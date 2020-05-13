@@ -11,7 +11,7 @@ public:
 		making_screenshot			=	0x01,
 		drawing_download_states		=	0x02
 	};
-	typedef fastdelegate::FastDelegate3<u8 const*, u32, u32, void> complete_callback_t;
+	typedef fastdelegate::FastDelegate<void(u8 const*, u32, u32)> complete_callback_t;
 
 	screenshot_manager();
 	virtual	~screenshot_manager();
@@ -22,7 +22,7 @@ public:
 	virtual bool						shedule_Needed		()			{ return true; };
 			void						make_screenshot		(complete_callback_t cb);
 			void						set_draw_downloads	(bool draw);
-			void	__stdcall			jpeg_compress_cb	(long progress);
+			void						jpeg_compress_cb	(long progress);
 private:
 	CMemoryWriter						m_result_writer;
 			void						make_jpeg_file		();

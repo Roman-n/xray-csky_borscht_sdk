@@ -88,7 +88,7 @@ public:
 	CRegistrator	<pureFrame			>			seqFrame;
 	CRegistrator	<pureFrame			>			seqFrameMT;
 	CRegistrator	<pureDeviceReset	>			seqDeviceReset;
-	xr_vector		<fastdelegate::FastDelegate0<> >	seqParallel;
+	xr_vector		<fastdelegate::FastDelegate<void()> >	seqParallel;
 
 	// Dependent classes
 	//CResourceManager*						Resources;	  
@@ -174,9 +174,9 @@ public:
 	xrCriticalSection	mt_csLeave;
 	volatile BOOL		mt_bMustExit;
 
-	ICF		void			remove_from_seq_parallel	(const fastdelegate::FastDelegate0<> &delegate)
+	ICF		void			remove_from_seq_parallel	(const fastdelegate::FastDelegate<void()> &delegate)
 	{
-		xr_vector<fastdelegate::FastDelegate0<> >::iterator I = std::find(
+		xr_vector<fastdelegate::FastDelegate<void()> >::iterator I = std::find(
 			seqParallel.begin(),
 			seqParallel.end(),
 			delegate
@@ -186,8 +186,8 @@ public:
 	}
 
 public:
-			void xr_stdcall		on_idle				();
-			bool xr_stdcall		on_message			(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT &result);
+			void				on_idle				();
+			bool				on_message			(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT &result);
 
 private:
 			void				message_loop		();
@@ -196,7 +196,7 @@ private:
 extern		ENGINE_API		CRenderDevice		Device;
 extern		ENGINE_API		bool				g_bBenchmark;
 
-typedef fastdelegate::FastDelegate0<bool>		LOADING_EVENT;
+typedef fastdelegate::FastDelegate<bool()>		LOADING_EVENT;
 extern	ENGINE_API xr_list<LOADING_EVENT>		g_loading_events;
 
 //#include	"R_Backend_Runtime.h"

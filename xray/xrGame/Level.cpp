@@ -608,14 +608,14 @@ void CLevel::OnFrame	()
 	if(!g_dedicated_server )
 	{
 		if (g_mt_config.test(mtMap)) 
-			Device.seqParallel.push_back	(fastdelegate::FastDelegate0<>(m_map_manager,&CMapManager::Update));
+			Device.seqParallel.push_back	(fastdelegate::FastDelegate<void()>(m_map_manager,&CMapManager::Update));
 		else								
 			MapManager().Update		();
 
 		if( IsGameTypeSingle() && Device.dwPrecacheFrame==0 )
 		{
 			if (g_mt_config.test(mtMap)) 
-				Device.seqParallel.push_back	(fastdelegate::FastDelegate0<>(m_game_task_manager,&CGameTaskManager::UpdateTasks));
+				Device.seqParallel.push_back	(fastdelegate::FastDelegate<void()>(m_game_task_manager,&CGameTaskManager::UpdateTasks));
 			else								
 				GameTaskManager().UpdateTasks();
 		}
@@ -735,14 +735,14 @@ void CLevel::OnFrame	()
 	if(!g_dedicated_server)
 	{
 		if (g_mt_config.test(mtLevelSounds)) 
-			Device.seqParallel.push_back	(fastdelegate::FastDelegate0<>(m_level_sound_manager,&CLevelSoundManager::Update));
+			Device.seqParallel.push_back	(fastdelegate::FastDelegate<void()>(m_level_sound_manager,&CLevelSoundManager::Update));
 		else								
 			m_level_sound_manager->Update	();
 	}
 	// deffer LUA-GC-STEP
 	if (!g_dedicated_server)
 	{
-		if (g_mt_config.test(mtLUA_GC))	Device.seqParallel.push_back	(fastdelegate::FastDelegate0<>(this,&CLevel::script_gc));
+		if (g_mt_config.test(mtLUA_GC))	Device.seqParallel.push_back	(fastdelegate::FastDelegate<void()>(this,&CLevel::script_gc));
 		else							script_gc	()	;
 	}
 	//-----------------------------------------------------
