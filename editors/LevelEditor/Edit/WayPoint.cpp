@@ -400,42 +400,49 @@ CWayPoint* CWayObject::AppendWayPoint()
 
 void CWayObject::Select(int flag)
 {
-    if (IsPointMode()){
-	    if (Selected()){
-        	for (WPIt it=m_WayPoints.begin(); it!=m_WayPoints.end(); it++) (*it)->Select(flag);
-        }
-    }else{
-		inherited::Select(flag);
-    }
+	inherited::Select(flag);
 }
 
 bool CWayObject::RaySelect(int flag, const Fvector& start, const Fvector& dir, bool bRayTest)
 {
-    if (IsPointMode()){
-    	float dist = UI->ZFar();
-        CWayPoint* nearest=0;
-        dist = UI->ZFar();
-		for (WPIt it=m_WayPoints.begin(); it!=m_WayPoints.end(); it++)
-			if ((*it)->RayPick(dist,start,dir)) nearest=*it;
-        if (nearest!=0){
-        	nearest->Select(flag);
-            return true;
-        }
-    }else 	return inherited::RaySelect(flag,start,dir,bRayTest);
-    return false;
+	return inherited::RaySelect(flag,start,dir,bRayTest);
 }
 
 bool CWayObject::FrustumSelect(int flag, const CFrustum& frustum)
 {
-    if (IsPointMode()){
-	    if (Selected()){
-            bool bRes=false;
-            for (WPIt it=m_WayPoints.begin(); it!=m_WayPoints.end(); it++)
-                bRes|=(*it)->FrustumSelect(flag,frustum);
-            return true;
-        }
-        return false;
-    }else 	return inherited::FrustumSelect(flag,frustum);
+	return inherited::FrustumSelect(flag,frustum);
+}
+
+void CWayObject::SelectPoint(int flag)
+{
+	if (Selected()){
+		for (WPIt it=m_WayPoints.begin(); it!=m_WayPoints.end(); it++) (*it)->Select(flag);
+	}
+}
+
+bool CWayObject::RaySelectPoint(int flag, const Fvector& start, const Fvector& dir, bool bRayTest)
+{
+	float dist = UI->ZFar();
+	CWayPoint* nearest=0;
+	dist = UI->ZFar();
+	for (WPIt it=m_WayPoints.begin(); it!=m_WayPoints.end(); it++)
+		if ((*it)->RayPick(dist,start,dir)) nearest=*it;
+	if (nearest!=0){
+		nearest->Select(flag);
+		return true;
+	}
+	return false;
+}
+
+bool CWayObject::FrustumSelectPoint(int flag, const CFrustum& frustum)
+{
+	if (Selected()){
+		bool bRes=false;
+		for (WPIt it=m_WayPoints.begin(); it!=m_WayPoints.end(); it++)
+			bRes|=(*it)->FrustumSelect(flag,frustum);
+		return true;
+	}
+	return false;
 }
 
 bool CWayObject::GetBox( Fbox& box )

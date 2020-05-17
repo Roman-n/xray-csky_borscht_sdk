@@ -72,7 +72,11 @@ public:
 
 	virtual void 	Select			(int flag);
 	virtual bool 	RaySelect		(int flag, const Fvector& start, const Fvector& dir, bool bRayTest=false); // flag 1,0,-1 (-1 invert)
-    virtual bool 	FrustumSelect	(int flag, const CFrustum& frustum);
+	virtual bool 	FrustumSelect	(int flag, const CFrustum& frustum);
+
+	void			SelectPoint		(int flag);
+	bool			RaySelectPoint	(int flag, const Fvector& start, const Fvector& dir, bool bRayTest=false);
+	bool			FrustumSelectPoint(int flag, const CFrustum& frustum);
 
     CWayPoint*		AppendWayPoint	();
     CWayPoint*		GetFirstSelected();

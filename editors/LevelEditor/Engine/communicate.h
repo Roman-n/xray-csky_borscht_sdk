@@ -119,7 +119,8 @@ struct b_mu_model
     int					m_iVertexCount;
     b_vertex*			m_pVertices;
     int					m_iFaceCount;
-    b_face*				m_pFaces;
+	b_face*				m_pFaces;
+	Fvector*			m_pVertexNormals;
     u32*				m_smgroups;
 	u16					lod_id;				// u16(-1) = no lod, just static geometry
 };

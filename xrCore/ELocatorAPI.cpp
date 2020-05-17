@@ -266,7 +266,7 @@ int CLocatorAPI::file_list(FS_FileSet& dest, LPCSTR path, u32 flags, LPCSTR mask
 
 IReader* CLocatorAPI::r_open	(LPCSTR path, LPCSTR _fname)
 {
-	IReader* R		= 0;
+	IReader* R;
 
 	// correct path
 	string_path		fname;
@@ -280,17 +280,16 @@ IReader* CLocatorAPI::r_open	(LPCSTR path, LPCSTR _fname)
 
 	dwOpenCounter	++;
 
-	LPCSTR	source_name 	= &fname[0];
-
     // open file
     if (desc.size<256*1024)	R = xr_new<CFileReader>			(fname);
     else			  		R = xr_new<CVirtualFileReader>	(fname);
     
 #ifdef DEBUG
 	if ( R && m_Flags.is(flBuildCopy|flReady) ){
+		LPCSTR source_name = &fname[0];
 		string_path	cpy_name;
 		string_path	e_cpy_name;
-		FS_Path* 	P; 
+		FS_Path* 	P;
 		if (source_name==strstr(source_name,(P=get_path("$server_root$"))->m_Path)||
         	source_name==strstr(source_name,(P=get_path("$server_data_root$"))->m_Path)){
 			update_path			(cpy_name,"$build_copy$",source_name+xr_strlen(P->m_Path));

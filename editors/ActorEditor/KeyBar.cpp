@@ -17,6 +17,7 @@
 #pragma link "ElBtnCtl"
 #pragma link "ElCheckCtl"
 #pragma link "ElPopBtn"
+#pragma link "ElCGControl"
 #pragma resource "*.dfm"
 //---------------------------------------------------------------------------
 __fastcall TfrmKeyBar::TfrmKeyBar(TComponent* Owner)
@@ -90,7 +91,7 @@ void TfrmKeyBar::UpdateBar()
     if(bMarksPresent34 || ((CAEPreferences*)EPrefs)->bAlwaysShowKeyBar34)
     	h+=60 ; //(4x15)
     else
-    if(bMarksPresent12 || ((CAEPreferences*)EPrefs)->bAlwaysShowKeyBar12)
+	if(bMarksPresent12 || ((CAEPreferences*)EPrefs)->bAlwaysShowKeyBar12)
     	h+=30 ; //(2x15)
 
 
@@ -100,7 +101,7 @@ void TfrmKeyBar::UpdateBar()
 
 }
 
-void TfrmKeyBar::draw_marks (int i)
+void TfrmKeyBar::draw_marks (size_t i)
 {
 	if(m_currentEditMotion	!= ATools->GetCurrentMotion())
     {
@@ -118,7 +119,7 @@ void TfrmKeyBar::draw_marks (int i)
      if(m_currentEditMotion->marks.size()==0)
 		return;
 
-     if(m_currentEditMotion->marks.size() < (i+1) )
+	 if(m_currentEditMotion->marks.size() < (i+1) )
 		return;
 
 	 motion_marks& M 		= m_currentEditMotion->marks[i];
@@ -190,7 +191,7 @@ bool interval_comparer(const motion_marks::interval& i1, const motion_marks::int
 	return (i1.first<i2.first);
 }
 
-void TfrmKeyBar::set_mark	(int id, int action)
+void TfrmKeyBar::set_mark	(size_t id, int action)
 {
    	m_currentEditMotion	= ATools->GetCurrentMotion();
 
@@ -351,7 +352,7 @@ void __fastcall TfrmKeyBar::PanelCh3Paint(TObject *Sender)
 
 void __fastcall TfrmKeyBar::PanelCh4Paint(TObject *Sender)
 {
-   		draw_marks(3);
+		draw_marks(3);
 }
 //---------------------------------------------------------------------------
 

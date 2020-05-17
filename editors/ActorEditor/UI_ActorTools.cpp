@@ -977,7 +977,7 @@ LPCSTR CActorTools::ExtractMotionName(LPCSTR full_name, LPCSTR prefix)
     {
         LPCSTR mot_nm		   	= strstr(full_name, _templ);
     	mot_nm 					+= xr_strlen(_templ);
-        u32 ii = 0;
+
          while(isdigit(*mot_nm))
         {
             ++mot_nm;

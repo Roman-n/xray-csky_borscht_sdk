@@ -75,9 +75,6 @@ protected:
 
     void PrepareRedraw	();
     void Redraw			();
-protected:
-    void D3D_CreateStateBlocks();
-    void D3D_DestroyStateBlocks();
 public:
     virtual void OutUICursorPos	()=0;
 	virtual void OutGridSize	()=0;

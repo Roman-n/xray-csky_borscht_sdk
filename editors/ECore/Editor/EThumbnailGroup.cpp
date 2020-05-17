@@ -34,7 +34,7 @@ bool EGroupThumbnail::Load(LPCSTR src_name, LPCSTR path)
 	string_path fn;
     strcpy(fn,EFS.ChangeFileExt(src_name?src_name:m_Name.c_str(),".thm").c_str());
     if (path) 		FS.update_path(fn,path,fn);
-    else			FS.update_path(fn,_objects_,fn);
+    else			FS.update_path(fn,_groups_,fn);
     if (!FS.exist(fn)) return false;
 
     IReader* F 		= FS.r_open(fn);
@@ -91,7 +91,7 @@ void EGroupThumbnail::Save(int age, LPCSTR path)
 
 	string_path fn;
     if (path) 		FS.update_path(fn,path,m_Name.c_str());
-    else			FS.update_path(fn,_objects_,m_Name.c_str());
+    else			FS.update_path(fn,_groups_,m_Name.c_str());
     if (F.save_to(fn))
     {
 	    FS.set_file_age	(fn,age?age:m_Age);
