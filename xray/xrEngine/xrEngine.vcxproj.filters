@@ -76,9 +76,6 @@
     <Filter Include="Render\Visibility">
       <UniqueIdentifier>{17458b6d-b3ff-4378-8134-a9185af4307d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Render\Visibility\Frustum">
-      <UniqueIdentifier>{ffa91f5a-59ae-4591-8491-31aaefe87822}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Render\Particle system">
       <UniqueIdentifier>{a2e0ce6d-a665-4529-bbe9-2fdbbf26709d}</UniqueIdentifier>
     </Filter>
@@ -329,9 +326,6 @@
     </ClInclude>
     <ClInclude Include="vis_common.h">
       <Filter>Render\Visibility</Filter>
-    </ClInclude>
-    <ClInclude Include="Frustum.h">
-      <Filter>Render\Visibility\Frustum</Filter>
     </ClInclude>
     <ClInclude Include="PS_instance.h">
       <Filter>Render\Particle system</Filter>
@@ -601,9 +595,6 @@
     </ClCompile>
     <ClCompile Include="GameMtlLib_Engine.cpp">
       <Filter>Game API\GameMaterials</Filter>
-    </ClCompile>
-    <ClCompile Include="Frustum.cpp">
-      <Filter>Render\Visibility\Frustum</Filter>
     </ClCompile>
     <ClCompile Include="PS_instance.cpp">
       <Filter>Render\Particle system</Filter>

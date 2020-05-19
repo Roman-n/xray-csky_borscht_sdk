@@ -84,9 +84,6 @@
     <ClInclude Include="..\..\xrEngine\IGame_Persistent.h">
       <Filter>xrEngine</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\xrEngine\Frustum.h">
-      <Filter>xrEngine</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Layers\xrRender\DetailModel.h">
       <Filter>xrRender</Filter>
     </ClInclude>
@@ -519,9 +516,6 @@
       <Filter>xrEngine</Filter>
     </ClCompile>
     <ClCompile Include="..\..\xrEngine\IGame_Persistent.cpp">
-      <Filter>xrEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\xrEngine\Frustum.cpp">
       <Filter>xrEngine</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Layers\xrRender\DetailModel.cpp">

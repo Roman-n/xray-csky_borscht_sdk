@@ -6,7 +6,7 @@
 #include "x_ray.h"
 #include "xrLevel.h"
 #include "fmesh.h"
-#include "frustum.h"
+#include "../xrCore/frustum.h"
 
 //#include "skeletoncustom.h"
 #include "../Include/xrRender/Kinematics.h"

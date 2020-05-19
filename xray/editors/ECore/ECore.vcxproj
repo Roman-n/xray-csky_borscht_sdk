@@ -256,7 +256,6 @@
     <ClInclude Include="..\..\xrEngine\envelope.h" />
     <ClInclude Include="..\..\xrEngine\Environment.h" />
     <ClInclude Include="..\..\xrEngine\Fmesh.h" />
-    <ClInclude Include="..\..\xrEngine\Frustum.h" />
     <ClInclude Include="..\..\xrEngine\GameFont.h" />
     <ClInclude Include="..\..\xrEngine\GameMtlLib.h" />
     <ClInclude Include="..\..\xrEngine\IGame_Persistent.h" />
@@ -412,7 +411,6 @@
     <ClCompile Include="..\..\xrEngine\Environment_misc.cpp" />
     <ClCompile Include="..\..\xrEngine\Environment_render.cpp" />
     <ClCompile Include="..\..\xrEngine\fmesh.cpp" />
-    <ClCompile Include="..\..\xrEngine\Frustum.cpp" />
     <ClCompile Include="..\..\xrEngine\GameFont.cpp" />
     <ClCompile Include="..\..\xrEngine\GameMtlLib.cpp" />
     <ClCompile Include="..\..\xrEngine\IGame_Persistent.cpp" />

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "xrCDB.h"
-#include "../xrEngine/Frustum.h"
+#include "../xrCore/Frustum.h"
 
 using namespace CDB;
 using namespace Opcode;

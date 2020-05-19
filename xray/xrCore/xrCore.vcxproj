@@ -700,6 +700,7 @@
     <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="FileSystem_borland.cpp" />
     <ClCompile Include="file_stream_reader.cpp" />
+    <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="FS.cpp" />
     <ClCompile Include="FTimer.cpp" />
     <ClCompile Include="LocatorAPI.cpp" />
@@ -841,6 +842,7 @@
     <ClInclude Include="FixedMap.h" />
     <ClInclude Include="FixedSet.h" />
     <ClInclude Include="FixedVector.h" />
+    <ClInclude Include="Frustum.h" />
     <ClInclude Include="FS.h" />
     <ClInclude Include="FS_impl.h" />
     <ClInclude Include="FS_internal.h" />

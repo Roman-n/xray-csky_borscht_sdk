@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "frustum.h"
+#include "../xrCore/frustum.h"
 #pragma warning(disable:4995)
 // mmsystem.h
 #define MMNOSOUND

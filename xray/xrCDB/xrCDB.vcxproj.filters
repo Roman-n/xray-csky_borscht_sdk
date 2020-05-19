@@ -99,9 +99,6 @@
     <ClCompile Include="Opcode.cpp">
       <Filter>Opcode</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrEngine\Frustum.cpp">
-      <Filter>Kernel</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -226,9 +223,6 @@
     </ClInclude>
     <ClInclude Include="Opcode.h">
       <Filter>Opcode</Filter>
-    </ClInclude>
-    <ClInclude Include="..\xrEngine\Frustum.h">
-      <Filter>Kernel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

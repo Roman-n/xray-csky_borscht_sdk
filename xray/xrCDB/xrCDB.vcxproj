@@ -530,7 +530,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\xrEngine\Frustum.cpp" />
     <ClCompile Include="cl_raypick.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug-LLVM|Win32'">true</ExcludedFromBuild>
@@ -737,7 +736,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\xrEngine\Frustum.h" />
     <ClInclude Include="Opcode.h" />
     <ClInclude Include="OPC_AABB.h" />
     <ClInclude Include="OPC_AABBCollider.h" />

@@ -2,7 +2,7 @@
 #ifndef renderH
 #define renderH
 
-#include <xrEngine/Frustum.h>
+#include <xrCore/Frustum.h>
 #include <xrEngine/vis_common.h>
 
 #include <Layers/xrRender/blenders/Blender.h>
