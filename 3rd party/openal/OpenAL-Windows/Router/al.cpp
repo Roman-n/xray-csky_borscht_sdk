@@ -170,7 +170,7 @@ static ALfunction  function[]=   {
     EnterCriticalSection(&context->Lock);                                   \
     alListReleaseLock(alContextList);                                       \
                                                                             \
-    result = context->AlApi.##fxn;                                          \
+    result = context->AlApi.fxn;                                            \
     LeaveCriticalSection(&context->Lock);                                   \
     return result
 
@@ -188,7 +188,7 @@ static ALfunction  function[]=   {
     EnterCriticalSection(&context->Lock);                                   \
     alListReleaseLock(alContextList);                                       \
                                                                             \
-    context->AlApi.##fxn;                                                   \
+    context->AlApi.fxn;                                                     \
     LeaveCriticalSection(&context->Lock);                                   \
     return
 #endif
