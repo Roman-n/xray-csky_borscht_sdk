@@ -2,7 +2,7 @@
 #define r_constantsH
 #pragma once
 
-#include "../../xrcore/xr_resource.h"
+#include "../../xrCore/xr_resource.h"
 
 
 #ifdef	USE_DX10

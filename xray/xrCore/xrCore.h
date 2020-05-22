@@ -10,7 +10,7 @@
 
 #if (defined(_DEBUG) || defined(MIXED) || defined(DEBUG)) && !defined(FORCE_NO_EXCEPTIONS)
 	// "debug" or "mixed"
-	#if !defined(_CPPUNWIND)
+	#if (!defined(_CPPUNWIND) && !defined(__EXCEPTIONS))
 		#error Please enable exceptions...
 	#endif
 	#define _HAS_EXCEPTIONS		1	// STL

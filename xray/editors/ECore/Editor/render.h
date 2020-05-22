@@ -6,7 +6,7 @@
 #include <xrEngine/vis_common.h>
 
 #include <Layers/xrRender/blenders/Blender.h>
-#include <Layers/xrRender/blenders/blender_clsid.h>
+#include <Layers/xrRender/blenders/Blender_CLSID.h>
 #include <Layers/xrRender/xrRender_console.h>
 #include <Layers/xrRender/PSLibrary.h>
 #include <Layers/xrRender/IRenderDetailModel.h>

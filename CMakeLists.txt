@@ -7,7 +7,11 @@ link_directories(SDK/libraries/x64)
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDLL")
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/intermediate/cmake-${CMAKE_CXX_COMPILER_ID}-${CMAKE_CXX_COMPILER_ARCHITECTURE_ID}-${CMAKE_BUILD_TYPE}")
-add_compile_definitions($<$<CONFIG:Debug>:DEBUG>)
+add_compile_definitions(
+	$<$<CONFIG:Debug>:DEBUG>
+	$<$<CXX_COMPILER_ID:GNU>:_MT>)
+
+message("CMAKE_CXX_COMPILER_ID " ${CMAKE_CXX_COMPILER_ID})
 
 add_subdirectory("3rd party/libogg-1.3.3")
 add_subdirectory("3rd party/libvorbis-1.3.6")

@@ -10,12 +10,12 @@
 #define PGO(a)
 #endif
 
-#include "r_DStreams.h"
+#include "R_DStreams.h"
 #include "r_constants_cache.h"
-#include "r_backend_xform.h"
-#include "r_backend_hemi.h"
-#include "r_backend_tree.h"
-#include "fvf.h"
+#include "R_Backend_xform.h"
+#include "R_Backend_hemi.h"
+#include "R_Backend_tree.h"
+#include "FVF.h"
 
 const	u32		CULL_CCW			= D3DCULL_CCW;
 const	u32		CULL_CW				= D3DCULL_CW;
@@ -191,7 +191,7 @@ public:
 
 #ifdef	USE_DX10
 	IC	void						get_ConstantDirect	(shared_str& n, u32 DataSize, void** pVData, void** pGData, void** pPData);
-#else	USE_DX10
+#else	//	USE_DX10
 	IC	R_constant_array&			get_ConstantCache_Vertex	()			{ return constants.a_vertex;	}
 	IC	R_constant_array&			get_ConstantCache_Pixel		()			{ return constants.a_pixel;		}
 #endif	//	USE_DX10

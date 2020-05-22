@@ -3,7 +3,7 @@
 #define PropertiesListTypesH
 
 
-#include "WaveForm.H"
+#include "WaveForm.h"
 #include "gametype_chooser.h"
 
 #ifdef __BORLANDC__            
@@ -49,7 +49,7 @@ class PropItem;
 DEFINE_VECTOR			(PropItem*,PropItemVec,PropItemIt);
 
 //------------------------------------------------------------------------------
-#include "../xrcore/ChooseTypes.H"     
+#include "../xrCore/ChooseTypes.H"     
 //------------------------------------------------------------------------------
 typedef fastdelegate::FastDelegate<void(PropValue*, xr_string&)> 	TOnDrawTextEvent; 
 typedef fastdelegate::FastDelegate<void(PropItem*)> 				TOnClick;
@@ -99,8 +99,8 @@ public:
 public:
 						CustomValue		(T* val)
 	{
-    	OnBeforeEditEvent 	= 0;
-        OnAfterEditEvent	= 0;
+    	OnBeforeEditEvent.clear();
+        OnAfterEditEvent.clear();
     	set_value		(value,val);
     	set_value		(init_value,*val);
     };
@@ -301,7 +301,7 @@ public:
 						ButtonValue		(const shared_str& val, u32 flags)
 	{
     	m_Flags.assign	(flags);
-    	OnBtnClickEvent	= 0;
+    	OnBtnClickEvent.clear();
     	btn_num			= -1;
     	xr_string 	v;
         int cnt			=_GetItemCount(val.c_str()); 
@@ -376,8 +376,8 @@ public:
 public:
 						CTextValue		(LPSTR val, int _lim):value(val),init_value(val),lim(_lim)
     {
-    	OnBeforeEditEvent 	= 0;
-        OnAfterEditEvent	= 0;
+    	OnBeforeEditEvent.clear();
+        OnAfterEditEvent.clear();
     };
     virtual xr_string	GetDrawText		(TOnDrawTextEvent OnDrawText)
     {
@@ -554,6 +554,8 @@ class FlagValue: public CustomValue<T>, public FlagValueCustom
 public:
 	typedef T			TYPE;
 	typedef typename T::TYPE FLAG_TYPE;
+	using CustomValue<T>::value;
+	using CustomValue<T>::init_value;
 public:
     FLAG_TYPE			mask;
 public:

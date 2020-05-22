@@ -2,10 +2,10 @@
 #define R_BACKEND_RUNTIMEH
 #pragma once
 
-#include "sh_texture.h"
-#include "sh_matrix.h"
-#include "sh_constant.h"
-#include "sh_rt.h"
+#include "SH_Texture.h"
+#include "SH_Matrix.h"
+#include "SH_Constant.h"
+#include "SH_RT.h"
 
 #ifdef	USE_DX10
 #include "../xrRenderDX10/dx10R_Backend_Runtime.h"

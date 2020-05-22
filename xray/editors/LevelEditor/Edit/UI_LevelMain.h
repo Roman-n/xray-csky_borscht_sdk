@@ -98,7 +98,7 @@ public:
     void			store_rt_flags			(const CCustomObject* CO);
     void			restore_rt_flags		(CCustomObject* CO);
 
-    virtual LPSTR	GetCaption				();
+    virtual LPCSTR	GetCaption				();
 
     virtual void 	ResetStatus				();
             void 	SetStatus				(LPCSTR s, bool bOutLog=true) override;

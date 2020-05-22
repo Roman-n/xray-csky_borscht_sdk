@@ -444,9 +444,9 @@ int CImageManager::GetLocalNewTextures(FS_FileSet& files)
 // output: 	соответствие
 //------------------------------------------------------------------------------
 #define SQR(a) ((a)*(a))
-BOOL CImageManager::CheckCompliance(LPCSTR fname, int& compl)
+BOOL CImageManager::CheckCompliance(LPCSTR fname, int& compliance)
 {
-	compl 			= 0;
+	compliance	= 0;
     U32Vec data;
     u32 w, h, a;
     if (!Surface_Load(fname,data,w,h,a)) return FALSE;
@@ -485,18 +485,18 @@ BOOL CImageManager::CheckCompliance(LPCSTR fname, int& compl)
     difference		= 	difference/(a ? 2.f : sqrtf(3.f));
     difference		=  	difference*100.f;
     clamp 			(difference,0.f,100.f);
-    compl			= 	iFloor(difference)*1000;
+    compliance		= 	iFloor(difference)*1000;
     maximal 		=	maximal/(a ? 2.f : sqrtf(3.f));
     maximal			=  	maximal*100.f;
     clamp 			(maximal,0.f,100.f);
-    compl			+= 	iFloor(maximal);
+    compliance		+= 	iFloor(maximal);
 
     // free
     xr_free			(pScaled);
     xr_free   		(pRestored);
     return 			TRUE;
 }
-void CImageManager::CheckCompliance(FS_FileSet& files, FS_FileSet& compl)
+void CImageManager::CheckCompliance(FS_FileSet& files, FS_FileSet& compliance)
 {
 	SPBItem* pb = UI->ProgressStart(files.size(),"Check texture compliance: ");
     FS_FileSetIt it	= files.begin();
@@ -508,7 +508,7 @@ void CImageManager::CheckCompliance(FS_FileSet& files, FS_FileSet& compl)
     	if (!CheckCompliance(fname,val))
         	ELog.Msg(mtError,"Bad texture: '%s'",it->name.c_str());
         FS_File 				F(*it); F.attrib = val;
-        compl.insert			(F);
+        compliance.insert		(F);
 	    pb->Inc					();
 		if (UI->NeedAbort()) break;
     }

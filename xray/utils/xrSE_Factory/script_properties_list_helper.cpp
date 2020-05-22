@@ -22,42 +22,15 @@ CSE_Abstract *owner				(luabind::object object)
 }
 
 template <typename T>
-struct CWrapHelper {
-	typedef T result_type;
-	template <bool a>
-	static T	*wrap_value				(luabind::object object, LPCSTR name)
-	{
-		CScriptValueWrapper<T>	*value = xr_new<CScriptValueWrapper<T> >(object,name);
-		owner(object)->add		(value);
-		return					(value->value());
-	}
-
-	template <>
-	static T	*wrap_value<true>		(luabind::object object, LPCSTR name)
-	{
-		return					(luabind::object_cast<T*>(object[name]));
-	}
-};
-
-template <>
-struct CWrapHelper<bool> {
-	typedef BOOL result_type;
-	template <bool a>
-	static BOOL	*wrap_value				(luabind::object object, LPCSTR name)
-	{
-		CScriptValueWrapper<bool>	*value = xr_new<CScriptValueWrapper<bool> >(object,name);
-		owner(object)->add			(value);
-		return						(value->value());
-	}
-};
-
-template <typename T>
-typename CWrapHelper<T>::result_type	*wrap_value		(luabind::object object, LPCSTR name)
+auto *wrap_value(luabind::object object, LPCSTR name)
 {
-	return						(CWrapHelper<T>::wrap_value<
-		std::is_class_v<T> &&
-		!object_type_traits::is_same<shared_str,T>::value
-	>(object,name));
+	if constexpr (std::is_class_v<T> && !object_type_traits::is_same<shared_str, T>::value) {
+		return luabind::object_cast<T*>(object[name]);
+    } else {
+		CScriptValueWrapper<T> *value = xr_new<CScriptValueWrapper<T>>(object,name);
+		owner(object)->add(value);
+		return value->value();
+    }
 }
 
 bool CScriptPropertiesListHelper::FvectorRDOnAfterEdit	(PropValue* sender,  Fvector& edit_val)

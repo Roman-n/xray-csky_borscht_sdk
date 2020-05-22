@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "xrCDB.h"
 #include "../xrCore/Frustum.h"
 

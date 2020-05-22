@@ -96,14 +96,14 @@ __inline float expf	(float val)                           	{ return ::exp(val);}
 
 #include "..\..\xrCDB\xrCDB.h"
 #include "..\..\xrSound\Sound.h"
-#include "..\..\xrEngine\PSystem.h"
+#include "..\..\xrEngine\psystem.h"
 
 // DirectX headers
 #include <d3d9.h>
 #pragma warn -8010
 #include <d3dx/d3dx9.h>
 #pragma warn .8010
-#include "..\..\Layers\xrRender\xrD3dDefs.h"
+#include "..\..\Layers\xrRender\xrD3DDefs.h"
 
 #ifdef __BORLANDC__
 #include <dinput.h>
@@ -111,15 +111,15 @@ __inline float expf	(float val)                           	{ return ::exp(val);}
 #endif
 
 // some user components
-#include "..\..\xrEngine\fmesh.h"
+#include "..\..\xrEngine\Fmesh.h"
 #include "..\..\xrEngine\_d3d_extensions.h"
 
 DEFINE_VECTOR		(AnsiString,AStringVec,AStringIt);
 DEFINE_VECTOR		(AnsiString*,LPAStringVec,LPAStringIt);
 
 #include <xrServerEntities/xrEProps.h>
-#include "../../xrCore/Log.h"
-#include "editor/engine.h"
+#include "../../xrCore/log.h"
+#include "Editor/engine.h"
 #include "../../xrEngine/defines.h"
 
 struct str_pred
@@ -134,9 +134,9 @@ struct astr_pred
 };
 
 #ifdef _EDITOR
-	#include "editor\device.h"
-	#include "..\..\xrEngine\properties.h"
-	#include "editor\render.h"
+	#include "Editor/device.h"
+	#include "..\..\xrEngine\Properties.h"
+	#include "Editor/render.h"
 	DEFINE_VECTOR(FVF::L,FLvertexVec,FLvertexIt);
 	DEFINE_VECTOR(FVF::TL,FTLvertexVec,FTLvertexIt);
 	DEFINE_VECTOR(FVF::LIT,FLITvertexVec,FLITvertexIt);

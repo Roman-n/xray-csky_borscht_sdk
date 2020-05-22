@@ -7,7 +7,7 @@
 
 #include "EditMesh.h"
 #include "EditObject.h"
-#include <xrEngine/Bone.h>
+#include <xrEngine/bone.h>
 #include "../../../Include/itterate_adjacents.h"
 #include "itterate_adjacents_dynamic.h"
 #ifdef _EDITOR

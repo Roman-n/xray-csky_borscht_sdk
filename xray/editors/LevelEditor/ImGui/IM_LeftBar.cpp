@@ -1,4 +1,4 @@
-#include "stdafx.h"
+п»ї#include "stdafx.h"
 #pragma hdrstop
 
 #include "IM_LeftBar.h"
@@ -16,7 +16,7 @@
 
 void IM_LeftBar::OnAdd()
 {
-	m_title = wide2utf8(L"Редактор уровней X-Ray 1.8");
+	m_title = u8"Р РµРґР°РєС‚РѕСЂ СѓСЂРѕРІРЅРµР№ X-Ray 1.8";
 
     fraObject.OnAdd();
     fraLight.OnAdd();

@@ -4,7 +4,7 @@
 
 //#include		"skeletoncustom.h"
 #include "bone.h"
-#include "skeletonmotiondefs.h"	
+#include "SkeletonMotionDefs.h"	
 // refs
 class CKinematicsAnimated;
 class CBlend;

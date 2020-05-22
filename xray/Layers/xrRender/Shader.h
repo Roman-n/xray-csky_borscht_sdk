@@ -9,11 +9,11 @@
 #include "r_constants.h"
 #include "../../xrCore/xr_resource.h"
 
-#include "sh_atomic.h"
-#include "sh_texture.h"
-#include "sh_matrix.h"
-#include "sh_constant.h"
-#include "sh_rt.h"
+#include "SH_Atomic.h"
+#include "SH_Texture.h"
+#include "SH_Matrix.h"
+#include "SH_Constant.h"
+#include "SH_RT.h"
 
 typedef xr_vector<shared_str>	sh_list;
 class					CBlender_Compile;
@@ -93,7 +93,7 @@ struct	  ECORE_API		SPass			: public xr_resource_flagged									{
 	BOOL				equal			(ref_state& _state, ref_ps& _ps, ref_vs& _vs, ref_gs& _gs, ref_ctable& _ctable, ref_texture_list& _T, ref_matrix_list& _M, ref_constant_list& _C);
 #else	//	USE_DX10
 	BOOL				equal			(ref_state& _state, ref_ps& _ps, ref_vs& _vs, ref_ctable& _ctable, ref_texture_list& _T, ref_matrix_list& _M, ref_constant_list& _C);
-#endif	USE_DX10
+#endif	//	USE_DX10
 };
 typedef	resptr_core<SPass,resptr_base<SPass> >												ref_pass;
 

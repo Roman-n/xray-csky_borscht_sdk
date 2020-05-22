@@ -6,7 +6,7 @@ class XRCORE_API CStreamReader;
 
 struct ILocatorAPI
 {
-	virtual ~ILocatorAPI() = 0 {}
+	virtual ~ILocatorAPI() {}
 
 	enum{
 		flNeedRescan			= (1<<0),

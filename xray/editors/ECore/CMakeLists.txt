@@ -6,6 +6,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE  -DNO_VCL -D_EDITOR -D_ECOREB
 target_include_directories(${PROJECT_NAME} PRIVATE
 	../..
 	.)
+target_compile_options(${PROJECT_NAME} PRIVATE $<$<CXX_COMPILER_ID:Clang>:-Wno-non-pod-varargs>)
 target_sources(${PROJECT_NAME} PRIVATE
 	Editor/ArbitraryList.h
 #	Editor/bone.cpp

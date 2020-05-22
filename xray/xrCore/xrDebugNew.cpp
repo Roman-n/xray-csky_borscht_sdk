@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "xrdebug.h"
+#include "xrDebug.h"
 #include "os_clipboard.h"
 #include "../../3rd party/DxErr/src/dxerr.h"
 #include "blackbox/CrashHandler.h"

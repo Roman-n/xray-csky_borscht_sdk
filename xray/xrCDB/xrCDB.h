@@ -306,7 +306,7 @@ namespace CDB
 		Face*			getT() { return faces.data(); }
 		size_t			getTS() { return faces.size(); }
 		void			clear() { VertexCollector::clear(); faces.clear(); }
-		void			reserve(size_t vertCount, size_t faceCount) { Collector_Base::.reserve(vertCount); faces.reserve(faceCount); }
+		void			reserve(size_t vertCount, size_t faceCount) { VertexCollector::reserve(vertCount); faces.reserve(faceCount); }
 
 		void			add_face(const Fvector& v0, const Fvector& v1, const Fvector& v2, Payload&& payload)
 		{

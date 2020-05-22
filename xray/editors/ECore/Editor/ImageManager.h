@@ -3,7 +3,7 @@
 #define ImageManagerH
 
 #include <editors/xrEProps/FolderLib.h>
-#include <Layers/xrRender/etextureparams.h>
+#include <Layers/xrRender/ETextureParams.h>
 #include "EThumbnail.h"
 
 class CEditableObject;
@@ -30,8 +30,8 @@ public:
 				~CImageManager		(){;}
 	// texture routines
     void __stdcall 	RemoveTexture	(LPCSTR fname, EItemType type, bool& res);
-    BOOL		CheckCompliance		(LPCSTR fname, int& compl);
-    void		CheckCompliance		(FS_FileSet& files, FS_FileSet& compl);
+    BOOL		CheckCompliance		(LPCSTR fname, int& compliance);
+    void		CheckCompliance		(FS_FileSet& files, FS_FileSet& compliance);
     int			GetTextures			(FS_FileSet& files, BOOL bFolder=FALSE);
     int			GetTexturesRaw		(FS_FileSet& files, BOOL bFolder=FALSE);
 //	int			GetServerModifiedTextures(CLocatorAPI::files_query& files);

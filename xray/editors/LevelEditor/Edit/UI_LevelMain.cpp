@@ -1017,7 +1017,7 @@ void CLevelMain::RegisterCommands()
     
 }
 
-char* CLevelMain::GetCaption()
+const char* CLevelMain::GetCaption()
 {
 	return Tools->m_LastFileName.empty()?"noname":Tools->m_LastFileName.c_str();
 }

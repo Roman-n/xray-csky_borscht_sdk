@@ -6,6 +6,10 @@ using std::swap;
 #ifdef	__BORLANDC__
 #define M_NOSTDCONTAINERS_EXT
 #endif
+#ifdef	__GNUC__
+#define	M_NOSTDCONTAINERS_EXT
+#endif
+
 #ifdef	_M_AMD64
 #define M_DONTDEFERCLEAR_EXT
 #endif
@@ -27,11 +31,18 @@ using std::swap;
 
 template <class T>
 class xr_vector	: public std::vector<T> {
-public: 
+public:
 	typedef	size_t		size_type;
 	typedef T&			reference;
 	typedef const T&	const_reference;
-public: 
+public:
+#ifdef __GNUC__
+	using	std::vector<T>::begin;
+	using	std::vector<T>::end;
+	using	std::vector<T>::erase;
+	using	std::vector<T>::size;
+#endif
+
 			xr_vector			()								: std::vector<T>	()				{}
 			xr_vector			(size_t _count, const T& _value): std::vector<T>	(_count,_value)	{}
 	explicit xr_vector			(size_t _count)					: std::vector<T> 	(_count)		{}

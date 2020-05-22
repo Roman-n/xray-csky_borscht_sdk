@@ -32,7 +32,7 @@ LPCSTR _CopyVal ( LPCSTR src, AnsiString& dst, char separator )
 	LPCSTR	p;
 	u32		n;
 	p			= strchr	( src, separator );
-	n			= (p>0) ? (p-src) : xr_strlen(src);
+	n			= p ? (p-src) : xr_strlen(src);
 	dst			= src;
 	dst			= dst.substr(n);
 	return		dst.c_str();
