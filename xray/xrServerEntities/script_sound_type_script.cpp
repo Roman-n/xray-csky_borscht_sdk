@@ -8,7 +8,6 @@
 
 #include "pch_script.h"
 #include "script_sound_type.h"
-#include "ai_sounds.h"
 
 using namespace luabind;
 

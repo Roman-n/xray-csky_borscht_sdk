@@ -25,6 +25,7 @@
 #include <luabind/detail/stack_utils.hpp>
 #include <luabind/luabind.hpp>
 #include <utility>
+#include <cstring>
 
 using namespace luabind::detail;
 

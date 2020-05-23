@@ -44,44 +44,32 @@ public:
     option(U&& value) noexcept(std::is_nothrow_constructible_v<T, U&&>)
         : storage(),
           empty_(false) {
-        if constexpr(std::is_constructible_v<T, U&&>) {
-            construct(std::forward<U>(value));
-        } else {
-            static_assert(false, "Optional type needs to be constructible from argument type");
-        }
+        static_assert(std::is_constructible_v<T, U&&>, "Optional type needs to be constructible from argument type");
+        construct(std::forward<U>(value));
     }
 
     template <typename U>
     option(const option<U>& that) noexcept(std::is_nothrow_constructible_v<T, const U&>)
         : storage(),
           empty_(that.empty_) {
-        if constexpr(std::is_constructible_v<T, const U&>) {
-            if (that.non_empty()) construct(that.value());
-        } else {
-            static_assert(false, "Optional type needs to be constructible from optinal argument type");
-        }
+        static_assert(std::is_constructible_v<T, const U&>, "Optional type needs to be constructible from optinal argument type");
+        if (that.non_empty()) construct(that.value());
     }
 
     template <typename U>
     option(option<U>&& that) noexcept(std::is_nothrow_constructible_v<T, U&&>)
         : storage(),
           empty_(that.empty_) {
-        if constexpr(std::is_constructible_v<T, U&&>) {
-            if (that.non_empty()) construct(std::move(that.value()));
-        } else {
-            static_assert(false, "Optional type needs to be constructible from optional argument type");
-        }
+        static_assert(std::is_constructible_v<T, U&&>, "Optional type needs to be constructible from optional argument type");
+        if (that.non_empty()) construct(std::move(that.value()));
     }
 
     template <typename... Ts>
     explicit option(const in_place&, Ts&&... args) noexcept(std::is_nothrow_constructible_v<T, Ts&&...>)
         : storage(),
           empty_(false) {
-        if constexpr (std::is_constructible_v<T, Ts&&...>) {
-            construct(std::forward<Ts>(args)...);
-        } else {
-            static_assert(false, "Optional type needs to be constructible from passed arguments");
-        }
+        static_assert(std::is_constructible_v<T, Ts&&...>, "Optional type needs to be constructible from passed arguments");
+        construct(std::forward<Ts>(args)...);
     }
 
     ~option() noexcept(std::is_nothrow_destructible_v<T>) {
@@ -98,16 +86,12 @@ public:
                                                        std::is_nothrow_constructible_v<T, const U&> &&
                                                        std::is_nothrow_destructible_v<T>)
     {
-        if constexpr(std::is_constructible_v<T, const U&> && std::is_assignable_v<T, const U&>) {
-            if (non_empty() || that.non_empty()) {
-                if (non_empty() && that.non_empty())  assign(that.value());
-                else if (empty() && that.non_empty()) initialize(that.value());
-                else                                  reset();
-            }
-        } else {
-            static_assert(false, "Optional type needs to be constructible and assignable from the argument optional type");
+        static_assert(std::is_constructible_v<T, const U&> && std::is_assignable_v<T, const U&>, "Optional type needs to be constructible and assignable from the argument optional type");
+        if (non_empty() || that.non_empty()) {
+            if (non_empty() && that.non_empty())  assign(that.value());
+            else if (empty() && that.non_empty()) initialize(that.value());
+            else                                  reset();
         }
-
         return *this;
     }
 
@@ -116,28 +100,20 @@ public:
                                                   std::is_nothrow_constructible_v<T, U&&> &&
                                                   std::is_nothrow_destructible_v<T>)
     {
-        if constexpr (std::is_constructible_v<T, U&&> && std::is_assignable_v<T&, U&&>) {
-            if (non_empty() || that.non_empty()) {
-                if (non_empty() && that.non_empty())  assign(std::move(that.value()));
-                else if (empty() && that.non_empty()) initialize(std::move(that.value()));
-                else                                  reset();
-            }
-        } else {
-            static_assert(false, "Optional type needs to be constructible and assignable from the argument optional type");
+        static_assert(std::is_constructible_v<T, U&&> && std::is_assignable_v<T&, U&&>, "Optional type needs to be constructible and assignable from the argument optional type");
+        if (non_empty() || that.non_empty()) {
+            if (non_empty() && that.non_empty())  assign(std::move(that.value()));
+            else if (empty() && that.non_empty()) initialize(std::move(that.value()));
+            else                                  reset();
         }
-
         return *this;
     }
 
     template <typename U>
     option& operator= (U&& value) noexcept(std::is_nothrow_assignable_v<T&, U&&> && std::is_nothrow_constructible_v<T, U&&>) {
-        if constexpr (std::is_constructible_v<T, U&&> && std::is_assignable_v<T&, U&&>) {
-            if (empty()) initialize(std::forward<U>(value));
-            else         assign(std::forward<U>(value));
-        } else {
-            static_assert(false, "Optional type needs to be constructible and assignable from the argument type");
-        }
-
+        static_assert(std::is_constructible_v<T, U&&> && std::is_assignable_v<T&, U&&>, "Optional type needs to be constructible and assignable from the argument type");
+        if (empty()) initialize(std::forward<U>(value));
+        else         assign(std::forward<U>(value));
         return *this;
     }
 
@@ -164,11 +140,8 @@ public:
 
     template <typename U>
     bool operator== (const option<U>& that) const noexcept {
-        if constexpr (is_comparable_to_v<const T&, const U&>) {
-            return (empty() == that.empty()) && (empty() ? true : (value() == that.value()));
-        } else {
-            static_assert(false, "Types not comparable");
-        }
+        static_assert(is_comparable_to_v<const T&, const U&>, "Types not comparable");
+        return (empty() == that.empty()) && (empty() ? true : (value() == that.value()));
     }
 
     template <typename U>
@@ -178,12 +151,8 @@ public:
 
     template <typename U>
     bool operator== (const U& that) const noexcept {
-        if constexpr (is_comparable_to_v<const T&, const U&>) {
-            return empty() ? false : (value() == that);
-        } else {
-            static_assert(false, "Types not comparable");
-            return false;
-        }
+        static_assert(is_comparable_to_v<const T&, const U&>, "Types not comparable");
+        return empty() ? false : (value() == that);
     }
 
     bool operator!= (const T& that) const noexcept {

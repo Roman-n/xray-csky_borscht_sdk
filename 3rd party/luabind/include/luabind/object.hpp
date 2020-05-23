@@ -164,18 +164,18 @@ namespace luabind
 				return *this;
 			}
 
-			template<class T, class Policies>
-			void assign(const T& val, const Policies& p)
-			{
-				//std::cout << "proxy assigment\n";
-				lua_State* L = m_obj->m_state;
-				m_obj->pushvalue();
-				detail::getref(L, m_key_ref);
-				detail::convert_to_lua_p(L, val, p);
-				lua_settable(L, -3);
-				// pop table
-				lua_pop(L, 1);
-			}
+			//template<class T, class Policies>
+			//void assign(const T& val, const Policies& p)
+			//{
+			//	//std::cout << "proxy assigment\n";
+			//	lua_State* L = m_obj->m_state;
+			//	m_obj->pushvalue();
+			//	detail::getref(L, m_key_ref);
+			//	detail::convert_to_lua_p(L, val, p);
+			//	lua_settable(L, -3);
+			//	// pop table
+			//	lua_pop(L, 1);
+			//}
 
 			template<class T>
 			detail::proxy_object operator[](const T& key) const;
@@ -267,32 +267,32 @@ namespace luabind
 		    friend class luabind::detail::proxy_object;
 		public:
 
-			template<typename T>
-			proxy_raw_object& operator=(const T& val)
-			{
-				//std::cout << "proxy assigment\n";
-				lua_State* L = m_obj->m_state;
-				m_obj->pushvalue();
-				detail::getref(L, m_key_ref);
-				detail::convert_to_lua(L, val);
-				lua_rawset(L, -3);
-				// pop table
-				lua_pop(L, 1);
-				return *this;
-			}
+			//template<typename T>
+			//proxy_raw_object& operator=(const T& val)
+			//{
+			//	//std::cout << "proxy assigment\n";
+			//	lua_State* L = m_obj->m_state;
+			//	m_obj->pushvalue();
+			//	detail::getref(L, m_key_ref);
+			//	detail::convert_to_lua(L, val);
+			//	lua_rawset(L, -3);
+			//	// pop table
+			//	lua_pop(L, 1);
+			//	return *this;
+			//}
 
-			template<typename T, typename... Policies>
-			void assign(const T& val, const policy_cons<Policies...> p)
-			{
-				//std::cout << "proxy assigment\n";
-				lua_State* L = m_obj->m_state;
-				m_obj->pushvalue();
-				detail::getref(L, m_key_ref);
-				detail::convert_to_lua_p(L, val, p);
-				lua_settable(L, -3);
-				// pop table
-				lua_pop(L, 1);
-			}
+			//template<typename T, typename... Policies>
+			//void assign(const T& val, const policy_cons<Policies...> p)
+			//{
+			//	//std::cout << "proxy assigment\n";
+			//	lua_State* L = m_obj->m_state;
+			//	m_obj->pushvalue();
+			//	detail::getref(L, m_key_ref);
+			//	detail::convert_to_lua_p(L, val, p);
+			//	lua_settable(L, -3);
+			//	// pop table
+			//	lua_pop(L, 1);
+			//}
 
 			proxy_raw_object& operator=(const object& p);
 			proxy_raw_object& operator=(const proxy_object& p);
@@ -399,27 +399,27 @@ namespace luabind
 				return lua_type(lua_state(), -1);
 			}
 
-#define LUABIND_PROXY_ARRAY_RAW_AT_BODY\
-			{\
-				pushvalue();\
-				detail::convert_to_lua(m_state, key);\
-				lua_rawget(m_state, -2);\
-				lua_reference ref;\
-				ref.set(m_state);\
-				lua_pop(m_state, 1);\
-				return object(m_state, ref, true);\
-			}
+//#define LUABIND_PROXY_ARRAY_RAW_AT_BODY\
+//			{\
+//				pushvalue();\
+//				detail::convert_to_lua(m_state, key);\
+//				lua_rawget(m_state, -2);\
+//				lua_reference ref;\
+//				ref.set(m_state);\
+//				lua_pop(m_state, 1);\
+//				return object(m_state, ref, true);\
+//			}
 
-#define LUABIND_PROXY_ARRAY_AT_BODY\
-			{\
-				pushvalue();\
-				detail::convert_to_lua(m_state, key);\
-				lua_gettable(m_state, -2);\
-				lua_reference ref;\
-				ref.set(m_state);\
-				lua_pop(m_state, 1);\
-				return object(m_state, ref, true);\
-			}
+//#define LUABIND_PROXY_ARRAY_AT_BODY\
+//			{\
+//				pushvalue();\
+//				detail::convert_to_lua(m_state, key);\
+//				lua_gettable(m_state, -2);\
+//				lua_reference ref;\
+//				ref.set(m_state);\
+//				lua_pop(m_state, 1);\
+//				return object(m_state, ref, true);\
+//			}
 
 			template<class T>
 			inline object at(const T& key);
@@ -1178,13 +1178,13 @@ private:
 		// *************************************
 		// PROXY ARRAY OBJECT
 
-		template<class T>
-		inline object proxy_array_object::raw_at(const T& key)
-		LUABIND_PROXY_ARRAY_RAW_AT_BODY
+		//template<class T>
+		//inline object proxy_array_object::raw_at(const T& key)
+		//LUABIND_PROXY_ARRAY_RAW_AT_BODY
 
-		template<class T>
-		inline object proxy_array_object::at(const T& key)
-		LUABIND_PROXY_ARRAY_AT_BODY
+		//template<class T>
+		//inline object proxy_array_object::at(const T& key)
+		//LUABIND_PROXY_ARRAY_AT_BODY
 
 #undef LUABIND_PROXY_ARRAY_AT_BODY
 #undef LUABIND_PROXY_ARRAY_RAW_AT_BODY

@@ -195,6 +195,7 @@ switch (hr)
 // -------------------------------------------------------------
 // dinputd.h error codes
 // -------------------------------------------------------------
+#ifndef __GNUC__
     CHK_ERR(DIERR_NOMOREITEMS, "No more items.")
     CHK_ERR(DIERR_DRIVERFIRST, "Device driver-specific codes. Unless the specific driver has been precisely identified, no meaning should be attributed to these values other than that the driver originated the error.")
     CHK_ERR(DIERR_DRIVERFIRST+1, "DIERR_DRIVERFIRST+1")
@@ -206,6 +207,7 @@ switch (hr)
     CHK_ERR(DIERR_INVALIDCLASSINSTALLER, "Registry entry or DLL for class installer invalid or class installer not found.")
     CHK_ERR(DIERR_CANCELLED, "The user cancelled the install operation. & The stream already has allocated samples and the surface doesn't match the sample format.")
     CHK_ERR(DIERR_BADINF, "The INF file for the selected device could not be found or is invalid or is damaged. & The specified purpose ID can't be used for the call.")
+#endif
 
 // -------------------------------------------------------------
 // d3d9.h error codes
@@ -318,10 +320,12 @@ switch (hr)
 // -------------------------------------------------------------
 // d3d11.h error codes
 // -------------------------------------------------------------
+#ifndef __GNUC__
     CHK_ERR(D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS, "There are too many unique state objects.")
     CHK_ERR(D3D11_ERROR_FILE_NOT_FOUND, "File not found")
     CHK_ERR(D3D11_ERROR_TOO_MANY_UNIQUE_VIEW_OBJECTS, "Therea are too many unique view objects.")
     CHK_ERR(D3D11_ERROR_DEFERRED_CONTEXT_MAP_WITHOUT_INITIAL_DISCARD, "Deferred context requires Map-Discard usage pattern")
+#endif
 
 #if !defined(WINAPI_FAMILY) || WINAPI_FAMILY != WINAPI_FAMILY_PHONE_APP
 

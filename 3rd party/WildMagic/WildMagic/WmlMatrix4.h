@@ -20,6 +20,8 @@ namespace Wml
 template <class Real>
 class Matrix4 : public Matrix<4,Real>
 {
+using Matrix<4,Real>::m_afEntry;
+
 public:
     // construction
     Matrix4 ();

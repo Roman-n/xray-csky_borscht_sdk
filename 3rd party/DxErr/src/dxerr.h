@@ -19,6 +19,10 @@
 
 #include <windows.h>
 #include <sal.h>
+#ifndef _Out_cap_
+#    define _Out_cap_(c)
+#endif
+
 
 #ifdef __cplusplus
 extern "C" {

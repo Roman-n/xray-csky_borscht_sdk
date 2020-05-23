@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "xrDebug.h"
 #include "os_clipboard.h"
+#include "string_concatenations.h"
 #include "../../3rd party/DxErr/src/dxerr.h"
 #include "blackbox/CrashHandler.h"
 #pragma warning(push)
@@ -334,8 +335,10 @@ void CALLBACK PreErrorHandler	(INT_PTR)
 		return;
 
 	string_path				log_folder;
-
-	__try {
+#ifndef __GNUC__
+	__try
+#endif
+    {
 		FS.update_path		(log_folder,"$logs$","");
 		if ((log_folder[0] != '\\') && (log_folder[1] != ':')) {
 			string256		current_folder;
@@ -346,9 +349,11 @@ void CALLBACK PreErrorHandler	(INT_PTR)
 			strconcat		(sizeof(log_folder),log_folder,current_folder,"\\",relative_path);
 		}
 	}
+#ifndef __GNUC__
 	__except(EXCEPTION_EXECUTE_HANDLER) {
 		strcpy_s				(log_folder,"logs");
 	}
+#endif
 
 	string_path				temp;
 	strconcat				(sizeof(temp), temp, log_folder, log_name());

@@ -23,6 +23,7 @@
 #pragma once
 
 #include <luabind/config.hpp>
+#include <string.h>
 
 namespace luabind { namespace detail
 {
@@ -55,7 +56,7 @@ namespace luabind { namespace detail
 	{
 #pragma warning(push)
 #pragma warning(disable:4995)
-		bool operator()(const char* s1, const char* s2) const { return std::strcmp(s1, s2) < 0; }
+		bool operator()(const char* s1, const char* s2) const { return strcmp(s1, s2) < 0; }
 #pragma warning(pop)
 	};
 

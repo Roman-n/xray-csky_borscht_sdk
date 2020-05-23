@@ -14,6 +14,7 @@ class	 CKinematics;
 class	 CInifile;
 class	 CBoneData;
 struct	SEnumVerticesCallback;
+class	CSkeletonX;
 
 // MT-locker
 struct	UCalc_mtlock	{

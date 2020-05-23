@@ -47,6 +47,7 @@ struct 	xr_token;
 class PropValue;
 class PropItem;
 DEFINE_VECTOR			(PropItem*,PropItemVec,PropItemIt);
+class TProperties;
 
 //------------------------------------------------------------------------------
 #include "../xrCore/ChooseTypes.H"     
@@ -446,9 +447,10 @@ typedef CustomValue<Fcolor>		ColorValue;
 template <class T>
 class NumericValue: public CustomValue<T>
 {
-	using inherited = CustomValue<T>;
-
 public:
+using CustomValue<T>::value;
+using CustomValue<T>::init_value;
+
     T					lim_mn;
     T					lim_mx;
     T					inc;
@@ -456,8 +458,8 @@ public:
 public:
 						NumericValue	(T* val):CustomValue<T>(val)
 	{
-        inherited::value= val;
-        init_value		= *inherited::value;
+        value           = val;
+        init_value		= *value;
         dec				= 0;
     };
 						NumericValue	(T* val, T mn, T mx, T increm, int decim):CustomValue<T>(val),lim_mn(mn),lim_mx(mx),inc(increm),dec(decim)
@@ -476,7 +478,7 @@ public:
 	{
         xr_string		draw_val;
         if (!OnDrawText.empty())	OnDrawText(this, draw_val);
-        else			draw_sprintf	(draw_val,*inherited::value,dec);
+        else			draw_sprintf	(draw_val,*value,dec);
         return draw_val;
     }
 };

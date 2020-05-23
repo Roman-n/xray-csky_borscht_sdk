@@ -27,7 +27,7 @@ namespace CPU {
 	XRCORE_API extern	_processor_info	ID					;
 	XRCORE_API extern	u64				QPC	()				;
 
-#ifdef M_VISUAL
+#ifndef __BORLANDC__
 	#ifndef _M_AMD64
         #pragma warning(push)
 		#pragma warning(disable:4035)

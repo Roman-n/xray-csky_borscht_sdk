@@ -253,7 +253,7 @@ IC	typename _associative_vector::iterator _associative_vector::insert						(iter
 		)
 			return		(inherited::insert(where,value));
 
-	return				(insert(val).first);
+	return				(insert(value).first);
 }
 
 TEMPLATE_SPECIALIZATION
@@ -352,19 +352,19 @@ IC	bool _associative_vector::operator<														(const self_type &right) con
 TEMPLATE_SPECIALIZATION
 IC	bool _associative_vector::operator<=													(const self_type &right) const
 {
-	return				!(right < left);
+	return				!(right < (inherited&)(*this));
 }
 
 TEMPLATE_SPECIALIZATION
 IC	bool _associative_vector::operator>														(const self_type &right) const
 {
-	return				(right < left);
+	return				(right < (inherited&)(*this));
 }
 
 TEMPLATE_SPECIALIZATION
 IC	bool _associative_vector::operator>=													(const self_type &right) const
 {
-	return				!(left < right);
+	return				!((inherited&)(*this) < right);
 }
 
 TEMPLATE_SPECIALIZATION
@@ -376,7 +376,7 @@ IC	bool _associative_vector::operator==													(const self_type &right) con
 TEMPLATE_SPECIALIZATION
 IC	bool _associative_vector::operator!=													(const self_type &right) const
 {
-	return				!(left == right);
+	return				!((inherited&)(*this) == right);
 }
 
 #undef TEMPLATE_SPECIALIZATION

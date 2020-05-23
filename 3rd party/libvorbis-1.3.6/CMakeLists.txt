@@ -2,7 +2,9 @@ cmake_minimum_required(VERSION 3.15)
 project(libvorbis LANGUAGES C CXX)
 
 add_library(libvorbis_static STATIC)
-target_include_directories(libvorbis_static PUBLIC include)
+target_include_directories(libvorbis_static
+	PUBLIC include
+	PRIVATE lib)
 target_sources(libvorbis_static PRIVATE
 #	lib/books\
 #	lib/modes\

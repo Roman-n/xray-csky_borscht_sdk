@@ -24,7 +24,7 @@ CSE_Abstract *owner				(luabind::object object)
 template <typename T>
 auto *wrap_value(luabind::object object, LPCSTR name)
 {
-	if constexpr (std::is_class_v<T> && !object_type_traits::is_same<shared_str, T>::value) {
+	if constexpr (std::is_class_v<T> && !std::is_same_v<shared_str, T>) {
 		return luabind::object_cast<T*>(object[name]);
     } else {
 		CScriptValueWrapper<T> *value = xr_new<CScriptValueWrapper<T>>(object,name);

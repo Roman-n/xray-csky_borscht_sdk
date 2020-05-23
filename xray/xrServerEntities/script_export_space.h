@@ -14,9 +14,13 @@
 struct lua_State;
 
 #ifdef SCRIPT_REGISTRATOR
-#	define	script_type_list		Loki::NullType
-#	define	add_to_type_list(type)	typedef Loki::Typelist<type,script_type_list> TypeList_##type;
-#	define	save_type_list(type)	TypeList_##type
+template <class T> struct just_type { using type = T; };
+template <class... Ts> struct type_pack {};
+using empty_pack = type_pack<>;
+template <class... Ts, class T> constexpr type_pack<Ts..., T> push_back(type_pack<Ts...>, just_type<T>) { return {}; }
+#	define script_type_list       empty_pack{}
+#   define add_to_type_list(type) auto TypeList_##type = push_back(script_type_list, just_type<type>{});
+#	define save_type_list(type)	  TypeList_##type
 #else
 #	define	script_type_list		
 #	define	add_to_type_list(type)	;

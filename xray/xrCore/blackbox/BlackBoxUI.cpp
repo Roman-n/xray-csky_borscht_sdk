@@ -1,6 +1,7 @@
 #include "stdafx_.h"
 #include "BugSlayerUtil.h"
 #include <stdio.h>
+#include <intrin.h>
 
 #define MAX_STACK_TRACE	100
 
@@ -57,8 +58,6 @@ void BuildStackTrace	(struct _EXCEPTION_POINTERS *g_BlackBoxUIExPtrs)
 	}
 #	pragma auto_inline(on)
 #else // _EDITOR
-	extern "C" void * _ReturnAddress(void);
-
 #   pragma intrinsic(_ReturnAddress)
 
 #	pragma auto_inline(off)

@@ -10,72 +10,6 @@
 
 template <class M, typename P>
 struct CSaver {
-	
-	template <typename T>
-	struct CHelper1 {
-		template <bool a>
-		IC	static void save_data(const T &data, M &stream, const P &p)
-		{
-			static_assert(!std::is_polymorphic_v<T>, "Cannot save polymorphic classes as binary data");
-			stream.w					(&data,sizeof(T));
-		}
-
-		template <>
-		IC	static void save_data<true>(const T &data, M &stream, const P &p)
-		{
-			T* data1 = const_cast<T*>(&data);
-			data1->save	(stream);
-		}
-	};
-
-	template <typename T>
-	struct CHelper {
-
-		template <bool pointer>
-		IC	static void save_data(const T &data, M &stream, const P &p)
-		{
-			CHelper1<T>::template save_data<
-				object_type_traits::is_base_and_derived_or_same_from_template<
-					IPureSavableObject,
-					T
-				>::value
-			>(data,stream,p);
-		}
-
-		template <>
-		IC	static void save_data<true>(const T &data, M &stream, const P &p)
-		{
-			CSaver<M,P>::save_data	(*data,stream,p);
-		}
-	};
-
-	struct CHelper3 {
-		template <typename T>
-		IC	static void save_data(const T &data, M &stream, const P &p)
-		{
-			stream.w_u32					((u32)data.size());
-			T::const_iterator				I = data.begin();
-			T::const_iterator				E = data.end();
-			for ( ; I != E; ++I)
-				if (p(data,*I))
-					CSaver<M,P>::save_data	(*I,stream,p);
-		}
-	};
-	
-	template <typename T>
-	struct CHelper4 {
-		template <bool a>
-		IC	static void save_data(const T &data, M &stream, const P &p)
-		{
-			CHelper<T>::template save_data<object_type_traits::is_pointer<T>::value>	(data,stream,p);
-		}
-
-		template <>
-		IC	static void save_data<true>(const T &data, M &stream, const P &p)
-		{
-			CHelper3::save_data	(data,stream,p);
-		}
-	};
 
 	IC	static void save_data(LPSTR data, M &stream, const P &p)
 	{
@@ -182,7 +116,22 @@ struct CSaver {
 	template <typename T>
 	IC	static void save_data(const T &data, M &stream, const P &p)
 	{
-		CHelper4<T>::template save_data<object_type_traits::is_stl_container<T>::value>	(data,stream,p);
+		if constexpr (object_type_traits::is_stl_container<T>::value) {
+			stream.w_u32					((u32)data.size());
+			typename T::const_iterator		I = data.begin();
+			typename T::const_iterator		E = data.end();
+			for ( ; I != E; ++I)
+				if (p(data,*I))
+					CSaver<M,P>::save_data	(*I,stream,p);
+		} else if constexpr (object_type_traits::is_pointer<T>::value) {
+			CSaver<M,P>::save_data	(*data,stream,p);
+		} else if constexpr (object_type_traits::is_base_and_derived_or_same_from_template<IPureSavableObject, T>::value) {
+			T* data1 = const_cast<T*>(&data);
+			data1->save	(stream);
+		} else {
+			static_assert(!std::is_polymorphic_v<T>, "Cannot save polymorphic classes as binary data");
+			stream.w(&data,sizeof(T));
+		}
 	}
 };
 

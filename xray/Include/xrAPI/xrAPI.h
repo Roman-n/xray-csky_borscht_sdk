@@ -30,6 +30,7 @@ extern XRAPI_API IUIRender*	UIRender;
 #endif // DEBUG
 
 #else
+	class CRender;
     extern ENGINE_API CRender*	Render;
 
     class IRenderFactory;

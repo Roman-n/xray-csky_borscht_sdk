@@ -19,7 +19,9 @@ namespace RestrictionSpace {
 		template <typename T>
 		IC	void	_release		(T*object)
 		{
+#ifdef XRGAME_EXPORTS
 			m_last_time_dec = Device.dwTimeGlobal;
+#endif
 		}
 	};
 

@@ -3104,6 +3104,7 @@ switch(hr)
 // dinputd.h error
 // -------------------------------------------------------------
 //        CHK_ERRA(DIERR_NOMOREITEMS)
+#ifndef __GNUC__
     CHK_ERRA(DIERR_DRIVERFIRST)
     CHK_ERR(DIERR_DRIVERFIRST+1, "DIERR_DRIVERFIRST+1")
     CHK_ERR(DIERR_DRIVERFIRST+2, "DIERR_DRIVERFIRST+2")
@@ -3114,6 +3115,7 @@ switch(hr)
     CHK_ERR(DIERR_INVALIDCLASSINSTALLER, "DIERR_INVALIDCLASSINSTALLER")
     CHK_ERR(DIERR_CANCELLED, "DIERR_CANCELLED & MS_E_SAMPLEALLOC")
     CHK_ERRA(DIERR_BADINF)
+#endif
 
 // -------------------------------------------------------------
 // d3d9.h error codes
@@ -3225,10 +3227,12 @@ switch(hr)
 // -------------------------------------------------------------
 // d3d11.h error codes
 // -------------------------------------------------------------
+#ifndef __GNUC__
     CHK_ERRA(D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS)
     CHK_ERRA(D3D11_ERROR_FILE_NOT_FOUND)
     CHK_ERRA(D3D11_ERROR_TOO_MANY_UNIQUE_VIEW_OBJECTS)
     CHK_ERRA(D3D11_ERROR_DEFERRED_CONTEXT_MAP_WITHOUT_INITIAL_DISCARD)
+#endif
 
 #if !defined(WINAPI_FAMILY) || WINAPI_FAMILY != WINAPI_FAMILY_PHONE_APP
 

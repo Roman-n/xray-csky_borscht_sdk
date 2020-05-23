@@ -25,6 +25,8 @@ namespace Wml
 template <class Real>
 class Matrix2 : public Matrix<2,Real>
 {
+using Matrix<2, Real>::m_afEntry;
+
 public:
     // construction
     Matrix2 ();

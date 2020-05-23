@@ -70,15 +70,19 @@ int stack_overflow_exception_filter	(int exception_code)
 
 void   check_stack_overflow (u32 stack_increment)
 {
+#ifndef __GNUC__
 	__try 
+#endif
 	{
 		void* p = _alloca(stack_increment);
 		p;
 	} 
+#ifndef __GNUC__
 	__except ( xray::core::detail::stack_overflow_exception_filter(GetExceptionCode()) ) 
 	{
 		_resetstkoflw();
 	}
+#endif
 }
 
 void	string_tupples::error_process () const

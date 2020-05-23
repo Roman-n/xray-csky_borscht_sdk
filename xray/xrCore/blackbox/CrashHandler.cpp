@@ -16,6 +16,10 @@ CONDITIONAL COMPILATION :
 #include "BugslayerUtil.h"
 #include "CrashHandler.h"
 
+#ifndef min
+#define min(a,b)            (((a) < (b)) ? (a) : (b))
+#endif
+
 // The project internal header file
 //#include "Internal.h"
 
@@ -218,7 +222,9 @@ int __stdcall GetLimitModulesArray ( HMODULE * pahMod , UINT uiSize )
 {
     int iRet ;
 
+#ifndef __GNUC__
     __try
+#endif
     {
         ASSERT ( FALSE == IsBadWritePtr ( pahMod ,
                                           uiSize * sizeof ( HMODULE ) ) ) ;
@@ -241,10 +247,12 @@ int __stdcall GetLimitModulesArray ( HMODULE * pahMod , UINT uiSize )
 
         iRet = GLMA_SUCCESS ;
     }
+#ifndef __GNUC__
     __except ( EXCEPTION_EXECUTE_HANDLER )
     {
         iRet = GLMA_FAILURE ;
     }
+#endif
     return ( iRet ) ;
 }
 
@@ -280,7 +288,9 @@ LONG __stdcall CrashHandlerExceptionFilter (EXCEPTION_POINTERS* pExPtrs)
         OutputDebugString ( "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n" ) ;
     }
 
+#ifndef __GNUC__
     __try
+#endif
     {
 
         if ( NULL != g_pfnCallBack )
@@ -344,10 +354,12 @@ LONG __stdcall CrashHandlerExceptionFilter (EXCEPTION_POINTERS* pExPtrs)
             CleanupSymEng ( ) ;
         }
     }
+#ifndef __GNUC__
     __except ( EXCEPTION_EXECUTE_HANDLER )
     {
         lRet = EXCEPTION_CONTINUE_SEARCH ;
     }
+#endif
     return ( lRet ) ;
 }
 
@@ -369,7 +381,9 @@ LPCTSTR __stdcall GetFaultReason ( EXCEPTION_POINTERS * pExPtrs )
     // The variable that holds the return value
     LPCTSTR szRet ;
 
+#ifndef __GNUC__
     __try
+#endif
     {
 
         // Initialize the symbol engine in case it isn't initialized.
@@ -555,11 +569,13 @@ LPCTSTR __stdcall GetFaultReason ( EXCEPTION_POINTERS * pExPtrs )
         }
         szRet = g_szBuff ;
     }
+#ifndef __GNUC__
     __except ( EXCEPTION_EXECUTE_HANDLER )
     {
         ASSERT ( !"Crashed in GetFaultReason" ) ;
         szRet = NULL ;
     }
+#endif
     return ( szRet ) ;
 }
 
@@ -575,7 +591,9 @@ BOOL __stdcall GetFaultReasonVB ( EXCEPTION_POINTERS * pExPtrs ,
 
     LPCTSTR szRet ;
 
+#ifndef __GNUC__
     __try
+#endif
     {
 
         szRet = GetFaultReason ( pExPtrs ) ;
@@ -589,10 +607,12 @@ BOOL __stdcall GetFaultReasonVB ( EXCEPTION_POINTERS * pExPtrs ,
                    szRet    ,
                    min ( (UINT)lstrlen ( szRet ) + 1, uiSize ) ) ;
     }
+#ifndef __GNUC__
     __except ( EXCEPTION_EXECUTE_HANDLER )
     {
         szRet = NULL ;
     }
+#endif
     return ( NULL != szRet ) ;
 }
 
@@ -684,7 +704,9 @@ LPCTSTR __stdcall
     // walk to ensure that the module is valid.
     DWORD_PTR dwModBase ;
 
+#ifndef __GNUC__
     __try
+#endif
     {
         // Initialize the symbol engine in case it isn't initialized.
         InitSymEng ( ) ;
@@ -873,11 +895,13 @@ LPCTSTR __stdcall
 
         szRet = g_szBuff ;
     }
+#ifndef __GNUC__
     __except ( EXCEPTION_EXECUTE_HANDLER )
     {
         ASSERT ( !"Crashed in InternalGetStackTraceString" ) ;
         szRet = NULL ;
     }
+#endif
 
     return ( szRet ) ;
 }
@@ -896,7 +920,9 @@ BOOL __stdcall
 
     LPCTSTR szRet ;
 
+#ifndef __GNUC__
     __try
+#endif
     {
         szRet = GetFirstStackTraceString ( dwOpts , pExPtrs ) ;
         if ( NULL == szRet )
@@ -907,10 +933,12 @@ BOOL __stdcall
                    szRet    ,
                    min ( (UINT)lstrlen ( szRet ) + 1 , uiSize ) ) ;
     }
+#ifndef __GNUC__
     __except ( EXCEPTION_EXECUTE_HANDLER )
     {
         szRet = NULL ;
     }
+#endif
     return ( NULL != szRet ) ;
 }
 
@@ -928,7 +956,9 @@ BOOL __stdcall
 
     LPCTSTR szRet ;
 
+#ifndef __GNUC__
     __try
+#endif
     {
         szRet = GetNextStackTraceString ( dwOpts , pExPtrs ) ;
         if ( NULL == szRet )
@@ -939,10 +969,12 @@ BOOL __stdcall
                    szRet    ,
                    min ( (UINT)lstrlen ( szRet ) + 1 , uiSize ) ) ;
     }
+#ifndef __GNUC__
     __except ( EXCEPTION_EXECUTE_HANDLER )
     {
         szRet = NULL ;
     }
+#endif
     return ( NULL != szRet ) ;
 }
 
@@ -1002,7 +1034,9 @@ BOOL __stdcall GetRegisterStringVB ( EXCEPTION_POINTERS * pExPtrs ,
 
     LPCTSTR szRet ;
 
+#ifndef __GNUC__
     __try
+#endif
     {
         szRet = GetRegisterString ( pExPtrs ) ;
         if ( NULL == szRet )
@@ -1013,10 +1047,12 @@ BOOL __stdcall GetRegisterStringVB ( EXCEPTION_POINTERS * pExPtrs ,
                    szRet    ,
                    min ( (UINT)lstrlen ( szRet ) + 1 , uiSize ) ) ;
     }
+#ifndef __GNUC__
     __except ( EXCEPTION_EXECUTE_HANDLER )
     {
         szRet = NULL ;
     }
+#endif
     return ( NULL != szRet ) ;
 
 }

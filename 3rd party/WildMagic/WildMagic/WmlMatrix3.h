@@ -35,6 +35,9 @@ namespace Wml
 template <class Real>
 class Matrix3 : public Matrix<3,Real>
 {
+using Matrix<3,Real>::m_afEntry;
+using Matrix<3, Real>::I;
+
 public:
     // construction
     Matrix3 ();

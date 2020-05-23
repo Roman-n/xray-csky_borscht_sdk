@@ -7,6 +7,10 @@ Copyright (c) 1997-2000 John Robbins -- All rights reserved.
 #include "BugslayerUtil.h"
 #include "Internal.h"
 
+#ifndef min
+#define min(a,b)            (((a) < (b)) ? (a) : (b))
+#endif
+
 // The Win95 version of GetModuleBaseName.
 static DWORD __stdcall Win95GetModuleBaseName ( HANDLE  hProcess   ,
                                                 HMODULE hModule    ,

@@ -1,19 +1,15 @@
 // xrCore.cpp : Defines the entry point for the DLL application.
 //
 #include "stdafx.h"
-
-
 #include <mmsystem.h>
 #include <objbase.h>
 #include "xrCore.h"
 #include "ELocatorAPI.h"
 #include "LocatorAPI.h"
- 
-#pragma comment(lib,"winmm.lib")
-
 #ifdef DEBUG
 #	include	<malloc.h>
 #endif // DEBUG
+#include <float.h>
 
 XRCORE_API		xrCore	Core;
 XRCORE_API		u32		build_id;
@@ -164,10 +160,10 @@ void xrCore::_destroy		()
 	case DLL_PROCESS_ATTACH:
 		{
 			_clear87		();
-			_control87		( _PC_53,   MCW_PC );
-			_control87		( _RC_CHOP, MCW_RC );
-			_control87		( _RC_NEAR, MCW_RC );
-			_control87		( _MCW_EM,  MCW_EM );
+			_control87		( _PC_53,   _MCW_PC );
+			_control87		( _RC_CHOP, _MCW_RC );
+			_control87		( _RC_NEAR, _MCW_RC );
+			_control87		( _MCW_EM,  _MCW_EM );
 		}
 //.		LogFile.reserve		(256);
 		break;

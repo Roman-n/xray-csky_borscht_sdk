@@ -16,11 +16,6 @@
 #else
 #define XRCDB_API __declspec(dllimport)
 #endif
-#ifdef M_VISUAL
-#define ALIGN(a) __declspec(align(a))
-#else
-#define ALIGN(a)
-#endif
 
 // forward declarations
 class CFrustum;
@@ -30,7 +25,7 @@ namespace Opcode {
 };
 template<bool bClass3, bool bFirst> class box_collider;
 template <bool bClass3, bool bFirst> class frustum_collider;
-template <bool bUseSSE, bool bCull, bool bFirst, bool bNearest> class _MM_ALIGN16 ray_collider;
+template <bool bUseSSE, bool bCull, bool bFirst, bool bNearest> class alignas(16) ray_collider;
 
 #pragma pack(push,8)
 namespace CDB

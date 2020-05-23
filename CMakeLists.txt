@@ -10,6 +10,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/intermediate/cmake-${CMA
 add_compile_definitions(
 	$<$<CONFIG:Debug>:DEBUG>
 	$<$<CXX_COMPILER_ID:GNU>:_MT>)
+add_compile_options(
+	$<$<CXX_COMPILER_ID:GNU>:-fpermissive>
+	$<$<CXX_COMPILER_ID:Clang>:-Wno-microsoft-template>)
 
 message("CMAKE_CXX_COMPILER_ID " ${CMAKE_CXX_COMPILER_ID})
 

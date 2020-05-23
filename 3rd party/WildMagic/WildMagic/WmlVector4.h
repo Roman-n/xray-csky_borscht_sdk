@@ -19,6 +19,8 @@ namespace Wml
 template <class Real>
 class Vector4 : public Vector<4,Real>
 {
+using Vector<4,Real>::m_afTuple;
+
 public:
     // construction
     Vector4 ();

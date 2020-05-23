@@ -23,7 +23,9 @@
 
 #define DIRECTINPUT_VERSION 0x800
 #include <dinput.h>
+#ifndef __GNUC__
 #include <dinputd.h>
+#endif
 #endif
 
 #include <d3d10_1.h>
@@ -65,7 +67,7 @@
 
 #define  CHK_ERRA_W(hrchk) \
         case hrchk: \
-             return L#hrchk;
+             return L ## #hrchk;
 
 #define  CHK_ERR_A(hrchk, strOut) \
         case hrchk: \
@@ -80,7 +82,7 @@
 #define  CHK_ERR_WIN32A_W(hrchk) \
         case HRESULT_FROM_WIN32b(hrchk): \
         case hrchk: \
-             return L#hrchk;
+             return L ## #hrchk;
 
 #define  CHK_ERR_WIN32_ONLY_W(hrchk, strOut) \
         case HRESULT_FROM_WIN32b(hrchk): \
@@ -135,7 +137,7 @@ const CHAR* WINAPI DXGetErrorStringA( _In_ HRESULT hr )
 
 #define  CHK_ERRA_W(hrchk) \
         case hrchk: \
-             wcscpy_s( desc, count, L#hrchk );
+             wcscpy_s(desc, count, L ## #hrchk);
 
 #define  CHK_ERR_W(hrchk, strOut) \
         case hrchk: \
@@ -181,7 +183,11 @@ HRESULT WINAPI DXTraceW( _In_z_ const WCHAR* strFile, _In_ DWORD dwLine, _In_ HR
 #define DX_CHAR WCHAR
 #define DX_SPRINTF_S swprintf_s
 #define DX_STRCPY_S wcscpy_s
+#ifdef __GNUC__
+#    define DX_STRNLEN_S(s, n) wcslen(s)
+#else
 #define DX_STRNLEN_S wcsnlen_s
+#endif
 #define STR_FMT_SPEC "%ls"
 #define DX_MESSAGEBOX MessageBoxW
 #define DX_OUTPUTDEBUGSTRING OutputDebugStringW
@@ -205,7 +211,11 @@ HRESULT WINAPI DXTraceA( _In_z_ const CHAR* strFile, _In_ DWORD dwLine, _In_ HRE
 #define DX_CHAR CHAR
 #define DX_SPRINTF_S sprintf_s
 #define DX_STRCPY_S strcpy_s
+#ifdef __GNUC__
+#    define DX_STRNLEN_S(s, n) strlen(s)
+#else
 #define DX_STRNLEN_S strnlen_s
+#endif
 #define STR_FMT_SPEC "%s"
 #define DX_MESSAGEBOX MessageBoxA
 #define DX_OUTPUTDEBUGSTRING OutputDebugStringA

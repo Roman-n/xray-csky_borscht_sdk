@@ -328,65 +328,65 @@ namespace luabind { namespace detail
 
 // ********** user defined converter ***********
 
-	template<Direction Dir> struct user_defined_converter;
-	
-	template<>
-	struct user_defined_converter<Direction::lua_to_cpp>
-	{
-		template<class T>
-		T apply(lua_State* L, detail::by_value<T>, int index) 
-		{ 
-//			std::cerr << "user_defined_converter\n";
-			return converters::convert_lua_to_cpp(L, detail::by_value<T>(), index);
-		}
-
-		template<class T>
-		T apply(lua_State* L, detail::by_reference<T>, int index) 
-		{ 
-//			std::cerr << "user_defined_converter\n";
-			return converters::convert_lua_to_cpp(L, detail::by_reference<T>(), index);
-		}
-
-		template<class T>
-		T apply(lua_State* L, detail::by_const_reference<T>, int index) 
-		{ 
-//			std::cerr << "user_defined_converter\n";
-			return converters::convert_lua_to_cpp(L, detail::by_const_reference<T>(), index);
-		}
-
-		template<class T>
-		T* apply(lua_State* L, detail::by_pointer<T>, int index) 
-		{ 
-//			std::cerr << "user_defined_converter\n";
-			return converters::convert_lua_to_cpp(L, detail::by_pointer<T>(), index);
-		}
-
-		template<class T>
-		const T* apply(lua_State* L, detail::by_const_pointer<T>, int index) 
-		{ 
-//			std::cerr << "user_defined_converter\n";
-			return converters::convert_lua_to_cpp(L, detail::by_pointer<T>(), index);
-		}
-
-		template<class T>
-		static int match(lua_State* L, T, int index)
-		{
-			return converters::match_lua_to_cpp(L, T(), index);
-		}
-
-		template<class T>
-		void converter_postcall(lua_State*, T, int) {}
-	};
-
-	template<>
-	struct user_defined_converter<Direction::cpp_to_lua>
-	{
-			template<class T>
-			void apply(lua_State* L, const T& v) 
-			{ 
-				converters::convert_cpp_to_lua(L, v);
-			}
-	};
+//	template<Direction Dir> struct user_defined_converter;
+//	
+//	template<>
+//	struct user_defined_converter<Direction::lua_to_cpp>
+//	{
+//		template<class T>
+//		T apply(lua_State* L, detail::by_value<T>, int index) 
+//		{ 
+////			std::cerr << "user_defined_converter\n";
+//			return converters::convert_lua_to_cpp(L, detail::by_value<T>(), index);
+//		}
+//
+//		template<class T>
+//		T apply(lua_State* L, detail::by_reference<T>, int index) 
+//		{ 
+////			std::cerr << "user_defined_converter\n";
+//			return converters::convert_lua_to_cpp(L, detail::by_reference<T>(), index);
+//		}
+//
+//		template<class T>
+//		T apply(lua_State* L, detail::by_const_reference<T>, int index) 
+//		{ 
+////			std::cerr << "user_defined_converter\n";
+//			return converters::convert_lua_to_cpp(L, detail::by_const_reference<T>(), index);
+//		}
+//
+//		template<class T>
+//		T* apply(lua_State* L, detail::by_pointer<T>, int index) 
+//		{ 
+////			std::cerr << "user_defined_converter\n";
+//			return converters::convert_lua_to_cpp(L, detail::by_pointer<T>(), index);
+//		}
+//
+//		template<class T>
+//		const T* apply(lua_State* L, detail::by_const_pointer<T>, int index) 
+//		{ 
+////			std::cerr << "user_defined_converter\n";
+//			return converters::convert_lua_to_cpp(L, detail::by_pointer<T>(), index);
+//		}
+//
+//		template<class T>
+//		static int match(lua_State* L, T, int index)
+//		{
+//			return converters::match_lua_to_cpp(L, T(), index);
+//		}
+//
+//		template<class T>
+//		void converter_postcall(lua_State*, T, int) {}
+//	};
+//
+//	template<>
+//	struct user_defined_converter<Direction::cpp_to_lua>
+//	{
+//			template<class T>
+//			void apply(lua_State* L, const T& v) 
+//			{ 
+//				converters::convert_cpp_to_lua(L, v);
+//			}
+//	};
 
 // ********** pointer converter ***********
 
@@ -944,9 +944,10 @@ namespace luabind { namespace detail
         template<typename T, Direction Dir>
         struct generate_converter
         {
-            using type = std::conditional_t<
-                is_user_defined<T>::value,
-                user_defined_converter<Dir>,
+            static_assert(!is_user_defined<T>::value);
+            using type = //std::conditional_t<
+                //is_user_defined<T>::value,
+                //user_defined_converter<Dir>,
                 std::conditional_t<
                     is_primitive<T>::value,
                     primitive_converter<Dir>,
@@ -975,7 +976,7 @@ namespace luabind { namespace detail
                             >
                         >
                     >
-                >
+                //>
             >;
         };
 	};

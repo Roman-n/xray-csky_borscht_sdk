@@ -636,7 +636,7 @@ Void_t* memcpy();
 #ifdef LACKS_UNISTD_H
 #if !defined(__FreeBSD__) && !defined(__OpenBSD__) && !defined(__NetBSD__)
 #if __STD_C
-extern Void_t*     sbrk(ptrdiff_t);
+extern Void_t*     sbrk(long);
 #else
 extern Void_t*     sbrk();
 #endif

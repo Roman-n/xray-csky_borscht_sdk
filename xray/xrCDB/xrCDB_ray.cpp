@@ -173,7 +173,7 @@ ICF BOOL isect_sse			(const aabb_t &box, const ray_t &ray, float &dist)	{
 }
 
 template <bool bUseSSE, bool bCull, bool bFirst, bool bNearest>
-class _MM_ALIGN16	ray_collider
+class alignas(16) ray_collider
 {
 public:
 	COLLIDER_Base*		dest;

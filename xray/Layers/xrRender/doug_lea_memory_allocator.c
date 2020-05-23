@@ -451,7 +451,9 @@ DEFAULT_MMAP_THRESHOLD       default: 256K
 #include <windows.h>
 #define HAVE_MMAP 1
 #define HAVE_MORECORE 0
+#ifndef __GNUC__
 #define LACKS_UNISTD_H
+#endif
 #define LACKS_SYS_PARAM_H
 #define LACKS_SYS_MMAN_H
 #define LACKS_STRING_H

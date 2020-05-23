@@ -10,6 +10,7 @@
 #define MMNOMIXER
 #define MMNOJOY
 #include <mmsystem.h>
+#include <float.h>
 
 // Initialized on startup
 XRCORE_API	Fmatrix			Fidentity;
@@ -22,28 +23,28 @@ u16			getFPUsw()		{ return 0;	}
 namespace	FPU 
 {
 	XRCORE_API void 	m24		(void)	{
-		_control87	( _PC_24,   MCW_PC );
-		_control87	( _RC_CHOP, MCW_RC );
+		_control87	( _PC_24,   _MCW_PC );
+		_control87	( _RC_CHOP, _MCW_RC );
 	}
 	XRCORE_API void 	m24r	(void)	{
-		_control87	( _PC_24,   MCW_PC );
-		_control87	( _RC_NEAR, MCW_RC );
+		_control87	( _PC_24,   _MCW_PC );
+		_control87	( _RC_NEAR, _MCW_RC );
 	}
 	XRCORE_API void 	m53		(void)	{
-		_control87	( _PC_53,   MCW_PC );
-		_control87	( _RC_CHOP, MCW_RC );
+		_control87	( _PC_53,   _MCW_PC );
+		_control87	( _RC_CHOP, _MCW_RC );
 	}
 	XRCORE_API void 	m53r	(void)	{
-		_control87	( _PC_53,   MCW_PC );
-		_control87	( _RC_NEAR, MCW_RC );
+		_control87	( _PC_53,   _MCW_PC );
+		_control87	( _RC_NEAR, _MCW_RC );
 	}
 	XRCORE_API void 	m64		(void)	{
-		_control87	( _PC_64,   MCW_PC );
-		_control87	( _RC_CHOP, MCW_RC );
+		_control87	( _PC_64,   _MCW_PC );
+		_control87	( _RC_CHOP, _MCW_RC );
 	}
 	XRCORE_API void 	m64r	(void)	{
-		_control87	( _PC_64,   MCW_PC );
-		_control87	( _RC_NEAR, MCW_RC );
+		_control87	( _PC_64,   _MCW_PC );
+		_control87	( _RC_NEAR, _MCW_RC );
 	}
 
 	void		initialize		()				{}
@@ -276,11 +277,17 @@ void _initialize_cpu_thread	()
 		//_mm_setcsr ( _mm_getcsr() | (_MM_FLUSH_ZERO_ON+_MM_DENORMALS_ZERO_ON) );
 		_MM_SET_FLUSH_ZERO_MODE			(_MM_FLUSH_ZERO_ON);
 		if (_denormals_are_zero_supported)	{
-			__try	{
+#ifndef __GNUC__
+			__try
+#endif
+			{
 				_MM_SET_DENORMALS_ZERO_MODE	(_MM_DENORMALS_ZERO_ON);
-			} __except(EXCEPTION_EXECUTE_HANDLER) {
+			}
+#ifndef __GNUC__
+			__except(EXCEPTION_EXECUTE_HANDLER) {
 				_denormals_are_zero_supported	= FALSE;
 			}
+#endif
 		}
 	}
 }
@@ -300,13 +307,17 @@ void	thread_name	(const char* name)
 	tn.szName		= name;
 	tn.dwThreadID	= DWORD(-1);
 	tn.dwFlags		= 0;
+#ifndef __GNUC__
 	__try
+#endif
 	{
 		RaiseException(0x406D1388,0,sizeof(tn)/sizeof(DWORD),(PDWORD_PTR)&tn);
 	}
+#ifndef __GNUC__
 	__except(EXCEPTION_CONTINUE_EXECUTION)
 	{
 	}
+#endif
 }
 #pragma pack(pop)
 

@@ -70,6 +70,8 @@
 //	DEFINE_VECTOR(ref_shader,ShaderVec,ShaderIt);
 #endif
 
+class CGameMtlLibrary;
+
 struct MTL_EXPORT_API SGameMtl
 {
 	friend class CGameMtlLibrary;

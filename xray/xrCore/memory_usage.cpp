@@ -64,14 +64,19 @@ nextBlock:
              * Guard the HeapWalk call in case we were passed a bad pointer
              * to an allegedly free block.
              */
-            __try {
+#ifndef __GNUC__
+            __try
+#endif
+			{
                 errflag = 0;
                 if ( !HeapWalk( heap_handle, Entry ) )
                     errflag = 1;
             }
+#ifndef __GNUC__
             __except( EXCEPTION_EXECUTE_HANDLER ) {
                 errflag = 2;
             }
+#endif
 
             /*
              * Check errflag to see how HeapWalk fared...
