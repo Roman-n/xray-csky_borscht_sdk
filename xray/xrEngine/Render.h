@@ -27,6 +27,7 @@ struct ENGINE_API	FSlideWindowItem;
 class IRenderVisual;
 class IKinematics;
 //class IRenderDetailModel;
+struct IEditDetailsMask;
 
 #ifndef _EDITOR
 extern const	float		fLightSmoothFactor;
@@ -284,6 +285,8 @@ public:
 	virtual void					rmFar					()											= 0;
 	virtual void					rmNormal				()											= 0;
 	virtual u32						memory_usage			()											= 0;
+
+	virtual IEditDetailsMask*		editDetailsMask			()											= 0;
 
 	// Constructor/destructor
 	virtual ~IRender_interface();

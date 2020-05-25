@@ -9,6 +9,7 @@
 #include "../../xrCore/xrpool.h"
 #include "detailformat.h"
 #include "detailmodel.h"
+#include "../../Include/xrRender/IEditDetailsMask.h"
 
 #ifdef _EDITOR
 //.	#include	"ESceneClassList.h"
@@ -209,6 +210,24 @@ public:
 
 	CDetailManager					();
 	virtual ~CDetailManager			();
+
+	bool useMask() const;// получить использование маски
+	void setUseMask(bool useMask);// установить использование маски
+	MaskEditModes maskEditMode() const;// получить режим редактировани€ маски
+	void setMaskEditMode(MaskEditModes mode);// установить режим редактировани€ маски
+	bool maskChanged() const;// маска изменена
+	void saveMask();// сохранить маску
+
+private:
+	ref_texture m_mask;// “екстура маски
+	u32* m_maskData = nullptr;// ѕиксели маски в формате A8R8G8B8
+	bool isMaskCleared(const Fvector& p) const;// ѕроверить по маске, что траву в точке p сажать не надо
+	bool m_useMask = true;// »спользовать маску
+	MaskEditModes m_maskEditMode = MaskEditModes::None;//–ежим редактировани€ маски
+	bool m_maskChanged = false;// ћаска изменена
+	void editMask(const Fvector& p);//»зменить маску в соответствии с режимом
+	void invalidateCache();// ќчищает кеш травы
+	u32* sampleMask(const Fvector& p) const;// выбрать пиксель маски
 };
 
 #endif //DetailManagerH

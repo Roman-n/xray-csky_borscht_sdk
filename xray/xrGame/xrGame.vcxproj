@@ -4536,6 +4536,7 @@
     <ClCompile Include="embedded_editor\controls\imgui_ext.cpp" />
     <ClCompile Include="embedded_editor\embedded_editor.cpp" />
     <ClCompile Include="embedded_editor\embedded_editor_ae.cpp" />
+    <ClCompile Include="embedded_editor\embedded_editor_details.cpp" />
     <ClCompile Include="embedded_editor\embedded_editor_helper.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch_script.h</PrecompiledHeaderFile>

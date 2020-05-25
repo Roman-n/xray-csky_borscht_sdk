@@ -177,6 +177,8 @@ void		CDetailManager::cache_Decompress(Slot* S)
 #else
 			Item_P.set	(rx , D.vis.box.max.y, rz );
 #endif
+			if (m_useMask && isMaskCleared(Item_P))
+				continue;
 
 			// Position (Y)
 			float y		= D.vis.box.min.y-5;

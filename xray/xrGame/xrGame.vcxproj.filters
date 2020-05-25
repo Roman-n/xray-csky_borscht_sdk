@@ -7518,6 +7518,9 @@
     <ClInclude Include="embedded_editor\embedded_editor.h">
       <Filter>Embedded editor</Filter>
     </ClInclude>
+    <ClInclude Include="embedded_editor\embedded_editor_details.h">
+      <Filter>Embedded editor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="damage_manager.cpp">
@@ -11224,6 +11227,9 @@
     </ClCompile>
     <ClCompile Include="embedded_editor\controls\imgui_ext.cpp">
       <Filter>Embedded editor\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="embedded_editor\embedded_editor_details.cpp">
+      <Filter>Embedded editor</Filter>
     </ClCompile>
     <ClCompile Include="embedded_editor\embedded_editor.cpp">
       <Filter>Embedded editor</Filter>

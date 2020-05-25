@@ -2,6 +2,7 @@
 #include "embedded_editor_main.h"
 #include "../../xrEngine/xr_input.h"
 #include "../xr_level_controller.h"
+#include "embedded_editor.h"
 #include "embedded_editor_ae.h"
 #include "embedded_editor_helper.h"
 #include "embedded_editor_hud.h"
@@ -84,6 +85,8 @@ void ShowMain()
         show_map_editor = !show_map_editor;
     if (ImGui::Button("HUD Editor"))
         show_hud_editor = !show_hud_editor;
+    if (ImGui::Button("Details"))
+        switchEditor(Editors::Details);
 
     bool full = stage == EditorStage::Full;
     if (ImGui::Checkbox("Active", &full))
@@ -128,6 +131,8 @@ void ShowEditor()
         showLeEditor(show_le_editor);
     if (show_se_editor)
         showSeEditor(show_se_editor);
+
+    drawActiveEditors();
 }
 
 bool isRControl = false, isLControl = false, isRShift = false, isLShift = false;

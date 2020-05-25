@@ -16,6 +16,7 @@
 #include "lightPPA.h"
 #include "../xrRender/light_DB.h"
 #include "../../xrEngine/fmesh.h"
+#include "../../Include/xrRender/IEditDetailsMask.h"
 
 class dxRender_Visual;
 
@@ -27,7 +28,7 @@ using MODEL_Portal = CDB::MODEL_Generic<PortalPayload>;
 using TRI_Portal = CDB::TRI_Generic<PortalPayload>;
 
 // definition
-class CRender													:	public R_dsgraph_structure
+class CRender													:	public R_dsgraph_structure, public IEditDetailsMask
 {
 public:
 	enum	{
@@ -217,6 +218,8 @@ public:
 	virtual void					rmNear					();
 	virtual void					rmFar					();
 	virtual void					rmNormal				();
+
+	IMPLEMENT_IEDIT_DETAILS_MASK
 
 	// Constructor/destructor/loader
 	CRender							();

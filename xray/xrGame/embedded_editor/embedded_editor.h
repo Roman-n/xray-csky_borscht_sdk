@@ -5,6 +5,7 @@
 /// Список редакторов
 enum class Editors {
     None,
+    Details, ///< Редактор маски травы
 };
 
 struct Editor {

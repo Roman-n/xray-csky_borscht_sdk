@@ -220,10 +220,18 @@ void CDetailManager::Load		()
 	swing_desc[1].rot1	= pSettings->r_float("details","swing_fast_rot1");
 	swing_desc[1].rot2	= pSettings->r_float("details","swing_fast_rot2");
 	swing_desc[1].speed	= pSettings->r_float("details","swing_fast_speed");
+
+	m_mask.create("mask");
+	m_mask._get()->Load();
+	m_mask._get()->convert(D3DFMT_A8R8G8B8);
+	m_maskData = (u32*)m_mask._get()->getData();
 }
 #endif
 void CDetailManager::Unload		()
 {
+	m_mask._get()->releaseData();
+	m_mask.destroy();
+
 	if (UseVS())	hw_Unload	();
 	else			soft_Unload	();
 
@@ -377,6 +385,8 @@ void __stdcall	CDetailManager::MT_CALC		()
 			int s_x	= iFloor			(EYE.x/dm_slot_size+.5f);
 			int s_z	= iFloor			(EYE.z/dm_slot_size+.5f);
 
+			editMask(EYE);
+
 			Statistic.RenderDUMP_DT_Cache.Begin	();
 			cache_Update				(s_x,s_z,EYE,dm_max_decompress);
 			Statistic.RenderDUMP_DT_Cache.End	();
@@ -385,4 +395,101 @@ void __stdcall	CDetailManager::MT_CALC		()
 			m_frame_calc				= Device.dwFrame;
 		}
 	MT.Leave					        ();
+}
+
+void CDetailManager::setUseMask(bool useMask)
+{
+    m_useMask = useMask;
+    invalidateCache();
+}
+
+void CDetailManager::setMaskEditMode(MaskEditModes mode) { m_maskEditMode = mode; }
+
+bool CDetailManager::maskChanged() const { return m_maskChanged; }
+
+void CDetailManager::saveMask()
+{
+    if (!m_maskChanged)
+        return;
+
+    m_mask._get()->releaseData();
+    string_path fileName;
+    FS.update_path(fileName, "$level$", "mask.png");
+    m_mask._get()->save(fileName);
+    m_maskData = (u32*)m_mask._get()->getData();
+    m_maskChanged = false;
+}
+
+void CDetailManager::editMask(const Fvector& p)
+{
+    if (m_maskEditMode == MaskEditModes::None)
+        return;
+
+    u32* mask = sampleMask(p);
+    bool changed = false;
+    if (m_maskEditMode == MaskEditModes::FillByCamera && *mask != 0xFFFFFFFF) {
+        *mask = 0xFFFFFFFF;
+        changed = true;
+    }
+    if (m_maskEditMode == MaskEditModes::ClearByCamera && *mask != 0xFF000000) {
+        *mask = 0xFF000000;
+        changed = true;
+    }
+
+    if (changed) {
+        int s_x = iFloor(p.x / dm_slot_size + .5f);
+        int s_z = iFloor(p.z / dm_slot_size + .5f);
+        int gx = w2cg_X(s_x);
+        int gz = w2cg_Z(s_z);
+        // обновляется квадрат 3х3 вокруг точки
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dz = -1; dz <= 1; dz++) {
+                auto s = cache[gz + dz][gx + dx];
+                s->frame = 0;
+                for (int sp_id = 0; sp_id < dm_obj_in_slot; sp_id++) {
+                    SlotPart& sp = s->G[sp_id];
+                    sp.r_items[0].clear_not_free();
+                    sp.r_items[1].clear_not_free();
+                    sp.r_items[2].clear_not_free();
+                }
+                cache_Task(gx + dx, gz + dz, s);
+            }
+        }
+        m_maskChanged = true;
+    }
+}
+
+void CDetailManager::invalidateCache()
+{
+    for (u32 i = 0; i < dm_cache_line; i++)
+        for (u32 j = 0; j < dm_cache_line; j++) {
+            auto s = cache[i][j];
+            s->frame = 0;
+            for (int sp_id = 0; sp_id < dm_obj_in_slot; sp_id++) {
+                SlotPart& sp = s->G[sp_id];
+                sp.r_items[0].clear_not_free();
+                sp.r_items[1].clear_not_free();
+                sp.r_items[2].clear_not_free();
+            }
+            cache_Task(j, i, s);
+        }
+}
+
+bool CDetailManager::isMaskCleared(const Fvector& p) const
+{
+    u32 mask = *sampleMask(p);
+    return (mask & 0x00FFFFFF) == 0x00000000; // черный с любой прозрачностью => траву не сажать
+}
+
+bool CDetailManager::useMask() const { return m_useMask; }
+
+MaskEditModes CDetailManager::maskEditMode() const { return m_maskEditMode; }
+
+u32* CDetailManager::sampleMask(const Fvector& p) const
+{
+    const Fbox& bb = g_pGameLevel->ObjectSpace.GetBoundingVolume();
+    size_t u = (p.x - bb.x1) / (bb.x2 - bb.x1) * m_mask._get()->get_Width();
+    size_t v = m_mask._get()->get_Height() - ((p.z - bb.z1) / (bb.z2 - bb.z1) * m_mask._get()->get_Height());
+    u32* mask = m_maskData + u + v * m_mask._get()->get_Width();
+    return mask;
 }
