@@ -1,12 +1,12 @@
 #include "stdafx.h"
 #include "compiler.h"
-#include "cl_intersect.h"
+#include "../../Include/cl_intersect.h"
 #include "xrThread.h"
 #include <mmsystem.h>
 #include "cover_point.h"
 #include "object_broker.h"
 #include "compiler_cover_tools.h"
-#include "../../common/quadtree.h"
+#include "../../Include/quadtree.h"
 
 Shader_xrLC_LIB*				g_shaders_xrlc	;
 xr_vector<b_material>			g_materials		;

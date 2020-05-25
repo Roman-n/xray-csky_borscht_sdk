@@ -4,10 +4,10 @@
 #include "ExportObjectOGF.h"
 
 //--------------------------------------------------------------------------------
-#include "../../common/nvMender2003/nvmeshmender.h"
-#include "../../common/NvMender2003/nvMeshMender.h"
-#include "../../common/NvMender2003/mender_input_output.h"
-#include "../../common/NvMender2003/remove_isolated_verts.h"
+#include "../../../3rd party/NvMender2003/nvmeshmender.h"
+#include "../../../3rd party/NvMender2003/nvMeshMender.h"
+#include "../../../3rd party/NvMender2003/mender_input_output.h"
+#include "../../../3rd party/NvMender2003/remove_isolated_verts.h"
 //--------------------------------------------------------------------------------
 IC void	set_vertex( MeshMender::Vertex &out_vertex, const SOGFVert& in_vertex )
 {

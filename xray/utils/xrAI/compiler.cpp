@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "compiler.h"
 
-#include "cl_intersect.h"
+#include "../../Include/cl_intersect.h"
 
 CDB::MODEL			Level;
 CDB::COLLIDER		XRC;

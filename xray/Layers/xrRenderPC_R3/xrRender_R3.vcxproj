@@ -431,10 +431,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\common\NvMender2003\convert.h" />
-    <ClInclude Include="..\..\common\NvMender2003\mender_input_output.h" />
-    <ClInclude Include="..\..\common\NvMender2003\NVMeshMender.h" />
-    <ClInclude Include="..\..\common\NvMender2003\remove_isolated_verts.h" />
+    <ClInclude Include="..\..\..\3rd party\NvMender2003\convert.h" />
+    <ClInclude Include="..\..\..\3rd party\NvMender2003\mender_input_output.h" />
+    <ClInclude Include="..\..\..\3rd party\NvMender2003\NVMeshMender.h" />
+    <ClInclude Include="..\..\..\3rd party\NvMender2003\remove_isolated_verts.h" />
     <ClInclude Include="..\..\Include\xrRender\ApplicationRender.h" />
     <ClInclude Include="..\..\Include\xrRender\ConsoleRender.h" />
     <ClInclude Include="..\..\Include\xrRender\DebugRender.h" />
@@ -620,7 +620,7 @@
     <ClInclude Include="SMAP_Allocator.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\common\NvMender2003\NVMeshMender.cpp" />
+    <ClCompile Include="..\..\..\3rd party\NvMender2003\NVMeshMender.cpp" />
     <ClCompile Include="..\..\xrEngine\ai_script_lua_debug.cpp" />
     <ClCompile Include="..\..\xrEngine\ai_script_lua_extension.cpp" />
     <ClCompile Include="..\Editor\EditMesh.cpp" />
@@ -887,7 +887,7 @@
     <ClCompile Include="xrRender_R3.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\common\NvMender2003\ReadMe.txt" />
+    <Text Include="..\..\..\3rd party\NvMender2003\ReadMe.txt" />
     <Text Include="todo.txt" />
   </ItemGroup>
   <ItemGroup>

@@ -3,7 +3,7 @@
 #include <MxStdModel.h>
 #include <MxQSlim.h>
 #include "../../xrcdb/xrcdb.h"
-#include "../../common/face_smoth_flags.h"
+#include "../../Include/face_smoth_flags.h"
 #include "SaveAsSmf.h"
 
 #pragma comment (lib,"xrQSlim.lib")

@@ -102,30 +102,6 @@
     <ClInclude Include="NV_Library\VertexCache.h">
       <Filter>External\NV_Strips</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\NvMender2003\convert.h">
-      <Filter>External\NV_Mender2003</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\common\NvMender2003\mender_input_output.h">
-      <Filter>External\NV_Mender2003</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\common\NvMender2003\NVMeshMender.h">
-      <Filter>External\NV_Mender2003</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\common\NvMender2003\remove_isolated_verts.h">
-      <Filter>External\NV_Mender2003</Filter>
-    </ClInclude>
-    <ClInclude Include="NvMender2002\NVMeshMender.h">
-      <Filter>External\NV_Mender2002</Filter>
-    </ClInclude>
-    <ClInclude Include="NvMender2002\nv_algebra.h">
-      <Filter>External\NV_Mender2002\NV_Basis</Filter>
-    </ClInclude>
-    <ClInclude Include="NvMender2002\nv_math.h">
-      <Filter>External\NV_Mender2002\NV_Basis</Filter>
-    </ClInclude>
-    <ClInclude Include="NvMender2002\nv_mathdecl.h">
-      <Filter>External\NV_Mender2002\NV_Basis</Filter>
-    </ClInclude>
     <ClInclude Include="_rect.h">
       <Filter>%2a%2a%2a COMPILER %2a%2a%2a</Filter>
     </ClInclude>
@@ -175,6 +151,30 @@
     <ClInclude Include="SaveAsSmf.h">
       <Filter>Kernel</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\3rd party\NvMender2003\convert.h">
+      <Filter>External\NV_Mender2003</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\3rd party\NvMender2003\mender_input_output.h">
+      <Filter>External\NV_Mender2003</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\3rd party\NvMender2003\NVMeshMender.h">
+      <Filter>External\NV_Mender2003</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\3rd party\NvMender2003\remove_isolated_verts.h">
+      <Filter>External\NV_Mender2003</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\3rd party\NvMender2002\nv_algebra.h">
+      <Filter>External\NV_Mender2002\NV_Basis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\3rd party\NvMender2002\nv_math.h">
+      <Filter>External\NV_Mender2002\NV_Basis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\3rd party\NvMender2002\nv_mathdecl.h">
+      <Filter>External\NV_Mender2002\NV_Basis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\3rd party\NvMender2002\NVMeshMender.h">
+      <Filter>External\NV_Mender2002</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StdAfx.cpp">
@@ -194,15 +194,6 @@
     </ClCompile>
     <ClCompile Include="NV_Library\VertexCache.cpp">
       <Filter>External\NV_Strips</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\common\NvMender2003\NVMeshMender.cpp">
-      <Filter>External\NV_Mender2003</Filter>
-    </ClCompile>
-    <ClCompile Include="NvMender2002\NVMeshMender.cpp">
-      <Filter>External\NV_Mender2002</Filter>
-    </ClCompile>
-    <ClCompile Include="NvMender2002\nv_algebra.cpp">
-      <Filter>External\NV_Mender2002\NV_Basis</Filter>
     </ClCompile>
     <ClCompile Include="Build.cpp">
       <Filter>%2a%2a%2a COMPILER %2a%2a%2a</Filter>
@@ -311,6 +302,15 @@
     </ClCompile>
     <ClCompile Include="net.cpp">
       <Filter>%2a%2a%2a COMPILER %2a%2a%2a\net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\3rd party\NvMender2002\nv_algebra.cpp">
+      <Filter>External\NV_Mender2002\NV_Basis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\3rd party\NvMender2002\NVMeshMender.cpp">
+      <Filter>External\NV_Mender2002</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\3rd party\NvMender2003\NVMeshMender.cpp">
+      <Filter>External\NV_Mender2003</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "cl_intersect.h"
+#include "../../Include/cl_intersect.h"
 #include "compiler.h"
 #include "compiler_cover_tools.h"
 #include <tbb/tbb.h>
