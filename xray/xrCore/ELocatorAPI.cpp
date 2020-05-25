@@ -1,10 +1,11 @@
-// LocatorAPI.cpp: implementation of the CLocatorAPI class.
+// ELocatorAPI.cpp: implementation of the ELocatorAPI class.
 //
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
 #pragma hdrstop
 
+#include "ELocatorAPI.h"
 #pragma warning(disable:4995)
 #include <io.h>
 #include <direct.h>
@@ -14,18 +15,16 @@
 
 #include "FS_internal.h"
 
-CLocatorAPI*	xr_FS	= NULL;
-
-#ifdef _EDITOR
+//#ifdef _EDITOR
 #define FSLTX	"fs.ltx"
-#else
-#define FSLTX	"fsgame.ltx"
-#endif
+//#else
+//#define FSLTX	"fsgame.ltx"
+//#endif
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
-CLocatorAPI::CLocatorAPI()
+ELocatorAPI::ELocatorAPI()
 {
     m_Flags.zero		();
 	// get page size
@@ -35,11 +34,11 @@ CLocatorAPI::CLocatorAPI()
 	dwOpenCounter		= 0;
 }
 
-CLocatorAPI::~CLocatorAPI()
+ELocatorAPI::~ELocatorAPI()
 {
 }
 
-void CLocatorAPI::_initialize	(u32 flags, LPCSTR target_folder, LPCSTR fs_fname)
+void ELocatorAPI::_initialize	(u32 flags, LPCSTR target_folder, LPCSTR fs_fname)
 {
 	char _delimiter = '|'; //','
 	if (m_Flags.is(flReady))return;
@@ -99,7 +98,7 @@ void CLocatorAPI::_initialize	(u32 flags, LPCSTR target_folder, LPCSTR fs_fname)
 	CreateLog		(0!=strstr(Core.Params,"-nolog"));
 }
 
-void CLocatorAPI::_destroy		()
+void ELocatorAPI::_destroy		()
 {
 	CloseLog		();
 
@@ -111,7 +110,7 @@ void CLocatorAPI::_destroy		()
 	pathes.clear	();
 }
 
-BOOL CLocatorAPI::file_find(LPCSTR full_name, FS_File& f)
+BOOL ELocatorAPI::file_find(LPCSTR full_name, FS_File& f)
 {
     intptr_t		hFile;
     _FINDDATA_T		sFile;
@@ -125,36 +124,30 @@ BOOL CLocatorAPI::file_find(LPCSTR full_name, FS_File& f)
     }
 }
 
-BOOL CLocatorAPI::exist			(const char* fn)
+bool ELocatorAPI::exist			(const char* fn)
 {
 	return ::GetFileAttributes(fn) != u32(-1);
 }
 
-BOOL CLocatorAPI::exist			(const char* path, const char* name)
+bool ELocatorAPI::exist			(const char* path, const char* name)
 {
 	string_path		temp;       
     update_path		(temp,path,name);
 	return exist	(temp);
 }
 
-BOOL CLocatorAPI::exist			(string_path& fn, const char* path, const char* name)
+bool ELocatorAPI::exist			(string_path& fn, const char* path, const char* name)
 {
     update_path		(fn,path,name);
 	return exist	(fn);
 }
 
-BOOL CLocatorAPI::exist			(string_path& fn, const char* path, const char* name, const char* ext)
+bool ELocatorAPI::exist			(string_path& fn, const char* path, const char* name, const char* ext)
 {
 	string_path 	nm;
 	strconcat		(sizeof(nm),nm,name,ext);
     update_path		(fn,path,nm);
 	return exist	(fn);
-}
-
-bool ignore_name(const char* _name)
-{
-	// ignore processing ".svn" folders
-	return ( _name[0]=='.' && _name[1]=='s' && _name[2]=='v' && _name[3]=='n' && _name[4]==0) ;
 }
 
 typedef void	(__stdcall * TOnFind)	(_finddata_t&, void*);
@@ -239,7 +232,7 @@ void __stdcall file_list_cb(_finddata_t& entry, void* data)
     }
 }
 
-int CLocatorAPI::file_list(FS_FileSet& dest, LPCSTR path, u32 flags, LPCSTR mask)
+int ELocatorAPI::file_list(FS_FileSet& dest, LPCSTR path, u32 flags, LPCSTR mask)
 {
 	R_ASSERT		(path);
 	VERIFY			(flags);
@@ -264,7 +257,7 @@ int CLocatorAPI::file_list(FS_FileSet& dest, LPCSTR path, u32 flags, LPCSTR mask
 	return dest.size();
 }
 
-IReader* CLocatorAPI::r_open	(LPCSTR path, LPCSTR _fname)
+IReader* ELocatorAPI::r_open	(LPCSTR path, LPCSTR _fname)
 {
 	IReader* R		= 0;
 
@@ -342,36 +335,36 @@ IReader* CLocatorAPI::r_open	(LPCSTR path, LPCSTR _fname)
 	return R;
 }
 
-void	CLocatorAPI::r_close	(IReader* &fs)
+void	ELocatorAPI::r_close	(IReader* &fs)
 {
 	xr_delete	(fs);
 }
 
-IWriter* CLocatorAPI::w_open	(LPCSTR path, LPCSTR _fname)
+IWriter* ELocatorAPI::w_open	(LPCSTR path, LPCSTR _fname)
 {
 	string_path	fname;
 	xr_strlwr(strcpy(fname,_fname));//,".$");
 	if (path&&path[0]) update_path(fname,path,fname);
     CFileWriter* W 	= xr_new<CFileWriter>(fname,false); 
-#ifdef _EDITOR
+//#ifdef _EDITOR
 	if (!W->valid()) xr_delete(W);
-#endif    
+//#endif    
 	return W;
 }
 
-IWriter* CLocatorAPI::w_open_ex	(LPCSTR path, LPCSTR _fname)
+IWriter* ELocatorAPI::w_open_ex	(LPCSTR path, LPCSTR _fname)
 {
 	string_path	fname;
 	xr_strlwr(strcpy(fname,_fname));//,".$");
 	if (path&&path[0]) update_path(fname,path,fname);
     CFileWriter* W 	= xr_new<CFileWriter>(fname,true); 
-#ifdef _EDITOR
+//#ifdef _EDITOR
 	if (!W->valid()) xr_delete(W);
-#endif    
+//#endif    
 	return W;
 }
 
-void	CLocatorAPI::w_close(IWriter* &S)
+void	ELocatorAPI::w_close(IWriter* &S)
 {
 	if (S){
         R_ASSERT	(S->fName.size());
@@ -393,7 +386,7 @@ void __stdcall dir_delete_cb(_finddata_t& entry, void* data)
     else if (D->remove_files)	FS.file_delete		(entry.name);
 }
 
-BOOL CLocatorAPI::dir_delete(LPCSTR initial, LPCSTR nm, BOOL remove_files)
+BOOL ELocatorAPI::dir_delete(LPCSTR initial, LPCSTR nm, BOOL remove_files)
 {
 	string_path			fpath;
 	if (initial&&initial[0])
@@ -417,7 +410,7 @@ BOOL CLocatorAPI::dir_delete(LPCSTR initial, LPCSTR nm, BOOL remove_files)
     return TRUE;
 }                                                
 
-void CLocatorAPI::file_delete(LPCSTR path, LPCSTR nm)
+void ELocatorAPI::file_delete(LPCSTR path, LPCSTR nm)
 {
 	string_path	fname;
 	if (path&&path[0])
@@ -427,7 +420,7 @@ void CLocatorAPI::file_delete(LPCSTR path, LPCSTR nm)
     unlink			(fname);
 }
 
-void CLocatorAPI::file_copy(LPCSTR src, LPCSTR dest)
+void ELocatorAPI::file_copy(LPCSTR src, LPCSTR dest)
 {
 	if (exist(src)){
         IReader* S		= r_open(src);
@@ -442,7 +435,7 @@ void CLocatorAPI::file_copy(LPCSTR src, LPCSTR dest)
 	}
 }
 
-void CLocatorAPI::file_rename(LPCSTR src, LPCSTR dest, bool bOwerwrite)
+void ELocatorAPI::file_rename(LPCSTR src, LPCSTR dest, bool bOwerwrite)
 {
 	if (bOwerwrite&&exist(dest)) unlink(dest);
     // physically rename file
@@ -450,19 +443,19 @@ void CLocatorAPI::file_rename(LPCSTR src, LPCSTR dest, bool bOwerwrite)
     rename				(src,dest);
 }
 
-int	CLocatorAPI::file_length(LPCSTR src)
+int	ELocatorAPI::file_length(LPCSTR src)
 {
 	FS_File F;
     return (file_find(src,F))?F.size:-1;
 }
 
-BOOL CLocatorAPI::path_exist(LPCSTR path)
+bool ELocatorAPI::path_exist(LPCSTR path)
 {
     PathPairIt P 			= pathes.find(path); 
     return					(P!=pathes.end());
 }
 
-FS_Path* CLocatorAPI::append_path(LPCSTR path_alias, LPCSTR root, LPCSTR add, BOOL recursive)
+FS_Path* ELocatorAPI::append_path(LPCSTR path_alias, LPCSTR root, LPCSTR add, BOOL recursive)
 {
 	VERIFY			(root/*&&root[0]*/);
 	VERIFY			(false==path_exist(path_alias));
@@ -471,30 +464,30 @@ FS_Path* CLocatorAPI::append_path(LPCSTR path_alias, LPCSTR root, LPCSTR add, BO
 	return P;
 }
 
-FS_Path* CLocatorAPI::get_path(LPCSTR path)
+FS_Path* ELocatorAPI::get_path(LPCSTR path)
 {
     PathPairIt P 			= pathes.find(path); 
     R_ASSERT2(P!=pathes.end(),path);
     return P->second;
 }
 
-LPCSTR CLocatorAPI::update_path(string_path& dest, LPCSTR initial, LPCSTR src)
+LPCSTR ELocatorAPI::update_path(string_path& dest, LPCSTR initial, LPCSTR src)
 {
     return get_path(initial)->_update(dest,src);
 }
 /*
-void CLocatorAPI::update_path(xr_string& dest, LPCSTR initial, LPCSTR src)
+void ELocatorAPI::update_path(xr_string& dest, LPCSTR initial, LPCSTR src)
 {
     return get_path(initial)->_update(dest,src);
 } */
 
-time_t CLocatorAPI::get_file_age(LPCSTR nm)
+time_t ELocatorAPI::get_file_age(LPCSTR nm)
 {
 	FS_File F;
     return (file_find(nm,F))?F.time_write:-1;
 }
 
-void CLocatorAPI::set_file_age(LPCSTR nm, time_t age)
+void ELocatorAPI::set_file_age(LPCSTR nm, time_t age)
 {
     // set file
     _utimbuf	tm;
@@ -504,7 +497,7 @@ void CLocatorAPI::set_file_age(LPCSTR nm, time_t age)
     if (0!=res)	Msg("!Can't set file age: '%s'. Error: '%s'",nm,_sys_errlist[errno]);
 }
 
-BOOL CLocatorAPI::can_write_to_folder(LPCSTR path)
+BOOL ELocatorAPI::can_write_to_folder(LPCSTR path)
 {
 	if (path&&path[0]){
 		string_path		temp;       
@@ -522,14 +515,14 @@ BOOL CLocatorAPI::can_write_to_folder(LPCSTR path)
     }
 }
 
-BOOL CLocatorAPI::can_write_to_alias(LPCSTR path)
+BOOL ELocatorAPI::can_write_to_alias(LPCSTR path)
 {
 	string_path			temp;       
     update_path			(temp,path,"");
 	return can_write_to_folder(temp);
 }
 
-BOOL CLocatorAPI::can_modify_file(LPCSTR fname)
+BOOL ELocatorAPI::can_modify_file(LPCSTR fname)
 {
 	FILE* hf			= fopen	(fname, "r+b");
     if (hf){	
@@ -540,9 +533,100 @@ BOOL CLocatorAPI::can_modify_file(LPCSTR fname)
     }
 }
 
-BOOL CLocatorAPI::can_modify_file(LPCSTR path, LPCSTR name)
+BOOL ELocatorAPI::can_modify_file(LPCSTR path, LPCSTR name)
 {
 	string_path			temp;       
     update_path			(temp,path,name);
 	return can_modify_file(temp);
+}
+
+xr_vector<LPSTR>* ELocatorAPI::file_list_open(LPCSTR initial, LPCSTR folder, u32 flags)
+{
+	R_ASSERT(initial && initial[0]);
+
+	string_path path;
+    update_path(path, initial, folder);
+
+    return file_list_open(path, flags);
+}
+
+xr_vector<LPSTR>* ELocatorAPI::file_list_open(LPCSTR path, u32 flags)
+{
+	xr_vector<LPSTR> * result = xr_new<xr_vector<LPSTR> >();
+	FS_FileSet fileset;
+
+    file_list(fileset, path, flags);
+
+    for(FS_FileSetIt it = fileset.begin(), end = fileset.end(); it != end; it++)
+		result->push_back(xr_strdup((*it).name.c_str()));
+
+    return result;
+}
+
+void ELocatorAPI::file_list_close(xr_vector<LPSTR>*& list)
+{
+	for(xr_vector<LPSTR>::iterator it = list->begin(), end = list->end(); it != end; it++)
+    	xr_free(*it);
+
+    xr_delete(list);
+}
+
+void ELocatorAPI::auth_runtime(void* params)
+{
+    R_ASSERT(FALSE);
+}
+
+u64 ELocatorAPI::auth_get()
+{
+    R_ASSERT(FALSE);
+    return 0;
+}
+
+void ELocatorAPI::auth_generate(xr_vector<xr_string>& ignore, xr_vector<xr_string>& important)
+{
+    R_ASSERT(FALSE);
+}
+
+void ELocatorAPI::r_close(CStreamReader* &fs)
+{
+    R_ASSERT(FALSE);
+}
+
+CStreamReader* ELocatorAPI::rs_open(LPCSTR initial, LPCSTR N)
+{
+    R_ASSERT(FALSE);
+    return 0;
+}
+
+bool ELocatorAPI::load_all_unloaded_archives()
+{
+    R_ASSERT(FALSE);
+    return false;
+}
+
+bool ELocatorAPI::loadArchiveByLevelNameAnvVersion(LPCSTR name, LPCSTR version)
+{
+    R_ASSERT(FALSE);
+    return false;
+}
+
+CInifile* ELocatorAPI::getArchiveHeader(LPCSTR name, LPCSTR version)
+{
+    R_ASSERT(FALSE);
+    return 0;
+}
+
+void ELocatorAPI::rescan_path(LPCSTR full_path, BOOL bRecurse)
+{
+    R_ASSERT(FALSE);
+}
+
+void ELocatorAPI::rescan_pathes()
+{
+    R_ASSERT(FALSE);
+}
+
+void ELocatorAPI::enumUnloadedMaps(LPCSTR tmp_entrypoint, ILocatorAPI::MapCallback callback)
+{
+    R_ASSERT(FALSE);
 }

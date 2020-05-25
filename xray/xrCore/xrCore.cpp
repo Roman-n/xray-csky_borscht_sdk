@@ -6,6 +6,8 @@
 #include <mmsystem.h>
 #include <objbase.h>
 #include "xrCore.h"
+#include "ELocatorAPI.h"
+#include "LocatorAPI.h"
  
 #pragma comment(lib,"winmm.lib")
 
@@ -16,6 +18,7 @@
 XRCORE_API		xrCore	Core;
 XRCORE_API		u32		build_id;
 XRCORE_API		LPCSTR	build_date;
+XRCORE_API ILocatorAPI*	xr_FS	= NULL;
 
 namespace CPU
 {
@@ -28,7 +31,7 @@ extern char g_application_path[256];
 
 //. extern xr_vector<shared_str>*	LogFile;
 
-void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs, LPCSTR fs_fname)
+void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs, LPCSTR fs_fname, bool editor)
 {
 	strcpy_s					(ApplicationName,_ApplicationName);
 	if (0==init_counter) {
@@ -51,19 +54,17 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
         GetModuleFileName(GetModuleHandle(MODULE_NAME),fn,sizeof(fn));
         _splitpath		(fn,dr,di,0,0);
         strconcat		(sizeof(ApplicationPath),ApplicationPath,dr,di);
-#ifndef _EDITOR
-		strcpy_s		(g_application_path,sizeof(g_application_path),ApplicationPath);
-#endif
+        if (!editor)
+			strcpy_s	(g_application_path,sizeof(g_application_path),ApplicationPath);
 
-#ifdef _EDITOR
-		// working path
-        if( strstr(Params,"-wf") )
-        {
-            string_path				c_name;
-            sscanf					(strstr(Core.Params,"-wf ")+4,"%[^ ] ",c_name);
-            SetCurrentDirectory     (c_name);
+		if (editor) {
+            // working path
+            if (strstr(Params, "-wf")) {
+                string_path c_name;
+                sscanf(strstr(Core.Params, "-wf ") + 4, "%[^ ] ", c_name);
+                SetCurrentDirectory(c_name);
+            }
         }
-#endif
 
 		GetCurrentDirectory(sizeof(WorkingPath),WorkingPath);
 
@@ -88,7 +89,7 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 
 		rtc_initialize		();
 
-		xr_FS				= xr_new<CLocatorAPI>	();
+		xr_FS				= editor ? (ILocatorAPI*)xr_new<ELocatorAPI>	() : (ILocatorAPI*)xr_new<CLocatorAPI>	();
 
 		xr_EFS				= xr_new<EFS_Utils>		();
 //.		R_ASSERT			(co_res==S_OK);
@@ -101,16 +102,15 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 		if (strstr(Params,"-cache"))  flags |= CLocatorAPI::flCacheFiles;
 		else flags &= ~CLocatorAPI::flCacheFiles;
 #endif // DEBUG
-#ifdef _EDITOR // for EDITORS - no cache
-		flags 				&=~ CLocatorAPI::flCacheFiles;
-#endif // _EDITOR
+        if (editor)
+			flags 				&=~ CLocatorAPI::flCacheFiles;
 		flags |= CLocatorAPI::flScanAppRoot;
 
-#ifndef	_EDITOR
+		if (!editor) {
 	#ifndef ELocatorAPIH
 		if (0!=strstr(Params,"-file_activity"))	 flags |= CLocatorAPI::flDumpFileActivity;
 	#endif
-#endif
+        }
 		FS._initialize		(flags,0,fs_fname);
 		Msg					("'%s' build %d, %s\n","xrCore",build_id, build_date);
 		EFS._initialize		();

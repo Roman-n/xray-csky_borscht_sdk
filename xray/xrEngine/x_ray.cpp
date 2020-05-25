@@ -1156,25 +1156,7 @@ void CApplication::Level_Set(u32 L)
 int CApplication::Level_ID(LPCSTR name, LPCSTR ver, bool bSet)
 {
 	int result = -1;
-	CLocatorAPI::archives_it it		= FS.m_archives.begin();
-	CLocatorAPI::archives_it it_e	= FS.m_archives.end();
-	bool arch_res					= false;
-
-	for(;it!=it_e;++it)
-	{
-		CLocatorAPI::archive& A		= *it;
-		if(A.hSrcFile==NULL)
-		{
-			LPCSTR ln = A.header->r_string("header", "level_name");
-			LPCSTR lv = A.header->r_string("header", "level_ver");
-			if ( 0==stricmp(ln,name) && 0==stricmp(lv,ver) )
-			{
-				FS.LoadArchive(A);
-				arch_res = true;
-			}
-		}
-	}
-
+	bool arch_res					= FS.loadArchiveByLevelNameAnvVersion(name, ver);
 	if( arch_res )
 		Level_Scan							();
 	
@@ -1200,21 +1182,7 @@ int CApplication::Level_ID(LPCSTR name, LPCSTR ver, bool bSet)
 
 CInifile*  CApplication::GetArchiveHeader(LPCSTR name, LPCSTR ver)
 {
-	CLocatorAPI::archives_it it		= FS.m_archives.begin();
-	CLocatorAPI::archives_it it_e	= FS.m_archives.end();
-
-	for(;it!=it_e;++it)
-	{
-		CLocatorAPI::archive& A		= *it;
-
-		LPCSTR ln = A.header->r_string("header", "level_name");
-		LPCSTR lv = A.header->r_string("header", "level_ver");
-		if ( 0==stricmp(ln,name) && 0==stricmp(lv,ver) )
-		{
-			return A.header;
-		}
-	}
-	return NULL;
+	return FS.getArchiveHeader(name, ver);
 }
 
 void CApplication::LoadAllArchives()

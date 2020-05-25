@@ -248,14 +248,10 @@ DEFINE_VECTOR	(xr_rtoken,RTokenVec,RTokenVecIt);
 #include "log.h"
 #include "xr_trims.h"
 #include "xr_ini.h"
-#ifdef NO_FS_SCAN
-#	include "ELocatorAPI.h"
-#else
-#	include "LocatorAPI.h"
-#endif
+#include "fastdelegate.h"
+#include "ILocatorAPI.h"
 #include "FileSystem.h"
 #include "FTimer.h"
-#include "fastdelegate.h"
 #include "intrusive_ptr.h"
 
 #include "net_utils.h"
@@ -284,7 +280,7 @@ public:
 	string512	Params;
 
 public:
-	void		_initialize	(LPCSTR ApplicationName, LogCallback cb=0, BOOL init_fs=TRUE, LPCSTR fs_fname=0);
+	void		_initialize	(LPCSTR ApplicationName, LogCallback cb=0, BOOL init_fs=TRUE, LPCSTR fs_fname=0, bool editor = false);
 	void		_destroy	();
 };
 extern XRCORE_API xrCore Core;

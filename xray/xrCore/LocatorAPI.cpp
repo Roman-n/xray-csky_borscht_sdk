@@ -3,7 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
-
+#include "LocatorAPI.h"
 
 #pragma warning(disable:4995)
 #include <direct.h>
@@ -24,8 +24,6 @@ const u32 BIG_FILE_READER_WINDOW_SIZE	= 1024*1024;
 #	pragma warning(disable:4995)
 #	include <malloc.h>
 #	pragma warning(pop)
-
-CLocatorAPI*		xr_FS = NULL;
 
 #ifdef _EDITOR
 #	define FSLTX	"fs.ltx"
@@ -514,13 +512,6 @@ IC bool pred_str_ff(const _finddata_t& x, const _finddata_t& y)
 	return xr_strcmp(x.name,y.name)<0;	
 }
 
-
-bool ignore_name(const char* _name)
-{
-	// ignore processing ".svn" folders
-	return ( _name[0]=='.' && _name[1]=='s' && _name[2]=='v' && _name[3]=='n' && _name[4]==0);
-}
-
 // we need to check for file existance
 // because Unicode file names can 
 // be interpolated by FindNextFile()
@@ -845,26 +836,26 @@ void CLocatorAPI::_destroy		()
     m_archives.clear	();
 }
 
-const CLocatorAPI::file* CLocatorAPI::exist			(const char* fn)
+bool CLocatorAPI::exist			(const char* fn)
 {
 	files_it it		= file_find_it(fn);
-	return (it!=m_files.end())?&(*it):0;
+	return it!=m_files.end();
 }
 
-const CLocatorAPI::file* CLocatorAPI::exist			(const char* path, const char* name)
+bool CLocatorAPI::exist			(const char* path, const char* name)
 {
 	string_path		temp;       
     update_path		(temp,path,name);
 	return			exist(temp);
 }
 
-const CLocatorAPI::file* CLocatorAPI::exist			(string_path& fn, LPCSTR path, LPCSTR name)
+bool CLocatorAPI::exist			(string_path& fn, LPCSTR path, LPCSTR name)
 {
     update_path		(fn,path,name);
 	return			exist(fn);
 }
 
-const CLocatorAPI::file* CLocatorAPI::exist			(string_path& fn, LPCSTR path, LPCSTR name, LPCSTR ext)
+bool CLocatorAPI::exist			(string_path& fn, LPCSTR path, LPCSTR name, LPCSTR ext)
 {
 	string_path		nm;
 	strconcat		(sizeof(nm),nm,name,ext);
@@ -1507,7 +1498,7 @@ void CLocatorAPI::update_path(xr_string& dest, LPCSTR initial, LPCSTR src)
     return get_path(initial)->_update(dest,src);
 }*/
 
-u32 CLocatorAPI::get_file_age(LPCSTR nm)
+time_t CLocatorAPI::get_file_age(LPCSTR nm)
 {
 	// проверить нужно ли пересканировать пути
     check_pathes	();
@@ -1516,7 +1507,7 @@ u32 CLocatorAPI::get_file_age(LPCSTR nm)
     return (I!=m_files.end())?I->modif:u32(-1);
 }
 
-void CLocatorAPI::set_file_age(LPCSTR nm, u32 age)
+void CLocatorAPI::set_file_age(LPCSTR nm, time_t age)
 {
 	// проверить нужно ли пересканировать пути
     check_pathes	();
@@ -1638,4 +1629,65 @@ BOOL CLocatorAPI::can_modify_file(LPCSTR path, LPCSTR name)
 	string_path			temp;       
     update_path			(temp,path,name);
 	return can_modify_file(temp);
+}
+
+bool CLocatorAPI::loadArchiveByLevelNameAnvVersion(LPCSTR name, LPCSTR version)
+{
+	CLocatorAPI::archives_it it		= m_archives.begin();
+	CLocatorAPI::archives_it it_e	= m_archives.end();
+	for(;it!=it_e;++it)
+	{
+		CLocatorAPI::archive& A		= *it;
+        if (A.hSrcFile != NULL)
+            continue;
+
+		LPCSTR ln = A.header->r_string("header", "level_name");
+		LPCSTR lv = A.header->r_string("header", "level_ver");
+		if ( 0==stricmp(ln,name) && 0==stricmp(lv,version) )
+		{
+			LoadArchive(A);
+			return true;
+		}
+	}
+	return false;
+}
+
+CInifile* CLocatorAPI::getArchiveHeader(LPCSTR name, LPCSTR version)
+{
+	CLocatorAPI::archives_it it		= m_archives.begin();
+	CLocatorAPI::archives_it it_e	= m_archives.end();
+	for(;it!=it_e;++it)
+	{
+		CLocatorAPI::archive& A		= *it;
+
+		LPCSTR ln = A.header->r_string("header", "level_name");
+		LPCSTR lv = A.header->r_string("header", "level_ver");
+		if ( 0==stricmp(ln,name) && 0==stricmp(lv,version) )
+		{
+			return A.header;
+		}
+	}
+	return NULL;
+}
+
+void CLocatorAPI::enumUnloadedMaps(LPCSTR tmp_entrypoint, ILocatorAPI::MapCallback callback)
+{
+	CLocatorAPI::archives_it it		= m_archives.begin();
+	CLocatorAPI::archives_it it_e	= m_archives.end();
+	for(;it!=it_e;++it)
+	{
+		CLocatorAPI::archive& A		= *it;
+		if(A.hSrcFile)				continue;
+
+		LPCSTR ln					= A.header->r_string("header", "level_name");
+		LPCSTR lv					= A.header->r_string("header", "level_ver");
+		LoadArchive					(A, tmp_entrypoint);
+
+		string_path					map_cfg_fn;
+		update_path					(map_cfg_fn, "$game_levels$", ln);
+		
+		strcat_s					(map_cfg_fn,"\\level.ltx");
+		callback					(map_cfg_fn, ln, lv);
+		unload_archive				(A);
+	}
 }

@@ -1,5 +1,5 @@
 #include "stdafx.h"
-
+#include "LocatorAPI.h"
 
 struct	auth_options	{
 	xr_vector<xr_string>				ignore;

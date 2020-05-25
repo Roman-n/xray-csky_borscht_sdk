@@ -15,7 +15,7 @@
 
 class XRCORE_API CStreamReader;
 
-class XRCORE_API CLocatorAPI  
+class XRCORE_API CLocatorAPI : public ILocatorAPI
 {
 	friend class FS_Path;
 public:
@@ -70,22 +70,6 @@ private:
 	bool						Recurse			(LPCSTR path);	
 
 	files_it					file_find_it	(LPCSTR n);
-public:
-	enum{
-		flNeedRescan			= (1<<0),
-		flBuildCopy				= (1<<1),
-		flReady					= (1<<2),
-		flEBuildCopy			= (1<<3),
-		flEventNotificator      = (1<<4),
-		flTargetFolderOnly		= (1<<5),
-		flCacheFiles			= (1<<6),
-		flScanAppRoot			= (1<<7),
-		flNeedCheck				= (1<<8),
-		flDumpFileActivity		= (1<<9),
-	};    
-	Flags32						m_Flags			;
-	u32							dwAllocGranularity;
-	u32							dwOpenCounter;
 
 private:
 			void				check_cached_files	(LPSTR fname, const u32 &fname_size, const file &desc, LPCSTR &source_name);
@@ -116,69 +100,69 @@ private:
 public:
 								CLocatorAPI			();
 								~CLocatorAPI		();
-	void						_initialize			(u32 flags, LPCSTR target_folder=0, LPCSTR fs_name=0);
-	void						_destroy			();
+	void						_initialize			(u32 flags, LPCSTR target_folder=0, LPCSTR fs_name=0) override;
+	void						_destroy			() override;
 
-	CStreamReader*				rs_open				(LPCSTR initial, LPCSTR N);
-	IReader*					r_open				(LPCSTR initial, LPCSTR N);
-	IC IReader*					r_open				(LPCSTR N){return r_open(0,N);}
-	void						r_close				(IReader* &S);
-	void						r_close				(CStreamReader* &fs);
+	CStreamReader*				rs_open				(LPCSTR initial, LPCSTR N) override;
+	IReader*					r_open				(LPCSTR initial, LPCSTR N) override;
+	IC IReader*					r_open				(LPCSTR N) override {return r_open(0,N);}
+	void						r_close				(IReader* &S) override;
+	void						r_close				(CStreamReader* &fs) override;
 
-	IWriter*					w_open				(LPCSTR initial, LPCSTR N);
-	IC IWriter*					w_open				(LPCSTR N){return w_open(0,N);}
+	IWriter*					w_open				(LPCSTR initial, LPCSTR N) override;
+	IC IWriter*					w_open				(LPCSTR N) override {return w_open(0,N);}
 	IWriter*					w_open_ex			(LPCSTR initial, LPCSTR N);
-	IC IWriter*					w_open_ex			(LPCSTR N){return w_open_ex(0,N);}
-	void						w_close				(IWriter* &S);
+	IC IWriter*					w_open_ex			(LPCSTR N) override {return w_open_ex(0,N);}
+	void						w_close				(IWriter* &S) override;
 
-	const file*					exist				(LPCSTR N);
-	const file*					exist				(LPCSTR path, LPCSTR name);
-	const file*					exist				(string_path& fn, LPCSTR path, LPCSTR name);
-	const file*					exist				(string_path& fn, LPCSTR path, LPCSTR name, LPCSTR ext);
+	bool						exist				(LPCSTR N) override;
+	bool						exist				(LPCSTR path, LPCSTR name) override;
+	bool						exist				(string_path& fn, LPCSTR path, LPCSTR name) override;
+	bool						exist				(string_path& fn, LPCSTR path, LPCSTR name, LPCSTR ext) override;
 
-    BOOL 						can_write_to_folder	(LPCSTR path); 
-    BOOL 						can_write_to_alias	(LPCSTR path); 
+    BOOL 						can_write_to_folder	(LPCSTR path) override; 
+    BOOL 						can_write_to_alias	(LPCSTR path) override; 
     BOOL						can_modify_file		(LPCSTR fname);
     BOOL						can_modify_file		(LPCSTR path, LPCSTR name);
 
-    BOOL 						dir_delete			(LPCSTR path,LPCSTR nm,BOOL remove_files);
-    BOOL 						dir_delete			(LPCSTR full_path,BOOL remove_files){return dir_delete(0,full_path,remove_files);}
-    void 						file_delete			(LPCSTR path,LPCSTR nm);
-    void 						file_delete			(LPCSTR full_path){file_delete(0,full_path);}
-	void 						file_copy			(LPCSTR src, LPCSTR dest);
-	void 						file_rename			(LPCSTR src, LPCSTR dest,bool bOwerwrite=true);
-    int							file_length			(LPCSTR src);
+    BOOL 						dir_delete			(LPCSTR path,LPCSTR nm,BOOL remove_files) override;
+    BOOL 						dir_delete			(LPCSTR full_path,BOOL remove_files) override {return dir_delete(0,full_path,remove_files);}
+    void 						file_delete			(LPCSTR path,LPCSTR nm) override;
+    void 						file_delete			(LPCSTR full_path) override {file_delete(0,full_path);}
+	void 						file_copy			(LPCSTR src, LPCSTR dest) override;
+	void 						file_rename			(LPCSTR src, LPCSTR dest,bool bOwerwrite=true) override;
+    int							file_length			(LPCSTR src) override;
 
-    u32  						get_file_age		(LPCSTR nm);
-    void 						set_file_age		(LPCSTR nm, u32 age);
+    time_t 						get_file_age		(LPCSTR nm) override;
+    void 						set_file_age		(LPCSTR nm, time_t age) override;
 
-	xr_vector<LPSTR>*			file_list_open		(LPCSTR initial, LPCSTR folder,	u32 flags=FS_ListFiles);
-	xr_vector<LPSTR>*			file_list_open		(LPCSTR path,					u32 flags=FS_ListFiles);
-	void						file_list_close		(xr_vector<LPSTR>* &lst);
+	xr_vector<LPSTR>*			file_list_open		(LPCSTR initial, LPCSTR folder,	u32 flags=FS_ListFiles) override;
+	xr_vector<LPSTR>*			file_list_open		(LPCSTR path,					u32 flags=FS_ListFiles) override;
+	void						file_list_close		(xr_vector<LPSTR>* &lst) override;
                                                      
-    bool						path_exist			(LPCSTR path);
-    FS_Path*					get_path			(LPCSTR path);
+    bool						path_exist			(LPCSTR path) override;
+    FS_Path*					get_path			(LPCSTR path) override;
     FS_Path*					append_path			(LPCSTR path_alias, LPCSTR root, LPCSTR add, BOOL recursive);
-    LPCSTR						update_path			(string_path& dest, LPCSTR initial, LPCSTR src);
+    LPCSTR						update_path			(string_path& dest, LPCSTR initial, LPCSTR src) override;
 
-	int							file_list			(FS_FileSet& dest, LPCSTR path, u32 flags=FS_ListFiles, LPCSTR mask=0);
+	int							file_list			(FS_FileSet& dest, LPCSTR path, u32 flags=FS_ListFiles, LPCSTR mask=0) override;
 
-	bool						load_all_unloaded_archives();
+	bool						load_all_unloaded_archives() override;
 	void						unload_archive		(archive& A);
+    bool						loadArchiveByLevelNameAnvVersion(LPCSTR name, LPCSTR version) override;
+	CInifile*					getArchiveHeader	(LPCSTR name, LPCSTR version) override;
+	void						enumUnloadedMaps	(LPCSTR tmp_entrypoint, MapCallback callback) override;
 
-	void						auth_generate		(xr_vector<xr_string>&	ignore, xr_vector<xr_string>&	important);
-	u64							auth_get			();
-	void						auth_runtime		(void*);
+	void						auth_generate		(xr_vector<xr_string>&	ignore, xr_vector<xr_string>&	important) override;
+	u64							auth_get			() override;
+	void						auth_runtime		(void*) override;
 
-	void						rescan_path			(LPCSTR full_path, BOOL bRecurse);
+	void						rescan_path			(LPCSTR full_path, BOOL bRecurse) override;
 	// editor functions
-	void						rescan_pathes		();
+	void						rescan_pathes		() override;
 	void						lock_rescan			();
 	void						unlock_rescan		();
 };
-
-extern XRCORE_API	CLocatorAPI*					xr_FS;
-#define FS (*xr_FS)
 
 #endif // LocatorAPIH
 

@@ -4,8 +4,7 @@
 
 using namespace luabind;
 
-LPCSTR get_file_age_str(CLocatorAPI* fs, LPCSTR nm);
-CLocatorAPI* getFS()
+ILocatorAPI* getFS()
 {
 	return &FS;
 }
@@ -144,6 +143,11 @@ void dir_delete_script_2(CLocatorAPI* fs, LPCSTR path, LPCSTR nm, int remove_fil
 void dir_delete_script(CLocatorAPI* fs, LPCSTR full_path, int remove_files)
 {	fs->dir_delete(full_path,remove_files);}
 
+u32 get_file_age(CLocatorAPI* fs, LPCSTR nm)
+{
+	return fs->get_file_age(nm);
+}
+
 LPCSTR get_file_age_str(CLocatorAPI* fs, LPCSTR nm)
 {
 	time_t t= fs->get_file_age(nm);
@@ -222,10 +226,10 @@ void fs_registrator::script_register(lua_State *L)
 			.def("file_length",							&CLocatorAPI::file_length)
 			.def("file_copy",							&CLocatorAPI::file_copy)
 
-			.def("exist",								(const CLocatorAPI::file*	(CLocatorAPI::*)(LPCSTR)) (&CLocatorAPI::exist))
-			.def("exist",								(const CLocatorAPI::file*	(CLocatorAPI::*)(LPCSTR, LPCSTR)) (&CLocatorAPI::exist))
+			.def("exist",								(bool	(CLocatorAPI::*)(LPCSTR)) (&CLocatorAPI::exist))
+			.def("exist",								(bool	(CLocatorAPI::*)(LPCSTR, LPCSTR)) (&CLocatorAPI::exist))
 
-			.def("get_file_age",						&CLocatorAPI::get_file_age)
+			.def("get_file_age",						&get_file_age)
 			.def("get_file_age_str",					&get_file_age_str)
 			.def("r_open",								(IReader*	(CLocatorAPI::*)(LPCSTR,LPCSTR)) (&CLocatorAPI::r_open))
 			.def("r_open",								(IReader*	(CLocatorAPI::*)(LPCSTR)) (&CLocatorAPI::r_open))
