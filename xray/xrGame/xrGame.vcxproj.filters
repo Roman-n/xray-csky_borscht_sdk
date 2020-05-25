@@ -2587,6 +2587,9 @@
     <Filter Include="Embedded editor\controls">
       <UniqueIdentifier>{8b2a7209-3d11-4e8f-95df-61f221d68681}</UniqueIdentifier>
     </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{70d7c795-89bc-4d25-97ec-373173043e97}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mt_config.h">
@@ -7518,9 +7521,6 @@
     <ClInclude Include="embedded_editor\embedded_editor.h">
       <Filter>Embedded editor</Filter>
     </ClInclude>
-    <ClInclude Include="embedded_editor\embedded_editor_details.h">
-      <Filter>Embedded editor</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="damage_manager.cpp">
@@ -8938,9 +8938,6 @@
     </ClCompile>
     <ClCompile Include="..\xrServerEntities\lua_studio.cpp">
       <Filter>AI\AScript\lua_studio</Filter>
-    </ClCompile>
-    <ClCompile Include="ai_sounds.cpp">
-      <Filter>AI\ASound</Filter>
     </ClCompile>
     <ClCompile Include="ai_space.cpp">
       <Filter>AI\ASpace</Filter>
@@ -11236,6 +11233,9 @@
     </ClCompile>
     <ClCompile Include="embedded_editor\embedded_editor_envmod.cpp">
       <Filter>Embedded editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\ai_sounds.cpp">
+      <Filter>common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
