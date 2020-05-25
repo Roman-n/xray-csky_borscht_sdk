@@ -46,9 +46,6 @@
     <Filter Include="xrRender\xrRenderDX9">
       <UniqueIdentifier>{59e608bf-9307-4816-a5c1-07b7f818c1e3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="xrGame">
-      <UniqueIdentifier>{0c009acb-2b51-45c2-b85d-5034c0fc5852}</UniqueIdentifier>
-    </Filter>
     <Filter Include="imgui">
       <UniqueIdentifier>{4ef78859-ccdc-450f-a6cf-eeb044d3b614}</UniqueIdentifier>
     </Filter>
@@ -61,9 +58,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="builder_types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RenderWindow.hpp">
@@ -498,6 +492,9 @@
     <ClInclude Include="..\..\..\3rd party\NvMender2003\remove_isolated_verts.h">
       <Filter>NvMender2003</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Include\builder_types.h">
+      <Filter>Include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -776,9 +773,6 @@
     <ClCompile Include="..\..\Layers\xrRender\Blender_Screen_SET.cpp">
       <Filter>xrRender</Filter>
     </ClCompile>
-    <ClCompile Include="builder_types.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Editor\EThumbnailTexture.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
@@ -941,9 +935,6 @@
     <ClCompile Include="..\..\Layers\xrRender\dxThunderboltRender.cpp">
       <Filter>xrRender</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\xrGame\ai_sounds.cpp">
-      <Filter>xrGame</Filter>
-    </ClCompile>
     <ClCompile Include="Editor\ParticleEffectActions.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
@@ -1024,6 +1015,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\3rd party\NvMender2003\NVMeshMender.cpp">
       <Filter>NvMender2003</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Include\ai_sounds.cpp">
+      <Filter>Include</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Include\builder_types.cpp">
+      <Filter>Include</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

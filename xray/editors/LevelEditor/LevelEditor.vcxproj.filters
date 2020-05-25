@@ -28,6 +28,9 @@
     <Filter Include="xrRender">
       <UniqueIdentifier>{703b6209-1595-4e4c-b0fe-c22bb23d0be3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Include">
+      <UniqueIdentifier>{6c45c6e7-65dd-4975-be8a-760dc26b1ede}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -225,9 +228,6 @@
     <ClInclude Include="..\..\xrServerEntities\gametype_chooser.h">
       <Filter>xrServerEntities</Filter>
     </ClInclude>
-    <ClInclude Include="..\ECore\builder_types.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Edit\ESceneWallmarkControls.h">
       <Filter>Edit</Filter>
     </ClInclude>
@@ -269,6 +269,9 @@
     </ClInclude>
     <ClInclude Include="..\..\xrServerEntities\LevelGameDef.h">
       <Filter>xrServerEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\builder_types.h">
+      <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -587,9 +590,6 @@
     <ClCompile Include="..\..\xrServerEntities\gametype_chooser.cpp">
       <Filter>xrServerEntities</Filter>
     </ClCompile>
-    <ClCompile Include="..\ECore\builder_types.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Edit\ESceneWallmarkControls.cpp">
       <Filter>Edit</Filter>
     </ClCompile>
@@ -646,6 +646,9 @@
     </ClCompile>
     <ClCompile Include="..\..\xrServerEntities\LevelGameDef.cpp">
       <Filter>xrServerEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Include\builder_types.cpp">
+      <Filter>Include</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

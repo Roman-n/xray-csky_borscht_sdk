@@ -7,7 +7,7 @@
 
 #ifndef __BORLANDC__
 #include "framework.h"
-#include "builder_types.h"
+#include "../../Include/builder_types.h"
 #endif
 
 #pragma warn -pck

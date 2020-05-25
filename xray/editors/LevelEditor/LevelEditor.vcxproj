@@ -166,10 +166,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Include\builder_types.h" />
     <ClInclude Include="..\..\Layers\xrRender\DetailManager.h" />
     <ClInclude Include="..\..\xrServerEntities\gametype_chooser.h" />
     <ClInclude Include="..\..\xrServerEntities\LevelGameDef.h" />
-    <ClInclude Include="..\ECore\builder_types.h" />
     <ClInclude Include="Edit\Builder.h" />
     <ClInclude Include="Edit\Cursor3D.h" />
     <ClInclude Include="Edit\Custom2DProjector.h" />
@@ -248,6 +248,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Include\builder_types.cpp" />
     <ClCompile Include="..\..\Layers\xrRender\DetailManager.cpp" />
     <ClCompile Include="..\..\Layers\xrRender\DetailManager_CACHE.cpp" />
     <ClCompile Include="..\..\Layers\xrRender\DetailManager_Decompress.cpp" />
@@ -255,7 +256,6 @@
     <ClCompile Include="..\..\Layers\xrRender\DetailManager_VS.cpp" />
     <ClCompile Include="..\..\xrServerEntities\gametype_chooser.cpp" />
     <ClCompile Include="..\..\xrServerEntities\LevelGameDef.cpp" />
-    <ClCompile Include="..\ECore\builder_types.cpp" />
     <ClCompile Include="Edit\Builder.cpp" />
     <ClCompile Include="Edit\BuilderCF.cpp" />
     <ClCompile Include="Edit\BuilderCore.cpp" />

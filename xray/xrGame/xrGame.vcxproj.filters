@@ -2587,8 +2587,8 @@
     <Filter Include="Embedded editor\controls">
       <UniqueIdentifier>{8b2a7209-3d11-4e8f-95df-61f221d68681}</UniqueIdentifier>
     </Filter>
-    <Filter Include="common">
-      <UniqueIdentifier>{70d7c795-89bc-4d25-97ec-373173043e97}</UniqueIdentifier>
+    <Filter Include="Include">
+      <UniqueIdentifier>{3b8b78c7-f43f-455e-84b2-a5441bb3f447}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -11234,8 +11234,8 @@
     <ClCompile Include="embedded_editor\embedded_editor_envmod.cpp">
       <Filter>Embedded editor</Filter>
     </ClCompile>
-    <ClCompile Include="..\common\ai_sounds.cpp">
-      <Filter>common</Filter>
+    <ClCompile Include="..\Include\ai_sounds.cpp">
+      <Filter>Include</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -367,16 +367,16 @@ target_sources(${PROJECT_NAME} PRIVATE
 	../../Layers/xrRenderDX9/dx9r_constants_cache.h
 	../../xrCPU_Pipe/xrSkin1W.cpp
 	../../xrCPU_Pipe/xrSkin2W.cpp
-	../../common/ai_sounds.cpp
-	../../common/builder_types.cpp
-	../../common/builder_types.h
-	../../common/NvMender2003/convert.h
-	../../common/NvMender2003/mender_input_output.h
-	../../common/NvMender2003/NVMeshMender.cpp
-	../../common/NvMender2003/NVMeshMender.h
-	../../common/NvMender2003/ReadMe.txt
-	../../common/NvMender2003/remove_isolated_verts.h
-	../../Layers/Editor/RAPIDMinBox.cpp)
+	../../Include/ai_sounds.cpp
+	../../Include/builder_types.cpp
+	../../Include/builder_types.h
+	../../Layers/Editor/RAPIDMinBox.cpp
+	"../../../3rd party/NvMender2003/convert.h"
+	"../../../3rd party/NvMender2003/mender_input_output.h"
+	"../../../3rd party/NvMender2003/NVMeshMender.cpp"
+	"../../../3rd party/NvMender2003/NVMeshMender.h"
+	"../../../3rd party/NvMender2003/ReadMe.txt"
+	"../../../3rd party/NvMender2003/remove_isolated_verts.h")
 target_link_libraries(${PROJECT_NAME} PRIVATE
 	xrCore
 	libtheora_static

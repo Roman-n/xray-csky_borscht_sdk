@@ -218,8 +218,8 @@ target_sources(${PROJECT_NAME} PRIVATE
 	stdafx.cpp
 	stdafx.h
 	targetver.h
-	../../common/builder_types.cpp
-	../../common/builder_types.h
+	../../Include/builder_types.cpp
+	../../Include/builder_types.h
 	../../xrServerEntities/gametype_chooser.cpp
 	../../xrServerEntities/gametype_chooser.h
 	../../xrServerEntities/LevelGameDef.cpp

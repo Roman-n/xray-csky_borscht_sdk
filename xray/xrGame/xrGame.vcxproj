@@ -2223,6 +2223,7 @@
     <ClInclude Include="ZudaArtifact.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Include\ai_sounds.cpp" />
     <ClCompile Include="..\xrGameSpy\gamespy\md5c.c">
       <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Sync</ExceptionHandling>
       <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug-LLVM|Win32'">Sync</ExceptionHandling>
@@ -3984,7 +3985,6 @@
     </ClCompile>
     <ClCompile Include="ai_obstacle.cpp" />
     <ClCompile Include="AI_PhraseDialogManager.cpp" />
-    <ClCompile Include="ai_sounds.cpp" />
     <ClCompile Include="ai_space.cpp" />
     <ClCompile Include="ai_stalker_alife.cpp" />
     <ClCompile Include="alife_anomalous_zone.cpp" />

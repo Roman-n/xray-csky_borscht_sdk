@@ -178,6 +178,7 @@
     <ClInclude Include="..\..\..\3rd party\NvMender2003\mender_input_output.h" />
     <ClInclude Include="..\..\..\3rd party\NvMender2003\NVMeshMender.h" />
     <ClInclude Include="..\..\..\3rd party\NvMender2003\remove_isolated_verts.h" />
+    <ClInclude Include="..\..\Include\builder_types.h" />
     <ClInclude Include="..\..\Include\xrRender\FactoryPtr.h" />
     <ClInclude Include="..\..\Include\xrRender\RenderFactory.h" />
     <ClInclude Include="..\..\Layers\xrRenderDX9\dx9r_constants_cache.h" />
@@ -276,7 +277,6 @@
     <ClInclude Include="..\..\xrEngine\xrTheora_Surface.h" />
     <ClInclude Include="..\..\xrEngine\xr_efflensflare.h" />
     <ClInclude Include="..\..\xrEngine\xr_input.h" />
-    <ClInclude Include="builder_types.h" />
     <ClInclude Include="Editor\device.h" />
     <ClInclude Include="Editor\EDetailModel.h" />
     <ClInclude Include="Editor\EditMesh.h" />
@@ -323,6 +323,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\3rd party\NvMender2003\NVMeshMender.cpp" />
+    <ClCompile Include="..\..\Include\ai_sounds.cpp" />
+    <ClCompile Include="..\..\Include\builder_types.cpp" />
     <ClCompile Include="..\..\Layers\Editor\RAPIDMinBox.cpp" />
     <ClCompile Include="..\..\Layers\xrRenderDX9\dx9r_constants_cache.cpp" />
     <ClCompile Include="..\..\Layers\xrRenderPC_R1\BlenderDefault.cpp" />
@@ -431,8 +433,6 @@
     <ClCompile Include="..\..\xrEngine\xrTheora_Surface.cpp" />
     <ClCompile Include="..\..\xrEngine\xr_efflensflare.cpp" />
     <ClCompile Include="..\..\xrEngine\Xr_input.cpp" />
-    <ClCompile Include="..\..\xrGame\ai_sounds.cpp" />
-    <ClCompile Include="builder_types.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Editor\BoneEditor.cpp" />
     <ClCompile Include="Editor\device.cpp" />
