@@ -74,14 +74,14 @@ class CCommandVar{
         tpStr,
         tpInt
     };
-    u32				i;
+    std::uintptr_t	i;
     xr_string		s;
     EType			type;
 public:
        		     	CCommandVar		():i(0),type(tpInt)			{}
        		     	CCommandVar		(xr_string str)	:type(tpStr){s=str;}
-            		CCommandVar		(u32 val)		:type(tpInt){i=val;}
-	IC operator 	u32 			()							{VERIFY(type==tpInt);return i;}
+            		CCommandVar		(std::uintptr_t val)		:type(tpInt){i=val;}
+	IC operator 	std::uintptr_t 	()							{VERIFY(type==tpInt);return i;}
 	IC operator 	xr_string 		()							{VERIFY(type==tpStr);return s;}
     IC bool			IsString		()							{return type==tpStr;}
     IC bool			IsInteger		()							{return type==tpInt;}

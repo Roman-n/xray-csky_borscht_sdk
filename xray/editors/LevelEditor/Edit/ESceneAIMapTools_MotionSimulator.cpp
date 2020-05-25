@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#include <common/cl_intersect.h>
+#include <Include/cl_intersect.h>
 #include "scene.h"
 #include "ESceneAIMapTools.h"
 #include "../ECore/Editor/editobject.h"

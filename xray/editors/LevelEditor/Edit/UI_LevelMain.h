@@ -124,7 +124,7 @@ public:
     virtual void	SaveSettings			(CInifile*);
     virtual void	LoadSettings			(CInifile*);
 };    
-extern CLevelMain*	LUI;
+extern CLevelMain*&	LUI;
 
 #endif //UI_MainCommandH
 

@@ -295,7 +295,7 @@ void IM_Tree::GetItems(ImTreeNode &node, ListItemsVec &result)
 
 void IM_Tree::Add(LPCSTR path, LPCSTR value)
 {
-	if(path == NULL) __asm int 3h;
+	if(path == NULL) DebugBreak();
 	ImTreeNode *node = GetNode(path, false);
     node->name = path;
     node->value = value;
@@ -303,7 +303,7 @@ void IM_Tree::Add(LPCSTR path, LPCSTR value)
 
 void IM_Tree::Add(LPCSTR path, ListItem* item)
 {
-	if(path == NULL) __asm int 3h;
+	if(path == NULL) DebugBreak();
 	ImTreeNode *node = GetNode(path, false);
     node->name = path;
     node->item = item;

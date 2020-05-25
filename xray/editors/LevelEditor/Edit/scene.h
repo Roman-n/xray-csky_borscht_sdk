@@ -201,8 +201,8 @@ public:
 	int 			BoxPickObjects		(const Fbox& box, SBoxPickInfoVec& pinf, ObjectList* from_list);
     int				RayQuery			(SPickQuery& RQ, const Fvector& start, const Fvector& dir, float dist, u32 flags, ObjectList* snap_list);
     int 			BoxQuery			(SPickQuery& RQ, const Fbox& bb, u32 flags, ObjectList* snap_list);
-    int				RayQuery			(SPickQuery& RQ, const Fvector& start, const Fvector& dir, float dist, u32 flags, CDB::MODEL* model);
-    int 			BoxQuery			(SPickQuery& RQ, const Fbox& bb, u32 flags, CDB::MODEL* model);
+    int				RayQuery			(SPickQuery& RQ, const Fvector& start, const Fvector& dir, float dist, u32 flags, ETOOLS::Model* model);
+    int 			BoxQuery			(SPickQuery& RQ, const Fbox& bb, u32 flags, ETOOLS::Model* model);
 
 	int 			RaySelect           (int flag, ObjClassID classfilter=OBJCLASS_DUMMY); // flag=0,1,-1 (-1 invert)
 	int 			FrustumSelect       (int flag, ObjClassID classfilter=OBJCLASS_DUMMY);

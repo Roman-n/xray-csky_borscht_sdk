@@ -8,7 +8,7 @@ typedef	void		on_dialog			(bool before);
 class XRCORE_API	xrDebug
 {
 private:
-	crashhandler*	handler	;
+	crashhandler*	handler	= 0;
 	on_dialog*		m_on_dialog;
 
 public:

@@ -6,7 +6,7 @@
 
 #include "ESceneDOTools.h"
 #include "Scene.h"
-#include <common/cl_intersect.h>
+#include <Include/cl_intersect.h>
 #ifndef NO_VCL
 #include "bottombar.h"
 #endif

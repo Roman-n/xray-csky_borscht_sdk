@@ -40,7 +40,7 @@ void CEditableMesh::GenerateCFModel()
 {
 	UnloadCForm		();
 	// Collect faces
-	CDB::Collector* CL = ETOOLS::create_collector();
+	ETOOLS::Collector* CL = ETOOLS::create_collector();
 	// double sided
 	for (SurfFacesPairIt sp_it=m_SurfFaces.begin(); sp_it!=m_SurfFaces.end(); sp_it++){
 		IntVec& face_lst = sp_it->second;
@@ -104,7 +104,7 @@ bool CEditableMesh::RayPick(float& distance, const Fvector& start, const Fvector
 	ETOOLS::ray_query_m	(inv_parent, m_CFModel, start, direction, _sqrt_flt_max);
 
     if (ETOOLS::r_count()){
-		CDB::RESULT* I	= ETOOLS::r_begin	();
+		ETOOLS::Result* I	= ETOOLS::r_begin	();
 		if (I->range<distance) {
 	        if (pinf){
             	pinf->SetRESULT	(m_CFModel,I);
@@ -189,7 +189,7 @@ bool CEditableMesh::BoxPick(const Fbox& box, const Fmatrix& inv_parent, SBoxPick
     	pinf.push_back(SBoxPickInfo());
 		pinf.back().e_obj 	= m_Parent;
 	    pinf.back().e_mesh	= this;
-	    for (CDB::RESULT* I=ETOOLS::r_begin(); I!=ETOOLS::r_end(); I++) pinf.back().AddRESULT(m_CFModel,I);
+	    for (ETOOLS::Result* I=ETOOLS::r_begin(); I!=ETOOLS::r_end(); I++) pinf.back().AddRESULT(m_CFModel,I);
         return true;
     }
     return false;

@@ -21,7 +21,12 @@ typedef IPropHelper& (__stdcall *TPHelper) ();
 
 TPHelper					_PHelper = 0;
 HMODULE						prop_helper_module = 0;
-LPCSTR						prop_helper_library = "xrEPropsB.dll", prop_helper_func = "PHelper";
+#ifdef __BORLANDC__
+LPCSTR prop_helper_library = "xrEPropsB.dll";
+#else
+LPCSTR prop_helper_library = "xrEProps.dll";
+#endif
+LPCSTR prop_helper_func = "PHelper";
 CScriptPropertiesListHelper	*g_property_list_helper = 0;
 
 void load_prop_helper			()

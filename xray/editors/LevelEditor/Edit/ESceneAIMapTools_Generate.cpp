@@ -6,7 +6,7 @@
 #include "scene.h"
 #include "../ECore/Editor/ui_main.h"
 #include "ui_leveltools.h"
-#include <common/cl_intersect.h>
+#include <Include/cl_intersect.h>
 #include <freemagic/MgcAppr3DPlaneFit.h>
 #include "sceneobject.h"
 #include "../ECore/Editor/EditObject.h"
@@ -632,7 +632,7 @@ bool ESceneAIMapTool::GenerateMap(bool bFromSelectedOnly)
 
             SPBItem* pb = UI->ProgressStart(mesh_cnt,"Prepare collision model...");
 
-            CDB::Collector* CL		= ETOOLS::create_collector();
+            ETOOLS::Collector* CL		= ETOOLS::create_collector();
             Fvector verts[3];
             for (ObjectIt o_it=m_SnapObjects.begin(); o_it!=m_SnapObjects.end(); o_it++)
             {

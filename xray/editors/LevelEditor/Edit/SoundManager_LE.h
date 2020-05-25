@@ -32,6 +32,6 @@ public:
     AnsiString	UpdateFileName		(AnsiString& fn);
 };
 
-extern CLevelSoundManager* LSndLib;
+extern CLevelSoundManager*& LSndLib;
 //---------------------------------------------------------------------------
 #endif

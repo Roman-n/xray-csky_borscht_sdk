@@ -35,7 +35,7 @@ template <class T> struct VclFlags {
     }
     bool operator==(VclFlags<T> other) const { return value == other.value; }
     void Clear() { value = 0; }
-    bool Contains(T flag) { return value & flag; }
+    bool Contains(T flag) { return value & (1 << flag); }
 
     unsigned int value = 0;
 };
@@ -46,9 +46,13 @@ enum _TShiftState { ssShift, ssAlt, ssCtrl, ssLeft, ssRight, ssMiddle, ssDouble 
 using TShiftState = VclFlags<_TShiftState>;
 
 const int mrNone = 0;
-const int mrYes = IDOK;
+const int mrYes = IDYES;
 const int mrCancel = IDCANCEL;
 const int mrNo = IDNO;
+const int mrAbort = IDABORT;
+const int mrRetry = IDRETRY;
+const int mrIgnore = IDIGNORE;
+const int mrOK = IDOK;
 
 using AnsiString = std::string;
 
@@ -70,6 +74,9 @@ class TComponent : public TPersistent
 
 class TControl : public TComponent
 {
+public:
+    int Width;
+    int Height;
 };
 
 class TWinControl : public TControl

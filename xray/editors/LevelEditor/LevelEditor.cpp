@@ -17,9 +17,12 @@
 
 // Global Variables:
 HINSTANCE hInst; // current instance
-WCHAR szTitle[MAX_LOADSTRING]; // The title bar text
-WCHAR szWindowClass[MAX_LOADSTRING]; // the main window class name
+char szTitle[MAX_LOADSTRING]; // The title bar text
+char szWindowClass[MAX_LOADSTRING]; // the main window class name
 HWND g_MainWnd;
+bool g_idle = false;
+TShiftState g_ShiftKey;
+TD3DWindow* g_d3dWnd = 0;
 
 // Forward declarations of functions included in this code module:
 ATOM MyRegisterClass(HINSTANCE hInstance);
@@ -36,11 +39,12 @@ int APIENTRY wWinMain(
     // TODO: Place code here.
 
     // Initialize global strings
-    LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-    LoadStringW(hInstance, IDC_LEVELEDITOR, szWindowClass, MAX_LOADSTRING);
+    LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
+    LoadString(hInstance, IDC_LEVELEDITOR, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
 
-    Core._initialize("level", ELogCallback);
+    Debug._initialize(false);
+    Core._initialize("level", ELogCallback, 1, 0, true);
     CEditableMesh::m_bDraftMeshMode = TRUE;
 
     // Perform application initialization:
@@ -48,6 +52,11 @@ int APIENTRY wWinMain(
         return FALSE;
     }
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_LEVELEDITOR));
+
+    g_d3dWnd = xr_new<TD3DWindow>();
+    g_d3dWnd->Handle = g_MainWnd;
+    RECT r;
+    GetClientRect(g_MainWnd, &r);
 
     Tools					= xr_new<CLevelTool>();
     UI						= xr_new<CLevelMain>();
@@ -57,21 +66,30 @@ int APIENTRY wWinMain(
 
 	Device.SetHandle		(g_MainWnd,g_MainWnd);
     EnableReceiveCommands	();
-    if (!ExecCommand(COMMAND_INITIALIZE,(u32)g_MainWnd,(u32)0)){ 
+    if (!ExecCommand(COMMAND_INITIALIZE,(uintptr_t)g_d3dWnd,(uintptr_t)0)){ 
     	FlushLog			();
     	TerminateProcess(GetCurrentProcess(),-1);
     }
+
+    ShowWindow(g_MainWnd, nCmdShow);
+    UpdateWindow(g_MainWnd);
 
     UI->AddIMWindow(&imLeftBar);
     UI->AddIMWindow(&imTopBar);
 
     // Main message loop:
-    MSG msg;
-    while (GetMessage(&msg, nullptr, 0, 0)) {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
+    g_idle = true;
+    MSG msg {};
+    while (msg.message != WM_QUIT) {
+        if (::PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
+        {
+            if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) {
+                TranslateMessage(&msg);
+                DispatchMessage(&msg);
+            }
+            continue;
         }
+        if (g_idle) UI->Idle();
     }
 
     UI->ClearCommands		();
@@ -91,11 +109,11 @@ int APIENTRY wWinMain(
 //
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
-    WNDCLASSEXW wcex;
+    WNDCLASSEX wcex;
 
     wcex.cbSize = sizeof(WNDCLASSEX);
 
-    wcex.style = CS_HREDRAW | CS_VREDRAW;
+    wcex.style = CS_CLASSDC;
     wcex.lpfnWndProc = WndProc;
     wcex.cbClsExtra = 0;
     wcex.cbWndExtra = 0;
@@ -103,11 +121,11 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_LEVELEDITOR));
     wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-    wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_LEVELEDITOR);
+    wcex.lpszMenuName = MAKEINTRESOURCE(IDC_LEVELEDITOR);
     wcex.lpszClassName = szWindowClass;
     wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
-    return RegisterClassExW(&wcex);
+    return RegisterClassEx(&wcex);
 }
 
 //
@@ -124,17 +142,49 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
     hInst = hInstance; // Store instance handle in our global variable
 
-    g_MainWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr,
+    g_MainWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr,
         nullptr, hInstance, nullptr);
 
     if (!g_MainWnd) {
         return FALSE;
     }
 
-    ShowWindow(g_MainWnd, nCmdShow);
-    UpdateWindow(g_MainWnd);
-
     return TRUE;
+}
+
+TShiftState getShiftState()
+{
+    TShiftState shift;
+    if (GetKeyState(VK_MENU) < 0)
+        shift << ssAlt;
+    if (GetKeyState(VK_SHIFT) < 0)
+        shift << ssShift;
+    if (GetKeyState(VK_CONTROL) < 0)
+        shift << ssCtrl;
+    return shift;
+}
+
+TShiftState getMouseShiftState(WPARAM wParam)
+{
+    TShiftState shift;
+    if (GetKeyState(VK_MENU) < 0)
+        shift << ssAlt;
+    if (wParam & MK_SHIFT)
+        shift << ssShift;
+    if (wParam & MK_CONTROL)
+        shift << ssCtrl;
+    if (wParam & MK_LBUTTON)
+        shift << ssLeft;
+    if (wParam & MK_MBUTTON)
+        shift << ssMiddle;
+    if (wParam & MK_RBUTTON)
+        shift << ssRight;
+    if (wParam & MK_CONTROL)
+        shift << ssCtrl;
+    if (wParam & MK_CONTROL)
+        shift << ssCtrl;
+
+    return shift;
 }
 
 //
@@ -169,7 +219,45 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         HDC hdc = BeginPaint(hWnd, &ps);
         // TODO: Add any drawing code that uses hdc here...
         EndPaint(hWnd, &ps);
+	    if (UI && UI->m_bReady)
+            UI->RedrawScene();
     } break;
+    case WM_SIZE: {  
+        int newWidth = GET_X_LPARAM(lParam);
+        int newHeight = GET_Y_LPARAM(lParam);
+        if (newWidth != 0 && newHeight != 0) {
+            g_d3dWnd->Width = newWidth;
+            g_d3dWnd->Height = newHeight;
+            ExecCommand(COMMAND_RENDER_RESIZE);
+            if (UI) UI->Resize();
+        }
+        } break;
+    case WM_CLOSE:
+        g_idle = false;
+        ExecCommand				(COMMAND_DESTROY);
+        DestroyWindow(g_MainWnd);
+        break;
+    case WM_KEYDOWN: case WM_SYSKEYDOWN:
+        g_ShiftKey = getShiftState();
+        if (!UI->KeyDown(wParam, g_ShiftKey)){UI->ApplyShortCut(wParam, g_ShiftKey);}
+        break;
+    case WM_KEYUP: case WM_SYSKEYUP:
+        if (!UI->KeyUp(wParam, getShiftState())){;}
+        break;
+    case WM_CHAR:
+        if (!UI->KeyPress(wParam, g_ShiftKey)){;}
+        break;
+    case WM_LBUTTONDOWN: case WM_MBUTTONDOWN: case WM_RBUTTONDOWN:
+        UI->MousePress(getMouseShiftState(wParam),GET_X_LPARAM(lParam),GET_Y_LPARAM(lParam));
+        UI->RedrawScene();
+        break;
+    case WM_LBUTTONUP: case WM_MBUTTONUP: case WM_RBUTTONUP:
+        UI->MouseRelease(getMouseShiftState(wParam),GET_X_LPARAM(lParam),GET_Y_LPARAM(lParam));
+        UI->RedrawScene();
+        break;
+    case WM_MOUSEMOVE:
+        UI->MouseMove(getMouseShiftState(wParam),GET_X_LPARAM(lParam),GET_Y_LPARAM(lParam));
+        break;
     case WM_DESTROY:
         PostQuitMessage(0);
         break;

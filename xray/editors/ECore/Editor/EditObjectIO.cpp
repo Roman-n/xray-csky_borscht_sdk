@@ -405,9 +405,12 @@ bool CEditableObject::Load(IReader& F)
             if (F.find_chunk	(EOBJ_CHUNK_DESC))
             {
                 F.r_stringZ		(m_CreateName);
-                F.r				(&m_CreateTime,sizeof(m_CreateTime));
+                u32 temp        = 0;
+                F.r				(&temp,sizeof(temp));
+                m_CreateTime    = temp;
                 F.r_stringZ		(m_ModifName);
-                F.r				(&m_ModifTime,sizeof(m_ModifTime));
+                F.r				(&temp,sizeof(temp));
+                m_ModifTime     = temp;
             }
 	
             ResetSAnimation();

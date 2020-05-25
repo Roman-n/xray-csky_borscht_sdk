@@ -28,6 +28,7 @@ CLevelTool*&	LTools=(CLevelTool*&)tTools;
 TShiftState ssRBOnly;
 //---------------------------------------------------------------------------
 CLevelTool::CLevelTool()
+    : pCurTool(0)
 {
     fFogness	= 0.9f;
     dwFogColor	= 0xffffffff;

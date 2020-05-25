@@ -69,7 +69,7 @@ int EScene::BoxQuery(SPickQuery& PQ, const Fbox& bb, u32 flags, ObjectList* snap
 }
 //------------------------------------------------------------------------------
 
-int EScene::RayQuery(SPickQuery& PQ, const Fvector& start, const Fvector& dir, float dist, u32 flags, CDB::MODEL* model)
+int EScene::RayQuery(SPickQuery& PQ, const Fvector& start, const Fvector& dir, float dist, u32 flags, ETOOLS::Model* model)
 {
     PQ.prepare_rq	(start,dir,dist,flags);
 	ETOOLS::ray_options	(flags);
@@ -80,7 +80,7 @@ int EScene::RayQuery(SPickQuery& PQ, const Fvector& start, const Fvector& dir, f
 }
 //------------------------------------------------------------------------------
 
-int EScene::BoxQuery(SPickQuery& PQ, const Fbox& bb, u32 flags, CDB::MODEL* model)
+int EScene::BoxQuery(SPickQuery& PQ, const Fbox& bb, u32 flags, ETOOLS::Model* model)
 {
     PQ.prepare_bq	(bb,flags);
 	ETOOLS::box_options	(flags);

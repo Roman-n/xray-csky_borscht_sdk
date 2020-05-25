@@ -11,6 +11,10 @@
 // refs
 class ESceneAIMapTool;
 struct SAINode;
+namespace ETOOLS {
+struct Payload;
+using Model = CDB::MODEL_Generic<Payload>;
+}
 
 const DWORD InvalidNode		= 0xffffffff;
 
@@ -84,7 +88,7 @@ class ESceneAIMapTool: public ESceneToolBase
 
 	ref_geom			m_RGeom;
     ref_shader			m_Shader;
-    CDB::MODEL*			m_CFModel;
+    ETOOLS::Model*	    m_CFModel;
 protected:
     void 				hash_FillFromNodes		();
     void 				hash_Initialize			();

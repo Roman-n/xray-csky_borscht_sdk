@@ -7,7 +7,7 @@
 #include "EScenePortalTools.h"
 #include "Portal.h"
 #include "Scene.h"
-#include <common/cl_intersect.h>
+#include <Include/cl_intersect.h>
 #include "sector.h"
 #include <freemagic/MgcConvexHull2D.h>
 #include <freemagic/MgcAppr3DPlaneFit.h>

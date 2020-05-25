@@ -1,6 +1,5 @@
 #include	"stdafx.h"
 #include	"ETools.h"
-#include	"xrXRC.h"
 
 #pragma warning(disable:4267)
 
@@ -11,8 +10,8 @@ BOOL APIENTRY DllMain( HANDLE hModule,
 { 
 	switch(fdwReason) {
 		case DLL_PROCESS_ATTACH:
-			Debug._initialize	(false);
-			Core._initialize	("XRayEditorTools",0,FALSE);
+			//Debug._initialize	(false);
+			//Core._initialize	("XRayEditorTools",0,FALSE);
 			//FPU::m64r	();
 			break;
 		case DLL_THREAD_ATTACH:
@@ -128,28 +127,28 @@ namespace ETOOLS{
 		return true;
 	}
 
-	ETOOLS_API CDB::Collector*			 __stdcall create_collector		()
+	ETOOLS_API Collector*				 __stdcall create_collector		()
 	{
-		return							xr_new<CDB::Collector>	();
+		return							xr_new<Collector>	();
 	}
-	ETOOLS_API void						 __stdcall destroy_collector		(CDB::Collector*& M)
+	ETOOLS_API void						 __stdcall destroy_collector		(Collector*& M)
 	{
 		xr_delete						(M);
 	}
-	ETOOLS_API void						 __stdcall collector_add_face_d	(CDB::Collector* CL, const Fvector& v0, const Fvector& v1, const Fvector& v2, u32 dummy)
+	ETOOLS_API void						 __stdcall collector_add_face_d	(Collector* CL, const Fvector& v0, const Fvector& v1, const Fvector& v2, u32 dummy)
 	{
-	//	CL->add_face_D					(v0,v1,v2,dummy);
+		CL->add_face					(v0,v1,v2,{dummy});
 	}
-	ETOOLS_API void						 __stdcall collector_add_face_pd	(CDB::Collector* CL, const Fvector& v0, const Fvector& v1, const Fvector& v2, u32 dummy, float eps)
+	ETOOLS_API void						 __stdcall collector_add_face_pd	(Collector* CL, const Fvector& v0, const Fvector& v1, const Fvector& v2, u32 dummy, float eps)
 	{
-	//	CL->add_face_packed_D			(v0,v1,v2,dummy,eps);
+		CL->add_face_packed(v0, v1, v2, { dummy }, eps);
 	}
 
-	ETOOLS_API CDB::CollectorPacked_Game*	 __stdcall create_collectorp		(const Fbox &bb, int apx_vertices, int apx_faces)
+	ETOOLS_API CollectorPacked*		__stdcall create_collectorp		(const Fbox &bb, int apx_vertices, int apx_faces)
 	{
-		return							xr_new<CDB::CollectorPacked_Game>	(bb, apx_vertices, apx_faces);
+		return							xr_new<CollectorPacked>	(bb, apx_vertices, apx_faces);
 	}
-	ETOOLS_API void						 __stdcall destroy_collectorp		(CDB::CollectorPacked_Game*& M)
+	ETOOLS_API void						 __stdcall destroy_collectorp		(CollectorPacked*& M)
 	{
 		xr_delete						(M);
 	}
@@ -158,53 +157,64 @@ namespace ETOOLS{
 	//	CL->add_face(v0, v1, v2, { dummy }, u32(-1));
 	//}
 
-	ETOOLS_API CDB::COLLIDER* __stdcall get_collider	(){return XRC.collider();}
+	Collider	COL;
 
-	ETOOLS_API CDB::MODEL*	 __stdcall create_model_clp(CDB::CollectorPacked_Game* CL)
+	ETOOLS_API Collider*		__stdcall get_collider	(){return &COL;}
+
+	ETOOLS_API Model*			 __stdcall create_model_clp(CollectorPacked* CL)
 	{
 		return				create_model(CL->getV(), CL->getVS(), CL->getT(), CL->getTS());
 	}
 
-	ETOOLS_API CDB::MODEL*	 __stdcall create_model_cl	(CDB::Collector* CL)
+	ETOOLS_API Model*		 __stdcall create_model_cl	(Collector* CL)
 	{
 		return				create_model(CL->getV(), CL->getVS(), CL->getT(), CL->getTS());
 	}
-	ETOOLS_API CDB::MODEL*	 __stdcall create_model	(Fvector* V, int Vcnt, CDB::TRI* T, int Tcnt)
+	ETOOLS_API Model*		 __stdcall create_model	(Fvector* V, int Vcnt, Tri* T, int Tcnt)
 	{
-		CDB::MODEL* M		= xr_new<CDB::MODEL> ();
+		Model* M			= xr_new<Model> ();
 		M->build			(V, Vcnt, T, Tcnt);
 		return M;
 	}
-	ETOOLS_API void			 __stdcall destroy_model	(CDB::MODEL*& M)
+	ETOOLS_API void			 __stdcall destroy_model	(Model*& M)
 	{
 		xr_delete			(M);
 	}
-	ETOOLS_API CDB::RESULT*	 __stdcall r_begin	()	{	return XRC.r_begin();		};
-	ETOOLS_API CDB::RESULT*	 __stdcall r_end	()	{	return XRC.r_end();			};
-	ETOOLS_API int	 __stdcall r_count			()	{	return XRC.r_count();		};
+	ETOOLS_API Result*	 __stdcall r_begin	()	{	return COL.r_begin();		};
+	ETOOLS_API Result*	 __stdcall r_end	()	{	return COL.r_end();			};
+	ETOOLS_API int	 __stdcall r_count			()	{	return COL.r_count();		};
 	ETOOLS_API void  __stdcall ray_options	(u32 flags)
 	{
-		XRC.ray_options(flags);
+		COL.ray_options(flags);
 	}
-	ETOOLS_API void	 __stdcall ray_query	(const CDB::MODEL *m_def, const Fvector& r_start,  const Fvector& r_dir, float r_range)
+	ETOOLS_API void	 __stdcall ray_query	(const Model *m_def, const Fvector& r_start,  const Fvector& r_dir, float r_range)
 	{
-		XRC.ray_query(m_def,r_start,r_dir,r_range);
+		COL.ray_query(m_def,r_start,r_dir,r_range);
 	}
-	ETOOLS_API void	 __stdcall ray_query_m	(const Fmatrix& inv_parent, const CDB::MODEL *m_def, const Fvector& r_start,  const Fvector& r_dir, float r_range)
+	ETOOLS_API void	 __stdcall ray_query_m	(const Fmatrix& inv_parent, const Model *m_def, const Fvector& r_start,  const Fvector& r_dir, float r_range)
 	{
-		XRC.ray_query(inv_parent,m_def,r_start,r_dir,r_range);
+    	// transform
+        Fvector S,D;
+	    inv_parent.transform_tiny	(S,r_start);
+    	inv_parent.transform_dir	(D,r_dir);
+		ray_query					(m_def,S,D,r_range);
 	}
 	ETOOLS_API void  __stdcall box_options	(u32 flags)
 	{
-		XRC.box_options(flags);
+		COL.box_options(flags);
 	}
-	ETOOLS_API void	 __stdcall box_query	(const CDB::MODEL *m_def, const Fvector& b_center, const Fvector& b_dim)
+	ETOOLS_API void	 __stdcall box_query	(const Model *m_def, const Fvector& b_center, const Fvector& b_dim)
 	{
-		XRC.box_query(m_def, b_center, b_dim);
+		COL.box_query(m_def,b_center,b_dim);
 	}
-	ETOOLS_API void	 __stdcall box_query_m	(const Fmatrix& inv_parent, const CDB::MODEL *m_def, const Fbox& src)
+	ETOOLS_API void	 __stdcall box_query_m	(const Fmatrix& inv_parent, const Model *m_def, const Fbox& src)
 	{
-		XRC.box_query(inv_parent, m_def, src);
+    	Fbox dest;
+		dest.xform(src,inv_parent);
+        Fvector c,d;
+        dest.getcenter(c);
+        dest.getradius(d);
+    	box_query(m_def,c,d);
 	}
 }
 

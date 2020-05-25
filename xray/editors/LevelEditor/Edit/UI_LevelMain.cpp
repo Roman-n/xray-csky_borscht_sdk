@@ -41,7 +41,7 @@
 //.    if (m_Cursor->GetVisible()) RedrawScene();
 #endif
 
-CLevelMain*	    LUI=(CLevelMain*)UI;
+CLevelMain*&	    LUI=(CLevelMain*&)(TUI*&)UI;
 
 CLevelMain::CLevelMain()
 {

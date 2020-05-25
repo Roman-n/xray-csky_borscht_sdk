@@ -12,6 +12,10 @@ struct 	SRayPickInfo;
 struct 	FSChunkDef;
 class 	CExporter;
 class	CCustomObject;
+namespace ETOOLS {
+struct Payload;
+using Model = CDB::MODEL_Generic<Payload>;
+}
 
 #ifdef _EDITOR
 #	include "pick_defs.h"
@@ -263,7 +267,7 @@ protected:
     VMRefsVec	    m_VMRefs;
 
 #ifdef _EDITOR
-    CDB::MODEL*		m_CFModel;
+    ETOOLS::Model* m_CFModel;
 	RBMap*			m_RenderBuffers;
 #endif
 

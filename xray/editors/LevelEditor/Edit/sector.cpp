@@ -10,7 +10,7 @@
 #include "SceneObject.h"
 #include "Scene.h"
 #include "../ECore/Engine/Texture.h"
-#include <common/cl_intersect.h>
+#include <Include/cl_intersect.h>
 #include "../../ECore/Engine/cl_collector.h"
 #include "portal.h"
 #include "portalutils.h"

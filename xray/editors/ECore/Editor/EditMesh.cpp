@@ -8,7 +8,7 @@
 #include "EditMesh.h"
 #include "EditObject.h"
 #include <xrEngine/Bone.h>
-#include "../../../common/itterate_adjacents.h"
+#include "../../../Include/itterate_adjacents.h"
 #include "itterate_adjacents_dynamic.h"
 #ifdef _EDITOR
 #	include <utils/ETools/ETools.h>

@@ -34,9 +34,6 @@
     <Filter Include="xrCPU_Pipe">
       <UniqueIdentifier>{f79ce4bf-36be-431e-9871-6e0576e0b10a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="common">
-      <UniqueIdentifier>{c437f476-62de-4f82-a0a2-961b5ad8c986}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Include">
       <UniqueIdentifier>{ab4adb69-1740-4cd7-942f-c1e19682b341}</UniqueIdentifier>
     </Filter>
@@ -57,6 +54,9 @@
     </Filter>
     <Filter Include="~Precompiled Headers">
       <UniqueIdentifier>{7cd85578-98ab-4777-a6eb-3776e6988fe9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NvMender2003">
+      <UniqueIdentifier>{c61ff315-a356-48ac-86e9-d8b9aec71a0c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -233,18 +233,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Layers\xrRender\HWCaps.h">
       <Filter>xrRender</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\common\NvMender2003\convert.h">
-      <Filter>common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\common\NvMender2003\mender_input_output.h">
-      <Filter>common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\common\NvMender2003\NVMeshMender.h">
-      <Filter>common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\common\NvMender2003\remove_isolated_verts.h">
-      <Filter>common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\xrEngine\envelope.h">
       <Filter>xrEngine</Filter>
@@ -501,6 +489,18 @@
     <ClInclude Include="Editor\TLSPRITE.h">
       <Filter>Editor</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\3rd party\NvMender2003\convert.h">
+      <Filter>NvMender2003</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\3rd party\NvMender2003\mender_input_output.h">
+      <Filter>NvMender2003</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\3rd party\NvMender2003\NVMeshMender.h">
+      <Filter>NvMender2003</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\3rd party\NvMender2003\remove_isolated_verts.h">
+      <Filter>NvMender2003</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -733,9 +733,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Layers\xrRender\HWCaps.cpp">
       <Filter>xrRender</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\common\NvMender2003\NVMeshMender.cpp">
-      <Filter>common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\xrEngine\Envelope.cpp">
       <Filter>xrEngine</Filter>
@@ -1031,5 +1028,13 @@
     <ClCompile Include="Editor\TLSPRITE.CPP">
       <Filter>Editor</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\3rd party\NvMender2003\NVMeshMender.cpp">
+      <Filter>NvMender2003</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\3rd party\NvMender2003\ReadMe.txt">
+      <Filter>NvMender2003</Filter>
+    </Text>
   </ItemGroup>
 </Project>

@@ -11,7 +11,7 @@
 #ifndef NO_VCL
 #include "leftbar.h"
 #endif
-#include <common/cl_intersect.h>
+#include <Include/cl_intersect.h>
 #include "../ECore/Editor/Library.h"
 #include "ui_levelmain.h"
 

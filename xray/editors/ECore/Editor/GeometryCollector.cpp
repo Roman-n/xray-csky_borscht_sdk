@@ -108,7 +108,7 @@ void	GCPacked::add_face(const Fvector& v0, const Fvector& v1, const Fvector& v2,
 
 void	GCPacked::clear()
 {
-	GCPacked::clear	();
+	VCPacked::clear	();
     faces.clear_and_free	();
 }
 

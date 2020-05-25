@@ -110,6 +110,7 @@
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>.;../..;$(SolutionDir)3rd party\WildMagic;$(SolutionDir)3rd party/libtheora-1.1.1/include;$(SolutionDir)3rd party/libogg-1.3.3/include;</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -127,6 +128,11 @@
       <PreprocessorDefinitions>_ECOREB;_EDITOR;NO_VCL;WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>.;../..;$(SolutionDir)3rd party\WildMagic;$(SolutionDir)3rd party/libtheora-1.1.1/include;$(SolutionDir)3rd party/libogg-1.3.3/include;</AdditionalIncludeDirectories>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <ExceptionHandling />
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -135,17 +141,27 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalDependencies>FreeImage.lib;MagicFM.lib;dxguid.lib;dinput8.lib;d3dx9.lib;vfw32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <LargeAddressAware>true</LargeAddressAware>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>_ECOREB;_EDITOR;NO_VCL;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_ECOREB;_EDITOR;NO_VCL;NDEBUG;_WINDOWS;_USRDLL;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>.;../..;$(SolutionDir)3rd party\WildMagic;$(SolutionDir)3rd party/libtheora-1.1.1/include;$(SolutionDir)3rd party/libogg-1.3.3/include;</AdditionalIncludeDirectories>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -154,13 +170,14 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalDependencies>FreeImage.lib;MagicFM.lib;dxguid.lib;dinput8.lib;d3dx9.lib;vfw32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <LargeAddressAware>true</LargeAddressAware>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\common\NvMender2003\convert.h" />
-    <ClInclude Include="..\..\common\NvMender2003\mender_input_output.h" />
-    <ClInclude Include="..\..\common\NvMender2003\NVMeshMender.h" />
-    <ClInclude Include="..\..\common\NvMender2003\remove_isolated_verts.h" />
+    <ClInclude Include="..\..\..\3rd party\NvMender2003\convert.h" />
+    <ClInclude Include="..\..\..\3rd party\NvMender2003\mender_input_output.h" />
+    <ClInclude Include="..\..\..\3rd party\NvMender2003\NVMeshMender.h" />
+    <ClInclude Include="..\..\..\3rd party\NvMender2003\remove_isolated_verts.h" />
     <ClInclude Include="..\..\Include\xrRender\FactoryPtr.h" />
     <ClInclude Include="..\..\Include\xrRender\RenderFactory.h" />
     <ClInclude Include="..\..\Layers\xrRenderDX9\dx9r_constants_cache.h" />
@@ -306,7 +323,7 @@
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\common\NvMender2003\NVMeshMender.cpp" />
+    <ClCompile Include="..\..\..\3rd party\NvMender2003\NVMeshMender.cpp" />
     <ClCompile Include="..\..\Layers\Editor\RAPIDMinBox.cpp" />
     <ClCompile Include="..\..\Layers\xrRenderDX9\dx9r_constants_cache.cpp" />
     <ClCompile Include="..\..\Layers\xrRenderPC_R1\BlenderDefault.cpp" />
@@ -546,6 +563,9 @@
     <ProjectReference Include="..\xrEProps\xrEProps.vcxproj">
       <Project>{499f99a4-6c44-4599-8eae-0eb73827923e}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\3rd party\NvMender2003\ReadMe.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

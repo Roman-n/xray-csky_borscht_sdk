@@ -249,7 +249,7 @@ CCommandVar CommandInitialize(CCommandVar p1, CCommandVar p2)
     // make interface
     //----------------
     EPrefs->OnCreate		();
-    if (UI->OnCreate((TD3DWindow*)(u32)p1,(TPanel*)(u32)p2))
+    if (UI->OnCreate((TD3DWindow*)(uintptr_t)p1,(TPanel*)(uintptr_t)p2))
     {
         ExecCommand		(COMMAND_CREATE_SOUND_LIB);	R_ASSERT(SndLib);
         SndLib->OnCreate();

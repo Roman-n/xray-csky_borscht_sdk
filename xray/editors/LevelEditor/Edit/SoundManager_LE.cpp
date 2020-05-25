@@ -8,7 +8,7 @@
 #include <Layers/xrRender/du_box.h>
 #include <xrEngine/xrLevel.h>
 
-CLevelSoundManager* LSndLib=(CLevelSoundManager*)SndLib;
+CLevelSoundManager*& LSndLib=(CLevelSoundManager*&)(CSoundManager*&)SndLib;
 
 bool CLevelSoundManager::Validate()
 {

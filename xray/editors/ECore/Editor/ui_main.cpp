@@ -537,9 +537,7 @@ void TUI::Redraw()
 void TUI::RealResize()
 {
    	ImGui_Shutdown		();
-    #ifndef NO_VCL
     Device.Resize		(m_D3DWindow->Width,m_D3DWindow->Height); 
-    #endif
     m_Flags.set			(flResize,FALSE);
     ExecCommand			(COMMAND_UPDATE_PROPERTIES);
 	ImGui_Init			(m_D3DWindow->Handle, HW.pDevice);
@@ -581,9 +579,9 @@ void TUI::OnFrame()
 void TUI::Idle()         
 {
 	VERIFY(m_bReady);
-    #ifndef NO_VCL
+#ifndef NO_VCL
     Device.b_is_Active  = Application->Active;
-    #endif
+#endif
 	// input
     pInput->OnFrame();
     Sleep(1);

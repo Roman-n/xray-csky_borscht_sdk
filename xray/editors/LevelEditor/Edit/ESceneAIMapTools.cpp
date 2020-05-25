@@ -134,13 +134,10 @@ void SAINode::LoadStream(IReader& F, ESceneAIMapTool* tools, u16 version)
     }
     else
     {
-    /*
-    	F.r			(&id, sizeof(id)); n1 = (SAINode*)tools->UnpackLink(id);
-    	F.r			(&id, sizeof(id)); n2 = (SAINode*)tools->UnpackLink(id);
-    	F.r			(&id, sizeof(id)); n3 = (SAINode*)tools->UnpackLink(id);
-    	F.r			(&id, sizeof(id)); n4 = (SAINode*)tools->UnpackLink(id);
-    */
-    	F.r			(n, sizeof n);
+    	F.r			(&id, sizeof(id)); n1 = (SAINode*)id;
+    	F.r			(&id, sizeof(id)); n2 = (SAINode*)id;
+    	F.r			(&id, sizeof(id)); n3 = (SAINode*)id;
+    	F.r			(&id, sizeof(id)); n4 = (SAINode*)id;
     }
 	pl				= F.r_u16(); 		pvDecompress(Plane.n,pl);
     F.r				(&np,sizeof(np)); 	tools->UnpackPosition(Pos,np,tools->m_AIBBox,tools->m_Params);

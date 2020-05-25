@@ -135,8 +135,7 @@ CEditableObject* ELibrary::CreateEditObject(LPCSTR nm)
 	VERIFY(m_bReady);
     R_ASSERT(nm&&nm[0]);
 //.    UI->ProgressInfo		(nm);
-    AnsiString name = nm;// = AnsiString(nm).LowerCase();
-    std::for_each(name.begin(), name.end(), [](char c) { return tolower(c); });
+    AnsiString name = LowerCase(nm);
     // file exist - find in already loaded
     CEditableObject* m_EditObject = 0;
 	EditObjPairIt it 	= m_EditObjects.find(name);
