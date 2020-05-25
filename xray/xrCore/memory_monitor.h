@@ -2,9 +2,9 @@
 #define MEMORY_MONITOR_H
 
 #ifdef DEBUG
-    #ifndef	_EDITOR
+//    #ifndef	_EDITOR
         #define	USE_MEMORY_MONITOR
-    #endif // _EDITOR
+//    #endif // _EDITOR
 #endif // DEBUG
 
 #ifdef USE_MEMORY_MONITOR

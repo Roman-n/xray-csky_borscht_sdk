@@ -8,18 +8,18 @@
 #include "ExportObjectOGF.h"
 #include "EditObject.h"
 #include "EditMesh.h"
-#include "fmesh.h"
-#include "std_classes.h"
-#include "bone.h"
-#include "motion.h"
+#include <xrEngine/fmesh.h>
+#include <xrEngine/std_classes.h>
+#include <xrEngine/bone.h>
+#include <xrEngine/motion.h>
 #include "library.h"
 
-#include "MgcCont3DBox.h"         
-#include "MgcCont3DMinBox.h"         
+#include <freemagic/MgcCont3DBox.h>
+#include <freemagic/MgcCont3DMinBox.h>
 
 #include "ui_main.h"
 #include "ui_toolscustom.h"
-#include "SkeletonAnimated.h"
+#include <Layers/xrRender/SkeletonAnimated.h>
 
 ECORE_API BOOL g_force16BitTransformQuant = FALSE;
 
@@ -342,7 +342,7 @@ void CExportSkeleton::SSplit::Save(IWriter& F)
     // Faces
     F.open_chunk		(OGF_INDICES);
     F.w_u32				(m_Faces.size()*3);
-    F.w					(m_Faces.begin(),m_Faces.size()*3*sizeof(WORD));
+    F.w					(m_Faces.data(),m_Faces.size()*3*sizeof(WORD));
     F.close_chunk		();
 
     // PMap
@@ -472,16 +472,16 @@ CExportSkeleton::CExportSkeleton(CEditableObject* object)
 	m_Source=object;
 }
 //----------------------------------------------------
-#include "WmlMath.h"
-#include "WmlContMinBox3.h"
-#include "WmlContBox3.h"
+#include <WildMagic/WmlMath.h>
+#include <WildMagic/WmlContMinBox3.h>
+#include <WildMagic/WmlContBox3.h>
 
 extern BOOL RAPIDMinBox(Fobb& B, Fvector* vertices, u32 v_count);
 void ComputeOBB_RAPID	(Fobb &B, FvectorVec& V, u32 t_cnt)
 {
 	VERIFY	(t_cnt==(V.size()/3));
     if ((t_cnt<1)||(V.size()<3)) { B.invalidate(); return; }
-    RAPIDMinBox			(B,V.begin(),V.size());
+    RAPIDMinBox			(B,V.data(),V.size());
 
     // Normalize rotation matrix (???? ???????? ContOrientedBox - ?????? ????? ???????)
     B.m_rotate.i.crossproduct(B.m_rotate.j,B.m_rotate.k);
@@ -496,7 +496,7 @@ void ComputeOBB_WML		(Fobb &B, FvectorVec& V)
     float 	HV				= flt_max;
     {
         Wml::Box3<float> 	BOX;
-        Wml::MinBox3<float> mb(V.size(), (const Wml::Vector3<float>*) V.begin(), BOX);
+        Wml::MinBox3<float> mb(V.size(), (const Wml::Vector3<float>*) V.data(), BOX);
         float hv			= BOX.Extents()[0]*BOX.Extents()[1]*BOX.Extents()[2];
         if (hv<HV){
         	HV 				= hv;
@@ -816,7 +816,7 @@ bool CExportSkeleton::ExportGeometry(IWriter& F, u8 infl)
     // OGF_CHILDREN
     F.open_chunk	(OGF_CHILDREN);
     int chield=0;
-    for (split_it=m_Splits.begin(); split_it!=m_Splits.end(); split_it++){
+    for (SplitIt split_it=m_Splits.begin(); split_it!=m_Splits.end(); split_it++){
 	    F.open_chunk(chield++);
         split_it->Save(F);
 	    F.close_chunk();
@@ -841,7 +841,7 @@ bool CExportSkeleton::ExportGeometry(IWriter& F, u8 infl)
     bool bRes = true;
                     
     F.open_chunk(OGF_S_IKDATA);
-    for (bone_it=m_Source->FirstBone(); bone_it!=m_Source->LastBone(); bone_it++,bone_idx++)
+    for (BoneIt bone_it=m_Source->FirstBone(); bone_it!=m_Source->LastBone(); bone_it++,bone_idx++)
         if (!(*bone_it)->ExportOGF(F)) bRes=false; 
     F.close_chunk();
 
@@ -972,7 +972,7 @@ bool CExportSkeleton::ExportMotionKeys(IWriter& F)
             
             m_Source->CalculateAnimation(cur_motion);
 	        bone_id 		= 0;
-            for(b_it=b_lst.begin(); b_it!=b_lst.end(); b_it++, bone_id++)
+            for(BoneIt b_it=b_lst.begin(); b_it!=b_lst.end(); b_it++, bone_id++)
             {
                 CBone* B 			= *b_it;
                 Fmatrix mat			= B->_MTransform();
@@ -991,7 +991,7 @@ bool CExportSkeleton::ExportMotionKeys(IWriter& F)
             }
         }
         // free temp storage
-        for (itm_idx=0; itm_idx<b_lst.size(); ++itm_idx)
+        for (u32 itm_idx=0; itm_idx<b_lst.size(); ++itm_idx)
         {
         	bm_item& BM 	= items[itm_idx];
             // check T
@@ -1028,7 +1028,7 @@ bool CExportSkeleton::ExportMotionKeys(IWriter& F)
                 Msg("animation [%s] is 16bit-transform (%f)m", cur_motion->Name(), St.magnitude());
             }
             
-            for (t_idx=0; t_idx<dwLen; ++t_idx)
+            for (u32 t_idx=0; t_idx<dwLen; ++t_idx)
             {
                 Fvector& t	= BM._keysT[t_idx];
                 CKeyQR& r	= BM._keysQR[t_idx];

@@ -6,7 +6,7 @@
 
 #include "ELight.h"
 #include "escenelighttools.h"
-#include "LightAnimLibrary.h"
+#include <xrEngine/LightAnimLibrary.h>
 #include "../ECore/Editor/ui_main.h"
 
 //----------------------------------------------------
@@ -72,6 +72,7 @@ void 	CLight::OnFuzzyDataChange(PropValue* value)
 
 void  CLight::OnAttenuationDraw(CanvasValue* sender, void* _canvas, const Irect& _rect)
 {
+#ifndef NO_VCL
 	TCanvas* canvas 	= (TCanvas*)_canvas;
     const TRect& rect	= *((TRect*)&_rect);
 //	canvas
@@ -113,6 +114,7 @@ void  CLight::OnAttenuationDraw(CanvasValue* sender, void* _canvas, const Irect&
             else		canvas->LineTo(x0+d,y);
         }
     }
+#endif
 }
 
 void 	CLight::OnPointDataChange(PropValue* value)
@@ -246,8 +248,7 @@ void 	CLight::OnTypeChange(PropValue* value)
 
 void CLight::OnShowHint(AStringVec& dest){
     CCustomObject::OnShowHint(dest);
-    AnsiString temp;
-    temp.sprintf("Type:  ");
+    AnsiString temp("Type:  ");
     switch(m_Type){
     case ELight::ltPoint:	        temp+="point"; break;
     case ELight::ltSpot:			temp+="spot"; break;
@@ -259,7 +260,9 @@ void CLight::OnShowHint(AStringVec& dest){
     if (m_Flags.is(ELight::flAffectDynamic)) 	temp+="Dyn ";
     if (m_Flags.is(ELight::flProcedural))		temp+="Proc ";
     dest.push_back(temp);
-    temp.sprintf("Pos:   %3.2f, %3.2f, %3.2f",PPosition.x,PPosition.y,PPosition.z);
+    string64 s;
+    sprintf(s, "Pos:   %3.2f, %3.2f, %3.2f",GetPosition().x,GetPosition().y,GetPosition().z);
+    temp = s;
     dest.push_back(temp);
 }
 

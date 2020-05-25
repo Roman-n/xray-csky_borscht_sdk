@@ -69,7 +69,7 @@ void CCustomObject::OnDetach()
     }
    	m_CO_Flags.set			(flObjectInGroup,FALSE);
     Select					(true);
-    FParentTools->SetChanged(TRUE);
+    ParentTool->SetChanged(TRUE);
 }
 
 void CCustomObject::OnAttach(CCustomObject* owner)
@@ -78,18 +78,18 @@ void CCustomObject::OnAttach(CCustomObject* owner)
     R_ASSERT2				( ((!m_pOwnerObject) || (m_pOwnerObject==owner) ), "Object already has owner!");
     m_pOwnerObject 			= owner;
 //.    Scene->RemoveObject		(this,false,false);
-	if(owner->FClassID==OBJCLASS_GROUP)
+	if(owner->ClassID==OBJCLASS_GROUP)
     	m_CO_Flags.set(flObjectInGroup,TRUE);
         
     Select					(false);
-    FParentTools->SetChanged(TRUE);
+    ParentTool->SetChanged(TRUE);
 }
 
 void CCustomObject::Move(Fvector& amount)
 {
     UI->UpdateScene();
-    Fvector v=PPosition;
-    Fvector r=PRotation;
+    Fvector v=GetPosition();
+    Fvector r=GetRotation();
     if (Tools->GetSettings(etfMTSnap)){
         BOOL bVis	= Visible();
         BOOL bSel	= Selected();
@@ -101,21 +101,21 @@ void CCustomObject::Move(Fvector& amount)
     }else{
 	    v.add(amount);
     }
-    PPosition = v;
-    PRotation = r;
+    SetPosition(v);
+    SetRotation(r);
 }
 
 void CCustomObject::MoveTo(const Fvector& pos, const Fvector& up)
 {
     UI->UpdateScene();
-    Fvector v=PPosition;
+    Fvector v=GetPosition();
     v.set(pos);
     if (Tools->GetSettings(etfNormalAlign)){
         Fmatrix 	M;
-        M.setXYZ	(PRotation);
-    	NormalAlign(PRotation, up, M.k);
+        M.setXYZ	(GetRotation());
+    	NormalAlign(GetRotation(), up, M.k);
     }
-    PPosition = v;
+    SetPosition(v);
 }
 
 void CCustomObject::RotatePivot(const Fmatrix& prev_inv, const Fmatrix& current)
@@ -125,16 +125,16 @@ void CCustomObject::RotatePivot(const Fmatrix& prev_inv, const Fmatrix& current)
     On.mul			(current,Ol);
     Fvector 		xyz;
     On.getXYZ		(xyz);
-    PRotation		= xyz;
-    PPosition		= On.c;
+    SetRotation		(xyz);
+    SetPosition		(On.c);
 }
 
 void CCustomObject::RotateParent(Fvector& axis, float angle)
 {
     UI->UpdateScene();
-    Fvector r	= PRotation;
+    Fvector r	= GetRotation();
     r.mad		(axis,angle);
-    PRotation		= r;
+    SetRotation	(r);
 }
 
 void CCustomObject::RotateLocal(Fvector& axis, float angle)
@@ -144,56 +144,56 @@ void CCustomObject::RotateLocal(Fvector& axis, float angle)
     m.rotation(axis,angle);
     FTransformRP.mulB_43(m);
     FTransformRP.getXYZ(r);
-    PRotation		= r;    
+    SetRotation		(r);    
 }
 
 void CCustomObject::ScalePivot( const Fmatrix& prev_inv, const Fmatrix& current, Fvector& amount )
 {
     UI->UpdateScene();
-    Fvector p	= PPosition;
-    Fvector s	= PScale;
+    Fvector p	= GetPosition();
+    Fvector s	= GetScale();
 	s.add(amount);
 	if (s.x<EPS) s.x=EPS;
 	if (s.y<EPS) s.y=EPS;
 	if (s.z<EPS) s.z=EPS;
-    PScale		= s;
+    SetScale		(s);
 
     // translate position
     prev_inv.transform_tiny	(p);
     current.transform_tiny	(p);
 
-    PPosition	= p;
+    SetPosition(p);
 }
 
 void CCustomObject::Scale( Fvector& amount )
 {
     UI->UpdateScene();
-    Fvector s	= PScale;
+    Fvector s	= GetScale();
 	s.add(amount);
     if (s.x<EPS) s.x=EPS;
     if (s.y<EPS) s.y=EPS;
     if (s.z<EPS) s.z=EPS;
-    PScale		= s;
+    SetScale		(s);
 }
 
 bool CCustomObject::OnObjectNameAfterEdit(PropValue* sender, shared_str& edit_val)
 {
 	RTextValue* V = dynamic_cast<RTextValue*>(sender); VERIFY(V);
-    edit_val 	= (AnsiString(edit_val.c_str()).LowerCase()).c_str();
+    edit_val 	= LowerCase(edit_val.c_str()).c_str();
 	return !Scene->FindObjectByName(edit_val.c_str(),(CCustomObject*)0);
 }
 
 void CCustomObject::OnNumChangePosition(PropValue* sender)
 {
-	NumSetPosition	(PPosition);
+	NumSetPosition	(GetPosition());
 }
 void CCustomObject::OnNumChangeRotation(PropValue* sender)
 {
-	NumSetRotation	(PRotation);
+	NumSetRotation	(GetRotation());
 }
 void CCustomObject::OnNumChangeScale(PropValue* sender)
 {
-	NumSetScale		(PScale);
+	NumSetScale		(GetScale());
 }
 void CCustomObject::OnNameChange(PropValue* sender)
 {
@@ -205,11 +205,11 @@ void CCustomObject::FillProp(LPCSTR pref, PropItemVec& items)
     PropValue* V;
     V = PHelper().CreateNameCB	(items, PrepareKey(pref, "Name"),&FName,NULL,NULL,RTextValue::TOnAfterEditEvent(this,&CCustomObject::OnObjectNameAfterEdit));
     V->OnChangeEvent.bind		(this,&CCustomObject::OnNameChange);
-    V = PHelper().CreateVector	(items, PrepareKey(pref,"Transform\\Position"),	&PPosition,	-10000,	10000,0.01,2);
+    V = PHelper().CreateVector	(items, PrepareKey(pref,"Transform\\Position"),	&GetPosition(),	-10000,	10000,0.01,2);
     V->OnChangeEvent.bind		(this,&CCustomObject::OnNumChangePosition);
-    V = PHelper().CreateAngle3	(items, PrepareKey(pref,"Transform\\Rotation"),	&PRotation,	-10000,	10000,0.1,1);
+    V = PHelper().CreateAngle3	(items, PrepareKey(pref,"Transform\\Rotation"),	&GetRotation(),	-10000,	10000,0.1,1);
     V->OnChangeEvent.bind		(this,&CCustomObject::OnNumChangeRotation);
-    V = PHelper().CreateVector	(items, PrepareKey(pref,"Transform\\Scale"),	&PScale, 	0.01,	10000,0.01,2);
+    V = PHelper().CreateVector	(items, PrepareKey(pref,"Transform\\Scale"),	&GetScale(), 	0.01,	10000,0.01,2);
     V->OnChangeEvent.bind		(this,&CCustomObject::OnNumChangeScale);
 
     if(m_CO_Flags.test(flObjectInGroup))
@@ -229,7 +229,7 @@ void  CCustomObject::OnChangeIngroupUnique(PropValue* sender)
 void CCustomObject::OnShowHint(AStringVec& dest)
 {
 //	dest.push_back(AnsiString("Class: ")+AnsiString(ParentTools->ClassDesc()));
-    dest.push_back(AnsiString("Name:  ")+AnsiString(Name));
+    dest.push_back(AnsiString("Name:  ")+AnsiString(GetName()));
     dest.push_back(AnsiString("-------"));
 }
 //----------------------------------------------------

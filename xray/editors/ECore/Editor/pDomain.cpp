@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#include "d3dutils.h"
+#include <Layers/xrRender/D3DUtils.h>
 #include "ui_main.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
+#include <xrServerEntities/PropertiesListHelper.h>
 #include "ParticleEffectActions.h"
 
 using namespace PAPI;
@@ -109,30 +109,30 @@ void 	PDomain::Render		(u32 clr, const Fmatrix& parent)
 	switch(type){
     case PDPoint: 	
 		Device.SetShader	(Device.m_WireShader);
-    	DU_impl.DrawCross		(v[0], 0.05f,0.05f,0.05f, 0.05f,0.05f,0.05f, clr_w);
+    	DUImpl.DrawCross		(v[0], 0.05f,0.05f,0.05f, 0.05f,0.05f,0.05f, clr_w);
     break;
 	case PDLine:
 		Device.SetShader	(Device.m_WireShader);
-    	DU_impl.DrawCross		(v[0], 0.05f,0.05f,0.05f, 0.05f,0.05f,0.05f, clr_w);
-	  	DU_impl.DrawCross		(v[1], 0.05f,0.05f,0.05f, 0.05f,0.05f,0.05f, clr_w);
-    	DU_impl.DrawLine 		(v[0], v[1], clr_w);
+    	DUImpl.DrawCross		(v[0], 0.05f,0.05f,0.05f, 0.05f,0.05f,0.05f, clr_w);
+	  	DUImpl.DrawCross		(v[1], 0.05f,0.05f,0.05f, 0.05f,0.05f,0.05f, clr_w);
+    	DUImpl.DrawLine 		(v[0], v[1], clr_w);
     break;
     case PDTriangle:
 		Device.SetShader	(Device.m_SelectionShader);
-        DU_impl.DrawFace			(v[0], v[1], v[2], clr_s, clr_w, true, true);
+        DUImpl.DrawFace			(v[0], v[1], v[2], clr_s, clr_w, true, true);
     break;
 	case PDPlane:{
 		Device.SetShader	(Device.m_SelectionShader);
         Fvector2 sz			= {100.f,100.f};
-        DU_impl.DrawPlane		(v[0],v[1],sz,clr_s,clr_w,true,true,true);
+        DUImpl.DrawPlane		(v[0],v[1],sz,clr_s,clr_w,true,true,true);
     }break;
 	case PDBox:
 		Device.SetShader	(Device.m_SelectionShader);
-    	DU_impl.DrawAABB			(v[0], v[1], clr_s, clr_w, true, true);
+    	DUImpl.DrawAABB			(v[0], v[1], clr_s, clr_w, true, true);
     break;
 	case PDSphere:
-    	DU_impl.DrawSphere		(parent, v[0], f[4], clr_s, clr_w, true, true);
-    	DU_impl.DrawSphere		(parent, v[0], f[3], clr_s, clr_w, true, true);
+    	DUImpl.DrawSphere		(parent, v[0], f[4], clr_s, clr_w, true, true);
+    	DUImpl.DrawSphere		(parent, v[0], f[3], clr_s, clr_w, true, true);
     break;
 	case PDCylinder:{
     	Fvector c,d;
@@ -140,8 +140,8 @@ void 	PDomain::Render		(u32 clr, const Fmatrix& parent)
         c.add 				(v[0],v[1]).div(2.f);
         if (!fis_zero(h)){
         	d.div			(h);
-			DU_impl.DrawCylinder	(parent, c, d, h, f[6], clr_s, clr_w, true, true);
-			DU_impl.DrawCylinder	(parent, c, d, h, f[7], clr_s, clr_w, true, true);
+			DUImpl.DrawCylinder	(parent, c, d, h, f[6], clr_s, clr_w, true, true);
+			DUImpl.DrawCylinder	(parent, c, d, h, f[7], clr_s, clr_w, true, true);
         }
     }break;
 	case PDCone:{
@@ -149,20 +149,20 @@ void 	PDomain::Render		(u32 clr, const Fmatrix& parent)
         float h 			= d.sub(v[1],v[0]).magnitude();
         if (!fis_zero(h)){
             d.div			(h);
-            DU_impl.DrawCone		(parent, v[0], d, h, f[6], clr_s, clr_w, true, true);
-            DU_impl.DrawCone		(parent, v[0], d, h, f[7], clr_s, clr_w, true, true);
+            DUImpl.DrawCone		(parent, v[0], d, h, f[6], clr_s, clr_w, true, true);
+            DUImpl.DrawCone		(parent, v[0], d, h, f[7], clr_s, clr_w, true, true);
         }
     }break;
 	case PDBlob:
 		Device.SetShader	(Device.m_WireShader);
-    	DU_impl.DrawCross		(v[0], f[3],f[3],f[3], f[3],f[3],f[3], clr);
+    	DUImpl.DrawCross		(v[0], f[3],f[3],f[3], f[3],f[3],f[3], clr);
     break;
 	case PDDisc:
-        DU_impl.DrawCylinder		(parent, v[0], v[1], 0.f, f[6], clr_s, clr_w, true, true);
-        DU_impl.DrawCylinder		(parent, v[0], v[1], 0.f, f[7], clr_s, clr_w, true, true);
+        DUImpl.DrawCylinder		(parent, v[0], v[1], 0.f, f[6], clr_s, clr_w, true, true);
+        DUImpl.DrawCylinder		(parent, v[0], v[1], 0.f, f[7], clr_s, clr_w, true, true);
     break;
 	case PDRectangle:
-        DU_impl.DrawRectangle	(v[0], v[1], v[2], clr_s, clr_w, true, true);
+        DUImpl.DrawRectangle	(v[0], v[1], v[2], clr_s, clr_w, true, true);
     break;
    }
 }

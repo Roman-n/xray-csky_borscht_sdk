@@ -4,7 +4,9 @@
 #include "ESceneAIMapControls.h"
 #include "ESceneAIMapTools.h"
 #include "../ECore/Editor/ui_main.h"
+#ifndef NO_VCL
 #include "FrameAIMap.h"
+#endif
 #include "scene.h"
 #include "ui_leveltools.h"
 
@@ -14,19 +16,21 @@
 TUI_ControlAIMapNodeAdd::TUI_ControlAIMapNodeAdd(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent){
 }
 
-bool __fastcall TUI_ControlAIMapNodeAdd::Start(TShiftState Shift)
+bool TUI_ControlAIMapNodeAdd::Start(TShiftState Shift)
 {
 	append_nodes = 0;                           
 	Fvector p;
     ESceneAIMapTool* S 		= (ESceneAIMapTool*)parent_tool;
     if (S->PickObjects(p,UI->m_CurrentRStart,UI->m_CurrentRNorm,UI->ZFar())){
     	S->SelectObjects	(false);
+#ifndef NO_VCL
 	    append_nodes		= S->AddNode(p,((TfraAIMap*)S->pFrame)->ebIgnoreConstraints->Down,((TfraAIMap*)S->pFrame)->ebAutoLink->Down,S->m_BrushSize);
 		if (!Shift.Contains(ssAlt)){ 
 		    if (append_nodes) Scene->UndoSave();
         	ResetActionToSelect();
             return false;
         }else return true;
+#endif
     }
     return false;
 }
@@ -35,7 +39,9 @@ void TUI_ControlAIMapNodeAdd::Move(TShiftState _Shift)
 	Fvector p;
     ESceneAIMapTool* S 	= (ESceneAIMapTool*)parent_tool;
     if (S->PickObjects(p,UI->m_CurrentRStart,UI->m_CurrentRNorm,UI->ZFar())){
+#ifndef NO_VCL
 	    append_nodes+=S->AddNode(p,((TfraAIMap*)S->pFrame)->ebIgnoreConstraints->Down,((TfraAIMap*)S->pFrame)->ebAutoLink->Down,S->m_BrushSize);
+#endif
     }
 }
 bool TUI_ControlAIMapNodeAdd::End(TShiftState _Shift)
@@ -67,7 +73,7 @@ bool TUI_ControlAIMapNodeMove::Start(TShiftState Shift)
     return true;
 }
 
-void __fastcall TUI_ControlAIMapNodeMove::Move(TShiftState _Shift)
+void TUI_ControlAIMapNodeMove::Move(TShiftState _Shift)
 {
 	Fvector amount;
 	if (DefaultMovingProcess(_Shift,amount)){
@@ -80,7 +86,7 @@ void __fastcall TUI_ControlAIMapNodeMove::Move(TShiftState _Shift)
     }
 }
 
-bool __fastcall TUI_ControlAIMapNodeMove::End(TShiftState _Shift)
+bool TUI_ControlAIMapNodeMove::End(TShiftState _Shift)
 {
 	return MovingEnd(_Shift);
 }
@@ -91,7 +97,7 @@ bool __fastcall TUI_ControlAIMapNodeMove::End(TShiftState _Shift)
 TUI_ControlAIMapNodeRotate::TUI_ControlAIMapNodeRotate(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent)
 {
 }                                           
-bool __fastcall TUI_ControlAIMapNodeRotate::Start(TShiftState Shift)
+bool TUI_ControlAIMapNodeRotate::Start(TShiftState Shift)
 {
     if(parent_tool->SelectionCount(true)==0) return false;
 
@@ -103,7 +109,7 @@ bool __fastcall TUI_ControlAIMapNodeRotate::Start(TShiftState Shift)
     return true;
 }
 
-void __fastcall TUI_ControlAIMapNodeRotate::Move(TShiftState _Shift)
+void TUI_ControlAIMapNodeRotate::Move(TShiftState _Shift)
 {
     if (_Shift.Contains(ssLeft)){
         float amount = -UI->m_DeltaCpH.x * UI->m_MouseSR;
@@ -125,7 +131,7 @@ void __fastcall TUI_ControlAIMapNodeRotate::Move(TShiftState _Shift)
             }
     }
 }
-bool __fastcall TUI_ControlAIMapNodeRotate::End(TShiftState _Shift)
+bool TUI_ControlAIMapNodeRotate::End(TShiftState _Shift)
 {
 	return RotateEnd(_Shift);
 }

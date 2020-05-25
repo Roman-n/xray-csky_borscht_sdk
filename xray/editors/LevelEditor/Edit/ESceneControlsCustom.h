@@ -2,6 +2,7 @@
 #define ESceneControlsCustomH
 
 #include "customobject.h"
+#include <functional>
 //---------------------------------------------------------------------------
 // refs
 class ESceneToolBase;
@@ -15,8 +16,13 @@ struct SBeforeAppendCallbackParams{
         name_prefix	= "";
     }
 };
+#ifdef __BIRLANDC__
 typedef bool __fastcall (__closure *TBeforeAppendCallback)(SBeforeAppendCallbackParams* p);
 typedef bool __fastcall (__closure *TAfterAppendCallback)(TShiftState _Shift, CCustomObject* obj);
+#else
+using TBeforeAppendCallback = std::function<bool __fastcall (SBeforeAppendCallbackParams*)>;
+using TAfterAppendCallback = std::function <bool __fastcall (TShiftState, CCustomObject*)>;
+#endif
 
 class TUI_CustomControl{
 protected:
@@ -52,7 +58,7 @@ protected:
 protected:
 	bool				CheckSnapList 	(TShiftState Shift);
 
-    CCustomObject*		DefaultAddObject(TShiftState Shift, TBeforeAppendCallback before=0, TAfterAppendCallback after=0);
+    CCustomObject*		DefaultAddObject(TShiftState Shift, TBeforeAppendCallback before={}, TAfterAppendCallback after={});
     bool				DefaultMovingProcess(TShiftState Shift, Fvector& amount);
 public:
     ESceneToolBase*	parent_tool;

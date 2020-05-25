@@ -2,14 +2,20 @@
 #pragma hdrstop
 
 #include "../../xrServerEntities/PropertiesListTypes.h"
+#ifndef NO_VCL
 #include "MxShortcut.hpp"
+#endif
 //------------------------------------------------------------------------------
             
 xr_string	ShortcutValue::GetDrawText		(TOnDrawTextEvent OnDrawText)
 {
+#ifndef NO_VCL
     xr_string 	txt = MxShortCutToText(value->hotkey).c_str();
     if (!OnDrawText.empty())	OnDrawText(this, txt);
     return 			txt;
+#else
+    return {};
+#endif
 }
 
 xr_string GameTypeValue::GetDrawText(TOnDrawTextEvent)

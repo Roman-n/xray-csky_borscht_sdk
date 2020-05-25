@@ -49,7 +49,9 @@
 #endif
 
 #ifdef _EDITOR
+#ifndef NO_VCL
 	#include "ElTree.hpp"
+#endif
 	#define MTL_EXPORT_API ECORE_API
 #else
 	#define MTL_EXPORT_API ENGINE_API
@@ -291,6 +293,11 @@ public:
     	GameMtlIt it	= GetMaterialIt	(name);
         return (it==materials.end())?GAMEMTL_NONE_ID:(*it)->ID;
     }
+	IC SGameMtl*		GetMaterial(LPCSTR name)
+	{
+		GameMtlIt it = GetMaterialIt(name);
+		return materials.end() != it ? *it : 0;
+	}
 #ifdef _EDITOR
 	// editor
 	SGameMtl*			AppendMaterial	(SGameMtl* parent);
@@ -301,11 +308,6 @@ public:
     	return materials.end() != it?*it:0;
     }
 #else
-	IC SGameMtl*		GetMaterial(LPCSTR name)
-	{
-		GameMtlIt it = GetMaterialIt(name);
-		return materials.end() != it ? *it : 0;
-	}
 	// game
 	IC u16				GetMaterialIdx	(int ID)		{GameMtlIt it=GetMaterialItByID(ID);VERIFY(materials.end() != it); return (u16)(it-materials.begin());}
 	IC u16				GetMaterialIdx	(LPCSTR name)	{GameMtlIt it=GetMaterialIt(name);VERIFY(materials.end() != it); return (u16)(it-materials.begin());}

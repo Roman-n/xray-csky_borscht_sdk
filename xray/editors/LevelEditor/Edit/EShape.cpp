@@ -3,8 +3,8 @@
 #pragma hdrstop
 
 #include "EShape.h"
-#include "../../ecore/editor/D3DUtils.h"
-#include "du_box.h"
+#include <Layers/xrRender/D3DUtils.h>
+#include <Layers/xrRender/du_box.h>
 #include "Scene.h"
 
 #define SHAPE_COLOR_TRANSP		0x3C808080
@@ -100,7 +100,7 @@ void CEditShape::ApplyScale()
 		case cfSphere:{
             Fsphere&	T	= it->data.sphere;
             FTransformS.transform_tiny(T.P);
-            T.R				*= PScale.x;
+            T.R				*= GetScale().x;
 		}break;
 		case cfBox:{
             Fmatrix& B		= it->data.box;
@@ -171,20 +171,20 @@ void CEditShape::Detach()
         ShapeIt it=shapes.begin(); it++;
         for (; it!=shapes.end(); it++){
             string256 namebuffer;
-            Scene->GenObjectName	(OBJCLASS_SHAPE, namebuffer, Name);
+            Scene->GenObjectName	(OBJCLASS_SHAPE, namebuffer, GetName());
             CEditShape* shape 	= (CEditShape*)Scene->GetOTool(ClassID)->CreateObject(0, namebuffer);
             switch (it->type){
             case cfSphere:{
                 Fsphere	T		= it->data.sphere;
                 M.transform_tiny(T.P);
-                shape->PPosition= T.P;
+                shape->SetPosition(T.P);
                 T.P.set			(0,0,0);
                 shape->add_sphere(T);
             }break;
             case cfBox:{
                 Fmatrix B		= it->data.box;
                 B.mulA_43		(M);
-                shape->PPosition= B.c;
+                shape->SetPosition(B.c);
                 B.c.set			(0,0,0);
                 shape->add_box	(B);
             }break;
@@ -382,7 +382,7 @@ bool CEditShape::LoadStream(IReader& F)
 
 	R_ASSERT(F.find_chunk(SHAPE_CHUNK_SHAPES));
     shapes.resize	(F.r_u32());
-    F.r				(shapes.begin(),shapes.size()*sizeof(shape_def));
+    F.r				(shapes.data(),shapes.size()*sizeof(shape_def));
 
     if(F.find_chunk(SHAPE_CHUNK_DATA))
     	m_shape_type	= F.r_u8();
@@ -401,7 +401,7 @@ void CEditShape::SaveStream(IWriter& F)
 
 	F.open_chunk	(SHAPE_CHUNK_SHAPES);
     F.w_u32			(shapes.size());
-    F.w				(shapes.begin(),shapes.size()*sizeof(shape_def));
+    F.w				(shapes.data(),shapes.size()*sizeof(shape_def));
 	F.close_chunk	();
 
     F.open_chunk	(SHAPE_CHUNK_DATA);
@@ -439,15 +439,15 @@ void CEditShape::Render(int priority, bool strictB2F)
                     B.mulA_43			(_Transform());
                     RCache.set_xform_world(B);
                     Device.SetShader	(Device.m_WireShader);
-                    DU_impl.DrawCross	(zero,1.f,m_DrawEdgeColor,false);
-                    DU_impl.DrawIdentSphere	(true,true,clr,m_DrawEdgeColor);
+                    DUImpl.DrawCross	(zero,1.f,m_DrawEdgeColor,false);
+                    DUImpl.DrawIdentSphere	(true,true,clr,m_DrawEdgeColor);
                 }break;
                 case cfBox:
                 {
                     Fmatrix B			= it->data.box;
                     B.mulA_43			(_Transform());
                     RCache.set_xform_world(B);
-                    DU_impl.DrawIdentBox(true,true,clr,m_DrawEdgeColor);
+                    DUImpl.DrawIdentBox(true,true,clr,m_DrawEdgeColor);
                 }break;
                 }
             }
@@ -458,21 +458,24 @@ void CEditShape::Render(int priority, bool strictB2F)
                 RCache.set_xform_world	(_Transform());
                 u32 clr 				= 0xFFFFFFFF;
                 Device.SetShader		(Device.m_WireShader);
-                DU_impl.DrawSelectionBox(m_Box,&clr);
+                DUImpl.DrawSelectionBox(m_Box,&clr);
             }
         }
     }
 }
+#ifndef NO_VCL
 #include "FrameShape.h"
-
+#endif
 void CEditShape::OnFrame()
 {
 	inherited::OnFrame();
     if(m_shape_type==eShapeLevelBound)
     {
+#ifndef NO_VCL
     	TfraShape* F 		= (TfraShape*)ParentTool->pFrame;
     	BOOL bVis = F->ebEditLevelBoundMode->Down;
     	m_RT_Flags.set(flRT_Visible, bVis);
+#endif
     }
 }
 

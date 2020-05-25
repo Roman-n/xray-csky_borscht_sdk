@@ -12,8 +12,8 @@
 #include "ELight.h"
 #include "SpawnPoint.h"
 #include "WayPoint.h"
-#include "xr_ini.h"
-#include "xr_efflensflare.h"
+#include <xrCore/xr_ini.h>
+#include <xrEngine/xr_efflensflare.h>
 #include "GroupObject.h"
 #include "EShape.h"
 #include "sector.h"

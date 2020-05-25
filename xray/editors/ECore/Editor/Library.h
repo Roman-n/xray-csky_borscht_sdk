@@ -5,8 +5,9 @@
 #ifndef LibraryH
 #define LibraryH
 
-#include "pure.h"
-#include "../xrEProps/FolderLib.h"              
+#include <xrEngine/pure.h>
+#include <editors/xrEProps/FolderLib.h>
+
 //----------------------------------------------------
 class CEditableObject;
 

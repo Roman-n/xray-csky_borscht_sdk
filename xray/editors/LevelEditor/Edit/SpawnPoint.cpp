@@ -9,14 +9,15 @@
 #include "eshape.h"
 #include "../../xrServerEntities/xrServer_Objects_Abstract.h"
 #include "../ECore/Editor/ui_main.h"
-#include "SkeletonAnimated.h"
-#include "ObjectAnimator.h"
+#include <Layers/xrRender/SkeletonAnimated.h>
+#include <xrEngine/ObjectAnimator.h>
 #include "../../xrServerEntities/xrMessages.h"
 #include "scene.h"
-#include "../ECore/Editor/D3DUtils.h"
+#include <Layers/xrRender/D3DUtils.h>
 #include "iniStreamImpl.h"
 #include "../Ecore/Editor/EditObject.h"
 
+using namespace std::placeholders;
 
 //----------------------------------------------------
 #define SPAWNPOINT_CHUNK_VERSION		0xE411
@@ -82,11 +83,13 @@ void CSpawnPoint::CLE_Visual::OnChangeVisual	()
               int mr = ELog.DlgMsg(mtConfirmation,TMsgDlgButtons() << mbYes << mbNo, _msg.c_str());
               LPCSTR _new_val = 0;
               g_tmp_lock = true;
+#ifndef NO_VCL
               if (mr==mrYes && TfrmChoseItem::SelectItem(smVisual,_new_val, 1) )
               {
                   source->visual_name  =  _new_val;
                   visual = ::Render->model_Create(source->visual_name.c_str());
               }
+#endif
               g_tmp_lock = false;
 
         }
@@ -211,7 +214,7 @@ CSpawnPoint::CLE_Motion::CLE_Motion	(CSE_Motion* src)
 CSpawnPoint::CLE_Motion::~CLE_Motion()
 {
 }
-void __stdcall	CSpawnPoint::CLE_Motion::OnChangeMotion	()
+void CSpawnPoint::CLE_Motion::OnChangeMotion	()
 {
 	xr_delete					(animator);
     if (source->motion_name.size()){
@@ -361,21 +364,21 @@ bool CSpawnPoint::SSpawnData::LoadStream(IReader& F)
 bool CSpawnPoint::SSpawnData::ExportGame(SExportStreams* F, CSpawnPoint* owner)
 {
 	// set params
-    m_Data->set_name_replace	(owner->Name);
-    m_Data->position().set		(owner->PPosition);
-    m_Data->angle().set			(owner->PRotation);
+    m_Data->set_name_replace	(owner->GetName());
+    m_Data->position().set		(owner->GetPosition());
+    m_Data->angle().set			(owner->GetRotation());
 
     // export cform (if needed)
     ISE_Shape* cform 			= m_Data->shape();
 // SHAPE
     if (cform&&!(owner->m_AttachedObject&&(owner->m_AttachedObject->ClassID==OBJCLASS_SHAPE))){
-		ELog.DlgMsg				(mtError,"Spawn Point: '%s' must contain attached shape.",owner->Name);
+		ELog.DlgMsg				(mtError,"Spawn Point: '%s' must contain attached shape.",owner->GetName());
     	return false;
     }
     if (cform){
 	    CEditShape* shape		= dynamic_cast<CEditShape*>(owner->m_AttachedObject); R_ASSERT(shape);
 		shape->ApplyScale		();
-        owner->PScale 			= shape->PScale;
+        owner->SetScale 		(shape->GetScale());
     	cform->assign_shapes	(&*shape->GetShapes().begin(),shape->GetShapes().size());
     }
     // end
@@ -449,7 +452,7 @@ void CSpawnPoint::SSpawnData::Render(bool bSelected, const Fmatrix& parent,int p
 
     RCache.set_xform_world		(Fidentity);
 	Device.SetShader			(Device.m_WireShader);
-    m_Data->on_render			(&DU_impl,this,bSelected,parent,priority,strictB2F);
+    m_Data->on_render			(&DUImpl,this,bSelected,parent,priority,strictB2F);
 
     if(bSelected)
     {
@@ -590,17 +593,17 @@ void CSpawnPoint::Select(int  flag)
 void CSpawnPoint::SetPosition(const Fvector& pos)
 {
 	inherited::SetPosition	(pos);
-    if (m_AttachedObject) m_AttachedObject->PPosition = pos;
+    if (m_AttachedObject) m_AttachedObject->SetPosition(pos);
 }
 void CSpawnPoint::SetRotation(const Fvector& rot)
 {
 	inherited::SetRotation	(rot);
-    if (m_AttachedObject) m_AttachedObject->PRotation = rot;
+    if (m_AttachedObject) m_AttachedObject->SetRotation(rot);
 }
 void CSpawnPoint::SetScale(const Fvector& scale)
 {
 	inherited::SetScale		(scale);
-    if (m_AttachedObject) m_AttachedObject->PScale = scale;
+    if (m_AttachedObject) m_AttachedObject->SetScale(scale);
 }
 
 bool CSpawnPoint::AttachObject(CCustomObject* obj)
@@ -623,9 +626,9 @@ bool CSpawnPoint::AttachObject(CCustomObject* obj)
         DetachObject				();
         OnAppendObject				(obj);
         m_AttachedObject->OnAttach	(this);
-        PPosition 	= m_AttachedObject->PPosition;
-        PRotation 	= m_AttachedObject->PRotation;
-        PScale 		= m_AttachedObject->PScale;
+        SetPosition                 (m_AttachedObject->GetPosition());
+        SetRotation                 (m_AttachedObject->GetRotation());
+        SetScale                    (m_AttachedObject->GetScale());
     }
     return bAllowed;
 }
@@ -664,7 +667,7 @@ bool CSpawnPoint::GetBox( Fbox& box )
 {
     switch (m_Type){
     case ptRPoint: 	
-        box.set		( PPosition, PPosition );
+        box.set		( GetPosition(), GetPosition() );
         box.min.x 	-= RPOINT_SIZE;
         box.min.y 	-= 0;
         box.min.z 	-= RPOINT_SIZE;
@@ -673,7 +676,7 @@ bool CSpawnPoint::GetBox( Fbox& box )
         box.max.z 	+= RPOINT_SIZE;
     break;
     case ptEnvMod: 	
-        box.set		(PPosition, PPosition);
+        box.set		(GetPosition(), GetPosition());
         box.grow	(Selected()?m_EM_Radius:ENVMOD_SIZE);
     break;
     case ptSpawnPoint:
@@ -701,7 +704,7 @@ bool CSpawnPoint::GetBox( Fbox& box )
                         }
                     }
                 }else{
-                    box.set		( PPosition, PPosition );
+                    box.set		( GetPosition(), GetPosition() );
                     box.min.x 	-= RPOINT_SIZE;
                     box.min.y 	-= 0;
                     box.min.z 	-= RPOINT_SIZE;
@@ -711,7 +714,7 @@ bool CSpawnPoint::GetBox( Fbox& box )
                 }
             }
         }else{
-            box.set		( PPosition, PPosition );
+            box.set		( GetPosition(), GetPosition() );
             box.min.x 	-= RPOINT_SIZE;
             box.min.y 	-= 0;
             box.min.z 	-= RPOINT_SIZE;
@@ -754,7 +757,7 @@ void CSpawnPoint::Render( int priority, bool strictB2F )
                 // render icon
                 ESceneSpawnTool* st	= dynamic_cast<ESceneSpawnTool*>(ParentTool); VERIFY(st);
                 ref_shader s 	   	= st->GetIcon(m_SpawnData.m_Data->name());
-                DU_impl.DrawEntity		(0xffffffff,s);
+                DUImpl.DrawEntity		(0xffffffff,s);
             }else{
                 switch (m_Type)
                 {
@@ -768,16 +771,16 @@ void CSpawnPoint::Render( int priority, bool strictB2F )
                             Fcolor c;
                             c.set(RP_COLORS[r]);
                             c.mul_rgb(k*0.9f+0.1f);
-                            DU_impl.DrawEntity(c.get(),Device.m_WireShader);
+                            DUImpl.DrawEntity(c.get(),Device.m_WireShader);
                         }
                     }break;
                     case ptEnvMod:
                     {
                         Fvector pos={0,0,0};
                         Device.SetShader(Device.m_WireShader);
-                        DU_impl.DrawCross(pos,0.25f,0x20FFAE00,true);
+                        DUImpl.DrawCross(pos,0.25f,0x20FFAE00,true);
                         if (Selected())
-                            DU_impl.DrawSphere(Fidentity,PPosition,m_EM_Radius,0x30FFAE00,0x00FFAE00,true,true);
+                            DUImpl.DrawSphere(Fidentity,GetPosition(),m_EM_Radius,0x30FFAE00,0x00FFAE00,true,true);
                     }break;
 
 	                default: THROW2("CSpawnPoint:: Unknown Type");
@@ -792,21 +795,26 @@ void CSpawnPoint::Render( int priority, bool strictB2F )
                 {
                     s_name	= m_SpawnData.m_Data->name();
                 }else{
+                    string64 temp;
                     switch (m_Type)
                     {
-                    case ptRPoint: 	s_name.sprintf("RPoint T:%d",m_RP_TeamID); break;
+                    case ptRPoint:
+                        sprintf(temp, "RPoint T:%d",m_RP_TeamID);
+                        s_name = temp;
+                        break;
                     case ptEnvMod:
-                    	s_name.sprintf("EnvMod V:%3.2f, F:%3.2f",m_EM_ViewDist,m_EM_FogDensity);
-					break;
+                    	sprintf(temp, "EnvMod V:%3.2f, F:%3.2f",m_EM_ViewDist,m_EM_FogDensity);
+                        s_name = temp;
+					    break;
                     default: THROW2("CSpawnPoint:: Unknown Type");
                     }
                 }
                 
-                Fvector D;	D.sub(Device.vCameraPosition,PPosition);
+                Fvector D;	D.sub(Device.vCameraPosition,GetPosition());
                 float dist 	= D.normalize_magn();
                 if (!st->m_Flags.is(ESceneSpawnTool::flPickSpawnType)||
-                    !Scene->RayPickObject(dist,PPosition,D,OBJCLASS_SCENEOBJECT,0,0))
-                        DU_impl.OutText	(PPosition,s_name.c_str(),0xffffffff,0xff000000);
+                    !Scene->RayPickObject(dist,GetPosition(),D,OBJCLASS_SCENEOBJECT,0,0))
+                        DUImpl.OutText	(GetPosition(),s_name.c_str(),0xffffffff,0xff000000);
             }
             if(Selected())
             {
@@ -814,7 +822,7 @@ void CSpawnPoint::Render( int priority, bool strictB2F )
                 Fbox bb; GetBox(bb);
                 u32 clr = 0xFFFFFFFF;
                 Device.SetShader(Device.m_WireShader);
-                DU_impl.DrawSelectionBox(bb,&clr);
+                DUImpl.DrawSelectionBox(bb,&clr);
             }
         }
     }
@@ -954,14 +962,14 @@ bool CSpawnPoint::LoadLTX(CInifile& ini, LPCSTR sect_name)
 
 	// objects
     if(ini.line_exist(sect_name, "attached_count"))
-	    Scene->ReadObjectsLTX(ini, sect_name, "attached",OnAppendObject,0);
+	    Scene->ReadObjectsLTX(ini, sect_name, "attached",std::bind(&CSpawnPoint::OnAppendObject,this,_1),0);
 
 	UpdateTransform	();
 
 	// BUG fix
     CEditShape* shape	= dynamic_cast<CEditShape*>(m_AttachedObject);
     if (shape)
-    	PScale 	= shape->PScale;
+    	SetScale(shape->GetScale());
     
     return true;
 }
@@ -1074,13 +1082,13 @@ bool CSpawnPoint::LoadStream(IReader& F)
     }
 
 	// objects
-    Scene->ReadObjectsStream(F,SPAWNPOINT_CHUNK_ATTACHED_OBJ,OnAppendObject,0);
+    Scene->ReadObjectsStream(F,SPAWNPOINT_CHUNK_ATTACHED_OBJ,std::bind(&CSpawnPoint::OnAppendObject,this,_1),0);
 
 	UpdateTransform	();
 
 	// BUG fix
     CEditShape* shape	= dynamic_cast<CEditShape*>(m_AttachedObject);
-    if (shape) 	PScale 	= shape->PScale;
+    if (shape) 	SetScale(shape->GetScale());
     
     return true;
 }
@@ -1155,7 +1163,7 @@ bool CSpawnPoint::ExportGame(SExportStreams* F)
     	if (m_SpawnData.m_Data->validate()){
 	    	m_SpawnData.ExportGame		(F,this);
         }else{
-        	Log	("!Invalid spawn data:",Name);
+        	Log	("!Invalid spawn data:",GetName());
             return false;
         }
     }else{
@@ -1163,8 +1171,8 @@ bool CSpawnPoint::ExportGame(SExportStreams* F)
         switch (m_Type){
         case ptRPoint:
 	        F->rpoint.stream.open_chunk	(F->rpoint.chunk++);
-            F->rpoint.stream.w_fvector3	(PPosition);
-            F->rpoint.stream.w_fvector3	(PRotation);
+            F->rpoint.stream.w_fvector3	(GetPosition());
+            F->rpoint.stream.w_fvector3	(GetRotation());
             F->rpoint.stream.w_u8		(m_RP_TeamID);
             F->rpoint.stream.w_u8		(m_RP_Type);
             F->rpoint.stream.w_u16		(m_GameType.m_GameType.get());
@@ -1174,7 +1182,7 @@ bool CSpawnPoint::ExportGame(SExportStreams* F)
         case ptEnvMod:
         	Fcolor tmp;
 	        F->envmodif.stream.open_chunk(F->envmodif.chunk++);
-            F->envmodif.stream.w_fvector3(PPosition);
+            F->envmodif.stream.w_fvector3(GetPosition());
             F->envmodif.stream.w_float	(m_EM_Radius);
             F->envmodif.stream.w_float	(m_EM_Power);
             F->envmodif.stream.w_float	(m_EM_ViewDist);

@@ -18,8 +18,10 @@
 
 #ifdef __BORLANDC__
 	#include <vcl.h>
-	#include <mmsystem.h>
 	#include <stdint.h>
+#endif
+#ifdef _EDITOR
+	#include <mmsystem.h>
 #endif
 
 #define NOGDICAPMASKS

@@ -3,7 +3,9 @@
 
 #include "UI_LevelTools.h"
 #include "ESceneFogVolumeTools.h"
+#ifndef NO_VCL
 #include "FrameFogVol.h"
+#endif
 
 static const u16 FOG_VOL_TOOLS_VERSION  	= 0x0000;
 static const u16 FOG_VOL_VERSION  			= 0x0002;
@@ -21,7 +23,9 @@ xr_token fog_vol_type[] = {
 void ESceneFogVolumeTool::CreateControls()
 {
 	inherited::CreateDefaultControls(estDefault);
+#ifndef NO_VCL
     pFrame 			= xr_new<TfraFogVol>((TComponent*)0,this);
+#endif
 }
 
 void ESceneFogVolumeTool::RemoveControls()

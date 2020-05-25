@@ -26,7 +26,7 @@ struct SOGFVert{
 		T.set	(0,0,0);
 		B.set	(0,0,0);
 	}
-	void set(Fvector& p, Fvector& n, Fvector2& uv){
+	void set(const Fvector& p, const Fvector& n, const Fvector2& uv){
 		P.set	(p);
   		N.set	(n);
         UV.set	(uv);
@@ -106,7 +106,7 @@ public:
     }
     IC OGFVertVec& 	getV_Verts	()	{return m_Verts;}
    	IC OGFFaceVec& 	getV_Faces	()	{return m_Faces;}
-    IC SOGFVert*	getVert		() 	{return m_Verts.begin();}
+    IC SOGFVert*	getVert		() 	{return m_Verts.data();}
     IC int			getVS		() 	{return m_Verts.size();}
     IC int			getTS		() 	{return m_Faces.size();}
 };

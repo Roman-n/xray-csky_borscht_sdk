@@ -5,9 +5,9 @@
 #include "../../Include/cl_intersect.h"
 
 #ifdef _EDITOR
-#	include "scene.h"
-#	include "sceneobject.h"
-#	include "../utils/ETools/ETools.h"
+#	include <editors/LevelEditor/Edit/scene.h>
+#	include <editors/LevelEditor/Edit/sceneobject.h>
+#	include <utils/ETools/ETools.h>
 #endif
 
 //--------------------------------------------------- Decompression
@@ -177,8 +177,11 @@ void		CDetailManager::cache_Decompress(Slot* S)
 #else
 			Item_P.set	(rx , D.vis.box.max.y, rz );
 #endif
+
+#ifndef _EDITOR
 			if (m_useMask && isMaskCleared(Item_P))
 				continue;
+#endif
 
 			// Position (Y)
 			float y		= D.vis.box.min.y-5;
@@ -192,9 +195,9 @@ void		CDetailManager::cache_Decompress(Slot* S)
 				SBoxPickInfo& I=pinf[tid];
 				for (int k=0; k<(int)I.inf.size(); k++){
 					VERIFY(I.s_obj);
-Statistic.TEST0.Begin	();
+Device.Statistic->TEST0.Begin	();
 					I.e_obj->GetFaceWorld(I.s_obj->_Transform(),I.e_mesh,I.inf[k].id,verts);
-Statistic.TEST0.End		();
+Device.Statistic->TEST0.End		();
 					if (CDB::TestRayTri(Item_P,dir,verts,r_u,r_v,r_range,TRUE))
 					{
 						if (r_range>=0)	{

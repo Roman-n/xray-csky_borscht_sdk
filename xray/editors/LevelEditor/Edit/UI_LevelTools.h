@@ -6,6 +6,8 @@ class ESceneToolBase;
 class TProperties;
 class TfrmObjectList;
 
+class IM_PropertiesWnd;
+
 #include "ESceneClassList.h"
 #include "../ECore/Editor/UI_ToolsCustom.h"
 #include "../ECore/Editor/UI_mainCommand.h"
@@ -47,6 +49,8 @@ class CLevelTool: public CToolCustom
     TProperties* 		m_Props;
     void __stdcall  	OnPropsModified		();
     void __stdcall  	OnPropsClose		();
+
+    IM_PropertiesWnd*	m_IMProps;
 
     void				RealUpdateProperties();
     void				RealUpdateObjectList();
@@ -121,15 +125,15 @@ public:
     void				ShowObjectList		();
 
     // commands
-    CCommandVar			CommandChangeTarget		(CCommandVar p1, CCommandVar p2);
-	CCommandVar			CommandShowObjectList	(CCommandVar p1, CCommandVar p2);
-    CCommandVar			CommandEnableTarget		(CCommandVar p1, CCommandVar p2);
-    CCommandVar			CommandShowTarget		(CCommandVar p1, CCommandVar p2);
-    CCommandVar			CommandReadonlyTarget	(CCommandVar p1, CCommandVar p2);
-    CCommandVar			CommandMultiRenameObjects(CCommandVar p1,CCommandVar p2);
+    CCommandVar __stdcall CommandChangeTarget		(CCommandVar p1, CCommandVar p2);
+	CCommandVar __stdcall CommandShowObjectList	(CCommandVar p1, CCommandVar p2);
+    CCommandVar __stdcall CommandEnableTarget	(CCommandVar p1, CCommandVar p2);
+    CCommandVar __stdcall CommandShowTarget		(CCommandVar p1, CCommandVar p2);
+    CCommandVar __stdcall CommandReadonlyTarget	(CCommandVar p1, CCommandVar p2);
+    CCommandVar __stdcall CommandMultiRenameObjects(CCommandVar p1,CCommandVar p2);
 };
 extern CLevelTool*&		LTools;
 
-extern void ResetActionToSelect();
+//extern void ResetActionToSelect();
 extern TShiftState ssRBOnly;
 #endif

@@ -14,6 +14,9 @@
 #include "../ECore/Editor/ExportObjectOGF.h"
 #include "Builder.h"
 #include "SpawnPoint.h"
+
+using namespace std::placeholders;
+
 // file: SceneChunks.h
 #define CURRENT_FILE_VERSION    	0x00000005
 
@@ -432,7 +435,7 @@ void EScene::SaveLTX(LPCSTR map_name, bool bForUndo, bool bForceSaveAll)
 
         for(ObjectIt SO=m_ESO_SnapObjects.begin(); SO!=m_ESO_SnapObjects.end(); ++SO)
         {
-            ini.w_string	("snap_objects",(*SO)->Name,NULL);
+            ini.w_string	("snap_objects",(*SO)->GetName(),NULL);
         }
     }
 
@@ -571,7 +574,7 @@ void EScene::Save(LPCSTR map_name, bool bUndo, bool bForceSaveAll)
         F->w_u32			(m_ESO_SnapObjects.size());
 
         for(ObjectIt _F=m_ESO_SnapObjects.begin();_F!=m_ESO_SnapObjects.end();++_F)
-            F->w_stringZ	((*_F)->Name);
+            F->w_stringZ	((*_F)->GetName());
 
         F->close_chunk		();
     }
@@ -685,8 +688,9 @@ bool EScene::ReadObjectLTX(CInifile& ini, LPCSTR sect_name, CCustomObject*& O)
 
 	return bRes;
 }
-
+#ifndef NO_VCL
 #include "AppendObjectInfoForm.h"
+#endif
 bool EScene::ReadObjectsLTX(CInifile& ini,  LPCSTR sect_name_parent, LPCSTR sect_name_prefix, TAppendObject on_append, SPBItem* pb)
 {
 	string128			buff;
@@ -702,11 +706,11 @@ bool EScene::ReadObjectsLTX(CInifile& ini,  LPCSTR sect_name_parent, LPCSTR sect
 
 		if(ReadObjectLTX(ini, buff, obj))
         {
-            LPCSTR obj_name = obj->Name;
+            LPCSTR obj_name = obj->GetName();
             CCustomObject* existing = FindObjectByName(obj_name,obj->ClassID);
             if(existing)
             {
-
+#ifndef NO_VCL
                 if(g_frmConflictLoadObject->m_result!=2 && g_frmConflictLoadObject->m_result!=4 && g_frmConflictLoadObject->m_result!=6)
                 {
                     g_frmConflictLoadObject->m_existing_object 	= existing;
@@ -714,14 +718,18 @@ bool EScene::ReadObjectsLTX(CInifile& ini,  LPCSTR sect_name_parent, LPCSTR sect
                     g_frmConflictLoadObject->Prepare			();
                     g_frmConflictLoadObject->ShowModal			();
                 }
-                switch(g_frmConflictLoadObject->m_result)
+                int result = g_frmConflictLoadObject->m_result;
+#else
+                int result = 0;
+#endif
+                switch(result)
                 {
                     case 1: //Overwrite
                     case 2: //Overwrite All
                     {
                        bool res = RemoveObject		(existing, true, true);
                         if(!res)
-                            Msg("! RemoveObject [%s] failed", existing->Name);
+                            Msg("! RemoveObject [%s] failed", existing->GetName());
                          else
                             xr_delete(existing);
                     }break;
@@ -729,8 +737,8 @@ bool EScene::ReadObjectsLTX(CInifile& ini,  LPCSTR sect_name_parent, LPCSTR sect
                     case 4: //Insert new All
                     {
                         string256 				buf;
-                        GenObjectName			(obj->ClassID, buf, obj->Name);
-                        obj->Name				= buf;
+                        GenObjectName			(obj->ClassID, buf, obj->GetName());
+                        obj->SetName			(buf);
                     }break;
                     case 0: //Cancel
                     case 5: //Skip
@@ -765,10 +773,11 @@ bool EScene::ReadObjectsStream(IReader& F, u32 chunk_id, TAppendObject on_append
             CCustomObject* obj	=NULL;
             if (ReadObjectStream(*O, obj))
             {
-                LPCSTR obj_name = obj->Name;
+                LPCSTR obj_name = obj->GetName();
                 CCustomObject* existing = FindObjectByName(obj_name,obj->ClassID);
                 if(existing)
                 {
+#ifndef NO_VCL
                 	if(g_frmConflictLoadObject->m_result!=2 && g_frmConflictLoadObject->m_result!=4 && g_frmConflictLoadObject->m_result!=6)
                     {
                         g_frmConflictLoadObject->m_existing_object 	= existing;
@@ -776,14 +785,18 @@ bool EScene::ReadObjectsStream(IReader& F, u32 chunk_id, TAppendObject on_append
                         g_frmConflictLoadObject->Prepare			();
                         g_frmConflictLoadObject->ShowModal			();
                     }
-                    switch(g_frmConflictLoadObject->m_result)
+                    int result = g_frmConflictLoadObject->m_result;
+#else
+                    int result = 0;
+#endif
+                    switch(result)
                     {
                     	case 1: //Overwrite
                     	case 2: //Overwrite All
                         {
                            bool res = RemoveObject		(existing, true, true);
 							if(!res)
-                            	Msg("! RemoveObject [%s] failed", existing->Name);
+                            	Msg("! RemoveObject [%s] failed", existing->GetName());
                              else
                              	xr_delete(existing);
                         }break;
@@ -791,8 +804,8 @@ bool EScene::ReadObjectsStream(IReader& F, u32 chunk_id, TAppendObject on_append
                     	case 4: //Insert new All
                         {
                             string256 				buf;
-    						GenObjectName			(obj->ClassID, buf, obj->Name);
-    						obj->Name				= buf;
+    						GenObjectName			(obj->ClassID, buf, obj->GetName());
+    						obj->SetName			(buf);
                         }break;
                     	case 0: //Cancel
                     	case 5: //Skip
@@ -986,7 +999,7 @@ bool EScene::Load(LPCSTR map_name, bool bUndo)
         	obj_cnt 		= F->r_u32();
 
         SPBItem* pb 		= UI->ProgressStart(obj_cnt,"Loading objects...");
-        ReadObjectsStream	(*F,CHUNK_OBJECT_LIST,OnLoadAppendObject,pb);
+        ReadObjectsStream	(*F,CHUNK_OBJECT_LIST,std::bind(&EScene::OnLoadAppendObject,this,_1),pb);
         UI->ProgressEnd		(pb);
 
         SceneToolsMapPairIt _I = m_SceneTools.begin();
@@ -1094,8 +1107,8 @@ void EScene::SaveSelection( ObjClassID classfilter, LPCSTR fname )
 bool EScene::OnLoadSelectionAppendObject(CCustomObject* obj)
 {
     string256 				buf;
-    GenObjectName			(obj->ClassID,buf,obj->Name);
-    obj->Name				= buf;
+    GenObjectName			(obj->ClassID,buf,obj->GetName());
+    obj->SetName			(buf);
     AppendObject			(obj, false);
     obj->Select				(true);
     return 					true;
@@ -1130,7 +1143,7 @@ bool EScene::LoadSelection( LPCSTR fname )
         }
 
         // Objects
-        if (!ReadObjectsStream(*F,CHUNK_OBJECT_LIST,OnLoadSelectionAppendObject,0))
+        if (!ReadObjectsStream(*F,CHUNK_OBJECT_LIST,std::bind(&EScene::OnLoadSelectionAppendObject,this,_1),0))
         {
             ELog.DlgMsg(mtError,"EScene. Failed to load selection.");
             res = false;
@@ -1290,7 +1303,7 @@ void EScene::LoadCompilerError(LPCSTR fn)
     Fvector 		pt[3];
     if (F->find_chunk(10)){ // lc error (TJ)
         Tools->m_DebugDraw.m_Points.resize(F->r_u32());
-        F->r(Tools->m_DebugDraw.m_Points.begin(),sizeof(CLevelTool::SDebugDraw::Point)*Tools->m_DebugDraw.m_Points.size());
+        F->r(Tools->m_DebugDraw.m_Points.data(),sizeof(CLevelTool::SDebugDraw::Point)*Tools->m_DebugDraw.m_Points.size());
     }else if (F->find_chunk(0)){ // lc error (TJ)
     	u32 cnt			= F->r_u32();
         for (u32 k=0;k<cnt; k++){ F->r(pt,sizeof(Fvector)); Tools->m_DebugDraw.AppendPoint(pt[0],0xff00ff00,true,true,"TJ"); }
@@ -1306,7 +1319,7 @@ void EScene::LoadCompilerError(LPCSTR fn)
 */
     if (F->find_chunk(12)){ // lc error (invalid faces)
         Tools->m_DebugDraw.m_WireFaces.resize(F->r_u32());
-        F->r(Tools->m_DebugDraw.m_WireFaces.begin(),sizeof(CLevelTool::SDebugDraw::Face)*Tools->m_DebugDraw.m_WireFaces.size());
+        F->r(Tools->m_DebugDraw.m_WireFaces.data(),sizeof(CLevelTool::SDebugDraw::Face)*Tools->m_DebugDraw.m_WireFaces.size());
     }else if (F->find_chunk(2)){ // lc error (invalid faces)
     	u32 cnt			= F->r_u32();
         for (u32 k=0;k<cnt; k++){ F->r(pt,sizeof(Fvector)*3); Tools->m_DebugDraw.AppendWireFace(pt[0],pt[1],pt[2]); }
@@ -1392,19 +1405,19 @@ void EScene::SaveCompilerError(LPCSTR fn)
 	// t-junction
 	err.open_chunk	(10);
 	err.w_u32		(Tools->m_DebugDraw.m_Points.size());
-	err.w			(Tools->m_DebugDraw.m_Points.begin(), Tools->m_DebugDraw.m_Points.size()*sizeof(CLevelTool::SDebugDraw::Point));
+	err.w			(Tools->m_DebugDraw.m_Points.data(), Tools->m_DebugDraw.m_Points.size()*sizeof(CLevelTool::SDebugDraw::Point));
 	err.close_chunk	();
 
 	// m-edje
 	err.open_chunk	(11);
 	err.w_u32		(Tools->m_DebugDraw.m_Lines.size());
-	err.w			(Tools->m_DebugDraw.m_Lines.begin(), Tools->m_DebugDraw.m_Lines.size()*sizeof(CLevelTool::SDebugDraw::Line));
+	err.w			(Tools->m_DebugDraw.m_Lines.data(), Tools->m_DebugDraw.m_Lines.size()*sizeof(CLevelTool::SDebugDraw::Line));
 	err.close_chunk	();
 
 	// invalid
 	err.open_chunk	(12);
 	err.w_u32		(Tools->m_DebugDraw.m_WireFaces.size());
-	err.w			(Tools->m_DebugDraw.m_WireFaces.begin(), Tools->m_DebugDraw.m_WireFaces.size()*sizeof(CLevelTool::SDebugDraw::Face));
+	err.w			(Tools->m_DebugDraw.m_WireFaces.data(), Tools->m_DebugDraw.m_WireFaces.size()*sizeof(CLevelTool::SDebugDraw::Face));
 	err.close_chunk	();
 
     FS.w_close		(fs);

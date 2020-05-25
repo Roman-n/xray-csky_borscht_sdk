@@ -48,7 +48,9 @@
 #endif
 
 #ifdef _EDITOR
+#ifndef NO_VCL
 #include "ElTree.hpp"
+#endif
 #endif
 
 #ifdef GM_NON_GAME

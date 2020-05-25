@@ -7,8 +7,10 @@
 #include "scene.h"
 #include "SceneObject.h"
 #include "ESceneObjectTools.h"
+#ifndef NO_VCL
 #include "FrameObject.h"
 #include "leftbar.h"
+#endif
 #include "ui_levelmain.h"
 
 //------------------------------------------------------------------------------
@@ -18,10 +20,12 @@ __fastcall TUI_ControlObjectAdd::TUI_ControlObjectAdd(int st, int act, ESceneToo
 {
 }
 
-bool __fastcall TUI_ControlObjectAdd::Start(TShiftState Shift)
+bool TUI_ControlObjectAdd::Start(TShiftState Shift)
 {
     if (Shift==ssRBOnly){ ExecCommand(COMMAND_SHOWCONTEXTMENU,OBJCLASS_SCENEOBJECT); return false;}
+#ifndef NO_VCL
     TfraObject* fraObject = (TfraObject*)parent_tool->pFrame; VERIFY(fraObject);
+#endif
 	Fvector p,n;
 	if(!LUI->PickGround(p,UI->m_CurrentRStart,UI->m_CurrentRNorm,1,&n)) return false;
     { // pick already executed (see top)
@@ -30,11 +34,13 @@ bool __fastcall TUI_ControlObjectAdd::Start(TShiftState Shift)
         if (ot->IsAppendRandomActive()&&ot->m_AppendRandomObjects.size()){
         	N = ot->m_AppendRandomObjects[Random.randI(ot->m_AppendRandomObjects.size())].c_str();  
         }else{
+#ifndef NO_VCL
             N = ((TfraObject*)parent_tool->pFrame)->Current();
             if(!N){
                 ELog.DlgMsg(mtInformation,"Nothing selected.");
                 return false;
             }
+#endif
         }
 
         string256 namebuffer;
@@ -59,7 +65,7 @@ bool __fastcall TUI_ControlObjectAdd::Start(TShiftState Shift)
                 p.set(	Random.randF(ot->m_AppendRandomMinRotation.x,ot->m_AppendRandomMaxRotation.x),
                  		Random.randF(ot->m_AppendRandomMinRotation.y,ot->m_AppendRandomMaxRotation.y),
                         Random.randF(ot->m_AppendRandomMinRotation.z,ot->m_AppendRandomMaxRotation.z));
-                obj->PRotation = p;
+                obj->SetRotation(p);
             }
             if (ot->IsAppendRandomScaleActive()){
             	Fvector s;
@@ -71,7 +77,7 @@ bool __fastcall TUI_ControlObjectAdd::Start(TShiftState Shift)
                             Random.randF(ot->m_AppendRandomMinScale.y,ot->m_AppendRandomMaxScale.y),
                             Random.randF(ot->m_AppendRandomMinScale.z,ot->m_AppendRandomMaxScale.z));
                 }
-                obj->PScale = s;
+                obj->SetScale(s);
             }
         }
         obj->MoveTo(p,n);
@@ -86,10 +92,10 @@ bool __fastcall TUI_ControlObjectAdd::Start(TShiftState Shift)
     return false;
 }
 
-void __fastcall TUI_ControlObjectAdd::Move(TShiftState _Shift)
+void TUI_ControlObjectAdd::Move(TShiftState _Shift)
 {
 }
-bool __fastcall TUI_ControlObjectAdd::End(TShiftState _Shift)
+bool TUI_ControlObjectAdd::End(TShiftState _Shift)
 {
     return true;
 }

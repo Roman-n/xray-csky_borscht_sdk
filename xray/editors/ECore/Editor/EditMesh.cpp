@@ -7,11 +7,11 @@
 
 #include "EditMesh.h"
 #include "EditObject.h"
-#include "Bone.h"
+#include <xrEngine/Bone.h>
 #include "../../../common/itterate_adjacents.h"
 #include "itterate_adjacents_dynamic.h"
 #ifdef _EDITOR
-#	include "ETools.h"
+#	include <utils/ETools/ETools.h>
 #	include "UI_ToolsCustom.h"
 #endif
 

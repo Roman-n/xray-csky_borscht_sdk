@@ -5,11 +5,10 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#include "EditMeshVLight.h"
 #include "EditMesh.h"
 #include "EditObject.h"
 #include "ui_main.h"
-#include "d3dutils.h"
+#include <Layers/xrRender/D3DUtils.h>
 #include "render.h"
 //----------------------------------------------------
 #define F_LIM (10000)
@@ -195,7 +194,7 @@ void CEditableMesh::Render(const Fmatrix& parent, CSurface* S)
 //----------------------------------------------------
 #define MAX_VERT_COUNT 0xFFFF
 static Fvector RB[MAX_VERT_COUNT];
-static RB_cnt=0;
+static int RB_cnt=0;
 
 void CEditableMesh::RenderList(const Fmatrix& parent, u32 color, bool bEdge, IntVec& fl)
 {
@@ -219,13 +218,13 @@ void CEditableMesh::RenderList(const Fmatrix& parent, u32 color, bool bEdge, Int
 
 		if (RB_cnt==MAX_VERT_COUNT)
         {
-        	DU_impl.DrawPrimitiveL(D3DPT_TRIANGLELIST,RB_cnt/3,RB,RB_cnt,color,true,false);
+        	DUImpl.DrawPrimitiveL(D3DPT_TRIANGLELIST,RB_cnt/3,RB,RB_cnt,color,true,false);
 			RB_cnt = 0;
         }
     }
 
 	if (RB_cnt)
-    	DU_impl.DrawPrimitiveL(D3DPT_TRIANGLELIST,RB_cnt/3,RB,RB_cnt,color,true,false);
+    	DUImpl.DrawPrimitiveL(D3DPT_TRIANGLELIST,RB_cnt/3,RB,RB_cnt,color,true,false);
 
     if (bEdge)
     	Device.SetRS(D3DRS_FILLMODE,Device.dwFillMode);

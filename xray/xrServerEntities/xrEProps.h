@@ -32,6 +32,8 @@ typedef fastdelegate::FastDelegate0<>		  					TOnModifiedEvent;
 	//---------------------------------------------------------------------------
 	void XR_EPROPS_API CheckWindowPos(TForm* form);
 	//---------------------------------------------------------------------------
+#else
+typedef fastdelegate::FastDelegate1<ListItem*> 				    TOnILItemFocused;    
 #endif
 
 //------------------------------------------------------------------------------
@@ -128,7 +130,7 @@ public:
     virtual CTextValue* 		__stdcall	CreateTexture		(PropItemVec& items, shared_str key, LPSTR val, u32 sz)=0;
 };
 //---------------------------------------------------------------------------
-#ifdef __BORLANDC__
+#ifdef _EDITOR
 	extern "C" XR_EPROPS_API IPropHelper& PHelper ();
 #else
 	extern IPropHelper &PHelper();
@@ -146,7 +148,7 @@ public:
 	virtual ListItem*			__stdcall	CreateItem			(ListItemsVec& items, LPCSTR key, int type, u32 item_flags=0, void* object=0)=0;
 };
 
-#ifdef __BORLANDC__
+#ifdef _EDITOR
 	extern "C" XR_EPROPS_API IListHelper& LHelper ();
 #endif
 

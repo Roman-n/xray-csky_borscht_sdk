@@ -7,8 +7,8 @@
 
 #include "EditObject.h"
 #include "EditMesh.h"
-#include "d3dutils.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
+#include <Layers/xrRender/D3DUtils.h>
+#include <xrServerEntities/PropertiesListHelper.h>
 
 static const u32 color_bone_sel_color	=0xFFFFFFFF;
 static const u32 color_bone_norm_color	=0xFFFFFF00;
@@ -122,17 +122,17 @@ void CEditableObject::RenderBones(const Fmatrix& parent)
             Fvector p1		= M.c;
             u32 c_joint		= (*b_it)->flags.is(CBone::flSelected)?color_bone_sel_color:color_bone_norm_color;
             if (EPrefs->object_flags.is(epoDrawJoints))
-	            DU_impl.DrawJoint	(p1,joint_size,c_joint);
+	            DUImpl.DrawJoint	(p1,joint_size,c_joint);
             // center of mass
             if ((*b_it)->shape.type!=SBoneShape::stNone){
                 Fvector cm;
                 M.transform_tiny(cm,(*b_it)->center_of_mass);
                 if ((*b_it)->flags.is(CBone::flSelected)){
                     float sz 	= joint_size*2.f;
-                    DU_impl.DrawCross	(cm, sz,sz,sz, sz,sz,sz, 0xFFFFFFFF, false);
-                    DU_impl.DrawRomboid	(cm,joint_size*0.7f,color_bone_sel_cm);
+                    DUImpl.DrawCross	(cm, sz,sz,sz, sz,sz,sz, 0xFFFFFFFF, false);
+                    DUImpl.DrawRomboid	(cm,joint_size*0.7f,color_bone_sel_cm);
                 }else{
-                    DU_impl.DrawRomboid	(cm,joint_size*0.7f,color_bone_norm_cm);
+                    DUImpl.DrawRomboid	(cm,joint_size*0.7f,color_bone_norm_cm);
                 }
             }
 /*
@@ -145,17 +145,17 @@ void CEditableObject::RenderBones(const Fmatrix& parent)
 	     	if ((*b_it)->Parent()){
 		        Device.SetShader(Device.m_SelectionShader);
 				Fvector& p2 = (*b_it)->Parent()->_LTransform().c;
-        	    DU_impl.DrawLine	(p1,p2,color_bone_link_color);
+        	    DUImpl.DrawLine	(p1,p2,color_bone_link_color);
 			}
 			if (EPrefs->object_flags.is(epoDrawBoneAxis)){
             	Fmatrix mat; mat.mul(parent,M);
-	          	DU_impl.DrawObjectAxis(mat,0.03f,(*b_it)->flags.is(CBone::flSelected));
+	          	DUImpl.DrawObjectAxis(mat,0.03f,(*b_it)->flags.is(CBone::flSelected));
             }
 			if (EPrefs->object_flags.is(epoDrawBoneNames)){
             	parent.transform_tiny(p1);
             	u32 c = (*b_it)->flags.is(CBone::flSelected)?0xFFFFFFFF:0xFF000000;
             	u32 s = (*b_it)->flags.is(CBone::flSelected)?0xFF000000:0xFF909090;
-            	DU_impl.OutText(p1,(*b_it)->Name().c_str(),c,s);
+            	DUImpl.OutText(p1,(*b_it)->Name().c_str(),c,s);
             }
 			if (EPrefs->object_flags.is(epoDrawBoneShapes)){
 		        Device.SetShader(Device.m_SelectionShader);
@@ -164,9 +164,9 @@ void CEditableObject::RenderBones(const Fmatrix& parent)
                 u32 c 		= (*b_it)->flags.is(CBone::flSelected)?0x80ffffff:0x300000ff;
                 if ((*b_it)->shape.Valid()){
                     switch ((*b_it)->shape.type){
-                    case SBoneShape::stBox: 	DU_impl.DrawOBB		(mat,(*b_it)->shape.box,c,c);	break;
-                    case SBoneShape::stSphere:	DU_impl.DrawSphere   (mat,(*b_it)->shape.sphere,c,c,TRUE,TRUE);break;
-                    case SBoneShape::stCylinder:DU_impl.DrawCylinder (mat,(*b_it)->shape.cylinder.m_center,(*b_it)->shape.cylinder.m_direction,(*b_it)->shape.cylinder.m_height,(*b_it)->shape.cylinder.m_radius,c,c,TRUE,TRUE);break;
+                    case SBoneShape::stBox: 	DUImpl.DrawOBB		(mat,(*b_it)->shape.box,c,c);	break;
+                    case SBoneShape::stSphere:	DUImpl.DrawSphere   (mat,(*b_it)->shape.sphere,c,c,TRUE,TRUE);break;
+                    case SBoneShape::stCylinder:DUImpl.DrawCylinder (mat,(*b_it)->shape.cylinder.m_center,(*b_it)->shape.cylinder.m_direction,(*b_it)->shape.cylinder.m_height,(*b_it)->shape.cylinder.m_radius,c,c,TRUE,TRUE);break;
 	                }
                 }
             }
@@ -208,7 +208,7 @@ int CEditableObject::GetSelectedBones(BoneVec& sel_bones)
 
 //----------------------------------------------------
 
-#include "MgcCont3DMinSphere.h"
+#include <freemagic/MgcCont3DMinSphere.h>
 #include "ExportSkeleton.h"
 BOOL	f_valid		(float f)
 {
@@ -232,7 +232,7 @@ void ComputeSphere(Fsphere &B, FvectorVec& V)
 
 	// 1: calc first variation
 	Fsphere	S1;
-    Fsphere_compute		(S1,V.begin(),V.size());
+    Fsphere_compute		(S1,V.data(),V.size());
 	BOOL B1				= SphereValid(V,S1);
     
 	// 2: calc ordinary algorithm (2nd)
@@ -243,7 +243,7 @@ void ComputeSphere(Fsphere &B, FvectorVec& V)
 	bbox.grow			(EPS_L);
 	bbox.getsphere		(S2.P,S2.R);
 	S2.R = -1;
-	for (I=V.begin(); I!=V.end(); I++)	{
+	for (FvectorIt I=V.begin(); I!=V.end(); I++)	{
 		float d = S2.P.distance_to_sqr(*I);
 		if (d>S2.R) S2.R=d;
 	}
@@ -251,7 +251,7 @@ void ComputeSphere(Fsphere &B, FvectorVec& V)
 	BOOL B2				= SphereValid(V,S2);
 
 	// 3: calc magic-fm
-	Mgc::Sphere _S3 = Mgc::MinSphere(V.size(), (const Mgc::Vector3*) V.begin());
+	Mgc::Sphere _S3 = Mgc::MinSphere(V.size(), (const Mgc::Vector3*) V.data());
 	Fsphere	S3;
 	S3.P.set			(_S3.Center().x,_S3.Center().y,_S3.Center().z);
 	S3.R				= _S3.Radius();
@@ -275,7 +275,7 @@ void ComputeSphere(Fsphere &B, FvectorVec& V)
 }
 //----------------------------------------------------
 
-#include "MgcCont3DCylinder.h"
+#include <freemagic/MgcCont3DCylinder.h>
 void ComputeCylinder(Fcylinder& C, Fobb& B, FvectorVec& V)
 {
     if (V.size()<3) 	{ C.invalidate(); return; }

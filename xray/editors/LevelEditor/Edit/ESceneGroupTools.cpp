@@ -4,7 +4,9 @@
 #include "ESceneGroupTools.h"
 #include "ESceneGroupControls.h"
 #include "ui_leveltools.h"
+#ifndef NO_VCL
 #include "FrameGroup.h"
+#endif
 #include "Scene.h"
 #include "GroupObject.h"
 #include "../ECore/Editor/EThumbnail.h"
@@ -13,8 +15,10 @@ void ESceneGroupTool::CreateControls()
 {
 	inherited::CreateDefaultControls(estDefault);
     AddControl		(xr_new<TUI_ControlGroupAdd >(estDefault,etaAdd,		this));
+#ifndef NO_VCL
 	// frame
     pFrame 			= xr_new<TfraGroup>((TComponent*)0,this);
+#endif
 }
 //----------------------------------------------------
 
@@ -45,7 +49,7 @@ void ESceneGroupTool::UngroupObjects(bool bUndo)
                     xr_delete			(obj);
                     bModif				= true;
                 }else{
-                	ELog.DlgMsg			(mtError,"Can't ungroup object: '%s'.",obj->Name);
+                	ELog.DlgMsg			(mtError,"Can't ungroup object: '%s'.",obj->GetName());
                 }
             }
         }
@@ -78,7 +82,7 @@ void ESceneGroupTool::GroupObjects(bool bUndo)
         
     if (group->ObjectInGroupCount())
     {
-	    ELog.DlgMsg(mtInformation,"Group '%s' successfully created.\nContain %d object(s)",group->Name,group->ObjectInGroupCount());
+	    ELog.DlgMsg(mtInformation,"Group '%s' successfully created.\nContain %d object(s)",group->GetName(),group->ObjectInGroupCount());
         Scene->AppendObject(group,bUndo);
     }else{
 	    ELog.DlgMsg(mtError,"Group can't created.");
@@ -104,7 +108,7 @@ void __stdcall  FillGroupItems(ChooseItemVec& items, void* param)
     group->GetObjects	(grp_lst);
     
     for (ObjectIt it=grp_lst.begin(); it!=grp_lst.end(); ++it)
-	    items.push_back	(SChooseItem((*it)->Name,""));
+	    items.push_back	(SChooseItem((*it)->GetName(),""));
 }
 
 void ESceneGroupTool::AlignToObject()
@@ -116,9 +120,12 @@ void ESceneGroupTool::AlignToObject()
     	for (ObjectIt it=lst.begin(); it!=lst.end(); it++){
         	if ((*it)->Selected()){
 			    sel_cnt++;
+#ifndef NO_VCL
                 if (TfrmChoseItem::SelectItem(smCustom,nm,1,nm,FillGroupItems,*it)){
                     ((CGroupObject*)(*it))->UpdatePivot(nm,false);
-                }else break;
+                }else 
+#endif
+                    break;
             }
         }
         Scene->UndoSave();
@@ -158,7 +165,7 @@ void ESceneGroupTool::ReloadRefsSelectedObject()
                 {
                     bModif			= true;
                 }else{
-                    ELog.Msg		(mtError,"Can't reload group: '%s'.",obj->Name);
+                    ELog.Msg		(mtError,"Can't reload group: '%s'.",obj->GetName());
                 }
             }
         }
@@ -240,16 +247,20 @@ void ESceneGroupTool::SaveSelectedObject()
 void ESceneGroupTool::SetCurrentObject(LPCSTR nm)
 {
 	m_CurrentObject				= nm;
+#ifndef NO_VCL
 	TfraGroup* frame			=(TfraGroup*)pFrame;
     frame->lbCurrent->Caption 	= m_CurrentObject.c_str();
+#endif
 }
 //----------------------------------------------------
 
 void ESceneGroupTool::OnActivate()
 {
 	inherited::OnActivate		();
+#ifndef NO_VCL
 	TfraGroup* frame			= (TfraGroup*)pFrame;
     frame->lbCurrent->Caption 	= m_CurrentObject.c_str();
+#endif
 }
 //----------------------------------------------------
 
@@ -273,17 +284,17 @@ void ESceneGroupTool::MakeThumbnail()
         U32Vec pixels;
         u32 w=512,h=512;
         if (Device.MakeScreenshot	(pixels,w,h)){
-            AnsiString tex_name		= ChangeFileExt(object->Name,".thm");
+            AnsiString tex_name		= ChangeFileExt(object->GetName(),".thm");
             SStringVec lst;
 
             ObjectList 			grp_lst;
             object->GetObjects	(grp_lst);
             
             for (ObjectIt it=grp_lst.begin(); it!=grp_lst.end(); ++it)
-                lst.push_back		((*it)->Name);
+                lst.push_back		((*it)->GetName());
                 
             EGroupThumbnail 		tex	(tex_name.c_str(),false);
-            tex.CreateFromData		(pixels.begin(),w,h,lst);
+            tex.CreateFromData		(pixels.data(),w,h,lst);
             string_path fn;
             FS.update_path			(fn,_groups_,object->RefName());
             strcat					(fn,".group");

@@ -6,7 +6,7 @@
 #include "igame_persistent.h"
 #include "LightAnimLibrary.h"
 #ifdef _EDITOR
-    #include "ui_toolscustom.h"
+    #include <editors/ECore/Editor/UI_ToolsCustom.h>
 #else
 	#include "igame_level.h"
 	#include "xr_area.h"

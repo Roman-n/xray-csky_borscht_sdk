@@ -5,7 +5,7 @@
 #pragma hdrstop
 
 #include "ELight.h"
-#include "LightAnimLibrary.h"
+#include <xrEngine/LightAnimLibrary.h>
 #include "escenelighttools.h"
 
 static const u32 LIGHT_VERSION   			= 0x0011;
@@ -42,7 +42,7 @@ void CLight::SFuzzyData::SaveLTX(CInifile& ini, LPCSTR sect_name)
 
 void CLight::SFuzzyData::LoadLTX(CInifile& ini, LPCSTR sect_name)
 {
-    m_ShapeType		= ini.r_u8			(sect_name, "fuzzy_shape_type");
+    m_ShapeType		= (EShapeType)ini.r_u8(sect_name, "fuzzy_shape_type");
     m_SphereRadius	= ini.r_float		(sect_name, "fuzzy_sphere_radius");
     m_BoxDimension	= ini.r_fvector3	(sect_name,  "fuzzy_box_dim");
     m_PointCount	= ini.r_u32			(sect_name,  "fuzzy_point_count");
@@ -183,7 +183,7 @@ bool CLight::LoadStream(IReader& F)
 	    F.r				(&d3d,sizeof(d3d));
         m_Type			= (ELight::EType)d3d.type;   	        
         m_Color.set		(d3d.diffuse); 	        
-        PPosition		= d3d.position;
+        SetPosition		(d3d.position);
         m_Range			= d3d.range;			
         m_Attenuation0	= d3d.attenuation0;		
         m_Attenuation1	= d3d.attenuation1;		

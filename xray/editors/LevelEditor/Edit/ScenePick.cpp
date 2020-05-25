@@ -4,7 +4,7 @@
 #include "Scene.h"
 #include "../ECore/Editor/ui_main.h"
 #include "SceneObject.h"
-#include "ETools.h"
+#include <utils/ETools/ETools.h>
 //------------------------------------------------------------------------------
 
 int EScene::FrustumPick( const CFrustum& frustum, ObjClassID classfilter, ObjectList& ol )

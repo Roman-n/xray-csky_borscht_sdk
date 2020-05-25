@@ -4,16 +4,20 @@
 #include "ESceneShapeTools.h"
 #include "ESceneShapeControls.h"
 #include "ui_leveltools.h"
+#ifndef NO_VCL
 #include "FrameShape.h"
+#endif
 #include "EShape.h"
 
 void ESceneShapeTool::CreateControls()
 {
 	inherited::CreateDefaultControls(estDefault);
     AddControl		(xr_new<TUI_ControlShapeAdd>(estDefault,etaAdd,	this));
+#ifndef NO_VCL
 	// frame
     pFrame 			= xr_new<TfraShape>((TComponent*)0);
     ((TfraShape*)pFrame)->tool = this;
+#endif
 }
 //----------------------------------------------------
 
@@ -71,7 +75,7 @@ void ESceneShapeTool::OnEditLevelBounds(bool recalc)
 
         Fvector vec;
         br.getsize(vec);
-        level_shape->PScale = vec;
+        level_shape->SetScale(vec);
 //      level_shape->OnUpdateTransform();
 //      level_shape->ApplyScale();
         
@@ -83,11 +87,15 @@ void ESceneShapeTool::OnEditLevelBounds(bool recalc)
 void ESceneShapeTool::OnActivate()
 {
 	inherited::OnActivate();
+#ifndef NO_VCL
 	((TfraShape*)pFrame)->ebEditLevelBoundMode->Down = false;
+#endif
 }
 
 void ESceneShapeTool::OnDeactivate()
 {
 	inherited::OnDeactivate();
+#ifndef NO_VCL
 	((TfraShape*)pFrame)->ebEditLevelBoundMode->Down = false;
+#endif
 }

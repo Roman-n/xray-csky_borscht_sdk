@@ -8,14 +8,14 @@
 	#define XRSOUND_API __declspec(dllimport)
 #endif
 
-#ifdef __BORLANDC__
+//#ifdef _EDITOR
 	#define XRSOUND_EDITOR_API XRSOUND_API
 
 	// editor only refs
 	class XRSOUND_EDITOR_API SoundEnvironment_LIB;
-#else
-	#define XRSOUND_EDITOR_API
-#endif
+//#else
+//	#define XRSOUND_EDITOR_API
+//#endif
 
 #define SNDENV_FILENAME				"sEnvironment.xr"
 #define OGG_COMMENT_VERSION 		0x0003 
@@ -277,7 +277,7 @@ public:
 
 	virtual void					object_relcase			( CObject* obj )																		= 0;
 	virtual const Fvector&			listener_position		()																						= 0;
-#ifdef __BORLANDC__
+#ifdef _EDITOR
 	virtual SoundEnvironment_LIB*	get_env_library			()																						= 0;
 	virtual void					refresh_env_library		()																						= 0;
 	virtual void					set_user_env			(CSound_environment* E)																	= 0;

@@ -6,13 +6,15 @@
 #include "scene.h"
 #include "../ECore/Editor/ui_main.h"
 #include "ui_leveltools.h"
-#include "cl_intersect.h"
-#include "MgcAppr3DPlaneFit.h"
+#include <common/cl_intersect.h>
+#include <freemagic/MgcAppr3DPlaneFit.h>
 #include "sceneobject.h"
 #include "../ECore/Editor/EditObject.h"
 #include "../ECore/Editor/EditMesh.h"
+#ifndef NO_VCL
 #include "leftbar.h"
-#include "ETools.h"
+#endif
+#include <utils/ETools/ETools.h>
 
 static SPickQuery	PQ;
 
@@ -122,7 +124,7 @@ BOOL ESceneAIMapTool::CreateNode(Fvector& vAt, SAINode& N, bool bIC)
 			float	tri_min_range	= flt_max;
 			int		tri_selected	= -1;
 			float	range,u,v;
-			for (i=0; i<DWORD(tris.size()); i++){
+			for (DWORD i=0; i<DWORD(tris.size()); i++){
 				if (ETOOLS::TestRayTriA(P,D,tris[i].v,u,v,range,false)){
 					if (range<tri_min_range){
 						tri_min_range	= range;
@@ -222,7 +224,7 @@ BOOL ESceneAIMapTool::CreateNode(Fvector& vAt, SAINode& N, bool bIC)
 				float	tri_min_range	= flt_max;
 				int		tri_selected	= -1;
 				float	range,u,v;
-				for (i=0; i<tris.size(); i++){
+				for (u32 i=0; i<tris.size(); i++){
 					if (ETOOLS::TestRayTriA(P,D,tris[i].v,u,v,range,false)){
 						if (range<tri_min_range){
 							tri_min_range	= range;
@@ -639,7 +641,9 @@ bool ESceneAIMapTool::GenerateMap(bool bFromSelectedOnly)
                 EditMeshVec& 		_meshes = E->Meshes();
                 for (EditMeshIt m_it=_meshes.begin(); m_it!=_meshes.end(); m_it++)
                 {
-                    pb->Inc(AnsiString().sprintf("%s [%s]",S->Name,(*m_it)->Name().c_str()).c_str());
+                    string256 temp;
+                    sprintf(temp, "%s [%s]",S->GetName(),(*m_it)->Name().c_str());
+                    pb->Inc(temp);
                     const SurfFaces&	_sfaces = (*m_it)->GetSurfFaces();
                     for (SurfFaces::const_iterator sp_it=_sfaces.begin(); sp_it!=_sfaces.end(); sp_it++)
                     {
@@ -714,7 +718,9 @@ int ESceneAIMapTool::RemoveOutOfBoundsNodes()
 bool ESceneAIMapTool::RealUpdateSnapList()
 {
 	m_Flags.set					(flUpdateSnapList,FALSE);
+#ifndef NO_VCL
 	fraLeftBar->UpdateSnapList	();
+#endif
     Fbox nodes_bb;				CalculateNodesBBox(nodes_bb);
 	if (!GetSnapList()->empty()){
         Fbox bb,snap_bb;		Scene->GetBox(snap_bb,*GetSnapList());

@@ -6,15 +6,17 @@
 #include "UI_ToolsCustom.h"
 #include "EditObject.h"
 #include "EditMesh.h"
+#ifndef NO_VCL
 #include "ChoseForm.h"
-#include "ui_main.h"
-#include "PropertiesList.h"               
-#include "motion.h"
-#include "bone.h"
+#include "../../xrEProps/PropertiesList.h"
+#endif
+#include <editors/xrEProps/FolderLib.h>
+#include "ui_main.h"         
+#include <xrEngine/motion.h>
+#include <xrEngine/bone.h>
 #include "library.h"
-#include "fmesh.h"
-#include "folderlib.h"
-#include "d3dutils.h"
+#include <xrEngine/Fmesh.h>
+#include <Layers/xrRender/D3DUtils.h>
 
 //------------------------------------------------------------------------------
 CToolCustom* Tools=0;
@@ -68,6 +70,7 @@ void CToolCustom::SetAction(ETAction action)
     case etaScale:  m_bHiddenMode=true; break;
     }
     m_Action = action;
+#ifndef NO_VCL
     switch(m_Action){
         case etaSelect:  UI->GetD3DWindow()->Cursor = crCross;     break;
         case etaAdd:     UI->GetD3DWindow()->Cursor = crArrow;     break;
@@ -76,6 +79,7 @@ void CToolCustom::SetAction(ETAction action)
         case etaScale:   UI->GetD3DWindow()->Cursor = crVSplit;    break;
         default:         UI->GetD3DWindow()->Cursor = crHelp;
     }
+#endif
     UI->RedrawScene();
     ExecCommand(COMMAND_REFRESH_UI_BAR);
 }
@@ -204,50 +208,50 @@ void CToolCustom::Render()
     RCache.set_xform_world	(Fidentity);
     Device.RenderNearer		(0.0003f);
     Device.SetRS			(D3DRS_CULLMODE,D3DCULL_NONE);
-    AnsiString temp;
+    char temp[20];
     int cnt=0;
     for (SDebugDraw::PointIt vit=m_DebugDraw.m_Points.begin(); vit!=m_DebugDraw.m_Points.end(); ++vit)
     {
         LPCSTR s = NULL;
         if (vit->i)
         {
-        	temp.sprintf		("P: %d",cnt++);
-            s = temp.c_str();
+        	sprintf		    (temp, "P: %d",cnt++);
+            s = temp;
         }
 
         if(vit->descr.size())
         {
             s = vit->descr.c_str();
         }
-        DU_impl.dbgDrawVert(vit->p[0],			vit->c,	s?s:"");
+        DUImpl.dbgDrawVert(vit->p[0],			vit->c,	s?s:"");
     }
     Device.SetShader		(Device.m_SelectionShader);
     cnt=0;
     for (SDebugDraw::LineIt eit=m_DebugDraw.m_Lines.begin(); eit!=m_DebugDraw.m_Lines.end(); eit++){
-        if (eit->i)        temp.sprintf		("L: %d",cnt++);
-        DU_impl.dbgDrawEdge		(eit->p[0],eit->p[1],				eit->c,	eit->i?temp.c_str():"");
+        if (eit->i)        sprintf		    (temp, "L: %d",cnt++);
+        DUImpl.dbgDrawEdge		(eit->p[0],eit->p[1],				eit->c,	eit->i?temp:"");
     }
     Device.SetShader		(Device.m_SelectionShader);
     cnt=0;
     for (SDebugDraw::FaceIt fwit=m_DebugDraw.m_WireFaces.begin(); fwit!=m_DebugDraw.m_WireFaces.end(); fwit++){
-    	if (fwit->i)        temp.sprintf		("F: %d",cnt++);
-        DU_impl.dbgDrawFace		(fwit->p[0],fwit->p[1],fwit->p[2],fwit->c,	fwit->i?temp.c_str():"");
+    	if (fwit->i)        sprintf		    (temp, "F: %d",cnt++);
+        DUImpl.dbgDrawFace		(fwit->p[0],fwit->p[1],fwit->p[2],fwit->c,	fwit->i?temp:"");
     }
     cnt=0;
     if (!m_DebugDraw.m_SolidFaces.empty()){
 	    Device.SetShader		(Device.m_SelectionShader);
-        DU_impl.DD_DrawFace_begin	(FALSE);
+        DUImpl.DD_DrawFace_begin	(FALSE);
         for (SDebugDraw::FaceIt fsit=m_DebugDraw.m_SolidFaces.begin(); fsit!=m_DebugDraw.m_SolidFaces.end(); fsit++)
-            DU_impl.DD_DrawFace_push	(fsit->p[0],fsit->p[1],fsit->p[2],	fsit->c);
-        DU_impl.DD_DrawFace_end		();
+            DUImpl.DD_DrawFace_push	(fsit->p[0],fsit->p[1],fsit->p[2],	fsit->c);
+        DUImpl.DD_DrawFace_end		();
     }
     Device.SetShader		(Device.m_SelectionShader);
     cnt=0;
     for (SDebugDraw::OBBVecIt oit=m_DebugDraw.m_OBB.begin(); oit!=m_DebugDraw.m_OBB.end(); oit++)
     {
-        temp.sprintf		("OBB: %d",cnt++);
-        DU_impl.DrawOBB			(Fidentity,*oit,0x2F00FF00,0xFF00FF00);
-        DU_impl.OutText			(oit->m_translate,temp.c_str(),0xffff0000,0x0000000);
+        sprintf		            (temp, "OBB: %d",cnt++);
+        DUImpl.DrawOBB			(Fidentity,*oit,0x2F00FF00,0xFF00FF00);
+        DUImpl.OutText			(oit->m_translate,temp,0xffff0000,0x0000000);
     }
     Device.SetRS			(D3DRS_CULLMODE,D3DCULL_CCW);
     Device.ResetNearer		();

@@ -6,7 +6,7 @@
 
 #include "ELight.h"
 #include "../ECore/Editor/ui_main.h"
-#include "../ECORE/Editor/D3DUtils.h"
+#include <Layers/xrRender/D3DUtils.h>
 #include "scene.h"
 #include "escenelighttools.h"
 
@@ -87,7 +87,7 @@ void CLight::AffectD3D(BOOL flag){
 
 bool CLight::GetBox( Fbox& box )
 {
-	box.set		(PPosition, PPosition);
+	box.set		(GetPosition(), GetPosition());
 	box.min.sub	(m_Range);
 	box.max.add	(m_Range);
 	return true;
@@ -103,14 +103,14 @@ void CLight::Render(int priority, bool strictB2F)
     	switch (m_Type){
         case ELight::ltPoint:
             if (Selected())
-            	DU_impl.DrawLineSphere( PPosition, m_Range, clr, true );
+            	DUImpl.DrawLineSphere( GetPosition(), m_Range, clr, true );
 
-            DU_impl.DrawPointLight(PPosition,VIS_RADIUS, clr);
+            DUImpl.DrawPointLight(GetPosition(),VIS_RADIUS, clr);
             if (m_Flags.is(ELight::flPointFuzzy)){
             	VERIFY(m_FuzzyData);
 			    for (FvectorIt it=m_FuzzyData->m_Positions.begin(); it!=m_FuzzyData->m_Positions.end(); it++){
                 	Fvector tmp; _Transform().transform_tiny(tmp,*it);
-		            DU_impl.DrawPointLight(tmp,VIS_RADIUS/6, clr);
+		            DUImpl.DrawPointLight(tmp,VIS_RADIUS/6, clr);
 	            }
 			}
         break;
@@ -119,9 +119,9 @@ void CLight::Render(int priority, bool strictB2F)
 //			dir.setHP		(PRotation.y,PRotation.x);
 //			DU.DrawCone		(Fidentity, PPosition, dir, Selected()?m_Range:VIS_RADIUS, radius2, clr, true, false);
         	if (Selected())
-            	DU_impl.DrawSpotLight( PPosition, FTransformR.k, m_Range, m_Cone, clr );
+            	DUImpl.DrawSpotLight( GetPosition(), FTransformR.k, m_Range, m_Cone, clr );
             else
-            	DU_impl.DrawSpotLight( PPosition, FTransformR.k, VIS_RADIUS, m_Cone, clr );
+            	DUImpl.DrawSpotLight( GetPosition(), FTransformR.k, VIS_RADIUS, m_Cone, clr );
         }break;
         default: THROW;
         }
@@ -131,10 +131,10 @@ void CLight::Render(int priority, bool strictB2F)
         if (lt->m_Flags.is(ESceneLightTool::flShowControlName))
         {
             Fvector 		D;
-            D.sub			(Device.vCameraPosition,PPosition);
+            D.sub			(Device.vCameraPosition,GetPosition());
             float dist 		= D.normalize_magn();
-        	if (!Scene->RayPickObject(dist,PPosition,D,OBJCLASS_SCENEOBJECT,0,0))
-	        	DU_impl.OutText (PPosition,AnsiString().sprintf(" %s",GetLControlName()).c_str(),0xffffffff,0xff000000);
+        	if (!Scene->RayPickObject(dist,GetPosition(),D,OBJCLASS_SCENEOBJECT,0,0))
+	        	DUImpl.OutText (GetPosition(),(AnsiString(" ") + GetLControlName()).c_str(),0xffffffff,0xff000000);
         }
     }else if ((1==priority)&&(true==strictB2F))
     {
@@ -152,10 +152,10 @@ void CLight::Render(int priority, bool strictB2F)
                 switch (m_FuzzyData->m_ShapeType)
                 {
                 case CLight::SFuzzyData::fstSphere:
-                	DU_impl.DrawSphere	(_Transform(),zero,m_FuzzyData->m_SphereRadius,clr,clr,true,true);
+                	DUImpl.DrawSphere	(_Transform(),zero,m_FuzzyData->m_SphereRadius,clr,clr,true,true);
                 break;
                 case CLight::SFuzzyData::fstBox:
-                	DU_impl.DrawAABB		(_Transform(),zero,m_FuzzyData->m_BoxDimension,clr,clr,true,true);
+                	DUImpl.DrawAABB		(_Transform(),zero,m_FuzzyData->m_BoxDimension,clr,clr,true,true);
                 break;
                 }
 			}
@@ -169,13 +169,13 @@ void CLight::Render(int priority, bool strictB2F)
 bool CLight::FrustumPick(const CFrustum& frustum)
 {
 //    return (frustum.testSphere(m_Position,m_Range))?true:false;
-    return (frustum.testSphere_dirty(PPosition,VIS_RADIUS))?true:false;
+    return (frustum.testSphere_dirty(GetPosition(),VIS_RADIUS))?true:false;
 }
 
 bool CLight::RayPick(float& distance, const Fvector& start, const Fvector& direction, SRayPickInfo* pinf)
 {
 	Fvector ray2;
-	ray2.sub( PPosition, start );
+	ray2.sub( GetPosition(), start );
 
     float d = ray2.dotproduct(direction);
     if( d > 0  ){

@@ -1,0 +1,664 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="~ Precompiled Headers">
+      <UniqueIdentifier>{f08217ea-5128-4a04-8006-17dc604574ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Edit">
+      <UniqueIdentifier>{e5ae2477-5ee1-41e3-b238-778a6b8ac618}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGui">
+      <UniqueIdentifier>{51ad96bc-51e4-4dc0-b230-6dda67534585}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xrServerEntities">
+      <UniqueIdentifier>{3855fb19-bce5-4e88-bd54-7f52f1d52cec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xrRender">
+      <UniqueIdentifier>{703b6209-1595-4e4c-b0fe-c22bb23d0be3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelEditor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>~ Precompiled Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\scene.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\UI_LevelMain.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\UI_LevelTools.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\IM_FrameAIMap.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\IM_FrameDetail.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\IM_FrameFogVol.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\IM_FrameGroup.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\IM_FrameLight.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\IM_FrameObject.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\IM_FramePortal.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\IM_FramePS.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\IM_FrameSector.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\IM_FrameShape.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\IM_FrameSpawn.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\IM_FrameWayPoint.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\IM_LeftBar.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\IM_TopBar.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\WayPoint.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\SpawnPoint.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\CustomObject.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\portalutils.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\sector.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\EShape.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneShapeTools.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\portal.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\EScenePortalTools.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\SceneObject.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\EParticlesObject.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ELight.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ELight_def.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneGroupTools.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneFogVolumeTools.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneDOTools.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneAIMapTools.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneAIMapTools_Export.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneObjectTools.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\Builder.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\Cursor3D.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\LevelPreferences.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\SoundManager_LE.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\SceneSummaryInfo.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="iniStreamImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneSpawnTools.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneWayControls.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\EScenePSTools.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneGlowTools.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneSectorTools.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneSoundEnvTools.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneSoundSrcTools.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\GeometryPartExtractor.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneCustomOTools.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\Custom2DProjector.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneCustomMTools.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneDummyTools.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneControlsCustom.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneWayTools.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneSpawnControls.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneSectorControls.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\GroupObject.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xrServerEntities\gametype_chooser.h">
+      <Filter>xrServerEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ECore\builder_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneWallmarkControls.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneWallmarkTools.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneLightTools.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Layers\xrRender\DetailManager.h">
+      <Filter>xrRender</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneAIMapControls.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\glow.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneGroupControls.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneObjectControls.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\EScenePortalControls.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\EScenePSControls.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESceneShapeControls.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESound_Environment.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\ESound_Source.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xrServerEntities\LevelGameDef.h">
+      <Filter>xrServerEntities</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="LevelEditor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>~ Precompiled Headers</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\scene.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\UI_LevelMain.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\UI_LevelTools.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\IM_FrameAIMap.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\IM_FrameDetail.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\IM_FrameFogVol.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\IM_FrameGroup.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\IM_FrameLight.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\IM_FrameObject.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\IM_FramePortal.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\IM_FramePS.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\IM_FrameSector.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\IM_FrameShape.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\IM_FrameSpawn.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\IM_FrameWayPoint.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\IM_LeftBar.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\IM_TopBar.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\Scene_Tools.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\WayPoint.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ScenePick.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\SpawnPoint.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\CustomObject.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\portalutils.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\sector.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\EShape.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneShapeTools.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\portal.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\EScenePortalTools.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\EScenePortalToolsIO.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\SceneObject.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\SceneObjectIO.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\SceneIO.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\EParticlesObject.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ELight.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ELight_IO.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ELight_props.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneGroupTools.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneGroupToolsIO.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneFogVolumeTools.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneDOTools.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneDOTools_Controls.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneDOTools_Generate.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneDOTools_Pick.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneAIMapTools.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneAIMapTools_Controls.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneAIMapTools_Export.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneAIMapTools_Generate.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneAIMapTools_MotionSimulator.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneAIMapTools_Pick.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneAIMapTools_Render.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\CustomObjectLE.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneObjectTools.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneObjectToolsExportBreakable.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneObjectToolsIO.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\Builder.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\BuilderCF.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\BuilderCore.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\BuilderGame.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\BuilderLODs.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\BuilderLTX.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\BuilderOGF.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\BuilderRemote.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\SceneSelection.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\SceneRender.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\SceneSnap.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\Cursor3D.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\LevelPreferences.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\SoundManager_LE.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\SceneSummaryInfo.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="iniStreamImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneSpawnTools.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneSpawnToolsIO.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneWayControls.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\EScenePSTools.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\EScenePSToolsIO.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneGlowTools.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneGlowToolsIO.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneSectorTools.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneSectorToolsIO.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneSoundEnvTools.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneSoundEnvToolsIO.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneSoundSrcTools.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneSoundSrcToolsIO.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\GeometryPartExtractor.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneCustomOTools.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneCustomOToolsFactory.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneCustomOToolsIO.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\Custom2DProjector.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneCustomMTools.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneCustomMToolsControls.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneShapeToolsIO.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneDummyTools.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\CustomObjectAnimation.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\SceneUtil.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneControlsCustom.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneWayTools.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneWayToolsIO.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneSpawnControls.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneSectorControls.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\GroupObjectUtils.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\GroupObject.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\SceneUndo.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xrServerEntities\gametype_chooser.cpp">
+      <Filter>xrServerEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ECore\builder_types.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneWallmarkControls.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneWallmarkTools.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneLightTools.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneLightToolsIO.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Layers\xrRender\DetailManager.cpp">
+      <Filter>xrRender</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Layers\xrRender\DetailManager_CACHE.cpp">
+      <Filter>xrRender</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Layers\xrRender\DetailManager_Decompress.cpp">
+      <Filter>xrRender</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Layers\xrRender\DetailManager_soft.cpp">
+      <Filter>xrRender</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Layers\xrRender\DetailManager_VS.cpp">
+      <Filter>xrRender</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneAIMapControls.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\glow.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneGroupControls.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneObjectControls.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\EScenePortalControls.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\EScenePSControls.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESceneShapeControls.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESound_Environment.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\ESound_Source.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xrServerEntities\LevelGameDef.cpp">
+      <Filter>xrServerEntities</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="LevelEditor.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="LevelEditor.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

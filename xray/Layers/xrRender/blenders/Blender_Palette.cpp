@@ -74,27 +74,27 @@ void		IBlender::Destroy	(IBlender*& B)
 #else
 
 // Editor
-#include "../Layers/xrRenderPC_R1/blenderdefault.h"
-#include "../Layers/xrRenderPC_R1/blender_default_aref.h"
-#include "../Layers/xrRenderPC_R1/blender_vertex.h"
-#include "../Layers/xrRenderPC_R1/blender_vertex_aref.h"
-#include "blender_screen_set.h"
-#include "../Layers/xrRenderPC_R1/blender_screen_gray.h"
-#include "blender_editor_wire.h"
-#include "blender_editor_selection.h"
-#include "blender_light.h"
-#include "../Layers/xrRenderPC_R1/blender_LaEmB.h"
-#include "blender_Lm(EbB).h"
-#include "blender_BmmD.h"
-#include "blender_B.h"
-#include "blender_shadow_texture.h"
-#include "../Layers/xrRenderPC_R1/blender_shadow_world.h"
-#include "../Layers/xrRenderPC_R1/blender_blur.h"
-#include "../Layers/xrRenderPC_R1/blender_model.h"
-#include "blender_model_ebb.h"
-#include "blender_detail_still.h"
-#include "blender_tree.h"
-#include "blender_particle.h"
+#include <Layers/xrRenderPC_R1/BlenderDefault.h>
+#include <Layers/xrRenderPC_R1/Blender_default_aref.h>
+#include <Layers/xrRenderPC_R1/Blender_Vertex.h>
+#include <Layers/xrRenderPC_R1/Blender_Vertex_aref.h>
+#include <Layers/xrRender/Blender_Screen_SET.h>
+#include <Layers/xrRenderPC_R1/Blender_Screen_GRAY.h>
+#include <Layers/xrRender/Blender_Editor_Wire.h>
+#include <Layers/xrRender/Blender_Editor_Selection.h>
+#include <editors/ECore/Engine/blenders/blender_light.h>
+#include <Layers/xrRenderPC_R1/blender_LaEmB.h>
+#include <Layers/xrRender/blender_Lm(EbB).h>
+#include <Layers/xrRender/blender_BmmD.h>
+#include <editors/ECore/Engine/blenders/Blender_B.h>
+#include <editors/ECore/Engine/blenders/Blender_Shadow_Texture.h>
+#include <Layers/xrRenderPC_R1/Blender_Shadow_World.h>
+#include <Layers/xrRenderPC_R1/Blender_Blur.h>
+#include <Layers/xrRenderPC_R1/Blender_Model.h>
+#include <Layers/xrRender/Blender_Model_EbB.h>
+#include <Layers/xrRender/Blender_detail_still.h>
+#include <Layers/xrRender/Blender_tree.h>
+#include <Layers/xrRender/Blender_Particle.h>
 
 IBlender*	IBlender::Create	(CLASS_ID cls)
 {	

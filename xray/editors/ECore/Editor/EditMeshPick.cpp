@@ -7,10 +7,10 @@
 
 #include "EditMesh.h"
 #include "EditObject.h"
-#include "cl_collector.h"
+#include "../Engine/cl_collector.h"
 #include "ui_main.h"
 #include "pick_defs.h"
-#include "../ETools/ETools.h"
+#include <utils/ETools/ETools.h>
 
 /*
 void CEditableMesh::CHullPickFaces(PlaneVec& pl, Fmatrix& parent, U32Vec& fl){
@@ -124,7 +124,7 @@ bool CEditableMesh::RayPick(float& distance, const Fvector& start, const Fvector
 bool CEditableMesh::CHullPickMesh(PlaneVec& pl, const Fmatrix& parent)
 {
 	Fvector p;
-    boolVec inside(m_VertCount,true);
+    boolVec inside((size_t)m_VertCount,true);
     for(u32 v_id=0;v_id<m_VertCount;v_id++){
         parent.transform_tiny(p,m_Vertices[v_id]);
         for(PlaneIt p_it=pl.begin(); p_it!=pl.end(); p_it++)

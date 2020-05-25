@@ -4,12 +4,16 @@
 #include "ESceneSpawnTools.h"
 #include "ui_leveltools.h"
 #include "ESceneSpawnControls.h"
+#ifndef NO_VCL
 #include "FrameSpawn.h"
+#endif
 #include "Scene.h"
 #include "SceneObject.h"
 #include "spawnpoint.h"
 #include "builder.h"
+#ifndef NO_VCL
 #include "EditLibrary.h"
+#endif
 
 static HMODULE hXRSE_FACTORY = 0;
 static LPCSTR xrse_factory_library	= "xrSE_Factory.dll";
@@ -23,6 +27,7 @@ CEditableObject* ESceneSpawnTool::get_draw_visual(u8 _RP_TeamID, u8 _RP_Type, co
 	CEditableObject* ret = NULL;
 	if(m_draw_RP_visuals.empty())
     {
+#ifndef NO_VCL
         m_draw_RP_visuals.push_back(Lib.CreateEditObject("editor\\artefakt_ah"));     		//0
         m_draw_RP_visuals.push_back(Lib.CreateEditObject("editor\\artefakt_cta_blue"));     //1
         m_draw_RP_visuals.push_back(Lib.CreateEditObject("editor\\artefakt_cta_green"));    //2
@@ -33,6 +38,7 @@ CEditableObject* ESceneSpawnTool::get_draw_visual(u8 _RP_TeamID, u8 _RP_Type, co
         m_draw_RP_visuals.push_back(Lib.CreateEditObject("editor\\telo_tdm_green"));        //7
         m_draw_RP_visuals.push_back(Lib.CreateEditObject("editor\\spectator"));        		//8
         m_draw_RP_visuals.push_back(Lib.CreateEditObject("editor\\item_spawn"));       		//9
+#endif
     }
     switch (_RP_Type)
     {
@@ -112,14 +118,16 @@ void __stdcall  FillSpawnItems	(ChooseItemVec& lst, void* param)
     for (int k=0; k<cnt; k++){
         _GetItem				(gcs,k,itm);
         for (ObjectIt it=objects.begin(); it!=objects.end(); it++)
-            if ((*it)->OnChooseQuery(itm.c_str()))	lst.push_back(SChooseItem((*it)->Name,""));
+            if ((*it)->OnChooseQuery(itm.c_str()))	lst.push_back(SChooseItem((*it)->GetName(),""));
     }
 }
 
 ESceneSpawnTool::ESceneSpawnTool():ESceneCustomOTool(OBJCLASS_SPAWNPOINT)
 {
 	m_Flags.zero();
+#ifndef NO_VCL
     TfrmChoseItem::AppendEvents	(smSpawnItem,		"Select Spawn Item",		FillSpawnItems,		0,0,0,0);
+#endif
 
     hXRSE_FACTORY	= LoadLibrary(xrse_factory_library);									VERIFY3(hXRSE_FACTORY,"Can't load library:",xrse_factory_library);
     create_entity 	= (Tcreate_entity)	GetProcAddress(hXRSE_FACTORY,create_entity_func);  	VERIFY3(create_entity,"Can't find func:",create_entity_func);
@@ -147,7 +155,9 @@ ESceneSpawnTool::~ESceneSpawnTool()
 	xr_vector<CEditableObject*>::iterator it_e 	= m_draw_RP_visuals.end();
     for(;it!=it_e;++it)
     {
+#ifndef NO_VCL
 		Lib.RemoveEditObject(*it);
+#endif
     }
     m_draw_RP_visuals.clear();
 }
@@ -156,8 +166,10 @@ void ESceneSpawnTool::CreateControls()
 {
 	inherited::CreateDefaultControls(estDefault);
     AddControl		(xr_new<TUI_ControlSpawnAdd>(estDefault,etaAdd,		this));
+#ifndef NO_VCL
 	// frame
     pFrame 			= xr_new<TfraSpawn>((TComponent*)0);
+#endif
 }
 //----------------------------------------------------
  
@@ -233,8 +245,8 @@ int ESceneSpawnTool::MultiRenameObjects()
             strconcat			(sizeof(pref),pref,Scene->LevelPrefix().c_str(),"_",obj->RefName());
             string256 			buf;
         	Scene->GenObjectName(obj->ClassID,buf,pref);
-            if (obj->Name!=buf){
-	            obj->Name		= buf;
+            if (obj->GetName()!=buf){//TODO Do we need compare pointer?
+	            obj->SetName    (buf);
                 cnt++; 
             }
         }

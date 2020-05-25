@@ -3,12 +3,12 @@
 #ifndef EShapeH
 #define EShapeH
 
-#include "ShapeData.h"
+#include <xrServerEntities/ShapeData.h>
 #include "CustomObject.h"
 //---------------------------------------------------------------------------
 enum eShapeUsage{eShapeCommon=0, eShapeLevelBound};
 
-class CEditShape: public CCustomObject, CShapeData
+class CEditShape: public CCustomObject, public CShapeData
 {
 	typedef CCustomObject inherited;
 private:
@@ -28,8 +28,8 @@ public:
     const shape_def&get_shape		(int idx){R_ASSERT(idx<(int)shapes.size());return shapes[idx];}
 	virtual void	FillProp		(LPCSTR pref, PropItemVec& values);
     
-protected:
 	virtual void 	SetScale		(const Fvector& val);
+protected:
     virtual void	OnUpdateTransform();
 public:
 					CEditShape 		(LPVOID data, LPCSTR name);

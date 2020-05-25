@@ -5,31 +5,43 @@
 #include "UI_LevelMain.h"
 
 #include "UI_LevelTools.h"
+#ifndef NO_VCL
 #include "EditLibrary.h"
 #include "../ECore/Editor/ImageEditor.h"
 #include "leftbar.h"
 #include "topbar.h"
+#endif
 #include "scene.h"
 #include "sceneobject.h"
 #include "Cursor3D.h"
+#ifndef NO_VCL
 #include "bottombar.h"
-#include "xr_trims.h"
+#endif
+#include <xrCore/xr_trims.h>
+#ifndef NO_VCL
 #include "main.h"
-#include "xr_input.h"
+#endif
+#include <xrEngine/xr_input.h>
 #include "../ECore/Editor/ui_main.h"
-#include "d3dutils.h"
+#include <Layers/xrRender/D3DUtils.h>
+#ifndef NO_VCL
 #include "EditLightAnim.h"
+#endif
 #include "builder.h"
 #include "SoundManager_LE.h"
+#ifndef NO_VCL
 #include "../xrEProps/NumericVector.h"
+#endif
 #include "LevelPreferences.h"
+#ifndef NO_VCL
 #include "LEClipEditor.h"
+#endif
 
 #ifdef _LEVEL_EDITOR
 //.    if (m_Cursor->GetVisible()) RedrawScene();
 #endif
 
-CLevelMain*&	LUI=(CLevelMain*)UI;
+CLevelMain*	    LUI=(CLevelMain*)UI;
 
 CLevelMain::CLevelMain()
 {
@@ -41,7 +53,9 @@ CLevelMain::~CLevelMain()
 {
     xr_delete		(EPrefs);
     xr_delete		(m_Cursor);
+#ifndef NO_VCL
     TClipMaker::DestroyForm(g_clip_maker);
+#endif
 }
 
 
@@ -72,21 +86,30 @@ CCommandVar CLevelTool::CommandShowObjectList(CCommandVar p1, CCommandVar p2)
 CCommandVar CommandLibraryEditor(CCommandVar p1, CCommandVar p2)
 {
     if (Scene->ObjCount()||(LUI->GetEState()!=esEditScene)){
-        if (LUI->GetEState()==esEditLibrary)	TfrmEditLibrary::ShowEditor();
-        else									ELog.DlgMsg(mtError, "Scene must be empty before editing library!");
+        if (LUI->GetEState() == esEditLibrary) {
+#ifndef NO_VCL
+            TfrmEditLibrary::ShowEditor();
+#endif
+        } else									ELog.DlgMsg(mtError, "Scene must be empty before editing library!");
     }else{
+#ifndef NO_VCL
         TfrmEditLibrary::ShowEditor();
+#endif
     }
     return TRUE;
 }
 CCommandVar CommandLAnimEditor(CCommandVar p1, CCommandVar p2)
 {
+#ifndef NO_VCL
     TfrmEditLightAnim::ShowEditor();
+#endif
     return TRUE;
 }
 CCommandVar CommandFileMenu(CCommandVar p1, CCommandVar p2)
 {
+#ifndef NO_VCL
     FHelper.ShowPPMenu(fraLeftBar->pmSceneFile,0);
+#endif
     return TRUE;
 }
 CCommandVar CLevelTool::CommandEnableTarget(CCommandVar p1, CCommandVar p2)
@@ -352,6 +375,7 @@ CCommandVar CommandClearDebugDraw(CCommandVar p1, CCommandVar p2)
 #include "SpawnPoint.h"
 CCommandVar CommandShowClipEditor(CCommandVar p1, CCommandVar p2)
 {
+#ifndef NO_VCL
 	if(g_clip_maker==NULL)
        g_clip_maker = TClipMaker::CreateForm();
 
@@ -382,6 +406,7 @@ CCommandVar CommandShowClipEditor(CCommandVar p1, CCommandVar p2)
         R_ASSERT					(KA);
    		g_clip_maker->ShowEditor	(KA);
     }
+#endif
     return 							TRUE;
 }
 
@@ -415,7 +440,9 @@ CCommandVar CommandValidateScene(CCommandVar p1, CCommandVar p2)
 CCommandVar CommandCleanLibrary(CCommandVar p1, CCommandVar p2)
 {
     if ( !Scene->locked() ){
+#ifndef NO_VCL
         Lib.CleanLibrary();
+#endif
         return 			TRUE;
     }else{
         ELog.DlgMsg		(mtError, "Scene must be empty before refreshing library!");
@@ -425,7 +452,9 @@ CCommandVar CommandCleanLibrary(CCommandVar p1, CCommandVar p2)
 
 CCommandVar CommandReloadObjects(CCommandVar p1, CCommandVar p2)
 {
+#ifndef NO_VCL
     Lib.ReloadObjects	();
+#endif
     return 				TRUE;
 }
 
@@ -433,8 +462,10 @@ CCommandVar CommandCut(CCommandVar p1, CCommandVar p2)
 {
     if( !Scene->locked() ){
         Scene->CutSelection(LTools->CurrentClassID());
+#ifndef NO_VCL
         fraLeftBar->miPaste->Enabled = true;
         fraLeftBar->miPaste2->Enabled = true;
+#endif
         Scene->UndoSave	();
         return 			TRUE;
     } else {
@@ -446,8 +477,10 @@ CCommandVar CommandCopy(CCommandVar p1, CCommandVar p2)
 {
     if( !Scene->locked() ){
         Scene->CopySelection(LTools->CurrentClassID());
+#ifndef NO_VCL
         fraLeftBar->miPaste->Enabled = true;
         fraLeftBar->miPaste2->Enabled = true;
+#endif
         return 			TRUE;
     } else {
         ELog.DlgMsg		( mtError, "Scene sharing violation" );
@@ -467,7 +500,9 @@ CCommandVar CommandPaste(CCommandVar p1, CCommandVar p2)
     }
 }
 
+#ifndef NO_VCL
 #include "AppendObjectInfoForm.h"
+#endif
 CCommandVar CommandLoadSelection(CCommandVar p1, CCommandVar p2)
 {
     if( !Scene->locked() )
@@ -480,9 +515,13 @@ CCommandVar CommandLoadSelection(CCommandVar p1, CCommandVar p2)
 		        LTools->m_LastSelectionName = fn.c_str()+xr_strlen(maps_path);
             UI->SetStatus		("Fragment loading...");
 
+#ifndef NO_VCL
 			g_frmConflictLoadObject->m_result = 0;
+#endif
             Scene->LoadSelection(fn.c_str());
+#ifndef NO_VCL
 			g_frmConflictLoadObject->m_result = 4; //auto-rename
+#endif
 
             UI->ResetStatus		();
             Scene->UndoSave		();
@@ -590,10 +629,12 @@ CCommandVar CommandSceneHighlightTexture(CCommandVar p1, CCommandVar p2)
 {
     if( !Scene->locked() ){
         LPCSTR new_val 		 	= 0;
+#ifndef NO_VCL
 		if (TfrmChoseItem::SelectItem(smTexture,new_val,1)){
 	       	Scene->HighlightTexture(new_val,false,0,0,false);
 		    return 				TRUE;
         }
+#endif
     } else {
         ELog.DlgMsg( mtError, "Scene sharing violation" );
     }
@@ -804,7 +845,9 @@ CCommandVar CommandSelectSnapObjects(CCommandVar p1, CCommandVar p2)
 }
 CCommandVar CommandRefreshSnapObjects(CCommandVar p1, CCommandVar p2)
 {
+#ifndef NO_VCL
     fraLeftBar->UpdateSnapList();
+#endif
     return 						TRUE;
 }
 CCommandVar CommandRefreshSoundEnvs(CCommandVar p1, CCommandVar p2)
@@ -826,33 +869,43 @@ CCommandVar CommandShowContextMenu(CCommandVar p1, CCommandVar p2)
 //------        
 CCommandVar CommandRefreshUIBar(CCommandVar p1, CCommandVar p2)
 {
+#ifndef NO_VCL
     fraTopBar->RefreshBar		();
     fraLeftBar->RefreshBar		();
     fraBottomBar->RefreshBar	();
+#endif
     return 						TRUE;
 }
 CCommandVar CommandRestoreUIBar(CCommandVar p1, CCommandVar p2)
 {
+#ifndef NO_VCL
     fraTopBar->fsStorage->RestoreFormPlacement();
     fraLeftBar->fsStorage->RestoreFormPlacement();
     fraBottomBar->fsStorage->RestoreFormPlacement();
+#endif
     return 						TRUE;
 }
 CCommandVar CommandSaveUIBar(CCommandVar p1, CCommandVar p2)
 {
+#ifndef NO_VCL
     fraTopBar->fsStorage->SaveFormPlacement();
     fraLeftBar->fsStorage->SaveFormPlacement();
     fraBottomBar->fsStorage->SaveFormPlacement();
+#endif
     return 						TRUE;
 }
 CCommandVar CommandUpdateToolBar(CCommandVar p1, CCommandVar p2)
 {
+#ifndef NO_VCL
     fraLeftBar->UpdateBar		();
+#endif
     return 						TRUE;
 }
 CCommandVar CommandUpdateCaption(CCommandVar p1, CCommandVar p2)
 {
+#ifndef NO_VCL
     frmMain->UpdateCaption		();
+#endif
     return 						TRUE;
 }
 //------
@@ -966,16 +1019,16 @@ void CLevelMain::RegisterCommands()
 
 char* CLevelMain::GetCaption()
 {
-	return Tools->m_LastFileName.IsEmpty()?"noname":Tools->m_LastFileName.c_str();
+	return Tools->m_LastFileName.empty()?"noname":Tools->m_LastFileName.c_str();
 }
 
-bool __fastcall CLevelMain::ApplyShortCut(WORD Key, TShiftState Shift)
+bool CLevelMain::ApplyShortCut(WORD Key, TShiftState Shift)
 {
     return inherited::ApplyShortCut(Key,Shift);
 }
 //---------------------------------------------------------------------------
 
-bool __fastcall CLevelMain::ApplyGlobalShortCut(WORD Key, TShiftState Shift)
+bool CLevelMain::ApplyGlobalShortCut(WORD Key, TShiftState Shift)
 {
     return inherited::ApplyGlobalShortCut(Key,Shift);
 }
@@ -990,7 +1043,9 @@ bool CLevelMain::PickGround(Fvector& hitpoint, const Fvector& start, const Fvect
 	    EEditorState est = GetEState();
         switch(est){
         case esEditLibrary:{
+#ifndef NO_VCL
         	bPickObject = !!TfrmEditLibrary::RayPick(start,direction,&pinf);
+#endif
         }break;
         case esEditScene:{
         	bPickObject = !!Scene->RayPickObject(pinf.inf.range, start,direction,OBJCLASS_SCENEOBJECT,&pinf,Scene->GetSnapList(false)); break;
@@ -1074,7 +1129,7 @@ bool CLevelMain::SelectionFrustum(CFrustum& frustum)
     if (depth<Device.m_Camera._Znear()) depth = Device.m_Camera._Zfar();
     else depth += EPrefs->bp_depth_tolerance;
 
-    for (i=0; i<4; i++){
+    for (int i=0; i<4; i++){
 	    Device.m_Camera.MouseRayFromPoint(st, d, pt[i]);
         p[i].mad(st,d,depth);
     }
@@ -1106,11 +1161,13 @@ void CLevelMain::ShowContextMenu(int cls)
 	VERIFY(m_bReady);
     POINT pt;
     GetCursorPos(&pt);
+#ifndef NO_VCL
     fraLeftBar->miProperties->Enabled = false;
     if (Scene->SelectionCount( true, cls )) fraLeftBar->miProperties->Enabled = true;
     RedrawScene(true);
     fraLeftBar->pmObjectContext->TrackButton = tbRightButton;
     fraLeftBar->pmObjectContext->Popup(pt.x,pt.y);
+#endif
 }
 //---------------------------------------------------------------------------
 
@@ -1123,60 +1180,80 @@ void CLevelMain::ShowContextMenu(int cls)
 void CLevelMain::ResetStatus()
 {
 	VERIFY(m_bReady);
+#ifndef NO_VCL
     if (fraBottomBar->paStatus->Caption!=""){
 	    fraBottomBar->paStatus->Caption=""; fraBottomBar->paStatus->Repaint();
     }
+#endif
 }
-void CLevelMain::SetStatus(LPSTR s, bool bOutLog)
+void CLevelMain::SetStatus(LPCSTR s, bool bOutLog)
 {
 	VERIFY(m_bReady);
+#ifndef NO_VCL
     if (fraBottomBar->paStatus->Caption!=s){
 	    fraBottomBar->paStatus->Caption=s; fraBottomBar->paStatus->Repaint();
     	if (bOutLog&&s&&s[0]) ELog.Msg(mtInformation,s);
     }
+#endif
 }
 void CLevelMain::ProgressDraw()
 {
+#ifndef NO_VCL
 	fraBottomBar->RedrawBar();
+#endif
 }
 //---------------------------------------------------------------------------
 void CLevelMain::OutCameraPos()
 {
 	if (m_bReady){
-        AnsiString s;
+        string64 s;
         const Fvector& c 	= Device.m_Camera.GetPosition();
-        s.sprintf("C: %3.1f, %3.1f, %3.1f",c.x,c.y,c.z);
+        sprintf(s, "C: %3.1f, %3.1f, %3.1f",c.x,c.y,c.z);
     //	const Fvector& hpb 	= Device.m_Camera.GetHPB();
     //	s.sprintf(" Cam: %3.1f°, %3.1f°, %3.1f°",rad2deg(hpb.y),rad2deg(hpb.x),rad2deg(hpb.z));
+#ifndef NO_VCL
         fraBottomBar->paCamera->Caption=s; fraBottomBar->paCamera->Repaint();
+#endif
     }
 }
 //---------------------------------------------------------------------------
 void CLevelMain::OutUICursorPos()
 {
+#ifndef NO_VCL
 	VERIFY(fraBottomBar);
-    AnsiString s; POINT pt;
+#endif
+    string64 s; POINT pt;
     GetCursorPos(&pt);
-    s.sprintf("Cur: %d, %d",pt.x,pt.y);
+    sprintf(s,"Cur: %d, %d",pt.x,pt.y);
+#ifndef NO_VCL
     fraBottomBar->paUICursor->Caption=s; fraBottomBar->paUICursor->Repaint();
+#endif
 }
 //---------------------------------------------------------------------------
 void CLevelMain::OutGridSize()
 {
+#ifndef NO_VCL
 	VERIFY(fraBottomBar);
-    AnsiString s;
-    s.sprintf("Grid: %1.1f",EPrefs->grid_cell_size);
+#endif
+    string64 s;
+    sprintf(s,"Grid: %1.1f",EPrefs->grid_cell_size);
+#ifndef NO_VCL
     fraBottomBar->paGridSquareSize->Caption=s; fraBottomBar->paGridSquareSize->Repaint();
+#endif
 }
 //---------------------------------------------------------------------------
 void CLevelMain::OutInfo()
 {
+#ifndef NO_VCL
 	fraBottomBar->paSel->Caption = Tools->GetInfo();
+#endif
 }
 //---------------------------------------------------------------------------
 void CLevelMain::RealQuit()
 {
+#ifndef NO_VCL
 	frmMain->Close();
+#endif
 }
 //---------------------------------------------------------------------------
 
@@ -1202,21 +1279,21 @@ void CLevelMain::LoadSettings(CInifile* I)
 
 void CLevelMain::store_rt_flags(const CCustomObject* CO)
 {
-    if(LTools->m_LastFileName.Length() && CO->Name)
+    if(LTools->m_LastFileName.size() && CO->GetName())
     {
-   	m_rt_object_props->remove_line(LTools->m_LastFileName.c_str(), CO->Name);
+   	m_rt_object_props->remove_line(LTools->m_LastFileName.c_str(), CO->GetName());
 	if(CO->Selected() || !CO->Visible())
-    	m_rt_object_props->w_u32(LTools->m_LastFileName.c_str(), CO->Name, CO->m_RT_Flags.get()&(CCustomObject::flRT_Selected|CCustomObject::flRT_Visible));
+    	m_rt_object_props->w_u32(LTools->m_LastFileName.c_str(), CO->GetName(), CO->m_RT_Flags.get()&(CCustomObject::flRT_Selected|CCustomObject::flRT_Visible));
     }
 }
 
 void CLevelMain::restore_rt_flags(CCustomObject* CO)
 {
-	if(CO->Name && LTools->m_LastFileName.Length() && m_rt_object_props->line_exist(LTools->m_LastFileName.c_str(), CO->Name))
+	if(CO->GetName() && LTools->m_LastFileName.size() && m_rt_object_props->line_exist(LTools->m_LastFileName.c_str(), CO->GetName()))
     {
-		u32 fl = m_rt_object_props->r_u32(LTools->m_LastFileName.c_str(), CO->Name);
+		u32 fl = m_rt_object_props->r_u32(LTools->m_LastFileName.c_str(), CO->GetName());
         CO->m_RT_Flags.set	(CCustomObject::flRT_Visible|CCustomObject::flRT_Selected, FALSE);
-        CO->m_RT_Flags.or	(fl);
+        CO->m_RT_Flags.or_	(fl);
     }
 }
 

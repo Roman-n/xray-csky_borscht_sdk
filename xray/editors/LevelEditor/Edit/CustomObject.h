@@ -16,8 +16,8 @@ class IReader;
 class IWriter;
 class COMotion;
 class CCustomMotion;
-class SAnimParams;
-struct SSceneSummary;
+struct SAnimParams;
+class SSceneSummary;
 class ESceneCustomOTool;
 
 struct SExportStreamItem{
@@ -38,11 +38,12 @@ struct SExportStreams{
 	SExportStreamItem	fog_vol;
 };
 
-class ECORE_API CCustomObject 
+class CCustomObject 
 {
-	ObjClassID		FClassID;
-    ESceneCustomOTool* FParentTools;
-
+public:
+	ObjClassID		ClassID;
+    ESceneCustomOTool* ParentTool;
+private:
 	SAnimParams*	m_MotionParams;
     COMotion*		m_Motion;
 
@@ -102,21 +103,18 @@ public:
 
     void __stdcall 	OnMotionCurrentFrameChange(PropValue* value); 
     void __stdcall 	OnMotionCameraViewChange(PropValue* value); 
-protected:
+public:
 	LPCSTR			GetName			() const {return *FName; }
 	void			SetName			(LPCSTR N){string256 tmp; strcpy(tmp,N); strlwr(tmp); FName=tmp;}
-
     virtual Fvector& GetPosition	()	{ return FPosition; 	}
     virtual Fvector& GetRotation	()	{ return FRotation;		}
     virtual Fvector& GetScale		()	{ return FScale; 		}
-
     virtual void 	SetPosition		(const Fvector& pos)	{ FPosition.set(pos);	UpdateTransform();}
 	virtual void 	SetRotation		(const Fvector& rot)	{ FRotation.set(rot);	UpdateTransform();}
     virtual void 	SetScale		(const Fvector& scale)	{ FScale.set(scale);	UpdateTransform();}
-
     void __stdcall 	OnNameChange		(PropValue* sender);
     void __stdcall 	OnChangeIngroupUnique(PropValue* sender);
-    
+ protected:   
     void __stdcall 	OnNumChangePosition	(PropValue* sender);
     void __stdcall 	OnNumChangeRotation	(PropValue* sender);
     void __stdcall 	OnNumChangeScale	(PropValue* sender);
@@ -218,13 +216,6 @@ public:
     IC const Fvector& _Rotation				(){return FRotation;}
     IC const Fvector& _Scale				(){return FScale;}
 
-    PropertyGP(GetPosition,SetPosition)		Fvector PPosition;
-    PropertyGP(GetRotation,SetRotation)		Fvector PRotation;
-    PropertyGP(GetScale,SetScale)			Fvector PScale;
-
-    PropertyGP(FParentTools,FParentTools)	ESceneCustomOTool* ParentTool;
-    PropertyGP(FClassID,FClassID)			ObjClassID 	ClassID;
-    PropertyGP(GetName,SetName) 			LPCSTR  	Name;
 public:
 	static void		SnapMove		(Fvector& pos, Fvector& rot, const Fmatrix& rotRP, const Fvector& amount);
 	static void		NormalAlign		(Fvector& rot, const Fvector& up, const Fvector& dir);

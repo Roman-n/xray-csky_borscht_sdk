@@ -7,10 +7,10 @@
 #include "ExportObjectOGF.h"
 #include "EditObject.h"
 #include "EditMesh.h"
-#include "fmesh.h"
-#include "std_classes.h"
-#include "bone.h"
-#include "motion.h"
+#include <xrEngine/Fmesh.h>
+#include <xrEngine/std_classes.h>
+#include <xrEngine/bone.h>
+#include <xrEngine/motion.h>
 #include "ui_main.h"
 //#include "nvMeshMender.h"
 
@@ -161,7 +161,7 @@ void CExportObjectOGF::SSplit::SavePart(IWriter& F, CObjectOGFCollectorPacked* p
     // Faces
     F.open_chunk(OGF_INDICES);
     F.w_u32(part->m_Faces.size()*3);
-    F.w(part->m_Faces.begin(),part->m_Faces.size()*3*sizeof(u16));
+    F.w(part->m_Faces.data(),part->m_Faces.size()*3*sizeof(u16));
     F.close_chunk();
 
     // PMap
@@ -552,7 +552,7 @@ bool CExportObjectOGF::ExportAsWavefrontOBJ(IWriter& F, LPCSTR fn)
     F.w_string				(tmp);
 
     u32 v_offs				= 0;
-    for (split_it=m_Splits.begin(); split_it!=m_Splits.end(); ++split_it)
+    for (SplitIt split_it=m_Splits.begin(); split_it!=m_Splits.end(); ++split_it)
     {
 	    _splitpath			((*split_it)->m_Surf->_Texture(), 0, 0, tex_name, 0 );
         sprintf				(tmp,"g %d",split_it-m_Splits.begin());

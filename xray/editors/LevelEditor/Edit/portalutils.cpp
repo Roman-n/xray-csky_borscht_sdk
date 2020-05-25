@@ -175,7 +175,7 @@ bool CPortalUtils::Validate(bool bMsg)
         	if (bMsg){ 
             	ELog.DlgMsg(mtError,"*ERROR: Scene has '%d' non associated face!",f_cnt);
                 for (SItemIt it=sector_def->sector_items.begin();it!=sector_def->sector_items.end();it++)
-                	Msg		("! - scene object: '%s' [O:'%s', M:'%s']",it->object->Name, it->object->RefName(), it->mesh->Name().c_str());
+                	Msg		("! - scene object: '%s' [O:'%s', M:'%s']",it->object->GetName(), it->object->RefName(), it->mesh->Name().c_str());
             }
             bResult = false;
         }
@@ -429,7 +429,7 @@ public:
         }
 
         // remove equal
-        qsort(edges.begin(),edges.size(),sizeof(sEdge),sEdge::compare);
+        qsort(edges.data(),edges.size(),sizeof(sEdge),sEdge::compare);
         sEdgeIt NewEnd = std::unique(edges.begin(),edges.end(),sEdge::c_equal);
         edges.erase(NewEnd,edges.end());
 		//dump_edges();
@@ -500,15 +500,15 @@ public:
 	 	            Scene->AppendObject(_O,false);
                 }else{
                 	xr_delete(_O);
-				    ELog.Msg(mtError,"Can't simplify Portal :(\nPlease check geometry.\n'%s'<->'%s'",p_it->s[0]->Name,p_it->s[1]->Name);
+				    ELog.Msg(mtError,"Can't simplify Portal :(\nPlease check geometry.\n'%s'<->'%s'",p_it->s[0]->GetName(),p_it->s[1]->GetName());
                 }
             }else
             	if (p_it->e.size()==0){
-				    ELog.Msg(mtError,"Can't create Portal from 0 edge :(\nPlease check geometry.\n'%s'<->'%s'\n",p_it->s[0]->Name,p_it->s[1]->Name);
+				    ELog.Msg(mtError,"Can't create Portal from 0 edge :(\nPlease check geometry.\n'%s'<->'%s'\n",p_it->s[0]->GetName(),p_it->s[1]->GetName());
                 }else{
                 	Fvector& v0=verts[edges[p_it->e[0]].v[0]];
                 	Fvector& v1=verts[edges[p_it->e[0]].v[1]];
-				    ELog.Msg(mtError,"Can't create Portal from one edge :(\nPlease check geometry.\n'%s'<->'%s'", p_it->s[0]->Name, p_it->s[1]->Name);
+				    ELog.Msg(mtError,"Can't create Portal from one edge :(\nPlease check geometry.\n'%s'<->'%s'", p_it->s[0]->GetName(), p_it->s[1]->GetName());
                     Tools->m_DebugDraw.AppendLine(v0,v1);
                 }
 
@@ -533,7 +533,7 @@ int CPortalUtils::CalculateSelectedPortals(ObjectList& sectors){
             Fvector* m_verts=s_it->mesh->m_Vertices;
             for (u32 f_id=0; f_id<s_it->mesh->GetFCount(); f_id++){
                 Fvector v0, v1, v2;
-                st_Face& P			= s_it->mesh->GetFaces()[f_id];
+                const st_Face& P	= s_it->mesh->GetFaces()[f_id];
                 T.transform_tiny	(v0,m_verts[P.pv[0].pindex]);
                 T.transform_tiny	(v1,m_verts[P.pv[1].pindex]);
                 T.transform_tiny	(v2,m_verts[P.pv[2].pindex]);

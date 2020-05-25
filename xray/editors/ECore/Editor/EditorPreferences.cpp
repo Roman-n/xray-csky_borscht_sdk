@@ -1,8 +1,8 @@
 //---------------------------------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
-
-#include "PropertiesList.h"
+#ifndef NO_VCL
+#include "../../xrEProps/PropertiesList.h"
+#endif
 #include "ui_main.h"
 #include "ui_toolscustom.h"
 //---------------------------------------------------------------------------
@@ -44,6 +44,11 @@ CCustomPreferences::CCustomPreferences()
     scene_clear_color	= DEFAULT_CLEARCOLOR;
     // objects
     object_flags.zero	();
+
+    log_default_color   = 0x00E8E8E8;
+    log_error_color     = 0x00FFC4C4;
+    log_info_color      = 0x00E7FFE6;
+    log_confirmation_color = 0x00E7E6FF;
 }
 //---------------------------------------------------------------------------
 
@@ -104,7 +109,9 @@ void CCustomPreferences::OnKeyboardCommonFileClick(ButtonValue* B, bool& bModif,
             CInifile* 	I 	= xr_new<CInifile>(fn.c_str(), TRUE, TRUE, TRUE);
 		    LoadShortcuts	(I);
             xr_delete		(I);
+            #ifndef NO_VCL
             m_ItemProps->RefreshForm();
+            #endif
         }
     break;
     case 1:
@@ -184,8 +191,10 @@ void CCustomPreferences::Edit()
 
     FillProp						(props);
 
+    #ifndef NO_VCL
 	m_ItemProps->AssignItems		(props);
     m_ItemProps->ShowPropertiesModal();
+    #endif
 
     // save changed options
     Save							();
@@ -234,7 +243,8 @@ void CCustomPreferences::Load(CInifile* I)
 
 	// read recent list    
     for (u32 i=0; i<scene_recent_count; i++){
-    	shared_str fn  	= R_STRING_SAFE	("editor_prefs",AnsiString().sprintf("recent_files_%d",i).c_str(),shared_str("") );
+        AnsiString key = "recent_files_" + std::to_string(i);
+    	shared_str fn  	= R_STRING_SAFE	("editor_prefs",key.c_str(),shared_str("") );
         if (fn.size())
         {
         	AStringIt it =   std::find(scene_recent_list.begin(), scene_recent_list.end(), fn.c_str() ) ;
@@ -290,8 +300,8 @@ void CCustomPreferences::Save(CInifile* I)
     I->w_u32	("editor_prefs","object_flags",		object_flags.flags);
 
     for (AStringIt it=scene_recent_list.begin(); it!=scene_recent_list.end(); it++){
-    	AnsiString L; L.sprintf("recent_files_%d",it-scene_recent_list.begin());
-    	AnsiString V; V.sprintf("\"%s\"",it->c_str());
+        AnsiString L = "recent_files_" + std::to_string(it - scene_recent_list.begin());
+    	AnsiString V = '"' + *it + '"';
 		I->w_string("editor_prefs",L.c_str(),V.c_str());
     }
     I->w_string("editor_prefs","weather",   sWeather.c_str() );
@@ -338,13 +348,17 @@ void CCustomPreferences::AppendRecentFile(LPCSTR name)
 void CCustomPreferences::OnCreate()
 {
 	Load				();
+    #ifndef NO_VCL
 	m_ItemProps 		= TProperties::CreateModalForm("Editor Preferences",false,0,0,TOnCloseEvent(this,&CCustomPreferences::OnClose),TProperties::plItemFolders|TProperties::plFullSort); //TProperties::plFullExpand TProperties::plFullSort TProperties::plNoClearStore|TProperties::plFolderStore|
+    #endif
 }
 //---------------------------------------------------------------------------
 
 void CCustomPreferences::OnDestroy()
 {
+    #ifndef NO_VCL
     TProperties::DestroyForm(m_ItemProps);
+    #endif
     Save				();
 }
 //---------------------------------------------------------------------------

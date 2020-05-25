@@ -101,7 +101,9 @@ void SSceneSummary::STextureInfo::Prepare	()
 void SSceneSummary::STextureInfo::OnHighlightClick(ButtonValue* sender, bool& bDataModified, bool& bSafe)
 {
 	ButtonValue* V = dynamic_cast<ButtonValue*>(sender); R_ASSERT(V);
+#ifndef NO_VCL
     AnsiString item_name = sender->Owner()->Item()->Text;
+#endif
     switch (V->btn_num){
     case 0: Scene->HighlightTexture	((LPCSTR)sender->tag,false,info.width,info.height,false); break;
     case 1: Scene->HighlightTexture	((LPCSTR)sender->tag,true,info.width,info.height,false); break;
@@ -157,8 +159,8 @@ void SSceneSummary::STextureInfo::FillProp	(PropItemVec& items, LPCSTR main_pref
 }
 void SSceneSummary::STextureInfo::Export	(IWriter* F, u32& mem_use)
 {
+    string512       buf;
 	string128		mask;
-	AnsiString		tmp;
     strcpy			(mask,"%s=%s,%d,%d,%s,%d,%3.2f,%3.2f,%s");
     if (info.flags.is_any(STextureParams::flDiffuseDetail|STextureParams::flBumpDetail)){
         if (0!=info.detail_name.size()){
@@ -172,16 +174,17 @@ void SSceneSummary::STextureInfo::Export	(IWriter* F, u32& mem_use)
     }
     AnsiString 		tmp2;
     for (objinf_map_it o_it=objects.begin(); o_it!=objects.end(); o_it++){
-        tmp2 		+= AnsiString().sprintf("%s%s[%d*%3.2f]",tmp2.Length()?"; ":"",o_it->first.c_str(),o_it->second.ref_count,o_it->second.area);
+        sprintf(buf,"%s%s[%d*%3.2f]",tmp2.size()?"; ":"",o_it->first.c_str(),o_it->second.ref_count,o_it->second.area);
+        tmp2 		+= buf;
     }
     int tex_mem		= info.MemoryUsage(*file_name);
     mem_use			+=tex_mem;
-    tmp.sprintf		(mask,*file_name,info.FormatString(),
+    sprintf		    (buf,mask,*file_name,info.FormatString(),
     				info.width,info.height,info.HasAlpha()?"present":"absent",
                     iFloor(tex_mem/1024),
                     effective_area, _sqrt((pixel_area*info.width*info.height)/effective_area), tmp2.c_str(), 
                     *info.detail_name, info.detail_scale, *info.bump_name);
-	F->w_string		(tmp.c_str());
+	F->w_string		(buf);
 }
 
 void SSceneSummary::OnFileClick(ButtonValue* sender, bool& bModif, bool& bSafe)
@@ -199,7 +202,9 @@ void SSceneSummary::OnFileClick(ButtonValue* sender, bool& bModif, bool& bSafe)
 }
 void SSceneSummary::OnHighlightClick(ButtonValue* V, bool& bDataModified, bool& bSafe)
 {
+#ifndef NO_VCL
     AnsiString item_name = V->Owner()->Item()->Text;
+#endif
     switch (V->btn_num){
     case 0:{ 
     	ExecCommand				(COMMAND_CLEAR_DEBUG_DRAW);
@@ -433,8 +438,10 @@ void EScene::ShowSummaryInfo		()
 	PropItemVec items;
     // fill items
     s_summary.FillProp				(items);
+#ifndef NO_VCL
     m_SummaryInfo->ShowProperties	();
 	m_SummaryInfo->AssignItems		(items);
+#endif
 }
 
 void EScene::ExportSummaryInfo	(LPCSTR f_name)

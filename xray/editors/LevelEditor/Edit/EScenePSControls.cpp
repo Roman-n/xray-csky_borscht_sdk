@@ -6,8 +6,12 @@
 #include "..\..\Layers\xrRender\PSLibrary.h"
 #include "EParticlesObject.h"
 #include "scene.h"
+#ifndef NO_VCL
 #include "FramePS.h"
+#endif
 #include "../ECore/Editor/ui_main.h"
+
+using namespace std::placeholders;
 
 //----------------------------------------------------------------------
 //
@@ -18,6 +22,7 @@ __fastcall TUI_ControlPSAdd::TUI_ControlPSAdd(int st, int act, ESceneToolBase* p
 bool __fastcall TUI_ControlPSAdd::AfterAppendCallback(TShiftState Shift, CCustomObject* obj)
 {
 	EParticlesObject* pg= dynamic_cast<EParticlesObject*>(obj); R_ASSERT(pg);
+#ifndef NO_VCL
     LPCSTR ref_name		= ((TfraPS*)parent_tool->pFrame)->Current();
     if (!ref_name){
     	ELog.DlgMsg(mtInformation,"Nothing selected.");
@@ -27,19 +32,20 @@ bool __fastcall TUI_ControlPSAdd::AfterAppendCallback(TShiftState Shift, CCustom
     	ELog.DlgMsg(mtInformation,"Can't compile particle system '%s'.",ref_name);
         return false;
     }
+#endif
     return true;
 }
 
-bool __fastcall TUI_ControlPSAdd::Start(TShiftState Shift)
+bool TUI_ControlPSAdd::Start(TShiftState Shift)
 {
-    DefaultAddObject(Shift,0,AfterAppendCallback);
+    DefaultAddObject(Shift,0,std::bind(&TUI_ControlPSAdd::AfterAppendCallback,this,_1,_2));
     return false;
 }
 
-void __fastcall TUI_ControlPSAdd::Move(TShiftState _Shift)
+void TUI_ControlPSAdd::Move(TShiftState _Shift)
 {
 }
-bool __fastcall TUI_ControlPSAdd::End(TShiftState _Shift)
+bool TUI_ControlPSAdd::End(TShiftState _Shift)
 {
     return true;
 }

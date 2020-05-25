@@ -2,15 +2,16 @@
 #ifndef UI_MainH
 #define UI_MainH
 
-#include "RenderWindow.hpp"
+#include "../RenderWindow.hpp"
 #include "UI_MainCommand.h"
-#include "IInputReceiver.h"
+#include <xrEngine/IInputReceiver.h>
 
 // refs
 class CCustomObject;
 class TUI_Tools;
 class TUI_Tools;
 class C3DCursor;
+class IM_Window;
 //------------------------------------------------------------------------------
 
 enum EEditorState{
@@ -152,7 +153,7 @@ public:
 
     void 			MouseMultiClickCapture(bool b){m_MouseMultiClickCaptured = b;}
 
-    bool __fastcall IsMouseCaptured		()	{	return m_MouseCaptured|m_MouseMultiClickCaptured;}
+    bool __fastcall IsMouseCaptured		()	{	return m_MouseCaptured||m_MouseMultiClickCaptured;}
     bool __fastcall IsMouseInUse		()	{	return bMouseInUse;}
 
     bool __fastcall KeyDown     		(WORD Key, TShiftState Shift);
@@ -176,7 +177,7 @@ public:
     bool 			ContainEState		(EEditorState st){ return std::find(m_EditorState.begin(),m_EditorState.end(),st)!=m_EditorState.end(); }
 
     virtual void 	OutCameraPos		()=0;
-    virtual void 	SetStatus			(LPSTR s, bool bOutLog=true)=0;
+    virtual void 	SetStatus			(LPCSTR s, bool bOutLog=true)=0;
     virtual void 	ResetStatus			()=0;
     
 	// direct input
@@ -212,9 +213,9 @@ public:
 	virtual	void	RegisterCommands			()=0; 
 	void			ClearCommands				();
     
-	CCommandVar		CommandRenderFocus			(CCommandVar p1, CCommandVar p2);
-	CCommandVar		CommandBreakLastOperation	(CCommandVar p1, CCommandVar p2);
-	CCommandVar		CommandRenderResize			(CCommandVar p1, CCommandVar p2);
+	CCommandVar __stdcall CommandRenderFocus    (CCommandVar p1, CCommandVar p2);
+	CCommandVar __stdcall CommandBreakLastOperation	(CCommandVar p1, CCommandVar p2);
+	CCommandVar __stdcall CommandRenderResize	(CCommandVar p1, CCommandVar p2);
 
     virtual void	SaveSettings				(CInifile*){}
     virtual void	LoadSettings				(CInifile*){}
@@ -227,6 +228,12 @@ public:
 	void 			ProgressEnd			(SPBItem*&);
     virtual void	ProgressDraw		()=0;
     SPBItem*		ProgressLast		(){return m_ProgressItems.empty()?0:m_ProgressItems.back();}
+
+	xr_vector<IM_Window*> imwindows;
+	bool show_demo_window;
+
+	void AddIMWindow(IM_Window* wnd);
+	void RemoveIMWindow(IM_Window* wnd);
 };
 //---------------------------------------------------------------------------
 extern ECORE_API TUI* UI;  

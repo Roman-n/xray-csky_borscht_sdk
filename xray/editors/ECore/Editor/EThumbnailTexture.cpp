@@ -249,7 +249,7 @@ void ETextureThumbnail::Draw(HDC hdc, const Irect& R)
                ELog.Msg(mtError,"Can't make preview for texture '%s'.",m_Name.c_str());
                return;
         }
-        ImageLib.MakeThumbnailImage(this,data.begin(),image_w,image_h,image_a);
+        ImageLib.MakeThumbnailImage(this,data.data(),image_w,image_h,image_a);
      }
 
 	if (Valid())
@@ -259,7 +259,9 @@ void ETextureThumbnail::Draw(HDC hdc, const Irect& R)
         r.y1 = R.y1+1;
         r.x2 = R.x2-1; 
         r.y2 = R.y2-1;
+#ifndef NO_VCL
         if (_Width()!=_Height())	FHelper.FillRect(hdc,r,0x00000000);
+#endif
         if (_Width()>_Height())
         {
                 r.y2 -= r.height()-iFloor(r.height()*float(_Height())/float(_Width()));

@@ -10,13 +10,13 @@
 #include "SceneObject.h"
 #include "Scene.h"
 #include "../ECore/Engine/Texture.h"
-#include "../../ECore/Engine/cl_intersect.h"
+#include <common/cl_intersect.h>
 #include "../../ECore/Engine/cl_collector.h"
 #include "portal.h"
 #include "portalutils.h"
-#include "MgcConvexHull3D.h"
+#include <freemagic/MgcConvexHull3D.h>
 #include "../ECore/Editor/ui_main.h"
-#include "../ECore/Editor/D3DUtils.h"
+#include <Layers/xrRender/D3DUtils.h>
 #include "ESceneGroupTools.h"
 
 #define SECTOR_VERSION   					0x0012
@@ -40,7 +40,7 @@ void CSectorItem::GetTransform(Fmatrix& parent){
 	object->GetFullTransformToWorld(parent);
 }
 bool CSectorItem::IsItem(const char* O, const char* M){
-	return (0==stricmp(O,object->Name))&&(0==stricmp(M,mesh->Name().c_str()));
+	return (0==stricmp(O,object->GetName()))&&(0==stricmp(M,mesh->Name().c_str()));
 }
 //------------------------------------------------------------------------------
 
@@ -167,7 +167,7 @@ void CSector::Render(int priority, bool strictB2F)
             }
             if (Selected()){
                 RCache.set_xform_world(Fidentity);
-                DU_impl.DrawSelectionBox(m_SectorBox);
+                DUImpl.DrawSelectionBox(m_SectorBox);
             }
         }
     }
@@ -520,7 +520,7 @@ void CSector::SaveLTX(CInifile& ini, LPCSTR sect_name)
     for(SItemIt it=sector_items.begin(); it!=sector_items.end(); ++it)
     {
             sprintf			(buff,"item_object_name_%.4d",count);
-            ini.w_string	(sect_name, buff, it->object->Name);
+            ini.w_string	(sect_name, buff, it->object->GetName());
             sprintf			(buff,"item_mesh_name_%.4d",count);
             ini.w_string	(sect_name, buff, it->mesh->Name().c_str());
             ++count;
@@ -587,7 +587,7 @@ void CSector::SaveStream(IWriter& F)
     for(SItemIt it=sector_items.begin(); it!=sector_items.end(); it++){
         F.open_chunk(count); count++;
             F.open_chunk	(SECTOR_CHUNK_ONE_ITEM);
-            F.w_stringZ		(it->object->Name);
+            F.w_stringZ		(it->object->GetName());
             F.w_stringZ		(it->mesh->Name());
 	        F.close_chunk	();
         F.close_chunk		();
@@ -616,10 +616,10 @@ void CSector::FillProp(LPCSTR pref, PropItemVec& items)
     PHelper().CreateFColor(items, PrepareKey(pref,"Color"), &sector_color);
     int faces, objects, meshes;
     GetCounts(&objects,&meshes,&faces);
-    PHelper().CreateCaption(items,PrepareKey(pref,Name,"Contents\\Objects"),	AnsiString(objects).c_str());
-    PHelper().CreateCaption(items,PrepareKey(pref,Name,"Contents\\Meshes"), 	AnsiString(meshes).c_str());
-    PHelper().CreateCaption(items,PrepareKey(pref,Name,"Contents\\Faces"), 	AnsiString(faces).c_str());
-	PHelper().CreateToken8(items, PrepareKey(pref,Name,"Change LevelMap to"), &m_map_idx, level_sub_map);
+    PHelper().CreateCaption(items,PrepareKey(pref,GetName(),"Contents\\Objects"),	std::to_string(objects).c_str());
+    PHelper().CreateCaption(items,PrepareKey(pref,GetName(),"Contents\\Meshes"), 	std::to_string(meshes).c_str());
+    PHelper().CreateCaption(items,PrepareKey(pref,GetName(),"Contents\\Faces"), 	std::to_string(faces).c_str());
+	PHelper().CreateToken8(items, PrepareKey(pref,GetName(),"Change LevelMap to"), &m_map_idx, level_sub_map);
     
 }
 //----------------------------------------------------
@@ -638,7 +638,7 @@ bool CSector::Validate(bool bMsg)
     int f_cnt;
     GetCounts		(0,0,&f_cnt);
     if (f_cnt<=4){
-        if (bMsg) 	ELog.Msg(mtError,"*ERROR: Sector: '%s' - face count < 4!",Name);
+        if (bMsg) 	ELog.Msg(mtError,"*ERROR: Sector: '%s' - face count < 4!",GetName());
         bRes		= false;
     }
     // verify shader compatibility
@@ -651,7 +651,7 @@ bool CSector::Validate(bool bMsg)
         }
 	}
     if (!bRenderableFound){
-        if (bMsg) 	ELog.Msg(mtError,"*ERROR: Sector: '%s' - can't find any renderable face!",Name);
+        if (bMsg) 	ELog.Msg(mtError,"*ERROR: Sector: '%s' - can't find any renderable face!",GetName());
     	bRes 		= false;
 	}        
    	return bRes;

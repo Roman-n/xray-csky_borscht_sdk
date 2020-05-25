@@ -3,7 +3,9 @@
 
 #include "ESceneShapeControls.h"
 #include "ui_leveltools.h"
+#ifndef NO_VCL
 #include "FrameShape.h"
+#endif
 #include "EShape.h"
 #include "scene.h"
 #include "../ECore/Editor/ui_main.h"
@@ -15,6 +17,7 @@ __fastcall TUI_ControlShapeAdd::TUI_ControlShapeAdd(int st, int act, ESceneToolB
 bool __fastcall TUI_ControlShapeAdd::AfterAppendCallback(TShiftState Shift, CCustomObject* obj)
 {
 	CEditShape* shape 	= dynamic_cast<CEditShape*>(obj); R_ASSERT(shape);
+#ifndef NO_VCL
 	TfraShape* F 		= (TfraShape*)parent_tool->pFrame;
 	if (F->ebTypeSphere->Down){
     	Fsphere S;	S.identity();
@@ -29,11 +32,13 @@ bool __fastcall TUI_ControlShapeAdd::AfterAppendCallback(TShiftState Shift, CCus
     }else{
     	ELog.DlgMsg(mtInformation,"Select shape type at first.");
     }
+#endif
     return false;
 }
 
-bool __fastcall TUI_ControlShapeAdd::Start(TShiftState Shift)
+bool TUI_ControlShapeAdd::Start(TShiftState Shift)
 {
+#ifndef NO_VCL
 	TfraShape* F 		= (TfraShape*)parent_tool->pFrame;
     if (F->ebAttachShape->Down){
 		CEditShape* from = dynamic_cast<CEditShape*>(Scene->RayPickObject(UI->ZFar(),UI->m_CurrentRStart, UI->m_CurrentRNorm, OBJCLASS_SHAPE, 0, 0));
@@ -54,6 +59,7 @@ bool __fastcall TUI_ControlShapeAdd::Start(TShiftState Shift)
         }
     }else
 	    DefaultAddObject(Shift,0,AfterAppendCallback);
+#endif
     return false;
 }
 

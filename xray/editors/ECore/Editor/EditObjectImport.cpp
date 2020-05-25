@@ -15,7 +15,7 @@ extern "C" {
 };
 
 #ifdef _EDITOR
-	#include "ResourceManager.h"
+	#include <Layers/xrRender/ResourceManager.h>
     
 	extern "C" __declspec(dllimport) lwObject* LWO_ImportObject(char* filename, lwObject *new_obj);
 	extern "C" __declspec(dllimport) void LWO_CloseFile(lwObject *new_obj);

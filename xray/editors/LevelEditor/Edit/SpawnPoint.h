@@ -15,7 +15,7 @@
 class CSE_Visual;
 class CSE_Motion;
 class CObjectAnimator;
-class ISE_Abstract;
+struct ISE_Abstract;
 
 
 class CSpawnPoint : public CCustomObject
@@ -93,7 +93,7 @@ public:
 		void    		OnFrame			();
     	void __stdcall	OnAnimControlClick		(ButtonValue* value, bool& bModif, bool& bSafe);  
         
-		virtual void get_bone_xform				(LPCSTR name, Fmatrix& xform);
+		virtual void __stdcall get_bone_xform				(LPCSTR name, Fmatrix& xform);
 	};
 
 	SSpawnData    	m_SpawnData;

@@ -460,11 +460,19 @@ void CInput::OnAppDeactivate	(void)
 
 void CInput::OnFrame			(void)
 {
-	Statistic.Input.Begin			();
+#ifdef _EDITOR
+	Device.Statistic->Input.Begin			();
+#else
+	Statistic.Input.Begin					();
+#endif
 	dwCurTime		= Device.TimerAsync_MMT	();
 	if (pKeyboard)	KeyUpdate				();
 	if (pMouse)		MouseUpdate				();
-	Statistic.Input.End				();
+#ifdef _EDITOR
+	Device.Statistic->Input.End				();
+#else
+	Statistic.Input.End						();
+#endif
 }
 
 IInputReceiver*	 CInput::CurrentIR()

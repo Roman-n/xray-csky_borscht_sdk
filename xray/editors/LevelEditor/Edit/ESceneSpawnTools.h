@@ -63,7 +63,7 @@ public:
 };
 //---------------------------------------------------------------------------
 // refs 
-class ISE_Abstract;
+struct ISE_Abstract;
 
 typedef ISE_Abstract* 	(__stdcall *Tcreate_entity)		(LPCSTR section);
 typedef void		  	(__stdcall *Tdestroy_entity)	(ISE_Abstract *&);

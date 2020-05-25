@@ -8,15 +8,19 @@
 #include "../ECore/Engine/Texture.h"
 #include "Scene.h"
 #include "SceneObject.h"
+#ifndef NO_VCL
 #include "leftbar.h"
-#include "cl_intersect.h"
+#endif
+#include <common/cl_intersect.h>
 #include "../ECore/Editor/Library.h"
 #include "ui_levelmain.h"
 
 #include "..\..\Layers\xrRender\DetailFormat.h"
+#ifndef NO_VCL
 #include "bottombar.h"
+#endif
 #include "../ECore/Editor/ImageManager.h"
-#include "../ECORE/Editor/D3DUtils.h"
+#include <Layers/xrRender/D3DUtils.h>
 
 static const u32 DETMGR_VERSION = 0x0003ul;
 //------------------------------------------------------------------------------
@@ -131,7 +135,7 @@ void EDetailManager::OnRender(int priority, bool strictB2F)
 								bbox.min.set(c.x-DETAIL_SLOT_SIZE_2, slot->r_ybase(), 					c.z-DETAIL_SLOT_SIZE_2);
                             	bbox.max.set(c.x+DETAIL_SLOT_SIZE_2, slot->r_ybase()+slot->r_yheight(),	c.z+DETAIL_SLOT_SIZE_2);
                             	bbox.shrink	(0.05f);
-								DU_impl.DrawSelectionBox(bbox,bSel?&selected:&inactive);
+								DUImpl.DrawSelectionBox(bbox,bSel?&selected:&inactive);
 							}
                         }
                     }
@@ -442,7 +446,7 @@ void EDetailManager::SaveStream(IWriter& F)
 	F.open_chunk		(DETMGR_CHUNK_SNAP_OBJECTS);
     F.w_u32				(m_SnapObjects.size());
     for (ObjectIt o_it=m_SnapObjects.begin(); o_it!=m_SnapObjects.end(); o_it++)
-    	F.w_stringZ		((*o_it)->Name);
+    	F.w_stringZ		((*o_it)->GetName());
     F.close_chunk		();
 }
 
@@ -506,7 +510,8 @@ bool EDetailManager::Export(LPCSTR path)
                     bRes=false;
                 }else{
                     LPCSTR tex_name = ((EDetail*)(*it))->GetTextureName();
-                    for (u32 t_idx=0; t_idx<textures.size(); t_idx++) 
+                    u32 t_idx;
+                    for (t_idx=0; t_idx<textures.size(); t_idx++) 
                         if (textures[t_idx]==tex_name) break;
                     VERIFY(t_idx<textures.size());
                     t_idx = remap[t_idx];
@@ -523,7 +528,7 @@ bool EDetailManager::Export(LPCSTR path)
     // slots
     if (bRes){
     	xr_vector<DetailSlot> dt_slots(slot_cnt); dt_slots.assign(dtSlots,dtSlots+slot_cnt);
-        for (slot_idx=0; slot_idx<slot_cnt; slot_idx++){
+        for (int slot_idx=0; slot_idx<slot_cnt; slot_idx++){
             DetailSlot& it 	= dt_slots[slot_idx];
             // zero colors need lighting
 	        it.c_dir		= 0;
@@ -537,7 +542,7 @@ bool EDetailManager::Export(LPCSTR path)
             }
         }
 		F.open_chunk	(DETMGR_CHUNK_SLOTS);
-		F.w				(dt_slots.begin(),dtH.size_x*dtH.size_z*sizeof(DetailSlot));
+		F.w				(dt_slots.data(),dtH.size_x*dtH.size_z*sizeof(DetailSlot));
 	    F.close_chunk	();
         pb->Inc();
 

@@ -6,7 +6,7 @@
 #include "scene.h"
 #include "sceneobject.h"
 #include "ui_levelmain.h"
-#include "../ECore/Editor/d3dUtils.h"
+#include <Layers/xrRender/D3DUtils.h>
 
 //---------------------------------------------------------------------------
 static WORD CrossIndices[4]={0,2,1,3};
@@ -92,7 +92,7 @@ void C3DCursor::Render(){
 //                UI->D3D_RenderNearer(0.0001);
                 RCache.set_xform_world(Fidentity);
 				Device.SetShader(Device.m_WireShader);
-                DU_impl.DrawPrimitiveL(D3DPT_LINESTRIP,m_RenderBuffer.size(),m_RenderBuffer.begin(),m_RenderBuffer.size(),dwColor,true,true);
+                DUImpl.DrawPrimitiveL(D3DPT_LINESTRIP,m_RenderBuffer.size(),m_RenderBuffer.data(),m_RenderBuffer.size(),dwColor,true,true);
 //                UI->D3D_ResetNearer();
             }break;
             case csPoint:{
@@ -108,7 +108,7 @@ void C3DCursor::Render(){
                 Device.RenderNearer(0.001);
                 RCache.set_xform_world(Fidentity);
 				Device.SetShader(Device.m_WireShader);
-                DU_impl.DrawPrimitiveTL(D3DPT_POINTLIST,5,pt,5,true,true);
+                DUImpl.DrawPrimitiveTL(D3DPT_POINTLIST,5,pt,5,true,true);
                 Device.ResetNearer();
             }break;
             }

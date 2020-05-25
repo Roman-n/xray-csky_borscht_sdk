@@ -6,8 +6,10 @@
 
 #include "ESceneDOTools.h"
 #include "Scene.h"
-#include "cl_intersect.h"
+#include <common/cl_intersect.h>
+#ifndef NO_VCL
 #include "bottombar.h"
+#endif
 #include "../ECore/Editor/ui_main.h"
 
 int EDetailManager::RaySelect(int flag, float& dist, const Fvector& start, const Fvector& direction, BOOL bDistanceOnly)

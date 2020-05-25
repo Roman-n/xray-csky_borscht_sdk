@@ -2,8 +2,8 @@
 
 
 #ifdef _EDITOR
-#	include "skeletonX.h"
-#	include "skeletoncustom.h"
+#	include <Layers/xrRender/skeletonX.h>
+#	include <Layers/xrRender/skeletoncustom.h>
 #else // _EDITOR
 #include "../xrEngine/bone.h"
 #include "../Layers/xrRender/SkeletonXVertRender.h"

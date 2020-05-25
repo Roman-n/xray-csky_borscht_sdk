@@ -8,7 +8,9 @@
 #include "../ECore/Editor/EditObject.h"
 #include "SceneObject.h"
 #include "GroupObject.h"
+#ifndef NO_VCL
 #include "frameSector.h"
+#endif
 #include "ui_leveltools.h"
 #include "ui_levelmain.h"
 
@@ -18,18 +20,22 @@
 __fastcall TUI_ControlSectorAdd::TUI_ControlSectorAdd(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent){
 }
 
-void __fastcall TUI_ControlSectorAdd::OnEnter()
+void TUI_ControlSectorAdd::OnEnter()
 {
     m_Action = saNone;
+#ifndef NO_VCL
     TfraSector* fraSector = (TfraSector*)parent_tool->pFrame; VERIFY(fraSector);
     fraSector->paSectorActions->Show();
+#endif
 }
 
-void __fastcall TUI_ControlSectorAdd::OnExit()
+void TUI_ControlSectorAdd::OnExit()
 {
+#ifndef NO_VCL
     TfraSector* fraSector = (TfraSector*)parent_tool->pFrame; VERIFY(fraSector);
     fraSector->paSectorActions->Hide();
 	fraSector = 0;
+#endif
 }
 
 void TUI_ControlSectorAdd::AddMesh(){
@@ -116,10 +122,11 @@ bool TUI_ControlSectorAdd::AddSectors()
     return cnt!=0;
 }
 
-bool __fastcall TUI_ControlSectorAdd::Start(TShiftState Shift)
+bool TUI_ControlSectorAdd::Start(TShiftState Shift)
 {
     if (Shift==ssRBOnly){ ExecCommand(COMMAND_SHOWCONTEXTMENU,OBJCLASS_SECTOR); return false;}
     TfraSector* fraSector = (TfraSector*)parent_tool->pFrame; VERIFY(fraSector);
+#ifndef NO_VCL
     if (fraSector->ebCreateNewSingle->Down){
     	if (AddSector()&&(!Shift.Contains(ssAlt))) fraSector->ebCreateNewSingle->Down=false;
         return false;
@@ -141,10 +148,11 @@ bool __fastcall TUI_ControlSectorAdd::Start(TShiftState Shift)
             return false;
         }
     }
+#endif
     return false;
 }
 
-void __fastcall TUI_ControlSectorAdd::Move(TShiftState _Shift)
+void TUI_ControlSectorAdd::Move(TShiftState _Shift)
 {
     switch (m_Action){
     case saAddMesh:	AddMesh();	break;
@@ -153,9 +161,11 @@ void __fastcall TUI_ControlSectorAdd::Move(TShiftState _Shift)
     }
 }
 
-bool __fastcall TUI_ControlSectorAdd::End(TShiftState _Shift)
+bool TUI_ControlSectorAdd::End(TShiftState _Shift)
 {
+#ifndef NO_VCL
     TfraSector* fraSector = (TfraSector*)parent_tool->pFrame; VERIFY(fraSector);
+#endif
     CSector* sector=PortalUtils.GetSelectedSector();
 	if (sector){
         if (m_Action==saMeshBoxSelection){
@@ -174,8 +184,10 @@ bool __fastcall TUI_ControlSectorAdd::End(TShiftState _Shift)
                     for(EditMeshIt m_def = O_lib->m_Meshes.begin();m_def!=O_lib->m_Meshes.end();m_def++){
                         O_ref->GetFullTransformToWorld(matrix);
                     	if ((*m_def)->FrustumPick(frustum,matrix)){
+#ifndef NO_VCL
 	                        if (fraSector->ebAddMesh->Down)	sector->AddMesh(O_ref,*m_def);
     	                    if (fraSector->ebDelMesh->Down)	if (sector->DelMesh(O_ref,*m_def)) break;
+#endif
                         }
                     }
                 }
@@ -205,16 +217,16 @@ void TUI_ControlSectorSelect::OnEnter(){
 void TUI_ControlSectorSelect::OnExit (){
 	pFrame = 0;
 }
-bool __fastcall TUI_ControlSectorSelect::Start(TShiftState Shift){
+bool TUI_ControlSectorSelect::Start(TShiftState Shift){
 	bool bRes = SelectStart(Shift);
 //	if(!bBoxSelection) pFrame->OnChange();
     return bRes;
 }
-void __fastcall TUI_ControlSectorSelect::Move(TShiftState Shift){
+void TUI_ControlSectorSelect::Move(TShiftState Shift){
 	SelectProcess(Shift);
 }
 
-bool __fastcall TUI_ControlSectorSelect::End(TShiftState Shift){
+bool TUI_ControlSectorSelect::End(TShiftState Shift){
 	bool bRes = SelectEnd(Shift);
 //	if (bBoxSelection) pFrame->OnChange();
     return bRes;

@@ -4,6 +4,9 @@
 #include "GroupObject.h"
 #include "Scene.h"
 #include "ESceneCustomMTools.h"
+
+using namespace std::placeholders;
+
 //----------------------------------------------------
 //----------------------------------------------------
 #define GROUPOBJ_CURRENT_VERSION		0x0012
@@ -65,12 +68,12 @@ bool CGroupObject::LL_AppendObject(CCustomObject* object)
 {
     if (!object->CanAttach())
     {
-    	ELog.Msg(mtError,"Can't attach object: '%s'",object->Name);
+    	ELog.Msg(mtError,"Can't attach object: '%s'",object->GetName());
 	    return false;
     }
     if(object->GetOwner())
     {
-        if (mrNo==ELog.DlgMsg(mtConfirmation,TMsgDlgButtons() << mbYes << mbNo,"Object '%s' already in group '%s'. Change group?",object->Name,object->GetOwner()->Name))
+        if (mrNo==ELog.DlgMsg(mtConfirmation,TMsgDlgButtons() << mbYes << mbNo,"Object '%s' already in group '%s'. Change group?",object->GetName(),object->GetOwner()->GetName()))
         	return false;
             
 	    object->OnDetach();
@@ -93,21 +96,21 @@ bool CGroupObject::AppendObjectLoadCB(CCustomObject* object)
 
 
     string256 			buf;
-    Scene->GenObjectName(object->ClassID, buf, object->Name);
-    LPCSTR N = object->Name;
+    Scene->GenObjectName(object->ClassID, buf, object->GetName());
+    LPCSTR N = object->GetName();
     if (xr_strcmp(N,buf)!=0)
     {
-       	Msg					("Load_Append name changed from[%s] to[%s]",object->Name, buf);
-        object->Name		= buf;
+       	Msg					("Load_Append name changed from[%s] to[%s]",object->GetName(), buf);
+        object->SetName		(buf);
     }
 
 	Scene->AppendObject				(object, false);
     
     return true;
 }
-
+#ifndef NO_VCL
 #include "AppendObjectInfoForm.h"
-
+#endif
 //------------------------------------------------------------------------------
 bool CGroupObject::LoadLTX(CInifile& ini, LPCSTR sect_name)
 {
@@ -138,7 +141,7 @@ bool CGroupObject::LoadLTX(CInifile& ini, LPCSTR sect_name)
         }
     }else
     {
-	    Scene->ReadObjectsLTX			(ini, sect_name, "ingroup", AppendObjectLoadCB, 0);
+	    Scene->ReadObjectsLTX			(ini, sect_name, "ingroup", std::bind(&CGroupObject::AppendObjectLoadCB,this,_1), 0);
     }
     VERIFY(m_ObjectsInGroup.size());
 
@@ -205,7 +208,7 @@ bool CGroupObject::LoadStream(IReader& F)
         }
     }else
     {
-	    Scene->ReadObjectsStream(F,GROUPOBJ_CHUNK_OBJECT_LIST,AppendObjectLoadCB,0);
+	    Scene->ReadObjectsStream(F,GROUPOBJ_CHUNK_OBJECT_LIST,std::bind(&CGroupObject::AppendObjectLoadCB,this,_1),0);
     }
     VERIFY(m_ObjectsInGroup.size());
 
@@ -278,7 +281,7 @@ bool CGroupObject::UpdateReference(bool bForceReload)
 {
 	if (!m_ReferenceName.size())
     {
-        ELog.Msg			(mtError,"ERROR: '%s' - has empty reference.",Name);
+        ELog.Msg			(mtError,"ERROR: '%s' - has empty reference.",GetName());
      	return 				false;
     }
 
@@ -297,16 +300,16 @@ bool CGroupObject::UpdateReference(bool bForceReload)
         m_ObjectsInGroup.clear();
         
 
-        xr_string nm		= Name;
+        xr_string nm		= GetName();
 		shared_str old_refs	= m_ReferenceName;
         UpdateTransform		(true);
-        Fvector old_pos		= PPosition;
-        Fvector old_rot		= PRotation;
-        Fvector old_sc		= PScale;
+        Fvector old_pos		= GetPosition();
+        Fvector old_rot		= GetRotation();
+        Fvector old_sc		= GetScale();
 
         if(LoadStream(*R))
         {
-            Name 		= nm.c_str();
+            SetName 	(nm.c_str());
             bres		= true;
 	        UpdateTransform	(true);
         }
@@ -330,13 +333,13 @@ bool CGroupObject::UpdateReference(bool bForceReload)
                {
                	  std::swap(*itBk, *it);
                }else
-               	 it->pObject->Name = itBk->pObject->Name;
+               	 it->pObject->SetName(itBk->pObject->GetName());
             }
         }else
         {
         	if(ObjectsInGroupBk.size())
             {
-        		ELog.Msg		(mtError, "Not all objects synchronised correctly", Name);
+        		ELog.Msg		(mtError, "Not all objects synchronised correctly", GetName());
                 for (ObjectsInGroup::iterator it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
                         it->pObject->m_CO_Flags.set(flObjectInGroupUnique, FALSE);
             }else
@@ -370,7 +373,7 @@ void CGroupObject::FillProp(LPCSTR pref, PropItemVec& items)
 	for (ObjectsInGroup::iterator it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
     {
     	string_path					pk;
-        sprintf						(pk,"%s (%s)",PrepareKey(pref, it->pObject->Name).c_str(),it->pObject->ParentTool->ClassDesc());
+        sprintf						(pk,"%s (%s)",PrepareKey(pref, it->pObject->GetName()).c_str(),it->pObject->ParentTool->ClassDesc());
         V = PHelper().CreateFlag32	(items, pk, &it->pObject->m_CO_Flags, flObjectInGroupUnique);
     	V->OnChangeEvent.bind		(this,&CCustomObject::OnChangeIngroupUnique);
     }
@@ -405,7 +408,7 @@ void CGroupObject::OnShowHint(AStringVec& dest)
     dest.push_back(AnsiString("Reference: ")+m_ReferenceName.c_str());
     dest.push_back(AnsiString("-------"));
 	for (ObjectsInGroup::iterator it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
-	    dest.push_back(it->pObject->Name);
+	    dest.push_back(it->pObject->GetName());
 }
 //----------------------------------------------------
 
@@ -436,24 +439,24 @@ void CGroupObject::OnSceneUpdate()
                 it->pObject			= CO;
 
                 string256 			buf;
-                Scene->GenObjectName(CO->ClassID, buf, CO->Name);
-                if (CO->Name!=buf)
+                Scene->GenObjectName(CO->ClassID, buf, CO->GetName());
+                if (CO->GetName()!=buf)// TODO replace comparing pointers to comparing strings
                 {
-                	Msg("OG name changed from[%s] to[%s]",CO->Name, buf);
-                    CO->Name		= buf;
+                	Msg("OG name changed from[%s] to[%s]",CO->GetName(), buf);
+                    CO->SetName		(buf);
 					it->ObjectName	= buf;
                 }
                 
                 it->pObject->m_CO_Flags.set(flObjectInGroup, 		TRUE);
                 it->pObject->m_CO_Flags.set(flObjectInGroupUnique, 	TRUE);
                 if(it->pObject==NULL)
-                    ELog.Msg	(mtError,"Group '%s' has invalid reference to object '%s'.", Name, it->ObjectName.c_str());
+                    ELog.Msg	(mtError,"Group '%s' has invalid reference to object '%s'.", GetName(), it->ObjectName.c_str());
             }
         }
     }
     if (m_ObjectsInGroup.empty())
     {
-        ELog.Msg	(mtInformation,"Group '%s' has no objects and will be removed.",Name);
+        ELog.Msg	(mtInformation,"Group '%s' has no objects and will be removed.",GetName());
         DeleteThis	();
     }
 }
@@ -467,7 +470,7 @@ bool CGroupObject::CanUngroup(bool bMsg)
     	ESceneToolBase* tool = Scene->GetTool(it->pObject->ClassID);
     	if ( !tool->IsEditable()  )
         {
-        	if (bMsg) Msg("!.Can't detach object '%s'. Target '%s' in readonly mode.",it->pObject->Name, tool->ClassDesc());
+        	if (bMsg) Msg("!.Can't detach object '%s'. Target '%s' in readonly mode.",it->pObject->GetName(), tool->ClassDesc());
         	res = false;
         }
     }
@@ -481,7 +484,7 @@ void CGroupObject::GroupObjects(ObjectList& lst)
         {
             if((*it)->m_CO_Flags.test(flObjectInGroup) )
             	{
-        			ELog.DlgMsg	(mtInformation,"object[%s] already in group", (*it)->Name);
+        			ELog.DlgMsg	(mtInformation,"object[%s] already in group", (*it)->GetName());
                     continue;
                 }
     		LL_AppendObject(*it);

@@ -8,6 +8,7 @@
 #pragma package(smart_init)
 
 CFolderHelper FHelper;
+#ifndef NO_VCL
 DEFINE_VECTOR(TElTreeItem*,ELVec,ELVecIt);
 static ELVec drag_items;
 
@@ -17,13 +18,14 @@ void CFolderHelper::ShowPPMenu(TMxPopupMenu* M, TExtBtn* B){
 	M->Popup(pt.x,pt.y-10);
     if (B) B->MouseManualUp();
 }
+#endif
 //---------------------------------------------------------------------------
 
 AnsiString CFolderHelper::GetFolderName(const AnsiString& full_name, AnsiString& dest)
 {
-    for (int i=full_name.Length(); i>=1; i--)
+    for (int i=full_name.size(); i>=1; i--)
     	if (full_name[i]=='\\'){
-        	dest=full_name.SubString(1,i);
+        	dest=full_name.substr(0,i);
             break;
         }
     return dest.c_str();
@@ -31,14 +33,14 @@ AnsiString CFolderHelper::GetFolderName(const AnsiString& full_name, AnsiString&
 
 AnsiString CFolderHelper::GetObjectName(const AnsiString& full_name, AnsiString& dest)
 {
-    for (int i=full_name.Length(); i>=1; i--)
+    for (int i=full_name.size(); i>=1; i--)
     	if (full_name[i]=='\\'){
-        	dest=full_name.SubString(i+1,full_name.Length());
+        	dest=full_name.substr(i+1);
             break;
         }
     return dest.c_str();
 }
-
+#ifndef NO_VCL
 // собирает имя от стартового итема до конечного
 // может включать либо не включать имя объекта
 bool CFolderHelper::MakeName(TElTreeItem* begin_item, TElTreeItem* end_item, AnsiString& name, bool bOnlyFolder)
@@ -264,8 +266,9 @@ void CFolderHelper::GenerateObjectName(TElTree* tv, TElTreeItem* node, AnsiStrin
     while (FindItemInFolder(TYPE_OBJECT,tv,node,name))
     	name.sprintf("%s_%02d",pref,cnt++);
 }
+#endif
 //---------------------------------------------------------------------------
-
+#ifndef NO_VCL
 AnsiString CFolderHelper::ReplacePart(AnsiString old_name, AnsiString ren_part, int level, LPSTR dest)
 {
     VERIFY(level<_GetItemCount(old_name.c_str(),'\\'));
@@ -585,7 +588,7 @@ bool CFolderHelper::NameAfterEdit(TElTreeItem* node, AnsiString value, AnsiStrin
     N=new_name;
     return true;
 }
-
+#endif
 void DrawBitmap(HDC hdc, const Irect& r, u32* data, u32 w, u32 h)
 {
     BITMAPINFO  	bmi;
@@ -675,8 +678,10 @@ AnsiString CFolderHelper::GenerateName(LPCSTR _pref, int dgt_cnt, TFindObjectByN
     
 
     bool 	res;
-    do{	
-    	result.sprintf	(mask, prefix, counter++);
+    do{
+        string256 temp;
+    	sprintf	    (temp, mask, prefix, counter++);
+        result = temp;
         res				= false;
         cb				(result.c_str(),res);
     }while(res);

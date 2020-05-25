@@ -1,13 +1,18 @@
 //---------------------------------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
-#include "gamefont.h"
-#include "dxerr8.h"
+#include <xrEngine/GameFont.h>
+//#include "dxerr8.h"
 #include "ImageManager.h"
 #include "ui_main.h"
 #include "render.h"
-#include "GameMtlLib.h"
-#include "ResourceManager.h"
+#include <xrEngine/GameMtlLib.h>
+#include <Layers/xrRender/ResourceManager.h>
+#define MMNOSOUND
+#define MMNOMIDI
+#define MMNOAUX
+#define MMNOMIXER
+#define MMNOJOY
+#include <mmsystem.h>
 
 #pragma package(smart_init)
 
@@ -61,8 +66,8 @@ CRenderDevice::~CRenderDevice(){
 }
 
 extern void Surface_Init();
-#include "../../Include/xrAPI/xrAPI.h"
-#include "../../Layers/xrRender/dxRenderFactory.h"
+#include <Include/xrAPI/xrAPI.h>
+#include <Layers/xrRender/dxRenderFactory.h>
 void CRenderDevice::Initialize()
 {
 //	m_Camera.Reset();
@@ -246,7 +251,7 @@ void CRenderDevice::_Destroy(BOOL	bKeepTextures)
 }
 
 //---------------------------------------------------------------------------
-void __fastcall CRenderDevice::Resize(int w, int h)
+void CRenderDevice::Resize(int w, int h)
 {
     m_RealWidth 	= w;
     m_RealHeight 	= h;

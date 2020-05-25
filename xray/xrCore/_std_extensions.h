@@ -29,7 +29,7 @@
 #undef max
 #endif
 
-#ifdef  _EDITOR
+#ifdef __BORLANDC__
 IC void strcpy_s(char* strDestination,   size_t sizeInBytes,   const char *strSource)
 {
 	strcpy(strDestination, strSource);

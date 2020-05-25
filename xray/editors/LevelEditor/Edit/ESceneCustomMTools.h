@@ -3,7 +3,7 @@
 
 #include "ESceneClassList.h"
 // refs
-struct SSceneSummary;
+class SSceneSummary;
 class TUI_CustomControl;
 class ESceneCustomMTools;
 class SceneBuilder;
@@ -13,7 +13,8 @@ DEFINE_VECTOR(TUI_CustomControl*,ControlsVec,ControlsIt);
 
 class ESceneToolBase
 {
-	ObjClassID 			FClassID;
+public:
+	ObjClassID 			ClassID;
 protected:
 	// controls
     ControlsVec 		m_Controls;
@@ -60,7 +61,7 @@ public:
     virtual void    	OnDeactivate			();
     virtual void    	OnObjectsUpdate			(){;}
 public:
-    PropertyGP			(FClassID,FClassID) 	ObjClassID ClassID;
+//    PropertyGP			(FClassID,FClassID) 	ObjClassID ClassID;
 	// definition
     virtual LPCSTR		ClassName				()=0;
     virtual LPCSTR		ClassDesc				()=0;

@@ -11,8 +11,8 @@
 #include "../ECore/Editor/UI_ToolsCustom.h"
 #include "scene.h"
 #include "../ECore/Editor/UI_Main.h"
-#include "../ECore/Editor/D3DUtils.h"
-#include "ResourceManager.h"
+#include <Layers/xrRender/D3DUtils.h>
+#include <Layers/xrRender/ResourceManager.h>
 #include "UI_LevelTools.h"
 
 // chunks
@@ -158,9 +158,9 @@ bool ESceneWallmarkTool::Valid		(){return !marks.empty();}
 bool ESceneWallmarkTool::IsNeedSave(){return marks.size();}
 void ESceneWallmarkTool::OnFrame	(){}
 
-struct zero_slot_pred : public std::unary_function<ESceneWallmarkTool::wm_slot*, bool>
+struct zero_slot_pred
 {
-	bool operator()(const ESceneWallmarkTool::wm_slot*& x){ return x==0; }
+	bool operator()(ESceneWallmarkTool::wm_slot* x){ return x==0; }
 };
 void ESceneWallmarkTool::RefiningSlots()
 {
@@ -219,7 +219,7 @@ void ESceneWallmarkTool::OnRender(int priority, bool strictB2F)
                                 w_start					= w_verts;
                             }
                             // real fill buffer
-                            FVF::LIT* S		= W->verts.begin()+t_idx*3;
+                            FVF::LIT* S		= W->verts.data()+t_idx*3;
                         	for (int k=0; k<3; k++,S++,w_verts++){
                                 w_verts->p.set	(S->p);
                                 w_verts->color	= C;
@@ -247,15 +247,15 @@ void ESceneWallmarkTool::OnRender(int priority, bool strictB2F)
                 wallmark* W		= *w_it;
                 if (W->flags.is(wallmark::flSelected))
                     if (RImplementation.ViewBase.testSphere_dirty(W->bounds.P,W->bounds.R))
-                        DU_impl.DrawSelectionBox(W->bbox);
+                        DUImpl.DrawSelectionBox(W->bbox);
             }
         }
     }
 }
 
-struct zero_item_pred : public std::unary_function<ESceneWallmarkTool::wallmark*, bool>
+struct zero_item_pred
 {
-	bool operator()(const ESceneWallmarkTool::wallmark*& x){ return x==0; }
+	bool operator()(ESceneWallmarkTool::wallmark* x){ return x==0; }
 };
 bool ESceneWallmarkTool::LoadLTX(CInifile& ini)
 {
@@ -576,7 +576,7 @@ ESceneWallmarkTool::wm_slot* ESceneWallmarkTool::AppendSlot(shared_str sh_name, 
 
 void ESceneWallmarkTool::RecurseTri(u32 t, Fmatrix &mView, wallmark &W)
 {
-	CDB::TRI*	T			= sml_collector.getT()+t;
+	auto	T			    = sml_collector.getT()+t;
 	if (T->dummy)			return;
 	T->dummy				= 0xffffffff;
 	
@@ -612,11 +612,11 @@ void ESceneWallmarkTool::RecurseTri(u32 t, Fmatrix &mView, wallmark &W)
 		}
 		
 		// recurse
-		for (i=0; i<3; i++)
+		for (u32 i=0; i<3; i++)
 		{
 			u32 adj					= sml_adjacency[3*t+i];
 			if (0xffffffff==adj)	continue;
-			CDB::TRI*	SML			= sml_collector.getT() + adj;
+			auto	SML	    		= sml_collector.getT() + adj;
 			v_ids					= SML->verts;
 
 			Fvector test_normal;
@@ -689,7 +689,7 @@ BOOL ESceneWallmarkTool::AddWallmark_internal(const Fvector& start, const Fvecto
     if (Scene->RayQuery(PQ,start,dir,dist,CDB::OPT_ONLYNEAREST|CDB::OPT_CULL,snap_list)){ 
         contact_pt.mad		(PQ.m_Start,PQ.m_Direction,PQ.r_begin()->range); 
         sml_normal.mknormal	(PQ.r_begin()->verts[0],PQ.r_begin()->verts[1],PQ.r_begin()->verts[2]);
-        sml_collector.add_face_packed_D	(PQ.r_begin()->verts[0],PQ.r_begin()->verts[1],PQ.r_begin()->verts[2],0);
+        sml_collector.add_face_packed(PQ.r_begin()->verts[0],PQ.r_begin()->verts[1],PQ.r_begin()->verts[2],{0});
     }else return FALSE;
 
     // box pick poly
@@ -704,7 +704,7 @@ BOOL ESceneWallmarkTool::AddWallmark_internal(const Fvector& start, const Fvecto
 			test_normal.mknormal	(R->verts[0],R->verts[1],R->verts[2]);
 			float cosa				= test_normal.dotproduct(sml_normal);
 			if (cosa<0.1)			continue;
-	        sml_collector.add_face_packed_D	(R->verts[0],R->verts[1],R->verts[2],0);
+	        sml_collector.add_face_packed(R->verts[0],R->verts[1],R->verts[2],{0});
         }
     }
 

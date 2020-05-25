@@ -18,7 +18,9 @@
 #include "ESceneAIMapTools.h"
 #include "ESceneDOTools.h"
 #include "ESceneLightTools.h"
+#ifndef NO_VCL
 #include "AppendObjectInfoForm.h"
+#endif
 //----------------------------------------------------
 EScene* Scene;
 //----------------------------------------------------
@@ -76,14 +78,17 @@ EScene::EScene()
 // 	Build options
     m_SummaryInfo	= 0;
     //ClearSnapList	(false);
+#ifndef NO_VCL
    g_frmConflictLoadObject 		= xr_new<TfrmAppendObjectInfo>((TComponent*)NULL);
+#endif
 
 }
 
 EScene::~EScene()
 {
+#ifndef NO_VCL
 	xr_delete(g_frmConflictLoadObject);
-
+#endif
 	VERIFY( m_Valid == false );
     m_ESO_SnapObjects.clear	();
 }
@@ -98,12 +103,16 @@ void EScene::OnCreate()
 	m_Valid 				= true;
     m_RTFlags.zero			();
     ExecCommand				(COMMAND_UPDATE_CAPTION);
+#ifndef NO_VCL
 	m_SummaryInfo 			= TProperties::CreateForm("Level Summary Info", 0, alNone, 0,0,0, TProperties::plFolderStore|TProperties::plItemFolders);
+#endif
 }
 
 void EScene::OnDestroy()
 {
+#ifndef NO_VCL
 	TProperties::DestroyForm(m_SummaryInfo);
+#endif
     Unload					(FALSE);
     UndoClear				();
 	ELog.Msg				( mtInformation, "Scene: cleared" );
@@ -225,7 +234,9 @@ void EScene::Unload		(BOOL bEditableOnly)
 {
 	m_LastAvailObject 	= 0;
 	Clear				(bEditableOnly);
+#ifndef NO_VCL
 	if (m_SummaryInfo) 	m_SummaryInfo->HideProperties();
+#endif
 }
 
 void EScene::Clear(BOOL bEditableToolsOnly)
@@ -247,7 +258,7 @@ void EScene::Clear(BOOL bEditableToolsOnly)
     m_RTFlags.set			(flRT_Unsaved|flRT_Modified,FALSE);
 
     m_GUID					= generate_guid();
-    m_OwnerName				= AnsiString().sprintf("\\\\%s\\%s",Core.CompName,Core.UserName).c_str();
+    m_OwnerName				= ("\\\\" + AnsiString(Core.CompName) + "\\" + AnsiString(Core.UserName)).c_str();
     m_CreateTime			= time(NULL);
 
     m_SaveCache.free		();
@@ -286,7 +297,7 @@ void EScene::Modified()
 
 bool EScene::IsUnsaved()
 {
-    return (m_RTFlags.is(flRT_Unsaved) && (ObjCount()||!Tools->GetEditFileName().IsEmpty()));
+    return (m_RTFlags.is(flRT_Unsaved) && (ObjCount()||!Tools->GetEditFileName().empty()));
 }
 bool EScene::IsModified()
 {
@@ -299,7 +310,7 @@ bool EScene::IfModified()
         ELog.DlgMsg( mtError, "Scene sharing violation" );
         return false;
     }
-    if (m_RTFlags.is(flRT_Unsaved) && (ObjCount()||!Tools->GetEditFileName().IsEmpty())){
+    if (m_RTFlags.is(flRT_Unsaved) && (ObjCount()||!Tools->GetEditFileName().empty())){
         int mr = ELog.DlgMsg(mtConfirmation, "The scene has been modified. Do you want to save your changes?");
         switch(mr){
         case mrYes: if (!ExecCommand(COMMAND_SAVE)) return false; break;

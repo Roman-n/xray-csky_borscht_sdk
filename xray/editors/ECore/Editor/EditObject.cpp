@@ -15,8 +15,8 @@
 #include "EditMesh.h"
 
 #ifdef _EDITOR
-	#include "motion.h"
-	#include "bone.h"
+	#include <xrEngine/motion.h>
+	#include <xrEngine/bone.h>
 	#include "ImageManager.h"
 #endif
 

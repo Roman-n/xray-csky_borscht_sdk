@@ -3,18 +3,52 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#include "xr_input.h"
+#include <xrEngine/xr_input.h>
 #include "UI_ToolsCustom.h"
 
 #include "UI_Main.h"
-#include "d3dutils.h"
+#include <Layers/xrRender/D3DUtils.h>
 #include "SoundManager.h"
-#include "PSLibrary.h"
+#include <Layers/xrRender/PSLibrary.h>
 
+#ifndef NO_VCL
 #include "ImageEditor.h"
 #include "SoundEditor.h"
-#include "ChoseForm.h"
-#include "ETools.h"
+#include "../../xrEProps/ChoseForm.h"
+#endif
+#include <utils/ETools/ETools.h>
+
+#include "..\ImGui\imgui.h"
+#include "..\ImGui\imgui_impl_dx9.h"
+#include "..\ImGui\IM_Window.h"
+#include "..\ImGui\IM_Log.h"
+
+static void ImGui_Init(HWND hwnd, IDirect3DDevice9 *d3ddevice)
+{
+	ImGui::CreateContext();
+    ImGui_ImplDX9_Init(hwnd, d3ddevice);
+
+    // load font
+    ImGuiIO &io = ImGui::GetIO();
+    ImFontAtlas &fonts 	= *io.Fonts;
+
+	const char* font_name = "extras\\Anonymous Pro.ttf";
+	if(FileExists(font_name))
+	{
+		ImFont *font = fonts.AddFontFromFileTTF(font_name, 14, NULL, fonts.GetGlyphRangesCyrillic());
+		fonts.AddFontFromFileTTF(font_name, 24, NULL, fonts.GetGlyphRangesCyrillic());
+
+		io.FontDefault = font;
+	}
+	else
+		ELog.Msg(mtError, "Cannot find font file '%s'!", font_name);
+}
+
+static void ImGui_Shutdown(void)
+{
+	ImGui_ImplDX9_Shutdown();
+    ImGui::DestroyContext();
+}
 
 TUI* 	UI			= 0;
 
@@ -42,22 +76,32 @@ TUI::TUI()
     m_bHintShowing	= false;
 	m_pHintWindow	= 0;
 	m_LastHint		= "";
+
+    show_demo_window = false;
 }
 //---------------------------------------------------------------------------
 TUI::~TUI()
 {
 	VERIFY(m_ProgressItems.size()==0);
     VERIFY(m_EditorState.size()==0);
+
+    xr_vector<IM_Window*>::iterator it, end;
+	for(it = imwindows.begin(), end = imwindows.end(); it != end; it++)
+    {
+    	(*it)->OnRemove();
+    }
 }
 
 void TUI::OnDeviceCreate()
 {
-	DU_impl.OnDeviceCreate();
+	DUImpl.OnDeviceCreate();
+    ImGui_Init(m_D3DWindow->Handle, HW.pDevice);
 }
 
 void TUI::OnDeviceDestroy()
 {
-	DU_impl.OnDeviceDestroy();
+	DUImpl.OnDeviceDestroy();
+    ImGui_Shutdown();
 }
 
 bool TUI::IsModified()
@@ -82,7 +126,17 @@ bool __fastcall TUI::KeyDown (WORD Key, TShiftState Shift)
 	if (!m_bReady) return false;
 //	m_ShiftState = Shift;
 //	Log("Dn  ",Shift.Contains(ssShift)?"1":"0");
-	if (Device.m_Camera.KeyDown(Key,Shift)) return true;
+
+	if (ImGui::GetIO().WantCaptureKeyboard)
+	{
+		ImGui::GetIO().KeysDown[Key] = true;
+		RedrawScene();
+		return true;
+	}
+
+	if (Device.m_Camera.KeyDown(Key,Shift))
+    	return true;
+
     return Tools->KeyDown(Key, Shift);
 }
 
@@ -90,13 +144,31 @@ bool __fastcall TUI::KeyUp   (WORD Key, TShiftState Shift)
 {
 	if (!m_bReady) return false;
 //	m_ShiftState = Shift;
-	if (Device.m_Camera.KeyUp(Key,Shift)) return true;
+
+	if (ImGui::GetIO().WantCaptureKeyboard)
+	{
+		ImGui::GetIO().KeysDown[Key] = false;
+		RedrawScene();
+		return false;
+	}
+
+	if (Device.m_Camera.KeyUp(Key,Shift))
+    	return true;
+
     return Tools->KeyUp(Key, Shift);
 }
 
 bool __fastcall TUI::KeyPress(WORD Key, TShiftState Shift)
 {
 	if (!m_bReady) return false;
+
+    if (ImGui::GetIO().WantCaptureKeyboard)
+    {
+		ImGui::GetIO().AddInputCharacter(Key);
+		RedrawScene();
+        return true;
+    }
+
     return Tools->KeyPress(Key, Shift);
 }
 //----------------------------------------------------
@@ -110,8 +182,12 @@ void TUI::MousePress(TShiftState Shift, int X, int Y)
 
     m_ShiftState = Shift;
 
+    ImGui::GetIO().MouseDown[0] = Shift.Contains(ssLeft);
+    ImGui::GetIO().MouseDown[1] = Shift.Contains(ssRight);
+    ImGui::GetIO().MouseDown[2] = Shift.Contains(ssMiddle);
+
     // camera activate
-    if(!Device.m_Camera.MoveStart(m_ShiftState)){
+    if(!ImGui::GetIO().WantCaptureMouse && !Device.m_Camera.MoveStart(m_ShiftState)){
     	if (Tools->Pick(Shift)) return;
         if( !m_MouseCaptured ){
             if( Tools->HiddenMode() ){
@@ -137,6 +213,12 @@ void TUI::MouseRelease(TShiftState Shift, int X, int Y)
 	if (!m_bReady) return;
 
     m_ShiftState = Shift;
+
+    ImGui::GetIO().MouseDown[0] = Shift.Contains(ssLeft);
+    ImGui::GetIO().MouseDown[1] = Shift.Contains(ssRight);
+    ImGui::GetIO().MouseDown[2] = Shift.Contains(ssMiddle);
+
+    // editor may need to know about mouse release even it hover imgui window
 
     if( Device.m_Camera.IsMoving() ){
         if (Device.m_Camera.MoveEnd(m_ShiftState)) bMouseInUse = false;
@@ -165,6 +247,11 @@ void TUI::MouseMove(TShiftState Shift, int X, int Y)
 {
 	if (!m_bReady) return;
     m_ShiftState = Shift;
+
+    ImGui::GetIO().MousePos.x = ((float)X * Device.m_ScreenQuality);
+    ImGui::GetIO().MousePos.y = ((float)Y * Device.m_ScreenQuality);
+
+    RedrawScene();
 }
 //----------------------------------------------------
 void TUI::IR_OnMouseMove(int x, int y){
@@ -221,6 +308,19 @@ void TUI::OnAppDeactivate()
 }
 //---------------------------------------------------------------------------
 
+AnsiString _ListToSequence2(const AStringVec& lst)
+{
+    AnsiString out;
+    out = "";
+    if (lst.size()) {
+        out = lst.front();
+        for (AStringVec::const_iterator s_it = lst.begin() + 1; s_it != lst.end(); s_it++) {
+            out += AnsiString("\n") + (*s_it);
+        }
+    }
+    return out;
+}
+
 bool TUI::ShowHint(const AStringVec& SS)
 {
 	VERIFY(m_bReady);
@@ -229,6 +329,7 @@ bool TUI::ShowHint(const AStringVec& SS)
         if (m_bHintShowing&&(S==m_LastHint)) return true;
         m_LastHint = S;
         m_bHintShowing = true;
+        #ifndef NO_VCL
         if (!m_pHintWindow){
             m_pHintWindow = xr_new<THintWindow>((TComponent*)0);
             m_pHintWindow->Brush->Color = (TColor)0x0d9F2FF;
@@ -237,6 +338,7 @@ bool TUI::ShowHint(const AStringVec& SS)
         rect.Left+=m_HintPoint.x;    rect.Top+=m_HintPoint.y;
         rect.Right+=m_HintPoint.x;   rect.Bottom+=m_HintPoint.y;
         m_pHintWindow->ActivateHint(rect,S);
+        #endif
     }else{
     	m_bHintShowing = false;
         m_LastHint = "";
@@ -275,8 +377,10 @@ void TUI::ShowObjectHint()
     if (!m_bAppActive) return;
 
     GetCursorPos(&m_HintPoint);
+    #ifndef NO_VCL
     TWinControl* ctr = FindVCLWindow(m_HintPoint);
     if (ctr!=m_D3DWindow) return;
+    #endif
 
 	AStringVec SS;
 	Tools->OnShowHint(SS);
@@ -285,15 +389,17 @@ void TUI::ShowObjectHint()
 //---------------------------------------------------------------------------
 void TUI::CheckWindowPos(TForm* form)
 {
+    #ifndef NO_VCL
 	if (form->Left+form->Width>Screen->Width) 	form->Left	= Screen->Width-form->Width;
 	if (form->Top+form->Height>Screen->Height)	form->Top 	= Screen->Height-form->Height;
 	if (form->Left<0) 							form->Left	= 0;
 	if (form->Top<0) 							form->Top 	= 0;
+    #endif
 }
 //---------------------------------------------------------------------------
-#include "igame_persistent.h"
-#include "environment.h"
-
+#include <xrEngine/IGame_Persistent.h>
+#include <xrEngine/Environment.h>
+    static bool b_imgui_rendering = false;
 void TUI::PrepareRedraw()
 {
 	VERIFY(m_bReady);
@@ -343,6 +449,23 @@ void TUI::PrepareRedraw()
     Device.SetRS			(D3DRS_SHADEMODE,Device.dwShadeMode);
 
     RCache.set_xform_world	(Fidentity);
+
+    if(!b_imgui_rendering)
+    {
+    	b_imgui_rendering = true;
+
+        ImGui_ImplDX9_NewFrame();
+        ImGui::GetIO().DisplaySize = ImVec2(Device.dwWidth, Device.dwHeight);
+
+    	if(show_demo_window)
+    		ImGui::ShowDemoWindow(&show_demo_window);
+
+        xr_vector<IM_Window*> windows = imwindows; // copy
+    	for(xr_vector<IM_Window*>::iterator it = windows.begin(); it != windows.end(); it++)
+			(*it)->Render();
+
+        b_imgui_rendering = false;
+    }
 }
 void TUI::Redraw()
 {
@@ -370,8 +493,8 @@ void TUI::Redraw()
 
             // draw grid
             if (psDeviceFlags.is(rsDrawGrid)){
-                DU_impl.DrawGrid		();
-                DU_impl.DrawPivot		(m_Pivot);
+                DUImpl.DrawGrid		();
+                DUImpl.DrawPivot		(m_Pivot);
             }
 
             try{
@@ -380,11 +503,16 @@ void TUI::Redraw()
 		    	ELog.DlgMsg(mtError, "Please notify AlexMX!!! Critical error has occured in render routine!!! [Type B]");
             }
 
+            if(!b_imgui_rendering) {
+            	ImGui::Render();
+                ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
+            }
+
             // draw selection rect
-            if(m_SelectionRect) 	DU_impl.DrawSelectionRect(m_SelStart,m_SelEnd);
+            if(m_SelectionRect) 	DUImpl.DrawSelectionRect(m_SelStart,m_SelEnd);
 
             // draw axis
-            DU_impl.DrawAxis(Device.m_Camera.GetTransform());
+            DUImpl.DrawAxis(Device.m_Camera.GetTransform());
 
             try{
 	            // end draw
@@ -408,9 +536,13 @@ void TUI::Redraw()
 //---------------------------------------------------------------------------
 void TUI::RealResize()
 {
+   	ImGui_Shutdown		();
+    #ifndef NO_VCL
     Device.Resize		(m_D3DWindow->Width,m_D3DWindow->Height); 
+    #endif
     m_Flags.set			(flResize,FALSE);
     ExecCommand			(COMMAND_UPDATE_PROPERTIES);
+	ImGui_Init			(m_D3DWindow->Handle, HW.pDevice);
 }
 void TUI::RealUpdateScene()
 {
@@ -433,19 +565,25 @@ void TUI::OnFrame()
 	// show hint
     ShowObjectHint		();
 	ResetBreak			();
+#if USE_MAILSLOT
 	// check mail
     CheckMailslot		();
+#endif
     // OnFrame
+    #ifndef NO_VCL
     TfrmImageLib::OnFrame();
     TfrmSoundLib::OnFrame();
     TfrmChoseItem::OnFrame();
+    #endif
     // Progress
     ProgressDraw		();
 }
 void TUI::Idle()         
 {
 	VERIFY(m_bReady);
+    #ifndef NO_VCL
     Device.b_is_Active  = Application->Active;
+    #endif
 	// input
     pInput->OnFrame();
     Sleep(1);
@@ -467,6 +605,7 @@ void ResetActionToSelect()
 #define MIN_PANEL_HEIGHT 15
 void __fastcall PanelMinMax(TPanel *pa)
 {
+    #ifndef NO_VCL
 	if (pa&&(pa->Align!=alClient)){
         if (pa->Tag > 0){
             pa->Height = pa->Tag;
@@ -477,9 +616,11 @@ void __fastcall PanelMinMax(TPanel *pa)
         }
         ExecCommand(COMMAND_UPDATE_TOOLBAR);
     }
+    #endif
 }
 void __fastcall PanelMinimize(TPanel *pa)
 {
+    #ifndef NO_VCL
 	if (pa&&(pa->Align!=alClient)){
         if (pa->Tag <= 0){
             pa->Tag    = pa->Height;
@@ -487,9 +628,11 @@ void __fastcall PanelMinimize(TPanel *pa)
         }
         ExecCommand(COMMAND_UPDATE_TOOLBAR);
     }
+    #endif
 }
 void __fastcall PanelMaximize(TPanel *pa)
 {
+    #ifndef NO_VCL
 	if (pa&&(pa->Align!=alClient)){
         if (pa->Tag > 0){
             pa->Height = pa->Tag;
@@ -497,18 +640,25 @@ void __fastcall PanelMaximize(TPanel *pa)
         }
         ExecCommand(COMMAND_UPDATE_TOOLBAR);
     }
+    #endif
 }
 void __fastcall PanelMinMaxClick(TObject* Sender)
 {
+#ifndef NO_VCL
     PanelMinMax(((TPanel*)((TControl*)Sender)->Parent));
+#endif
 }
 void __fastcall PanelMinimizeClick(TObject* Sender)
 {
+#ifndef NO_VCL
     PanelMinimize(((TPanel*)((TControl*)Sender)->Parent));
+#endif
 }
 void __fastcall PanelMaximizeClick(TObject* Sender)
 {
+#ifndef NO_VCL
     PanelMaximize(((TPanel*)((TControl*)Sender)->Parent));
+#endif
 }
 //---------------------------------------------------------------------------
 
@@ -530,10 +680,12 @@ bool TUI::OnCreate(TD3DWindow* w, TPanel* p)
 
     m_bReady		= true;
 
+#if USE_MAILSLOT
     if (!CreateMailslot()){
     	ELog.DlgMsg	(mtError,"Can't create mail slot.\nIt's possible two Editors started.");
         return 		false;
     }
+#endif
 
     if (!FS.path_exist(_local_root_)){
     	ELog.DlgMsg	(mtError,"Undefined Editor local directory.");
@@ -541,6 +693,8 @@ bool TUI::OnCreate(TD3DWindow* w, TPanel* p)
     }
 
 	BeginEState		(esEditScene);
+
+    AddIMWindow(&imLog);
 
     return true;
 }
@@ -579,8 +733,12 @@ void TUI::ProgressEnd			(SPBItem*& pbi)
 
 void SPBItem::GetInfo			(AnsiString& txt, float& p, float& m)
 {
-    if (info.size())txt.sprintf("%s (%s)",text.c_str(),info.c_str());
-    else			txt.sprintf("%s",text.c_str());
+    txt = text.c_str();
+    if (info.size()) {
+        txt += " (";
+        txt += info.c_str();
+        txt += ")";
+    }
     p				= progress;
     m				= max;
 }  
@@ -606,3 +764,22 @@ void SPBItem::Info				(LPCSTR text, bool bWarn)
     }
 }
 
+void TUI::AddIMWindow(IM_Window *wnd)
+{
+	imwindows.push_back(wnd);
+    wnd->OnAdd();
+}
+
+void TUI::RemoveIMWindow(IM_Window* wnd)
+{
+	xr_vector<IM_Window*>::iterator it, end;
+	for(it = imwindows.begin(), end = imwindows.end(); it != end; it++)
+    {
+    	if(*it == wnd)
+        {
+        	(*it)->OnRemove();
+        	imwindows.erase(it);
+            return;
+        }
+    }
+}

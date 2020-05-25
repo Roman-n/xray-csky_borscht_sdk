@@ -2,8 +2,8 @@
 #pragma hdrstop
 
 #include "EStats.h"
-#include "hw.h"
-#include "gamefont.h"
+#include <Layers/xrRender/HW.h>
+#include <xrEngine/GameFont.h>
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -23,7 +23,7 @@ CStats::~CStats()
 
 }
 
-#include "igame_persistent.h"
+#include <xrEngine/igame_persistent.h>
 void CStats::Show(CGameFont* font)
 {
 	// Stop timers

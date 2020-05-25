@@ -2,9 +2,10 @@
 #ifndef ImageManagerH
 #define ImageManagerH
 
-#include "../xrEProps/folderlib.h"
-#include "../Layers/xrRender/etextureparams.h"
-#include "../ECore/Editor/EThumbnail.h"
+#include <editors/xrEProps/FolderLib.h>
+#include <Layers/xrRender/etextureparams.h>
+#include "EThumbnail.h"
+
 class CEditableObject;
 
 struct SSimpleImage{

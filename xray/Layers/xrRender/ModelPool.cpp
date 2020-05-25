@@ -17,15 +17,15 @@
     #include "ParticleEffect.h"
 	#include "../Editor/EditObject.h"
 #else
-    #include "fmesh.h"
-    #include "fvisual.h"
+    #include <xrEngine/Fmesh.h>
+    #include <Layers/xrRender/FVisual.h>
     #include "fprogressive.h"
     #include "ParticleEffect.h"
     #include "ParticleGroup.h"
 	#include "fskinned.h"
     #include "fhierrarhyvisual.h"
     #include "SkeletonAnimated.h"
-	#include "IGame_Persistent.h"
+	#include <xrEngine/IGame_Persistent.h>
 #endif
 
 dxRender_Visual*	CModelPool::Instance_Create(u32 type)
@@ -93,6 +93,7 @@ dxRender_Visual*	CModelPool::Instance_Duplicate	(dxRender_Visual* V)
 	return N;
 }
 
+#ifndef _EDITOR
 dxRender_Visual* CModelPool::TryLoadObject(const char* N)
 {
     char* ext = strext(N);
@@ -124,6 +125,7 @@ dxRender_Visual* CModelPool::TryLoadObject(const char* N)
 	dxRender_Visual* result = TryLoadOgf(ogfName);
 	return result;
 }
+#endif
 
 dxRender_Visual* CModelPool::TryLoadOgf(const char* N)
 {
@@ -162,8 +164,10 @@ dxRender_Visual* CModelPool::TryLoadOgf(const char* N)
 dxRender_Visual*	CModelPool::Instance_Load		(const char* N, BOOL allow_register)
 {
 	dxRender_Visual* V = TryLoadOgf(N);
+#ifndef _EDITOR
 	if (V == nullptr)
 		V = TryLoadObject(N);
+#endif
 	if (V == nullptr) {
 #ifdef _EDITOR
 		Msg("!Can't find model file '%s'.", N);

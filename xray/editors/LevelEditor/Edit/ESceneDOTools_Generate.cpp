@@ -8,15 +8,20 @@
 #include "../ECore/Engine/Texture.h"
 #include "Scene.h"
 #include "SceneObject.h"
+#ifndef NO_VCL
 #include "leftbar.h"
-#include "../ECore/Engine/cl_intersect.h"
+#endif
+#include <common/cl_intersect.h>
 #include "../ECore/Editor/Library.h"
 #include "../ECore/Editor/ui_main.h"
 
 #include "..\..\Layers\xrRender\DetailFormat.h"
+#ifndef NO_VCL
 #include "bottombar.h"
+#endif
 #include "../ECore/Editor/ImageManager.h"
-#include "ETools.h"
+#include <utils/ETools/ETools.h>
+#include <random>
 
 static Fvector down_vec	={0.f,-1.f,0.f};
 static Fvector left_vec	={-1.f,0.f,0.f};
@@ -373,8 +378,8 @@ bool EDetailManager::UpdateSlotObjects(int x, int z){
         U8Vec elem; elem.resize(CI->second.size());
         for (U8It b_it=elem.begin(); b_it!=elem.end(); b_it++) *b_it=u8(b_it-elem.begin());
 //        best_rand A(DetailRandom);
-        std::random_shuffle(elem.begin(),elem.end());//,A);
-        for (b_it=elem.begin(); b_it!=elem.end(); b_it++){
+        std::shuffle(elem.begin(),elem.end(), std::random_device());//,A);
+        for (U8It b_it=elem.begin(); b_it!=elem.end(); b_it++){
 			bool bNotFound=true;
             slot->w_id	(k, GetObject(CI,*b_it));
             for (u32 j=0; j<k; j++)
@@ -396,7 +401,7 @@ bool EDetailManager::UpdateSlotObjects(int x, int z){
     }
 
     // определим ID незаполненных слотов как пустышки
-    for(k=best.size(); k<4; k++)
+    for(u32 k=best.size(); k<4; k++)
         slot->w_id(k,DetailSlot::ID_Empty);
     return true;
 }

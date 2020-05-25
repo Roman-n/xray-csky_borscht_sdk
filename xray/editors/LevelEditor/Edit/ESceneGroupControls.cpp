@@ -6,6 +6,8 @@
 #include "GroupObject.h"
 #include "Scene.h"
 
+using namespace std::placeholders;
+
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
@@ -25,20 +27,20 @@ bool __fastcall TUI_ControlGroupAdd::AfterAppendCallback(TShiftState Shift, CCus
         if (result){
             string256 			namebuffer;
             Scene->GenObjectName(OBJCLASS_GROUP, namebuffer, short_name);
-            group->Name 		= namebuffer;
+            group->SetName 	(namebuffer);
         }
     }
     return result;
 }
-bool __fastcall TUI_ControlGroupAdd::Start(TShiftState Shift)
+bool TUI_ControlGroupAdd::Start(TShiftState Shift)
 {
-	DefaultAddObject	(Shift,0,AfterAppendCallback);
+	DefaultAddObject	(Shift,0,std::bind(&TUI_ControlGroupAdd::AfterAppendCallback,this,_1,_2));
     return false;
 }
-void __fastcall TUI_ControlGroupAdd::Move(TShiftState _Shift)
+void TUI_ControlGroupAdd::Move(TShiftState _Shift)
 {
 }
-bool __fastcall TUI_ControlGroupAdd::End(TShiftState _Shift)
+bool TUI_ControlGroupAdd::End(TShiftState _Shift)
 {
     return true;
 }

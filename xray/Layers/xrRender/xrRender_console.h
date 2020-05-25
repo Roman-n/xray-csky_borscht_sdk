@@ -27,6 +27,17 @@ extern ECORE_API	int			ps_r__LightSleepFrames;
 extern ECORE_API	float		ps_r__Detail_l_ambient;
 extern ECORE_API	float		ps_r__Detail_l_aniso;
 extern ECORE_API	float		ps_r__Detail_density;
+extern ECORE_API	u32			dm_size;
+extern ECORE_API	u32 		dm_cache1_line;
+extern ECORE_API	u32			dm_cache_line;
+extern ECORE_API	u32			dm_cache_size;
+extern ECORE_API	float		dm_fade;
+extern ECORE_API	u32			dm_current_size;
+extern ECORE_API	u32 		dm_current_cache1_line;
+extern ECORE_API	u32			dm_current_cache_line;
+extern ECORE_API	u32			dm_current_cache_size;
+extern ECORE_API	float		dm_current_fade;
+extern ECORE_API	float		ps_current_detail_density;
 
 extern ECORE_API	float		ps_r__Tree_w_rot;
 extern ECORE_API	float		ps_r__Tree_w_speed;

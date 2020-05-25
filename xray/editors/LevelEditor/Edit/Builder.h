@@ -5,7 +5,7 @@
 #ifndef BuilderH
 #define BuilderH
 
-#include "communicate.h"
+#include "../Engine/communicate.h"
 #include "../ECore/Editor/EditMesh.h"
 #include "ESceneClassList.h"
 //----------------------------------------------------

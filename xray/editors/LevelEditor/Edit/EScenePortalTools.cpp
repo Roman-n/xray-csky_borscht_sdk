@@ -3,11 +3,13 @@
 
 #include "EScenePortalTools.h"
 #include "ui_leveltools.h"
+#ifndef NO_VCL
 #include "FramePortal.h"
+#endif
 #include "EScenePortalControls.h"
 #include "portal.h"
 #include "Scene.h"
-#include "MgcAppr3DPlaneFit.h"
+#include <freemagic/MgcAppr3DPlaneFit.h>
 
 /* TODO 1 -oAlexMX -cTODO: Create tools as AI Map */
 
@@ -15,9 +17,11 @@ void EScenePortalTool::CreateControls()
 {
 //	inherited::CreateControls();
     AddControl		(xr_new<TUI_ControlPortalSelect>(estDefault,etaSelect,	this));
+#ifndef NO_VCL
 	// frame
     pFrame 			= xr_new<TfraPortal>((TComponent*)0);
     ((TfraPortal*)pFrame)->tool	= this;
+#endif
 }
 //----------------------------------------------------
 
@@ -67,7 +71,7 @@ struct co_plane_pred
 	co_plane_pred(CPortal* p):m_portal(p)
     {
         Fvector rkOffset, rkNormal;
-        Mgc::OrthogonalPlaneFit(m_portal->m_Vertices.size(), (Mgc::Vector3*)m_portal->m_Vertices.begin(), (Mgc::Vector3&)rkOffset, (Mgc::Vector3&)rkNormal);
+        Mgc::OrthogonalPlaneFit(m_portal->m_Vertices.size(), (Mgc::Vector3*)m_portal->m_Vertices.data(), (Mgc::Vector3&)rkOffset, (Mgc::Vector3&)rkNormal);
         m_plane.build(rkOffset, rkNormal);
 		float plane_magn = sqrt(plane_dot(m_plane, m_plane));
         m_plane.n.div(plane_magn);
@@ -83,7 +87,7 @@ struct co_plane_pred
         {
             Fvector rkOffset, rkNormal;
     		Fplane 	p_plane;
-            Mgc::OrthogonalPlaneFit(P->m_Vertices.size(), (Mgc::Vector3*)P->m_Vertices.begin(), (Mgc::Vector3&)rkOffset, (Mgc::Vector3&)rkNormal);
+            Mgc::OrthogonalPlaneFit(P->m_Vertices.size(), (Mgc::Vector3*)P->m_Vertices.data(), (Mgc::Vector3&)rkOffset, (Mgc::Vector3&)rkNormal);
             p_plane.build(rkOffset, rkNormal);
             float plane_magn = sqrt(plane_dot(p_plane, p_plane));
             p_plane.n.div(plane_magn);

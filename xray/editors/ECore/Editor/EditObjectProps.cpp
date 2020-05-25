@@ -4,10 +4,10 @@
 #include "EditObject.h"
 #include "EditMesh.h"
 #include "ui_main.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
-#include "ItemListHelper.h"
-#include "motion.h"
-#include "bone.h"
+#include <xrServerEntities/PropertiesListHelper.h>
+#include "../../xrEProps/ItemListHelper.h"
+#include <xrEngine/motion.h>
+#include <xrEngine/bone.h>
 
 void CEditableObject::OnChangeShader(PropValue*)
 {
@@ -61,11 +61,11 @@ void CEditableObject::FillBasicProps(LPCSTR pref, PropItemVec& items)
 
 void CEditableObject::FillSummaryProps(LPCSTR pref, PropItemVec& items)
 {
-    AnsiString t; t.sprintf("V: %d, F: %d",		GetVertexCount(),GetFaceCount());
+    AnsiString t = "V: " + std::to_string(GetVertexCount()) + ", F: " + std::to_string(GetFaceCount());
     PHelper().CreateCaption(items,PrepareKey(pref,"Geometry\\Object"),t.c_str());
     for (EditMeshIt m_it=FirstMesh(); m_it!=LastMesh(); m_it++){
         CEditableMesh* MESH=*m_it;
-        t.sprintf("V: %d, F: %d",MESH->GetVertexCount(),MESH->GetFaceCount());
+        t = "V: " + std::to_string(MESH->GetVertexCount()) + ", F: " + std::to_string(MESH->GetFaceCount());
 	    PHelper().CreateCaption(items,PrepareKey(pref,AnsiString(AnsiString("Geometry\\Meshes\\")+MESH->Name().c_str()).c_str()),t.c_str());
     }
     PHelper().CreateSText(items,PrepareKey(pref, "Game options\\User Data"),&m_ClassScript);
@@ -105,7 +105,7 @@ void CEditableObject::FillBoneList(LPCSTR pref, ListItemsVec& items, int modeID)
 	if (pref) LHelper().CreateItem(items, pref, modeID, ListItem::flSorted);
     for(BoneIt b_it=b_lst.begin(); b_it!=b_lst.end(); b_it++){
     	AnsiString pt	= MakeFullBonePath(*b_it);
-    	AnsiString path	= pt.IsEmpty()?pref:PrepareKey(pref, pt.c_str()).c_str();
+    	AnsiString path	= pt.empty()?pref:PrepareKey(pref, pt.c_str()).c_str();
 		LHelper().CreateItem(items, PrepareKey(path.c_str(), (*b_it)->Name().c_str()).c_str(), modeID, 0, *b_it);
     }
 }

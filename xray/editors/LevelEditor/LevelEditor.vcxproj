@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <ProjectGuid>{F9F8C739-AD90-42B2-8A1F-7BFB45D6A355}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>LevelEditor</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\xray.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\xray.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\xray.x64.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\xray.x64.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_EDITOR;_LEVEL_EDITOR;NO_VCL;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.;../..</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>MagicFM.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>_EDITOR;_LEVEL_EDITOR;NO_VCL;WIN32;DEBUG;_WINDOWS;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.;../..</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>MagicFM.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>_EDITOR;_LEVEL_EDITOR;NO_VCL;DEBUG;_WINDOWS;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.;../..</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>MagicFM.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_EDITOR;_LEVEL_EDITOR;NO_VCL;WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.;../..</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>MagicFM.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Layers\xrRender\DetailManager.h" />
+    <ClInclude Include="..\..\xrServerEntities\gametype_chooser.h" />
+    <ClInclude Include="..\..\xrServerEntities\LevelGameDef.h" />
+    <ClInclude Include="..\ECore\builder_types.h" />
+    <ClInclude Include="Edit\Builder.h" />
+    <ClInclude Include="Edit\Cursor3D.h" />
+    <ClInclude Include="Edit\Custom2DProjector.h" />
+    <ClInclude Include="Edit\CustomObject.h" />
+    <ClInclude Include="Edit\ELight.h" />
+    <ClInclude Include="Edit\ELight_def.h" />
+    <ClInclude Include="Edit\EParticlesObject.h" />
+    <ClInclude Include="Edit\ESceneAIMapControls.h" />
+    <ClInclude Include="Edit\ESceneAIMapTools.h" />
+    <ClInclude Include="Edit\ESceneAIMapTools_Export.h" />
+    <ClInclude Include="Edit\ESceneControlsCustom.h" />
+    <ClInclude Include="Edit\ESceneCustomMTools.h" />
+    <ClInclude Include="Edit\ESceneCustomOTools.h" />
+    <ClInclude Include="Edit\ESceneDOTools.h" />
+    <ClInclude Include="Edit\ESceneDummyTools.h" />
+    <ClInclude Include="Edit\ESceneFogVolumeTools.h" />
+    <ClInclude Include="Edit\ESceneGlowTools.h" />
+    <ClInclude Include="Edit\ESceneGroupControls.h" />
+    <ClInclude Include="Edit\ESceneGroupTools.h" />
+    <ClInclude Include="Edit\ESceneLightTools.h" />
+    <ClInclude Include="Edit\ESceneObjectControls.h" />
+    <ClInclude Include="Edit\ESceneObjectTools.h" />
+    <ClInclude Include="Edit\EScenePortalControls.h" />
+    <ClInclude Include="Edit\EScenePortalTools.h" />
+    <ClInclude Include="Edit\EScenePSControls.h" />
+    <ClInclude Include="Edit\EScenePSTools.h" />
+    <ClInclude Include="Edit\ESceneSectorControls.h" />
+    <ClInclude Include="Edit\ESceneSectorTools.h" />
+    <ClInclude Include="Edit\ESceneShapeControls.h" />
+    <ClInclude Include="Edit\ESceneShapeTools.h" />
+    <ClInclude Include="Edit\ESceneSoundEnvTools.h" />
+    <ClInclude Include="Edit\ESceneSoundSrcTools.h" />
+    <ClInclude Include="Edit\ESceneSpawnControls.h" />
+    <ClInclude Include="Edit\ESceneSpawnTools.h" />
+    <ClInclude Include="Edit\ESceneWallmarkControls.h" />
+    <ClInclude Include="Edit\ESceneWallmarkTools.h" />
+    <ClInclude Include="Edit\ESceneWayControls.h" />
+    <ClInclude Include="Edit\ESceneWayTools.h" />
+    <ClInclude Include="Edit\EShape.h" />
+    <ClInclude Include="Edit\ESound_Environment.h" />
+    <ClInclude Include="Edit\ESound_Source.h" />
+    <ClInclude Include="Edit\GeometryPartExtractor.h" />
+    <ClInclude Include="Edit\glow.h" />
+    <ClInclude Include="Edit\GroupObject.h" />
+    <ClInclude Include="Edit\LevelPreferences.h" />
+    <ClInclude Include="Edit\portal.h" />
+    <ClInclude Include="Edit\portalutils.h" />
+    <ClInclude Include="Edit\scene.h" />
+    <ClInclude Include="Edit\SceneObject.h" />
+    <ClInclude Include="Edit\SceneSummaryInfo.h" />
+    <ClInclude Include="Edit\sector.h" />
+    <ClInclude Include="Edit\SoundManager_LE.h" />
+    <ClInclude Include="Edit\SpawnPoint.h" />
+    <ClInclude Include="Edit\UI_LevelMain.h" />
+    <ClInclude Include="Edit\UI_LevelTools.h" />
+    <ClInclude Include="Edit\WayPoint.h" />
+    <ClInclude Include="framework.h" />
+    <ClInclude Include="ImGui\IM_FrameAIMap.h" />
+    <ClInclude Include="ImGui\IM_FrameDetail.h" />
+    <ClInclude Include="ImGui\IM_FrameFogVol.h" />
+    <ClInclude Include="ImGui\IM_FrameGroup.h" />
+    <ClInclude Include="ImGui\IM_FrameLight.h" />
+    <ClInclude Include="ImGui\IM_FrameObject.h" />
+    <ClInclude Include="ImGui\IM_FramePortal.h" />
+    <ClInclude Include="ImGui\IM_FramePS.h" />
+    <ClInclude Include="ImGui\IM_FrameSector.h" />
+    <ClInclude Include="ImGui\IM_FrameShape.h" />
+    <ClInclude Include="ImGui\IM_FrameSpawn.h" />
+    <ClInclude Include="ImGui\IM_FrameWayPoint.h" />
+    <ClInclude Include="ImGui\IM_LeftBar.h" />
+    <ClInclude Include="ImGui\IM_TopBar.h" />
+    <ClInclude Include="iniStreamImpl.h" />
+    <ClInclude Include="LevelEditor.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Layers\xrRender\DetailManager.cpp" />
+    <ClCompile Include="..\..\Layers\xrRender\DetailManager_CACHE.cpp" />
+    <ClCompile Include="..\..\Layers\xrRender\DetailManager_Decompress.cpp" />
+    <ClCompile Include="..\..\Layers\xrRender\DetailManager_soft.cpp" />
+    <ClCompile Include="..\..\Layers\xrRender\DetailManager_VS.cpp" />
+    <ClCompile Include="..\..\xrServerEntities\gametype_chooser.cpp" />
+    <ClCompile Include="..\..\xrServerEntities\LevelGameDef.cpp" />
+    <ClCompile Include="..\ECore\builder_types.cpp" />
+    <ClCompile Include="Edit\Builder.cpp" />
+    <ClCompile Include="Edit\BuilderCF.cpp" />
+    <ClCompile Include="Edit\BuilderCore.cpp" />
+    <ClCompile Include="Edit\BuilderGame.cpp" />
+    <ClCompile Include="Edit\BuilderLODs.cpp" />
+    <ClCompile Include="Edit\BuilderLTX.cpp" />
+    <ClCompile Include="Edit\BuilderOGF.cpp" />
+    <ClCompile Include="Edit\BuilderRemote.cpp" />
+    <ClCompile Include="Edit\Cursor3D.cpp" />
+    <ClCompile Include="Edit\Custom2DProjector.cpp" />
+    <ClCompile Include="Edit\CustomObject.cpp" />
+    <ClCompile Include="Edit\CustomObjectAnimation.cpp" />
+    <ClCompile Include="Edit\CustomObjectLE.cpp" />
+    <ClCompile Include="Edit\ELight.cpp" />
+    <ClCompile Include="Edit\ELight_IO.cpp" />
+    <ClCompile Include="Edit\ELight_props.cpp" />
+    <ClCompile Include="Edit\EParticlesObject.cpp" />
+    <ClCompile Include="Edit\ESceneAIMapControls.cpp" />
+    <ClCompile Include="Edit\ESceneAIMapTools.cpp" />
+    <ClCompile Include="Edit\ESceneAIMapTools_Controls.cpp" />
+    <ClCompile Include="Edit\ESceneAIMapTools_Export.cpp" />
+    <ClCompile Include="Edit\ESceneAIMapTools_Generate.cpp" />
+    <ClCompile Include="Edit\ESceneAIMapTools_MotionSimulator.cpp" />
+    <ClCompile Include="Edit\ESceneAIMapTools_Pick.cpp" />
+    <ClCompile Include="Edit\ESceneAIMapTools_Render.cpp" />
+    <ClCompile Include="Edit\ESceneControlsCustom.cpp" />
+    <ClCompile Include="Edit\ESceneCustomMTools.cpp" />
+    <ClCompile Include="Edit\ESceneCustomMToolsControls.cpp" />
+    <ClCompile Include="Edit\ESceneCustomOTools.cpp" />
+    <ClCompile Include="Edit\ESceneCustomOToolsFactory.cpp" />
+    <ClCompile Include="Edit\ESceneCustomOToolsIO.cpp" />
+    <ClCompile Include="Edit\ESceneDOTools.cpp" />
+    <ClCompile Include="Edit\ESceneDOTools_Controls.cpp" />
+    <ClCompile Include="Edit\ESceneDOTools_Generate.cpp" />
+    <ClCompile Include="Edit\ESceneDOTools_Pick.cpp" />
+    <ClCompile Include="Edit\ESceneDummyTools.cpp" />
+    <ClCompile Include="Edit\ESceneFogVolumeTools.cpp" />
+    <ClCompile Include="Edit\ESceneGlowTools.cpp" />
+    <ClCompile Include="Edit\ESceneGlowToolsIO.cpp" />
+    <ClCompile Include="Edit\ESceneGroupControls.cpp" />
+    <ClCompile Include="Edit\ESceneGroupTools.cpp" />
+    <ClCompile Include="Edit\ESceneGroupToolsIO.cpp" />
+    <ClCompile Include="Edit\ESceneLightTools.cpp" />
+    <ClCompile Include="Edit\ESceneLightToolsIO.cpp" />
+    <ClCompile Include="Edit\ESceneObjectControls.cpp" />
+    <ClCompile Include="Edit\ESceneObjectTools.cpp" />
+    <ClCompile Include="Edit\ESceneObjectToolsExportBreakable.cpp" />
+    <ClCompile Include="Edit\ESceneObjectToolsIO.cpp" />
+    <ClCompile Include="Edit\EScenePortalControls.cpp" />
+    <ClCompile Include="Edit\EScenePortalTools.cpp" />
+    <ClCompile Include="Edit\EScenePortalToolsIO.cpp" />
+    <ClCompile Include="Edit\EScenePSControls.cpp" />
+    <ClCompile Include="Edit\EScenePSTools.cpp" />
+    <ClCompile Include="Edit\EScenePSToolsIO.cpp" />
+    <ClCompile Include="Edit\ESceneSectorControls.cpp" />
+    <ClCompile Include="Edit\ESceneSectorTools.cpp" />
+    <ClCompile Include="Edit\ESceneSectorToolsIO.cpp" />
+    <ClCompile Include="Edit\ESceneShapeControls.cpp" />
+    <ClCompile Include="Edit\ESceneShapeTools.cpp" />
+    <ClCompile Include="Edit\ESceneShapeToolsIO.cpp" />
+    <ClCompile Include="Edit\ESceneSoundEnvTools.cpp" />
+    <ClCompile Include="Edit\ESceneSoundEnvToolsIO.cpp" />
+    <ClCompile Include="Edit\ESceneSoundSrcTools.cpp" />
+    <ClCompile Include="Edit\ESceneSoundSrcToolsIO.cpp" />
+    <ClCompile Include="Edit\ESceneSpawnControls.cpp" />
+    <ClCompile Include="Edit\ESceneSpawnTools.cpp" />
+    <ClCompile Include="Edit\ESceneSpawnToolsIO.cpp" />
+    <ClCompile Include="Edit\ESceneWallmarkControls.cpp" />
+    <ClCompile Include="Edit\ESceneWallmarkTools.cpp" />
+    <ClCompile Include="Edit\ESceneWayControls.cpp" />
+    <ClCompile Include="Edit\ESceneWayTools.cpp" />
+    <ClCompile Include="Edit\ESceneWayToolsIO.cpp" />
+    <ClCompile Include="Edit\EShape.cpp" />
+    <ClCompile Include="Edit\ESound_Environment.cpp" />
+    <ClCompile Include="Edit\ESound_Source.cpp" />
+    <ClCompile Include="Edit\GeometryPartExtractor.cpp" />
+    <ClCompile Include="Edit\glow.cpp" />
+    <ClCompile Include="Edit\GroupObject.cpp" />
+    <ClCompile Include="Edit\GroupObjectUtils.cpp" />
+    <ClCompile Include="Edit\LevelPreferences.cpp" />
+    <ClCompile Include="Edit\portal.cpp" />
+    <ClCompile Include="Edit\portalutils.cpp" />
+    <ClCompile Include="Edit\scene.cpp" />
+    <ClCompile Include="Edit\SceneIO.cpp" />
+    <ClCompile Include="Edit\SceneObject.cpp" />
+    <ClCompile Include="Edit\SceneObjectIO.cpp" />
+    <ClCompile Include="Edit\ScenePick.cpp" />
+    <ClCompile Include="Edit\SceneRender.cpp" />
+    <ClCompile Include="Edit\SceneSelection.cpp" />
+    <ClCompile Include="Edit\SceneSnap.cpp" />
+    <ClCompile Include="Edit\SceneSummaryInfo.cpp" />
+    <ClCompile Include="Edit\SceneUndo.cpp" />
+    <ClCompile Include="Edit\SceneUtil.cpp" />
+    <ClCompile Include="Edit\Scene_Tools.cpp" />
+    <ClCompile Include="Edit\sector.cpp" />
+    <ClCompile Include="Edit\SoundManager_LE.cpp" />
+    <ClCompile Include="Edit\SpawnPoint.cpp" />
+    <ClCompile Include="Edit\UI_LevelMain.cpp" />
+    <ClCompile Include="Edit\UI_LevelTools.cpp" />
+    <ClCompile Include="Edit\WayPoint.cpp" />
+    <ClCompile Include="ImGui\IM_FrameAIMap.cpp" />
+    <ClCompile Include="ImGui\IM_FrameDetail.cpp" />
+    <ClCompile Include="ImGui\IM_FrameFogVol.cpp" />
+    <ClCompile Include="ImGui\IM_FrameGroup.cpp" />
+    <ClCompile Include="ImGui\IM_FrameLight.cpp" />
+    <ClCompile Include="ImGui\IM_FrameObject.cpp" />
+    <ClCompile Include="ImGui\IM_FramePortal.cpp" />
+    <ClCompile Include="ImGui\IM_FramePS.cpp" />
+    <ClCompile Include="ImGui\IM_FrameSector.cpp" />
+    <ClCompile Include="ImGui\IM_FrameShape.cpp" />
+    <ClCompile Include="ImGui\IM_FrameSpawn.cpp" />
+    <ClCompile Include="ImGui\IM_FrameWayPoint.cpp" />
+    <ClCompile Include="ImGui\IM_LeftBar.cpp" />
+    <ClCompile Include="ImGui\IM_TopBar.cpp" />
+    <ClCompile Include="iniStreamImpl.cpp" />
+    <ClCompile Include="LevelEditor.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="LevelEditor.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="LevelEditor.ico" />
+    <Image Include="small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\utils\ETools\ETools.vcxproj">
+      <Project>{65cbb9d0-fbc6-41a4-8316-f5e9b5d7fb33}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\xrCDB\xrCDB.vcxproj">
+      <Project>{a19b1df2-82ec-4364-8bdf-85d13a1c89b5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\xrCore\xrCore.vcxproj">
+      <Project>{a0f7d1fb-59a7-4717-a7e4-96f37e91998e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\xrSound\xrSound.vcxproj">
+      <Project>{ccca7859-eb86-493e-9b53-c4235f45b3c5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\ECore\ECore.vcxproj">
+      <Project>{b3cacae3-93ec-4e3c-9279-ece3ac5a7aa2}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\xrEProps\xrEProps.vcxproj">
+      <Project>{499f99a4-6c44-4599-8eae-0eb73827923e}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

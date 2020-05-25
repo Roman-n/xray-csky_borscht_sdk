@@ -2,18 +2,18 @@
 #ifndef renderH
 #define renderH
 
-#include "frustum.h"
-#include "vis_common.h"
+#include <xrEngine/Frustum.h>
+#include <xrEngine/vis_common.h>
 
-#include "..\..\Layers\xrRender\blenders\blender.h"
-#include "..\..\Layers\xrRender\blenders\blender_clsid.h"
-#include "..\..\Layers\xrRender\xrRender_console.h"
-#include "..\..\Layers\xrRender\PSLibrary.h"
-#include "..\..\Layers\xrRender\IRenderDetailModel.H"
-#include "..\..\Layers\xrRender\DetailModel.H"
-#include "..\..\Layers\xrRender\ModelPool.h"
-#include "..\..\Layers\xrRender\SkeletonCustom.h"
-#include "..\..\Include/xrAPI/xrAPI.h"
+#include <Layers/xrRender/blenders/Blender.h>
+#include <Layers/xrRender/blenders/blender_clsid.h>
+#include <Layers/xrRender/xrRender_console.h>
+#include <Layers/xrRender/PSLibrary.h>
+#include <Layers/xrRender/IRenderDetailModel.h>
+#include <Layers/xrRender/DetailModel.h>
+#include <Layers/xrRender/ModelPool.h>
+#include <Layers/xrRender/SkeletonCustom.h>
+#include <Include/xrAPI/xrAPI.h>
 
 
 // definition (Renderer)

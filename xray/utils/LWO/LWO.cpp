@@ -18,14 +18,14 @@ BOOL APIENTRY DllMain( HANDLE hModule,
 }
 
 extern "C"{ 
-	__declspec(dllexport) lwObject* LWO_ImportObject(char* filename, lwObject* new_obj){
+	extern "C" __declspec(dllexport) lwObject* LWO_ImportObject(char* filename, lwObject* new_obj){
 		unsigned int failID;
 		int failpos;
 		new_obj = lwGetObject( filename, &failID, &failpos );
 		return new_obj; 
 	}
 
-	__declspec(dllexport) void LWO_CloseFile(lwObject *new_obj){
+	extern "C" __declspec(dllexport) void LWO_CloseFile(lwObject *new_obj){
 		lwFreeObject( new_obj );
 	}
 }

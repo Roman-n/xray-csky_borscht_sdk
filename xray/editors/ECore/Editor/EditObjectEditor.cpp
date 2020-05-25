@@ -3,15 +3,15 @@
 
 #include "EditObject.h"
 #include "EditMesh.h"
-#include "motion.h"
-#include "bone.h"
+#include <xrEngine/motion.h>
+#include <xrEngine/bone.h>
 #include "ExportSkeleton.h"
 #include "ExportObjectOGF.h"
-#include "d3dutils.h"
+#include <Layers/xrRender/D3DUtils.h>
 #include "ui_main.h"
 #include "render.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
-#include "ResourceManager.h"
+#include <xrServerEntities/PropertiesListHelper.h>
+#include <Layers/xrRender/ResourceManager.h>
 #include "ImageManager.h"
 
 const float tex_w	= LOD_SAMPLE_COUNT*LOD_IMAGE_SIZE;
@@ -238,7 +238,7 @@ void CEditableObject::RenderLOD(const Fmatrix& parent)
         for (int i=0; i<4; i++){ LOD[i].p.set(p[i]); LOD[i].t.set(t[i]); }
     	RCache.set_xform_world(parent);
         Device.SetShader		(m_LODShader?m_LODShader:Device.m_WireShader);
-    	DU_impl.DrawPrimitiveLIT	(D3DPT_TRIANGLEFAN, 2, LOD, 4, true, false);
+    	DUImpl.DrawPrimitiveLIT	(D3DPT_TRIANGLEFAN, 2, LOD, 4, true, false);
     }
 }
 
@@ -346,7 +346,7 @@ bool CEditableObject::PrepareOMF(IWriter& F)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall CEditableObject::OnChangeTransform(PropValue*)
+void __stdcall CEditableObject::OnChangeTransform(PropValue*)
 {
 	UI->RedrawScene();
 }

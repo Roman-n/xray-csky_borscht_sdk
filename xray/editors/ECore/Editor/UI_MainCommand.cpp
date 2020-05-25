@@ -5,28 +5,30 @@
 
 #include "ui_main.h"
 #include "UI_ToolsCustom.h"
-
+#ifndef NO_VCL
 #include "ImageEditor.h"
 #include "MinimapEditor.h"
 #include "SoundEditor.h"
-#include "d3dutils.h"
+#include "../../xrEProps/NumericVector.h"
+#include "../../xrEProps/TextForm.h"
+#endif
+#include <Layers/xrRender/D3DUtils.h>
 
-#include "PSLibrary.h"
+#include <Layers/xrRender/PSLibrary.h>
 #include "Library.h"
-#include "LightAnimLibrary.h"
+#include <xrEngine/LightAnimLibrary.h>
 
 #include "ImageManager.h"
 #include "SoundManager.h"
-#include "ResourceManager.h"
-#include "igame_persistent.h"
-#include "NumericVector.h"
-
-#include "TextForm.h"
+#include <Layers/xrRender/ResourceManager.h>
+#include <xrEngine/IGame_Persistent.h>
 
 ECommandVec 		ECommands;
 BOOL 				bAllowReceiveCommand	= FALSE;
 BOOL 				bAllowLogCommands		= FALSE;
+#ifndef NO_VCL
 TfrmText*			frmEditCommandList		= 0;
+#endif
 AnsiString			sCommandListText;
 
 BOOL AllowLogCommands()
@@ -200,8 +202,10 @@ void	TUI::ClearCommands ()
 //------------------------------------------------------------------------------
 CCommandVar	TUI::CommandRenderFocus(CCommandVar p1, CCommandVar p2)
 {
+#ifndef NO_VCL
     if (((TForm*)m_D3DWindow->Owner)->Visible&&m_bReady)
         m_D3DWindow->SetFocus();
+#endif
     return 1;
 }
 CCommandVar	TUI::CommandBreakLastOperation(CCommandVar p1, CCommandVar p2)
@@ -214,6 +218,7 @@ CCommandVar	TUI::CommandBreakLastOperation(CCommandVar p1, CCommandVar p2)
 }
 CCommandVar 	TUI::CommandRenderResize(CCommandVar p1, CCommandVar p2)
 {
+#ifndef NO_VCL
     if (psDeviceFlags.is(rsDrawSafeRect)){
         int w=m_D3DPanel->Width,h=m_D3DPanel->Height,w_2=w/2,h_2=h/2;
         Irect rect;
@@ -229,6 +234,7 @@ CCommandVar 	TUI::CommandRenderResize(CCommandVar p1, CCommandVar p2)
         m_D3DWindow->Width 	= m_D3DPanel->Width;
         m_D3DWindow->Height	= m_D3DPanel->Height;
     }
+#endif
     UI->RedrawScene		();
     return 1;
 }
@@ -322,7 +328,9 @@ CCommandVar 	CommandSetSettings(CCommandVar p1, CCommandVar p2)
 }             
 CCommandVar 	CommandSoundEditor(CCommandVar p1, CCommandVar p2)
 {
+#ifndef NO_VCL
     TfrmSoundLib::EditLib(AnsiString("Sound Editor"));
+#endif
     return				TRUE;
 }
 CCommandVar 	CommandSyncSounds(CCommandVar p1, CCommandVar p2)
@@ -333,19 +341,25 @@ CCommandVar 	CommandSyncSounds(CCommandVar p1, CCommandVar p2)
 }
 CCommandVar 	CommandImageEditor(CCommandVar p1, CCommandVar p2)
 {
+#ifndef NO_VCL
     TfrmImageLib::EditLib(AnsiString("Image Editor"));
+#endif
     return				TRUE;
 }
 
 CCommandVar 	CommandMinimapEditor(CCommandVar p1, CCommandVar p2)
 {
+#ifndef NO_VCL
     TTMinimapEditor::Show   ();
+#endif
     return				    TRUE;
 }
 
 CCommandVar 	CommandCheckTextures(CCommandVar p1, CCommandVar p2)
 {
+#ifndef NO_VCL
     TfrmImageLib::ImportTextures();
+#endif
     return				TRUE;
 }
 CCommandVar 	CommandRefreshTextures(CCommandVar p1, CCommandVar p2)
@@ -362,7 +376,9 @@ CCommandVar 	CommandReloadTextures(CCommandVar p1, CCommandVar p2)
 }
 CCommandVar 	CommandChangeSnap(CCommandVar p1, CCommandVar p2)
 {
+#ifndef NO_VCL
     ((TExtBtn*)(u32)p1)->Down = !((TExtBtn*)(u32)p1)->Down;
+#endif
     return				TRUE;
 }
 CCommandVar 	CommandUnloadTextures(CCommandVar p1, CCommandVar p2)
@@ -436,7 +452,7 @@ CCommandVar 	CommandToggleGrid(CCommandVar p1, CCommandVar p2)
 }
 CCommandVar 	CommandUpdateGrid(CCommandVar p1, CCommandVar p2)
 {
-    DU_impl.UpdateGrid		(EPrefs->grid_cell_count,EPrefs->grid_cell_size);
+    DUImpl.UpdateGrid		(EPrefs->grid_cell_count,EPrefs->grid_cell_size);
     UI->OutGridSize		();
     UI->RedrawScene		();
     return				TRUE;
@@ -476,9 +492,11 @@ CCommandVar 	CommandMuteSound(CCommandVar p1, CCommandVar p2)
 }
 CCommandVar CommandMoveCameraTo(CCommandVar p1, CCommandVar p2)
 {
+#ifndef NO_VCL
     Fvector pos					= Device.m_Camera.GetPosition();
     if (NumericVectorRun		("Move to",&pos,3))
         Device.m_Camera.Set		(Device.m_Camera.GetHPB(),pos);
+#endif
     return 						TRUE;
 }
 
@@ -548,16 +566,20 @@ CCommandVar 	CommandExecuteCommandList(CCommandVar _p1, CCommandVar _p2)
 
 bool __stdcall OnCloseCommandListEditor()
 {
+#ifndef NO_VCL                   
 	frmEditCommandList	= 0;
+#endif
     return 		true;
 }
 
 CCommandVar 	CommandEditCommandList(CCommandVar _p1, CCommandVar _p2)
 {
+#ifndef NO_VCL
     if (NULL==frmEditCommandList){
     	frmEditCommandList	= TfrmText::CreateForm(sCommandListText,"Execute command list",0,0,"Run",OnRunExecuteListClick,OnCloseCommandListEditor);
         return TRUE;
     }
+#endif
     return FALSE;
 }
 

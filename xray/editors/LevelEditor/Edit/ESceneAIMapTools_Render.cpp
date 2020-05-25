@@ -5,9 +5,11 @@
 #pragma hdrstop
 
 #include "ESceneAIMapTools.h"
-#include "../../ECORE/EDITOR/D3dUtils.h"
+#include <Layers/xrRender/D3DUtils.h>
 #include "SceneObject.h"
+#ifndef NO_VCL
 #include "bottombar.h"
+#endif
 #include "ui_leveltools.h"
 
 typedef Fvector2 t_node_tc[4];
@@ -59,7 +61,7 @@ void ESceneAIMapTool::OnRender(int priority, bool strictB2F)
 			if (OBJCLASS_AIMAP==LTools->CurrentClassID()){
 	            u32 clr = 0xffffc000;
 	            Device.SetShader	(Device.m_WireShader);
-    	        DU_impl.DrawSelectionBox	(m_AIBBox,&clr);
+    	        DUImpl.DrawSelectionBox	(m_AIBBox,&clr);
             }
             if (Valid()){
                 // render nodes

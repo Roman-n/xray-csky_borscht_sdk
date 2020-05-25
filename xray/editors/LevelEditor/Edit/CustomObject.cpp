@@ -7,8 +7,8 @@
 
 #include "customobject.h"
 #include "UI_LevelMain.h"
-#include "../ECore/Editor/D3DUtils.h"
-#include "motion.h"
+#include <Layers/xrRender/D3DUtils.h>
+#include <xrEngine/motion.h>
 
 #define CUSTOMOBJECT_CHUNK_PARAMS 		0xF900
 #define CUSTOMOBJECT_CHUNK_LOCK	 		0xF902
@@ -54,10 +54,10 @@ void CCustomObject::OnUpdateTransform()
 {
 	m_RT_Flags.set			(flRT_UpdateTransform,FALSE);
     // update transform matrix
-	FTransformR.setXYZi		(-PRotation.x, -PRotation.y, -PRotation.z);
+	FTransformR.setXYZi		(-GetRotation().x, -GetRotation().y, -GetRotation().z);
 
-	FTransformS.scale		(PScale);
-	FTransformP.translate	(PPosition);
+	FTransformS.scale		(GetScale());
+	FTransformP.translate	(GetPosition());
 	FTransformRP.mul		(FTransformP,FTransformR);
 	FTransform.mul			(FTransformRP,FTransformS);
     FITransformRP.invert	(FTransformRP);
@@ -142,7 +142,7 @@ bool CCustomObject::LoadStream(IReader& F)
     {
         m_Motion 	= xr_new<COMotion>();
         if (!m_Motion->Load(F)){
-            ELog.Msg(mtError,"CustomObject: '%s' - motion has different version. Load failed.",Name);
+            ELog.Msg(mtError,"CustomObject: '%s' - motion has different version. Load failed.",GetName());
             xr_delete(m_Motion);
         }
         m_MotionParams = xr_new<SAnimParams>();
@@ -230,7 +230,7 @@ void CCustomObject::OnFrame()
 
 void CCustomObject::RenderRoot(int priority, bool strictB2F)
 {
-	if(FParentTools->IsVisible())
+	if(ParentTool->IsVisible())
 		Render(priority, strictB2F);
 }
 
@@ -239,7 +239,7 @@ void CCustomObject::Render(int priority, bool strictB2F)
 	if ((1==priority)&&(false==strictB2F)){
         if (EPrefs->object_flags.is(epoDrawPivot)&&Selected()){
             Device.SetShader(Device.m_WireShader);
-            DU_impl.DrawObjectAxis(FTransformRP,0.1f,Selected());
+            DUImpl.DrawObjectAxis(FTransformRP,0.1f,Selected());
         }
         if (m_Motion&&Visible()&&Selected())
             AnimationDrawPath();

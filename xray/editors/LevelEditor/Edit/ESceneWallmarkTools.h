@@ -44,7 +44,11 @@ private:
 	sPoly				sml_poly_dest;
 	sPoly				sml_poly_src;
 
-	CDB::Collector 		sml_collector;
+	struct Sml {
+		u32 dummy;//maybe "bool visited;"
+		bool operator!=(const Sml& other) { return dummy != other.dummy; }
+    };
+	CDB::Collector_Generic<Sml> sml_collector;
 	xr_vector<u32>		sml_adjacency;
 
 	wm_slot*			FindSlot				(shared_str sh_name, shared_str tx_name);

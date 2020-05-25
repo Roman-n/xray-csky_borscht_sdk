@@ -2,9 +2,9 @@
 #pragma hdrstop
 
 #include "customobject.h"
-#include "motion.h"
-#include "envelope.h"
-#include "../ECore/Editor/D3DUtils.h"
+#include <xrEngine/motion.h>
+#include <xrEngine/envelope.h>
+#include <Layers/xrRender/D3DUtils.h>
 #include "../ECore/Editor/ui_main.h"
 
 void  CCustomObject::OnMotionableChange(PropValue* sender)
@@ -21,8 +21,8 @@ void  CCustomObject::OnMotionableChange(PropValue* sender)
 
 void CCustomObject::AnimationCreateKey(float t)
 {
-    Fvector R;		R.set(-PRotation.x,-PRotation.y,-PRotation.z);
-    m_Motion->CreateKey(t,PPosition,R);
+    Fvector R;		R.set(-GetRotation().x,-GetRotation().y,-GetRotation().z);
+    m_Motion->CreateKey(t,GetPosition(),R);
 }
 
 void CCustomObject::AnimationDeleteKey(float t)
@@ -39,8 +39,8 @@ void CCustomObject::AnimationUpdate(float t)
 
 //    speed					= speed*0.9f+(P.distance_to(PPosition)/Device.fTimeDelta)*0.1f;
 //    Log("speed: ",speed);
-    PPosition 				= P;
-    PRotation 				= R;
+    SetPosition 			(P);
+    SetRotation				(R);
     BOOL bAK				= m_CO_Flags.is(flAutoKey);
     m_CO_Flags.set			(flAutoKey,FALSE);
     UpdateTransform			(true);
@@ -82,13 +82,14 @@ void CCustomObject::AnimationDrawPath()
         Device.SetShader		(Device.m_WireShader);
         RCache.set_xform_world	(Fidentity);
         if (!path_points.empty())
-        	DU_impl.DrawPrimitiveL		(D3DPT_LINESTRIP,path_points.size()-1,path_points.begin(),path_points.size(),clr,true,false);
+        	DUImpl.DrawPrimitiveL		(D3DPT_LINESTRIP,path_points.size()-1,path_points.data(),path_points.size(),clr,true,false);
         CEnvelope* E 			= m_Motion->Envelope();
         for (KeyIt k_it=E->keys.begin(); k_it!=E->keys.end(); k_it++){
             m_Motion->_Evaluate	((*k_it)->time,T,r);
             if (Device.m_Camera.GetPosition().distance_to_sqr(T)<50.f*50.f){
-                DU_impl.DrawCross	(T,0.1f,0.1f,0.1f, 0.1f,0.1f,0.1f, clr,false);
-                DU_impl.OutText		(T,AnsiString().sprintf("K: %3.3f",(*k_it)->time).c_str(),0xffffffff,0x00000000);
+                DUImpl.DrawCross	(T,0.1f,0.1f,0.1f, 0.1f,0.1f,0.1f, clr,false);
+                string64 temp; sprintf(temp,"K: %3.3f",(*k_it)->time);
+                DUImpl.OutText		(T,temp,0xffffffff,0x00000000);
             }
         }
     }
@@ -159,6 +160,7 @@ void 	CCustomObject::OnMotionCommandsClick(ButtonValue* value, bool& bModif, boo
     	AnimationDeleteKey	(m_MotionParams->t_current);
     break;
     case 2:{
+#ifndef NO_VCL
     	TProperties* P 		= TProperties::CreateModalForm("Scale keys");
         PropItemVec items;
         float from_time=m_MotionParams->min_t,to_time=m_MotionParams->max_t,scale_factor=1.f;
@@ -175,8 +177,10 @@ void 	CCustomObject::OnMotionCommandsClick(ButtonValue* value, bool& bModif, boo
         	m_MotionParams->max_t=mx;
 			m_Motion->SetParam	(m_MotionParams->min_t*30.f,m_MotionParams->max_t*30.f,30.f);
         }
+#endif
     }break;
     case 3:{
+#ifndef NO_VCL
     	TProperties* P 		= TProperties::CreateModalForm("Normalize keys");
         PropItemVec items;
         float from_time=m_MotionParams->min_t,to_time=m_MotionParams->max_t,speed=5.f;
@@ -193,6 +197,7 @@ void 	CCustomObject::OnMotionCommandsClick(ButtonValue* value, bool& bModif, boo
         	m_MotionParams->max_t=mx;
  			m_Motion->SetParam	(m_MotionParams->min_t*30.f,m_MotionParams->max_t*30.f,30.f);
         }
+#endif
     }break;
     case 4:{
     	float mn,mx;

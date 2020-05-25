@@ -15,7 +15,7 @@
 #include "../../xrServerEntities/xrServer_Objects_Abstract.h"
 #include "ESceneSpawnTools.h"
 #include "GeometryPartExtractor.h"
-#include "ResourceManager.h"
+#include <Layers/xrRender/ResourceManager.h>
 
 static bool s_draw_dbg = false;
 
@@ -116,8 +116,9 @@ bool ESceneObjectTool::ExportBreakableObjects(SExportStreams* F)
             SBPart*	P				= *p_it;
         	if (P->Valid()){
                 // export visual
-                AnsiString sn		= AnsiString().sprintf("meshes\\brkbl#%d.ogf",(p_it-parts.begin()));
-                xr_string fn		= Scene->LevelPath()+sn.c_str();
+                string64 sn;
+                sprintf(sn,"meshes\\brkbl#%d.ogf",(p_it-parts.begin()));
+                xr_string fn		= Scene->LevelPath()+sn;
                 IWriter* W			= FS.w_open(fn.c_str()); R_ASSERT(W);
                 if (!P->Export(*W,1)){
                     ELog.DlgMsg		(mtError,"Invalid breakable object.");
@@ -132,10 +133,10 @@ bool ESceneObjectTool::ExportBreakableObjects(SExportStreams* F)
                     CSE_Visual* m_Visual		= m_Data->visual();	VERIFY(m_Visual);
                     // set params
                     m_Data->set_name			(entity_ref.c_str());
-                    m_Data->set_name_replace	(sn.c_str());
+                    m_Data->set_name_replace	(sn);
                     m_Data->position().set		(P->m_RefOffset);
                     m_Data->angle().set			(P->m_RefRotate);
-                    m_Visual->set_visual		(sn.c_str(),false);
+                    m_Visual->set_visual		(sn,false);
 
 					if (s_draw_dbg){
                         Fmatrix MX;
@@ -223,7 +224,8 @@ bool ESceneObjectTool::ExportClimableObjects(SExportStreams* F)
             SBPart*	P				= *p_it;
         	if (P->Valid()){
                 // export visual
-                AnsiString sn		= AnsiString().sprintf("clmbl#%d",(p_it-parts.begin()));
+                string64 sn;
+                sprintf(sn, "clmbl#%d",(p_it-parts.begin()));
 /*
                 AnsiString fn		= AnsiString().sprintf("%smeshes\\%s.ogf",Scene->LevelPath().c_str(),sn.c_str());
                 IWriter* W			= FS.w_open(fn.c_str()); VERIFY(W);
@@ -247,7 +249,7 @@ bool ESceneObjectTool::ExportClimableObjects(SExportStreams* F)
 //					CSE_Visual* m_Visual		= m_Data->visual();	VERIFY(m_Visual);
                     // set params
                     m_Data->set_name			(entity_ref.c_str());
-                    m_Data->set_name_replace	(sn.c_str());
+                    m_Data->set_name_replace	(sn);
                     // set shape
                     CShapeData::shape_def		shape;
                     shape.type					= CShapeData::cfBox;

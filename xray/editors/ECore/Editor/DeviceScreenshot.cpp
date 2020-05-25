@@ -4,7 +4,7 @@
 
 #include "ui_toolscustom.h"
 #include "ui_main.h"
-#include "ResourceManager.h"
+#include <Layers/xrRender/ResourceManager.h>
 
 bool CRenderDevice::MakeScreenshot(U32Vec& pixels, u32 width, u32 height)
 {
@@ -45,9 +45,9 @@ bool CRenderDevice::MakeScreenshot(U32Vec& pixels, u32 width, u32 height)
 	// Image processing
 	u32* pPixel	= (u32*)D.pBits;
 
-    U32It it 		= pixels.begin();
+    u32* it 		= pixels.data();
     for (int h=height-1; h>=0; h--,it+=width){
-        LPDWORD dt 	= LPDWORD(u32(pPixel)+u32(D.Pitch*h));
+        LPDWORD dt 	= LPDWORD(DWORD_PTR(pPixel)+u32(D.Pitch*h));
         CopyMemory	(it,dt,sizeof(u32)*width);
     }
 

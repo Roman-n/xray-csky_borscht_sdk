@@ -58,7 +58,7 @@ class CCustomObject;
                 u			= r->u;
                 v			= r->v;
                 range		= r->range;
-                tag			= r->dummy;
+                //tag			= r->dummy;
                 e_obj		= obj;
                 e_mesh		= mesh;
             }
@@ -70,7 +70,7 @@ class CCustomObject;
                 u			= r->u;
                 v			= r->v;
                 range		= r->range;
-                tag			= r->dummy;
+                //tag			= r->dummy;
                 e_obj		= obj;
                 e_mesh		= mesh;
             }
@@ -115,11 +115,11 @@ class CCustomObject;
         }
         IC SResult* r_begin	()
         {
-        	return results.begin();
+        	return results.data();
         }
         IC SResult* r_end	()
         {
-        	return results.end();
+        	return results.data() + results.size();
         }
         IC void r_clear		()
         {
@@ -138,7 +138,7 @@ class CCustomObject;
 		Fvector     		pt;
 		SRayPickInfo		(){Reset();}
 		IC void Reset		(){ ZeroMemory(this,sizeof(SRayPickInfo));inf.range = 5000;}
-		IC void SetRESULT	(CDB::MODEL* M, CDB::RESULT* R){inf=*R;inf.id=(M->get_tris()+inf.id)->dummy;}
+		IC void SetRESULT	(CDB::MODEL* M, CDB::RESULT* R){inf=*R;/*inf.id=(M->get_tris()+inf.id)->dummy;*/}
 	};
     DEFINE_VECTOR(CDB::RESULT,BPInfVec,BPInfIt);
 	struct SBoxPickInfo{
@@ -148,7 +148,7 @@ class CCustomObject;
 		CEditableMesh*		e_mesh;
 		SBoxPickInfo		(){Reset();}
 		IC void Reset		(){ZeroMemory(this,sizeof(SBoxPickInfo));}
-		IC void AddRESULT	(CDB::MODEL* M, CDB::RESULT* R){inf.push_back(*R); inf.back().id=(M->get_tris()+inf.back().id)->dummy;}
+		IC void AddRESULT	(CDB::MODEL* M, CDB::RESULT* R){inf.push_back(*R); /*inf.back().id=(M->get_tris()+inf.back().id)->dummy;*/}
 	};
 	DEFINE_VECTOR(SBoxPickInfo,SBoxPickInfoVec,SBoxPickInfoIt);
 #endif

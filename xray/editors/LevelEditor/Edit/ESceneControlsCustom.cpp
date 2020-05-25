@@ -4,9 +4,13 @@
 #include "ESceneControlsCustom.h"
 #include "ui_leveltools.h"
 #include "scene.h"
+#ifndef NO_VCL
 #include "bottombar.h"
+#endif
 #include "ui_levelmain.h"
+#ifndef NO_VCL
 #include "leftbar.h"
+#endif
 
 TUI_CustomControl::TUI_CustomControl(int st, int act, ESceneToolBase* parent){
 	parent_tool		= parent; VERIFY(parent);
@@ -58,7 +62,7 @@ bool TUI_CustomControl::HiddenMode(){
 //------------------------------------------------------------------------------
 // add
 //------------------------------------------------------------------------------
-CCustomObject* __fastcall TUI_CustomControl::DefaultAddObject(TShiftState Shift, TBeforeAppendCallback before, TAfterAppendCallback after)
+CCustomObject* TUI_CustomControl::DefaultAddObject(TShiftState Shift, TBeforeAppendCallback before, TAfterAppendCallback after)
 {
     if (Shift==ssRBOnly){ ExecCommand(COMMAND_SHOWCONTEXTMENU,parent_tool->ClassID); return 0;}
     Fvector p,n;
@@ -91,21 +95,22 @@ CCustomObject* __fastcall TUI_CustomControl::DefaultAddObject(TShiftState Shift,
     return obj;
 }
 
-bool __fastcall TUI_CustomControl::AddStart(TShiftState Shift)
+bool TUI_CustomControl::AddStart(TShiftState Shift)
 {
 	DefaultAddObject(Shift,0);
     return false;
 }
-void __fastcall TUI_CustomControl::AddProcess(TShiftState _Shift)
+void TUI_CustomControl::AddProcess(TShiftState _Shift)
 {
 }
-bool __fastcall TUI_CustomControl::AddEnd(TShiftState _Shift)
+bool TUI_CustomControl::AddEnd(TShiftState _Shift)
 {
     return true;
 }
 
 bool TUI_CustomControl::CheckSnapList(TShiftState Shift)
 {
+#ifndef NO_VCL
 	if (fraLeftBar->ebSnapListMode->Down){
 	    CCustomObject* O=Scene->RayPickObject(UI->ZFar(),UI->m_CurrentRStart,UI->m_CurrentRNorm,OBJCLASS_SCENEOBJECT,0,0);
         if (O){
@@ -127,13 +132,14 @@ bool TUI_CustomControl::CheckSnapList(TShiftState Shift)
         	return false;
         }
     }
+#endif
     return false;
 }
 
 //------------------------------------------------------------------------------
 // total select
 //------------------------------------------------------------------------------
-bool __fastcall TUI_CustomControl::SelectStart(TShiftState Shift)
+bool TUI_CustomControl::SelectStart(TShiftState Shift)
 {
 	ObjClassID cls = LTools->CurrentClassID();
 
@@ -151,11 +157,11 @@ bool __fastcall TUI_CustomControl::SelectStart(TShiftState Shift)
     return false;
 }
 
-void __fastcall TUI_CustomControl::SelectProcess(TShiftState _Shift){
+void TUI_CustomControl::SelectProcess(TShiftState _Shift){
     if (bBoxSelection) UI->UpdateSelectionRect(UI->m_StartCp,UI->m_CurrentCp);
 }
 
-bool __fastcall TUI_CustomControl::SelectEnd(TShiftState _Shift)
+bool TUI_CustomControl::SelectEnd(TShiftState _Shift)
 {
     if (bBoxSelection){
         UI->EnableSelectionRect( false );
@@ -168,7 +174,7 @@ bool __fastcall TUI_CustomControl::SelectEnd(TShiftState _Shift)
 //------------------------------------------------------------------------------------
 // moving
 //------------------------------------------------------------------------------------
-bool __fastcall TUI_CustomControl::MovingStart(TShiftState Shift)
+bool TUI_CustomControl::MovingStart(TShiftState Shift)
 {
 	ObjClassID cls = LTools->CurrentClassID();
 
@@ -190,7 +196,7 @@ bool __fastcall TUI_CustomControl::MovingStart(TShiftState Shift)
                 Fvector p,n;
                 Fvector D={0,-1,0};
                 for(ObjectIt _F = lst.begin();_F!=lst.end();_F++){ 
-                	if (LUI->PickGround(p,(*_F)->PPosition,D,1,&n)){
+                	if (LUI->PickGround(p,(*_F)->GetPosition(),D,1,&n)){
 	                	(*_F)->MoveTo(p,n);
                     }
                 }
@@ -214,7 +220,7 @@ bool __fastcall TUI_CustomControl::MovingStart(TShiftState Shift)
     return true;
 }
 
-bool __fastcall TUI_CustomControl::DefaultMovingProcess(TShiftState Shift, Fvector& amount){
+bool TUI_CustomControl::DefaultMovingProcess(TShiftState Shift, Fvector& amount){
     if (Shift.Contains(ssLeft)||Shift.Contains(ssRight)){
         amount.mul( m_MovingXVector, UI->m_MouseSM * UI->m_DeltaCpH.x );
         amount.mad( amount, m_MovingYVector, -UI->m_MouseSM * UI->m_DeltaCpH.y );
@@ -234,7 +240,7 @@ bool __fastcall TUI_CustomControl::DefaultMovingProcess(TShiftState Shift, Fvect
     return false;
 }
 
-void __fastcall TUI_CustomControl::MovingProcess(TShiftState _Shift)
+void TUI_CustomControl::MovingProcess(TShiftState _Shift)
 {
 	Fvector amount;
 	if (DefaultMovingProcess(_Shift,amount)){
@@ -244,7 +250,7 @@ void __fastcall TUI_CustomControl::MovingProcess(TShiftState _Shift)
     }
 }
 
-bool __fastcall TUI_CustomControl::MovingEnd(TShiftState _Shift)
+bool TUI_CustomControl::MovingEnd(TShiftState _Shift)
 {
 	Scene->UndoSave();
     return true;
@@ -253,7 +259,7 @@ bool __fastcall TUI_CustomControl::MovingEnd(TShiftState _Shift)
 //------------------------------------------------------------------------------------
 // rotate
 //------------------------------------------------------------------------------------
-bool __fastcall TUI_CustomControl::RotateStart(TShiftState Shift)
+bool TUI_CustomControl::RotateStart(TShiftState Shift)
 {
 	ObjClassID cls = LTools->CurrentClassID();
 
@@ -268,7 +274,7 @@ bool __fastcall TUI_CustomControl::RotateStart(TShiftState Shift)
     return true;
 }
 
-void __fastcall TUI_CustomControl::RotateProcess(TShiftState _Shift)
+void TUI_CustomControl::RotateProcess(TShiftState _Shift)
 {
     if (_Shift.Contains(ssLeft)){
         float amount = -UI->m_DeltaCpH.x * UI->m_MouseSR;
@@ -285,7 +291,7 @@ void __fastcall TUI_CustomControl::RotateProcess(TShiftState _Shift)
                 }
     }
 }
-bool __fastcall TUI_CustomControl::RotateEnd(TShiftState _Shift)
+bool TUI_CustomControl::RotateEnd(TShiftState _Shift)
 {
 	Scene->UndoSave();
     return true;
@@ -294,7 +300,7 @@ bool __fastcall TUI_CustomControl::RotateEnd(TShiftState _Shift)
 //------------------------------------------------------------------------------
 // scale
 //------------------------------------------------------------------------------
-bool __fastcall TUI_CustomControl::ScaleStart(TShiftState Shift)
+bool TUI_CustomControl::ScaleStart(TShiftState Shift)
 {
 	ObjClassID cls = LTools->CurrentClassID();
     if(Shift==ssRBOnly){ ExecCommand(COMMAND_SHOWCONTEXTMENU,parent_tool->ClassID); return false;}
@@ -302,7 +308,7 @@ bool __fastcall TUI_CustomControl::ScaleStart(TShiftState Shift)
 	return true;
 }
 
-void __fastcall TUI_CustomControl::ScaleProcess(TShiftState _Shift)
+void TUI_CustomControl::ScaleProcess(TShiftState _Shift)
 {
 	float dy = UI->m_DeltaCpH.x * UI->m_MouseSS;
     if (dy>1.f) dy=1.f; else if (dy<-1.f) dy=-1.f;
@@ -320,7 +326,7 @@ void __fastcall TUI_CustomControl::ScaleProcess(TShiftState _Shift)
     if (Scene->GetQueryObjects(lst,LTools->CurrentClassID(),1,1,0))
         for(ObjectIt _F = lst.begin();_F!=lst.end();_F++) (*_F)->Scale( amount );
 }
-bool __fastcall TUI_CustomControl::ScaleEnd(TShiftState _Shift)
+bool TUI_CustomControl::ScaleEnd(TShiftState _Shift)
 {
 	Scene->UndoSave();
     return true;

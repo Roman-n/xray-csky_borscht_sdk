@@ -6,7 +6,7 @@
 #include "environment.h"
 
 #ifdef _EDITOR
-    #include "ui_toolscustom.h"
+    #include <editors/ECore/Editor/UI_ToolsCustom.h>
 #else
     #include "render.h"
 	#include "igame_level.h"

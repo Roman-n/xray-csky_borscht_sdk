@@ -2,9 +2,11 @@
 #ifndef UI_ToolsCustomH
 #define UI_ToolsCustomH
 
+#ifndef NO_VCL
 #include "eltree.hpp"
 #include "mxplacemnt.hpp"
-#include "../xrEProps/ItemListHelper.h"
+#endif
+#include "../../xrEProps/ItemListHelper.h"
 #include "EditObject.h"
 //.#include "SkeletonCustom.h"
 

@@ -3,8 +3,10 @@
 
 #include "Scene.h"
 #include "SceneObject.h"
+#ifndef NO_VCL
 #include "bottombar.h"
-#include "d3dutils.h"
+#endif
+#include <Layers/xrRender/D3DUtils.h>
 
 //------------------------------------------------------------------------------
 
@@ -14,7 +16,7 @@
     try{\
         (N->val)->RenderRoot(P,B);\
     }catch(...){\
-        ELog.DlgMsg(mtError, "Please notify AlexMX!!! Critical error has occured in render routine!!! [Type B] - Tools: '%s' Object: '%s'",(N->val)->ParentTool->ClassName(),(N->val)->Name);\
+        ELog.DlgMsg(mtError, "Please notify AlexMX!!! Critical error has occured in render routine!!! [Type B] - Tools: '%s' Object: '%s'",(N->val)->ParentTool->ClassName(),(N->val)->GetName());\
     }\
 }
     
@@ -63,7 +65,7 @@ void EScene::RenderSky(const Fmatrix& camera)
 }
 //------------------------------------------------------------------------------
 
-struct tools_rp_pred : public std::binary_function<ESceneToolBase*, ESceneToolBase*, bool>
+struct tools_rp_pred
 {
     IC bool operator()(ESceneToolBase* x, ESceneToolBase* y) const
     {	return x->RenderPriority()<y->RenderPriority();	}

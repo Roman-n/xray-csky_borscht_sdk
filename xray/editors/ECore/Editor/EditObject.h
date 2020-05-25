@@ -1,13 +1,14 @@
 #ifndef EditObjectH
 #define EditObjectH
 
-#include "Bone.h"
-#include "Motion.h"
+#include <xrEngine/Bone.h>
+#include <xrEngine/Motion.h>
 #ifdef _EDITOR
-#	include "../../../xrServerEntities/PropertiesListTypes.h"
+#	include <xrServerEntities/PropertiesListTypes.h>
 //	#include "PropertiesListHelper.h"
-#	include "GameMtlLib.h"
+#	include <xrEngine/GameMtlLib.h>
 #	include "pick_defs.h"
+#   include "ImageManager.h"
 #endif
 //----------------------------------------------------
 struct 	SRayPickInfo;
@@ -15,7 +16,7 @@ class 	CEditableMesh;
 class 	CFrustum;
 class 	CCustomMotion;
 class	CBone;
-class	Shader;
+struct	Shader;
 class	Mtl;
 class	CExporter;
 class	CMayaTranslator;
@@ -41,7 +42,6 @@ class	CCustomObject;
 
 // refs
 class XRayMtl;
-class SSimpleImage;
 
 class ECORE_API CSurface
 {

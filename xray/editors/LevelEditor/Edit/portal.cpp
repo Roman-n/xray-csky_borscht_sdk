@@ -7,11 +7,11 @@
 #include "EScenePortalTools.h"
 #include "Portal.h"
 #include "Scene.h"
-#include "cl_intersect.h"
+#include <common/cl_intersect.h>
 #include "sector.h"
-#include "MgcConvexHull2D.h"
-#include "MgcAppr3DPlaneFit.h"
-#include "../../ecore/editor/D3DUtils.h"
+#include <freemagic/MgcConvexHull2D.h>
+#include <freemagic/MgcAppr3DPlaneFit.h>
+#include <Layers/xrRender/D3DUtils.h>
 #include "../ECore/Editor/ui_main.h"
 #include "ui_leveltools.h"
 #include "SceneObject.h"
@@ -77,7 +77,7 @@ void CPortal::Render(int priority, bool strictB2F)
 			col.set			(m_SectorFront->sector_color);
 	        if (!Selected())col.mul_rgb(0.7f);
 		    Device.SetRS(D3DRS_CULLMODE,D3DCULL_CCW);
-    	    DU_impl.DrawPrimitiveL	(D3DPT_TRIANGLEFAN, V.size()-2, V.begin(), V.size(), col.get(), true, false);
+    	    DUImpl.DrawPrimitiveL	(D3DPT_TRIANGLEFAN, V.size()-2, V.data(), V.size(), col.get(), true, false);
 		    Device.SetRS(D3DRS_CULLMODE,D3DCULL_CCW);
         }
         // back
@@ -85,7 +85,7 @@ void CPortal::Render(int priority, bool strictB2F)
 			col.set			(m_SectorBack->sector_color);
 	        if (!Selected())col.mul_rgb(0.7f);
 		    Device.SetRS(D3DRS_CULLMODE,D3DCULL_CW);
-    	    DU_impl.DrawPrimitiveL	(D3DPT_TRIANGLEFAN, V.size()-2, V.begin(), V.size(), col.get(), true, false);
+    	    DUImpl.DrawPrimitiveL	(D3DPT_TRIANGLEFAN, V.size()-2, V.data(), V.size(), col.get(), true, false);
 		    Device.SetRS(D3DRS_CULLMODE,D3DCULL_CCW);
         }
 		col.set				(1.f,1.f,1.f,1.f);
@@ -94,10 +94,10 @@ void CPortal::Render(int priority, bool strictB2F)
     	// render portal edges
     	EScenePortalTool* lt = dynamic_cast<EScenePortalTool*>(ParentTool); VERIFY(lt);
         FvectorVec& src_ln 	= (lt->m_Flags.is(EScenePortalTool::flDrawSimpleModel))?m_SimplifyVertices:m_Vertices;
-        DU_impl.DrawPrimitiveL	(D3DPT_LINESTRIP, src_ln.size(), src_ln.begin(), src_ln.size(), col.get(), true, true);
+        DUImpl.DrawPrimitiveL	(D3DPT_LINESTRIP, src_ln.size(), src_ln.data(), src_ln.size(), col.get(), true, true);
         Device.ResetNearer	();
-        DU_impl.DrawFaceNormal	(m_Center,m_Normal,1,0xFFFFFFFF);
-        DU_impl.DrawFaceNormal	(m_Center,m_Normal,1,0x00000000);
+        DUImpl.DrawFaceNormal	(m_Center,m_Normal,1,0xFFFFFFFF);
+        DUImpl.DrawFaceNormal	(m_Center,m_Normal,1,0x00000000);
 /*		for (int k=0; k<1000; k++){
         	Fvector dir;
             dir.random_dir(m_Normal,deg2rad(45.f));
@@ -120,7 +120,7 @@ void CPortal::Move( Fvector& amount ){
 //------------------------------------------------------------------------------
 
 bool CPortal::FrustumPick(const CFrustum& frustum){
-	if (frustum.testPolyInside(m_Vertices.begin(),m_Vertices.size())) return true;
+	if (frustum.testPolyInside(m_Vertices.data(),m_Vertices.size())) return true;
     return false;
 }
 //------------------------------------------------------------------------------
@@ -194,7 +194,7 @@ bool CPortal::Update(bool bLoadMode){
         int b = B[m_SectorFront]+B[m_SectorBack];
         if (a>b);
         else if (a<b) InvertOrientation(false);
-        else ELog.Msg(mtError, "Check portal orientation: '%s'",Name);
+        else ELog.Msg(mtError, "Check portal orientation: '%s'",GetName());
     }
 
     return true;
@@ -298,7 +298,7 @@ void CPortal::Simplify()
     Fvector rkNormal;
     // compute plane
     Fplane P;
-	Mgc::OrthogonalPlaneFit(m_Vertices.size(), (Mgc::Vector3*)m_Vertices.begin(), (Mgc::Vector3&)rkOffset, (Mgc::Vector3&)rkNormal);
+	Mgc::OrthogonalPlaneFit(m_Vertices.size(), (Mgc::Vector3*)m_Vertices.data(), (Mgc::Vector3&)rkOffset, (Mgc::Vector3&)rkNormal);
     P.build(rkOffset, rkNormal);
     // project points
 	Fmatrix		mView;
@@ -319,7 +319,7 @@ void CPortal::Simplify()
         points[k].set(p.x,p.y);
     }
     // compute 2D Convex Hull
-    Mgc::ConvexHull2D Hull(points.size(),(const Mgc::Vector2*)points.begin());
+    Mgc::ConvexHull2D Hull(points.size(),(const Mgc::Vector2*)points.data());
 //    Hull.ByDivideAndConquer();
     Hull.ByIncremental();
     Hull.RemoveCollinear();
@@ -385,7 +385,7 @@ void CPortal::Simplify()
     center.set(0,0,0);
     mView.invert();
     m_SimplifyVertices.resize(vertices.size());
-    for (k=0; k<vertices.size(); k++){
+    for (u32 k=0; k<vertices.size(); k++){
     	p.set(vertices[k].x,vertices[k].y,0.f);
      	mView.transform_tiny(m_SimplifyVertices[k],p);
         center.add(m_SimplifyVertices[k]);
@@ -393,7 +393,7 @@ void CPortal::Simplify()
     center.div(vertices.size());
 
     norm.set(0,0,0);
-    for (k=0; k<m_SimplifyVertices.size()-1; k++){
+    for (u32 k=0; k<m_SimplifyVertices.size()-1; k++){
         temp.mknormal(center,m_SimplifyVertices[k],m_SimplifyVertices[k+1]);
     	norm.add(temp);
     }
@@ -429,7 +429,7 @@ bool CPortal::LoadLTX(CInifile& ini, LPCSTR sect_name)
 
     if (!m_SectorBack||!m_SectorFront)
     {
-        ELog.Msg( mtError, "Portal: Can't find required sectors.\nObject '%s' can't load.", Name);
+        ELog.Msg( mtError, "Portal: Can't find required sectors.\nObject '%s' can't load.", GetName());
     	return false;
     }
 
@@ -443,7 +443,7 @@ bool CPortal::LoadLTX(CInifile& ini, LPCSTR sect_name)
     }
     if (cnt<3)
     {
-        ELog.Msg( mtError, "Portal: '%s' can't create.\nInvalid portal. (m_Vertices.size()<3)", Name);
+        ELog.Msg( mtError, "Portal: '%s' can't create.\nInvalid portal. (m_Vertices.size()<3)", GetName());
     	return false;
     }
 
@@ -457,8 +457,8 @@ void CPortal::SaveLTX(CInifile& ini, LPCSTR sect_name)
 
 	ini.w_u32				(sect_name, "version", PORTAL_VERSION);
 
-    ini.w_string		(sect_name, "sector_front", m_SectorFront?m_SectorFront->Name:"");
-    ini.w_string		(sect_name, "sector_back", m_SectorBack?m_SectorBack->Name:"");
+    ini.w_string		(sect_name, "sector_front", m_SectorFront?m_SectorFront->GetName():"");
+    ini.w_string		(sect_name, "sector_back", m_SectorBack?m_SectorBack->GetName():"");
 
     ini.w_u32			(sect_name, "vert_count", m_Vertices.size());
     string512			buff;
@@ -492,16 +492,16 @@ bool CPortal::LoadStream(IReader& F)
     }
 
     if (!m_SectorBack||!m_SectorFront){
-        ELog.Msg( mtError, "Portal: Can't find required sectors.\nObject '%s' can't load.", Name);
+        ELog.Msg( mtError, "Portal: Can't find required sectors.\nObject '%s' can't load.", GetName());
     	return false;
     }
 
     R_ASSERT(F.find_chunk(PORTAL_CHUNK_VERTICES));
 	m_Vertices.resize(F.r_u16());
-	F.r				(m_Vertices.begin(), m_Vertices.size()*sizeof(Fvector));
+	F.r				(m_Vertices.data(), m_Vertices.size()*sizeof(Fvector));
 
     if (m_Vertices.size()<3){
-        ELog.Msg( mtError, "Portal: '%s' can't create.\nInvalid portal. (m_Vertices.size()<3)", Name);
+        ELog.Msg( mtError, "Portal: '%s' can't create.\nInvalid portal. (m_Vertices.size()<3)", GetName());
     	return false;
     }
 
@@ -520,19 +520,19 @@ void CPortal::SaveStream(IWriter& F)
 
     if (m_SectorFront){
 		F.open_chunk	(PORTAL_CHUNK_SECTOR_FRONT);
-        F.w_stringZ		(m_SectorFront->Name);
+        F.w_stringZ		(m_SectorFront->GetName());
 		F.close_chunk	();
     }
 
 	if (m_SectorBack){
 		F.open_chunk	(PORTAL_CHUNK_SECTOR_BACK);
-        F.w_stringZ		(m_SectorBack->Name);
+        F.w_stringZ		(m_SectorBack->GetName());
 		F.close_chunk	();
     }
 
 	F.open_chunk	(PORTAL_CHUNK_VERTICES);
     F.w_u16			((u16)m_Vertices.size());
-    F.w				(m_Vertices.begin(),m_Vertices.size()*sizeof(Fvector));
+    F.w				(m_Vertices.data(),m_Vertices.size()*sizeof(Fvector));
 	F.close_chunk	();
 }
 //------------------------------------------------------------------------------

@@ -4,7 +4,9 @@
 #include "ESceneObjectTools.h"
 #include "ui_leveltools.h"
 #include "ESceneObjectControls.h"
+#ifndef NO_VCL
 #include "FrameObject.h"
+#endif
 #include "SceneObject.h"
 #include "../ECore/Editor/library.h"
 #include "Scene.h"
@@ -26,8 +28,10 @@ void ESceneObjectTool::CreateControls()
 {
 	inherited::CreateDefaultControls(estDefault);
     AddControl		(xr_new<TUI_ControlObjectAdd >(estDefault,etaAdd,		this));
+#ifndef NO_VCL
 	// frame
     pFrame 			= xr_new<TfraObject>((TComponent*)0,this);
+#endif
 }
 //----------------------------------------------------
  
@@ -48,9 +52,9 @@ bool ESceneObjectTool::Validate(bool full_test)
             B = (CSceneObject*)(*b_it);
         	if (A==B) continue;
             if (A->RefCompare(B->GetReference())){
-            	if (A->PPosition.similar(B->PPosition,EPS_L)){
+            	if (A->GetPosition().similar(B->GetPosition(),EPS_L)){
                 	bRes = false;
-                    ELog.Msg(mtError,"Duplicate object position '%s'-'%s' with reference '%s'.",A->Name,B->Name,A->RefName());
+                    ELog.Msg(mtError,"Duplicate object position '%s'-'%s' with reference '%s'.",A->GetName(),B->GetName(),A->RefName());
                 }
             }
         }
@@ -97,8 +101,9 @@ void ESceneObjectTool::OnChangeAppendRandomFlags(PropValue* prop)
 
 void ESceneObjectTool::FillAppendRandomProperties(bool bUpdateOnly)
 {
+#ifndef NO_VCL
 	if (!bUpdateOnly) m_Props		= TProperties::CreateModalForm("Random Append Properties",false);
-
+#endif
 	m_AppendRandomObjectsStr		= _ListToSequence(m_AppendRandomObjects).c_str();    
 
     PropValue* V;           
@@ -125,7 +130,7 @@ void ESceneObjectTool::FillAppendRandomProperties(bool bUpdateOnly)
     }
 	V=PHelper().CreateChoose		(items,"Objects",&m_AppendRandomObjectsStr,smObject,0,0,32);
     V->OnChangeEvent.bind			(this,&ESceneObjectTool::OnChangeAppendRandomFlags);
-
+#ifndef NO_VCL
     m_Props->AssignItems			(items);
     
     if (!bUpdateOnly){
@@ -133,6 +138,7 @@ void ESceneObjectTool::FillAppendRandomProperties(bool bUpdateOnly)
             Scene->UndoSave			();
         TProperties::DestroyForm	(m_Props);
     }
+#endif
 }
 //----------------------------------------------------
 

@@ -77,9 +77,9 @@
 #	define NO_FS_SCAN
 #endif
 
-#ifdef _EDITOR
-#	define NO_FS_SCAN
-#endif
+//#ifdef _EDITOR
+//#	define NO_FS_SCAN
+//#endif
 
 // inline control - redefine to use compiler's heuristics ONLY
 // it seems "IC" is misused in many places which cause code-bloat
@@ -171,7 +171,7 @@
 #include <map>
 #include <typeinfo>
 
-#ifndef _EDITOR
+#ifndef __BORLANDC__
 #define _SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS
 #	include <hash_map>
 #	include <hash_set>

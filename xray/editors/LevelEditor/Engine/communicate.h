@@ -1,11 +1,7 @@
 #ifndef _XR_COMM_
 #define _XR_COMM_
 
-#ifdef _EDITOR
-	#include "xrLevel.h"
-#else
-	#include "../../../xrEngine/xrLevel.h"
-#endif
+#include "../../../xrEngine/xrLevel.h"
 
 #pragma pack(push,4)
 

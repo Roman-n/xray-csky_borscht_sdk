@@ -54,6 +54,19 @@ namespace CDB
 		}
 	};
 
+	template<class Payload>
+	bool similar(const TRI_Generic<Payload>& T1, const TRI_Generic<Payload>& T2)
+	{
+        if ((Payload)T1 != (Payload)T2) return false;
+	    if ((T1.verts[0]==T2.verts[0]) && (T1.verts[1]==T2.verts[1]) && (T1.verts[2]==T2.verts[2])) return true;
+	    if ((T1.verts[0]==T2.verts[0]) && (T1.verts[2]==T2.verts[1]) && (T1.verts[1]==T2.verts[2])) return true;
+	    if ((T1.verts[2]==T2.verts[0]) && (T1.verts[0]==T2.verts[1]) && (T1.verts[1]==T2.verts[2])) return true;
+	    if ((T1.verts[2]==T2.verts[0]) && (T1.verts[1]==T2.verts[1]) && (T1.verts[0]==T2.verts[2])) return true;
+	    if ((T1.verts[1]==T2.verts[0]) && (T1.verts[0]==T2.verts[1]) && (T1.verts[2]==T2.verts[2])) return true;
+	    if ((T1.verts[1]==T2.verts[0]) && (T1.verts[2]==T2.verts[1]) && (T1.verts[0]==T2.verts[2])) return true;
+	    return false;
+	}
+
 	struct GamePayload
 	{
 		GamePayload() = default;
@@ -284,22 +297,15 @@ namespace CDB
 		xr_vector<Fvector>	verts;
 	};
 
-	class XRCDB_API Collector_Base: public VertexCollector
-	{
-	private:
-        void			remove_duplicate_T	( );
-
-	};
-
 	template<class Payload>
-	class Collector_Generic final: public Collector_Base
+	class Collector_Generic final: public VertexCollector
 	{
 	public:
 		using Face = TRI_Generic<Payload>;
 
 		Face*			getT() { return faces.data(); }
 		size_t			getTS() { return faces.size(); }
-		void			clear() { Collector_Base::clear(); faces.clear(); }
+		void			clear() { VertexCollector::clear(); faces.clear(); }
 		void			reserve(size_t vertCount, size_t faceCount) { Collector_Base::.reserve(vertCount); faces.reserve(faceCount); }
 
 		void			add_face(const Fvector& v0, const Fvector& v1, const Fvector& v2, Payload&& payload)
@@ -479,6 +485,25 @@ namespace CDB
 				}
 			}
 #endif
+		}
+
+		void remove_duplicate_T( )
+		{
+			for (u32 f=0; f<faces.size(); f++)
+			{
+				for (u32 t=f+1; t<faces.size();)
+				{
+					if (t==f)	continue;
+	                Face& T1	= faces[f];
+	                Face& T2	= faces[t];
+	                if (similar(T1,T2)){
+	                	faces[t] = faces.back();
+	                    faces.pop_back();
+	                }else{
+	                	t++;
+	                }
+	            }
+	        }
 		}
 	private:
 		xr_vector<Face>		faces;

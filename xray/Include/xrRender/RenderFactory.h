@@ -58,7 +58,6 @@ public:
 	RENDER_FACTORY_INTERFACE(StatsRender)
 #endif // _EDITOR
 
-#ifndef _EDITOR
 	RENDER_FACTORY_INTERFACE(EnvironmentRender)
 	RENDER_FACTORY_INTERFACE(EnvDescriptorMixerRender)
 	RENDER_FACTORY_INTERFACE(EnvDescriptorRender)
@@ -67,7 +66,6 @@ public:
 	RENDER_FACTORY_INTERFACE(ThunderboltRender)
 	RENDER_FACTORY_INTERFACE(ThunderboltDescRender)
 	RENDER_FACTORY_INTERFACE(FlareRender)
-#endif // _EDITOR
 	RENDER_FACTORY_INTERFACE(FontRender)
 protected:
 	//virtual IEnvDescriptorRender *CreateEnvDescriptorRender() = 0;

@@ -46,6 +46,8 @@ void dxRainRender::Copy(IRainRender &_in)
 	*this = *(dxRainRender*)&_in;
 }
 
+#include "../../xrEngine/iGame_persistent.h"
+
 void dxRainRender::Render(CEffect_Rain &owner)
 {
 	float	factor				= g_pGamePersistent->Environment().CurrentEnv->rain_density;
@@ -92,7 +94,11 @@ void dxRainRender::Render(CEffect_Rain &owner)
 		float dt		= Device.fTimeDelta;
 		one.P.mad		(one.D,one.fSpeed*dt);
 
+#ifdef _EDITOR
+		Device.Statistic->TEST1.Begin();
+#else
 		Statistic.TEST1.Begin();
+#endif
 		Fvector	wdir;	wdir.set(one.P.x-vEye.x,0,one.P.z-vEye.z);
 		float	wlen	= wdir.square_magnitude();
 		if (wlen>b_radius_wrap_sqr)	{
@@ -129,7 +135,11 @@ void dxRainRender::Render(CEffect_Rain &owner)
 			}
 			//.			Statistic.TEST3.End();
 		}
+#ifdef _EDITOR
+		Device.Statistic->TEST1.End();
+#else
 		Statistic.TEST1.End();
+#endif
 
 		// Build line
 		Fvector&	pos_head	= one.P;

@@ -75,7 +75,9 @@ public:
 #endif
 
 private:
+#ifndef _EDITOR
 	dxRender_Visual* TryLoadObject(const char* N);
+#endif
 	dxRender_Visual* TryLoadOgf(const char* N);
 };
 #endif //ModelPoolH

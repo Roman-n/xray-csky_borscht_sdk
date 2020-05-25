@@ -145,6 +145,7 @@ inline void FactoryPtr<IStatsRender>::DestroyObject(void)
 	RenderFactory->DestroyStatsRender(m_pObject);
 	m_pObject = NULL;
 }
+#endif
 template<>
 inline void FactoryPtr<IFlareRender>::CreateObject(void)
 {
@@ -233,8 +234,6 @@ inline void FactoryPtr<IEnvDescriptorMixerRender>::DestroyObject(void)
 	RenderFactory->DestroyEnvDescriptorMixerRender(m_pObject);
 	m_pObject = NULL;
 }
-
-#endif // _EDITOR
 
 template<>
 inline void FactoryPtr<IFontRender>::CreateObject(void)

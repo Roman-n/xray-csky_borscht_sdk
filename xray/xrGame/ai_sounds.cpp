@@ -1,7 +1,10 @@
 #include "stdafx.h"
 
-
+#ifdef _EDITOR
+#include <xrServerEntities/ai_sounds.h>
+#else
 #include "ai_sounds.h"
+#endif
 
 xr_token anomaly_type_token[]={
 	{ "undefined",				sg_Undefined						},

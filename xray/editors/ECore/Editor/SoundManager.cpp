@@ -5,12 +5,13 @@
 #include "../../../xrSound/soundrender_environment.h"
 #include "EThumbnail.h"
 #include "ui_main.h"
+#include <utils/ETools/ETools.h>
 
 CSoundManager* SndLib=0;
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 
-extern "C" int ogg_enc(const char* in_fn, const char* out_fn, float quality, void* comment, int size);
+//extern "C" int ogg_enc(const char* in_fn, const char* out_fn, float quality, void* comment, int size);
 //------------------------------------------------------------------------------
 xr_string CSoundManager::UpdateFileName(xr_string& fn)
 {
@@ -167,7 +168,7 @@ void CSoundManager::SafeCopyLocalToServer(FS_FileSet& files)
 //------------------------------------------------------------------------------
 void CSoundManager::CreateSoundThumbnail(ESoundThumbnail* THM, const AnsiString& src_name, LPCSTR initial, bool bSetDefParam)
 {
-	R_ASSERT(src_name.Length());
+	R_ASSERT(src_name.size());
 	string_path base_name;
     if (initial)	FS.update_path(base_name,initial,src_name.c_str());
     else			FS.update_path(base_name,_sounds_,src_name.c_str());
@@ -193,7 +194,7 @@ void CSoundManager::MakeGameSound(ESoundThumbnail* THM, LPCSTR src_name, LPCSTR 
     F.w_u32			(THM->m_uGameType);
     F.w_float		(THM->m_fMaxAIDist);
 
-	if (!ogg_enc(src_name, game_name, THM->m_fQuality, F.pointer(), F.size()))
+	if (!ETOOLS::ogg_enc(src_name, game_name, THM->m_fQuality, F.pointer(), F.size()))
     {
     	FS.file_delete(game_name);
     	ELog.DlgMsg(mtError,"Can't make game sound '%s'.",game_name);

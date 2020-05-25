@@ -2,7 +2,7 @@
 #pragma hdrstop
 
 #include "GroupObject.h"
-#include "../../ecore/editor/D3DUtils.h"
+#include <Layers/xrRender/D3DUtils.h>
 
 static const float EMPTY_GROUP_SIZE = 0.5f;
 
@@ -23,12 +23,12 @@ bool CGroupObject::GetBox(Fbox& bb)
                 bb.merge(box);
         }break;
         default:
-            bb.modify(it->pObject->PPosition);
+            bb.modify(it->pObject->GetPosition());
         }
     }
     if (!bb.is_valid())
     {
-    	bb.set			(PPosition,PPosition);
+    	bb.set			(GetPosition(),GetPosition());
         bb.grow			(EMPTY_GROUP_SIZE);
     }
     return bb.is_valid();
@@ -51,7 +51,7 @@ void CGroupObject::UpdatePivot(LPCSTR nm, bool center)
     	if (nm&&nm[0]){
             for (it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
             {
-            	if (0==strcmp(nm,it->pObject->Name))
+            	if (0==strcmp(nm,it->pObject->GetName()))
                 {
                 	object = it->pObject;
                 	break;
@@ -72,8 +72,8 @@ void CGroupObject::UpdatePivot(LPCSTR nm, bool center)
             	object			= m_ObjectsInGroup.front().pObject;
         }
         if (object){
-            PPosition = object->PPosition;
-            PRotation = object->PRotation;
+            SetPosition(object->GetPosition());
+            SetRotation(object->GetRotation());
 //.			PScale	  = object->PScale;
 			UpdateTransform(true);
 //..		if (object->GetUTBox(box)) m_BBox.merge(box);
@@ -82,11 +82,11 @@ void CGroupObject::UpdatePivot(LPCSTR nm, bool center)
         // center alignment
         it=m_ObjectsInGroup.begin();
         Fvector C; 
-        C.set(it->pObject->PPosition); 
+        C.set(it->pObject->GetPosition()); 
         it++;
 
         for (; it!=m_ObjectsInGroup.end(); ++it)
-            C.add(it->pObject->PPosition);
+            C.add(it->pObject->GetPosition());
             
         FPosition.div(C,m_ObjectsInGroup.size());
         FRotation.set(0,0,0);
@@ -105,13 +105,13 @@ void CGroupObject::MoveTo(const Fvector& pos, const Fvector& up)
     Fvector dr; dr.sub(FRotation,old_r);
 	for (ObjectsInGroup::iterator it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
     {
-    	Fvector r=it->pObject->PRotation; 
+    	Fvector r=it->pObject->GetRotation();
         r.add(dr); 
-        it->pObject->PRotation=r;
-    	Fvector v=it->pObject->PPosition;
+        it->pObject->SetRotation(r);
+    	Fvector v=it->pObject->GetPosition();
         prev.transform_tiny(v);
         FTransform.transform_tiny(v);
-    	it->pObject->PPosition=v;
+    	it->pObject->SetPosition(v);
     }
 }
 
@@ -123,10 +123,10 @@ void CGroupObject::NumSetPosition(const Fvector& pos)
 
 	for (ObjectsInGroup::iterator it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
     {
-    	Fvector v=it->pObject->PPosition;
+    	Fvector v=it->pObject->GetPosition();
         prev.transform_tiny(v);
         FTransform.transform_tiny(v);
-    	it->pObject->PPosition=v;
+    	it->pObject->SetPosition(v);
     }
 }
 void CGroupObject::NumSetRotation(const Fvector& rot)
@@ -140,18 +140,18 @@ void CGroupObject::NumSetRotation(const Fvector& rot)
     Fvector dr; dr.sub(FRotation,old_r);
 	for (ObjectsInGroup::iterator it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
     {
-    	Fvector r=it->pObject->PRotation; 
+    	Fvector r=it->pObject->GetRotation(); 
         r.add(dr); 
-        it->pObject->PRotation=r;
-    	Fvector v=it->pObject->PPosition;
+        it->pObject->SetRotation(r);
+    	Fvector v=it->pObject->GetPosition();
         prev.transform_tiny(v);
         FTransform.transform_tiny(v);
-    	it->pObject->PPosition=v;
+    	it->pObject->SetPosition(v);
     }
 }
 void CGroupObject::NumSetScale(const Fvector& scale)
 {
-	Fvector old_s = PScale;
+	Fvector old_s = GetScale();
 	inherited::NumSetScale(scale);
     Fmatrix prev; 
     prev.invert(FTransform);
@@ -160,13 +160,13 @@ void CGroupObject::NumSetScale(const Fvector& scale)
     Fvector ds; ds.sub(FScale,old_s);
 	for (ObjectsInGroup::iterator it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
     {
-    	Fvector s=it->pObject->PScale; 
+    	Fvector s=it->pObject->GetScale(); 
         s.add(ds); 
-        it->pObject->PScale=s;
-    	Fvector v=it->pObject->PPosition;
+        it->pObject->SetScale(s);
+    	Fvector v=it->pObject->GetPosition();
         prev.transform_tiny(v);
         FTransform.transform_tiny(v);
-    	it->pObject->PPosition=v;
+    	it->pObject->SetPosition(v);
     }
 }
 
@@ -180,13 +180,13 @@ void CGroupObject::Move(Fvector& amount)
     Fvector dr; dr.sub(FRotation,old_r);
 	for (ObjectsInGroup::iterator it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
     {
-    	Fvector r=it->pObject->PRotation; 
+    	Fvector r=it->pObject->GetRotation();
         r.add(dr); 
-        it->pObject->PRotation=r;
-    	Fvector v=it->pObject->PPosition;
+        it->pObject->SetRotation(r);
+    	Fvector v=it->pObject->GetPosition();
         prev.transform_tiny(v);
         FTransform.transform_tiny(v);
-    	it->pObject->PPosition=v;
+    	it->pObject->SetPosition(v);
     }
 }
 void CGroupObject::RotateParent(Fvector& axis, float angle )
@@ -260,7 +260,7 @@ void CGroupObject::Render(int priority, bool strictB2F)
             Device.SetShader(Device.m_WireShader);
             RCache.set_xform_world(Fidentity);
             u32 clr = 0xFF7070FF;
-            DU_impl.DrawSelectionBox(bb,&clr);
+            DUImpl.DrawSelectionBox(bb,&clr);
         }
     }
 }

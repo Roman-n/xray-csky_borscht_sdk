@@ -275,7 +275,7 @@ CCustomObject* ESceneCustomOTool::FindObjectByName(LPCSTR name, CCustomObject* p
 	for(;_I!=_E;_I++) 
     {
     	CCustomObject* CO = (*_I);
-    	LPCSTR _name = CO->Name;
+    	LPCSTR _name = CO->GetName();
         R_ASSERT	(_name);
     	if((pass!=*_I) && (0==strcmp(_name,name)) ) 
         	return (*_I);
@@ -356,8 +356,8 @@ int ESceneCustomOTool::MultiRenameObjects()
     	if (obj->Selected()){
             string256 			buf;
         	Scene->GenObjectName(obj->ClassID,buf,obj->RefName());
-            if (obj->Name!=buf){
-	            obj->Name		= buf;
+            if (obj->GetName()!=buf){// TODO точно должны сравнивать указатели?
+	            obj->SetName(buf);
                 cnt++; 
             }
         }

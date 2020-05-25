@@ -1,12 +1,12 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#include "cl_intersect.h"
+#include <common/cl_intersect.h>
 #include "scene.h"
 #include "ESceneAIMapTools.h"
 #include "../ECore/Editor/editobject.h"
 #include "../ECore/Editor/editmesh.h"
-#include "ETools.h"
+#include <utils/ETools/ETools.h>
 
 struct cl_tri 
 {

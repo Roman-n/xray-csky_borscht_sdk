@@ -62,6 +62,7 @@ void ENGINE_API	CBoneData::CalculateM2B(const Fmatrix& parent)
 	m2b_transform.invert	();            
 }
 
+#ifndef _EDITOR
 #define BONE_VERSION					0x0002
 //------------------------------------------------------------------------------
 #define BONE_CHUNK_VERSION				0x0001
@@ -244,3 +245,4 @@ void CBone::CopyData(CBone* bone)
 	mass = bone->mass;
 	center_of_mass = bone->center_of_mass;
 }
+#endif

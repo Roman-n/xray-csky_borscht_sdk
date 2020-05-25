@@ -8,9 +8,11 @@
 #include <d3dx/d3dx9.h>
 #pragma warning(default:4995)
 #include "HW.h"
+#ifndef _EDITOR
 #include "../../xrEngine/XR_IOConsole.h"
 #include <imgui.h>
 #include "../xrRenderDX9/imgui_impl_dx9.h"
+#endif
 
 #ifndef _EDITOR
 	void	fill_vid_mode_list			(CHW* _hw);
@@ -49,7 +51,9 @@ CHW::~CHW()
 
 void CHW::Reset		(HWND hwnd)
 {
+#ifndef _EDITOR
 	ImGui_ImplDX9_InvalidateDeviceObjects();
+#endif
 
 #ifdef DEBUG
 	_RELEASE			(dwDebugSB);
@@ -91,7 +95,9 @@ void CHW::Reset		(HWND hwnd)
 	updateWindowProps	(hwnd);
 #endif
 
+#ifndef _EDITOR
 	ImGui_ImplDX9_CreateDeviceObjects();
+#endif
 }
 
 //xr_token*				vid_mode_token = NULL;
@@ -163,7 +169,9 @@ D3DFORMAT CHW::selectDepthStencil	(D3DFORMAT fTarget)
 
 void	CHW::DestroyDevice	()
 {
+#ifndef _EDITOR
 	ImGui_ImplDX9_Shutdown();
+#endif
 
 	_SHOW_REF				("refCount:pBaseZB",pBaseZB);
 	_RELEASE				(pBaseZB);
@@ -417,7 +425,9 @@ void		CHW::CreateDevice		(HWND m_hWnd, bool move_window)
 	fill_vid_mode_list							(this);
 #endif
 
+#ifndef _EDITOR
 	ImGui_ImplDX9_Init(m_hWnd, pDevice);
+#endif
 }
 
 u32	CHW::selectPresentInterval	()

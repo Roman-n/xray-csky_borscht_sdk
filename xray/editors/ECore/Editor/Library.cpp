@@ -5,10 +5,11 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#include "Log.h"
+#include <xrCore/log.h>
 #include "Library.h"
 #include "EditObject.h"
 #include "ui_main.h"
+#include <algorithm>
 
 //----------------------------------------------------
 ELibrary Lib;
@@ -134,7 +135,8 @@ CEditableObject* ELibrary::CreateEditObject(LPCSTR nm)
 	VERIFY(m_bReady);
     R_ASSERT(nm&&nm[0]);
 //.    UI->ProgressInfo		(nm);
-    AnsiString name		= AnsiString(nm).LowerCase();
+    AnsiString name = nm;// = AnsiString(nm).LowerCase();
+    std::for_each(name.begin(), name.end(), [](char c) { return tolower(c); });
     // file exist - find in already loaded
     CEditableObject* m_EditObject = 0;
 	EditObjPairIt it 	= m_EditObjects.find(name);

@@ -2,11 +2,13 @@
 #pragma hdrstop
 
 #include "ESceneLightTools.h"
-#include "IGame_Persistent.h"
-#include "../ECore/Editor/d3dutils.h"
-#include "communicate.h"
+#include <xrEngine/IGame_Persistent.h>
+#include <Layers/xrRender/D3DUtils.h>
+#include "../Engine/communicate.h"
 #include "../ECore/Editor/ui_main.h"
+#ifndef NO_VCL
 #include "../xrEProps/TextForm.h"
+#endif
 #include "ELight.h"
 
 ESceneLightTool::ESceneLightTool():ESceneCustomOTool(OBJCLASS_LIGHT)
@@ -45,7 +47,7 @@ void ESceneLightTool::SelectLightsForObject(CCustomObject* obj)
 //        if (!obj->IsDynamic()&&!l->m_Flags.is(CLight::flAffectStatic)) continue;
         Fbox bb; 	obj->GetBox(bb);
         Fvector C; 	float R; bb.getsphere(C,R);
-        float d 	= C.distance_to(l->PPosition) - l->m_Range - R;
+        float d 	= C.distance_to(l->GetPosition()) - l->m_Range - R;
         Device.LightEnable(i,(d<0));
     }
 }
@@ -57,8 +59,8 @@ void ESceneLightTool::AppendFrameLight(CLight* src)
     L.type				= src->m_Type;
     L.diffuse.mul_rgb	(src->m_Color,src->m_Brightness);
     L.specular.set		(L.diffuse);
-    L.position.set		(src->PPosition);
-    Fvector dir;    	dir.setHP(src->PRotation.y,src->PRotation.x);
+    L.position.set		(src->GetPosition());
+    Fvector dir;    	dir.setHP(src->GetRotation().y,src->GetRotation().x);
     L.direction.set		(dir);
     L.range				= src->m_Range;
     L.attenuation0		= src->m_Attenuation0+EPS_S;
@@ -79,7 +81,7 @@ void ESceneLightTool::BeforeRender()
             CLight* l 		= (CLight*)(*_F);
             l_cnt++;
             if (l->Visible()&&l->m_UseInD3D&&l->m_Flags.is_any(ELight::flAffectDynamic|ELight::flAffectStatic))
-                if (::Render->ViewBase.testSphere_dirty(l->PPosition,l->m_Range))
+                if (::Render->ViewBase.testSphere_dirty(l->GetPosition(),l->m_Range))
                 	AppendFrameLight(l);
         }
     	// set sun
@@ -137,8 +139,8 @@ void  ESceneLightTool::OnRender(int priority, bool strictB2F)
             Fvector p;
             float fd				= UI->ZFar()*0.95f;
             p.mad					(Device.vCameraPosition,dir,-fd);
-            DU_impl.DrawPointLight		( p ,VIS_RADIUS*fd, 0x00FFE020);
-            DU_impl.DrawLineSphere		( p, VIS_RADIUS*fd*0.3f, 0x00FF3000, false );
+            DUImpl.DrawPointLight		( p ,VIS_RADIUS*fd, 0x00FFE020);
+            DUImpl.DrawLineSphere		( p, VIS_RADIUS*fd*0.3f, 0x00FF3000, false );
         }
     }
 }
@@ -154,9 +156,14 @@ void ESceneLightTool::OnControlAppendClick(ButtonValue* sender, bool& bDataModif
 
 void ESceneLightTool::OnControlRenameRemoveClick(ButtonValue* V, bool& bDataModified, bool& bSafe)
 {
+#ifndef NO_VCL
     AnsiString item_name = V->Owner()->Item()->Text;
+#else
+    AnsiString item_name;
+#endif
     switch (V->btn_num){
     case 0:{ 
+#ifndef NO_VCL
     	AnsiString new_name=item_name;
     	if (TfrmText::RunEditor(new_name,"Control name")){
         	if (FindLightControl(new_name.c_str())){
@@ -168,6 +175,7 @@ void ESceneLightTool::OnControlRenameRemoveClick(ButtonValue* V, bool& bDataModi
                 it->rename 		(new_name.c_str());
             }
         }
+#endif
     }break;
     case 1: RemoveLightControl(item_name.c_str());	break;
 	}
@@ -206,11 +214,11 @@ void ESceneLightTool::FillProp(LPCSTR pref, PropItemVec& items)
 
 AnsiString ESceneLightTool::GenLightControlName()
 {
-	AnsiString name;
+	string32 name;
     int idx=0;
     do{
-    	name.sprintf("control_%02d",idx++);
-    }while (FindLightControl(name.c_str()));
+    	sprintf(name,"control_%02d",idx++);
+    }while (FindLightControl(name));
     return name;
 }
 //------------------------------------------------------------------------------
@@ -220,7 +228,7 @@ xr_rtoken* ESceneLightTool::FindLightControl(int id)
 	RTokenVecIt		_I 	= lcontrols.begin();
     RTokenVecIt		_E 	= lcontrols.end();
     for (;_I!=_E; _I++)
-    	if (_I->id==id) return _I;
+    	if (_I->id==id) return &*_I;
     return 0;
 }
 //------------------------------------------------------------------------------
@@ -235,10 +243,13 @@ RTokenVecIt ESceneLightTool::FindLightControlIt(LPCSTR name)
 }
 //------------------------------------------------------------------------------
 
+#ifndef __BORLANDC__
+AnsiString& _Trim(AnsiString& str);
+#endif
 void ESceneLightTool::AppendLightControl(LPCSTR nm, u32* idx)
 {
 	AnsiString name = nm; _Trim(name);
-    if (name.IsEmpty()) return;
+    if (name.empty()) return;
 	if (FindLightControl(name.c_str())) return;
 	lcontrols.push_back	(xr_rtoken(name.c_str(),idx?*idx:lcontrol_last_idx++));
 }
@@ -259,22 +270,25 @@ bool ESceneLightTool::Validate(bool full_test)
     	CLight* L = dynamic_cast<CLight*>(*it);
     	if (!L->GetLControlName()){
         	bRes=false;
-            ELog.Msg(mtError,"%s: '%s' - Invalid light control.",ClassDesc(),L->Name);
+            ELog.Msg(mtError,"%s: '%s' - Invalid light control.",ClassDesc(),L->GetName());
         }
     }
     return bRes;
 }
 //------------------------------------------------------------------------------
 
-
+#ifndef NO_VCL
 #include "frameLight.h"
+#endif
 #include "UI_LevelTools.h"
 
 void ESceneLightTool::CreateControls()
 {
 	inherited::CreateDefaultControls(estDefault);
+#ifndef NO_VCL
 	// frame
     pFrame 			= xr_new<TfraLight>((TComponent*)0);
+#endif
 }
 //----------------------------------------------------
  

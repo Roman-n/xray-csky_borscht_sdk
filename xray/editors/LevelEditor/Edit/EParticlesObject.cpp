@@ -5,8 +5,8 @@
 #pragma hdrstop
 
 #include "EParticlesObject.h"
-#include "../ECORE/Editor/D3DUtils.h"
-#include "..\..\Layers\xrRender\PSLibrary.h"
+#include <Layers/xrRender/D3DUtils.h>
+#include <Layers\xrRender\PSLibrary.h>
 #include "../ECore/Editor/ui_main.h"
 
 #define CPSOBJECT_VERSION  				0x0013
@@ -37,13 +37,15 @@ void EParticlesObject::Construct(LPVOID data)
 
 EParticlesObject::~EParticlesObject()
 {
-	::Render->model_Delete	(dynamic_cast<IRenderVisual*>(m_Particles) );
+    IRenderVisual* temp = dynamic_cast<IRenderVisual*>(m_Particles);
+	::Render->model_Delete	(temp );
+    m_Particles = 0;
 }
 //----------------------------------------------------
 
 bool EParticlesObject::GetBox( Fbox& box )
 {
-	box.set( PPosition, PPosition );
+	box.set( GetPosition(), GetPosition() );
 	box.min.x -= PSOBJECT_SIZE;
 	box.min.y -= PSOBJECT_SIZE;
 	box.min.z -= PSOBJECT_SIZE;
@@ -83,15 +85,15 @@ void EParticlesObject::Render(int priority, bool strictB2F)
                 // draw emitter
 	    		Device.SetShader(Device.m_WireShader);
                 if( !Selected() )
-    				DU_impl.DrawCross	(PPosition,0.30f,0.1f,0.3f,0.3f,0.3f,0.3f,0xFFFFEBAA,false);
+    				DUImpl.DrawCross	(GetPosition(),0.30f,0.1f,0.3f,0.3f,0.3f,0.3f,0xFFFFEBAA,false);
                     
-				Fvector p = PPosition;
-                DU_impl.DrawRomboid	(p,0.1f,0x0AFFEBAA);
+				Fvector p = GetPosition();
+                DUImpl.DrawRomboid	(p,0.1f,0x0AFFEBAA);
                 if( Selected() )
                 {
                     Fbox bb; GetBox(bb);
                     u32 clr = 0xFFFFFFFF;
-                    DU_impl.DrawSelectionBox(bb,&clr);
+                    DUImpl.DrawSelectionBox(bb,&clr);
                 }
             }
         }
@@ -110,14 +112,14 @@ void EParticlesObject::RenderSingle()
 
 bool EParticlesObject::FrustumPick(const CFrustum& frustum)
 {
-    return (frustum.testSphere_dirty(PPosition,PSOBJECT_SIZE))?true:false;
+    return (frustum.testSphere_dirty(GetPosition(),PSOBJECT_SIZE))?true:false;
 }
 //----------------------------------------------------
 
 bool EParticlesObject::RayPick(float& distance, const Fvector& start, const Fvector& direction, SRayPickInfo* pinf)
 {
 	Fvector pos,ray2;
-    pos.set(PPosition);
+    pos.set(GetPosition());
 	ray2.sub( pos, start );
 
     float d = ray2.dotproduct(direction);
@@ -256,7 +258,9 @@ bool EParticlesObject::ExportGame(SExportStreams* F)
 
 bool EParticlesObject::Compile(LPCSTR ref_name)
 {
-	::Render->model_Delete	(dynamic_cast<IRenderVisual*>(m_Particles) );
+    IRenderVisual* temp = dynamic_cast<IRenderVisual*>(m_Particles);
+	::Render->model_Delete	(temp );
+    m_Particles = 0;
     if (ref_name)
     {
     	IRenderVisual* base = ::Render->model_CreateParticles(ref_name);

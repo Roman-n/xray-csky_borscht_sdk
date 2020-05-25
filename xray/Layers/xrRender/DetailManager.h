@@ -33,19 +33,19 @@ const int		dm_obj_in_slot		= 4;
 const float		dm_slot_size		= DETAIL_SLOT_SIZE;
 
 const u32		dm_max_cache_size = 62001; // assuming max dm_size = 124
-extern u32		dm_size;
-extern u32 		dm_cache1_line;
-extern u32		dm_cache_line;
-extern u32		dm_cache_size;
-extern float	dm_fade;
-extern u32		dm_current_size;//				= iFloor((float)ps_r__detail_radius/4)*2;				//!
-extern u32 		dm_current_cache1_line;//		= dm_current_size*2/dm_cache1_count;		//! dm_current_size*2 must be div dm_cache1_count
-extern u32		dm_current_cache_line;//		= dm_current_size+1+dm_current_size;
-extern u32		dm_current_cache_size;//		= dm_current_cache_line*dm_current_cache_line;
-extern float	dm_current_fade;//				= float(2*dm_current_size)-.5f;
-extern float	ps_current_detail_density;
+//extern u32		dm_size;
+//extern u32 		dm_cache1_line;
+//extern u32		dm_cache_line;
+//extern u32		dm_cache_size;
+//extern float	dm_fade;
+//extern u32		dm_current_size;//				= iFloor((float)ps_r__detail_radius/4)*2;				//!
+//extern u32 		dm_current_cache1_line;//		= dm_current_size*2/dm_cache1_count;		//! dm_current_size*2 must be div dm_cache1_count
+//extern u32		dm_current_cache_line;//		= dm_current_size+1+dm_current_size;
+//extern u32		dm_current_cache_size;//		= dm_current_cache_line*dm_current_cache_line;
+//extern float	dm_current_fade;//				= float(2*dm_current_size)-.5f;
+//extern float	ps_current_detail_density;
 
-class ECORE_API CDetailManager
+class CDetailManager
 {
 public:
 	struct	SlotItem	{								// один кустик
@@ -211,6 +211,7 @@ public:
 	CDetailManager					();
 	virtual ~CDetailManager			();
 
+#ifndef _EDITOR
 	bool useMask() const;// получить использование маски
 	void setUseMask(bool useMask);// установить использование маски
 	MaskEditModes maskEditMode() const;// получить режим редактирования маски
@@ -228,6 +229,7 @@ private:
 	void editMask(const Fvector& p);//Изменить маску в соответствии с режимом
 	void invalidateCache();// Очищает кеш травы
 	u32* sampleMask(const Fvector& p) const;// выбрать пиксель маски
+#endif
 };
 
 #endif //DetailManagerH

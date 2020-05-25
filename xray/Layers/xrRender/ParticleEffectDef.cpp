@@ -4,8 +4,8 @@
 #include "ParticleEffectDef.h"
 #include "ParticleEffect.h"
 #ifdef _EDITOR
-	#include "UI_ToolsCustom.h"
-	#include "ParticleEffectActions.h"
+	#include <editors/ECore/Editor/UI_ToolsCustom.h>
+	#include <editors/ECore/Editor/ParticleEffectActions.h>
 #else
 
 #endif

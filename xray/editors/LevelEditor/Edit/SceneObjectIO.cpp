@@ -52,12 +52,14 @@ bool CSceneObject::LoadLTX(CInifile& ini, LPCSTR sect_name)
                     mr = mrNone;
 
                 LPCSTR new_val = 0;
+#ifndef NO_VCL
                 if ( (mr==mrNone||mr==mrYes) && TfrmChoseItem::SelectItem(smObject,new_val,1))
                 {
                     bRes = SetReference(new_val);
                     if(bRes)
                         Scene->RegisterSubstObjectName(ref_name.c_str(), new_val);
                 }
+#endif
             }
 
             Scene->Modified();
@@ -138,12 +140,14 @@ bool CSceneObject::LoadStream(IReader& F)
                     mr = mrNone;
 
                 LPCSTR new_val = 0;
+#ifndef NO_VCL
                 if ( (mr==mrNone||mr==mrYes) && TfrmChoseItem::SelectItem(smObject,new_val,1))
                 {
                     bRes = SetReference(new_val);
                     if(bRes)
                         Scene->RegisterSubstObjectName(buf, new_val);
                 }
+#endif
             }
 
             Scene->Modified();

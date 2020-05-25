@@ -147,6 +147,9 @@ private:
 	typedef std::vector<bool,xalloc<bool> > inherited;
 
 public: 
+			xr_vector			()									: inherited	()				{}
+			xr_vector			(size_t _count, bool _value)		: inherited	(_count,_value)	{}
+	explicit xr_vector			(size_t _count)						: inherited	(_count)		{}
 	u32		size				() const							{ return (u32)inherited::size();} 
 	void	clear				()									{ erase(begin(),end());			} 
 };

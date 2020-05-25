@@ -5,7 +5,7 @@
 #include "ELight.h"
 #include "SceneObject.h"
 #include "../ECore/Editor/EditObject.h"
-#include "Communicate.h"
+#include "../Engine/communicate.h"
 #include "Scene.h"
 #include "../ECore/Editor/EditMesh.h"
 #include "../ECore/Engine/Texture.h"
@@ -13,11 +13,11 @@
 #include "sector.h"
 #include "groupobject.h"
 #include "portal.h"
-#include "xrLevel.h"
+#include <xrEngine/xrLevel.h>
 #include "../ECore/Editor/ui_main.h"
 #include "ui_leveltools.h"
-#include "xrHemisphere.h"
-#include "ResourceManager.h"
+#include <xrEngine/xrHemisphere.h>
+#include <Layers/xrRender/ResourceManager.h>
 #include "../ECore/Editor/ImageManager.h"
 #include "../ECore/Engine/Image.h"
 
@@ -93,7 +93,7 @@ public:
         
         AnsiString image_name = AnsiString(fn)+".tga";
         CImage* I 	= xr_new<CImage>();
-        I->Create	(sx,sz,data.begin());
+        I->Create	(sx,sz,data.data());
         I->Vflip	();
         I->SaveTGA	(image_name.c_str());
         xr_delete	(I);
@@ -102,11 +102,17 @@ public:
         AnsiString txt_name = AnsiString(fn)+".txt";
         IWriter* F	= FS.w_open(txt_name.c_str());
         if (F){
-            F->w_string	(AnsiString().sprintf("Map size X x Z:            [%d x %d]",bb_sx,bb_sz).c_str());
-            F->w_string	(AnsiString().sprintf("Max static vertex per m^2: %d",max_svert).c_str());
-            F->w_string	(AnsiString().sprintf("Total static vertices:     %d",total_svert).c_str());
-            F->w_string	(AnsiString().sprintf("Max mu vertex per m^2:     %d",max_muvert).c_str());
-            F->w_string	(AnsiString().sprintf("Total mu vertices:         %d",total_muvert).c_str());
+            string64 temp;
+            sprintf(temp, "Map size X x Z:            [%d x %d]",bb_sx,bb_sz);
+            F->w_string	(temp);
+            sprintf(temp,"Max static vertex per m^2: %d",max_svert);
+            F->w_string	(temp);
+            sprintf(temp,"Total static vertices:     %d",total_svert);
+            F->w_string	(temp);
+            sprintf(temp,"Max mu vertex per m^2:     %d",max_muvert);
+            F->w_string	(temp);
+            sprintf(temp,"Total mu vertices:         %d",total_muvert);
+            F->w_string	(temp);
             FS.w_close	(F);
 	        return true;
         }
@@ -229,7 +235,7 @@ void SceneBuilder::SaveBuildAsObject()
             tmpFaces.w_string	(tmp);
 		}
         //faces
-		for(fi=0; fi<m.m_iFaceCount; ++fi)
+		for(u32 fi=0; fi<m.m_iFaceCount; ++fi)
 		{
 			const b_face& it		= m.m_pFaces[fi];
 
@@ -365,52 +371,52 @@ void SceneBuilder::SaveBuild()
         F->close_chunk	();
 
         F->open_chunk	(EB_Materials);
-        F->w	   		(l_materials.begin(),sizeof(b_material)*l_materials.size());
+        F->w	   		(l_materials.data(),sizeof(b_material)*l_materials.size());
         F->close_chunk	();
 
         F->open_chunk	(EB_Shaders_Render);
-        F->w			(l_shaders.begin(),sizeof(b_shader)*l_shaders.size());
+        F->w			(l_shaders.data(),sizeof(b_shader)*l_shaders.size());
         F->close_chunk	();
 
         F->open_chunk	(EB_Shaders_Compile);
-        F->w			(l_shaders_xrlc.begin(),sizeof(b_shader)*l_shaders_xrlc.size());
+        F->w			(l_shaders_xrlc.data(),sizeof(b_shader)*l_shaders_xrlc.size());
         F->close_chunk	();
 
         F->open_chunk	(EB_Textures);
-        F->w			(l_textures.begin(),sizeof(b_texture)*l_textures.size());
+        F->w			(l_textures.data(),sizeof(b_texture)*l_textures.size());
         F->close_chunk	();
 
         F->open_chunk 	(EB_Glows);
-        F->w			(l_glows.begin(),sizeof(b_glow)*l_glows.size());
+        F->w			(l_glows.data(),sizeof(b_glow)*l_glows.size());
         F->close_chunk	();
 
         F->open_chunk	(EB_Portals);
-        F->w			(l_portals.begin(),sizeof(b_portal)*l_portals.size());
+        F->w			(l_portals.data(),sizeof(b_portal)*l_portals.size());
         F->close_chunk	();
 
         F->open_chunk	(EB_Light_control);
         for (xr_vector<sb_light_control>::iterator lc_it=l_light_control.begin(); lc_it!=l_light_control.end(); lc_it++){
             F->w		(lc_it->name,sizeof(lc_it->name));
             F->w_u32 	(lc_it->data.size());
-            F->w	 	(lc_it->data.begin(),sizeof(u32)*lc_it->data.size());
+            F->w	 	(lc_it->data.data(),sizeof(u32)*lc_it->data.size());
         }
         F->close_chunk	();
 
         F->open_chunk	(EB_Light_static);
-        F->w		 	(l_light_static.begin(),sizeof(b_light_static)*l_light_static.size());
+        F->w		 	(l_light_static.data(),sizeof(b_light_static)*l_light_static.size());
         F->close_chunk	();
 
         F->open_chunk	(EB_Light_dynamic);
-        F->w		  	(l_light_dynamic.begin(),sizeof(b_light_dynamic)*l_light_dynamic.size());
+        F->w		  	(l_light_dynamic.data(),sizeof(b_light_dynamic)*l_light_dynamic.size());
         F->close_chunk	();
 
         F->open_chunk	(EB_LOD_models);
-        for (int k=0; k<(int)l_lods.size(); ++k)
+        for (u32 k=0; k<l_lods.size(); ++k)
             F->w	  	(&l_lods[k].lod,sizeof(b_lod));
         F->close_chunk	();
 
         F->open_chunk	(EB_MU_models);
-        for (k=0; k<(int)l_mu_models.size(); ++k)
+        for (u32 k=0; k<l_mu_models.size(); ++k)
         {
             b_mu_model&	m= l_mu_models[k];
             // name
@@ -428,7 +434,7 @@ void SceneBuilder::SaveBuild()
         F->close_chunk	();
 
         F->open_chunk	(EB_MU_refs);
-        F->w			(l_mu_refs.begin(),sizeof(b_mu_reference)*l_mu_refs.size());
+        F->w			(l_mu_refs.data(),sizeof(b_mu_reference)*l_mu_refs.size());
         F->close_chunk	();
 
         FS.w_close		(F);
@@ -679,8 +685,8 @@ BOOL SceneBuilder::BuildMesh(	const Fmatrix& parent,
 BOOL SceneBuilder::BuildObject(CSceneObject* obj)
 {
 	CEditableObject *O = obj->GetReference();
-    AnsiString temp;
-    temp.sprintf("Building object: %s",obj->Name);
+    AnsiString temp("Building object: ");
+    temp += obj->GetName();
     UI->SetStatus(temp.c_str());
 
     Fmatrix T 			= obj->_Transform();
@@ -722,7 +728,7 @@ BOOL SceneBuilder::BuildObject(CSceneObject* obj)
 BOOL SceneBuilder::BuildMUObject(CSceneObject* obj)
 {
 	CEditableObject *O = obj->GetReference();
-    AnsiString temp; temp.sprintf("Building object: %s",obj->Name);
+    AnsiString temp("Building object: "); temp += obj->GetName();
     UI->SetStatus(temp.c_str());
 
     int model_idx		= -1;
@@ -883,16 +889,16 @@ BOOL SceneBuilder::BuildSun(u8 quality, Fvector2 dir)
     float mn_x  		= dir.x-disp/2;
     float mn_y  		= dir.y-disp/2;
     for (int x=0; x<samples; x++){
-        float x = mn_x+x*da;
+        float _x = mn_x+x*da;
         for (int y=0; y<samples; y++){
-            float y = mn_y+y*da;
+            float _y = mn_y+y*da;
             l_light_static.push_back(b_light_static());
             b_light_static& sl	= l_light_static.back();
             sl.controller_ID 	= controller_ID;
             sl.data.type		= D3DLIGHT_DIRECTIONAL;
             sl.data.position.set(0,0,0);
             sl.data.diffuse.set	(color);
-            sl.data.direction.setHP(y,x);
+            sl.data.direction.setHP(_y,_x);
         }
     }
     // dynamic
@@ -954,15 +960,15 @@ BOOL SceneBuilder::BuildLight(CLight* e)
     	return FALSE;
 
     if (!e->GetLControlName()){
-    	ELog.Msg(mtError,"Invalid light control name: light '%s'.",e->Name);
+    	ELog.Msg(mtError,"Invalid light control name: light '%s'.",e->GetName());
     	return FALSE;
     }
         
     b_light	L;
     L.data.type					= e->m_Type;
     L.data.diffuse.mul_rgb		(e->m_Color,e->m_Brightness);
-    L.data.position.set			(e->PPosition);
-    Fvector dir;    dir.setHP	(e->PRotation.y,e->PRotation.x);
+    L.data.position.set			(e->GetPosition());
+    Fvector dir;    dir.setHP	(e->GetRotation().y,e->GetRotation().x);
     L.data.direction.set		(dir);
     L.data.range				= e->m_Range;
     L.data.attenuation0			= e->m_Attenuation0;
@@ -976,7 +982,7 @@ BOOL SceneBuilder::BuildLight(CLight* e)
     if (e->m_Flags.is(ELight::flAffectDynamic)){
 		svector<u16,16> sectors;
         lpSectors		= &sectors;
-        Fvector& pos 	= e->PPosition;
+        Fvector& pos 	= e->GetPosition();
         float& range 	= e->m_Range;
         if (Scene->ObjCount(OBJCLASS_SECTOR)){
             // test fully and partial inside
@@ -1027,7 +1033,7 @@ BOOL SceneBuilder::BuildGlow(CGlow* e)
     VERIFY			(e->m_ShaderName.size());
 	mtl.surfidx		= (u16)BuildTexture		(*e->m_TexName);		
     mtl.shader      = (u16)BuildShader		(*e->m_ShaderName);
-    mtl.sector		= (u16)CalculateSector	(e->PPosition,e->m_fRadius);
+    mtl.sector		= (u16)CalculateSector	(e->GetPosition(),e->m_fRadius);
     mtl.shader_xrlc	= -1;
     if ((u16(-1)==mtl.surfidx)||(u16(-1)==mtl.shader)) return FALSE;
 
@@ -1038,7 +1044,7 @@ BOOL SceneBuilder::BuildGlow(CGlow* e)
     }
 
 // fill params
-	b.P.set        	(e->PPosition);
+	b.P.set        	(e->GetPosition());
     b.size        	= e->m_fRadius;
 	b.dwMaterial   	= mtl_idx;
     b.flags			= e->m_Flags.is(CGlow::gfFixedSize)?0x01:0x00;	// 0x01 - non scalable
@@ -1053,7 +1059,7 @@ void SceneBuilder::BuildPortal(b_portal* b, CPortal* e){
 	b->sector_front	= (u16)e->m_SectorFront->m_sector_num;
 	b->sector_back	= (u16)e->m_SectorBack->m_sector_num;
     b->vertices.resize(e->m_SimplifyVertices.size());
-    CopyMemory(b->vertices.begin(),e->m_SimplifyVertices.begin(),e->m_SimplifyVertices.size()*sizeof(Fvector));
+    CopyMemory(b->vertices.begin(),e->m_SimplifyVertices.data(),e->m_SimplifyVertices.size()*sizeof(Fvector));
 }
 
 //------------------------------------------------------------------------------
@@ -1195,7 +1201,7 @@ BOOL SceneBuilder::ParseStaticObjects(ObjectList& lst, LPCSTR prefix, bool b_sel
     SPBItem* pb	= UI->ProgressStart(lst.size(),"Parse static objects...");
     for(ObjectIt _F = lst.begin();_F!=lst.end();_F++)
 	{
-        pb->Inc((*_F)->Name);
+        pb->Inc((*_F)->GetName());
         if (UI->NeedAbort()) break;
 		if(b_selected_only && !(*_F)->Selected())
 			continue;
@@ -1229,7 +1235,7 @@ BOOL SceneBuilder::ParseStaticObjects(ObjectList& lst, LPCSTR prefix, bool b_sel
         }// end switch
         if (!bResult)
         {
-            ELog.DlgMsg(mtError,"Failed to build object: '%s'",(*_F)->Name);
+            ELog.DlgMsg(mtError,"Failed to build object: '%s'",(*_F)->GetName());
         	break;
         }
     }
@@ -1357,9 +1363,9 @@ BOOL SceneBuilder::CompileStatic(bool b_selected_only)
             tp.type				= STextureParams::ttImage;
             tp.mip_filter		= STextureParams::kMIPFilterAdvanced;
             tp.flags.assign		(STextureParams::flDitherColor|STextureParams::flGenerateMipMaps);
-            ImageLib.MakeGameTexture		(fn_color.c_str(),merged_image.layers[0].begin(), tp);
-            ImageLib.MakeGameTexture		(fn_normal.c_str(),merged_image.layers[1].begin(),tp);
-	        for (k=0; k<(int)l_lods.size(); k++){        
+            ImageLib.MakeGameTexture		(fn_color.c_str(),merged_image.layers[0].data(), tp);
+            ImageLib.MakeGameTexture		(fn_normal.c_str(),merged_image.layers[1].data(),tp);
+	        for (u32 k=0; k<l_lods.size(); k++){        
 	            e_b_lod& l	= l_lods[k];         
                 for (u32 f=0; f<8; f++){
                 	for (u32 t=0; t<4; t++){

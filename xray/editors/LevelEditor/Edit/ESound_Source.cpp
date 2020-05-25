@@ -4,9 +4,9 @@
 
 #include "ESound_Source.h"
 #include "../../xrSound/SoundRender_Source.h"
-#include "../../ecore/editor/D3DUtils.h"
+#include <Layers/xrRender/D3DUtils.h>
 #include "../ECore/Editor/ui_main.h"
-#include "IGame_Persistent.h"
+#include <xrEngine/IGame_Persistent.h>
 //----------------------------------------------------
 
 #define VIS_RADIUS 0.25f
@@ -80,10 +80,10 @@ void ESoundSource::Render(int priority, bool strictB2F)
         u32 clr0				= Selected()?SOUND_SEL0_COLOR:SOUND_NORM_COLOR;
         u32 clr1				= Selected()?SOUND_SEL1_COLOR:SOUND_NORM_COLOR;
         if (Selected()){ 
-        	DU_impl.DrawLineSphere	(m_Params.position, m_Params.max_distance, clr1, true);
-        	DU_impl.DrawLineSphere	(m_Params.position, m_Params.min_distance, clr0, false);
+        	DUImpl.DrawLineSphere	(m_Params.position, m_Params.max_distance, clr1, true);
+        	DUImpl.DrawLineSphere	(m_Params.position, m_Params.min_distance, clr0, false);
         }else{
-			DU_impl.DrawSound		(m_Params.position,VIS_RADIUS, clr1);
+			DUImpl.DrawSound		(m_Params.position,VIS_RADIUS, clr1);
         }
     }
 }
@@ -124,7 +124,7 @@ bool ESoundSource::LoadLTX(CInifile& ini, LPCSTR sect_name)
 
 	inherited::LoadLTX	(ini, sect_name);
 
-    m_Type				= ini.r_u32			(sect_name, "snd_type");
+    m_Type				= (ESoundType)ini.r_u32			(sect_name, "snd_type");
 
     m_WAVName			= ini.r_string		(sect_name, "snd_name");
 

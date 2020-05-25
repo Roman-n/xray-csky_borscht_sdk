@@ -14,8 +14,8 @@
 #include "../xrServerEntities/object_broker.h"
 
 #ifdef _EDITOR
-    #include "ui_toolscustom.h"
-    #include "ui_main.h"
+    #include <editors/ECore/Editor/UI_ToolsCustom.h>
+    #include  <editors/ECore/Editor/ui_main.h>
 #else
 	#include "xr_object.h"
 	#include "igame_level.h"

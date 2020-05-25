@@ -33,8 +33,8 @@ enum EEnvModUsedParams{	eViewDist 		=(1<<0),
                         eHemiColor 		=(1<<5)
 };
 
-extern ECORE_API xr_token rpoint_type[];
-extern ECORE_API xr_token rpoint_game_type[];
+extern xr_token rpoint_type[];
+extern xr_token rpoint_game_type[];
 
 // BASE offset
 #define WAY_BASE					0x1000

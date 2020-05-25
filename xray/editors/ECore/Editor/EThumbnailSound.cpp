@@ -113,19 +113,26 @@ void ESoundThumbnail::Save(int age, LPCSTR path)
 }
 //------------------------------------------------------------------------------
 
-#include "ai_sounds.h"
-#include "PropertiesList.h"
+#include <xrServerEntities/ai_sounds.h>
+#ifndef NO_VCL
+#include "../../xrEProps/PropertiesList.h"
+#endif
 
 bool ESoundThumbnail::OnMaxAIDistAfterEdit(PropValue* sender, float& edit_val)
 {
+#ifndef NO_VCL
     TProperties* P	= sender->Owner()->Owner(); 		VERIFY(P);
     PropItem* S 	= P->FindItem("Max Dist"); 			VERIFY(S);
     FloatValue* V 	= dynamic_cast<FloatValue*>(S->GetFrontValue());VERIFY(V);
+#else
+    FloatValue* V = dynamic_cast<FloatValue*>(sender); VERIFY(V);
+#endif
     float max_val 	= V->GetValue	();
 	return edit_val<max_val;
 }
 void ESoundThumbnail::OnMaxDistChange(PropValue* sender)
 {
+    #ifndef NO_VCL
     FloatValue* SV 	= dynamic_cast<FloatValue*>(sender);VERIFY(SV);
     TProperties* P	= sender->Owner()->Owner(); 		VERIFY(P);
     PropItem* S 	= P->FindItem("Max AI Dist"); 		VERIFY(S);
@@ -145,6 +152,7 @@ void ESoundThumbnail::OnMaxDistChange(PropValue* sender)
     	P->Modified		();
         P->RefreshForm	();
     }
+    #endif
 }
 
 void ESoundThumbnail::FillProp(PropItemVec& items)
@@ -163,11 +171,12 @@ void ESoundThumbnail::FillProp(PropItemVec& items)
 
 void ESoundThumbnail::FillInfo(PropItemVec& items)
 {
-    PHelper().CreateCaption		(items, "Quality", 		AnsiString().sprintf("%3.2f",m_fQuality).c_str());
-    PHelper().CreateCaption		(items, "Min Dist", 	AnsiString().sprintf("%3.2f",m_fMinDist).c_str());
-    PHelper().CreateCaption		(items, "Max Dist",		AnsiString().sprintf("%3.2f",m_fMaxDist).c_str());
-    PHelper().CreateCaption		(items, "Max AI Dist",	AnsiString().sprintf("%3.2f",m_fMaxAIDist).c_str());
-    PHelper().CreateCaption		(items, "Base Volume",	AnsiString().sprintf("%3.2f",m_fBaseVolume).c_str());
+    //AnsiString().sprintf("%3.2f"
+    PHelper().CreateCaption		(items, "Quality", 		std::to_string(m_fQuality).c_str());
+    PHelper().CreateCaption		(items, "Min Dist", 	std::to_string(m_fMinDist).c_str());
+    PHelper().CreateCaption		(items, "Max Dist",		std::to_string(m_fMaxDist).c_str());
+    PHelper().CreateCaption		(items, "Max AI Dist",	std::to_string(m_fMaxAIDist).c_str());
+    PHelper().CreateCaption		(items, "Base Volume",	std::to_string(m_fBaseVolume).c_str());
     PHelper().CreateCaption		(items, "Game Type",	get_token_name(anomaly_type_token,m_uGameType));
 }
 //------------------------------------------------------------------------------

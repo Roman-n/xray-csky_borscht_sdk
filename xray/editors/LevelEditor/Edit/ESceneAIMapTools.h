@@ -5,7 +5,7 @@
 #define ESceneAIMapToolsH
 
 #include "ESceneCustomMTools.H"
-#include "xrLevel.H"
+#include <xrEngine/xrLevel.h>
 #include "ESceneAIMapTools_Export.H"
 
 // refs
@@ -54,7 +54,7 @@ struct SAINode					// definition of "patch" or "node"
 	void		PointRB	(Fvector& D, float patch_size);
 	void		PointBL	(Fvector& D, float patch_size);
 
-    void   		LoadStream			(IReader&, ESceneAIMapTool*);
+    void   		LoadStream			(IReader&, ESceneAIMapTool*, u16 version);
     void   		SaveStream			(IWriter&, ESceneAIMapTool*);
     void   		LoadLTX				(CInifile& ini, LPCSTR sect_name, ESceneAIMapTool*);
     void   		SaveLTX				(CInifile& ini, LPCSTR sect_name, ESceneAIMapTool*);
@@ -72,7 +72,7 @@ const int				HDIM_Z	= 128;
 
 class ESceneAIMapTool: public ESceneToolBase
 {
-	friend class SAINode;
+	friend struct SAINode;
 	typedef ESceneToolBase inherited;
     ObjectList			m_SnapObjects;
 	// hash
@@ -127,10 +127,11 @@ public:
     	mdInvert,
     };
 	enum{
-    	flUpdateSnapList	= (1<<0),
-    	flHideNodes			= (1<<1),
-    	flSlowCalculate		= (1<<2),
-    	flUpdateHL 			= (1<<15),
+    	flUpdateSnapList			= (1<<0),
+    	flHideNodes					= (1<<1),
+    	flSlowCalculate				= (1<<2),
+        flHideNodesWhileGenerating	= (1<<3),
+    	flUpdateHL 					= (1<<15),
     };
     Flags32				m_Flags;
 
@@ -138,6 +139,10 @@ public:
     float 				m_SmoothHeight;
     u32					m_BrushSize;
     xr_vector<u16>		m_ignored_materials;
+
+    xr_vector<Fvector>	m_ErrorNodes;
+
+    u32					m_SelectionCount;
 
     bool				PickObjects				(Fvector& dest, const Fvector& start, const Fvector& dir, float dist);
 public:
@@ -189,6 +194,8 @@ public:
     virtual void		SaveSelection      		(IWriter&);
     virtual bool   		Export          		(LPCSTR path);
 
+    void				LoadCompilerErrors		(IReader&);
+
 	// device dependent funcs
 	virtual void		OnDeviceCreate			();
 	virtual void		OnDeviceDestroy			();
@@ -217,6 +224,11 @@ public:
     void 				SmoothNodes				();
 	void 				ResetNodes				();
     void				SelectNodesByLink		(int link);
+
+    void __stdcall      OnPatchSizeChanged		(PropValue*);
+    void				SelectErrorNodes		();
+
+    void				SelectNode				(SAINode *node, bool select);
 };
 #endif // ESceneAIMapToolsH
 

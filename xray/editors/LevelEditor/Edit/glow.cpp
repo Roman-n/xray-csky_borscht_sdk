@@ -4,11 +4,13 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#include "Log.h"
+#include <xrCore/Log.h>
 #include "Glow.h"
-#include "xr_trims.h"
+#include <xrCore/xr_trims.h>
+#ifndef NO_VCL
 #include "bottombar.h"
-#include "../../ecore/editor/D3DUtils.h"
+#endif
+#include <Layers/xrRender/D3DUtils.h>
 #include "scene.h"
 #include "ESceneGlowTools.h"
 
@@ -63,7 +65,7 @@ void CGlow::ShaderChange(PropValue* value)
 
 bool CGlow::GetBox( Fbox& box )
 {
-	box.set( PPosition, PPosition );
+	box.set( GetPosition(), GetPosition() );
 	box.min.sub(m_fRadius);
 	box.max.add(m_fRadius);
 	return true;
@@ -81,32 +83,32 @@ void CGlow::Render(int priority, bool strictB2F)
         if (gt->m_Flags.is(ESceneGlowTool::flTestVisibility))
         { 
             Fvector D;
-            D.sub(Device.vCameraPosition,PPosition);
+            D.sub(Device.vCameraPosition,GetPosition());
             float dist 	= D.normalize_magn();
-            if (!Scene->RayPickObject(dist,PPosition,D,OBJCLASS_SCENEOBJECT,0,0)){
+            if (!Scene->RayPickObject(dist,GetPosition(),D,OBJCLASS_SCENEOBJECT,0,0)){
                 if (m_GShader){	Device.SetShader(m_GShader);
                 }else{			Device.SetShader(Device.m_WireShader);}
-                m_RenderSprite.Render(PPosition,m_fRadius,m_Flags.is(gfFixedSize));
-                DU_impl.DrawRomboid(PPosition, VIS_RADIUS, 0x00FF8507);
+                m_RenderSprite.Render(GetPosition(),m_fRadius,m_Flags.is(gfFixedSize));
+                DUImpl.DrawRomboid(GetPosition(), VIS_RADIUS, 0x00FF8507);
             }else{
                 // рендерим bounding sphere
                 Device.SetShader(Device.m_WireShader);
-                DU_impl.DrawRomboid(PPosition, VIS_RADIUS, 0x00FF8507);
+                DUImpl.DrawRomboid(GetPosition(), VIS_RADIUS, 0x00FF8507);
             }
         }else{
             if (m_GShader){	Device.SetShader(m_GShader);
             }else{			Device.SetShader(Device.m_WireShader);}
-            m_RenderSprite.Render(PPosition,m_fRadius,m_Flags.is(gfFixedSize));
+            m_RenderSprite.Render(GetPosition(),m_fRadius,m_Flags.is(gfFixedSize));
         }
         if( Selected() ){
             Fbox bb; GetBox(bb);
             u32 clr = 0xFFFFFFFF;
             Device.SetShader(Device.m_WireShader);
-            DU_impl.DrawSelectionBox(bb,&clr);
+            DUImpl.DrawSelectionBox(bb,&clr);
             if (gt->m_Flags.is(ESceneGlowTool::flDrawCross))
             {
             	Fvector sz; bb.getradius(sz);
-        		DU_impl.DrawCross(PPosition,sz.x,sz.y,sz.z, sz.x,sz.y,sz.z,0xFFFFFFFF,false);
+        		DUImpl.DrawCross(GetPosition(),sz.x,sz.y,sz.z, sz.x,sz.y,sz.z,0xFFFFFFFF,false);
             }
         }
     }
@@ -114,13 +116,13 @@ void CGlow::Render(int priority, bool strictB2F)
 
 bool CGlow::FrustumPick(const CFrustum& frustum)
 {
-    return (frustum.testSphere_dirty(PPosition,m_fRadius))?true:false;
+    return (frustum.testSphere_dirty(GetPosition(),m_fRadius))?true:false;
 }
 
 bool CGlow::RayPick(float& distance, const Fvector& start, const Fvector& direction, SRayPickInfo* pinf)
 {
 	Fvector ray2;
-	ray2.sub( PPosition, start );
+	ray2.sub( GetPosition(), start );
 
     float d = ray2.dotproduct(direction);
     if( d > 0  ){
@@ -245,7 +247,7 @@ void CGlow::FillProp(LPCSTR pref, PropItemVec& items)
 bool CGlow::GetSummaryInfo(SSceneSummary* inf)
 {
 	inherited::GetSummaryInfo	(inf);
-	if (m_TexName.size()) 	inf->AppendTexture(ChangeFileExt(*m_TexName,"").LowerCase().c_str(),SSceneSummary::sttGlow,0,0,"$GLOW$");
+	if (m_TexName.size()) 	inf->AppendTexture(LowerCase(ChangeFileExt(*m_TexName,"")).c_str(),SSceneSummary::sttGlow,0,0,"$GLOW$");
 	inf->glow_cnt++;
 	return true;
 }

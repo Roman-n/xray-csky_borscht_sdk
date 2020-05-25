@@ -1,10 +1,7 @@
 #include "stdafx.h"
-
-
 #include "IGame_Persistent.h"
-
-#ifndef _EDITOR
 #include "environment.h"
+#ifndef _EDITOR
 #	include "x_ray.h"
 #	include "IGame_Level.h"
 #	include "XR_IOConsole.h"
@@ -29,9 +26,7 @@ IGame_Persistent::IGame_Persistent	()
 
 	m_pMainMenu						= NULL;
 
-#ifndef _EDITOR
 	pEnvironment					= xr_new<CEnvironment>();
-#endif
 }
 
 IGame_Persistent::~IGame_Persistent	()
@@ -41,9 +36,7 @@ IGame_Persistent::~IGame_Persistent	()
 	Device.seqAppEnd.Remove			(this);
 	Device.seqAppActivate.Remove	(this);
 	Device.seqAppDeactivate.Remove	(this);
-#ifndef _EDITOR
 	xr_delete						(pEnvironment);
-#endif
 }
 
 void IGame_Persistent::OnAppActivate		()
@@ -56,16 +49,12 @@ void IGame_Persistent::OnAppDeactivate		()
 
 void IGame_Persistent::OnAppStart	()
 {
-#ifndef _EDITOR
 	Environment().load				();
-#endif    
 }
 
 void IGame_Persistent::OnAppEnd		()
 {
-#ifndef _EDITOR
 	Environment().unload			 ();
-#endif    
 	OnGameEnd						();
 
 #ifndef _EDITOR
@@ -152,12 +141,10 @@ void IGame_Persistent::OnGameEnd	()
 
 void IGame_Persistent::OnFrame		()
 {
-#ifndef _EDITOR
-
 	if(!Device.Paused() || Device.dwPrecacheFrame)
 		Environment().OnFrame	();
 
-
+#ifndef _EDITOR
 	Statistic.Particles_starting= ps_needtoplay.size	();
 	Statistic.Particles_active	= ps_active.size		();
 	Statistic.Particles_destroy	= ps_destroy.size		();

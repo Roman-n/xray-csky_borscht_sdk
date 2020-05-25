@@ -10,7 +10,7 @@ class CSceneObject : public CCustomObject
 {
 	shared_str		m_ReferenceName;
 	CEditableObject*m_pReference;
-	void 			ReferenceChange			(PropValue* sender);
+	void __stdcall	ReferenceChange			(PropValue* sender);
 public:
 	enum{
 //    	flDynamic	= (1<<0),
@@ -24,7 +24,7 @@ public:
     virtual void 	SetScale				(const Fvector& scale)
     {
     	if (m_pReference&&m_pReference->IsDynamic()){
-        	ELog.Msg(mtError,"Dynamic object %s - can't scale.", Name);
+        	ELog.Msg(mtError,"Dynamic object %s - can't scale.", GetName());
         }else{
 			FScale.set(scale);
             UpdateTransform();

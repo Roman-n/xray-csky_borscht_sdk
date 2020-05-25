@@ -2,9 +2,9 @@
 #pragma hdrstop
 
 #include "tlsprite.h"
-#include "texture.h"
+#include "../Engine/Texture.h"
 #include "ui_main.h"
-#include "d3dutils.h"
+#include <Layers/xrRender/D3DUtils.h>
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -37,7 +37,7 @@ void CTLSprite::Render(Fvector &pos, float radius, bool bFixedSize, u32 clr)
     mesh.setdepth	( P.p.z, P.p.w );
     mesh.setcolor	( clr );
 
-    DU_impl.DrawPrimitiveTL(D3DPT_TRIANGLESTRIP,2,(FVF::TL*)&mesh,4,false,false);
+    DUImpl.DrawPrimitiveTL(D3DPT_TRIANGLESTRIP,2,(FVF::TL*)&mesh,4,false,false);
 }
 
 void CTLSprite::Render(Fvector &pos, u32 color, float radius, float angle)
@@ -65,7 +65,7 @@ void CTLSprite::Render(Fvector &pos, u32 color, float radius, float angle)
 	mesh.setdepth	(P.p.z, P.p.w);
 	mesh.setcolor	(color);
 
-    DU_impl.DrawPrimitiveTL(D3DPT_TRIANGLESTRIP,2,(FVF::TL*)&mesh,4,false,false);
+    DUImpl.DrawPrimitiveTL(D3DPT_TRIANGLESTRIP,2,(FVF::TL*)&mesh,4,false,false);
 }
 
 void CTLSprite::Render( Fvector &pos, u32 color, float radius, const Fvector& D ){
@@ -94,7 +94,7 @@ void CTLSprite::Render( Fvector &pos, u32 color, float radius, const Fvector& D 
 
 	mesh.setcolor	(color);
 
-    DU_impl.DrawPrimitiveTL(D3DPT_TRIANGLESTRIP,2,(FVF::TL*)&mesh,4,false,false);
+    DUImpl.DrawPrimitiveTL(D3DPT_TRIANGLESTRIP,2,(FVF::TL*)&mesh,4,false,false);
 /*
 	float radius	= size*0.5f;
 

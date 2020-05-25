@@ -6,10 +6,12 @@
 
 #include "WayPoint.h"
 #include "ui_leveltools.h"
+#ifndef NO_VCL
 #include "FrameWayPoint.h"
+#endif
 #include "../ECore/Editor/ui_main.h"
 #include "ESceneWayControls.h"
-#include "../ECore/Editor/d3dUtils.h"
+#include <Layers/xrRender/D3DUtils.h>
 
 //----------------------------------------------------
 
@@ -52,7 +54,7 @@ void CWayPoint::Render(LPCSTR parent_name, bool bParentSelect)
 {
 	Fvector pos;
     pos.set	(m_vPosition.x,m_vPosition.y+WAYPOINT_SIZE*0.85f,m_vPosition.z);
-    DU_impl.DrawCross(pos,WAYPOINT_RADIUS,WAYPOINT_SIZE*0.85f,WAYPOINT_RADIUS,WAYPOINT_RADIUS,WAYPOINT_SIZE*0.15f,WAYPOINT_RADIUS,0x0000ff00);
+    DUImpl.DrawCross(pos,WAYPOINT_RADIUS,WAYPOINT_SIZE*0.85f,WAYPOINT_RADIUS,WAYPOINT_RADIUS,WAYPOINT_SIZE*0.15f,WAYPOINT_RADIUS,0x0000ff00);
 	// draw links
 	Fvector p1;
     p1.set	(m_vPosition.x,m_vPosition.y+WAYPOINT_SIZE*0.85f,m_vPosition.z);
@@ -73,9 +75,11 @@ void CWayPoint::Render(LPCSTR parent_name, bool bParentSelect)
             xx.sub	(p2,p1);
             xx.mul	(0.95f);
             xx.add	(p1);
-            DU_impl.OutText(xx,AnsiString().sprintf("P: %1.2f",O->probability).c_str(),c,s);
+            string64 buf;
+            sprintf(buf, "P: %1.2f", O->probability);
+            DUImpl.OutText(xx,buf,c,s);
         }
-	    DU_impl.OutText(m_vPosition,hint.c_str(),c,s);
+	    DUImpl.OutText(m_vPosition,hint.c_str(),c,s);
     }
 
 	Fvector p2;
@@ -84,12 +88,12 @@ void CWayPoint::Render(LPCSTR parent_name, bool bParentSelect)
     for (WPLIt it=m_Links.begin(); it!=m_Links.end(); it++){
     	SWPLink* O = (SWPLink*)(*it);
 	    p2.set	(O->way_point->m_vPosition.x,O->way_point->m_vPosition.y+WAYPOINT_SIZE*0.85f,O->way_point->m_vPosition.z);
-    	DU_impl.DrawLink(p1,p2,0.25f,l);
+    	DUImpl.DrawLink(p1,p2,0.25f,l);
     }
 	if (bParentSelect&&m_bSelected){
     	Fbox bb; GetBox(bb);
         u32 clr = 0xffffffff;
-		DU_impl.DrawSelectionBox(bb,&clr);
+		DUImpl.DrawSelectionBox(bb,&clr);
 	}
 }
 bool CWayPoint::RayPick(float& distance, const Fvector& S, const Fvector& D)
@@ -488,11 +492,11 @@ void CWayObject::Render(int priority, bool strictB2F)
     if ((1==priority)&&(false==strictB2F)){
         RCache.set_xform_world(Fidentity);
         Device.SetShader		(Device.m_WireShader);
-        for (WPIt it=m_WayPoints.begin(); it!=m_WayPoints.end(); it++) (*it)->Render(Name,Selected());
+        for (WPIt it=m_WayPoints.begin(); it!=m_WayPoints.end(); it++) (*it)->Render(GetName(),Selected());
         if( Selected() ){
             u32 clr = 0xFFFFFFFF;
             Fbox bb; GetBox(bb);
-            DU_impl.DrawSelectionBox(bb,&clr);
+            DUImpl.DrawSelectionBox(bb,&clr);
         }
     }
 }
@@ -526,7 +530,7 @@ bool CWayObject::LoadLTX(CInifile& ini, LPCSTR sect_name)
 
 	CCustomObject::LoadLTX(ini, sect_name);
 
-    if(!Name)
+    if(!GetName())
     {
      ELog.DlgMsg(mtError,"Corrupted scene file.[%s] sect[%s] has empty name",ini.fname(), sect_name);
      return false;
@@ -588,7 +592,8 @@ void CWayObject::SaveLTX(CInifile& ini, LPCSTR sect_name)
 
     u32 wp_idx				= 0;
     string128				buff;
-	for(WPIt it=m_WayPoints.begin(); it!=m_WayPoints.end(); ++it, ++wp_idx)
+    WPIt it;
+	for(it=m_WayPoints.begin(); it!=m_WayPoints.end(); ++it, ++wp_idx)
     {
     	CWayPoint* W = *it;
         sprintf				(buff,"wp_%d_pos",wp_idx);
@@ -688,7 +693,7 @@ void CWayObject::SaveStream(IWriter& F)
 
 	F.open_chunk	(WAYOBJECT_CHUNK_LINKS);
     F.w_u16			((u16)l_cnt);
-	for (it=m_WayPoints.begin(); it!=m_WayPoints.end(); it++){
+	for (WPIt it=m_WayPoints.begin(); it!=m_WayPoints.end(); it++){
     	CWayPoint* W= *it;
     	int from	= it-m_WayPoints.begin();
         for (WPLIt l_it=W->m_Links.begin(); l_it!=W->m_Links.end(); l_it++){
@@ -714,7 +719,7 @@ bool CWayObject::ExportGame(SExportStreams* F)
         F->patrolpath.stream.close_chunk	();
 
         F->patrolpath.stream.open_chunk	(WAYOBJECT_CHUNK_NAME);
-        F->patrolpath.stream.w_stringZ	(Name);
+        F->patrolpath.stream.w_stringZ	(GetName());
         F->patrolpath.stream.close_chunk	();
 
         int l_cnt		= 0;
@@ -731,7 +736,7 @@ bool CWayObject::ExportGame(SExportStreams* F)
 
         F->patrolpath.stream.open_chunk	(WAYOBJECT_CHUNK_LINKS);
         F->patrolpath.stream.w_u16		((u16)l_cnt);
-        for (it=m_WayPoints.begin(); it!=m_WayPoints.end(); it++){
+        for (WPIt it=m_WayPoints.begin(); it!=m_WayPoints.end(); it++){
             CWayPoint* W= *it;
             int from	= it-m_WayPoints.begin();
             for (WPLIt l_it=W->m_Links.begin(); l_it!=W->m_Links.end(); l_it++){
@@ -757,7 +762,7 @@ CWayPoint* CWayObject::FindWayPoint(const shared_str& nm)
 
 bool CWayObject::OnWayPointNameAfterEdit(PropValue* sender, shared_str& edit_val)
 {
-    edit_val 		= AnsiString(edit_val.c_str()).LowerCase().c_str();
+    edit_val 		= LowerCase(edit_val.c_str()).c_str();
     return !FindWayPoint(edit_val);
 }
 
@@ -783,7 +788,7 @@ void CWayObject::FillProp(LPCSTR pref, PropItemVec& items)
                     PHelper().CreateFloat	(items,	PrepareKey(pref,"Way Point\\Links",*(*l_it)->way_point->m_Name),&(*l_it)->probability);
                     
                 for (int k=0; k<32; k++)
-                    PHelper().CreateFlag32(items,	PrepareKey(pref,"Way Point\\Flags",AnsiString(k).c_str()),	&W->m_Flags,	1<<k);
+                    PHelper().CreateFlag32(items,	PrepareKey(pref,"Way Point\\Flags",std::to_string(k).c_str()),	&W->m_Flags,	1<<k);
             }
     	}
     }

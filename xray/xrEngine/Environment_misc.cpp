@@ -3,8 +3,10 @@
 #include "xr_efflensflare.h"
 #include "thunderbolt.h"
 #include "rain.h"
+#ifndef _EDITOR
 #include "IGame_Level.h"
 #include "../xrServerEntities/object_broker.h"
+#endif
 #include "../xrServerEntities/LevelGameDef.h"
 #include "../xrServerEntities/ShapeData.h"
 
@@ -231,8 +233,16 @@ CEnvAmbient::~CEnvAmbient						()
 
 void CEnvAmbient::destroy ()
 {
+#ifdef _EDITOR
+	for(EffectVecIt it1 = m_effects.begin(), e1 = m_effects.end(); it1 != e1; it1++)
+    	xr_delete(*it1);
+
+    for(SSndChannelVecIt it2 = m_sound_channels.begin(), e2 = m_sound_channels.end(); it2 != e2; it2++)
+    	xr_delete(*it2);
+#else
 	delete_data				(m_effects);
 	delete_data				(m_sound_channels);
+#endif
 }
 
 void CEnvAmbient::load( 
@@ -611,6 +621,7 @@ void	CEnvironment::mods_unload		()
 
 void    CEnvironment::load_level_specific_ambients ()
 {
+#ifndef _EDITOR
 	const shared_str level_name = g_pGameLevel->name();
 
 	string_path path;
@@ -643,6 +654,7 @@ void    CEnvironment::load_level_specific_ambients ()
 	}
 
 	xr_delete(level_ambients);
+#endif
 }
 
 CEnvDescriptor* CEnvironment::create_descriptor	(shared_str const& identifier, CInifile* config)

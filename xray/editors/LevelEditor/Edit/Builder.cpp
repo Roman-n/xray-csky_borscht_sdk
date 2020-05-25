@@ -11,13 +11,13 @@
 #include "ESceneDOTools.h"
 #include "../ECore/Editor/ui_main.h"
 #include "../ECore/Editor/ui_toolscustom.h"
-#include "xrHemisphere.h"
+#include <xrEngine/xrHemisphere.h>
 //----------------------------------------------------
 
 SceneBuilder Builder;
 //----------------------------------------------------
 
-ICF static void simple_hemi_callback(float x, float y, float z, float E, LPVOID P)
+ICF static void __stdcall simple_hemi_callback(float x, float y, float z, float E, LPVOID P)
 {
     SceneBuilder::BLVec* dst 	= (SceneBuilder::BLVec*)P;
     SceneBuilder::SBuildLight 	T;
@@ -48,7 +48,7 @@ SceneBuilder::~SceneBuilder()
 //------------------------------------------------------------------------------
 #define CHECK_BREAK     	if (UI->NeedAbort()) break;
 #define VERIFY_COMPILE(x,c1,c2) CHECK_BREAK \
-							if (!x){error_text.sprintf("ERROR: %s %s", c1,c2); break;}
+							if (!x){error_text = "ERROR: "; error_text += c1; error_text += " "; error_text += c2; break;}
 //------------------------------------------------------------------------------
 BOOL SceneBuilder::Compile(bool b_selected_only)
 {
@@ -109,7 +109,7 @@ BOOL SceneBuilder::Compile(bool b_selected_only)
 		    Clear			();
         } while(0);
 
-        if (!error_text.IsEmpty()) 	ELog.DlgMsg(mtError,error_text.c_str());
+        if (!error_text.empty()) 	ELog.DlgMsg(mtError,error_text.c_str());
         else if (UI->NeedAbort())	ELog.DlgMsg(mtInformation,"Building terminated.");
         else						ELog.DlgMsg(mtInformation,"Building OK.");
     }catch(...){
@@ -118,7 +118,7 @@ BOOL SceneBuilder::Compile(bool b_selected_only)
     }
     UI->EndEState();
 
-	return error_text.IsEmpty();
+	return error_text.empty();
 }
 //------------------------------------------------------------------------------
 
@@ -144,7 +144,7 @@ BOOL SceneBuilder::MakeGame( )
             VERIFY_COMPILE(BuildGame(),					"Failed to build game.","");
         } while(0);
 
-        if (!error_text.IsEmpty()) 	ELog.DlgMsg(mtError,error_text.c_str());
+        if (!error_text.empty()) 	ELog.DlgMsg(mtError,error_text.c_str());
         else if (UI->NeedAbort())	ELog.DlgMsg(mtInformation,"Making terminated.");
         else						ELog.DlgMsg(mtInformation,"Making finished.");
     }catch(...){
@@ -153,7 +153,7 @@ BOOL SceneBuilder::MakeGame( )
     }
     UI->EndEState();
 
-	return error_text.IsEmpty();
+	return error_text.empty();
 }
 //------------------------------------------------------------------------------
 
@@ -164,11 +164,11 @@ BOOL SceneBuilder::MakeAIMap()
 		VERIFY_COMPILE(PreparePath(),				"Failed to prepare level path.","");
 		VERIFY_COMPILE(BuildAIMap(),				"Failed to build AI-Map.","");
     }while(0);
-    if (!error_text.IsEmpty()) 	ELog.DlgMsg(mtError,error_text.c_str());
+    if (!error_text.empty()) 	ELog.DlgMsg(mtError,error_text.c_str());
     else if (UI->NeedAbort())	ELog.DlgMsg(mtInformation,"Building terminated.");
     else						ELog.DlgMsg(mtInformation,"AI-Map succesfully exported.");
 
-	return error_text.IsEmpty();
+	return error_text.empty();
 }
 //------------------------------------------------------------------------------
 
@@ -180,11 +180,11 @@ BOOL SceneBuilder::MakeDetails()
         // save details
 		VERIFY_COMPILE(Scene->GetTool(OBJCLASS_DO)->Export(m_LevelPath), "Export failed.","");
     }while(0);
-    if (!error_text.IsEmpty()) 	ELog.DlgMsg(mtError,error_text.c_str());
+    if (!error_text.empty()) 	ELog.DlgMsg(mtError,error_text.c_str());
     else if (UI->NeedAbort())	ELog.DlgMsg(mtInformation,"Building terminated.");
     else						ELog.DlgMsg(mtInformation,"Details succesfully exported.");
 
-	return error_text.IsEmpty();
+	return error_text.empty();
 }
 //------------------------------------------------------------------------------
 
@@ -203,7 +203,7 @@ BOOL SceneBuilder::MakeHOM( )
             VERIFY_COMPILE(BuildHOMModel(),				"Failed to build HOM model.","");
         } while(0);
 
-        if (!error_text.IsEmpty()) 	ELog.DlgMsg(mtError,error_text.c_str());
+        if (!error_text.empty()) 	ELog.DlgMsg(mtError,error_text.c_str());
         else if (UI->NeedAbort())	ELog.DlgMsg(mtInformation,"Building terminated...");
         else						ELog.DlgMsg(mtInformation,"Building OK...");
     }catch(...){
@@ -212,7 +212,7 @@ BOOL SceneBuilder::MakeHOM( )
     }
     UI->EndEState();
 
-	return error_text.IsEmpty();
+	return error_text.empty();
 }
 //------------------------------------------------------------------------------
 
@@ -231,7 +231,7 @@ BOOL SceneBuilder::MakeSOM( )
             VERIFY_COMPILE(BuildSOMModel(),				"Failed to build SOM model.","");
         } while(0);
 
-        if (!error_text.IsEmpty()) 	ELog.DlgMsg(mtError,error_text.c_str());
+        if (!error_text.empty()) 	ELog.DlgMsg(mtError,error_text.c_str());
         else if (UI->NeedAbort())	ELog.DlgMsg(mtInformation,"Building terminated...");
         else						ELog.DlgMsg(mtInformation,"Building OK...");
     }catch(...){
@@ -240,7 +240,7 @@ BOOL SceneBuilder::MakeSOM( )
     }
     UI->EndEState();
 
-	return error_text.IsEmpty();
+	return error_text.empty();
 }
 //------------------------------------------------------------------------------
 #include "../ECore/Editor/EditObject.h"

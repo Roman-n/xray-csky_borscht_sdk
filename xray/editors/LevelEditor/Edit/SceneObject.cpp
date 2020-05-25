@@ -6,11 +6,13 @@
 #pragma hdrstop
 
 #include "SceneObject.h"
+#ifndef NO_VCL
 #include "bottombar.h"
+#endif
 #include "../ECore/Editor/library.h"
 #include "../ECore/Editor/EditMesh.h"
 #include "../ECore/Editor/ui_main.h"
-#include "../ECore/Editor/D3DUtils.h"
+#include <Layers/xrRender/D3DUtils.h>
 
 #ifdef _LEVEL_EDITOR
 	#include "scene.h"
@@ -118,7 +120,7 @@ void CSceneObject::Render(int priority, bool strictB2F)
                 Device.SetShader(Device.m_WireShader);
                 RCache.set_xform_world(_Transform());
                 u32 clr = 0xFFFFFFFF;
-                DU_impl.DrawSelectionBox(m_pReference->GetBox(),&clr);
+                DUImpl.DrawSelectionBox(m_pReference->GetBox(),&clr);
             }else{
                 RenderBlink	();
             }
@@ -278,7 +280,7 @@ bool CSceneObject::GetSummaryInfo(SSceneSummary* inf)
             	area			+= (*m)->CalculateSurfaceArea(*s_it,true);
                 pixel_area		+= (*m)->CalculateSurfacePixelArea(*s_it,true);
             }
-            inf->AppendTexture(ChangeFileExt(AnsiString(*(*s_it)->m_Texture),"").LowerCase().c_str(),SSceneSummary::sttBase,area,pixel_area,E->m_LibName.c_str());
+            inf->AppendTexture(LowerCase(ChangeFileExt(AnsiString(*(*s_it)->m_Texture),"")).c_str(),SSceneSummary::sttBase,area,pixel_area,E->m_LibName.c_str());
         }
         if (m_Flags.is(CEditableObject::eoUsingLOD)){
             inf->AppendTexture(E->GetLODTextureName().c_str(),SSceneSummary::sttLOD,0,0,"$LOD$");
@@ -325,7 +327,11 @@ void CSceneObject::OnShowHint(AStringVec& dest)
             int gm_id			= surf->_GameMtl(); 
             if (gm_id!=GAMEMTL_NONE_ID){ 
                 SGameMtl* mtl 	= GMLib.GetMaterialByID(gm_id);
-                if (mtl)		dest.push_back(AnsiString().sprintf("Occlusion Factor: %3.2f",mtl->fSndOcclusionFactor));
+                if (mtl) {
+                    string64 temp;
+                    sprintf(temp, "Occlusion Factor: %3.2f", mtl->fSndOcclusionFactor);
+                    dest.push_back(temp);
+                }
             }
         }else if (pinf.e_obj->m_objectFlags.is(CEditableObject::eoHOM)){
         }else{

@@ -9,11 +9,11 @@
 #include "../../Include/cl_intersect.h"
 
 #ifdef _EDITOR
-#	include "ESceneClassList.h"
-#	include "Scene.h"
-#	include "SceneObject.h"
-#	include "igame_persistent.h"
-#	include "environment.h"
+#	include <editors/LevelEditor/Edit/ESceneClassList.h>
+#	include <editors/LevelEditor/Edit/Scene.h>
+#	include <editors/LevelEditor/Edit/SceneObject.h>
+#	include <xrEngine/igame_persistent.h>
+#	include <xrEngine/environment.h>
 #else
 #	include "../../xrEngine/igame_persistent.h"
 #	include "../../xrEngine/environment.h"
@@ -229,8 +229,10 @@ void CDetailManager::Load		()
 #endif
 void CDetailManager::Unload		()
 {
+#ifndef _EDITOR
 	m_mask._get()->releaseData();
 	m_mask.destroy();
+#endif
 
 	if (UseVS())	hw_Unload	();
 	else			soft_Unload	();
@@ -267,7 +269,11 @@ void CDetailManager::UpdateVisibleM()
 
 	// Initialize 'vis' and 'cache'
 	// Collect objects for rendering
+#ifdef _EDITOR
+	Device.Statistic->RenderDUMP_DT_VIS.Begin	();
+#else
 	Statistic.RenderDUMP_DT_VIS.Begin	();
+#endif
 	for (int _mz=0; _mz<dm_cache1_line; _mz++){
 		for (int _mx=0; _mx<dm_cache1_line; _mx++){
 			CacheSlot1& MS		= cache_level1[_mz][_mx];
@@ -338,7 +344,11 @@ void CDetailManager::UpdateVisibleM()
 			}
 		}
 	}
+#ifdef _EDITOR
+	Device.Statistic->RenderDUMP_DT_VIS.End	();
+#else
 	Statistic.RenderDUMP_DT_VIS.End	();
+#endif
 }
 
 void CDetailManager::Render	()
@@ -351,7 +361,11 @@ void CDetailManager::Render	()
 	// MT
 	MT_SYNC					();
 
+#ifdef _EDITOR
+	Device.Statistic->RenderDUMP_DT_Render.Begin	();
+#else
 	Statistic.RenderDUMP_DT_Render.Begin	();
+#endif
 
 #ifndef _EDITOR
 	float factor			= g_pGamePersistent->Environment().wind_strength_factor;
@@ -365,7 +379,11 @@ void CDetailManager::Render	()
 	if (UseVS())			hw_Render	();
 	else					soft_Render	();
 	RCache.set_CullMode		(CULL_CCW);
+#ifdef _EDITOR
+	Device.Statistic->RenderDUMP_DT_Render.End	();
+#else
 	Statistic.RenderDUMP_DT_Render.End	();
+#endif
 	m_frame_rendered		= Device.dwFrame;
 }
 
@@ -385,18 +403,28 @@ void __stdcall	CDetailManager::MT_CALC		()
 			int s_x	= iFloor			(EYE.x/dm_slot_size+.5f);
 			int s_z	= iFloor			(EYE.z/dm_slot_size+.5f);
 
+#ifndef _EDITOR
 			editMask(EYE);
+#endif
 
+#ifdef _EDITOR
+			Device.Statistic->RenderDUMP_DT_Cache.Begin	();
+#else
 			Statistic.RenderDUMP_DT_Cache.Begin	();
+#endif
 			cache_Update				(s_x,s_z,EYE,dm_max_decompress);
+#ifdef _EDITOR
+			Device.Statistic->RenderDUMP_DT_Cache.End	();
+#else
 			Statistic.RenderDUMP_DT_Cache.End	();
+#endif
 
 			UpdateVisibleM				();
 			m_frame_calc				= Device.dwFrame;
 		}
 	MT.Leave					        ();
 }
-
+#ifndef _EDITOR
 void CDetailManager::setUseMask(bool useMask)
 {
     m_useMask = useMask;
@@ -493,3 +521,4 @@ u32* CDetailManager::sampleMask(const Fvector& p) const
     u32* mask = m_maskData + u + v * m_mask._get()->get_Width();
     return mask;
 }
+#endif

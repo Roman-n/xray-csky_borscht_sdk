@@ -7,6 +7,8 @@
 #include "builder.h"
 #include "CustomObject.h"
 
+using namespace std::placeholders;
+
 // chunks
 //----------------------------------------------------
 static const u32 CHUNK_VERSION			= 0x0001;
@@ -18,8 +20,8 @@ static const u32 CHUNK_FLAGS			= 0x0004;
 bool ESceneCustomOTool::OnLoadSelectionAppendObject(CCustomObject* obj)
 {
     string256 				buf;
-    Scene->GenObjectName	(obj->ClassID,buf,obj->Name);
-    obj->Name				= buf;
+    Scene->GenObjectName	(obj->ClassID,buf,obj->GetName());
+    obj->SetName			(buf);
     Scene->AppendObject		(obj, false);
     return					true;
 }
@@ -37,8 +39,8 @@ bool ESceneCustomOTool::LoadSelection(IReader& F)
     int count					= 0;
 	F.r_chunk					(CHUNK_OBJECT_COUNT,&count);
 
-    SPBItem* pb 				= UI->ProgressStart(count,AnsiString().sprintf("Loading %s's...",ClassDesc()).c_str());
-    Scene->ReadObjectsStream	(F,CHUNK_OBJECTS,OnLoadSelectionAppendObject,pb);
+    SPBItem* pb 				= UI->ProgressStart(count,(AnsiString("Loading ") + ClassDesc()  + "'s...").c_str());
+    Scene->ReadObjectsStream	(F,CHUNK_OBJECTS,std::bind(&ESceneCustomOTool::OnLoadSelectionAppendObject,this,_1),pb);
     UI->ProgressEnd				(pb);
 
     return true;
@@ -69,7 +71,7 @@ bool ESceneCustomOTool::LoadLTX(CInifile& ini)
 
     u32 count			= ini.r_u32("main", "objects_count");
 
-	SPBItem* pb 		= UI->ProgressStart(count,AnsiString().sprintf("Loading %s...",ClassDesc()).c_str());
+	SPBItem* pb 		= UI->ProgressStart(count,(AnsiString("Loading ")+ ClassDesc() + "...").c_str());
 
     u32 i				= 0;
     string128			buff;
@@ -99,8 +101,8 @@ bool ESceneCustomOTool::LoadStream(IReader& F)
     int count					= 0;
 	F.r_chunk					(CHUNK_OBJECT_COUNT,&count);
 
-    SPBItem* pb 				= UI->ProgressStart(count,AnsiString().sprintf("Loading %s...",ClassDesc()).c_str());
-    Scene->ReadObjectsStream	(F,CHUNK_OBJECTS,OnLoadAppendObject,pb);
+    SPBItem* pb 				= UI->ProgressStart(count,(AnsiString("Loading ") + ClassDesc() + "...").c_str());
+    Scene->ReadObjectsStream	(F,CHUNK_OBJECTS,std::bind(&ESceneCustomOTool::OnLoadAppendObject,this,_1),pb);
     UI->ProgressEnd				(pb);
 
     return true;

@@ -136,14 +136,14 @@ namespace ETOOLS{
 	{
 		xr_delete						(M);
 	}
-	//ETOOLS_API void						 __stdcall collector_add_face_d	(CDB::Collector* CL, const Fvector& v0, const Fvector& v1, const Fvector& v2, u32 dummy)
-	//{
+	ETOOLS_API void						 __stdcall collector_add_face_d	(CDB::Collector* CL, const Fvector& v0, const Fvector& v1, const Fvector& v2, u32 dummy)
+	{
 	//	CL->add_face_D					(v0,v1,v2,dummy);
-	//}
-	//ETOOLS_API void						 __stdcall collector_add_face_pd	(CDB::Collector* CL, const Fvector& v0, const Fvector& v1, const Fvector& v2, u32 dummy, float eps)
-	//{
+	}
+	ETOOLS_API void						 __stdcall collector_add_face_pd	(CDB::Collector* CL, const Fvector& v0, const Fvector& v1, const Fvector& v2, u32 dummy, float eps)
+	{
 	//	CL->add_face_packed_D			(v0,v1,v2,dummy,eps);
-	//}
+	}
 
 	ETOOLS_API CDB::CollectorPacked_Game*	 __stdcall create_collectorp		(const Fbox &bb, int apx_vertices, int apx_faces)
 	{

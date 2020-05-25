@@ -4,7 +4,9 @@
 #include "ESceneSectorTools.h"
 #include "ESceneSectorControls.h"
 #include "ui_leveltools.h"
+#ifndef NO_VCL
 #include "FrameSector.h"
+#endif
 #include "SceneObject.h"
 #include "GroupObject.h"
 #include "sector.h"
@@ -16,8 +18,10 @@ void ESceneSectorTool::CreateControls()
 //	inherited::CreateControls();
     AddControl		(xr_new<TUI_ControlSectorSelect>(estDefault,etaSelect,	this));
     AddControl		(xr_new<TUI_ControlSectorAdd>	(estDefault,etaAdd,		this));
+#ifndef NO_VCL
 	// frame
     pFrame 			= xr_new<TfraSector>((TComponent*)0);
+#endif
 }
 //----------------------------------------------------
 

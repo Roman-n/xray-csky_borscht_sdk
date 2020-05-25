@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#include "bone.h"
-#include "envelope.h"
+#include <xrEngine/bone.h>
+#include <xrEngine/envelope.h>
 
 #define BONE_VERSION					0x0002
 //------------------------------------------------------------------------------
@@ -187,4 +187,4 @@ void CBone::CopyData(CBone* bone)
     center_of_mass	= bone->center_of_mass;
 }
 
-#include "../../xrEngine/bone.cpp"
+#include <xrEngine/bone.cpp>

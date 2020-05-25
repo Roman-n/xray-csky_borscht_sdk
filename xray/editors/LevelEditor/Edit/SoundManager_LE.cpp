@@ -5,10 +5,10 @@
 #include "Scene.h"
 #include "ESound_Source.h"
 #include "ESound_Environment.h"
-#include "du_box.h"
-#include "xrLevel.h"
+#include <Layers/xrRender/du_box.h>
+#include <xrEngine/xrLevel.h>
 
-CLevelSoundManager*& LSndLib=(CLevelSoundManager*)SndLib;
+CLevelSoundManager* LSndLib=(CLevelSoundManager*)SndLib;
 
 bool CLevelSoundManager::Validate()
 {
@@ -16,15 +16,15 @@ bool CLevelSoundManager::Validate()
     for (ObjectIt it=snd_envs.begin(); it!=snd_envs.end(); it++){
     	ESoundEnvironment* E = dynamic_cast<ESoundEnvironment*>(*it); R_ASSERT(E);
         if (E->m_EnvInner==E->m_EnvOuter){ 
-        	ELog.DlgMsg(mtError,"SoundEnvironment: '%s' inner and outer environment must be different.",E->Name);
+        	ELog.DlgMsg(mtError,"SoundEnvironment: '%s' inner and outer environment must be different.",E->GetName());
         	return false;
         }
     }
 	ObjectList& snd_src = Scene->ListObj(OBJCLASS_SOUND_SRC);
-    for (it=snd_src.begin(); it!=snd_src.end(); it++){
+    for (ObjectIt it=snd_src.begin(); it!=snd_src.end(); it++){
     	ESoundSource* S = dynamic_cast<ESoundSource*>(*it); R_ASSERT(S);
         if (!S->GetSourceWAV()||(0==strlen(S->GetSourceWAV()))){
-        	ELog.DlgMsg(mtError,"SoundSource: '%s' hasn't wave.",S->Name);
+        	ELog.DlgMsg(mtError,"SoundSource: '%s' hasn't wave.",S->GetName());
         	return false;
         } 
     }
@@ -51,7 +51,12 @@ bool CLevelSoundManager::MakeEnvGeometry(CMemoryWriter& F, bool bErrMsg)
     
 	RStringVec env_names;
 
-    CDB::Collector CP;
+    struct EnvPayload
+    {
+	    u16 inner;
+	    u16 outer;
+    };
+    CDB::Collector_Generic<EnvPayload> CP;
 	Fbox aabb; aabb.invalidate();
     for (ObjectIt it=snd_envs.begin(); it!=snd_envs.end(); it++){
     	ESoundEnvironment* E = dynamic_cast<ESoundEnvironment*>(*it); R_ASSERT(E);
@@ -80,8 +85,8 @@ bool CLevelSoundManager::MakeEnvGeometry(CMemoryWriter& F, bool bErrMsg)
         
         Fvector bv[DU_BOX_NUMVERTEX];
         for (int k=0; k<DU_BOX_NUMVERTEX; k++) M.transform_tiny(bv[k],du_box_vertices[k]);
-    	for (k=0; k<DU_BOX_NUMFACES; k++)
-			CP.add_face_packed_D(bv[du_box_faces[k*3+0]],bv[du_box_faces[k*3+1]],bv[du_box_faces[k*3+2]],idx);
+    	for (int k=0; k<DU_BOX_NUMFACES; k++)
+			CP.add_face_packed(bv[du_box_faces[k*3+0]],bv[du_box_faces[k*3+1]],bv[du_box_faces[k*3+2]],{(u16)inner,(u16)outer});
     }
 
     if (env_names.empty()) return false;
@@ -102,8 +107,8 @@ bool CLevelSoundManager::MakeEnvGeometry(CMemoryWriter& F, bool bErrMsg)
     H.aabb			= aabb;
 	F.w				(&H,sizeof(hdrCFORM));
     // write vertices&TRIs
-    F.w				(CP.getV(),sizeof(Fvector)*H.vertcount);
-    F.w				(CP.getT(),sizeof(CDB::TRI)*H.facecount);
+    F.w				(CP.getV(),sizeof(*CP.getV())*H.vertcount);
+    F.w				(CP.getT(),sizeof(*CP.getT())*H.facecount);
     F.close_chunk	();
 
     return true;

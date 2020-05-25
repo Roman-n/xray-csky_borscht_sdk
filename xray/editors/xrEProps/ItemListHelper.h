@@ -2,8 +2,10 @@
 #ifndef ItemListHelperH
 #define ItemListHelperH
 
-#include "ItemListTypes.h"
+#ifdef VCL
 #include "FolderLib.h"
+#endif
+#include <xrServerEntities/ItemListTypes.h>
 
 //---------------------------------------------------------------------------
 class CListHelper: public IListHelper{

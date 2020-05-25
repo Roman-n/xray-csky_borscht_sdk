@@ -5,14 +5,16 @@
 #define SceneH
 
 #include "SceneGraph.h"
-#include "Communicate.h"
-#include "pure.h"
+#include "../Engine/communicate.h"
+#include <xrEngine/pure.h>
+#ifndef NO_VCL
 #include "ElTree.hpp"
-
+#endif
 #include "ESceneCustomMTools.h"
 #include "ESceneCustomOTools.h"
-#include "xrLevel.h"
+#include <xrEngine/xrLevel.h>
 #include "../ECore/Editor/pick_defs.h"
+#include <functional>
 //refs
 struct FSChunkDef;
 class PropValue;
@@ -89,7 +91,7 @@ protected:
 	void			CreateSceneTools			();
 	void			DestroySceneTools			();
 
-    void 			FindObjectByNameCB			(LPCSTR new_name, bool& res){res=!!FindObjectByName(new_name,(CCustomObject*)0);}
+    void __stdcall	FindObjectByNameCB			(LPCSTR new_name, bool& res){res=!!FindObjectByName(new_name,(CCustomObject*)0);}
 
 	void __stdcall 	OnBuildControlClick			(ButtonValue* sender, bool& bModif, bool& bSafe);
 	void __stdcall 	OnRTFlagsChange				(PropValue* sender);
@@ -101,9 +103,11 @@ public:
     };
     Flags32			m_RTFlags;
 public:
-
+#ifdef __BORLANDC__
 	typedef bool (__closure *TAppendObject)(CCustomObject* object);
-
+#else
+	using TAppendObject = std::function<bool(CCustomObject*)>;
+#endif
 	bool 			ReadObjectStream	(IReader& F, CCustomObject*& O);
 	bool 			ReadObjectLTX		(CInifile& ini, LPCSTR sect_name, CCustomObject*& O);
 	bool 			ReadObjectsStream	(IReader& F, u32 chunk_id, TAppendObject on_append, SPBItem* pb);

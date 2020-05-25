@@ -4,7 +4,9 @@
 #include "ESceneSpawnControls.h"
 #include "ui_leveltools.h"
 #include "../ECore/Editor/ui_main.h"
+#ifndef NO_VCL
 #include "FrameSpawn.h"
+#endif
 #include "Scene.h"
 #include "SpawnPoint.h"
 //---------------------------------------------------------------------------
@@ -13,7 +15,11 @@ __fastcall TUI_ControlSpawnAdd::TUI_ControlSpawnAdd(int st, int act, ESceneToolB
 
 bool __fastcall TUI_ControlSpawnAdd::AppendCallback(SBeforeAppendCallbackParams* p)
 {
+#ifndef NO_VCL
 	LPCSTR ref_name = ((TfraSpawn*)parent_tool->pFrame)->Current();
+#else
+    LPCSTR ref_name = 0;
+#endif
     if (!ref_name){
     	ELog.DlgMsg(mtInformation,"Nothing selected.");
     	return false;
@@ -28,8 +34,9 @@ bool __fastcall TUI_ControlSpawnAdd::AppendCallback(SBeforeAppendCallbackParams*
     return (0!=p->name_prefix.length());
 }
 
-bool __fastcall TUI_ControlSpawnAdd::Start(TShiftState Shift)
+bool TUI_ControlSpawnAdd::Start(TShiftState Shift)
 {
+#ifndef NO_VCL
     TfraSpawn* F = (TfraSpawn*)parent_tool->pFrame;
 	if (F->ebAttachObject->Down){
 		CCustomObject* from = Scene->RayPickObject(UI->ZFar(), UI->m_CurrentRStart, UI->m_CurrentRNorm, OBJCLASS_DUMMY, 0, 0);
@@ -54,6 +61,7 @@ bool __fastcall TUI_ControlSpawnAdd::Start(TShiftState Shift)
     }else{
 	    DefaultAddObject(Shift,AppendCallback);             
     }
+#endif
     return false;
 }
 

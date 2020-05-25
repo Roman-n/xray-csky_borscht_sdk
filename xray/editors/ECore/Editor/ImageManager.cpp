@@ -2,12 +2,13 @@
 #pragma hdrstop
 
 #include "ImageManager.h"
-#include "xrImage_Resampler.h"
+#include <xrEngine/xrImage_Resampler.h>
 #include "freeimage/freeimage.h"
-#include "Image.h"
+#include "../Engine/Image.h"
 #include "ui_main.h"
 #include "EditObject.h"
-#include "ResourceManager.h"
+#include <Layers/xrRender/ResourceManager.h>
+
 CImageManager ImageLib;
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
@@ -15,7 +16,7 @@ extern bool IsFormatRegister(LPCSTR ext);
 extern FIBITMAP* Surface_Load(char* full_name);
 
 extern "C" __declspec(dllimport)
-int DXTCompress	(LPCSTR out_name, u8* raw_data, u8* ext_data, u32 w, u32 h, u32 pitch,
+int __stdcall DXTCompress	(LPCSTR out_name, u8* raw_data, u8* ext_data, u32 w, u32 h, u32 pitch,
 					STextureParams* options, u32 depth);
 
 bool IsValidSize(u32 w, u32 h){
@@ -31,7 +32,7 @@ bool Surface_Load(LPCSTR full_name, U32Vec& data, u32& w, u32& h, u32& a)
     	ELog.Msg(mtError,"Can't find file: '%s'",full_name);
     	return false;
     }
-	AnsiString ext = ExtractFileExt(full_name).LowerCase();
+	AnsiString ext = LowerCase(ExtractFileExt(full_name));
 	if (ext==".tga"){
     	CImage img;
         if (!img.LoadTGA	(full_name)) return false;
@@ -39,7 +40,7 @@ bool Surface_Load(LPCSTR full_name, U32Vec& data, u32& w, u32& h, u32& a)
         h 					= img.dwHeight;
         a					= img.bAlpha;
         data.resize			(w*h);
-		CopyMemory			(data.begin(),img.pData,sizeof(u32)*data.size());
+		CopyMemory			(data.data(),img.pData,sizeof(u32)*data.size());
 		if (!IsValidSize(w,h))	ELog.Msg(mtError,"Texture (%s) - invalid size: [%d, %d]",full_name,w,h);
         return true;
     }else{
@@ -49,7 +50,7 @@ bool Surface_Load(LPCSTR full_name, U32Vec& data, u32& w, u32& h, u32& a)
             h 				= FreeImage_GetHeight(bm);
 		    u32 w4			= w*4;
             data.resize		(w*h);
-            for (int y=h-1; y>=0; y--) CopyMemory(data.begin()+(h-y-1)*w,FreeImage_GetScanLine(bm,y),w4);
+            for (int y=h-1; y>=0; y--) CopyMemory(data.data()+(h-y-1)*w,FreeImage_GetScanLine(bm,y),w4);
             a				= FIC_RGBALPHA==FreeImage_GetColorType(bm);
             FreeImage_Unload	(bm);
 			if (!IsValidSize(w,h))	ELog.Msg(mtError,"Texture (%s) - invalid size: [%d, %d]",full_name,w,h);
@@ -76,7 +77,7 @@ void CImageManager::MakeThumbnailImage(ETextureThumbnail* THM, u32* data, u32 w,
 	THM->m_TexParams.width = w;
 	THM->m_TexParams.height= h;
     THM->m_TexParams.flags.set(STextureParams::flHasAlpha,a);
-	imf_Process(THM->m_Pixels.begin(),THUMB_WIDTH,THUMB_HEIGHT,data,THM->_Width(),THM->_Height(),imf_box);
+	imf_Process(THM->m_Pixels.data(),THUMB_WIDTH,THUMB_HEIGHT,data,THM->_Width(),THM->_Height(),imf_box);
     THM->VFlip();
 }
 
@@ -85,7 +86,7 @@ void CImageManager::MakeThumbnailImage(ETextureThumbnail* THM, u32* data, u32 w,
 //------------------------------------------------------------------------------
 void CImageManager::CreateTextureThumbnail(ETextureThumbnail* THM, const AnsiString& src_name, LPCSTR initial, bool bSetDefParam)
 {
-	R_ASSERT(src_name.Length());
+	R_ASSERT(src_name.size());
 	string_path 	base_name;
     if (initial)
     	FS.update_path(base_name,initial,src_name.c_str());
@@ -100,7 +101,7 @@ void CImageManager::CreateTextureThumbnail(ETextureThumbnail* THM, const AnsiStr
     	ELog.Msg(mtError,"Can't load texture '%s'.\nCheck file existence",fn.c_str());
      	return;
     }
-    MakeThumbnailImage(THM,data.begin(),w,h,a);
+    MakeThumbnailImage(THM,data.data(),w,h,a);
 
 
     // выставить начальные параметры
@@ -133,7 +134,7 @@ void CImageManager::CreateGameTexture(LPCSTR src_name, ETextureThumbnail* thumb)
     U32Vec data;
     u32 w, h, a;
     if (!Surface_Load(base_name,data,w,h,a)) return;
-    MakeGameTexture(THM,game_name,data.begin());
+    MakeGameTexture(THM,game_name,data.data());
 
     FS.set_file_age(game_name, base_age);
     if (!thumb) xr_delete(THM);
@@ -205,7 +206,7 @@ bool CImageManager::MakeGameTexture(ETextureThumbnail* THM, LPCSTR game_name, u3
     }
     // compress
     
-    int res 	= DXTCompress(game_name, (u8*)load_data, (u8*)(ext_data.empty()?0:ext_data.begin()), w, h, w4, &THM->m_TexParams, 4);
+    int res 	= DXTCompress(game_name, (u8*)load_data, (u8*)(ext_data.empty()?0:ext_data.data()), w, h, w4, &THM->m_TexParams, 4);
     if (1!=res){
     	if (-1000!=res){ //. Special for Oles (glos<10%) 
             FS.file_delete	(game_name);
@@ -266,7 +267,7 @@ void CImageManager::SafeCopyLocalToServer(FS_FileSet& files)
             u32 w,h,a;
 		    R_ASSERT	(Surface_Load(src_name,data,w,h,a));
             CImage* I 	= xr_new<CImage>();
-            I->Create	(w,h,data.begin());
+            I->Create	(w,h,data.data());
             I->Vflip	();
             I->SaveTGA	(dest_name);
             xr_delete	(I);
@@ -338,7 +339,7 @@ void CImageManager::SynchronizeTextures(bool sync_thm, bool sync_game, bool bFor
                 strconcat				(sizeof(game_name), game_name, base_name.c_str(), ".dds");
 
                 FS.update_path			(game_name,_game_textures_,game_name);
-                if (MakeGameTexture(THM,game_name,data.begin()))
+                if (MakeGameTexture(THM,game_name,data.data()))
                 {
                     if (sync_list) 		sync_list->push_back(base_name.c_str());
                     if (modif_map) 		modif_map->insert(*it);
@@ -457,7 +458,7 @@ BOOL CImageManager::CheckCompliance(LPCSTR fname, int& compl)
     u32* pScaled     = (u32*)(xr_malloc((w_2)*(h_2)*4));
     u32* pRestored   = (u32*)(xr_malloc(w*h*4));
     try {
-    	imf_Process     (pScaled,	w_2,h_2,data.begin(),w,h,imf_lanczos3	);
+    	imf_Process     (pScaled,	w_2,h_2,data.data(),w,h,imf_lanczos3	);
         imf_Process		(pRestored,	w,h,pScaled,w_2,h_2,imf_filter 		    );
     } catch (...)
     {
@@ -538,7 +539,7 @@ BOOL _ApplyBorders(U32Vec& pixels, u32 w, u32 h, u32 ref)
         U32Vec result;
         result.resize(w*h);
 
-        CopyMemory(result.begin(),pixels.begin(),w*h*4);
+        CopyMemory(result.data(),pixels.data(),w*h*4);
         for (u32 y=0; y<h; y++){
             for (u32 x=0; x<w; x++){
                 if (color_get_A(pixels[y*w+x])==0) {
@@ -561,7 +562,7 @@ BOOL _ApplyBorders(U32Vec& pixels, u32 w, u32 h, u32 ref)
                 }
             }
         }
-        CopyMemory(pixels.begin(),result.begin(),h*w*4);
+        CopyMemory(pixels.data(),result.data(),h*w*4);
     } catch (...)
     {
         Msg("* ERROR: ApplyBorders");
@@ -594,7 +595,7 @@ BOOL CImageManager::CreateOBJThumbnail(LPCSTR tex_name, CEditableObject* obj, in
     u32 w=512,h=512;
     if (Device.MakeScreenshot(pixels,w,h)){
         EObjectThumbnail tex(tex_name,false);
-        tex.CreateFromData(pixels.begin(),w,h,obj->GetFaceCount(),obj->GetVertexCount());
+        tex.CreateFromData(pixels.data(),w,h,obj->GetFaceCount(),obj->GetVertexCount());
         tex.Save(age);
     }else{
     	bResult = FALSE;
@@ -674,7 +675,8 @@ void __stdcall pb_callback(void* data, float& v)
 	PB->Update(v);
 }
 
-#include "ETools.h"
+#include <utils/ETools/ETools.h>
+
 BOOL CImageManager::CreateSmallerCubeMap(LPCSTR src_name, LPCSTR dst_name)
 {
     U32Vec data;
@@ -694,7 +696,7 @@ BOOL CImageManager::CreateSmallerCubeMap(LPCSTR src_name, LPCSTR dst_name)
 	    U32Vec sm_data	(sm_wf*sm_h,0);
 		SPBItem* PB		= UI->ProgressStart(1.f,"Cube Map: scale image...");
         CTimer T; T.Start();
-        ETOOLS::SimplifyCubeMap	(data.begin(),w,h,sm_data.begin(),sm_w,sm_h,16.f,pb_callback,PB);
+        ETOOLS::SimplifyCubeMap	(data.data(),w,h,sm_data.data(),sm_w,sm_h,16.f,pb_callback,PB);
         float tm_scm	= T.GetElapsed_sec();
 		UI->ProgressEnd	(PB);
         // write texture

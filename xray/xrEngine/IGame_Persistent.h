@@ -63,9 +63,9 @@ public:
 	virtual void					Disconnect			();
 #ifndef _EDITOR
 	IGame_ObjectPool				ObjectPool;
+#endif
 	CEnvironment*					pEnvironment;
 	CEnvironment&					Environment()	{return *pEnvironment;};
-#endif
 	IMainMenu*						m_pMainMenu;	
 
 

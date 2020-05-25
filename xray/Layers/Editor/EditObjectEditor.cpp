@@ -238,7 +238,7 @@ void CEditableObject::RenderLOD(const Fmatrix& parent)
         for (int i=0; i<4; i++){ LOD[i].p.set(p[i]); LOD[i].t.set(t[i]); }
     	RCache.set_xform_world(parent);
         Device.SetShader		(m_LODShader?m_LODShader:Device.m_WireShader);
-    	DU_impl.DrawPrimitiveLIT	(D3DPT_TRIANGLEFAN, 2, LOD, 4, true, false);
+    	DUImpl.DrawPrimitiveLIT	(D3DPT_TRIANGLEFAN, 2, LOD, 4, true, false);
     }
 }
 

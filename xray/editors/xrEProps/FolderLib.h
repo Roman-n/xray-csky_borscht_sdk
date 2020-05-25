@@ -3,13 +3,16 @@
 #ifndef FolderLibH
 #define FolderLibH
 //---------------------------------------------------------------------------
+#ifndef NO_VCL
 #include "ElTree.hpp"
 #include "ExtBtn.hpp"
 #include "MxMenus.hpp"
+#endif
 
 typedef fastdelegate::FastDelegate2<LPCSTR,bool&> TFindObjectByName;     
 
 class XR_EPROPS_API CFolderHelper{
+#ifndef NO_VCL
     IC TElTreeItem*		LL_CreateFolder	(TElTree* tv, TElTreeItem* parent, const AnsiString& name, bool force_icon)
     {
     	TElTreeItem* N	= tv->Items->AddChildObject(parent,name,(void*)TYPE_FOLDER);
@@ -21,7 +24,9 @@ class XR_EPROPS_API CFolderHelper{
     	TElTreeItem* N	= tv->Items->AddChildObject(parent,name,(void*)TYPE_OBJECT);
         return N;
     }
+#endif
 public:
+#ifndef NO_VCL
     IC bool				IsFolder			(TElTreeItem* node){return node?(TYPE_FOLDER==(u32)node->Data):TYPE_INVALID;}
     IC bool				IsObject			(TElTreeItem* node){return node?(TYPE_OBJECT==(u32)node->Data):TYPE_INVALID;}
 
@@ -36,9 +41,11 @@ public:
     TElTreeItem* 		FindItem			(TElTree* tv, AnsiString full_name, TElTreeItem** last_valid_node=0, int* last_valid_idx=0); 
     void 				GenerateFolderName	(TElTree* tv, TElTreeItem* node,AnsiString& name,AnsiString pref="folder", bool num_first=false);
 	void 				GenerateObjectName	(TElTree* tv, TElTreeItem* node, AnsiString& name,AnsiString pref="object", bool num_first=false);
+#endif
 	AnsiString	 		GetFolderName		(const AnsiString& full_name, AnsiString& dest);
 	AnsiString	 		GetObjectName		(const AnsiString& full_name, AnsiString& dest);
     AnsiString			ReplacePart			(AnsiString old_name, AnsiString ren_part, int level, LPSTR dest);
+#ifndef NO_VCL
     bool 				RenameItem          (TElTree* tv, TElTreeItem* node, AnsiString& new_text, TOnItemRename OnRenameItem);
     void 				CreateNewFolder		(TElTree* tv, bool bEditAfterCreate);
     BOOL				RemoveItem			(TElTree* tv, TElTreeItem* pNode, TOnItemRemove OnRemoveItem, TOnItemAfterRemove OnAfterRemoveItem=0);
@@ -56,7 +63,7 @@ public:
     TElTreeItem*		RestoreSelection	(TElTree* tv, AnsiString full_name, bool bLeaveSel);
     TElTreeItem*		ExpandItem			(TElTree* tv, TElTreeItem* node);
     TElTreeItem*		ExpandItem			(TElTree* tv, AnsiString full_name);
-
+#endif
 	bool 				DrawThumbnail		(HDC hdc, const Irect &R, u32* data, u32 w, u32 h);
 	void 				FillRect			(HDC hdc, const Irect& r, u32 color);
 

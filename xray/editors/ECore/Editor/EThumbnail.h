@@ -1,10 +1,11 @@
 #ifndef EThumbnailH
 #define EThumbnailH
 
-#include "../Layers/xrRender/ETextureParams.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
-
+#include <Layers/xrRender/ETextureParams.h>
+#include <xrServerEntities/PropertiesListHelper.h>
+#ifndef NO_VCL
 #include "MXCtrls.hpp"
+#endif
 //------------------------------------------------------------------------------
 // Custom class
 //------------------------------------------------------------------------------
@@ -145,8 +146,8 @@ private:
     float			m_fMaxAIDist;
     float			m_fBaseVolume;
     u32				m_uGameType;
-	bool 			OnMaxAIDistAfterEdit(PropValue* sender, float& edit_val);
-	void 			OnMaxDistChange		(PropValue* sender);
+	bool __stdcall	OnMaxAIDistAfterEdit(PropValue* sender, float& edit_val);
+	void __stdcall	OnMaxDistChange		(PropValue* sender);
 public:
 					ESoundThumbnail	(LPCSTR src_name, bool bLoad=true);
 	virtual			~ESoundThumbnail();
