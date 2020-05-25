@@ -3,7 +3,7 @@
 
 #include <xrEngine/bone.h>
 #include <xrEngine/envelope.h>
-#include "../Engine/GameMtlLib.h"
+//#include "../Engine/GameMtlLib.h"
 #include "ui_toolscustom.h"
 
 void SJointIKData::clamp_by_limits(Fvector& dest_xyz)

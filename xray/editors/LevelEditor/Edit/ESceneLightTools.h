@@ -4,6 +4,8 @@
 #include "ESceneCustomOTools.H"
 #include <xrEngine/xr_efflensflare.h>
 
+class CLight;
+
 class CEditFlare: public CLensFlare{
 public:
 					CEditFlare();

@@ -8,6 +8,7 @@
 
 #include "SkeletonCustom.h"
 #include "SkeletonXVertRender.h"
+#include "../../Include/cl_intersect.h"
 
 // refs
 class 	CKinematics;

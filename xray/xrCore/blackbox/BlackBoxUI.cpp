@@ -58,6 +58,12 @@ void BuildStackTrace	(struct _EXCEPTION_POINTERS *g_BlackBoxUIExPtrs)
 	}
 #	pragma auto_inline(on)
 #else // _EDITOR
+
+#if defined(__GNUC__)
+#undef  _ReturnAddress
+#define _ReturnAddress()		__builtin_return_address(0)
+#endif
+
 #   pragma intrinsic(_ReturnAddress)
 
 #	pragma auto_inline(off)
