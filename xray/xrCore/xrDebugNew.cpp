@@ -502,17 +502,21 @@ void save_mini_dump			(_EXCEPTION_POINTERS *pExceptionInfo)
 			strcat		( szDumpPath, "_"					);
 			strcat		( szDumpPath, t_stemp				);
 			strcat		( szDumpPath, ".mdmp"				);
-
-			__try {
+#ifndef __MINGW32__
+			__try
+#endif
+			{
 				if (FS.path_exist("$logs$"))
 					FS.update_path	(szDumpPath,"$logs$",szDumpPath);
 			}
+#ifndef __MINGW32__
             __except( EXCEPTION_EXECUTE_HANDLER ) {
 				string_path	temp;
 				strcpy_s		(temp,szDumpPath);
 				strcpy_s		(szDumpPath,"logs/");
 				strcat		(szDumpPath,temp);
             }
+#endif
 
 			// create the file
 			HANDLE hFile = ::CreateFile( szDumpPath, GENERIC_WRITE, FILE_SHARE_WRITE, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );

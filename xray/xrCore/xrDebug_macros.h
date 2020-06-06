@@ -45,6 +45,8 @@
 #	else // DEBUG
 #		ifdef __BORLANDC__
 #			define NODEFAULT
+#		elif defined (__MINGW32__)
+#			define NODEFAULT FATAL("nodefault reached")
 #		else
 #			define NODEFAULT __assume(0)
 #		endif
