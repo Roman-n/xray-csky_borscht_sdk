@@ -123,34 +123,34 @@ namespace nv {
     };
 
 
-    NV_SIMD_NATIVE SimdVector operator+( SimdVector::Arg left, SimdVector::Arg right  )
+    static NV_SIMD_NATIVE SimdVector operator+( SimdVector::Arg left, SimdVector::Arg right  )
     {
         return SimdVector( _mm_add_ps( left.vec, right.vec ) );
     }
 
-    NV_SIMD_NATIVE SimdVector operator-( SimdVector::Arg left, SimdVector::Arg right  )
+    static NV_SIMD_NATIVE SimdVector operator-( SimdVector::Arg left, SimdVector::Arg right  )
     {
         return SimdVector( _mm_sub_ps( left.vec, right.vec ) );
     }
 
-    NV_SIMD_NATIVE SimdVector operator*( SimdVector::Arg left, SimdVector::Arg right  )
+    static NV_SIMD_NATIVE SimdVector operator*( SimdVector::Arg left, SimdVector::Arg right  )
     {
         return SimdVector( _mm_mul_ps( left.vec, right.vec ) );
     }
 
     // Returns a*b + c
-    NV_SIMD_INLINE SimdVector multiplyAdd( SimdVector::Arg a, SimdVector::Arg b, SimdVector::Arg c )
+    static NV_SIMD_INLINE SimdVector multiplyAdd( SimdVector::Arg a, SimdVector::Arg b, SimdVector::Arg c )
     {
         return SimdVector( _mm_add_ps( _mm_mul_ps( a.vec, b.vec ), c.vec ) );
     }
 
     // Returns -( a*b - c )
-    NV_SIMD_INLINE SimdVector negativeMultiplySubtract( SimdVector::Arg a, SimdVector::Arg b, SimdVector::Arg c )
+    static NV_SIMD_INLINE SimdVector negativeMultiplySubtract( SimdVector::Arg a, SimdVector::Arg b, SimdVector::Arg c )
     {
         return SimdVector( _mm_sub_ps( c.vec, _mm_mul_ps( a.vec, b.vec ) ) );
     }
 
-    NV_SIMD_INLINE SimdVector reciprocal( SimdVector::Arg v )
+    static NV_SIMD_INLINE SimdVector reciprocal( SimdVector::Arg v )
     {
         // get the reciprocal estimate
         __m128 estimate = _mm_rcp_ps( v.vec );
@@ -160,17 +160,17 @@ namespace nv {
         return SimdVector( _mm_add_ps( _mm_mul_ps( diff, estimate ), estimate ) );
     }
 
-    NV_SIMD_NATIVE SimdVector min( SimdVector::Arg left, SimdVector::Arg right )
+    static NV_SIMD_NATIVE SimdVector min( SimdVector::Arg left, SimdVector::Arg right )
     {
         return SimdVector( _mm_min_ps( left.vec, right.vec ) );
     }
 
-    NV_SIMD_NATIVE SimdVector max( SimdVector::Arg left, SimdVector::Arg right )
+    static NV_SIMD_NATIVE SimdVector max( SimdVector::Arg left, SimdVector::Arg right )
     {
         return SimdVector( _mm_max_ps( left.vec, right.vec ) );
     }
 
-    NV_SIMD_INLINE SimdVector truncate( SimdVector::Arg v )
+    static NV_SIMD_INLINE SimdVector truncate( SimdVector::Arg v )
     {
 #if (NV_USE_SSE == 1)
         // convert to ints
@@ -191,12 +191,12 @@ namespace nv {
 #endif
     }
 
-    NV_SIMD_NATIVE SimdVector compareEqual( SimdVector::Arg left, SimdVector::Arg right )
+    static NV_SIMD_NATIVE SimdVector compareEqual( SimdVector::Arg left, SimdVector::Arg right )
     {
         return SimdVector( _mm_cmpeq_ps( left.vec, right.vec ) );
     }
 
-    NV_SIMD_INLINE SimdVector select( SimdVector::Arg off, SimdVector::Arg on, SimdVector::Arg bits )
+    static NV_SIMD_INLINE SimdVector select( SimdVector::Arg off, SimdVector::Arg on, SimdVector::Arg bits )
     {
         __m128 a = _mm_andnot_ps( bits.vec, off.vec );
         __m128 b = _mm_and_ps( bits.vec, on.vec );
@@ -204,7 +204,7 @@ namespace nv {
         return SimdVector( _mm_or_ps( a, b ) );
     }
 
-    NV_SIMD_INLINE bool compareAnyLessThan( SimdVector::Arg left, SimdVector::Arg right ) 
+    static NV_SIMD_INLINE bool compareAnyLessThan( SimdVector::Arg left, SimdVector::Arg right ) 
     {
         __m128 bits = _mm_cmplt_ps( left.vec, right.vec );
         int value = _mm_movemask_ps( bits );

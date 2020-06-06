@@ -43,7 +43,7 @@ namespace nv
         virtual ~StdStream()
         {
             if( m_fp != NULL && m_autoclose ) {
-#if NV_OS_WIN32
+#if NV_OS_WIN32 && !NV_OS_MINGW
                 _fclose_nolock( m_fp );
 #else
                 fclose( m_fp );
@@ -58,7 +58,7 @@ namespace nv
         {
             nvDebugCheck(m_fp != NULL);
             nvDebugCheck(pos <= size());
-#if NV_OS_WIN32
+#if NV_OS_WIN32 && !NV_OS_MINGW
             _fseek_nolock(m_fp, pos, SEEK_SET);
 #else
             fseek(m_fp, pos, SEEK_SET);
@@ -68,7 +68,7 @@ namespace nv
         virtual uint tell() const
         {
             nvDebugCheck(m_fp != NULL);
-#if NV_OS_WIN32
+#if NV_OS_WIN32 && !NV_OS_MINGW
             return _ftell_nolock(m_fp);
 #else
             return (uint)ftell(m_fp);
@@ -78,7 +78,7 @@ namespace nv
         virtual uint size() const
         {
             nvDebugCheck(m_fp != NULL);
-#if NV_OS_WIN32
+#if NV_OS_WIN32 && !NV_OS_MINGW
             uint pos = _ftell_nolock(m_fp);
             _fseek_nolock(m_fp, 0, SEEK_END);
             uint end = _ftell_nolock(m_fp);
@@ -111,7 +111,7 @@ namespace nv
             if (m_fp == NULL) return true;
             //nvDebugCheck(m_fp != NULL);
             //return feof( m_fp ) != 0;
-#if NV_OS_WIN32
+#if NV_OS_WIN32 && !NV_OS_MINGW
             uint pos = _ftell_nolock(m_fp);
             _fseek_nolock(m_fp, 0, SEEK_END);
             uint end = _ftell_nolock(m_fp);
@@ -158,7 +158,7 @@ namespace nv
         {
             nvDebugCheck(data != NULL);
             nvDebugCheck(m_fp != NULL);
-#if NV_OS_WIN32
+#if NV_OS_WIN32 && !NV_OS_MINGW
             return (uint)_fwrite_nolock(data, 1, len, m_fp);
 #elif NV_OS_LINUX
             return (uint)fwrite_unlocked(data, 1, len, m_fp);
@@ -208,7 +208,7 @@ namespace nv
         {
             nvDebugCheck(data != NULL);
             nvDebugCheck(m_fp != NULL);
-#if NV_OS_WIN32
+#if NV_OS_WIN32 && !NV_OS_MINGW
             return (uint)_fread_nolock(data, 1, len, m_fp);
 #elif NV_OS_LINUX
             return (uint)fread_unlocked(data, 1, len, m_fp);

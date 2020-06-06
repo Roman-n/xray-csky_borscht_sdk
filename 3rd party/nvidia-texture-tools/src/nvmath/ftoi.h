@@ -26,7 +26,7 @@ namespace nv
     static const double floatutil_xs_doublemagicdelta = (1.5e-8);                                   // almost .5f = .5f + 1e^(number of exp bit)
     static const double floatutil_xs_doublemagicroundeps = (0.5f - floatutil_xs_doublemagicdelta);  // almost .5f = .5f - 1e^(number of exp bit)
 
-    NV_FORCEINLINE int ftoi_round_xs(double val, double magic) {
+    static NV_FORCEINLINE int ftoi_round_xs(double val, double magic) {
 #if 1
         DoubleAnd64 dunion;
         dunion.d = val + magic;
@@ -37,47 +37,47 @@ namespace nv
 #endif
     }
 
-    NV_FORCEINLINE int ftoi_round_xs(float val) {
+    static NV_FORCEINLINE int ftoi_round_xs(float val) {
         return ftoi_round_xs(val, floatutil_xs_doublemagic);
     }
 
-    NV_FORCEINLINE int ftoi_floor_xs(float val) {
+    static NV_FORCEINLINE int ftoi_floor_xs(float val) {
         return ftoi_round_xs(val - floatutil_xs_doublemagicroundeps, floatutil_xs_doublemagic);
     }
 
-    NV_FORCEINLINE int ftoi_ceil_xs(float val) {
+    static NV_FORCEINLINE int ftoi_ceil_xs(float val) {
         return ftoi_round_xs(val + floatutil_xs_doublemagicroundeps, floatutil_xs_doublemagic);
     }
 
-    NV_FORCEINLINE int ftoi_trunc_xs(float val) {
+    static NV_FORCEINLINE int ftoi_trunc_xs(float val) {
         return (val<0) ? ftoi_ceil_xs(val) : ftoi_floor_xs(val);
     }
 
 #if NV_USE_SSE
 
-    NV_FORCEINLINE int ftoi_round_sse(float f) {
+    static NV_FORCEINLINE int ftoi_round_sse(float f) {
         return _mm_cvt_ss2si(_mm_set_ss(f));
     }
 
-    NV_FORCEINLINE int ftoi_trunc_sse(float f) {
+    static NV_FORCEINLINE int ftoi_trunc_sse(float f) {
       return _mm_cvtt_ss2si(_mm_set_ss(f));
     }
 
-    NV_FORCEINLINE int ftoi_round(float val) {
+    static NV_FORCEINLINE int ftoi_round(float val) {
         return ftoi_round_sse(val);
     }
 
-    NV_FORCEINLINE int ftoi_trunc(float f) {
+    static NV_FORCEINLINE int ftoi_trunc(float f) {
       return ftoi_trunc_sse(f);
     }
 
     // We can probably do better than this. See for example:
     // http://dss.stephanierct.com/DevBlog/?p=8
-    NV_FORCEINLINE int ftoi_floor(float val) {
+    static NV_FORCEINLINE int ftoi_floor(float val) {
         return ftoi_round(floorf(val));
     }
 
-    NV_FORCEINLINE int ftoi_ceil(float val) {
+    static NV_FORCEINLINE int ftoi_ceil(float val) {
         return ftoi_round(ceilf(val));
     }
 

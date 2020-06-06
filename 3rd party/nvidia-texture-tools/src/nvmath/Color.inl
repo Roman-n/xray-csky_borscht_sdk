@@ -12,11 +12,11 @@
 namespace nv
 {
     // for Color16 & Color16_4444 bitfields
-    NV_FORCEINLINE uint32 U32round(float f) { return uint32(floorf(f + 0.5f)); }
-    NV_FORCEINLINE uint16 U16round(float f) { return uint16(floorf(f + 0.5f)); }
-    NV_FORCEINLINE uint16 toU4_in_U16(int x) { nvDebugCheck(x >= 0 && x <= 15u); return (uint16)x; }
-    NV_FORCEINLINE uint16 toU5_in_U16(int x) { nvDebugCheck(x >= 0 && x <= 31u); return (uint16)x; }
-    NV_FORCEINLINE uint16 toU6_in_U16(int x) { nvDebugCheck(x >= 0 && x <= 63u); return (uint16)x; }
+    static NV_FORCEINLINE uint32 U32round(float f) { return uint32(floorf(f + 0.5f)); }
+    static NV_FORCEINLINE uint16 U16round(float f) { return uint16(floorf(f + 0.5f)); }
+    static NV_FORCEINLINE uint16 toU4_in_U16(int x) { nvDebugCheck(x >= 0 && x <= 15u); return (uint16)x; }
+    static NV_FORCEINLINE uint16 toU5_in_U16(int x) { nvDebugCheck(x >= 0 && x <= 31u); return (uint16)x; }
+    static NV_FORCEINLINE uint16 toU6_in_U16(int x) { nvDebugCheck(x >= 0 && x <= 63u); return (uint16)x; }
 
     // Clamp color components.
     inline Vector3 colorClamp(Vector3::Arg c)

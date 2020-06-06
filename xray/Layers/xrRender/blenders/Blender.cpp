@@ -19,10 +19,15 @@ void CBlender_DESC::Setup	(LPCSTR N)
 	strlwr(cName);
 	
 	strcpy_s(cComputer,Core.CompName);			// Computer
-#ifndef __BORLANDC__
+#if defined(_MSC_VER)
 	_tzset(); _time32( (__time32_t*)&cTime );	// Time
-#else
+#elif defined(__BORLANDC__)
 	_tzset(); time  ((long*)&cTime);			// Time
+#else
+    time_t temp;
+    _tzset();
+    time(&temp);
+    cTime = temp;
 #endif
 };
 

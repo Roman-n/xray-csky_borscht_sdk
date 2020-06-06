@@ -7,6 +7,7 @@ link_directories(SDK/libraries/x64)
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDLL")
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/intermediate/cmake-${CMAKE_CXX_COMPILER_ID}-${CMAKE_CXX_COMPILER_ARCHITECTURE_ID}-${CMAKE_BUILD_TYPE}")
+set(USE_FOLDERS ON)
 add_compile_definitions(
 	$<$<CONFIG:Debug>:DEBUG>
 	#$<$<CXX_COMPILER_ID:GNU>:_MT>
@@ -26,6 +27,7 @@ add_subdirectory("3rd party/WildMagic")
 add_subdirectory("3rd party/imdexlib")
 add_subdirectory("3rd party/luabind")
 add_subdirectory("3rd party/nvidia-texture-tools")
+add_subdirectory("3rd party/MagicSoftware/FreeMagic")
 add_subdirectory(xray/xrCore)
 add_subdirectory(xray/xrCDB)
 add_subdirectory(xray/xrSound)
@@ -40,3 +42,7 @@ add_subdirectory(xray/utils/xrSE_Factory)
 add_subdirectory(xray/editors/xrEProps)
 add_subdirectory(xray/editors/ECore)
 add_subdirectory(xray/editors/LevelEditor)
+
+set_target_properties(DxErr libogg libtheora_static libvorbis_static libvorbisfile luabind openal32 LWO WildMagic PROPERTIES FOLDER "3rd party")
+set_target_properties(squish rg_etc1 posh nvthread nvmath nvimage nvcore bc7 bc6h nvtt PROPERTIES FOLDER "3rd party/nvtt")
+set_target_properties(MagicFM MagicFM_Core MagicFM_Distance3D MagicFM_Core3D PROPERTIES FOLDER "3rd party/MagicFM")

@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.15)
 project(LevelEditor LANGUAGES C CXX)
 
 add_executable(${PROJECT_NAME} WIN32)
-#target_compile_definitions(${PROJECT_NAME} PRIVATE -DXRCDB_EXPORTS)
 target_compile_definitions(${PROJECT_NAME} PRIVATE -DNO_VCL -D_EDITOR -D_LEVEL_EDITOR)
 target_include_directories(${PROJECT_NAME} PRIVATE
 	../..
@@ -230,4 +229,4 @@ target_sources(${PROJECT_NAME} PRIVATE
 	../../Layers/xrRender/DetailManager_Decompress.cpp
 	../../Layers/xrRender/DetailManager_soft.cpp
 	../../Layers/xrRender/DetailManager_VS.cpp)
-target_link_libraries(${PROJECT_NAME} PRIVATE xrCore ECore xrEProps xrCDB ETools xrSound MagicFM.lib)
+target_link_libraries(${PROJECT_NAME} PRIVATE xrCore ECore xrEProps xrCDB ETools xrSound MagicFM)

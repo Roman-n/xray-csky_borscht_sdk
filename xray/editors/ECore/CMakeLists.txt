@@ -389,10 +389,11 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 	LWO
 	DXT
 	WildMagic
+	MagicFM
 	FreeImage.lib
 	vfw32.lib
 	dxguid.lib
 	dinput8.lib
 	d3dx9.lib
 	winmm.lib
-	MagicFM.lib)
+	Rpcrt4.lib)
