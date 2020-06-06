@@ -372,12 +372,12 @@ target_sources(${PROJECT_NAME} PRIVATE
 	../../Include/builder_types.cpp
 	../../Include/builder_types.h
 	../../Layers/Editor/RAPIDMinBox.cpp
-	"../../../3rd party/NvMender2003/convert.h"
-	"../../../3rd party/NvMender2003/mender_input_output.h"
-	"../../../3rd party/NvMender2003/NVMeshMender.cpp"
-	"../../../3rd party/NvMender2003/NVMeshMender.h"
-	"../../../3rd party/NvMender2003/ReadMe.txt"
-	"../../../3rd party/NvMender2003/remove_isolated_verts.h")
+	"../../../3rd_party/NvMender2003/convert.h"
+	"../../../3rd_party/NvMender2003/mender_input_output.h"
+	"../../../3rd_party/NvMender2003/NVMeshMender.cpp"
+	"../../../3rd_party/NvMender2003/NVMeshMender.h"
+	"../../../3rd_party/NvMender2003/ReadMe.txt"
+	"../../../3rd_party/NvMender2003/remove_isolated_verts.h")
 target_link_libraries(${PROJECT_NAME} PRIVATE
 	xrCore
 	libtheora_static

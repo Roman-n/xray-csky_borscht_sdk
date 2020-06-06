@@ -45,6 +45,14 @@ target_sources(MagicFM_Core PRIVATE
 	Source/Core/MgcTUnorderedSet.h
 	Source/Core/MgcTUnorderedSet.inl)
 
+add_library(MagicFM_Distance2D STATIC)
+target_include_directories(MagicFM_Distance2D PUBLIC Include)
+target_sources(MagicFM_Distance2D PRIVATE
+	Source/Distance2D/MgcDist2DVecElp.cpp
+	Source/Distance2D/MgcDist2DVecElp.h
+	Source/Distance2D/MgcDist2DVecQdr.cpp
+	Source/Distance2D/MgcDist2DVecQdr.h)
+
 add_library(MagicFM_Distance3D STATIC)
 target_include_directories(MagicFM_Distance3D PUBLIC Include)
 target_sources(MagicFM_Distance3D PRIVATE
@@ -95,6 +103,35 @@ target_sources(MagicFM_Distance3D PRIVATE
 	Source/Distance3D/MgcDistance3D.pkg
 	Source/Distance3D/MgcEllipsoidGeodesicDist.cpp
 	Source/Distance3D/MgcEllipsoidGeodesicDist.h)
+
+add_library(MagicFM_Core2D STATIC)
+target_include_directories(MagicFM_Core2D PUBLIC Include)
+target_sources(MagicFM_Core2D PRIVATE
+	Source/Core2D/MgcArc2.h
+	Source/Core2D/MgcArc2.inl
+	Source/Core2D/MgcBox2.cpp
+	Source/Core2D/MgcBox2.h
+	Source/Core2D/MgcBox2.inl
+	Source/Core2D/MgcCircle2.h
+	Source/Core2D/MgcCircle2.inl
+	Source/Core2D/MgcDisk2.h
+	Source/Core2D/MgcDisk2.inl
+	Source/Core2D/MgcEllipse2.h
+	Source/Core2D/MgcEllipse2.inl
+	Source/Core2D/MgcLine2.h
+	Source/Core2D/MgcLine2.inl
+	Source/Core2D/MgcMatrix2.cpp
+	Source/Core2D/MgcMatrix2.h
+	Source/Core2D/MgcMatrix2.inl
+	Source/Core2D/MgcRay2.h
+	Source/Core2D/MgcRay2.inl
+	Source/Core2D/MgcSegment2.h
+	Source/Core2D/MgcSegment2.inl
+	Source/Core2D/MgcTriangle2.h
+	Source/Core2D/MgcTriangle2.inl
+	Source/Core2D/MgcVector2.cpp
+	Source/Core2D/MgcVector2.h
+	Source/Core2D/MgcVector2.inl)
 
 add_library(MagicFM_Core3D STATIC)
 target_include_directories(MagicFM_Core3D PUBLIC Include)
@@ -159,8 +196,20 @@ target_sources(MagicFM_Core3D PRIVATE
 add_library(MagicFM SHARED)
 target_include_directories(MagicFM PUBLIC Include)
 target_compile_definitions(MagicFM PRIVATE MAGICFMDLL_EXPORTS)
-target_link_libraries(MagicFM PRIVATE MagicFM_Core MagicFM_Distance3D MagicFM_Core3D)
 target_sources(MagicFM PRIVATE
+	Source/Approximation2D/MgcAppr2DCircleFit.cpp
+	Source/Approximation2D/MgcAppr2DCircleFit.h
+	Source/Approximation2D/MgcAppr2DEllipseByArcs.cpp
+	Source/Approximation2D/MgcAppr2DEllipseByArcs.h
+	Source/Approximation2D/MgcAppr2DEllipseFit.cpp
+	Source/Approximation2D/MgcAppr2DEllipseFit.h
+	Source/Approximation2D/MgcAppr2DGaussPointsFit.cpp
+	Source/Approximation2D/MgcAppr2DGaussPointsFit.h
+	Source/Approximation2D/MgcAppr2DLineFit.cpp
+	Source/Approximation2D/MgcAppr2DLineFit.h
+	Source/Approximation2D/MgcAppr2DQuadraticFit.cpp
+	Source/Approximation2D/MgcAppr2DQuadraticFit.h
+
 	Source/Approximation3D/MgcAppr3DEllipsoidFit.cpp
 	Source/Approximation3D/MgcAppr3DEllipsoidFit.h
 	Source/Approximation3D/MgcAppr3DGaussPointsFit.cpp
@@ -176,6 +225,26 @@ target_sources(MagicFM PRIVATE
 	Source/Approximation3D/MgcAppr3DSphereFit.cpp
 	Source/Approximation3D/MgcAppr3DSphereFit.h
 	
+	Source/Containment2D/MgcCont2DBox.cpp
+	Source/Containment2D/MgcCont2DBox.h
+	Source/Containment2D/MgcCont2DCircleScribe.cpp
+	Source/Containment2D/MgcCont2DCircleScribe.h
+	Source/Containment2D/MgcCont2DEllipse.cpp
+	Source/Containment2D/MgcCont2DEllipse.h
+	Source/Containment2D/MgcCont2DMinBox.cpp
+	Source/Containment2D/MgcCont2DMinBox.h
+	Source/Containment2D/MgcCont2DMinCircle.cpp
+	Source/Containment2D/MgcCont2DMinCircle.h
+	Source/Containment2D/MgcCont2DPointInPolygon.cpp
+	Source/Containment2D/MgcCont2DPointInPolygon.h
+	Source/Containment2D/MgcConvexHull2D.cpp
+	Source/Containment2D/MgcConvexHull2D.h
+	Source/Containment2D/MgcConvexHull2D.inl
+	Source/Containment2D/MgcMinAreaEllipseCR.cpp
+	Source/Containment2D/MgcMinAreaEllipseCR.h
+	Source/Containment2D/MgcSeparatePointSets2D.cpp
+	Source/Containment2D/MgcSeparatePointSets2D.h
+
 	Source/Containment3D/MgcCont3DBox.cpp
 	Source/Containment3D/MgcCont3DBox.h
 	Source/Containment3D/MgcCont3DCapsule.cpp
@@ -242,3 +311,4 @@ target_sources(MagicFM PRIVATE
 	Source/Numerics/MgcRK4Adapt.inl
 	Source/Numerics/MgcSpecialFunction.cpp
 	Source/Numerics/MgcSpecialFunction.h)
+target_link_libraries(MagicFM PRIVATE MagicFM_Core MagicFM_Distance2D MagicFM_Distance3D MagicFM_Core2D MagicFM_Core3D)

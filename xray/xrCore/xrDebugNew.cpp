@@ -2,7 +2,7 @@
 #include "xrDebug.h"
 #include "os_clipboard.h"
 #include "string_concatenations.h"
-#include "../../3rd party/DxErr/src/dxerr.h"
+#include "../../3rd_party/DxErr/src/dxerr.h"
 #include "blackbox/CrashHandler.h"
 #pragma warning(push)
 #pragma warning(disable:4995)

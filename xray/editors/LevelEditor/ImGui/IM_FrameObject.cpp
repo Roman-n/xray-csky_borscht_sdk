@@ -38,15 +38,15 @@ LPCSTR _CopyVal ( LPCSTR src, AnsiString& dst, char separator )
 	return		dst.c_str();
 }
 
-LPCSTR _GetItem ( LPCSTR src, int index, AnsiString& dst, char separator=',', LPCSTR def="", bool trim=true )
-{
-	LPCSTR	ptr;
-	ptr			= _SetPos	( src, index, separator );
-	if( ptr )	_CopyVal	( ptr, dst, separator );
-	else	dst = def;
-	if (trim)	dst			= Trim(dst);
-	return		dst.c_str();
-}
+//LPCSTR _GetItem ( LPCSTR src, int index, AnsiString& dst, char separator=',', LPCSTR def="", bool trim=true )
+//{
+//	LPCSTR	ptr;
+//	ptr			= _SetPos	( src, index, separator );
+//	if( ptr )	_CopyVal	( ptr, dst, separator );
+//	else	dst = def;
+//	if (trim)	dst			= Trim(dst);
+//	return		dst.c_str();
+//}
 
 void _SequenceToList(AStringVec& lst, LPCSTR in, char separator=',')
 {

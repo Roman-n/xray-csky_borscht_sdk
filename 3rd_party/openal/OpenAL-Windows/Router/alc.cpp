@@ -1808,12 +1808,13 @@ void getDefaultPlaybackDeviceNames(char *longName, char *shortName, unsigned int
 	strcpy(longName, "");
 	strcpy(shortName, "");
 
+	CoInitialize(NULL);
+
 #ifdef HAVE_VISTA_HEADERS
 	// try to grab device name through Vista Core Audio...
 	HRESULT hr;
 	IMMDeviceEnumerator *pEnumerator;
 
-	CoInitialize(NULL);
 	hr = CoCreateInstance(__uuidof(MMDeviceEnumerator), NULL,CLSCTX_INPROC_SERVER, 
 		__uuidof(IMMDeviceEnumerator),(void**)&pEnumerator);
 	if SUCCEEDED(hr) {
@@ -1841,7 +1842,6 @@ void getDefaultPlaybackDeviceNames(char *longName, char *shortName, unsigned int
 		}
 		pEnumerator->Release();
 	}
-	CoUninitialize();
 #endif
 
 	if (bFoundOutputName == false) {
@@ -1870,6 +1870,8 @@ void getDefaultPlaybackDeviceNames(char *longName, char *shortName, unsigned int
 			strcpy(shortName, outputInfo.szPname);
 		}
 	}
+
+	CoUninitialize();
 }
 
 void getDefaultCaptureDeviceNames(char *longName, char *shortName, unsigned int len)

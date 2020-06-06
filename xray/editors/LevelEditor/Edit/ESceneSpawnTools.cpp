@@ -16,7 +16,11 @@
 #endif
 
 static HMODULE hXRSE_FACTORY = 0;
+#ifdef __MINGW32__
+static LPCSTR xrse_factory_library	= "libxrSE_Factory.dll";
+#else
 static LPCSTR xrse_factory_library	= "xrSE_Factory.dll";
+#endif
 #ifdef _WIN64
 static LPCSTR create_entity_func 	= "create_entity";
 static LPCSTR destroy_entity_func 	= "destroy_entity";

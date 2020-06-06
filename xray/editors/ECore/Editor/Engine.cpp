@@ -41,6 +41,12 @@ LPCSTR CEngine::LastWindowsError()
 extern void __stdcall xrSkin1W_x86	(vertRender* D, vertBoned1W* S, u32 vCount, CBoneInstance* Bones);
 extern void __stdcall xrSkin2W_x86	(vertRender* D, vertBoned2W* S, u32 vCount, CBoneInstance* Bones);
 
+#ifdef __MINGW32__
+static LPCSTR CPU_PIPE_DLL = "libxrCPU_Pipe.dll";
+#else
+static LPCSTR CPU_PIPE_DLL = "xrCPU_Pipe.dll";
+#endif
+
 void CEngine::Initialize(void)
 {
 	// Other stuff
@@ -51,7 +57,7 @@ void CEngine::Initialize(void)
 #ifdef _EDITOR
 	// Bind PSGP
 	ZeroMemory				(&PSGP,sizeof(PSGP));
-	hPSGP		            = LoadLibrary("xrCPU_Pipe.dll");
+	hPSGP		            = LoadLibrary(CPU_PIPE_DLL);
 	R_ASSERT2	            (hPSGP,"Can't find 'xrCPU_Pipe.dll'");
 
 	xrBinder* bindCPU	    = (xrBinder*)GetProcAddress(hPSGP,"xrBind_PSGP");	R_ASSERT(bindCPU);
