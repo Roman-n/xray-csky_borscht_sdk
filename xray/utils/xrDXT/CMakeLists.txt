@@ -21,4 +21,4 @@ target_sources(${PROJECT_NAME} PRIVATE
 	StdAfx.h
 	tga.cpp
 	tga.h)
-target_link_libraries(${PROJECT_NAME} PRIVATE xrCore nvtt.lib)
+target_link_libraries(${PROJECT_NAME} PRIVATE xrCore nvtt)

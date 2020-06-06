@@ -141,4 +141,4 @@ target_sources(${PROJECT_NAME} PRIVATE
 	../../xrServerEntities/xrServer_Objects_ALife_script3.cpp
 	../../xrServerEntities/xrServer_Objects_script.cpp
 	../../xrServerEntities/xrServer_Objects_script2.cpp)
-target_link_libraries(${PROJECT_NAME} PRIVATE xrCore xrXMLParser luabind imdexlib lua51.lib)
+target_link_libraries(${PROJECT_NAME} PRIVATE xrCore xrXMLParser luabind imdexlib lua51.lib shlwapi.lib)

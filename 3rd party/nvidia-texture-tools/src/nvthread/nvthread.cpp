@@ -6,6 +6,7 @@
 
 #if NV_OS_WIN32
 #include "Win32.h"
+#include <intrin.h>
 #elif NV_OS_UNIX
 #include <sys/types.h>
 #include <sys/sysctl.h>

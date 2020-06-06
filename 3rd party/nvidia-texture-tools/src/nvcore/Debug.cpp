@@ -25,6 +25,8 @@
 // VC7: ships with updated headers
 #           include <dbghelp.h>
 #       endif
+#   else
+#       include <dbghelp.h>
 #   endif
 #   pragma comment(lib,"dbghelp.lib")
 #endif
@@ -100,7 +102,7 @@ namespace
 #endif
 
 
-#if NV_OS_WIN32 && NV_CC_MSVC
+#if NV_OS_WIN32
 
     // We should try to simplify the top level filter as much as possible.
     // http://www.nynaeve.net/?p=128

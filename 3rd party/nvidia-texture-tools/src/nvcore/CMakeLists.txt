@@ -36,7 +36,7 @@ ELSE(NVCORE_SHARED)
     ADD_LIBRARY(nvcore ${CORE_SRCS})
 ENDIF(NVCORE_SHARED)
 
-TARGET_LINK_LIBRARIES(nvcore ${LIBS})
+TARGET_LINK_LIBRARIES(nvcore ${LIBS} dbghelp.lib)
 
 # On NetBSD and FreeBSD backtrace() is provided by libexecinfo, not libc.
 if (CMAKE_SYSTEM_NAME MATCHES "NetBSD" OR CMAKE_SYSTEM_NAME MATCHES "FreeBSD")

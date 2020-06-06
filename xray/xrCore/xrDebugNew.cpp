@@ -854,7 +854,9 @@ LONG WINAPI UnhandledFilter	(_EXCEPTION_POINTERS *pExceptionInfo)
 //		std::set_terminate				(_terminate);
 #endif // USE_BUG_TRAP
 
+#ifndef __GNUC__
 		_set_abort_behavior				(0,_WRITE_ABORT_MSG | _CALL_REPORTFAULT);
+#endif
 		signal							(SIGABRT,		abort_handler);
 		signal							(SIGABRT_COMPAT,abort_handler);
 		signal							(SIGFPE,		floating_point_handler);
@@ -864,9 +866,10 @@ LONG WINAPI UnhandledFilter	(_EXCEPTION_POINTERS *pExceptionInfo)
 		signal							(SIGTERM,		termination_handler);
 
 		_set_invalid_parameter_handler	(&invalid_parameter_handler);
-
+#ifndef __GNUC__
 		_set_new_mode					(1);
 		_set_new_handler				(&out_of_memory_handler);
+#endif
 //		std::set_new_handler			(&std_out_of_memory_handler);
 
 		_set_purecall_handler			(&pure_call_handler);

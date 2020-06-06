@@ -66,6 +66,7 @@ static void setThreadName(DWORD dwThreadID, const char* threadName)
     info.dwThreadID = dwThreadID;
     info.dwFlags = 0;
 
+#ifndef __GNUC__
     __try
     {
         RaiseException( MS_VC_EXCEPTION, 0, sizeof(info)/sizeof(ULONG_PTR), (ULONG_PTR*)&info );
@@ -73,6 +74,7 @@ static void setThreadName(DWORD dwThreadID, const char* threadName)
     __except(EXCEPTION_EXECUTE_HANDLER)
     {
     }
+#endif
 }
 
 

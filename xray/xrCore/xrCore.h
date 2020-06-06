@@ -27,9 +27,11 @@
 	#pragma warning(disable:4530)
 #endif
 
+#ifndef __GNUC__
 #if !defined(_MT)
 	// multithreading disabled
 	#error Please enable multi-threaded library...
+#endif
 #endif
 
 #	include "xrCore_platform.h"

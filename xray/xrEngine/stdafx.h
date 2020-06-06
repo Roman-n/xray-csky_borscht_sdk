@@ -46,7 +46,9 @@
 
 #include "xrXRC.h"
 
+#ifndef NO_SOUND
 #include "../xrSound/sound.h"
+#endif
 
 extern ENGINE_API CInifile *pGameIni;
 

@@ -7,7 +7,7 @@
 
 #include <float.h>
 
-#if !NV_CC_MSVC && !NV_OS_ORBIS
+#if !NV_CC_MSVC && !NV_OS_ORBIS && !__MINGW32__
 #include <alloca.h>
 #endif
 

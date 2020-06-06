@@ -124,8 +124,10 @@
 
 #if defined POSH_COMPILER_CLANG
 #   define NV_CC_CLANG  1
-#   define NV_CC_GNUC   1    // Clang is compatible with GCC.
-#   define NV_CC_STRING "clang"
+#   define NV_CC_MSVC   1
+#   define NV_CC_STRING "clang-msvc"
+//#   define NV_CC_GNUC   1    // Clang is compatible with GCC.
+//#   define NV_CC_STRING "clang"
 #elif defined POSH_COMPILER_GCC
 #   define NV_CC_GNUC   1
 #   define NV_CC_STRING "gcc"

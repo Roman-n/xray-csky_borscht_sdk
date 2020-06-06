@@ -9,7 +9,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/intermediate/cmake-${CMAKE_CXX_COMPILER_ID}-${CMAKE_CXX_COMPILER_ARCHITECTURE_ID}-${CMAKE_BUILD_TYPE}")
 add_compile_definitions(
 	$<$<CONFIG:Debug>:DEBUG>
-	$<$<CXX_COMPILER_ID:GNU>:_MT>)
+	#$<$<CXX_COMPILER_ID:GNU>:_MT>
+	)
 add_compile_options(
 	$<$<CXX_COMPILER_ID:GNU>:-fpermissive>
 	$<$<CXX_COMPILER_ID:Clang>:-Wno-microsoft-template>)
@@ -24,6 +25,7 @@ add_subdirectory("3rd party/DxErr")
 add_subdirectory("3rd party/WildMagic")
 add_subdirectory("3rd party/imdexlib")
 add_subdirectory("3rd party/luabind")
+add_subdirectory("3rd party/nvidia-texture-tools")
 add_subdirectory(xray/xrCore)
 add_subdirectory(xray/xrCDB)
 add_subdirectory(xray/xrSound)

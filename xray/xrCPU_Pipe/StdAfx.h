@@ -1,5 +1,6 @@
 #pragma once
 
+#define NO_SOUND
 #include "../xrEngine/stdafx.h"
 //	Warning: Check if it works for all renderers!
 //#include "../Layers/xrRenderPC_R2/stdafx.h"
