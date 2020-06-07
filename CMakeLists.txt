@@ -3,15 +3,16 @@ cmake_minimum_required(VERSION 3.15)
 project(xray15)
 
 include_directories(SDK/include)
-link_directories(SDK/libraries/x64)
+link_directories(SDK/libraries/$<IF:$<EQUAL:${CMAKE_SIZEOF_VOID_P},8>,x64,x86>)
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDLL")
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/intermediate/cmake-${CMAKE_CXX_COMPILER_ID}-${CMAKE_CXX_COMPILER_ARCHITECTURE_ID}-${CMAKE_BUILD_TYPE}")
 set(USE_FOLDERS ON)
-add_compile_definitions(
-	$<$<CONFIG:Debug>:DEBUG>
-	#$<$<CXX_COMPILER_ID:GNU>:_MT>
-	)
+if(NOT(CMAKE_BUILD_TYPE STREQUAL "Debug") AND MSVC)
+  # disable exceptions for MSVC release build
+  string(REGEX REPLACE "/EH.*" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+endif()
+add_compile_definitions($<$<CONFIG:Debug>:DEBUG>)
 add_compile_options(
 	$<$<CXX_COMPILER_ID:GNU>:-fpermissive>
 	$<$<CXX_COMPILER_ID:Clang>:-Wno-microsoft-template>)

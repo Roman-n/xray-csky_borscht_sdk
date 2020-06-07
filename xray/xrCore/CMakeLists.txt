@@ -183,4 +183,4 @@ target_sources(${PROJECT_NAME} PRIVATE
 	xrstring.h
 	xrSyncronize.cpp
 	xrSyncronize.h)
-target_link_libraries(${PROJECT_NAME} PRIVATE BugTrap-x64.lib winmm.lib dbghelp.lib)
+target_link_libraries(${PROJECT_NAME} PRIVATE DxErr BugTrap$<$<EQUAL:${CMAKE_SIZEOF_VOID_P},8>:-x64>.lib winmm.lib dbghelp.lib)
