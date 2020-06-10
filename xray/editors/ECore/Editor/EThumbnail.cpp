@@ -90,10 +90,8 @@ void EImageThumbnail::CreatePixels(u32* p, u32 w, u32 h)
 
 void EImageThumbnail::Draw(HDC hdc, const Irect& r)
 {
-#ifndef NO_VCL
 	if (Valid())
     	FHelper.DrawThumbnail(hdc,r,Pixels(),THUMB_WIDTH,THUMB_HEIGHT);
-#endif
 }
 
 EImageThumbnail* CreateThumbnail(LPCSTR src_name, ECustomThumbnail::THMType type, bool bLoad)

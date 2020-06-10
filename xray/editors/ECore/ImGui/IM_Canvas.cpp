@@ -40,7 +40,7 @@ void IM_Canvas::CreateTexture()
  //	0, D3DFMT_X8R8G8B8, D3DPOOL_MANAGED, &m_texture, NULL));
 
 	char name[256];
-	sprintf(name, "$user$canvas_%x", this);
+	sprintf(name, "$user$canvas_%p", this);
 	m_texture = Device.Resources->_CreateRT(name, m_width, m_height, D3DFMT_X8R8G8B8);
 	VERIFY(m_texture);
 
