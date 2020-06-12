@@ -342,7 +342,6 @@
     </ProjectReference>
     <ProjectReference Include="..\jpeg\Jpeg.vcxproj">
       <Project>{e6343391-13fc-479e-b62f-1c24f7b85408}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
