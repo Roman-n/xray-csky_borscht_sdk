@@ -621,16 +621,16 @@
     <ClInclude Include="..\xrRenderDX9\imgui_impl_dx9.h">
       <Filter>imgui_render</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\3rd party\NvMender2003\convert.h">
+    <ClInclude Include="..\..\..\3rd_party\NvMender2003\convert.h">
       <Filter>Models\Editor\NvMender2003</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\3rd party\NvMender2003\mender_input_output.h">
+    <ClInclude Include="..\..\..\3rd_party\NvMender2003\mender_input_output.h">
       <Filter>Models\Editor\NvMender2003</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\3rd party\NvMender2003\NVMeshMender.h">
+    <ClInclude Include="..\..\..\3rd_party\NvMender2003\NVMeshMender.h">
       <Filter>Models\Editor\NvMender2003</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\3rd party\NvMender2003\remove_isolated_verts.h">
+    <ClInclude Include="..\..\..\3rd_party\NvMender2003\remove_isolated_verts.h">
       <Filter>Models\Editor\NvMender2003</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1070,13 +1070,13 @@
     <ClCompile Include="..\xrRenderDX9\imgui_impl_dx9.cpp">
       <Filter>imgui_render</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\3rd party\NvMender2003\NVMeshMender.cpp">
+    <ClCompile Include="..\..\..\3rd_party\NvMender2003\NVMeshMender.cpp">
       <Filter>Models\Editor\NvMender2003</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Pipeline.txt" />
-    <Text Include="..\..\..\3rd party\NvMender2003\ReadMe.txt">
+    <Text Include="..\..\..\3rd_party\NvMender2003\ReadMe.txt">
       <Filter>Models\Editor\NvMender2003</Filter>
     </Text>
   </ItemGroup>

@@ -182,7 +182,7 @@
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <AdditionalIncludeDirectories>./;../xrServerEntities;$(SolutionDir)3rd party\imgui;$(SolutionDir)3rd party/luajit/src;$(SolutionDir)3rd party/luabind/include;$(SolutionDir)3rd party/imdexlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../xrServerEntities;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party/luajit/src;$(SolutionDir)3rd_party/luabind/include;$(SolutionDir)3rd_party/imdexlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;DEBUG;_WINDOWS;_USRDLL;XRGAME_EXPORTS;dSINGLE;MSVC;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>false</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -229,7 +229,7 @@
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <AdditionalIncludeDirectories>./;../xrServerEntities;$(SolutionDir)3rd party\imgui;$(SolutionDir)3rd party/luajit/src;$(SolutionDir)3rd party/luabind/include;$(SolutionDir)3rd party/imdexlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../xrServerEntities;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party/luajit/src;$(SolutionDir)3rd_party/luabind/include;$(SolutionDir)3rd_party/imdexlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;DEBUG;_WINDOWS;_USRDLL;XRGAME_EXPORTS;dSINGLE;MSVC;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>false</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -277,7 +277,7 @@
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <AdditionalIncludeDirectories>./;../xrServerEntities;$(SolutionDir)3rd party\imgui;$(SolutionDir)3rd party/luajit/src;$(SolutionDir)3rd party/luabind/include;$(SolutionDir)3rd party/imdexlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../xrServerEntities;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party/luajit/src;$(SolutionDir)3rd_party/luabind/include;$(SolutionDir)3rd_party/imdexlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;DEBUG;_WINDOWS;_USRDLL;XRGAME_EXPORTS;dSINGLE;MSVC;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>false</StringPooling>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -324,7 +324,7 @@
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <AdditionalIncludeDirectories>./;../xrServerEntities;$(SolutionDir)3rd party\imgui;$(SolutionDir)3rd party/luajit/src;$(SolutionDir)3rd party/luabind/include;$(SolutionDir)3rd party/imdexlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../xrServerEntities;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party/luajit/src;$(SolutionDir)3rd_party/luabind/include;$(SolutionDir)3rd_party/imdexlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;DEBUG;_WINDOWS;_USRDLL;XRGAME_EXPORTS;dSINGLE;MSVC;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>false</StringPooling>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -375,7 +375,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>false</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <AdditionalIncludeDirectories>./;../xrServerEntities;../../sdk/include/stlport;../../sdk/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../xrServerEntities;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party/luajit/src;$(SolutionDir)3rd_party/luabind/include;$(SolutionDir)3rd_party/imdexlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>DEBUG;MIXED;WIN32;_WINDOWS;_USRDLL;XRGAME_EXPORTS;dSINGLE;MSVC;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -426,7 +426,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>false</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <AdditionalIncludeDirectories>./;../xrServerEntities;../../sdk/include/stlport;../../sdk/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../xrServerEntities;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party/luajit/src;$(SolutionDir)3rd_party/luabind/include;$(SolutionDir)3rd_party/imdexlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>DEBUG;MIXED;WIN32;_WINDOWS;_USRDLL;XRGAME_EXPORTS;dSINGLE;MSVC;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -480,7 +480,7 @@
       <OmitFramePointers>true</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>./;../xrServerEntities;$(SolutionDir)3rd party\imgui;$(SolutionDir)3rd party/luabind/include;$(SolutionDir)3rd party/imdexlib;$(SolutionDir)3rd party/luajit/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../xrServerEntities;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party/luajit/src;$(SolutionDir)3rd_party/luabind/include;$(SolutionDir)3rd_party/imdexlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;XRGAME_EXPORTS;dSINGLE;MSVC;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling />
@@ -531,7 +531,7 @@
       <OmitFramePointers>true</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>./;../xrServerEntities;$(SolutionDir)3rd party\imgui;$(SolutionDir)3rd party/luabind/include;$(SolutionDir)3rd party/imdexlib;$(SolutionDir)3rd party/luajit/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../xrServerEntities;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party/luajit/src;$(SolutionDir)3rd_party/luabind/include;$(SolutionDir)3rd_party/imdexlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;XRGAME_EXPORTS;dSINGLE;MSVC;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>
@@ -9639,19 +9639,19 @@
     <ClCompile Include="ZudaArtifact.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\3rd party\crypto\crypto.vcxproj">
+    <ProjectReference Include="..\..\3rd_party\crypto\crypto.vcxproj">
       <Project>{fa169092-ea3e-40c1-8e5a-a2b575700fe8}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\3rd party\cximage\CxImage\cximage.vcxproj">
+    <ProjectReference Include="..\..\3rd_party\cximage\CxImage\cximage.vcxproj">
       <Project>{880cd250-ba77-4daf-a8d4-552f12dd3ae4}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\3rd party\imgui\imgui.vcxproj">
+    <ProjectReference Include="..\..\3rd_party\imgui\imgui.vcxproj">
       <Project>{c8fbc3ce-d6de-4fc3-bc15-7b647614db09}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\3rd party\luabind\luabind.vcxproj">
+    <ProjectReference Include="..\..\3rd_party\luabind\luabind.vcxproj">
       <Project>{cc52e0b3-cc35-4934-9302-035b748f3f2c}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\3rd party\ode\contrib\msvc7\ode_default\default.vcxproj">
+    <ProjectReference Include="..\..\3rd_party\ode\contrib\msvc7\ode_default\default.vcxproj">
       <Project>{1bf75feb-87dd-486c-880b-227987d191c2}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Layers\xrAPI\xrAPI.vcxproj">

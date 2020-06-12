@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "compiler.h"
 
-#include "../../common/cl_intersect.h"
+#include "../../Include/cl_intersect.h"
 
 #include "motion_simulator.h"
 

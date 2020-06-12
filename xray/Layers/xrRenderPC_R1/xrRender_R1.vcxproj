@@ -177,7 +177,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
       <WarningLevel>Level4</WarningLevel>
-      <AdditionalIncludeDirectories>pch;$(SolutionDir)3rd party\WildMagic;$(SolutionDir)3rd party\imgui;$(SolutionDir)3rd party/luajit/src;$(SolutionDir)3rd party/luabind/include;$(SolutionDir)3rd party/imdexlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>pch;$(SolutionDir)3rd_party\WildMagic;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party/luajit/src;$(SolutionDir)3rd_party/luabind/include;$(SolutionDir)3rd_party/imdexlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>nvapi.lib;$(TargetDir)xrEngine.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -202,7 +202,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
       <WarningLevel>Level4</WarningLevel>
-      <AdditionalIncludeDirectories>pch;$(SolutionDir)3rd party\WildMagic;$(SolutionDir)3rd party\imgui;$(SolutionDir)3rd party/luajit/src;$(SolutionDir)3rd party/luabind/include;$(SolutionDir)3rd party/imdexlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>pch;$(SolutionDir)3rd_party\WildMagic;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party/luajit/src;$(SolutionDir)3rd_party/luabind/include;$(SolutionDir)3rd_party/imdexlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>nvapi.lib;$(TargetDir)xrEngine.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -227,7 +227,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
       <WarningLevel>Level4</WarningLevel>
-      <AdditionalIncludeDirectories>pch;$(SolutionDir)3rd party\WildMagic;$(SolutionDir)3rd party\imgui;$(SolutionDir)3rd party/luajit/src;$(SolutionDir)3rd party/luabind/include;$(SolutionDir)3rd party/imdexlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>pch;$(SolutionDir)3rd_party\WildMagic;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party/luajit/src;$(SolutionDir)3rd_party/luabind/include;$(SolutionDir)3rd_party/imdexlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>nvapi64.lib;$(TargetDir)xrEngine.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -252,7 +252,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
       <WarningLevel>Level4</WarningLevel>
-      <AdditionalIncludeDirectories>pch;$(SolutionDir)3rd party\WildMagic;$(SolutionDir)3rd party\imgui;$(SolutionDir)3rd party/luajit/src;$(SolutionDir)3rd party/luabind/include;$(SolutionDir)3rd party/imdexlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>pch;$(SolutionDir)3rd_party\WildMagic;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party/luajit/src;$(SolutionDir)3rd_party/luabind/include;$(SolutionDir)3rd_party/imdexlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Wno-c++11-narrowing %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -289,7 +289,7 @@
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
       <WarningLevel>Level4</WarningLevel>
-      <AdditionalIncludeDirectories>pch;$(SolutionDir)3rd party\WildMagic;$(SolutionDir)3rd party\imgui;$(SolutionDir)3rd party/luabind/include;$(SolutionDir)3rd party/imdexlib;$(SolutionDir)3rd party/luajit/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>pch;$(SolutionDir)3rd_party\WildMagic;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party/luajit/src;$(SolutionDir)3rd_party/luabind/include;$(SolutionDir)3rd_party/imdexlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>nvapi.lib;$(TargetDir)xrEngine.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -327,7 +327,7 @@
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
       <WarningLevel>Level4</WarningLevel>
-      <AdditionalIncludeDirectories>pch;$(SolutionDir)3rd party\WildMagic;$(SolutionDir)3rd party\imgui;$(SolutionDir)3rd party/luabind/include;$(SolutionDir)3rd party/imdexlib;$(SolutionDir)3rd party/luajit/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>pch;$(SolutionDir)3rd_party\WildMagic;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party/luajit/src;$(SolutionDir)3rd_party/luabind/include;$(SolutionDir)3rd_party/imdexlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>nvapi64.lib;$(TargetDir)xrEngine.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -349,7 +349,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>false</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <AdditionalIncludeDirectories>../../../sdk/include/stlport;../../../sdk/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>pch;$(SolutionDir)3rd_party\WildMagic;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party/luajit/src;$(SolutionDir)3rd_party/luabind/include;$(SolutionDir)3rd_party/imdexlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>MIXED;WIN32;DEBUG;_WINDOWS;_USRDLL;XRRENDER_R1_EXPORTS;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -387,7 +387,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>false</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <AdditionalIncludeDirectories>../../../sdk/include/stlport;../../../sdk/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>pch;$(SolutionDir)3rd_party\WildMagic;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party/luajit/src;$(SolutionDir)3rd_party/luabind/include;$(SolutionDir)3rd_party/imdexlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>MIXED;WIN32;DEBUG;_WINDOWS;_USRDLL;XRRENDER_R1_EXPORTS;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -418,10 +418,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\3rd party\NvMender2003\convert.h" />
-    <ClInclude Include="..\..\..\3rd party\NvMender2003\mender_input_output.h" />
-    <ClInclude Include="..\..\..\3rd party\NvMender2003\NVMeshMender.h" />
-    <ClInclude Include="..\..\..\3rd party\NvMender2003\remove_isolated_verts.h" />
+    <ClInclude Include="..\..\..\3rd_party\NvMender2003\convert.h" />
+    <ClInclude Include="..\..\..\3rd_party\NvMender2003\mender_input_output.h" />
+    <ClInclude Include="..\..\..\3rd_party\NvMender2003\NVMeshMender.h" />
+    <ClInclude Include="..\..\..\3rd_party\NvMender2003\remove_isolated_verts.h" />
     <ClInclude Include="..\..\Include\xrRender\animation_blend.h" />
     <ClInclude Include="..\..\Include\xrRender\animation_motion.h" />
     <ClInclude Include="..\..\Include\xrRender\ApplicationRender.h" />
@@ -576,7 +576,7 @@
     <ClInclude Include="pch\stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\3rd party\NvMender2003\NVMeshMender.cpp" />
+    <ClCompile Include="..\..\..\3rd_party\NvMender2003\NVMeshMender.cpp" />
     <ClCompile Include="..\..\xrEngine\ai_script_lua_debug.cpp" />
     <ClCompile Include="..\..\xrEngine\ai_script_lua_extension.cpp" />
     <ClCompile Include="..\Editor\EditMesh.cpp" />
@@ -772,17 +772,17 @@
     <ClCompile Include="xrRender_R1.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\3rd party\NvMender2003\ReadMe.txt" />
+    <Text Include="..\..\..\3rd_party\NvMender2003\ReadMe.txt" />
     <Text Include="Pipeline.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\3rd party\imgui\imgui.vcxproj">
+    <ProjectReference Include="..\..\..\3rd_party\imgui\imgui.vcxproj">
       <Project>{c8fbc3ce-d6de-4fc3-bc15-7b647614db09}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\3rd party\luabind\luabind.vcxproj">
+    <ProjectReference Include="..\..\..\3rd_party\luabind\luabind.vcxproj">
       <Project>{cc52e0b3-cc35-4934-9302-035b748f3f2c}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\3rd party\WildMagic\WildMagic.vcxproj">
+    <ProjectReference Include="..\..\..\3rd_party\WildMagic\WildMagic.vcxproj">
       <Project>{6c275c8f-0e14-4f64-bb86-55bfc649b900}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\utils\ETools\ETools.vcxproj">

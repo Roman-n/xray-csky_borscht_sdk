@@ -1,9 +1,9 @@
 #ifndef _MESH_MENDER_LAYER_OGF_H_
 #define _MESH_MENDER_LAYER_OGF_H_
 
-#include	"../../../3rd party/NvMender2003/nvMeshMender.h"
-#include	"../../../3rd party/NvMender2003/mender_input_output.h"
-#include	"../../../3rd party/NvMender2003/remove_isolated_verts.h"
+#include	"../../../3rd_party/NvMender2003/nvMeshMender.h"
+#include	"../../../3rd_party/NvMender2003/mender_input_output.h"
+#include	"../../../3rd_party/NvMender2003/remove_isolated_verts.h"
 
 #include	"OGF_Face.h"
 

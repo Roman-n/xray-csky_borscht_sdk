@@ -178,7 +178,7 @@
       <OmitFramePointers>true</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>../xrQslim/src/;$(SolutionDir)3rd party/libogg-1.3.3/include;$(SolutionDir)3rd party/libvorbis-1.3.6/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../xrQslim/src/;$(SolutionDir)3rd_party/libogg-1.3.3/include;$(SolutionDir)3rd_party/libvorbis-1.3.6/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;ETOOLS_EXPORTS;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling />
@@ -220,7 +220,7 @@
       <OmitFramePointers>true</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>../xrQslim/src/;$(SolutionDir)3rd party/libogg-1.3.3/include;$(SolutionDir)3rd party/libvorbis-1.3.6/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../xrQslim/src/;$(SolutionDir)3rd_party/libogg-1.3.3/include;$(SolutionDir)3rd_party/libvorbis-1.3.6/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;ETOOLS_EXPORTS;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>
@@ -260,7 +260,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <AdditionalIncludeDirectories>../xrQslim/src/;$(SolutionDir)3rd party/libogg-1.3.3/include;$(SolutionDir)3rd party/libvorbis-1.3.6/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../xrQslim/src/;$(SolutionDir)3rd_party/libogg-1.3.3/include;$(SolutionDir)3rd_party/libvorbis-1.3.6/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;DEBUG;_WINDOWS;_USRDLL;ETOOLS_EXPORTS;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -297,7 +297,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <AdditionalIncludeDirectories>../xrQslim/src/;$(SolutionDir)3rd party/libogg-1.3.3/include;$(SolutionDir)3rd party/libvorbis-1.3.6/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../xrQslim/src/;$(SolutionDir)3rd_party/libogg-1.3.3/include;$(SolutionDir)3rd_party/libvorbis-1.3.6/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;DEBUG;_WINDOWS;_USRDLL;ETOOLS_EXPORTS;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -335,7 +335,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <AdditionalIncludeDirectories>../xrQslim/src/;$(SolutionDir)3rd party/libogg-1.3.3/include;$(SolutionDir)3rd party/libvorbis-1.3.6/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../xrQslim/src/;$(SolutionDir)3rd_party/libogg-1.3.3/include;$(SolutionDir)3rd_party/libvorbis-1.3.6/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;DEBUG;_WINDOWS;_USRDLL;ETOOLS_EXPORTS;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -373,7 +373,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <AdditionalIncludeDirectories>../xrQslim/src/;$(SolutionDir)3rd party/libogg-1.3.3/include;$(SolutionDir)3rd party/libvorbis-1.3.6/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../xrQslim/src/;$(SolutionDir)3rd_party/libogg-1.3.3/include;$(SolutionDir)3rd_party/libvorbis-1.3.6/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;DEBUG;_WINDOWS;_USRDLL;ETOOLS_EXPORTS;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -415,7 +415,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <AdditionalIncludeDirectories>../../../sdk/include/stlport;../../../sdk/include/;../xrQslim/src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../xrQslim/src/;$(SolutionDir)3rd_party/libogg-1.3.3/include;$(SolutionDir)3rd_party/libvorbis-1.3.6/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;DEBUG;_WINDOWS;ETOOLS_EXPORTS;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -467,7 +467,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <AdditionalIncludeDirectories>../../../sdk/include/stlport;../../../sdk/include/;../xrQslim/src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../xrQslim/src/;$(SolutionDir)3rd_party/libogg-1.3.3/include;$(SolutionDir)3rd_party/libvorbis-1.3.6/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;DEBUG;_WINDOWS;ETOOLS_EXPORTS;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -617,13 +617,13 @@
     <ClInclude Include="xrXRC.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\3rd party\DxErr\DxErr.vcxproj">
+    <ProjectReference Include="..\..\..\3rd_party\DxErr\DxErr.vcxproj">
       <Project>{7a19cbb1-ff90-44bd-9112-c2a269d9c280}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\3rd party\libogg-1.3.3\win32\VS2015\libogg_static.vcxproj">
+    <ProjectReference Include="..\..\..\3rd_party\libogg-1.3.3\win32\VS2015\libogg_static.vcxproj">
       <Project>{15cbfeff-7965-41f5-b4e2-21e8795c9159}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\3rd party\libvorbis-1.3.6\win32\VS2010\libvorbis\libvorbis_static.vcxproj">
+    <ProjectReference Include="..\..\..\3rd_party\libvorbis-1.3.6\win32\VS2010\libvorbis\libvorbis_static.vcxproj">
       <Project>{3a214e06-b95e-4d61-a291-1f8df2ec10fd}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\xrCDB\xrCDB.vcxproj">

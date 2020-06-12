@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "../../3rd party/DxErr/src/dxerr.h"
+#include "../../3rd_party/DxErr/src/dxerr.h"
 #include "NET_Common.h"
 #include "net_server.h"
 #include <functional>

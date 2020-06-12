@@ -185,10 +185,10 @@ void CExportSkeleton::SSplit::CalculateTB()
 ///////////////////////////////////////////////////////////////////////////////////////////////////// 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-#include "../../../3rd party/NvMender2003/nvmeshmender.h"
-#include "../../../3rd party/NvMender2003/nvMeshMender.h"
-#include "../../../3rd party/NvMender2003/mender_input_output.h"
-#include "../../../3rd party/NvMender2003/remove_isolated_verts.h"
+#include "../../../3rd_party/NvMender2003/nvmeshmender.h"
+#include "../../../3rd_party/NvMender2003/nvMeshMender.h"
+#include "../../../3rd_party/NvMender2003/mender_input_output.h"
+#include "../../../3rd_party/NvMender2003/remove_isolated_verts.h"
 
 void 	CExportSkeleton::SSplit::OptimizeTextureCoordinates()
 {

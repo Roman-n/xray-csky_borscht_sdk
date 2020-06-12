@@ -480,20 +480,20 @@
     <ClInclude Include="Editor\TLSPRITE.h">
       <Filter>Editor</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\3rd party\NvMender2003\convert.h">
-      <Filter>NvMender2003</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\3rd party\NvMender2003\mender_input_output.h">
-      <Filter>NvMender2003</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\3rd party\NvMender2003\NVMeshMender.h">
-      <Filter>NvMender2003</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\3rd party\NvMender2003\remove_isolated_verts.h">
-      <Filter>NvMender2003</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Include\builder_types.h">
       <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\3rd_party\NvMender2003\convert.h">
+      <Filter>NvMender2003</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\3rd_party\NvMender2003\mender_input_output.h">
+      <Filter>NvMender2003</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\3rd_party\NvMender2003\NVMeshMender.h">
+      <Filter>NvMender2003</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\3rd_party\NvMender2003\remove_isolated_verts.h">
+      <Filter>NvMender2003</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1013,18 +1013,18 @@
     <ClCompile Include="Editor\TLSPRITE.CPP">
       <Filter>Editor</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\3rd party\NvMender2003\NVMeshMender.cpp">
-      <Filter>NvMender2003</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Include\ai_sounds.cpp">
       <Filter>Include</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Include\builder_types.cpp">
       <Filter>Include</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\3rd_party\NvMender2003\NVMeshMender.cpp">
+      <Filter>NvMender2003</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\3rd party\NvMender2003\ReadMe.txt">
+    <Text Include="..\..\..\3rd_party\NvMender2003\ReadMe.txt">
       <Filter>NvMender2003</Filter>
     </Text>
   </ItemGroup>

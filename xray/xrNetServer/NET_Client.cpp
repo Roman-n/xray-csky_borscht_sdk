@@ -9,7 +9,7 @@
 #pragma warning(push)
 #pragma warning(disable:4995)
 #include <malloc.h>
-#include "../../3rd party/DxErr/src/dxerr.h"
+#include "../../3rd_party/DxErr/src/dxerr.h"
 
 //#pragma warning(pop)
 
