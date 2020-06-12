@@ -19,7 +19,7 @@ BOOL APIENTRY DllMain( HANDLE hModule,
 		case DLL_THREAD_DETACH:
 			break;
 		case DLL_PROCESS_DETACH:
-			Core._destroy();
+			//Core._destroy();
 			break;
 	}
 	return TRUE;
