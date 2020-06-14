@@ -11,6 +11,8 @@
 #endif
 #include "../ECore/Editor/ui_main.h"
 
+#include "ImGui\IM_LeftBar.h"
+
 using namespace std::placeholders;
 
 //----------------------------------------------------------------------
@@ -24,6 +26,10 @@ bool __fastcall TUI_ControlPSAdd::AfterAppendCallback(TShiftState Shift, CCustom
 	EParticlesObject* pg= dynamic_cast<EParticlesObject*>(obj); R_ASSERT(pg);
 #ifndef NO_VCL
     LPCSTR ref_name		= ((TfraPS*)parent_tool->pFrame)->Current();
+#else
+    LPCSTR ref_name = imLeftBar.fraPS.Current();
+#endif
+
     if (!ref_name){
     	ELog.DlgMsg(mtInformation,"Nothing selected.");
     	return false;
@@ -32,7 +38,7 @@ bool __fastcall TUI_ControlPSAdd::AfterAppendCallback(TShiftState Shift, CCustom
     	ELog.DlgMsg(mtInformation,"Can't compile particle system '%s'.",ref_name);
         return false;
     }
-#endif
+
     return true;
 }
 

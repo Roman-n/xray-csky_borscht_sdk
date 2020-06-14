@@ -10,6 +10,8 @@
 #include "scene.h"
 #include "ui_leveltools.h"
 
+#include "ImGui\IM_LeftBar.h"
+
 //------------------------------------------------------------------------------
 // Node Add
 //------------------------------------------------------------------------------
@@ -21,16 +23,24 @@ bool TUI_ControlAIMapNodeAdd::Start(TShiftState Shift)
 	append_nodes = 0;                           
 	Fvector p;
     ESceneAIMapTool* S 		= (ESceneAIMapTool*)parent_tool;
+    
+    bool bIgnoreConstraints, bAutoLink;
+#ifndef NO_VCL
+    bIgnoreConstraints = ((TfraAIMap*)S->pFrame)->ebIgnoreConstraints->Down;
+    bAutoLink = ((TfraAIMap*)S->pFrame)->ebAutoLink->Down;
+#else
+    bIgnoreConstraints = imLeftBar.fraAIMap.m_ignore_constraints;
+    bAutoLink = imLeftBar.fraAIMap.m_auto_link;
+#endif
+
     if (S->PickObjects(p,UI->m_CurrentRStart,UI->m_CurrentRNorm,UI->ZFar())){
     	S->SelectObjects	(false);
-#ifndef NO_VCL
-	    append_nodes		= S->AddNode(p,((TfraAIMap*)S->pFrame)->ebIgnoreConstraints->Down,((TfraAIMap*)S->pFrame)->ebAutoLink->Down,S->m_BrushSize);
+	    append_nodes		= S->AddNode(p,bIgnoreConstraints,bAutoLink,S->m_BrushSize);
 		if (!Shift.Contains(ssAlt)){ 
 		    if (append_nodes) Scene->UndoSave();
         	ResetActionToSelect();
             return false;
         }else return true;
-#endif
     }
     return false;
 }
@@ -38,10 +48,18 @@ void TUI_ControlAIMapNodeAdd::Move(TShiftState _Shift)
 {
 	Fvector p;
     ESceneAIMapTool* S 	= (ESceneAIMapTool*)parent_tool;
-    if (S->PickObjects(p,UI->m_CurrentRStart,UI->m_CurrentRNorm,UI->ZFar())){
+    
+    bool bIgnoreConstraints, bAutoLink;
 #ifndef NO_VCL
-	    append_nodes+=S->AddNode(p,((TfraAIMap*)S->pFrame)->ebIgnoreConstraints->Down,((TfraAIMap*)S->pFrame)->ebAutoLink->Down,S->m_BrushSize);
+    bIgnoreConstraints = ((TfraAIMap*)S->pFrame)->ebIgnoreConstraints->Down;
+    bAutoLink = ((TfraAIMap*)S->pFrame)->ebAutoLink->Down;
+#else
+    bIgnoreConstraints = imLeftBar.fraAIMap.m_ignore_constraints;
+    bAutoLink = imLeftBar.fraAIMap.m_auto_link;
 #endif
+    
+    if (S->PickObjects(p,UI->m_CurrentRStart,UI->m_CurrentRNorm,UI->ZFar())){
+	    append_nodes+=S->AddNode(p,bIgnoreConstraints,bAutoLink,S->m_BrushSize);
     }
 }
 bool TUI_ControlAIMapNodeAdd::End(TShiftState _Shift)

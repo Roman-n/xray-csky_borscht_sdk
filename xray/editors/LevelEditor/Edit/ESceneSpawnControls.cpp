@@ -9,6 +9,11 @@
 #endif
 #include "Scene.h"
 #include "SpawnPoint.h"
+
+#include "ImGui\IM_LeftBar.h"
+
+using namespace std::placeholders;
+
 //---------------------------------------------------------------------------
 __fastcall TUI_ControlSpawnAdd::TUI_ControlSpawnAdd(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent){
 }
@@ -18,7 +23,7 @@ bool __fastcall TUI_ControlSpawnAdd::AppendCallback(SBeforeAppendCallbackParams*
 #ifndef NO_VCL
 	LPCSTR ref_name = ((TfraSpawn*)parent_tool->pFrame)->Current();
 #else
-    LPCSTR ref_name = 0;
+	LPCSTR ref_name = imLeftBar.fraSpawn.Current();
 #endif
     if (!ref_name){
     	ELog.DlgMsg(mtInformation,"Nothing selected.");
@@ -59,7 +64,32 @@ bool TUI_ControlSpawnAdd::Start(TShiftState Shift)
         	ELog.DlgMsg(mtError,"Attach impossible.");
         }
     }else{
-	    DefaultAddObject(Shift,AppendCallback);             
+	    DefaultAddObject(Shift,std::bind(&TUI_ControlSpawnAdd::AppendCallback,this,_1));             
+    }
+#else
+    IM_FrameSpawn &F = imLeftBar.fraSpawn;
+	if (F.m_attach_object){
+		CCustomObject* from = Scene->RayPickObject(UI->ZFar(), UI->m_CurrentRStart, UI->m_CurrentRNorm, OBJCLASS_DUMMY, 0, 0);
+        if (from->ClassID!=OBJCLASS_SPAWNPOINT){
+            ObjectList 	lst;
+            int cnt 	= Scene->GetQueryObjects(lst,OBJCLASS_SPAWNPOINT,1,1,0);
+            if (1!=cnt)	ELog.DlgMsg(mtError,"Select one shape.");
+            else{
+                CSpawnPoint* base = dynamic_cast<CSpawnPoint*>(lst.back()); R_ASSERT(base);
+                if (base->AttachObject(from)){
+                    if (!Shift.Contains(ssAlt)){
+                        F.m_attach_object	= false;
+                        ResetActionToSelect		();
+                    }
+                }else{
+		        	ELog.DlgMsg(mtError,"Attach impossible.");
+                }
+            }
+        }else{
+        	ELog.DlgMsg(mtError,"Attach impossible.");
+        }
+    }else{
+	    DefaultAddObject(Shift,std::bind(&TUI_ControlSpawnAdd::AppendCallback,this,_1));             
     }
 #endif
     return false;

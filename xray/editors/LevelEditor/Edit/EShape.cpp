@@ -7,6 +7,8 @@
 #include <Layers/xrRender/du_box.h>
 #include "Scene.h"
 
+#include "ImGui\IM_LeftBar.h"
+
 #define SHAPE_COLOR_TRANSP		0x3C808080
 #define SHAPE_COLOR_EDGE		0xFF202020
 
@@ -474,8 +476,10 @@ void CEditShape::OnFrame()
 #ifndef NO_VCL
     	TfraShape* F 		= (TfraShape*)ParentTool->pFrame;
     	BOOL bVis = F->ebEditLevelBoundMode->Down;
-    	m_RT_Flags.set(flRT_Visible, bVis);
+#else
+      BOOL bVis = imLeftBar.fraShape.m_edit_level_bound;
 #endif
+    	m_RT_Flags.set(flRT_Visible, bVis);
     }
 }
 

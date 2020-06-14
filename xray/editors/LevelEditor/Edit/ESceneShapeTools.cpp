@@ -9,6 +9,8 @@
 #endif
 #include "EShape.h"
 
+#include "ImGui\IM_LeftBar.h"
+
 void ESceneShapeTool::CreateControls()
 {
 	inherited::CreateDefaultControls(estDefault);
@@ -89,6 +91,8 @@ void ESceneShapeTool::OnActivate()
 	inherited::OnActivate();
 #ifndef NO_VCL
 	((TfraShape*)pFrame)->ebEditLevelBoundMode->Down = false;
+#else
+	imLeftBar.fraShape.m_edit_level_bound = false;
 #endif
 }
 
@@ -97,5 +101,7 @@ void ESceneShapeTool::OnDeactivate()
 	inherited::OnDeactivate();
 #ifndef NO_VCL
 	((TfraShape*)pFrame)->ebEditLevelBoundMode->Down = false;
+#else
+	imLeftBar.fraShape.m_edit_level_bound = false;
 #endif
 }

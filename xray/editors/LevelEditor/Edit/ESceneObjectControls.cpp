@@ -13,6 +13,8 @@
 #endif
 #include "ui_levelmain.h"
 
+#include "ImGui\IM_LeftBar.h"
+
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
@@ -23,24 +25,25 @@ __fastcall TUI_ControlObjectAdd::TUI_ControlObjectAdd(int st, int act, ESceneToo
 bool TUI_ControlObjectAdd::Start(TShiftState Shift)
 {
     if (Shift==ssRBOnly){ ExecCommand(COMMAND_SHOWCONTEXTMENU,OBJCLASS_SCENEOBJECT); return false;}
+    
 #ifndef NO_VCL
     TfraObject* fraObject = (TfraObject*)parent_tool->pFrame; VERIFY(fraObject);
+    LPCSTR N = ((TfraObject*)parent_tool->pFrame)->Current();
+#else
+    LPCSTR N = imLeftBar.fraObject.Current();
 #endif
+
 	Fvector p,n;
 	if(!LUI->PickGround(p,UI->m_CurrentRStart,UI->m_CurrentRNorm,1,&n)) return false;
     { // pick already executed (see top)
 		ESceneObjectTool* ot = dynamic_cast<ESceneObjectTool*>(parent_tool);
-    	LPCSTR N;
         if (ot->IsAppendRandomActive()&&ot->m_AppendRandomObjects.size()){
         	N = ot->m_AppendRandomObjects[Random.randI(ot->m_AppendRandomObjects.size())].c_str();  
-        }else{
-#ifndef NO_VCL
-            N = ((TfraObject*)parent_tool->pFrame)->Current();
+        }else{       
             if(!N){
                 ELog.DlgMsg(mtInformation,"Nothing selected.");
                 return false;
             }
-#endif
         }
 
         string256 namebuffer;
