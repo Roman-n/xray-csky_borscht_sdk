@@ -4,6 +4,9 @@
 #pragma hdrstop
 
 #include "ChoseForm.h"
+
+#ifndef NO_VCL
+
 #include "PropertiesList.h"               
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
@@ -16,27 +19,9 @@
 #pragma resource "*.dfm"
 TfrmChoseItem*				TfrmChoseItem::form			= 0;
 AnsiString 					TfrmChoseItem::select_item	= "";
-TfrmChoseItem::EventsMap	TfrmChoseItem::m_Events;
 TOnChooseFillEvents 		TfrmChoseItem::fill_events	= 0;      
 AnsiString 					TfrmChoseItem::m_LastSelection; 
 
-//---------------------------------------------------------------------------
-SChooseEvents* TfrmChoseItem::GetEvents	(u32 choose_ID)
-{
-	EventsMapIt it 	= m_Events.find(choose_ID);
-    if (it!=m_Events.end()){
-    	return &it->second;
-    }else return 0;
-}
-void TfrmChoseItem::AppendEvents(u32 choose_ID, LPCSTR caption, TOnChooseFillItems on_fill, TOnChooseSelectItem on_sel, TOnDrawThumbnail on_thm, TOnChooseClose on_close, u32 flags)
-{
-	EventsMapIt it 	= m_Events.find(choose_ID); VERIFY(it==m_Events.end());
-    m_Events.insert	(std::make_pair(choose_ID,SChooseEvents(caption,on_fill,on_sel,on_thm,on_close,flags)));
-}
-void TfrmChoseItem::ClearEvents()
-{
-	m_Events.clear	();
-}
 //---------------------------------------------------------------------------
 void __fastcall TfrmChoseItem::FormCreate(TObject *Sender)
 {
@@ -421,4 +406,26 @@ void __fastcall	TfrmChoseItem::OnFrame()
     }
 }
 //---------------------------------------------------------------------------
+
+#endif // ifndef NO_VCL
+
+TfrmChoseItem::EventsMap	TfrmChoseItem::m_Events;
+//---------------------------------------------------------------------------
+
+SChooseEvents* TfrmChoseItem::GetEvents	(u32 choose_ID)
+{
+	EventsMapIt it 	= m_Events.find(choose_ID);
+    if (it!=m_Events.end()){
+    	return &it->second;
+    }else return 0;
+}
+void TfrmChoseItem::AppendEvents(u32 choose_ID, LPCSTR caption, TOnChooseFillItems on_fill, TOnChooseSelectItem on_sel, TOnDrawThumbnail on_thm, TOnChooseClose on_close, u32 flags)
+{
+	EventsMapIt it 	= m_Events.find(choose_ID); VERIFY(it==m_Events.end());
+    m_Events.insert	(std::make_pair(choose_ID,SChooseEvents(caption,on_fill,on_sel,on_thm,on_close,flags)));
+}
+void TfrmChoseItem::ClearEvents()
+{
+	m_Events.clear	();
+}
 

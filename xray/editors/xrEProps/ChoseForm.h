@@ -2,6 +2,9 @@
 
 #ifndef ChoseFormH
 #define ChoseFormH
+
+#ifndef NO_VCL
+
 //---------------------------------------------------------------------------
 #include <Classes.hpp>
 #include <Controls.hpp>
@@ -118,4 +121,25 @@ public:		// User declarations
     static SChooseEvents*		GetEvents		(u32 choose_ID);
 };
 //---------------------------------------------------------------------------
+
+#else // ifndef NO_VCL
+
+#include <xrCore\ChooseTypes.H>    
+//---------------------------------------------------------------------------
+
+class XR_EPROPS_API TfrmChoseItem
+{
+protected:
+    DEFINE_MAP(u32,SChooseEvents,EventsMap,EventsMapIt);     
+    static EventsMap			m_Events;
+
+public:		// User declarations
+    static void					AppendEvents	(u32 choose_ID, LPCSTR caption, TOnChooseFillItems on_fill, TOnChooseSelectItem on_sel, TOnDrawThumbnail on_thm, TOnChooseClose on_close, u32 flags);
+    static void					ClearEvents		();
+    static SChooseEvents*		GetEvents		(u32 choose_ID);
+};
+//---------------------------------------------------------------------------
+
+#endif
+
 #endif

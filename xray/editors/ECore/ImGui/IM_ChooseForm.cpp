@@ -5,10 +5,7 @@
 #include "IM_ChooseForm.h"
 #include "../Editor/ui_main.h"
 #include <Layers/xrRender/ETextureParams.h>
-#ifndef NO_VCL
-// for GetEvents
-#include "ChoseForm.h"
-#endif
+#include <editors/xrEProps/ChoseForm.h> // for GetEvents
 
 #pragma package(smart_init)
 
@@ -23,9 +20,8 @@ IM_ChooseForm::IM_ChooseForm(
       m_current_item(0),
       m_open(true)
 {
-#ifndef NO_VCL
 	m_events = TfrmChoseItem::GetEvents(mode);
-#endif
+
     if(max_select > 1)
     {
     	m_items_tree = IM_Tree('\\', true, true);

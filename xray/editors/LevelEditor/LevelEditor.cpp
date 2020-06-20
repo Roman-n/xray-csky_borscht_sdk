@@ -13,6 +13,8 @@
 #include "ImGui/IM_LeftBar.h"
 #include "ImGui/IM_TopBar.h"
 
+#include "../xrEProps/EditorChooseEvents.H"
+
 #define MAX_LOADSTRING 100
 
 // Global Variables:
@@ -77,6 +79,8 @@ int APIENTRY WinMain(
     UI->AddIMWindow(&imLeftBar);
     UI->AddIMWindow(&imTopBar);
 
+		FillChooseEvents();
+
     // Main message loop:
     g_idle = true;
     MSG msg {};
@@ -91,6 +95,8 @@ int APIENTRY WinMain(
         }
         if (g_idle) UI->Idle();
     }
+    
+    ClearChooseEvents();
 
     UI->ClearCommands		();
     xr_delete				(Scene);

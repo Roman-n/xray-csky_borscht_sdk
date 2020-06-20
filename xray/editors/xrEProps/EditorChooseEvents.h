@@ -1,7 +1,12 @@
 #ifndef EditorChooseEventsH
 #define EditorChooseEventsH
 
-#include "ChooseTypes.h"
+#include "ChoseForm.h"
+#include "../ECore/Editor/SoundManager.h"
+#include "../ECore/Editor/Library.h"
+#include "../../xrEngine/LightAnimLibrary.h"
+
+#include "../../xrCore/ChooseTypes.h"
 #include "../../Layers/xrRender/SkeletonAnimated.h"
 #include "../../Layers/xrRender/ResourceManager.h"
 
