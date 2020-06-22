@@ -581,6 +581,8 @@ void TUI::Idle()
 	VERIFY(m_bReady);
 #ifndef NO_VCL
     Device.b_is_Active  = Application->Active;
+#else
+    Device.b_is_Active  = !!GetActiveWindow();
 #endif
 	// input
     pInput->OnFrame();
