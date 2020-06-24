@@ -3,7 +3,15 @@
 
 std::unique_ptr<TApplication> Application;
 
-void TApplication::ProcessMessages() { }
+void TApplication::ProcessMessages()
+{
+	MSG msg;
+	while(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+}
 
 AnsiString ExtractFileExt(const AnsiString& fileName)
 {
