@@ -8,7 +8,7 @@
 #include "../Edit/Scene.h"
 #include "../Edit/ESceneAIMapTools.h"
 #include <xrEngine/GameMtlLib.h>
-#include "../ECore/Editor/ui_main.h"
+#include "../Edit/UI_LevelMain.h"
 
 #pragma package(smart_init)
 
@@ -108,9 +108,9 @@ void IM_FrameAIMap::Render()
     	ImGui::Columns(2, "aimap_commands", false);
 
         if(ImGui::MenuItem("Generate Full"))
-        	m_parent_tool->GenerateMap(false);
+        	PostCommand(COMMAND_GENERATE_AI_MAP, false);
         if(ImGui::MenuItem("Generate Selected"))
-        	m_parent_tool->GenerateMap(true);
+        	PostCommand(COMMAND_GENERATE_AI_MAP, true);
         if(ImGui::MenuItem("Reset Selected"))
         	m_parent_tool->ResetNodes();
 

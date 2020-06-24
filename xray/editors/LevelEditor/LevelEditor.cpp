@@ -95,6 +95,7 @@ int APIENTRY WinMain(
             }
             continue;
         }
+        DispatchQueueedCommands();
         if (g_idle) UI->Idle();
     }
     

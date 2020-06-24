@@ -924,6 +924,8 @@ CCommandVar CommandToggleAiMapVisibility(CCommandVar p1, CCommandVar p2)
     return 						TRUE;
 }
 
+CCommandVar GenerateAiMap(CCommandVar p1, CCommandVar p2);
+
 void CLevelMain::RegisterCommands()
 {
 	inherited::RegisterCommands	();
@@ -1016,7 +1018,7 @@ void CLevelMain::RegisterCommands()
 	REGISTER_CMD_S	    (COMMAND_CREATE_SOUND_LIB,          CommandCreateSoundLib);
 	REGISTER_CMD_SE	    (COMMAND_TOGGLE_AIMAP_VISIBILITY,   "Visibility\\Toggle AIMap",			CommandToggleAiMapVisibility,true);
 	REGISTER_CMD_S	    (COMMAND_SHOW_CLIP_EDITOR,			CommandShowClipEditor);
-    
+    REGISTER_CMD_S	    (COMMAND_GENERATE_AI_MAP,          	GenerateAiMap);    
 }
 
 const char* CLevelMain::GetCaption()

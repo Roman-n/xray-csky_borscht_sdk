@@ -134,6 +134,8 @@ ECORE_API SESubCommand* 	FindCommandByShortcut	(const xr_shortcut& val);
 ECORE_API BOOL				LoadShortcuts			(CInifile* ini);
 ECORE_API BOOL				SaveShortcuts			(CInifile* ini);
 ECORE_API BOOL				AllowLogCommands		();
+ECORE_API void      	    PostCommand				(u32 cmd, CCommandVar p1=u32(0), CCommandVar p2=u32(0));
+ECORE_API void      	    DispatchQueueedCommands();
 
 #define BIND_CMD_EVENT_S(a) 						fastdelegate::MakeDelegate(a)
 #define BIND_CMD_EVENT_C(a,b)						fastdelegate::MakeDelegate(a,&b)

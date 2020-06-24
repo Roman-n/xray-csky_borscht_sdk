@@ -79,7 +79,9 @@ enum {
     COMMAND_SHOWCONTEXTMENU,
     COMMAND_SHOW_CLIP_EDITOR,
 
-    COMMAND_RUN_SCRIPT
+    COMMAND_RUN_SCRIPT,
+
+    COMMAND_GENERATE_AI_MAP,// p1 - bool bFromSelectedOnly
 };
 //------------------------------------------------------------------------------
 

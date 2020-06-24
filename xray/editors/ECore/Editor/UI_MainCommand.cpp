@@ -23,6 +23,8 @@
 #include <Layers/xrRender/ResourceManager.h>
 #include <xrEngine/IGame_Persistent.h>
 
+#include <tuple>
+
 ECommandVec 		ECommands;
 BOOL 				bAllowReceiveCommand	= FALSE;
 BOOL 				bAllowLogCommands		= FALSE;
@@ -190,6 +192,17 @@ void	ClearCommands()
 	for (ECommandVecIt it=ECommands.begin(); it!=ECommands.end(); it++)
     	xr_delete	(*it);
 	ECommands.clear	();
+}
+
+using CmdRecord = std::tuple<u32, CCommandVar, CCommandVar>;
+std::vector<CmdRecord> commandQueue;
+void PostCommand(u32 cmd, CCommandVar p1, CCommandVar p2) { commandQueue.emplace_back(cmd, p1, p2); }
+
+void DispatchQueueedCommands()
+{
+    for (const auto& cmd : commandQueue)
+        std::apply((CCommandVar(*)(u32, CCommandVar,CCommandVar))ExecCommand, cmd);
+    commandQueue.clear();
 }
 
 void	TUI::ClearCommands ()

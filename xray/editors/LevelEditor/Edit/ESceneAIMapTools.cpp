@@ -661,3 +661,12 @@ void ESceneAIMapTool::SelectNode(SAINode *node, bool select)
         m_SelectionCount += (-1 + (int)select*2);
     }
 }
+
+CCommandVar GenerateAiMap(CCommandVar p1, CCommandVar p2)
+{
+    ESceneToolBase* M = Scene->GetTool(OBJCLASS_AIMAP);
+    VERIFY(M);
+    ESceneAIMapTool* ai = static_cast<ESceneAIMapTool*>(M);
+    ai->GenerateMap(p1);
+    return true;
+}
