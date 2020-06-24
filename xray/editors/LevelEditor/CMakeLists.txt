@@ -214,6 +214,8 @@ target_sources(${PROJECT_NAME} PRIVATE
 	LevelEditor.rc
 	Resource.h
 	small.ico
+	StatusBar.cpp
+	StatusBar.h
 	stdafx.cpp
 	stdafx.h
 	targetver.h
@@ -229,4 +231,4 @@ target_sources(${PROJECT_NAME} PRIVATE
 	../../Layers/xrRender/DetailManager_Decompress.cpp
 	../../Layers/xrRender/DetailManager_soft.cpp
 	../../Layers/xrRender/DetailManager_VS.cpp)
-target_link_libraries(${PROJECT_NAME} PRIVATE xrCore ECore xrEProps xrCDB ETools xrSound MagicFM)
+target_link_libraries(${PROJECT_NAME} PRIVATE xrCore ECore xrEProps xrCDB ETools xrSound MagicFM comctl32)

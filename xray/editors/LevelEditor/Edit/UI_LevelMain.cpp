@@ -37,6 +37,8 @@
 #include "LEClipEditor.h"
 #endif
 
+#include "StatusBar.h"
+
 #ifdef _LEVEL_EDITOR
 //.    if (m_Cursor->GetVisible()) RedrawScene();
 #endif
@@ -1185,6 +1187,8 @@ void CLevelMain::ResetStatus()
 	    fraBottomBar->paStatus->Caption=""; fraBottomBar->paStatus->Repaint();
     }
 #endif
+	SB_SetStatus("");
+	SB_DrawProgress();
 }
 void CLevelMain::SetStatus(LPCSTR s, bool bOutLog)
 {
@@ -1194,6 +1198,12 @@ void CLevelMain::SetStatus(LPCSTR s, bool bOutLog)
 	    fraBottomBar->paStatus->Caption=s; fraBottomBar->paStatus->Repaint();
     	if (bOutLog&&s&&s[0]) ELog.Msg(mtInformation,s);
     }
+#else
+	if(SB_SetStatus(s ? s : ""));
+	{
+		SB_DrawProgress();
+		if (bOutLog&&s&&s[0]) ELog.Msg(mtInformation,s);
+	}
 #endif
 }
 void CLevelMain::ProgressDraw()
@@ -1201,6 +1211,7 @@ void CLevelMain::ProgressDraw()
 #ifndef NO_VCL
 	fraBottomBar->RedrawBar();
 #endif
+	SB_DrawProgress();
 }
 //---------------------------------------------------------------------------
 void CLevelMain::OutCameraPos()
@@ -1214,6 +1225,7 @@ void CLevelMain::OutCameraPos()
 #ifndef NO_VCL
         fraBottomBar->paCamera->Caption=s; fraBottomBar->paCamera->Repaint();
 #endif
+        SB_SetInfo(1, s);
     }
 }
 //---------------------------------------------------------------------------
@@ -1228,6 +1240,7 @@ void CLevelMain::OutUICursorPos()
 #ifndef NO_VCL
     fraBottomBar->paUICursor->Caption=s; fraBottomBar->paUICursor->Repaint();
 #endif
+	SB_SetInfo(2, s);
 }
 //---------------------------------------------------------------------------
 void CLevelMain::OutGridSize()
@@ -1240,6 +1253,7 @@ void CLevelMain::OutGridSize()
 #ifndef NO_VCL
     fraBottomBar->paGridSquareSize->Caption=s; fraBottomBar->paGridSquareSize->Repaint();
 #endif
+	SB_SetInfo(3, s);
 }
 //---------------------------------------------------------------------------
 void CLevelMain::OutInfo()
@@ -1247,6 +1261,7 @@ void CLevelMain::OutInfo()
 #ifndef NO_VCL
 	fraBottomBar->paSel->Caption = Tools->GetInfo();
 #endif
+	SB_SetInfo(0, Tools->GetInfo());
 }
 //---------------------------------------------------------------------------
 void CLevelMain::RealQuit()

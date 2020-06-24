@@ -15,6 +15,8 @@
 
 #include "../xrEProps/EditorChooseEvents.H"
 
+#include "StatusBar.h"
+
 #define MAX_LOADSTRING 100
 
 // Global Variables:
@@ -148,7 +150,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
     hInst = hInstance; // Store instance handle in our global variable
 
-    g_MainWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr,
+    g_MainWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW|WS_CLIPCHILDREN, CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr,
         nullptr, hInstance, nullptr);
 
     if (!g_MainWnd) {
@@ -205,7 +207,13 @@ TShiftState getMouseShiftState(WPARAM wParam)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+    if(SB_ProcessMessage(message, wParam, lParam))
+    	return 0;
+    	
     switch (message) {
+    case WM_CREATE: {
+        SB_Initialize(hWnd);
+    } break;
     case WM_COMMAND: {
         int wmId = LOWORD(wParam);
         // Parse the menu selections:
@@ -236,8 +244,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             g_d3dWnd->Height = newHeight;
             ExecCommand(COMMAND_RENDER_RESIZE);
             if (UI) UI->Resize();
-        }
-        } break;
+        }  
+    } break;
     case WM_CLOSE:
         g_idle = false;
         ExecCommand				(COMMAND_DESTROY);
