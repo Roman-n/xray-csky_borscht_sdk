@@ -119,6 +119,7 @@ void ImGui_ImplDX9_RenderDrawData(ImDrawData* draw_data)
     // Setup render state: fixed-pipeline, alpha-blending, no face culling, no depth testing
     g_pd3dDevice->SetPixelShader(NULL);
     g_pd3dDevice->SetVertexShader(NULL);
+    g_pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
     g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
     g_pd3dDevice->SetRenderState(D3DRS_LIGHTING, false);
     g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, false);
