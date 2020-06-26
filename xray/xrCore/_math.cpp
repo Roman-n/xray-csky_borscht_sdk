@@ -12,44 +12,16 @@
 #include <mmsystem.h>
 #include <float.h>
 
+#ifdef M_GCC
+#include <intrin.h>
+#endif
+
 // Initialized on startup
 XRCORE_API	Fmatrix			Fidentity;
 XRCORE_API	Dmatrix			Didentity;
 XRCORE_API	CRandom			Random;
 
-#ifdef _M_AMD64
-u16			getFPUsw()		{ return 0;	}
-
-namespace	FPU 
-{
-	XRCORE_API void 	m24		(void)	{
-		_control87	( _PC_24,   _MCW_PC );
-		_control87	( _RC_CHOP, _MCW_RC );
-	}
-	XRCORE_API void 	m24r	(void)	{
-		_control87	( _PC_24,   _MCW_PC );
-		_control87	( _RC_NEAR, _MCW_RC );
-	}
-	XRCORE_API void 	m53		(void)	{
-		_control87	( _PC_53,   _MCW_PC );
-		_control87	( _RC_CHOP, _MCW_RC );
-	}
-	XRCORE_API void 	m53r	(void)	{
-		_control87	( _PC_53,   _MCW_PC );
-		_control87	( _RC_NEAR, _MCW_RC );
-	}
-	XRCORE_API void 	m64		(void)	{
-		_control87	( _PC_64,   _MCW_PC );
-		_control87	( _RC_CHOP, _MCW_RC );
-	}
-	XRCORE_API void 	m64r	(void)	{
-		_control87	( _PC_64,   _MCW_PC );
-		_control87	( _RC_NEAR, _MCW_RC );
-	}
-
-	void		initialize		()				{}
-};
-#else
+#if defined(M_IX86) && (defined(M_BORLAND) || defined(M_VISUAL))
 u16 getFPUsw() 
 {
 	u16		SW;
@@ -122,6 +94,38 @@ namespace FPU
 		::Random.seed	( u32(CPU::GetCLK()%(1i64<<32i64)) );
 	}
 };
+#else // portable code
+u16			getFPUsw()		{ return 0;	}
+
+namespace	FPU 
+{
+	XRCORE_API void 	m24		(void)	{
+		_control87	( _PC_24,   _MCW_PC );
+		_control87	( _RC_CHOP, _MCW_RC );
+	}
+	XRCORE_API void 	m24r	(void)	{
+		_control87	( _PC_24,   _MCW_PC );
+		_control87	( _RC_NEAR, _MCW_RC );
+	}
+	XRCORE_API void 	m53		(void)	{
+		_control87	( _PC_53,   _MCW_PC );
+		_control87	( _RC_CHOP, _MCW_RC );
+	}
+	XRCORE_API void 	m53r	(void)	{
+		_control87	( _PC_53,   _MCW_PC );
+		_control87	( _RC_NEAR, _MCW_RC );
+	}
+	XRCORE_API void 	m64		(void)	{
+		_control87	( _PC_64,   _MCW_PC );
+		_control87	( _RC_CHOP, _MCW_RC );
+	}
+	XRCORE_API void 	m64r	(void)	{
+		_control87	( _PC_64,   _MCW_PC );
+		_control87	( _RC_NEAR, _MCW_RC );
+	}
+
+	void		initialize		()				{}
+};
 #endif
 
 namespace CPU 
@@ -153,6 +157,14 @@ namespace CPU
 		_asm    db 0x31;
 	}
 #endif
+
+#ifdef M_GCC
+	u64 GetCLK(void)
+	{
+		return __rdtsc();
+	}
+#endif
+
 
 	void Detect	()
 	{

@@ -11,11 +11,11 @@ using namespace std::placeholders;
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-__fastcall TUI_ControlGroupAdd::TUI_ControlGroupAdd(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent)
+TUI_ControlGroupAdd::TUI_ControlGroupAdd(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent)
 {
 }
 
-bool __fastcall TUI_ControlGroupAdd::AfterAppendCallback(TShiftState Shift, CCustomObject* obj)
+bool TUI_ControlGroupAdd::AfterAppendCallback(TShiftState Shift, CCustomObject* obj)
 {
 	bool result 			= false;
     ESceneGroupTool* ot		= dynamic_cast<ESceneGroupTool*>(parent_tool);

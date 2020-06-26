@@ -16,12 +16,12 @@ struct SBeforeAppendCallbackParams{
         name_prefix	= "";
     }
 };
-#ifdef __BIRLANDC__
-typedef bool __fastcall (__closure *TBeforeAppendCallback)(SBeforeAppendCallbackParams* p);
-typedef bool __fastcall (__closure *TAfterAppendCallback)(TShiftState _Shift, CCustomObject* obj);
+#ifdef __BORLANDC__
+typedef bool (__closure *TBeforeAppendCallback)(SBeforeAppendCallbackParams* p);
+typedef bool (__closure *TAfterAppendCallback)(TShiftState _Shift, CCustomObject* obj);
 #else
-using TBeforeAppendCallback = std::function<bool __fastcall (SBeforeAppendCallbackParams*)>;
-using TAfterAppendCallback = std::function <bool __fastcall (TShiftState, CCustomObject*)>;
+using TBeforeAppendCallback = std::function<bool (SBeforeAppendCallbackParams*)>;
+using TAfterAppendCallback = std::function <bool (TShiftState, CCustomObject*)>;
 #endif
 
 class TUI_CustomControl{

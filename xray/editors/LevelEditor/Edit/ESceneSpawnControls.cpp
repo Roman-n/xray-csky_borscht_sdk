@@ -15,10 +15,10 @@
 using namespace std::placeholders;
 
 //---------------------------------------------------------------------------
-__fastcall TUI_ControlSpawnAdd::TUI_ControlSpawnAdd(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent){
+TUI_ControlSpawnAdd::TUI_ControlSpawnAdd(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent){
 }
 
-bool __fastcall TUI_ControlSpawnAdd::AppendCallback(SBeforeAppendCallbackParams* p)
+bool TUI_ControlSpawnAdd::AppendCallback(SBeforeAppendCallbackParams* p)
 {
 #ifndef NO_VCL
 	LPCSTR ref_name = ((TfraSpawn*)parent_tool->pFrame)->Current();

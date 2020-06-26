@@ -18,7 +18,7 @@
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-__fastcall TUI_ControlObjectAdd::TUI_ControlObjectAdd(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent)
+TUI_ControlObjectAdd::TUI_ControlObjectAdd(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent)
 {
 }
 

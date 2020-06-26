@@ -12,9 +12,9 @@ if(NOT(CMAKE_BUILD_TYPE STREQUAL "Debug") AND MSVC)
   # disable exceptions for MSVC release build
   string(REGEX REPLACE "/EH.*" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 endif()
-add_compile_definitions($<$<CONFIG:Debug>:DEBUG>)
+add_compile_definitions($<$<CONFIG:Debug>:DEBUG> $<$<CXX_COMPILER_ID:GNU>:__MINGW_USE_VC2005_COMPAT>)
 add_compile_options(
-	$<$<CXX_COMPILER_ID:GNU>:-fpermissive>
+	$<$<CXX_COMPILER_ID:GNU>:-fpermissive> $<$<CXX_COMPILER_ID:GNU>:-msse3>
 	$<$<CXX_COMPILER_ID:Clang>:-Wno-microsoft-template>)
 
 message("CMAKE_CXX_COMPILER_ID " ${CMAKE_CXX_COMPILER_ID})

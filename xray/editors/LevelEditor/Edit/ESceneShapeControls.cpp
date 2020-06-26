@@ -15,11 +15,11 @@
 using namespace std::placeholders;
 
 //---------------------------------------------------------------------------
-__fastcall TUI_ControlShapeAdd::TUI_ControlShapeAdd(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent)
+TUI_ControlShapeAdd::TUI_ControlShapeAdd(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent)
 {
 }
 
-bool __fastcall TUI_ControlShapeAdd::AfterAppendCallback(TShiftState Shift, CCustomObject* obj)
+bool TUI_ControlShapeAdd::AfterAppendCallback(TShiftState Shift, CCustomObject* obj)
 {
 	CEditShape* shape 	= dynamic_cast<CEditShape*>(obj); R_ASSERT(shape);
 	

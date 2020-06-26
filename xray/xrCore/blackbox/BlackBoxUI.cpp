@@ -91,13 +91,24 @@ void BuildStackTrace	()
 	context.Rip = program_counter();
 #else
 	context.Eip				= program_counter();
-#  ifndef _EDITOR
-	__asm					mov context.Ebp, ebp
-	__asm					mov context.Esp, esp
-#  else // _EDITOR
-	__asm					mov EBP, ebp
-	__asm					mov ESP, esp
-#  endif // _EDITOR
+	
+	#ifdef __GNUC__
+		__asm__ (
+			"movl %%ebp, %0;\n"
+			"movl %%esp, %1;\n"
+			: "=m" (context.Ebp), "=m" (context.Esp)
+			:
+			:
+		);
+	#else
+		#ifndef _EDITOR
+			__asm					mov context.Ebp, ebp
+			__asm					mov context.Esp, esp
+		#else // _EDITOR
+			__asm					mov EBP, ebp
+			__asm					mov ESP, esp
+		#endif // _EDITOR
+	#endif
 #endif
 
 	EXCEPTION_POINTERS		ex_ptrs;

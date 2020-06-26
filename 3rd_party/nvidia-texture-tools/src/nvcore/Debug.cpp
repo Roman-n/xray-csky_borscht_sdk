@@ -330,6 +330,20 @@ namespace
         CONTEXT ctx = { 0 };
 #if NV_CPU_X86 && !NV_CPU_X86_64
         ctx.ContextFlags = CONTEXT_CONTROL;
+        
+    #ifdef NV_CC_GNUC
+        __asm__ (
+            "call x;\n"
+            "x:\n"
+            "popl %%eax;\n"
+            "movl %%eax, %0;\n"
+            "movl %%ebp, %1;\n"
+            "movl %%esp, %2;\n"
+            : "=m" (ctx.Eip), "=m" (ctx.Ebp), "=m" (ctx.Esp)
+            : 
+            : "%eax"
+       );
+    #else
         _asm {
              call x
           x: pop eax
@@ -337,6 +351,7 @@ namespace
              mov ctx.Ebp, ebp
              mov ctx.Esp, esp
         }
+    #endif
 #else
         RtlCaptureContext(&ctx); // Not implemented correctly in x86.
 #endif

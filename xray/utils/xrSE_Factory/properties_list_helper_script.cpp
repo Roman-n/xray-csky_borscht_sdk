@@ -21,8 +21,8 @@ typedef IPropHelper& (__stdcall *TPHelper) ();
 
 TPHelper					_PHelper = 0;
 HMODULE						prop_helper_module = 0;
-#ifdef __BORLANDC__
-LPCSTR prop_helper_library = "xrEPropsB.dll";
+#ifdef __GNUC__
+LPCSTR prop_helper_library = "libxrEProps.dll";
 #else
 LPCSTR prop_helper_library = "xrEProps.dll";
 #endif

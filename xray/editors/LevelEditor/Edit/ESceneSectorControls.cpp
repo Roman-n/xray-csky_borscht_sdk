@@ -17,7 +17,7 @@
 //---------------------------------------------------------------------------
 // add
 //------------------------------------------------------------------------------
-__fastcall TUI_ControlSectorAdd::TUI_ControlSectorAdd(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent){
+TUI_ControlSectorAdd::TUI_ControlSectorAdd(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent){
 }
 
 void TUI_ControlSectorAdd::OnEnter()
@@ -208,7 +208,7 @@ bool TUI_ControlSectorAdd::End(TShiftState _Shift)
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-__fastcall TUI_ControlSectorSelect::TUI_ControlSectorSelect(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent){
+TUI_ControlSectorSelect::TUI_ControlSectorSelect(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent){
     pFrame 	= 0;
 }
 void TUI_ControlSectorSelect::OnEnter(){

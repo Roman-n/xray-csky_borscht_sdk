@@ -18,10 +18,10 @@ using namespace std::placeholders;
 //----------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-__fastcall TUI_ControlPSAdd::TUI_ControlPSAdd(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent){
+TUI_ControlPSAdd::TUI_ControlPSAdd(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent){
 }
 
-bool __fastcall TUI_ControlPSAdd::AfterAppendCallback(TShiftState Shift, CCustomObject* obj)
+bool TUI_ControlPSAdd::AfterAppendCallback(TShiftState Shift, CCustomObject* obj)
 {
 	EParticlesObject* pg= dynamic_cast<EParticlesObject*>(obj); R_ASSERT(pg);
 #ifndef NO_VCL

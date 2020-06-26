@@ -16,19 +16,31 @@
 #endif
 
 static HMODULE hXRSE_FACTORY = 0;
+
 #ifdef __MINGW32__
 static LPCSTR xrse_factory_library	= "libxrSE_Factory.dll";
+
+#ifdef _WIN64
+static LPCSTR create_entity_func 	= "create_entity";
+static LPCSTR destroy_entity_func 	= "destroy_entity";
+#else
+static LPCSTR create_entity_func 	= "create_entity@4";
+static LPCSTR destroy_entity_func 	= "destroy_entity@4";
+#endif
+
 #else
 static LPCSTR xrse_factory_library	= "xrSE_Factory.dll";
-#endif
+
 #ifdef _WIN64
 static LPCSTR create_entity_func 	= "create_entity";
 static LPCSTR destroy_entity_func 	= "destroy_entity";
 #else
 static LPCSTR create_entity_func 	= "_create_entity@4";
 static LPCSTR destroy_entity_func 	= "_destroy_entity@4";
+#endif
 
 #endif
+
 Tcreate_entity 	create_entity;
 Tdestroy_entity destroy_entity;
 

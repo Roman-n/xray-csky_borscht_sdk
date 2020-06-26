@@ -115,24 +115,21 @@ extern XRCORE_API	xrMemory	Memory;
 
 XRCORE_API	char* 	xr_strdup	(const char* string);
 
-#ifdef DEBUG_MEMORY_NAME
 // Global new/delete override
-#	if !(defined(__BORLANDC__) || defined(NO_XRNEW))
-	IC void*	operator new		(size_t size)		{	return Memory.mem_alloc(size?size:1, "C++ NEW");	}
+#if !(defined(__BORLANDC__) || defined(NO_XRNEW))
+	#ifdef DEBUG_MEMORY_NAME
+		IC void*	operator new		(size_t size)		{	return Memory.mem_alloc(size?size:1, "C++ NEW");	}
+		IC void*	operator new[]		(size_t size)		{	return Memory.mem_alloc(size?size:1, "C++ NEW");	}
+	#else
+		IC void*	operator new		(size_t size)		{	return Memory.mem_alloc(size?size:1);				}
+		IC void*	operator new[]		(size_t size)		{	return Memory.mem_alloc(size?size:1);				}
+	#endif
+	
 	IC void		operator delete		(void *p)			{	xr_free(p);											}
 	IC void		operator delete		(void* p, std::size_t sz ) noexcept { xr_free(p);							}
-	IC void*	operator new[]		(size_t size)		{	return Memory.mem_alloc(size?size:1, "C++ NEW");	}
 	IC void		operator delete[]	(void* p)			{	xr_free(p);											}
 	IC void		operator delete[]	(void* p, std::size_t sz ) noexcept { xr_free(p);							}	
-#	endif
-#else // DEBUG_MEMORY_NAME
-#	if !(defined(__BORLANDC__) || defined(NO_XRNEW))
-	IC void*	operator new		(size_t size)		{	return Memory.mem_alloc(size?size:1);				}
-	IC void		operator delete		(void *p)			{	xr_free(p);											}
-	IC void*	operator new[]		(size_t size)		{	return Memory.mem_alloc(size?size:1);				}
-	IC void		operator delete[]	(void* p)			{	xr_free(p);											}
-#	endif
-#endif // DEBUG_MEMORY_MANAGER
+#endif
 
 
 // POOL-ing

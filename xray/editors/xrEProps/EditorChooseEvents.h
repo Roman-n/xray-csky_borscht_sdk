@@ -16,7 +16,7 @@
 ref_sound* choose_snd;
 
 namespace ChoseEvents{
-void __stdcall  FillEntity(ChooseItemVec& items, void* param)
+void FillEntity(ChooseItemVec& items, void* param)
 {
 //.    AppendItem						(RPOINT_CHOOSE_NAME);
     CInifile::Root& data 			= pSettings->sections();
@@ -27,7 +27,7 @@ void __stdcall  FillEntity(ChooseItemVec& items, void* param)
     }
 }
 //---------------------------------------------------------------------------
-void __stdcall  SelectSoundSource(SChooseItem* item, PropItemVec& info_items)
+void SelectSoundSource(SChooseItem* item, PropItemVec& info_items)
 {
 	choose_snd->stop			();
 	choose_snd->create			(item->name.c_str(),st_Effect,sg_Undefined);
@@ -39,11 +39,11 @@ void __stdcall  SelectSoundSource(SChooseItem* item, PropItemVec& info_items)
     thm 		= xr_new<ESoundThumbnail>(item->name.c_str());
 */
 }
-void __stdcall  CloseSoundSource()
+void CloseSoundSource()
 {
 	choose_snd->destroy			();
 }
-void __stdcall  FillSoundSource(ChooseItemVec& items, void* param)
+void FillSoundSource(ChooseItemVec& items, void* param)
 {
     FS_FileSet 		lst;
     if (SndLib->GetGameSounds(lst))
@@ -54,7 +54,7 @@ void __stdcall  FillSoundSource(ChooseItemVec& items, void* param)
     }
 }
 //---------------------------------------------------------------------------
-void __stdcall  FillSoundEnv(ChooseItemVec& items, void* param)
+void FillSoundEnv(ChooseItemVec& items, void* param)
 {
     AStringVec lst;
     if (SndLib->GetSoundEnvs(lst)){
@@ -64,7 +64,7 @@ void __stdcall  FillSoundEnv(ChooseItemVec& items, void* param)
     }
 }
 //---------------------------------------------------------------------------
-void __stdcall  FillObject(ChooseItemVec& items, void* param)
+void FillObject(ChooseItemVec& items, void* param)
 {
     FS_FileSet lst;
     if (Lib.GetObjects(lst)){
@@ -73,20 +73,20 @@ void __stdcall  FillObject(ChooseItemVec& items, void* param)
 	    for (; it!=_E; it++)		items.push_back(SChooseItem(it->name.c_str(),""));
     }
 }
-void __stdcall  SelectObject(SChooseItem* item, PropItemVec& info_items)
+void SelectObject(SChooseItem* item, PropItemVec& info_items)
 {
 	EObjectThumbnail* thm			= xr_new<EObjectThumbnail>(*item->name);
     if (thm->Valid()) thm->FillInfo	(info_items);
     xr_delete						(thm);
 }
-void __stdcall  DrawObjectTHM(LPCSTR name, HDC hdc, const Irect& r)
+void DrawObjectTHM(LPCSTR name, HDC hdc, const Irect& r)
 {
 	EObjectThumbnail* thm			= xr_new<EObjectThumbnail>(name);
     if (thm->Valid()) thm->Draw		(hdc,r);
     xr_delete						(thm);
 }
 //---------------------------------------------------------------------------
-void __stdcall  FillGroup(ChooseItemVec& items, void* param)
+void FillGroup(ChooseItemVec& items, void* param)
 {
     FS_FileSet lst;
     if (FS.file_list(lst,_groups_,FS_ListFiles|FS_ClampExt,"*.group")){
@@ -95,20 +95,20 @@ void __stdcall  FillGroup(ChooseItemVec& items, void* param)
 	    for (; it!=_E; it++)		items.push_back(SChooseItem(it->name.c_str(),""));
     }
 }
-void __stdcall  SelectGroup(SChooseItem* item, PropItemVec& info_items)
+void SelectGroup(SChooseItem* item, PropItemVec& info_items)
 {
 	EGroupThumbnail* thm			= xr_new<EGroupThumbnail>(*item->name);
     if (thm->Valid()) thm->FillInfo	(info_items);
     xr_delete						(thm);
 }
-void __stdcall  DrawGroupTHM(LPCSTR name, HDC hdc, const Irect& r)
+void DrawGroupTHM(LPCSTR name, HDC hdc, const Irect& r)
 {
 	EGroupThumbnail* thm			= xr_new<EGroupThumbnail>(name);
     if (thm->Valid()) thm->Draw		(hdc,r);
     xr_delete						(thm);
 }
 //---------------------------------------------------------------------------
-void __stdcall  FillVisual(ChooseItemVec& items, void* param)
+void FillVisual(ChooseItemVec& items, void* param)
 {
     FS_FileSet lst;
     if (FS.file_list(lst,_game_meshes_,FS_ListFiles|FS_ClampExt,"*.ogf")){
@@ -117,7 +117,7 @@ void __stdcall  FillVisual(ChooseItemVec& items, void* param)
 	    for (; it!=_E; it++)		items.push_back(SChooseItem(it->name.c_str(),""));
     }
 }
-void __stdcall  SelectVisual(SChooseItem* item, PropItemVec& info_items)
+void SelectVisual(SChooseItem* item, PropItemVec& info_items)
 {
 /*
 //.
@@ -136,7 +136,7 @@ void __stdcall  SelectVisual(SChooseItem* item, PropItemVec& info_items)
 */
 }
 //---------------------------------------------------------------------------
-void __stdcall  FillGameObjectMots(ChooseItemVec& items, void* param)
+void FillGameObjectMots(ChooseItemVec& items, void* param)
 {
     FS_FileSet lst;
     if (FS.file_list(lst,_game_meshes_,FS_ListFiles|FS_ClampExt,"*.omf")){
@@ -145,11 +145,11 @@ void __stdcall  FillGameObjectMots(ChooseItemVec& items, void* param)
 	    for (; it!=_E; it++)		items.push_back(SChooseItem(it->name.c_str(),""));
     }
 }
-void __stdcall  SelectGameObjectMots(SChooseItem* item, PropItemVec& info_items)
+void SelectGameObjectMots(SChooseItem* item, PropItemVec& info_items)
 {
 }
 //---------------------------------------------------------------------------
-void __stdcall  FillGameAnim(ChooseItemVec& items, void* param)
+void FillGameAnim(ChooseItemVec& items, void* param)
 {
     FS_FileSet lst;
     if (FS.file_list(lst,"$game_anims$",FS_ListFiles,"*.anm,*.anms")){
@@ -159,14 +159,14 @@ void __stdcall  FillGameAnim(ChooseItemVec& items, void* param)
     }
 }
 //---------------------------------------------------------------------------
-void __stdcall  FillLAnim(ChooseItemVec& items, void* param)
+void FillLAnim(ChooseItemVec& items, void* param)
 {
     LAItemVec& lst 					= LALib.Objects();
     LAItemIt it						= lst.begin();
     LAItemIt _E						= lst.end();
     for (; it!=_E; it++)			items.push_back(SChooseItem(*(*it)->cName,""));
 }
-void __stdcall  DrawLAnim(LPCSTR name, HDC hdc, const Irect& r)
+void DrawLAnim(LPCSTR name, HDC hdc, const Irect& r)
 {
     int frame;
 	CLAItem* item 					= LALib.FindItem(name);
@@ -178,7 +178,7 @@ void __stdcall  DrawLAnim(LPCSTR name, HDC hdc, const Irect& r)
     }
 }
 //---------------------------------------------------------------------------
-void __stdcall  FillEShader(ChooseItemVec& items, void* param)
+void FillEShader(ChooseItemVec& items, void* param)
 {
     CResourceManager::map_Blender& blenders = Device.Resources->_GetBlenders();
 	CResourceManager::map_BlenderIt _S = blenders.begin();
@@ -186,7 +186,7 @@ void __stdcall  FillEShader(ChooseItemVec& items, void* param)
 	for (; _S!=_E; _S++)			items.push_back(SChooseItem(_S->first,""));
 }
 //---------------------------------------------------------------------------
-void __stdcall  FillCShader(ChooseItemVec& items, void* param)
+void FillCShader(ChooseItemVec& items, void* param)
 {
     Shader_xrLCVec& shaders 		= Device.ShaderXRLC.Library();
 	Shader_xrLCIt _F 				= shaders.begin();
@@ -194,18 +194,18 @@ void __stdcall  FillCShader(ChooseItemVec& items, void* param)
 	for ( ;_F!=_E;_F++)				items.push_back(SChooseItem(_F->Name,""));
 }
 //---------------------------------------------------------------------------
-void __stdcall  FillPE(ChooseItemVec& items, void* param)
+void FillPE(ChooseItemVec& items, void* param)
 {
     for (PS::PEDIt E=::Render->PSLibrary.FirstPED(); E!=::Render->PSLibrary.LastPED(); E++)items.push_back(SChooseItem(*(*E)->m_Name,"EFFECT"));
 }
 //---------------------------------------------------------------------------
-void __stdcall  FillParticles(ChooseItemVec& items, void* param)
+void FillParticles(ChooseItemVec& items, void* param)
 {
     for (PS::PEDIt E=::Render->PSLibrary.FirstPED(); E!=::Render->PSLibrary.LastPED(); E++)items.push_back(SChooseItem(*(*E)->m_Name,"EFFECT"));
     for (PS::PGDIt G=::Render->PSLibrary.FirstPGD(); G!=::Render->PSLibrary.LastPGD(); G++)items.push_back(SChooseItem(*(*G)->m_Name,"GROUP"));
 }
 
-void __stdcall  SelectPE(SChooseItem* item, PropItemVec& info_items)
+void SelectPE(SChooseItem* item, PropItemVec& info_items)
 {
 	string64 	str;
 	u32 		i		= 0;
@@ -226,7 +226,7 @@ void __stdcall  SelectPE(SChooseItem* item, PropItemVec& info_items)
     }
 }
 
-void __stdcall  SelectPG(SChooseItem* item, PropItemVec& info_items)
+void SelectPG(SChooseItem* item, PropItemVec& info_items)
 {
 	string64 	str;
 	u32 		i		= 0;
@@ -249,7 +249,7 @@ void __stdcall  SelectPG(SChooseItem* item, PropItemVec& info_items)
 }
 
 //---------------------------------------------------------------------------
-void __stdcall  FillTexture(ChooseItemVec& items, void* param)
+void FillTexture(ChooseItemVec& items, void* param)
 {
     FS_FileSet	lst;
     if (ImageLib.GetTextures(lst)){
@@ -259,7 +259,7 @@ void __stdcall  FillTexture(ChooseItemVec& items, void* param)
     }
 }
 
-void __stdcall  DrawTextureTHM(LPCSTR name, HDC hdc, const Irect& r)
+void DrawTextureTHM(LPCSTR name, HDC hdc, const Irect& r)
 {
 	if (name&&name[0]){
         ETextureThumbnail* thm		= xr_new<ETextureThumbnail>(name);
@@ -269,7 +269,7 @@ void __stdcall  DrawTextureTHM(LPCSTR name, HDC hdc, const Irect& r)
 }
 
 //---------------------------------------------------------------------------
-void __stdcall  FillTextureRaw(ChooseItemVec& items, void* param)
+void FillTextureRaw(ChooseItemVec& items, void* param)
 {
     FS_FileSet	lst;
     if (ImageLib.GetTexturesRaw(lst)){
@@ -279,7 +279,7 @@ void __stdcall  FillTextureRaw(ChooseItemVec& items, void* param)
     }
 }
 
-void __stdcall  DrawTextureTHMRaw(LPCSTR name, HDC hdc, const Irect& r)
+void DrawTextureTHMRaw(LPCSTR name, HDC hdc, const Irect& r)
 {
 	if (name&&name[0]){
         ETextureThumbnail* thm		= xr_new<ETextureThumbnail>(name);
@@ -288,7 +288,7 @@ void __stdcall  DrawTextureTHMRaw(LPCSTR name, HDC hdc, const Irect& r)
     }
 }
 
-void __stdcall  SelectTexture(SChooseItem* item, PropItemVec& info_items)
+void SelectTexture(SChooseItem* item, PropItemVec& info_items)
 {
 	if (item->name.size()){
         ETextureThumbnail* thm			= xr_new<ETextureThumbnail>(*item->name);
@@ -296,7 +296,7 @@ void __stdcall  SelectTexture(SChooseItem* item, PropItemVec& info_items)
         xr_delete						(thm);
     }
 }
-void __stdcall  SelectTextureRaw(SChooseItem* item, PropItemVec& info_items)
+void SelectTextureRaw(SChooseItem* item, PropItemVec& info_items)
 {
 	if (item->name.size()){
         ETextureThumbnail* thm			= xr_new<ETextureThumbnail>(*item->name);
@@ -305,7 +305,7 @@ void __stdcall  SelectTextureRaw(SChooseItem* item, PropItemVec& info_items)
     }
 }
 //---------------------------------------------------------------------------
-void __stdcall  FillGameMaterial(ChooseItemVec& items, void* param)
+void FillGameMaterial(ChooseItemVec& items, void* param)
 {
 	GameMtlIt _F 					= GMLib.FirstMaterial();
 	GameMtlIt _E 					= GMLib.LastMaterial();
@@ -313,7 +313,7 @@ void __stdcall  FillGameMaterial(ChooseItemVec& items, void* param)
 }
 //---------------------------------------------------------------------------
 
-void __stdcall  FillSkeletonAnims(ChooseItemVec& items, void* param)
+void FillSkeletonAnims(ChooseItemVec& items, void* param)
 {
 	IRenderVisual* V 				= ::Render->model_Create((LPCSTR)param);
     if (PKinematicsAnimated(V)){
@@ -334,7 +334,7 @@ void __stdcall  FillSkeletonAnims(ChooseItemVec& items, void* param)
 	::Render->model_Delete			(V);
 }
 
-void __stdcall  FillSkeletonBones(ChooseItemVec& items, void* param)
+void FillSkeletonBones(ChooseItemVec& items, void* param)
 {
 	IRenderVisual* V 				= ::Render->model_Create((LPCSTR)param);
     if (PKinematics(V))
@@ -348,7 +348,7 @@ void __stdcall  FillSkeletonBones(ChooseItemVec& items, void* param)
 	::Render->model_Delete			(V);
 }
 
-void __stdcall  FillSkeletonBonesObject(ChooseItemVec& items, void* param)
+void FillSkeletonBonesObject(ChooseItemVec& items, void* param)
 {
     CEditableObject* eo = 			(CEditableObject*)param;
 

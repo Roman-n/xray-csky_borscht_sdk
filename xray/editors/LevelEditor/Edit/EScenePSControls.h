@@ -5,7 +5,7 @@
 
 //---------------------------------------------------------------------------
 class TUI_ControlPSAdd: public TUI_CustomControl{
-	bool __fastcall	AfterAppendCallback(TShiftState Shift, CCustomObject* obj);
+	bool AfterAppendCallback(TShiftState Shift, CCustomObject* obj);
 public:
     TUI_ControlPSAdd(int st, int act, ESceneToolBase* parent);
     virtual ~TUI_ControlPSAdd(){;}

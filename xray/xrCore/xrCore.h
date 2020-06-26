@@ -137,10 +137,18 @@
 	#define _RC_CHOP RC_CHOP
 	#define _RC_NEAR RC_NEAR
     #define _MCW_EM MCW_EM
-#else
+#endif
+
+#ifdef _MSC_VER
 	#define ALIGN(a)		__declspec(align(a))
 	#include <sys\utime.h>
 	#define MODULE_NAME 	"xrCore.dll"
+#endif
+
+#ifdef __GNUC__
+	#define ALIGN(a) __attribute__((aligned(a)))
+	#include <sys\utime.h>
+	#define MODULE_NAME 	"libxrCore.dll"
 #endif
 
 
