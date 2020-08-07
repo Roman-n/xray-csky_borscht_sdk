@@ -11,6 +11,8 @@
 #include "SoundEditor.h"
 #include "../../xrEProps/NumericVector.h"
 #include "../../xrEProps/TextForm.h"
+#else
+#include <editors/ECore/ImGui/IM_ImageEditor.h>
 #endif
 #include <Layers/xrRender/D3DUtils.h>
 
@@ -356,6 +358,8 @@ CCommandVar 	CommandImageEditor(CCommandVar p1, CCommandVar p2)
 {
 #ifndef NO_VCL
     TfrmImageLib::EditLib(AnsiString("Image Editor"));
+#else
+    imImageEditor.Open(false);
 #endif
     return				TRUE;
 }
@@ -372,6 +376,8 @@ CCommandVar 	CommandCheckTextures(CCommandVar p1, CCommandVar p2)
 {
 #ifndef NO_VCL
     TfrmImageLib::ImportTextures();
+#else
+    imImageEditor.Open(true);
 #endif
     return				TRUE;
 }

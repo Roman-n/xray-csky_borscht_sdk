@@ -15,9 +15,11 @@ class ECORE_API IM_Canvas : public IM_Window
     IM_Canvas(int width, int height);
     ~IM_Canvas();
 
+    void DestroyTexture();
+
     private:
     void CreateTexture();
-    void DestroyTexture();
+
 
     public:
 

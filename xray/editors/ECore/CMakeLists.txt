@@ -128,8 +128,8 @@ target_sources(${PROJECT_NAME} PRIVATE
 	ImGui/IM_Canvas.h
 	ImGui/IM_ChooseForm.cpp
 	ImGui/IM_ChooseForm.h
-#	ImGui/IM_ImageEditor.cpp
-#	ImGui/IM_ImageEditor.h
+	ImGui/IM_ImageEditor.cpp
+	ImGui/IM_ImageEditor.h
 	ImGui/IM_Log.cpp
 	ImGui/IM_Log.h
 	ImGui/IM_PropertyTree.cpp
