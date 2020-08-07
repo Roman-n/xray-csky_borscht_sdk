@@ -18,7 +18,8 @@ SET(CORE_SRCS
     StdStream.h
     TextWriter.h TextWriter.cpp
     Timer.h Timer.cpp
-    Utils.h)
+    Utils.h
+    Library.h Library.cpp)
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
 
