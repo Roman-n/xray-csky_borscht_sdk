@@ -141,7 +141,7 @@ bool Image_DXTC::LoadFromFile(LPCSTR filename )
 	// start reading the file
 	// from Microsoft's mssdk D3DIM example "Compress"
 
-	DDSURFACEDESC2      ddsd;
+	DDSURFACEDESC2_X64      ddsd;
     DWORD				dwMagic;
 
 
@@ -155,7 +155,7 @@ bool Image_DXTC::LoadFromFile(LPCSTR filename )
     }
 	
     // Read the surface description
-    fread( &ddsd, sizeof(DDSURFACEDESC2), 1, file );
+    fread( &ddsd, sizeof(ddsd), 1, file );
 
 
     // Does texture have mipmaps?
