@@ -281,6 +281,12 @@ void TUI::IR_OnMouseMove(int x, int y){
     // Out cursor pos
     OutUICursorPos	();
 }
+
+void TUI::IR_OnMouseWheel(int direction)
+{
+    ImGui::GetIO().MouseWheel = direction > 0 ? +1.0f : -1.0f;
+    RedrawScene();
+}
 //---------------------------------------------------------------------------
 
 void TUI::OnAppActivate()

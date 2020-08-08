@@ -182,6 +182,7 @@ public:
     
 	// direct input
 	virtual void 	IR_OnMouseMove		(int x, int y);
+	virtual void 	IR_OnMouseWheel		(int direction);
 
     void 			OnAppActivate		();
     void 			OnAppDeactivate     ();
