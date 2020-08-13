@@ -77,22 +77,23 @@ void CBuild::xrPhase_UVmap()
 				}
 			}
 			if (msF) {
-				lc_global_data()->g_deflectors().push_back	(xr_new<CDeflector>());
+                CDeflector* deflector = xr_new<CDeflector>();
+				lc_global_data()->g_deflectors().push_back(deflector);
 				
 				// Start recursion from this face
 				start_unwarp_recursion();
 				
-				Deflector->OA_SetNormal	(msF->N);
-				msF->OA_Unwarp			();
+				deflector->OA_SetNormal	(msF->N);
+				msF->OA_Unwarp			(deflector);
 				
 				// break the cycle to startup again
-				Deflector->OA_Export	();
+				deflector->OA_Export	();
 				
 				// Detach affected faces
 				faces_affected.clear	();
 				for (int i=0; i<int(g_XSplit[SP]->size()); i++) {
 					Face *F = (*g_XSplit[SP])[i];
-					if ( F->pDeflector==Deflector ) {
+					if ( F->pDeflector==deflector ) {
 						faces_affected.push_back(F);
 						g_XSplit[SP]->erase		(g_XSplit[SP]->begin()+i); 
 						i--;

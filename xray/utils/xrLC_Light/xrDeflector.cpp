@@ -99,8 +99,6 @@ void blit_r	(lm_layer& dst, u32 ds_x, u32 ds_y, lm_layer& src, u32 ss_x, u32 ss_
 
 //-------------------------------------
 
-CDeflector*				Deflector = 0;
-
 IC BOOL UVpointInside(Fvector2 &P, UVtri &T)
 {
 	Fvector B;
@@ -109,7 +107,6 @@ IC BOOL UVpointInside(Fvector2 &P, UVtri &T)
 
 CDeflector::CDeflector(): _net_session(0)
 {
-	Deflector		= this;
 	normal.set		(0,1,0);
 	Sphere.P.set	(flt_max,flt_max,flt_max);
 	Sphere.R		= 0;

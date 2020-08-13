@@ -16,6 +16,7 @@
 //extern	volatile	u32		dwInvalidFaces;
 
 template <typename DataVertexType> struct Tvertex;
+class CDeflector;
 
 template <typename DataVertexType>
 struct MESHSTRUCTURE_API Tface: public DataVertexType::DataFaceType
@@ -30,7 +31,7 @@ static	Tface* read_create();
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 	void	Verify		();
 	void 	Failure		();
-	void	OA_Unwarp	();
+	void	OA_Unwarp	(CDeflector* d);
 
 virtual	void	read		( INetReader	&r );
 virtual	void	write		( IWriter	&w )const;

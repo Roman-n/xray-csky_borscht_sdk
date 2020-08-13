@@ -80,7 +80,6 @@ extern XRLC_LIGHT_API void		DumpDeflctor	( u32 id );
 extern XRLC_LIGHT_API void		DumpDeflctor	( CDeflector &d );
 extern XRLC_LIGHT_API void		DeflectorsStats ();
 extern XRLC_LIGHT_API void		DumpDeflctor	( u32 id );
-extern XRLC_LIGHT_API CDeflector*		Deflector		;
 
 static const	u32								c_LMAP_size				= 1024;			// pixels
 

@@ -180,17 +180,17 @@ void		start_unwarp_recursion()
 {
 	affected				= 1;
 }
-void Face::OA_Unwarp()
+void Face::OA_Unwarp(CDeflector* deflector)
 {
 	if (pDeflector)					return;
-	if (!Deflector->OA_Place(this))	return;
+	if (!deflector->OA_Place(this))	return;
 	
 	// now iterate on all our neigbours
 	for (int i=0; i<3; ++i) 
 		for (vecFaceIt it=v[i]->m_adjacents.begin(); it!=v[i]->m_adjacents.end(); ++it) 
 		{
 			affected		+= 1;
-			(*it)->OA_Unwarp();
+			(*it)->OA_Unwarp(deflector);
 		}
 }
 
