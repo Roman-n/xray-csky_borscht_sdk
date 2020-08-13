@@ -175,11 +175,7 @@ void	Face::Verify		()
 	if (!_valid(N))			{ Failure(); return; }
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-int			affected	= 0;
-void		start_unwarp_recursion()
-{
-	affected				= 1;
-}
+
 void Face::OA_Unwarp(CDeflector* deflector)
 {
 	if (pDeflector)					return;
@@ -189,7 +185,6 @@ void Face::OA_Unwarp(CDeflector* deflector)
 	for (int i=0; i<3; ++i) 
 		for (vecFaceIt it=v[i]->m_adjacents.begin(); it!=v[i]->m_adjacents.end(); ++it) 
 		{
-			affected		+= 1;
 			(*it)->OA_Unwarp(deflector);
 		}
 }

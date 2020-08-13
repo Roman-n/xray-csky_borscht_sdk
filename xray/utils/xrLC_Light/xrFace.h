@@ -95,7 +95,6 @@ extern XRLC_LIGHT_API bool						g_bUnregister;
 
 #pragma pack(pop)
 
-extern "C" XRLC_LIGHT_API void start_unwarp_recursion	();
 extern "C" XRLC_LIGHT_API void destroy_vertex			( Vertex* &v, bool unregister );
 
 

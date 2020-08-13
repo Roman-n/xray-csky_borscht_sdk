@@ -79,10 +79,7 @@ void CBuild::xrPhase_UVmap()
 			if (msF) {
                 CDeflector* deflector = xr_new<CDeflector>();
 				lc_global_data()->g_deflectors().push_back(deflector);
-				
-				// Start recursion from this face
-				start_unwarp_recursion();
-				
+		
 				deflector->OA_SetNormal	(msF->N);
 				msF->OA_Unwarp			(deflector);
 				
