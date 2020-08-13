@@ -495,6 +495,9 @@
     <ClInclude Include="..\..\..\3rd_party\NvMender2003\remove_isolated_verts.h">
       <Filter>NvMender2003</Filter>
     </ClInclude>
+    <ClInclude Include="ImGui\IM_ImageEditor.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -1021,6 +1024,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\3rd_party\NvMender2003\NVMeshMender.cpp">
       <Filter>NvMender2003</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\IM_ImageEditor.cpp">
+      <Filter>imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

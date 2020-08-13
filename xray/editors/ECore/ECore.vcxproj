@@ -312,6 +312,7 @@
     <ClInclude Include="ImGui\imgui_user.h" />
     <ClInclude Include="ImGui\IM_Canvas.h" />
     <ClInclude Include="ImGui\IM_ChooseForm.h" />
+    <ClInclude Include="ImGui\IM_ImageEditor.h" />
     <ClInclude Include="ImGui\IM_Log.h" />
     <ClInclude Include="ImGui\IM_PropertyTree.h" />
     <ClInclude Include="ImGui\IM_TextEditor.h" />
@@ -517,6 +518,7 @@
     </ClCompile>
     <ClCompile Include="ImGui\IM_Canvas.cpp" />
     <ClCompile Include="ImGui\IM_ChooseForm.cpp" />
+    <ClCompile Include="ImGui\IM_ImageEditor.cpp" />
     <ClCompile Include="ImGui\IM_Log.cpp" />
     <ClCompile Include="ImGui\IM_PropertyTree.cpp" />
     <ClCompile Include="ImGui\IM_TextEditor.cpp" />

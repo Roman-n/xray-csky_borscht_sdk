@@ -165,11 +165,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\xrServerEntities\xrEProps.h" />
+    <ClInclude Include="ChoseForm.h" />
     <ClInclude Include="FolderLib.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ChoseForm.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="FolderLib.cpp" />
     <ClCompile Include="ItemListHelper.cpp" />
