@@ -1,44 +1,10 @@
 #include "stdafx.h"
 #include "build.h"
+#include "utils.h"
 
 #include "../xrLC_Light/xrDeflector.h"
 #include "../xrLC_Light/xrLC_GlobalData.h"
 #include "../xrLC_Light/xrface.h"
-
-
-
-void Detach(vecFace* S)
-{
-	map_v2v			verts;
-	verts.clear		();
-	
-	// Collect vertices
-	for (vecFaceIt F=S->begin(); F!=S->end(); ++F)
-	{
-		for (int i=0; i<3; ++i) 
-		{
-			Vertex*		V=(*F)->v[i];
-			Vertex*		VC;
-			map_v2v_it	W=verts.find(V);	// iterator
-			
-			if (W==verts.end()) 
-			{	// where is no such-vertex
-				VC = V->CreateCopy_NOADJ( lc_global_data()->g_vertices() );	// make copy
-				verts.insert(mk_pair(V, VC));
-			} else 
-			{
-				// such vertex(key) already exists - update its adjacency
-				VC = W->second;
-			}
-			VC->prep_add		(*F);
-			V->prep_remove		(*F);
-			(*F)->v[i]=VC;
-		}
-	}
-	// vertices are already registered in container
-	// so we doesn't need "vers" for this time
-	verts.clear	();
-}
 
 void CBuild::xrPhase_UVmap()
 {
@@ -98,7 +64,7 @@ void CBuild::xrPhase_UVmap()
 				}
 				
 				// detaching itself
-				Detach				(&faces_affected);
+				Detach				(&faces_affected, lc_global_data()->g_vertices());
 				g_XSplit.push_back	(xr_new<vecFace> (faces_affected));
 			} else {
 				if (g_XSplit[SP]->empty()) 

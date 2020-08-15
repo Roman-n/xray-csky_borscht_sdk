@@ -4,7 +4,7 @@
 #include "../xrlc_light/xrface.h"
 #include "../xrlc_light/xrlc_globaldata.h"
 
-extern void		Detach		(vecFace* S);
+extern void		Detach		(vecFace* S, vecVertex& vertices);
 
 void	setup_bbs	(Fbox& b1, Fbox& b2, Fbox& bb,int edge)	{
 	Fvector	size;
@@ -157,8 +157,8 @@ resplit:
 			// Delete old SPLIT and push two new
 			xr_delete				(g_XSplit[X]);
 			g_XSplit.erase			(g_XSplit.begin()+X); X--;
-			g_XSplit.push_back		(xr_new<vecFace>(s1));	Detach(&s1);
-			g_XSplit.push_back		(xr_new<vecFace>(s2));	Detach(&s2);
+			g_XSplit.push_back		(xr_new<vecFace>(s1));	Detach(&s1, lc_global_data()->g_vertices());
+			g_XSplit.push_back		(xr_new<vecFace>(s2));	Detach(&s2, lc_global_data()->g_vertices());
 		}
 		s1.clear	();
 		s2.clear	();

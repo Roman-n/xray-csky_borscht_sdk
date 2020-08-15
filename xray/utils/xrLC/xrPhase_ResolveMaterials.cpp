@@ -1,9 +1,8 @@
 #include "stdafx.h"
 #include "build.h"
+#include "utils.h"
 #include "../xrLC_Light/xrLC_GlobalData.h"
 #include "../xrLC_Light/xrface.h"
-
-extern void		Detach		(vecFace* S);
 
 struct _counter
 {
@@ -78,7 +77,7 @@ void	CBuild::xrPhase_ResolveMaterials()
 	{
 		for (u32 it=0; it<g_XSplit.size(); it++)
 		{
-			Detach(g_XSplit[it]);
+			Detach(g_XSplit[it], lc_global_data()->g_vertices());
 		}
 	}
 	clMsg				("%d subdivisions.",g_XSplit.size());

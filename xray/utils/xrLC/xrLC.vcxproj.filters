@@ -175,6 +175,9 @@
     <ClInclude Include="..\..\..\3rd_party\NvMender2003\remove_isolated_verts.h">
       <Filter>External\NV_Mender2003</Filter>
     </ClInclude>
+    <ClInclude Include="utils.h">
+      <Filter>%2a%2a%2a COMPILER %2a%2a%2a</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StdAfx.cpp">
@@ -311,6 +314,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\3rd_party\NvMender2003\NVMeshMender.cpp">
       <Filter>External\NV_Mender2003</Filter>
+    </ClCompile>
+    <ClCompile Include="utils.cpp">
+      <Filter>%2a%2a%2a COMPILER %2a%2a%2a</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
