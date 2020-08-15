@@ -113,6 +113,10 @@ public:
 
 	CBuild	();
 	~CBuild	();
+
+private:
+	void xrPhase_UVmap_Legacy();
+	void xrPhase_UVmap_Tbb();
 };
 
 extern CBuild*		pBuild;			;

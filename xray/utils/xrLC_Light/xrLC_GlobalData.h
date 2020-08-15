@@ -48,6 +48,8 @@ class	XRLC_LIGHT_API xrLC_GlobalData
 		u32								_numThread;
 		bool							m_skipAhtTesselate;
 		bool                            m_cformOnly = false;
+		bool							m_useTbb = false;
+
 public:
 
 public:
@@ -103,6 +105,8 @@ IC		void						b_nosun_set		(bool v){	_b_nosun = v; }
 		void						setSkipAhtTesselate(bool v) { m_skipAhtTesselate = v; }
 		bool						cformOnly() const{ return m_cformOnly; }
 		void						setCformOnly(bool v) { m_cformOnly = v; }
+		bool						useTbb() const { return m_useTbb; }
+		void						setUseTbb(bool v) { m_useTbb = v; }
 
 private:
 //std::pair<u32,u32>					get_id		( const _face * v ) const;
