@@ -30,7 +30,9 @@ function is called.  Output of timing test is saved to a local .txt file.
 
 #include <ddraw.h>
 
-
+#ifndef DUMMYUNIONNAMEN
+#define DUMMYUNIONNAMEN(a)
+#endif
 
 //struct TimingInfo;		// defined in Image_DXTC.cpp
 

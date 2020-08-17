@@ -217,7 +217,7 @@ void IM_ImageEditor::DestroyUsedTHM()
     m_THM_Used.clear();
 }
 
-void __stdcall IM_ImageEditor::OnItemsFocused(ListItemsVec& items)
+void IM_ImageEditor::OnItemsFocused(ListItemsVec& items)
 {
     PropItemVec props;
 
@@ -255,7 +255,7 @@ void __stdcall IM_ImageEditor::OnItemsFocused(ListItemsVec& items)
     m_props.AssignItems(props, false, false);
 }
 
-void __stdcall IM_ImageEditor::OnTypeChange(PropValue*) { m_needupdate = true; }
+void IM_ImageEditor::OnTypeChange(PropValue*) { m_needupdate = true; }
 
 void IM_ImageEditor::UpdateLib()
 {

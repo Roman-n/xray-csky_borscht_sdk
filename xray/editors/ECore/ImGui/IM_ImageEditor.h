@@ -47,8 +47,8 @@ public:
     void SaveUsedTHM();
     void DestroyUsedTHM();
 
-    void __stdcall OnItemsFocused(ListItemsVec& items);
-    void __stdcall OnTypeChange(PropValue*);
+    void OnItemsFocused(ListItemsVec& items);
+    void OnTypeChange(PropValue*);
 
 private:
     void UpdateLib();
