@@ -70,11 +70,6 @@ void BuildStackTrace	()
     CONTEXT					context;
 	context.ContextFlags	= CONTEXT_FULL;
 
-#ifdef _EDITOR
-    DWORD                   *EBP = &context.Ebp;
-    DWORD                   *ESP = &context.Esp;
-#endif // _EDITOR
-
 	if (!GetThreadContext(GetCurrentThread(),&context))
 		return;
 
@@ -83,8 +78,8 @@ void BuildStackTrace	()
 	__asm					mov context.Ebp, ebp
 	__asm					mov context.Esp, esp
 #else // _EDITOR
-	__asm					mov EBP, ebp
-	__asm					mov ESP, esp
+	__asm					mov dword ptr [context.Ebp], ebp
+	__asm					mov dword ptr [context.Esp], esp
 #endif // _EDITOR
 
 	EXCEPTION_POINTERS		ex_ptrs;

@@ -248,7 +248,7 @@ BOOL __stdcall RealAssert  ( DWORD  dwOverrideOpts  ,
                              szModName                      ,
                              szMsg                          ,
                              dwLastErr                      ,
-                             szFmtMsg                        ) ) ;
+                             szRealLastErr                   ) ) ;
 
     // Get rid of the allocated memory from FormatMessage.
     if ( NULL != szFmtMsg )
