@@ -27,8 +27,8 @@ CommandLine=
 Folders=Debug,FS,LZO,Math,Memory
 IncludeVersionInfo=0
 SupportXPThemes=0
-CompilerSet=6
-CompilerSettings=00000ib000000000000000000
+CompilerSet=8
+CompilerSettings=00000dc000000000000000000
 UnitCount=83
 
 [VersionInfo]
