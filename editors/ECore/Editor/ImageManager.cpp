@@ -410,10 +410,6 @@ void CImageManager::ChangeFileAgeTo(FS_FileSet* tgt_map, int age)
     FS.unlock_rescan			();
 }
 */
-void CImageManager::WriteAssociation(CInifile* ltx_ini, LPCSTR base_name, const STextureParams& fmt)
-{
-    ltx_ini->w_u32				("types", base_name,fmt.type);
-}
 
 void CImageManager::SynchronizeTexture(LPCSTR tex_name, int age)
 {
