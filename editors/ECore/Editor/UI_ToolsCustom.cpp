@@ -45,9 +45,6 @@ CToolCustom::~CToolCustom()
 bool CToolCustom::OnCreate()
 {
     m_bReady 		= true;
-
-	SetAction		(etaSelect);
-
     return true;
 }
 
