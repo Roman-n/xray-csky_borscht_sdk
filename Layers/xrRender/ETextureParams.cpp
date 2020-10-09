@@ -64,6 +64,13 @@ xr_token					tbmode_token							[ ]={
 	{ 0,					0											}
 };
 
+xr_token                    tgmode_token                            [ ] ={
+	{ "Alpha",              STextureParams::gmAlpha                      },
+	{ "Height",             STextureParams::gmHeight                     },
+	{ "Constant",           STextureParams::gmConstant                   },
+	{ 0,                    0                                            }
+};
+
 void STextureParams::Load(IReader& F)
 {
     R_ASSERT(F.find_chunk(THM_CHUNK_TEXTUREPARAM));
@@ -99,11 +106,16 @@ void STextureParams::Load(IReader& F)
     	F.r_stringZ			(bump_name);
     }
 
-    if (F.find_chunk(THM_CHUNK_EXT_NORMALMAP))
-	    F.r_stringZ			(ext_normal_map_name);
+	if (F.find_chunk(THM_CHUNK_EXT_NORMALMAP))
+		F.r_stringZ			(ext_normal_map_name);
 
 	if (F.find_chunk(THM_CHUNK_FADE_DELAY))
 		fade_delay			= F.r_u8();
+
+	if (F.find_chunk(THM_CHUNK_GLOSS_PARAMS)) {
+		gloss_mode          = F.r_u8();
+		gloss_scale         = F.r_float();
+	}
 }
 
 
@@ -148,6 +160,11 @@ void STextureParams::Save(IWriter& F)
 	F.open_chunk	(THM_CHUNK_FADE_DELAY);
 	F.w_u8			(fade_delay);
 	F.close_chunk	();
+
+	F.open_chunk    (THM_CHUNK_GLOSS_PARAMS);
+	F.w_u8          (gloss_mode);
+	F.w_float       (gloss_scale);
+	F.close_chunk   ();
 }
 
 
@@ -257,7 +274,9 @@ void STextureParams::FillProp(LPCSTR base_name, PropItemVec& items, PropValue::T
     break;
     case ttBumpMap:	
         PHelper().CreateChoose		(items, "Bump\\Special NormalMap",	&ext_normal_map_name,smTexture,base_name);
-        PHelper().CreateFloat	   	(items, "Bump\\Virtual Height (m)",	&bump_virtual_height, 0.f, 0.1f, 0.001f, 3);
+		PHelper().CreateFloat	   	(items, "Bump\\Virtual Height (m)",	&bump_virtual_height, 0.f, 0.1f, 0.001f, 3);
+		PHelper().CreateToken8      (items, "Bump\\Gloss Source",       &gloss_mode,        tgmode_token);
+		PHelper().CreateFloat       (items, "Bump\\Gloss Scale",        &gloss_scale,       0.f,1.f,0.01f,2); 
     break;
     case ttNormalMap:	
 	    P = PHelper().CreateToken32	(items, "Format",	   				(u32*)&fmt, 		tfmt_token); P->Owner()->Enable(false);
@@ -410,7 +429,15 @@ BOOL STextureParams::similar(STextureParams& tp1, xr_vector<AnsiString>& sel_par
         if(par_name=="Bump\\Virtual Height (m)")
         {
         	res = ( fsimilar(bump_virtual_height,tp1.bump_virtual_height));
-        }else
+		}else
+		if(par_name=="Bump\\Gloss Source")
+		{
+			res = (gloss_mode==tp1.gloss_mode);
+		}else
+		if(par_name=="Bump\\Gloss Scale")
+		{
+			res = (gloss_scale==tp1.gloss_scale);
+		}else
         	Msg("! unknown filter [%s]", par_name.c_str());
        if(!res)
        	break;

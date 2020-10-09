@@ -176,10 +176,10 @@ bool CImageManager::MakeGameTexture(ETextureThumbnail* THM, LPCSTR game_name, u3
 	// remove old
     FS.file_delete			(game_name);
     AnsiString game_name2 	= ChangeFileExt(game_name,"#.dds");
-    FS.file_delete			(game_name2.c_str());
+	FS.file_delete			(game_name2.c_str());
 
     U32Vec 	ext_data;
-    if ((THM->m_TexParams.type==STextureParams::ttBumpMap)&&(THM->m_TexParams.ext_normal_map_name.size()))
+	if ((THM->m_TexParams.type==STextureParams::ttBumpMap)&&(THM->m_TexParams.ext_normal_map_name.size()))
     {
     	bool e_res			= true;
         LPCSTR e_name		= THM->m_TexParams.ext_normal_map_name.c_str();
@@ -208,9 +208,43 @@ bool CImageManager::MakeGameTexture(ETextureThumbnail* THM, LPCSTR game_name, u3
         }
         xr_delete			(NM_THM);
         if (false==e_res)	return false;
+	}
+
+	// calculate gloss (if need)
+	if((THM->m_TexParams.type==STextureParams::ttBumpMap))
+	{
+    	u8 *data = (u8*)load_data; // in memory pixels stored as BGRA
+		switch(THM->m_TexParams.gloss_mode)
+		{
+			case STextureParams::gmAlpha:
+			{
+				if(!fsimilar(THM->m_TexParams.gloss_scale,1.f,EPS))
+					for(u32 px = 0; px < w*h; px++)
+						data[px*4+3] = data[px*4+3] * THM->m_TexParams.gloss_scale;
+			} break;
+
+			case STextureParams::gmHeight:
+			{
+				for(u32 px = 0; px < w*h; px++)
+				{
+					u32 avg = (data[px*4+0] + data[px*4+1] + data[px*4+2]) / 3;
+					data[px*4+3] = avg * THM->m_TexParams.gloss_scale;
+				}
+			} break;
+
+			case STextureParams::gmConstant:
+			{
+				u8 gloss = THM->m_TexParams.gloss_scale * 255;
+				for(u32 px = 0; px < w*h; px++)
+					data[px*4+3] = gloss;
+			} break;
+
+			default:
+            	NODEFAULT;
+		}
     }
+
 	// compress
-    
 	int res 	= DXTCompress(game_name, (u8*)load_data, (u8*)(ext_data.empty()?0:&ext_data.front()), w, h, w4, &THM->m_TexParams, 4);
     if (1!=res){
     	if (-1000!=res){ //. Special for Oles (glos<10%) 
