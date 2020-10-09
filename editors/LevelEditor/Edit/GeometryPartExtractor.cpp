@@ -193,10 +193,10 @@ bool SBPart::prepare				(SBAdjVec& adjs, u32 bone_face_min)
 				center = F->o[0];
 				center.add(F->o[1]).add(F->o[2]).div(3);
 
-				u32 nearest = -1;
+				u32 nearest = 0;
 				for (u32 b_it = 0; b_it < m_Bones.size(); b_it++) {
-					if(nearest == -1 || center.distance_to_sqr(m_Bones[b_it].offset) < center.distance_to_sqr(m_Bones[nearest].offset))
-						nearest = b_it;;
+					if(center.distance_to_sqr(m_Bones[b_it].offset) < center.distance_to_sqr(m_Bones[nearest].offset))
+						nearest = b_it;
 				}
 
 				F->bone_id = nearest;

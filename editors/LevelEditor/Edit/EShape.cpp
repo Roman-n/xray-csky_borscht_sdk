@@ -376,7 +376,7 @@ void CEditShape::SaveLTX(CInifile& ini, LPCSTR sect_name)
 bool CEditShape::LoadStream(IReader& F)
 {
 	R_ASSERT(F.find_chunk(SHAPE_CHUNK_VERSION));
-    u16 vers		= F.r_u16();
+	/* u16 vers = */ F.r_u16();
 
 	inherited::LoadStream	(F);
 

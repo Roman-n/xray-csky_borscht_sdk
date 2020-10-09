@@ -209,28 +209,28 @@ void TfrmMain::RefreshBars()
 	// clear recent file list
     xr_vector<TMenuItem*> recent;
 
-	for(size_t i = 0; i < miFile->Count; i++)
+	for(int i = 0; i < miFile->Count; i++)
     	if(miFile->Items[i]->Tag >= 9555)
 			recent.push_back(miFile->Items[i]);
 
-    for(i = 0; i < recent.size(); i++)
-    	miFile->Remove(recent[i]);
+	for(size_t j = 0; j < recent.size(); j++)
+		miFile->Remove(recent[j]);
 
     // recreate recent file list
-    size_t cnt = EPrefs->scene_recent_list.size();
-    for(i = 0; i < cnt; i++)
-    {
-    	TMenuItem *item = xr_new<TMenuItem>(this);
-        item->Caption = EPrefs->scene_recent_list[i];
-        item->Tag = 9555 + i;
-        item->OnClick = miOpenRecentClick;
+	size_t cnt = EPrefs->scene_recent_list.size();
+	for(j = 0; j < cnt; j++)
+	{
+		TMenuItem *item = xr_new<TMenuItem>(this);
+		item->Caption = EPrefs->scene_recent_list[j];
+		item->Tag = 9555 + j;
+		item->OnClick = miOpenRecentClick;
 
-        miFile->Insert(10+i, item);
-    }
+		miFile->Insert(10+j, item);
+	}
 
     TMenuItem *separator = xr_new<TMenuItem>(this);
     separator->Caption = "-";
-    miFile->Insert(10+i, separator);
+	miFile->Insert(10+j, separator);
 }
 //---------------------------------------------------------------------------
 

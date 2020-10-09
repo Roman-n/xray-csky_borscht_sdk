@@ -88,7 +88,6 @@ BOOL SceneBuilder::BuildGame()
     }
 
     // save fog volumes
-    if(1)
     {
         xr_string lev_fog_vol 				= MakeLevelPath("level.fog_vol");
         EFS.MarkFile						(lev_fog_vol.c_str(),true);

@@ -825,7 +825,7 @@ void __fastcall TClipMaker::BPOnPaint(TObject *Sender)
             }
         }
         */
-    }else if ((bp->Tag>=0) && (bp->Tag < MAX_PARTS))
+    }else if ((bp->Tag>=0) && (bp->Tag < (int)MAX_PARTS))
     {
         AnsiString mn_prev		= "";
         for (AnimClipIt it=clips.begin(); it!=clips.end(); ++it)

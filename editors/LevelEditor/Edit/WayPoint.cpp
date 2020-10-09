@@ -152,10 +152,10 @@ void CWayPoint::Convert1Link(CWayPoint* P)
     WPLIt B=P->FindLink(this);
     bool a=(A!=m_Links.end()), b=(B!=P->m_Links.end());
 	float p_a=1.f;
-	float p_b=1.f;
-    if ((a&&!b)||(!a&&b)||(!a&&!b)) return;
+	//float p_b=1.f;
+	if ((a&&!b)||(!a&&b)||(!a&&!b)) return;
 	if (a){ p_a = (*A)->probability; xr_delete(*A); m_Links.erase(A);	}
-	if (b){ p_b = (*B)->probability; xr_delete(*B); P->m_Links.erase(B);}
+	if (b){ /* p_b = (*B)->probability; */ xr_delete(*B); P->m_Links.erase(B);}
     CreateLink	(P, p_a);
 }
 void CWayPoint::Convert2Link(CWayPoint* P)

@@ -226,7 +226,7 @@ bool SSceneSummary::ExportSummaryInfo(LPCSTR fn)
         u32 total_mem_usage		= 0; 
         F->w_string				("[TEXTURES]");
         F->w_string				("texture name=format,width,height,alpha,mem usage (Kb),area,pixel density,objects (name[count*area]),detail name,detail scale,bump name");
-        for (u32 stt=sttFirst; stt<sttLast; stt++){   
+        for (int stt=sttFirst; stt<sttLast; stt++){   
             u32 cur_mem_usage	= 0; 
             float cur_area		= 0; 
             xr_string pref	= "[";
@@ -317,7 +317,7 @@ void SSceneSummary::FillProp(PropItemVec& items)
         V->OnAfterEditEvent.bind(this,&SSceneSummary::OnWeightAfterEditClick);
         V->tag				= pd_it-pm_colors.begin();
     }
-    for (u32 stt=sttFirst; stt<sttLast; stt++){
+    for (int stt=sttFirst; stt<sttLast; stt++){
         LPCSTR nm			= get_token_name(summary_texture_type_tokens,stt);
         if (nm&&nm[0]){
             u32 cur_mem_usage	= 0; 
