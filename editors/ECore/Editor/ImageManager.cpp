@@ -120,30 +120,6 @@ void CImageManager::CreateTextureThumbnail(ETextureThumbnail* THM, const AnsiStr
     }
     THM->SetValid();
 }
-//------------------------------------------------------------------------------
-// создает новую текстуру
-//------------------------------------------------------------------------------
-void CImageManager::CreateGameTexture(LPCSTR src_name, ETextureThumbnail* thumb)
-{
-	R_ASSERT(src_name&&src_name[0]);
-    ETextureThumbnail* THM 	= thumb?thumb:xr_new<ETextureThumbnail>(src_name);
-	string_path base_name;
-    strcpy					(base_name,src_name);
-
-	string_path 			game_name;
-    strcpy					(game_name,EFS.ChangeFileExt(src_name,".dds").c_str());
-	FS.update_path			(base_name,_textures_,base_name);
-	FS.update_path			(game_name,_game_textures_,game_name);
-    int base_age 			= FS.get_file_age(base_name);
-
-    U32Vec data;
-    u32 w, h, a;
-    if (!Surface_Load(base_name,data,w,h,a)) return;
-	MakeGameTexture(THM,game_name,&data.front());
-
-    FS.set_file_age(game_name, base_age);
-    if (!thumb) xr_delete(THM);
-}
 
 //------------------------------------------------------------------------------
 // создает игровую текстуру

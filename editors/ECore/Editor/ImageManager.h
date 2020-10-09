@@ -46,7 +46,6 @@ public:
     BOOL		CreateOBJThumbnail	(LPCSTR tex_name, CEditableObject* obj, int age);
     void		CreateLODTexture	(CEditableObject* object, U32Vec& lod_pixels, U32Vec& nm_pixels, u32 tgt_w, u32 tgt_h, int samples, int quality);
     void		CreateLODTexture	(CEditableObject* object, LPCSTR tex_name, 	u32 tgt_w, u32 tgt_h, int samples, int age, int quality);
-    void		CreateGameTexture	(LPCSTR src_name, ETextureThumbnail* thumb=0);
     bool		LoadTextureData		(LPCSTR src_name, U32Vec& data, u32& w, u32& h, int* age=0);
 
     // result 0-can't fit images, 1-ok, -1 can't load image 
