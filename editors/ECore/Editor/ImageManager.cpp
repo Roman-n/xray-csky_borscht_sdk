@@ -117,6 +117,8 @@ void CImageManager::CreateTextureThumbnail(ETextureThumbnail* THM, const AnsiStr
 			THM->m_TexParams.type			= STextureParams::ttBumpMap;
 		if(name.length() >= 3 && name.substr(name.length()-3,3) == "_nm")
 			THM->m_TexParams.type			= STextureParams::ttNormalMap;
+		if(name.length() >= 7 && name.substr(name.length()-7,7) == "_normal")
+			THM->m_TexParams.type			= STextureParams::ttNormalMap;
     }
     THM->SetValid();
 }
@@ -486,7 +488,7 @@ BOOL CImageManager::CheckCompliance(LPCSTR fname, int& compl)
         Fcolor 		c1,c2;
     	c1.set		(data[p]);
         c2.set		(pRestored[p]);
-        float 	E 	= 0;
+        float 	E;
         if (a)		E = sqrtf(SQR(c1.r-c2.r)+SQR(c1.g-c2.g)+SQR(c1.b-c2.b)+SQR(c1.a-c2.a))*c1.a;	// q(4)
 		else 		E = sqrtf(SQR(c1.r-c2.r)+SQR(c1.g-c2.g)+SQR(c1.b-c2.b));						// q(3)
         difference 	+= 	E;
