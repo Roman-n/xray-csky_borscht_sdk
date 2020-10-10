@@ -83,6 +83,12 @@ struct ECORE_API STextureParams{
 		flForceU32			= u32(-1)
 	};
 
+	enum{
+		gmAlpha,
+		gmHeight,
+		gmConstant
+    };
+
     // texture part
     ETFormat	        fmt;
     Flags32		        flags;
@@ -104,7 +110,10 @@ struct ECORE_API STextureParams{
 	float 				bump_virtual_height;
     ETBumpMode			bump_mode;
     shared_str			bump_name;
-    shared_str			ext_normal_map_name;
+	shared_str			ext_normal_map_name;
+	// gloss
+	u8                  gloss_mode;
+	float               gloss_scale;
 
     STextureParams		()
 	{
@@ -140,7 +149,9 @@ struct ECORE_API STextureParams{
         detail_scale		= 1;
         bump_mode			= tbmNone;
 		material			= tmBlin_Phong;
-        bump_virtual_height = 0.05f;
+		bump_virtual_height = 0.05f;
+		gloss_mode          = gmAlpha;
+		gloss_scale         = 1.f;
 	}
 
     IC BOOL HasAlpha()
@@ -168,6 +179,7 @@ struct ECORE_API STextureParams{
 #ifdef _EDITOR
 	PropValue::TOnChange			OnTypeChangeEvent;
 	void			OnTypeChange	(PropValue* v);
+	void            SetType         (ETType type);
     void 			FillProp		(LPCSTR base_name, PropItemVec& items, PropValue::TOnChange OnChangeEvent);
     LPCSTR 			FormatString	();
 	u32 			MemoryUsage		(LPCSTR base_name);
@@ -193,6 +205,7 @@ extern xr_token	ttype_token[];
 #define THM_CHUNK_BUMP					0x0817
 #define THM_CHUNK_EXT_NORMALMAP			0x0818
 #define THM_CHUNK_FADE_DELAY			0x0819
+#define THM_CHUNK_GLOSS_PARAMS			0x081A
 //----------------------------------------------------
 #define THUMB_WIDTH 	128
 #define THUMB_HEIGHT 	128

@@ -1,6 +1,3 @@
-//----------------------------------------------------
-// file: TextureParam.h
-//----------------------------------------------------
 #ifndef ETextureParamsH
 #define ETextureParamsH
 
@@ -35,6 +32,7 @@ struct ECORE_API STextureParams{
     	tbmResereved	= 0,
         tbmNone,
         tbmUse,
+        tbmUseParallax,
 		tbmForceU32	= u32(-1)
     };
     enum ETMaterial{
@@ -85,6 +83,12 @@ struct ECORE_API STextureParams{
 		flForceU32			= u32(-1)
 	};
 
+	enum{
+		gmAlpha,
+		gmHeight,
+		gmConstant
+    };
+
     // texture part
     ETFormat	        fmt;
     Flags32		        flags;
@@ -106,20 +110,50 @@ struct ECORE_API STextureParams{
 	float 				bump_virtual_height;
     ETBumpMode			bump_mode;
     shared_str			bump_name;
-    shared_str			ext_normal_map_name;
+	shared_str			ext_normal_map_name;
+	// gloss
+	u8                  gloss_mode;
+	float               gloss_scale;
 
     STextureParams		()
 	{
-		ZeroMemory		(this,sizeof(STextureParams));
-		flags.set		(flGenerateMipMaps|flDitherColor,TRUE);
-		mip_filter		= kMIPFilterBox;
-        width			= 0;
-        height			= 0;
-        detail_scale	= 1;
-        bump_mode		= tbmNone;
-		material		= tmBlin_Phong;
-        bump_virtual_height = 0.05f;
+		Clear();
 	}
+	
+	IC void destroy_shared_str	(shared_str& object)
+	{
+		object.~shared_str	();
+	}
+
+	IC void construct_shared_str(shared_str& object)
+	{
+		::new	(&object)	shared_str	();
+	}
+
+	IC void Clear		()
+	{
+		destroy_shared_str	(detail_name);
+		destroy_shared_str	(bump_name);
+		destroy_shared_str	(ext_normal_map_name);
+		
+		ZeroMemory			(this,sizeof(STextureParams));
+		
+		construct_shared_str(detail_name);
+		construct_shared_str(bump_name);
+		construct_shared_str(ext_normal_map_name);
+
+		flags.set			(flGenerateMipMaps|flDitherColor,TRUE);
+		mip_filter			= kMIPFilterBox;
+        width				= 0;
+        height				= 0;
+        detail_scale		= 1;
+        bump_mode			= tbmNone;
+		material			= tmBlin_Phong;
+		bump_virtual_height = 0.05f;
+		gloss_mode          = gmAlpha;
+		gloss_scale         = 1.f;
+	}
+
     IC BOOL HasAlpha()
     { 
     	// исходная текстура содержит альфа канал
@@ -145,9 +179,12 @@ struct ECORE_API STextureParams{
 #ifdef _EDITOR
 	PropValue::TOnChange			OnTypeChangeEvent;
 	void __stdcall	OnTypeChange	(PropValue* v);
+	void            SetType         (ETType type);
     void 			FillProp		(LPCSTR base_name, PropItemVec& items, PropValue::TOnChange OnChangeEvent);
     LPCSTR 			FormatString	();
 	u32 			MemoryUsage		(LPCSTR base_name);
+    BOOL			similar			(STextureParams& tp1, xr_vector<AnsiString>& sel_params);
+    
 #endif
 };
 #pragma pack( pop )
@@ -168,6 +205,7 @@ extern xr_token	ttype_token[];
 #define THM_CHUNK_BUMP					0x0817
 #define THM_CHUNK_EXT_NORMALMAP			0x0818
 #define THM_CHUNK_FADE_DELAY			0x0819
+#define THM_CHUNK_GLOSS_PARAMS			0x081A
 //----------------------------------------------------
 #define THUMB_WIDTH 	128
 #define THUMB_HEIGHT 	128

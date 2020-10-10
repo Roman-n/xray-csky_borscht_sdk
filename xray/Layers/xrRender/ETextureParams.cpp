@@ -64,6 +64,13 @@ xr_token					tbmode_token							[ ]={
 	{ 0,					0											}
 };
 
+xr_token                    tgmode_token                            [ ] ={
+	{ "Alpha",              STextureParams::gmAlpha                      },
+	{ "Height",             STextureParams::gmHeight                     },
+	{ "Constant",           STextureParams::gmConstant                   },
+	{ 0,                    0                                            }
+};
+
 void STextureParams::Load(IReader& F)
 {
     R_ASSERT(F.find_chunk(THM_CHUNK_TEXTUREPARAM));
@@ -99,11 +106,16 @@ void STextureParams::Load(IReader& F)
     	F.r_stringZ			(bump_name);
     }
 
-    if (F.find_chunk(THM_CHUNK_EXT_NORMALMAP))
-	    F.r_stringZ			(ext_normal_map_name);
+	if (F.find_chunk(THM_CHUNK_EXT_NORMALMAP))
+		F.r_stringZ			(ext_normal_map_name);
 
 	if (F.find_chunk(THM_CHUNK_FADE_DELAY))
 		fade_delay			= F.r_u8();
+
+	if (F.find_chunk(THM_CHUNK_GLOSS_PARAMS)) {
+		gloss_mode          = F.r_u8();
+		gloss_scale         = F.r_float();
+	}
 }
 
 
@@ -148,6 +160,11 @@ void STextureParams::Save(IWriter& F)
 	F.open_chunk	(THM_CHUNK_FADE_DELAY);
 	F.w_u8			(fade_delay);
 	F.close_chunk	();
+
+	F.open_chunk    (THM_CHUNK_GLOSS_PARAMS);
+	F.w_u8          (gloss_mode);
+	F.w_float       (gloss_scale);
+	F.close_chunk   ();
 }
 
 
@@ -156,28 +173,34 @@ void STextureParams::Save(IWriter& F)
 
 void STextureParams::OnTypeChange(PropValue* prop)
 {
-	switch (type){
-    case ttImage:	
-    case ttCubeMap:	
-    break;
-    case ttBumpMap:	
-	    flags.set			(flGenerateMipMaps,FALSE);
-    break;
-    case ttNormalMap:
-	    flags.set			(flImplicitLighted|flBinaryAlpha|flAlphaBorder|flColorBorder|flFadeToColor
-        					|flFadeToAlpha|flDitherColor|flDitherEachMIPLevel|flBumpDetail,FALSE);
-	    flags.set			(flGenerateMipMaps,TRUE);
-        mip_filter			= kMIPFilterKaiser;
-        fmt					= tfRGBA;
-    break;
-    case ttTerrain:
-	    flags.set			(flGenerateMipMaps|flBinaryAlpha|flAlphaBorder|flColorBorder|flFadeToColor
-        					|flFadeToAlpha|flDitherColor|flDitherEachMIPLevel|flBumpDetail,FALSE);
-	    flags.set			(flImplicitLighted,TRUE);
-        fmt					= tfDXT1;
-    break;
-    }
+    SetType(type);
     if (!OnTypeChangeEvent.empty()) OnTypeChangeEvent(prop);
+}
+
+void STextureParams::SetType(ETType type)
+{
+	this->type = type;
+	switch (type){
+	case ttImage:
+	case ttCubeMap:
+	break;
+	case ttBumpMap:
+		flags.set			(flGenerateMipMaps,FALSE);
+	break;
+	case ttNormalMap:
+		flags.set			(flImplicitLighted|flBinaryAlpha|flAlphaBorder|flColorBorder|flFadeToColor
+							|flFadeToAlpha|flDitherColor|flDitherEachMIPLevel|flBumpDetail,FALSE);
+		flags.set			(flGenerateMipMaps,TRUE);
+		mip_filter			= kMIPFilterKaiser;
+		fmt					= tfRGBA;
+	break;
+	case ttTerrain:
+		flags.set			(flGenerateMipMaps|flBinaryAlpha|flAlphaBorder|flColorBorder|flFadeToColor
+							|flFadeToAlpha|flDitherColor|flDitherEachMIPLevel|flBumpDetail,FALSE);
+		flags.set			(flImplicitLighted,TRUE);
+		fmt					= tfDXT1;
+	break;
+	}
 }
 
 void STextureParams::FillProp(LPCSTR base_name, PropItemVec& items, PropValue::TOnChange on_type_change)
@@ -200,8 +223,34 @@ void STextureParams::FillProp(LPCSTR base_name, PropItemVec& items, PropValue::T
         P->OnChangeEvent.bind(this,&STextureParams::OnTypeChange);
         if (tbmUse==bump_mode || tbmUseParallax==bump_mode)
         {
-        	AnsiString path;
-            path = base_name;
+        	xr_string path;
+
+            if(bump_name.equal(NULL) || bump_name.equal(""))
+            {
+            	// try guess bump name
+                if(strext(base_name))
+                	path = xr_string(base_name, (int)(strext(base_name)-base_name));
+                else
+                	path = base_name;
+
+				xr_string prefix;
+                if(path.find("\\") == xr_string::npos && path.find("_") != xr_string::npos)
+                {
+                	// add folder to path if not present (e.g. importing)
+                	prefix = path.substr(0, path.find("_"));
+                    path = prefix + "\\" + path;
+                }
+                else if(path.find("\\") != xr_string::npos)
+                	prefix = path.substr(0, path.find("\\"));
+
+                if(FS.exist(_game_textures_, (path + "_bump.dds").c_str()))
+                	path = path + "_bump";
+                else if(!FS.exist(_game_textures_, (path + ".dds").c_str()))
+                	path = prefix;
+            }
+            else
+            	path = bump_name.c_str();
+
         	PHelper().CreateChoose	(items, "Bump\\Texture",			&bump_name,			smTexture, path.c_str());
         }
         
@@ -211,7 +260,7 @@ void STextureParams::FillProp(LPCSTR base_name, PropItemVec& items, PropValue::T
         PHelper().CreateFloat	   	(items, "Details\\Scale",			&detail_scale,		0.1f,10000.f,0.1f,2);
 
         PHelper().CreateToken32		(items, "Material\\Base",			(u32*)&material,	tmtl_token);
-        PHelper().CreateFloat	   	(items, "Material\\Weight",			&material_weight	);
+        PHelper().CreateFloat	   	(items, "Material\\Weight",			&material_weight,	0.0f,100.f);
         
 //		PHelper().CreateFlag32		(items, "Flags\\Binary Alpha",		&flags,				flBinaryAlpha);
         PHelper().CreateFlag32		(items, "Flags\\Dither",			&flags,				flDitherColor);
@@ -231,7 +280,9 @@ void STextureParams::FillProp(LPCSTR base_name, PropItemVec& items, PropValue::T
     break;
     case ttBumpMap:	
         PHelper().CreateChoose		(items, "Bump\\Special NormalMap",	&ext_normal_map_name,smTexture,base_name);
-        PHelper().CreateFloat	   	(items, "Bump\\Virtual Height (m)",	&bump_virtual_height, 0.f, 0.1f, 0.001f, 3);
+		PHelper().CreateFloat	   	(items, "Bump\\Virtual Height (m)",	&bump_virtual_height, 0.f, 0.1f, 0.001f, 3);
+		PHelper().CreateToken8      (items, "Bump\\Gloss Source",       &gloss_mode,        tgmode_token);
+		PHelper().CreateFloat       (items, "Bump\\Gloss Scale",        &gloss_scale,       0.f,1.f,0.01f,2); 
     break;
     case ttNormalMap:	
 	    P = PHelper().CreateToken32	(items, "Format",	   				(u32*)&fmt, 		tfmt_token); P->Owner()->Enable(false);
@@ -248,7 +299,7 @@ void STextureParams::FillProp(LPCSTR base_name, PropItemVec& items, PropValue::T
         PHelper().CreateFloat	   	(items, "Details\\Scale",			&detail_scale,		0.1f,10000.f,0.1f,2);
 
         PHelper().CreateToken32		(items, "Material\\Base",			(u32*)&material,	tmtl_token);
-        PHelper().CreateFloat	   	(items, "Material\\Weight",			&material_weight	);
+        PHelper().CreateFloat	   	(items, "Material\\Weight",			&material_weight,	0.0f,100.f);
 
         P = PHelper().CreateFlag32	(items, "Flags\\Implicit Lighted",	&flags,				flImplicitLighted);  P->Owner()->Enable(false);
     break;
@@ -384,7 +435,15 @@ BOOL STextureParams::similar(STextureParams& tp1, xr_vector<AnsiString>& sel_par
         if(par_name=="Bump\\Virtual Height (m)")
         {
         	res = ( fsimilar(bump_virtual_height,tp1.bump_virtual_height));
-        }else
+		}else
+		if(par_name=="Bump\\Gloss Source")
+		{
+			res = (gloss_mode==tp1.gloss_mode);
+		}else
+		if(par_name=="Bump\\Gloss Scale")
+		{
+			res = (gloss_scale==tp1.gloss_scale);
+		}else
         	Msg("! unknown filter [%s]", par_name.c_str());
        if(!res)
        	break;
