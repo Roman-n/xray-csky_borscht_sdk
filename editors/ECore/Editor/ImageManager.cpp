@@ -106,19 +106,19 @@ void CImageManager::CreateTextureThumbnail(ETextureThumbnail* THM, const AnsiStr
 		THM->m_Age 			= FS.get_file_age(fn.c_str());
 		THM->m_TexParams.fmt            = (a)?STextureParams::tfDXT3:STextureParams::tfDXT1;
 	    if ((h*6)==w){
-        	THM->m_TexParams.type	        = STextureParams::ttCubeMap;
+        	THM->m_TexParams.SetType	    (STextureParams::ttCubeMap);
         	THM->m_TexParams.flags.set      (STextureParams::flGenerateMipMaps,FALSE);
 		}
 
 		xr_string name = EFS.ExtractFileName(src_name.c_str());
 		if(name.substr(0,8) == "terrain_")
-			THM->m_TexParams.type			= STextureParams::ttTerrain;
+			THM->m_TexParams.SetType(STextureParams::ttTerrain);
 		if(name.length() >= 5 && name.substr(name.length()-5,5) == "_bump")
-			THM->m_TexParams.type			= STextureParams::ttBumpMap;
-		if(name.length() >= 3 && name.substr(name.length()-3,3) == "_nm")
-			THM->m_TexParams.type			= STextureParams::ttNormalMap;
+			THM->m_TexParams.SetType(STextureParams::ttBumpMap);
+		if(name.length() >= 5 && name.substr(name.length()-5,5) == "_nmap")
+			THM->m_TexParams.SetType(STextureParams::ttNormalMap);
 		if(name.length() >= 7 && name.substr(name.length()-7,7) == "_normal")
-			THM->m_TexParams.type			= STextureParams::ttNormalMap;
+			THM->m_TexParams.SetType(STextureParams::ttNormalMap);
     }
     THM->SetValid();
 }

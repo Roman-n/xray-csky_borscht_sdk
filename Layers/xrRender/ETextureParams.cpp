@@ -173,28 +173,34 @@ void STextureParams::Save(IWriter& F)
 
 void STextureParams::OnTypeChange(PropValue* prop)
 {
-	switch (type){
-    case ttImage:	
-    case ttCubeMap:	
-    break;
-    case ttBumpMap:	
-	    flags.set			(flGenerateMipMaps,FALSE);
-    break;
-    case ttNormalMap:
-	    flags.set			(flImplicitLighted|flBinaryAlpha|flAlphaBorder|flColorBorder|flFadeToColor
-        					|flFadeToAlpha|flDitherColor|flDitherEachMIPLevel|flBumpDetail,FALSE);
-	    flags.set			(flGenerateMipMaps,TRUE);
-        mip_filter			= kMIPFilterKaiser;
-        fmt					= tfRGBA;
-    break;
-    case ttTerrain:
-	    flags.set			(flGenerateMipMaps|flBinaryAlpha|flAlphaBorder|flColorBorder|flFadeToColor
-        					|flFadeToAlpha|flDitherColor|flDitherEachMIPLevel|flBumpDetail,FALSE);
-	    flags.set			(flImplicitLighted,TRUE);
-        fmt					= tfDXT1;
-    break;
-    }
+    SetType(type);
     if (!OnTypeChangeEvent.empty()) OnTypeChangeEvent(prop);
+}
+
+void STextureParams::SetType(ETType type)
+{
+	this->type = type;
+	switch (type){
+	case ttImage:
+	case ttCubeMap:
+	break;
+	case ttBumpMap:
+		flags.set			(flGenerateMipMaps,FALSE);
+	break;
+	case ttNormalMap:
+		flags.set			(flImplicitLighted|flBinaryAlpha|flAlphaBorder|flColorBorder|flFadeToColor
+							|flFadeToAlpha|flDitherColor|flDitherEachMIPLevel|flBumpDetail,FALSE);
+		flags.set			(flGenerateMipMaps,TRUE);
+		mip_filter			= kMIPFilterKaiser;
+		fmt					= tfRGBA;
+	break;
+	case ttTerrain:
+		flags.set			(flGenerateMipMaps|flBinaryAlpha|flAlphaBorder|flColorBorder|flFadeToColor
+							|flFadeToAlpha|flDitherColor|flDitherEachMIPLevel|flBumpDetail,FALSE);
+		flags.set			(flImplicitLighted,TRUE);
+		fmt					= tfDXT1;
+	break;
+	}
 }
 
 void STextureParams::FillProp(LPCSTR base_name, PropItemVec& items, PropValue::TOnChange on_type_change)

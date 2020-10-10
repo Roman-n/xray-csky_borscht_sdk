@@ -179,6 +179,7 @@ struct ECORE_API STextureParams{
 #ifdef _EDITOR
 	PropValue::TOnChange			OnTypeChangeEvent;
 	void __stdcall	OnTypeChange	(PropValue* v);
+	void            SetType         (ETType type);
     void 			FillProp		(LPCSTR base_name, PropItemVec& items, PropValue::TOnChange OnChangeEvent);
     LPCSTR 			FormatString	();
 	u32 			MemoryUsage		(LPCSTR base_name);
