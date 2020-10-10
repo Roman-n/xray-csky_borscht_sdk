@@ -547,6 +547,9 @@ void IM_PropertyTree::OpenChooseForm(PropItem* item)
 	shared_str val = V->GetValue();
 	item->BeforeEdit<ChooseValue,shared_str>(val);
 	cf->SetSelected(val);
+	
+	if(cf->GetSelected().equal(""))
+		cf->SetSelected(V->m_StartPath);
 
 	UI->AddIMWindow(cf);
 }

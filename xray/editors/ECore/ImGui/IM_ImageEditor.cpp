@@ -69,6 +69,9 @@ void IM_ImageEditor::Open(bool import)
 void IM_ImageEditor::Close()
 {
     texture_map.clear();
+    modif_map.clear();
+    DestroyUsedTHM();
+    
     UI->RemoveIMWindow(this);
     m_thm.DestroyTexture();
     m_open = false;
