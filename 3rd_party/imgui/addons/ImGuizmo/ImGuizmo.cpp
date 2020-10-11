@@ -677,9 +677,11 @@ namespace ImGuizmo
       ImGui::SetNextWindowSize(io.DisplaySize);
 
 	  ImGui::PushStyleColor(ImGuiCol_WindowBg, 0);
+      ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
       ImGui::Begin("gizmo", NULL, flags);
       gContext.mDrawList = ImGui::GetWindowDrawList();
       ImGui::End();
+	  ImGui::PopStyleVar();
 	  ImGui::PopStyleColor();
    }
 
