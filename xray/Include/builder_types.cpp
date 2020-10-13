@@ -47,13 +47,16 @@ int MessageDlg(const AnsiString& Msg, TMsgDlgType DlgType, TMsgDlgButtons Button
         buttonType = MB_ABORTRETRYIGNORE;
     else if (Buttons.Contains(mbOK) && Buttons.Contains(mbCancel))
         buttonType = MB_OKCANCEL;
+    else if (Buttons.Contains(mbOK))
+        buttonType = MB_OK;
     else if (Buttons.Contains(mbRetry) && Buttons.Contains(mbCancel))
         buttonType = MB_RETRYCANCEL;
     else if (Buttons.Contains(mbYes) && Buttons.Contains(mbNo))
         buttonType = MB_YESNO;
     else if (Buttons.Contains(mbYes) && Buttons.Contains(mbNo) && Buttons.Contains(mbCancel))
         buttonType = MB_YESNOCANCEL;
-    R_ASSERT(buttonType != 0);
+    else
+        R_ASSERT(!"Unknown MessageDlg button type!");
     if (Buttons.Contains(mbHelp))
         buttonType |= MB_HELP;
     int result = MessageBox(0, Msg.c_str(), "", dlgTypes[DlgType] | buttonType);
