@@ -205,6 +205,8 @@ target_sources(${PROJECT_NAME} PRIVATE
 	ImGui/IM_LeftBar.h
 	ImGui/IM_TopBar.cpp
 	ImGui/IM_TopBar.h
+	ImGui/IM_ContextMenu.cpp
+	ImGui/IM_ContextMenu.h
 	framework.h
 	iniStreamImpl.cpp
 	iniStreamImpl.h

@@ -38,6 +38,7 @@
 #endif
 
 #include "StatusBar.h"
+#include "ImGui/IM_ContextMenu.h"
 
 #ifdef _LEVEL_EDITOR
 //.    if (m_Cursor->GetVisible()) RedrawScene();
@@ -1214,6 +1215,8 @@ void CLevelMain::ShowContextMenu(int cls)
     RedrawScene(true);
     fraLeftBar->pmObjectContext->TrackButton = tbRightButton;
     fraLeftBar->pmObjectContext->Popup(pt.x,pt.y);
+#else
+    imContextMenu.Open();
 #endif
 }
 //---------------------------------------------------------------------------
