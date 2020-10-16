@@ -688,9 +688,8 @@ bool EScene::ReadObjectLTX(CInifile& ini, LPCSTR sect_name, CCustomObject*& O)
 
 	return bRes;
 }
-#ifndef NO_VCL
+
 #include "AppendObjectInfoForm.h"
-#endif
 bool EScene::ReadObjectsLTX(CInifile& ini,  LPCSTR sect_name_parent, LPCSTR sect_name_prefix, TAppendObject on_append, SPBItem* pb)
 {
 	string128			buff;
@@ -710,7 +709,6 @@ bool EScene::ReadObjectsLTX(CInifile& ini,  LPCSTR sect_name_parent, LPCSTR sect
             CCustomObject* existing = FindObjectByName(obj_name,obj->ClassID);
             if(existing)
             {
-#ifndef NO_VCL
                 if(g_frmConflictLoadObject->m_result!=2 && g_frmConflictLoadObject->m_result!=4 && g_frmConflictLoadObject->m_result!=6)
                 {
                     g_frmConflictLoadObject->m_existing_object 	= existing;
@@ -719,9 +717,7 @@ bool EScene::ReadObjectsLTX(CInifile& ini,  LPCSTR sect_name_parent, LPCSTR sect
                     g_frmConflictLoadObject->ShowModal			();
                 }
                 int result = g_frmConflictLoadObject->m_result;
-#else
-                int result = 0;
-#endif
+
                 switch(result)
                 {
                     case 1: //Overwrite
@@ -777,7 +773,6 @@ bool EScene::ReadObjectsStream(IReader& F, u32 chunk_id, TAppendObject on_append
                 CCustomObject* existing = FindObjectByName(obj_name,obj->ClassID);
                 if(existing)
                 {
-#ifndef NO_VCL
                 	if(g_frmConflictLoadObject->m_result!=2 && g_frmConflictLoadObject->m_result!=4 && g_frmConflictLoadObject->m_result!=6)
                     {
                         g_frmConflictLoadObject->m_existing_object 	= existing;
@@ -786,9 +781,7 @@ bool EScene::ReadObjectsStream(IReader& F, u32 chunk_id, TAppendObject on_append
                         g_frmConflictLoadObject->ShowModal			();
                     }
                     int result = g_frmConflictLoadObject->m_result;
-#else
-                    int result = 0;
-#endif
+
                     switch(result)
                     {
                     	case 1: //Overwrite

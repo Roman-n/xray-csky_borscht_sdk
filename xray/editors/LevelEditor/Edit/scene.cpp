@@ -18,9 +18,7 @@
 #include "ESceneAIMapTools.h"
 #include "ESceneDOTools.h"
 #include "ESceneLightTools.h"
-#ifndef NO_VCL
 #include "AppendObjectInfoForm.h"
-#endif
 //----------------------------------------------------
 EScene* Scene;
 //----------------------------------------------------
@@ -78,18 +76,15 @@ EScene::EScene()
 // 	Build options
     m_SummaryInfo	= 0;
     //ClearSnapList	(false);
-#ifndef NO_VCL
-   g_frmConflictLoadObject 		= xr_new<TfrmAppendObjectInfo>((TComponent*)NULL);
-#endif
 
+    g_frmConflictLoadObject 		= xr_new<TfrmAppendObjectInfo>((TComponent*)NULL);
 }
 
 EScene::~EScene()
 {
-#ifndef NO_VCL
-	xr_delete(g_frmConflictLoadObject);
-#endif
-	VERIFY( m_Valid == false );
+    xr_delete(g_frmConflictLoadObject);
+
+    VERIFY( m_Valid == false );
     m_ESO_SnapObjects.clear	();
 }
 

@@ -509,9 +509,7 @@ CCommandVar CommandDuplicate(CCommandVar p1, CCommandVar p2)
 	}
 }
 
-#ifndef NO_VCL
 #include "AppendObjectInfoForm.h"
-#endif
 CCommandVar CommandLoadSelection(CCommandVar p1, CCommandVar p2)
 {
     if( !Scene->locked() )
@@ -524,13 +522,9 @@ CCommandVar CommandLoadSelection(CCommandVar p1, CCommandVar p2)
 		        LTools->m_LastSelectionName = fn.c_str()+xr_strlen(maps_path);
             UI->SetStatus		("Fragment loading...");
 
-#ifndef NO_VCL
-			g_frmConflictLoadObject->m_result = 0;
-#endif
+            g_frmConflictLoadObject->m_result = 0;
             Scene->LoadSelection(fn.c_str());
-#ifndef NO_VCL
-			g_frmConflictLoadObject->m_result = 4; //auto-rename
-#endif
+            g_frmConflictLoadObject->m_result = 4; //auto-rename
 
             UI->ResetStatus		();
             Scene->UndoSave		();

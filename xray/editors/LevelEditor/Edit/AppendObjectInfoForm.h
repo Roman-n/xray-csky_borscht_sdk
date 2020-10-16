@@ -2,6 +2,9 @@
 
 #ifndef AppendObjectInfoFormH
 #define AppendObjectInfoFormH
+
+#ifndef NO_VCL
+
 //---------------------------------------------------------------------------
 #include <Classes.hpp>
 #include <Controls.hpp>
@@ -32,4 +35,31 @@ public:		// User declarations
 
 extern    TfrmAppendObjectInfo* 					g_frmConflictLoadObject;
 //---------------------------------------------------------------------------
+
+#else // NO_VCL
+
+class CCustomObject;
+
+class TfrmAppendObjectInfo
+{
+    public:
+    CCustomObject* m_existing_object;
+    CCustomObject* m_new_object;
+    int m_result;
+    
+    TfrmAppendObjectInfo(TComponent*)
+        : m_existing_object(NULL),
+          m_new_object(NULL),
+          m_result(4)
+    {
+    }
+    
+    void ShowModal();
+    void Prepare();
+};
+
+extern TfrmAppendObjectInfo* g_frmConflictLoadObject;
+
+#endif
+
 #endif

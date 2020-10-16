@@ -7,10 +7,10 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 	../..
 	.)
 target_sources(${PROJECT_NAME} PRIVATE
-#	Edit/AppendObjectInfoForm.cpp
+	Edit/AppendObjectInfoForm.cpp
 #	Edit/AppendObjectInfoForm.ddp
 #	Edit/AppendObjectInfoForm.dfm
-#	Edit/AppendObjectInfoForm.h
+	Edit/AppendObjectInfoForm.h
 	Edit/Builder.cpp
 	Edit/Builder.h
 	Edit/BuilderCF.cpp

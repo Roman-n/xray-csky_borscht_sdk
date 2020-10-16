@@ -46,6 +46,20 @@ BEGIN
     DEFPUSHBUTTON   "OK",IDOK,113,41,50,14,WS_GROUP
 END
 
+DIALOG_ALREADYEXIST DIALOG DISCARDABLE  20, 40, 193, 103
+STYLE DS_MODALFRAME | WS_OVERLAPPED | WS_CAPTION | WS_VISIBLE | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "Helv"
+BEGIN
+	CONTROL "Overwrite",                      100, "BUTTON", BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 10, 76, 51, 18
+	CONTROL "Auto rename",                    101, "BUTTON", BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 69, 76, 57, 17
+	CONTROL "Skip",                           102, "BUTTON", BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 132, 76, 52, 17
+	CONTROL "Don't ask me again",             103, "BUTTON", BS_AUTOCHECKBOX | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 15, 55, 77, 13
+	CONTROL "Object already exist in scene:", 104, "STATIC", SS_LEFT | WS_CHILD | WS_VISIBLE, 11, 11, 128, 10
+	CONTROL "object name here",               105, "STATIC", SS_LEFT | WS_CHILD | WS_VISIBLE, 17, 31, 148, 15
+END
+
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // DESIGNINFO
