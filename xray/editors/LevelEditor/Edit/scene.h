@@ -208,12 +208,14 @@ public:
 	int 			FrustumSelect       (int flag, ObjClassID classfilter=OBJCLASS_DUMMY);
 	void			SelectObjects       (bool flag, ObjClassID classfilter=OBJCLASS_DUMMY);
 	void 			ShowObjects         (bool flag, ObjClassID classfilter=OBJCLASS_DUMMY, bool bAllowSelectionFlag=false, bool bSelFlag=true);
+	int 			LockObjects         (bool flag, ObjClassID classfilter=OBJCLASS_DUMMY, bool bAllowSelectionFlag=false, bool bSelFlag=true);
 	void			InvertSelection     (ObjClassID classfilter);
 	int 			SelectionCount      (bool testflag, ObjClassID classfilter);
 	void			RemoveSelection     (ObjClassID classfilter);
 	void 			CutSelection        (ObjClassID classfilter);
 	void			CopySelection       (ObjClassID classfilter);
 	void			PasteSelection      ();
+	void			DuplicateSelection	(ObjClassID classfilter);
 
 	void 			SelectLightsForObject(CCustomObject* obj);
 

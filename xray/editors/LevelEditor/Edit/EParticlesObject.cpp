@@ -92,7 +92,7 @@ void EParticlesObject::Render(int priority, bool strictB2F)
                 if( Selected() )
                 {
                     Fbox bb; GetBox(bb);
-                    u32 clr = 0xFFFFFFFF;
+                    u32 clr = Locked()?0xFFFF0000:0xFFFFFFFF;
                     DUImpl.DrawSelectionBox(bb,&clr);
                 }
             }

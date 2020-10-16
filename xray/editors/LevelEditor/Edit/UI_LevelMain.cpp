@@ -312,12 +312,6 @@ CCommandVar CommandSave(CCommandVar p1, CCommandVar p2)
 
                 UI->SetStatus	("Level saving...");
 
-                if(LUI->m_rt_object_props->section_exist(temp_fn.c_str()))
-                {
-                    CInifile::Sect& S 	= LUI->m_rt_object_props->r_section(temp_fn.c_str());
-                    S.Data.clear		();
-                }
-
                 Scene->SaveLTX	(temp_fn.c_str(), false, (p2==66));
 
                 UI->ResetStatus	();
@@ -500,6 +494,18 @@ CCommandVar CommandPaste(CCommandVar p1, CCommandVar p2)
         ELog.DlgMsg		( mtError, "Scene sharing violation" );
         return  		FALSE;
     }
+}
+
+CCommandVar CommandDuplicate(CCommandVar p1, CCommandVar p2)
+{
+    if( !Scene->locked() ){
+		Scene->DuplicateSelection(LTools->CurrentClassID());
+        Scene->UndoSave	();
+        return 			TRUE;
+    } else {
+        ELog.DlgMsg		( mtError, "Scene sharing violation" );
+        return  		FALSE;
+	}
 }
 
 #ifndef NO_VCL
@@ -795,6 +801,39 @@ CCommandVar CommandHideAll(CCommandVar p1, CCommandVar p2)
 	    return 					FALSE;
     }
 }
+CCommandVar CommandLockAll(CCommandVar p1, CCommandVar p2)
+{
+    if( !Scene->locked() ){
+        Scene->LockObjects		(bool(p1),LTools->CurrentClassID(),false);
+        Scene->UndoSave			();
+	    return 					TRUE;
+    }else{
+        ELog.DlgMsg				( mtError, "Scene sharing violation" );
+	    return 					FALSE;
+    }
+}
+CCommandVar CommandLockSel(CCommandVar p1, CCommandVar p2)
+{
+    if( !Scene->locked() ){
+        Scene->LockObjects		(bool(p1),LTools->CurrentClassID(),true,true);
+        Scene->UndoSave			();
+	    return 					TRUE;
+    }else{
+        ELog.DlgMsg				( mtError, "Scene sharing violation" );
+	    return 					FALSE;
+    }
+}
+CCommandVar CommandLockUnsel(CCommandVar p1, CCommandVar p2)
+{
+    if( !Scene->locked() ){
+        Scene->LockObjects		(bool(p1),LTools->CurrentClassID(),true,false);
+        Scene->UndoSave			();
+        return					TRUE;
+   }else{
+        ELog.DlgMsg				( mtError, "Scene sharing violation" );                   
+	    return 					FALSE;
+    }
+}
 CCommandVar CommandSetSnapObjects(CCommandVar p1, CCommandVar p2)
 {
     if( !Scene->locked() ){
@@ -978,6 +1017,7 @@ void CLevelMain::RegisterCommands()
 	REGISTER_CMD_SE	    (COMMAND_CUT,              			"Edit\\Cut",					CommandCut,false);
 	REGISTER_CMD_SE	    (COMMAND_COPY,              		"Edit\\Copy",					CommandCopy,false);
 	REGISTER_CMD_SE	    (COMMAND_PASTE,              		"Edit\\Paste",					CommandPaste,false);
+	REGISTER_CMD_SE	    (COMMAND_DUPLICATE,              		"Edit\\Duplicate",					CommandDuplicate,false);
 	REGISTER_CMD_S	    (COMMAND_LOAD_SELECTION,            CommandLoadSelection);
 	REGISTER_CMD_S	    (COMMAND_SAVE_SELECTION,            CommandSaveSelection);
 	REGISTER_CMD_SE	    (COMMAND_UNDO,              		"Edit\\Undo",					CommandUndo,false);
@@ -1001,6 +1041,9 @@ void CLevelMain::RegisterCommands()
 	REGISTER_CMD_SE	    (COMMAND_HIDE_UNSEL,              	"Visibility\\Hide Unselected",	CommandHideUnsel,false);
 	REGISTER_CMD_SE	    (COMMAND_HIDE_SEL,              	"Visibility\\Hide Selected", 	CommandHideSel,false);
 	REGISTER_CMD_SE	    (COMMAND_HIDE_ALL,              	"Visibility\\Hide All", 		CommandHideAll,false);
+	REGISTER_CMD_S	    (COMMAND_LOCK_ALL,              	CommandLockAll);
+	REGISTER_CMD_S	    (COMMAND_LOCK_SEL,             		CommandLockSel);
+	REGISTER_CMD_S	    (COMMAND_LOCK_UNSEL,              	CommandLockUnsel);
 	REGISTER_CMD_S		(COMMAND_SET_SNAP_OBJECTS,          CommandSetSnapObjects);
 	REGISTER_CMD_S	    (COMMAND_ADD_SEL_SNAP_OBJECTS,      CommandAddSelSnapObjects);
 	REGISTER_CMD_S	    (COMMAND_DEL_SEL_SNAP_OBJECTS,      CommandDelSelSnapObjects);
@@ -1274,44 +1317,15 @@ void CLevelMain::RealQuit()
 }
 //---------------------------------------------------------------------------
 
-#define INI_RTP_NAME(buf) 		{FS.update_path(buf,"$local_root$","rt_object_props.ltx");}
-
 void CLevelMain::SaveSettings(CInifile* I)
 {
-	m_rt_object_props->save_as();
-    
-	inherited::SaveSettings(I);
+    inherited::SaveSettings(I);
     SSceneSummary::Save(I);
 }
 void CLevelMain::LoadSettings(CInifile* I)
 {
-	string_path			fn;
-	INI_RTP_NAME		(fn);
-	m_rt_object_props = CInifile::Create(fn,FALSE);
-	m_rt_object_props->save_at_end(FALSE);
-    
-	inherited::LoadSettings(I);
+    inherited::LoadSettings(I);
     SSceneSummary::Load(I);
-}
-
-void CLevelMain::store_rt_flags(const CCustomObject* CO)
-{
-    if(LTools->m_LastFileName.size() && CO->GetName())
-    {
-   	m_rt_object_props->remove_line(LTools->m_LastFileName.c_str(), CO->GetName());
-	if(CO->Selected() || !CO->Visible())
-    	m_rt_object_props->w_u32(LTools->m_LastFileName.c_str(), CO->GetName(), CO->m_RT_Flags.get()&(CCustomObject::flRT_Selected|CCustomObject::flRT_Visible));
-    }
-}
-
-void CLevelMain::restore_rt_flags(CCustomObject* CO)
-{
-	if(CO->GetName() && LTools->m_LastFileName.size() && m_rt_object_props->line_exist(LTools->m_LastFileName.c_str(), CO->GetName()))
-    {
-		u32 fl = m_rt_object_props->r_u32(LTools->m_LastFileName.c_str(), CO->GetName());
-        CO->m_RT_Flags.set	(CCustomObject::flRT_Visible|CCustomObject::flRT_Selected, FALSE);
-        CO->m_RT_Flags.or_	(fl);
-    }
 }
 
 //---------------------------------------------------------------------------

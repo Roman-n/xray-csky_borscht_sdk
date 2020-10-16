@@ -23,6 +23,7 @@ bool ESceneCustomOTool::OnLoadSelectionAppendObject(CCustomObject* obj)
     Scene->GenObjectName	(obj->ClassID,buf,obj->GetName());
     obj->SetName			(buf);
     Scene->AppendObject		(obj, false);
+    obj->Select				(1);
     return					true;
 }
 //----------------------------------------------------

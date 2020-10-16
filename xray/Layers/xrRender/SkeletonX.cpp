@@ -4,7 +4,6 @@
 
 #include "stdafx.h"
 
-
 #pragma warning(disable:4995)
 #include <d3dx/d3dx9.h>
 #pragma warning(default:4995)
@@ -185,8 +184,11 @@ void CSkeletonX::_Load	(const char* N, IReader *data, u32& dwVertCount)
 	//	Igor: some shaders in r1 need more free constant registers
 	u16			hw_bones_cnt		= u16((HW.Caps.geometry.dwRegisters-22-3)/3);
 	u16			sw_bones_cnt		= 0;
+
+	bool		force_software		= false;
+
 #ifdef _EDITOR
-	hw_bones_cnt					= 0;
+	if(!strstr(Core.Params, "-hw_skin")) force_software = true;
 #endif
 
 	u32								dwVertType,size,it,crc;
@@ -214,32 +216,28 @@ void CSkeletonX::_Load	(const char* N, IReader *data, u32& dwVertCount)
 
 				sw_bones_cnt		= _max(sw_bones_cnt, mid);
 			}
-#ifdef _EDITOR
-			// software
-			crc						= crc32	(data->pointer(),size);
-			Vertices1W.create		(crc,dwVertCount,(vertBoned1W*)data->pointer());
-#else
-			if(1==bids.size())	
+			if(sw_bones_cnt<=hw_bones_cnt && !force_software) 
 			{
-				// HW- single bone
-				RenderMode						= RM_SINGLE;
-				RMS_boneid						= *bids.begin();
-				Render->shader_option_skinning	(0);
-			}else 
-			if(sw_bones_cnt<=hw_bones_cnt) 
-			{
-				// HW- one weight
-				RenderMode						= RM_SKINNING_1B;
-				RMS_bonecount					= sw_bones_cnt+1;
-				Render->shader_option_skinning	(1);
-			}else 
+				if(1==bids.size())
+				{
+					// HW- single bone
+					RenderMode						= RM_SINGLE;
+					RMS_boneid						= *bids.begin();
+					Render->shader_option_skinning	(0);
+				}else
+				{
+					// HW- one weight
+					RenderMode						= RM_SKINNING_1B;
+					RMS_bonecount					= sw_bones_cnt+1;
+					Render->shader_option_skinning	(1);
+				}
+			}else
 			{
 				// software
 				crc								= crc32	(data->pointer(),size);
 				Vertices1W.create				(crc,dwVertCount,(vertBoned1W*)data->pointer());
 				Render->shader_option_skinning	(-1);
 			}
-#endif        
 		}
 		break;
 	case OGF_VERTEXFORMAT_FVF_2L: // 2-Link
@@ -261,7 +259,7 @@ void CSkeletonX::_Load	(const char* N, IReader *data, u32& dwVertCount)
 					bids.push_back(VB.matrix1);
 			}
 //.			R_ASSERT(sw_bones_cnt<=hw_bones_cnt);
-			if(sw_bones_cnt<=hw_bones_cnt)
+			if(sw_bones_cnt<=hw_bones_cnt && !force_software)
 			{
 				// HW- two weights
 				RenderMode						= RM_SKINNING_2B;
@@ -294,7 +292,7 @@ void CSkeletonX::_Load	(const char* N, IReader *data, u32& dwVertCount)
 				}
 			}
 //.			R_ASSERT(sw_bones_cnt<=hw_bones_cnt);
-			if((sw_bones_cnt<=hw_bones_cnt))
+			if((sw_bones_cnt<=hw_bones_cnt) && !force_software)
 			{
 				RenderMode						= RM_SKINNING_3B;
 				RMS_bonecount					= sw_bones_cnt+1;
@@ -325,7 +323,7 @@ void CSkeletonX::_Load	(const char* N, IReader *data, u32& dwVertCount)
 				}
 			}
 //.			R_ASSERT(sw_bones_cnt<=hw_bones_cnt);
-			if(sw_bones_cnt<=hw_bones_cnt)
+			if(sw_bones_cnt<=hw_bones_cnt && !force_software)
 			{
 				RenderMode						= RM_SKINNING_4B;
 				RMS_bonecount					= sw_bones_cnt+1;

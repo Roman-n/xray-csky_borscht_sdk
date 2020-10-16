@@ -820,7 +820,7 @@ void CSpawnPoint::Render( int priority, bool strictB2F )
             {
                 RCache.set_xform_world(Fidentity);
                 Fbox bb; GetBox(bb);
-                u32 clr = 0xFFFFFFFF;
+                u32 clr = Locked()?0xFFFF0000:0xFFFFFFFF;
                 Device.SetShader(Device.m_WireShader);
                 DUImpl.DrawSelectionBox(bb,&clr);
             }

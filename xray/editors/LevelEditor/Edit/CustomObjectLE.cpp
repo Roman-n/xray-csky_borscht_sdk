@@ -87,6 +87,7 @@ void CCustomObject::OnAttach(CCustomObject* owner)
 
 void CCustomObject::Move(Fvector& amount)
 {
+    R_ASSERT(!Locked());
     UI->UpdateScene();
     Fvector v=GetPosition();
     Fvector r=GetRotation();
@@ -107,6 +108,7 @@ void CCustomObject::Move(Fvector& amount)
 
 void CCustomObject::MoveTo(const Fvector& pos, const Fvector& up)
 {
+    R_ASSERT(!Locked());
     UI->UpdateScene();
     Fvector v=GetPosition();
     v.set(pos);
@@ -120,6 +122,7 @@ void CCustomObject::MoveTo(const Fvector& pos, const Fvector& up)
 
 void CCustomObject::RotatePivot(const Fmatrix& prev_inv, const Fmatrix& current)
 {
+    R_ASSERT(!Locked());
     Fmatrix 		Ol,On;
     Ol.mul			(prev_inv,FTransformRP);
     On.mul			(current,Ol);
@@ -131,6 +134,7 @@ void CCustomObject::RotatePivot(const Fmatrix& prev_inv, const Fmatrix& current)
 
 void CCustomObject::RotateParent(Fvector& axis, float angle)
 {
+    R_ASSERT(!Locked());
     UI->UpdateScene();
     Fvector r	= GetRotation();
     r.mad		(axis,angle);
@@ -139,6 +143,7 @@ void CCustomObject::RotateParent(Fvector& axis, float angle)
 
 void CCustomObject::RotateLocal(Fvector& axis, float angle)
 {
+    R_ASSERT(!Locked());
     Fmatrix m;
     Fvector r;
     m.rotation(axis,angle);
@@ -149,13 +154,14 @@ void CCustomObject::RotateLocal(Fvector& axis, float angle)
 
 void CCustomObject::ScalePivot( const Fmatrix& prev_inv, const Fmatrix& current, Fvector& amount )
 {
+    R_ASSERT(!Locked());
     UI->UpdateScene();
     Fvector p	= GetPosition();
     Fvector s	= GetScale();
-	s.add(amount);
-	if (s.x<EPS) s.x=EPS;
-	if (s.y<EPS) s.y=EPS;
-	if (s.z<EPS) s.z=EPS;
+    s.add(amount);
+    if (s.x<EPS) s.x=EPS;
+    if (s.y<EPS) s.y=EPS;
+    if (s.z<EPS) s.z=EPS;
     SetScale		(s);
 
     // translate position
@@ -167,9 +173,10 @@ void CCustomObject::ScalePivot( const Fmatrix& prev_inv, const Fmatrix& current,
 
 void CCustomObject::Scale( Fvector& amount )
 {
+    R_ASSERT(!Locked());
     UI->UpdateScene();
     Fvector s	= GetScale();
-	s.add(amount);
+    s.add(amount);
     if (s.x<EPS) s.x=EPS;
     if (s.y<EPS) s.y=EPS;
     if (s.z<EPS) s.z=EPS;

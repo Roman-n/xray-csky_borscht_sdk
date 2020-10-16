@@ -86,19 +86,15 @@ enum {
 //------------------------------------------------------------------------------
 
 class CLevelMain: public TUI{
-	typedef TUI inherited;
+    typedef TUI inherited;
     
     virtual void 	RealUpdateScene			();
     virtual void 	RealQuit				();
 public:
-	CInifile*		m_rt_object_props;
     C3DCursor*   	m_Cursor;
 public:
     				CLevelMain 				();
     virtual 		~CLevelMain				();
-
-    void			store_rt_flags			(const CCustomObject* CO);
-    void			restore_rt_flags		(CCustomObject* CO);
 
     virtual LPCSTR	GetCaption				();
 
@@ -114,8 +110,8 @@ public:
     virtual LPCSTR	EditorDesc				(){return "Level Editor";}
 
     void 			ShowContextMenu			(int cls);
-	bool 			PickGround				(Fvector& hitpoint, const Fvector& start, const Fvector& direction, int bSnap=1, Fvector* hitnormal=0);
-	bool 			SelectionFrustum		(CFrustum& frustum);
+    bool 			PickGround				(Fvector& hitpoint, const Fvector& start, const Fvector& direction, int bSnap=1, Fvector* hitnormal=0);
+    bool 			SelectionFrustum		(CFrustum& frustum);
 
     virtual bool 	ApplyShortCut			(WORD Key, TShiftState Shift);
     virtual bool 	ApplyGlobalShortCut		(WORD Key, TShiftState Shift);

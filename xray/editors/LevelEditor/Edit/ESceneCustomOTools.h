@@ -77,6 +77,7 @@ public:
     //--------------------------------------------------------------------------
     IC ObjectList&		GetObjects				(){return m_Objects;}
     IC int				ObjCount				(){return m_Objects.size();}
+    virtual int 		LockObjects				(bool flag, bool bAllowSelectionFlag, bool bSelFlag);
 
 	virtual BOOL 		_AppendObject			(CCustomObject* object);
 	virtual BOOL 		_RemoveObject			(CCustomObject* object);
