@@ -135,7 +135,7 @@ void IM_LeftBar::Render()
 
     if(ImGui::CollapsingPanel("Snap list", &m_show_snaplist))
     {
-    	if(ImGui::BeginMenu("Commands"))
+    	if(ImGui::BeginMenu("Commands##snap_commands"))
         {
         	if(ImGui::MenuItem("Make list from selected"))
             	ExecCommand(COMMAND_SET_SNAP_OBJECTS);
