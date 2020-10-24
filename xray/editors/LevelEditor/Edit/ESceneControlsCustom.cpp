@@ -4,13 +4,8 @@
 #include "ESceneControlsCustom.h"
 #include "ui_leveltools.h"
 #include "scene.h"
-#ifndef NO_VCL
-#include "bottombar.h"
-#endif
 #include "ui_levelmain.h"
-#ifndef NO_VCL
-#include "leftbar.h"
-#endif
+#include "../ImGui/IM_LeftBar.h"
 
 TUI_CustomControl::TUI_CustomControl(int st, int act, ESceneToolBase* parent){
 	parent_tool		= parent; VERIFY(parent);
@@ -110,8 +105,7 @@ bool TUI_CustomControl::AddEnd(TShiftState _Shift)
 
 bool TUI_CustomControl::CheckSnapList(TShiftState Shift)
 {
-#ifndef NO_VCL
-	if (fraLeftBar->ebSnapListMode->Down){
+	if (imLeftBar.m_select_snap_objs_mode){
 	    CCustomObject* O=Scene->RayPickObject(UI->ZFar(),UI->m_CurrentRStart,UI->m_CurrentRNorm,OBJCLASS_SCENEOBJECT,0,0);
         if (O){
             if (Scene->FindObjectInSnapList(O)){
@@ -132,7 +126,6 @@ bool TUI_CustomControl::CheckSnapList(TShiftState Shift)
         	return false;
         }
     }
-#endif
     return false;
 }
 
