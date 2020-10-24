@@ -4,6 +4,7 @@ project(xrSound LANGUAGES C CXX)
 add_library(${PROJECT_NAME} SHARED)
 target_compile_definitions(${PROJECT_NAME} PRIVATE -DXRSOUND_EXPORTS)
 target_link_directories(${PROJECT_NAME} PRIVATE SDK/libraries/x64)
+target_precompile_headers(${PROJECT_NAME} PRIVATE stdafx.h)
 target_sources(${PROJECT_NAME} PRIVATE
 	guids.cpp
 #	MusicStream.cpp

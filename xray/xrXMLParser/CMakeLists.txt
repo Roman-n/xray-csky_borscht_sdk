@@ -3,6 +3,7 @@ project(xrXMLParser LANGUAGES C CXX)
 
 add_library(${PROJECT_NAME} SHARED)
 target_compile_definitions(${PROJECT_NAME} PRIVATE -DXRXMLPARSER_EXPORTS)
+target_precompile_headers(${PROJECT_NAME} PRIVATE stdafx.h)
 target_sources(${PROJECT_NAME} PRIVATE
 	StdAfx.cpp
 	stdafx.h

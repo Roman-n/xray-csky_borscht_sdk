@@ -6,6 +6,8 @@
 //	Description : Precompiled header creator
 ////////////////////////////////////////////////////////////////////////////
 
+#ifdef __cplusplus
+
 #pragma once
 
 #include "../../xrCore/xrCore.h"
@@ -40,4 +42,6 @@ IC	xr_string string2xr_string(LPCSTR s) {return s ? s : "";}
 #	define	THROW					VERIFY
 #	define	THROW2					VERIFY2
 #	define	THROW3					VERIFY3
+#endif
+
 #endif

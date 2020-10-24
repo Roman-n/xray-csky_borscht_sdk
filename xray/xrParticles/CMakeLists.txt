@@ -3,6 +3,7 @@ project(xrParticles LANGUAGES C CXX)
 
 add_library(${PROJECT_NAME} SHARED)
 target_compile_definitions(${PROJECT_NAME} PRIVATE -DXR_PARTICLES_EXPORTS)
+target_precompile_headers(${PROJECT_NAME} PRIVATE stdafx.h)
 target_sources(${PROJECT_NAME} PRIVATE
 	noise.cpp
 	noise.h

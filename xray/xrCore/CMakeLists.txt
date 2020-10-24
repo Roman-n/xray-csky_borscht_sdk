@@ -3,6 +3,7 @@ project(xrCore LANGUAGES C CXX)
 
 add_library(${PROJECT_NAME} SHARED)
 target_compile_definitions(${PROJECT_NAME} PRIVATE -DXRCORE_EXPORTS)
+target_precompile_headers(${PROJECT_NAME} PRIVATE stdafx.h)
 target_sources(${PROJECT_NAME} PRIVATE
 	blackbox/BlackBoxUI.cpp
 	blackbox/BSUFunctions.cpp

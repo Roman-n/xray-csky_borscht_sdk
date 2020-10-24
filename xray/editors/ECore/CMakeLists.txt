@@ -7,6 +7,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 	../..
 	.)
 target_compile_options(${PROJECT_NAME} PRIVATE $<$<CXX_COMPILER_ID:Clang>:-Wno-non-pod-varargs>)
+target_precompile_headers(${PROJECT_NAME} PRIVATE stdafx.h)
 target_sources(${PROJECT_NAME} PRIVATE
 	Editor/ArbitraryList.h
 #	Editor/bone.cpp

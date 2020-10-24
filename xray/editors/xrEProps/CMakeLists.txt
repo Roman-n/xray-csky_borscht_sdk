@@ -4,6 +4,7 @@ project(xrEProps LANGUAGES C CXX)
 add_library(${PROJECT_NAME} SHARED)
 target_compile_definitions(${PROJECT_NAME} PRIVATE -DNO_VCL -D_EDITOR -DXR_EPROPS_EXPORTS)
 target_include_directories(${PROJECT_NAME} PRIVATE ../..)
+target_precompile_headers(${PROJECT_NAME} PRIVATE stdafx.h)
 target_sources(${PROJECT_NAME} PRIVATE
 	ChoseForm.cpp
 #	ChoseForm.ddp

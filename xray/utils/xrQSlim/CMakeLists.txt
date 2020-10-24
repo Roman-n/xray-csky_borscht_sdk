@@ -3,6 +3,7 @@ project(xrQSlim LANGUAGES C CXX)
 
 add_library(${PROJECT_NAME} STATIC)
 target_include_directories(${PROJECT_NAME} PUBLIC SRC)
+target_precompile_headers(${PROJECT_NAME} PRIVATE src/stdafx.h)
 target_sources(${PROJECT_NAME} PRIVATE
 	src/geom3d.h
 	src/mat2.cpp

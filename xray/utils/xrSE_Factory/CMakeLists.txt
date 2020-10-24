@@ -6,6 +6,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE XRSE_FACTORY_EXPORTS)
 target_include_directories(${PROJECT_NAME} PRIVATE
 	.
 	../../xrServerEntities)
+target_precompile_headers(${PROJECT_NAME} PRIVATE stdafx.h)
 target_sources(${PROJECT_NAME} PRIVATE
 	ai_space.cpp
 	ai_space.h

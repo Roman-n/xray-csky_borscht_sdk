@@ -3,6 +3,7 @@ project(xrCDB LANGUAGES C CXX)
 
 add_library(${PROJECT_NAME} SHARED)
 target_compile_definitions(${PROJECT_NAME} PRIVATE -DXRCDB_EXPORTS)
+target_precompile_headers(${PROJECT_NAME} PRIVATE StdAfx.h)
 target_sources(${PROJECT_NAME} PRIVATE
 #	cl_raypick.cpp
 	OPC_AABB.cpp

@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.15)
 project(LWO LANGUAGES C CXX)
 
 add_library(${PROJECT_NAME} SHARED)
+target_precompile_headers(${PROJECT_NAME} PRIVATE StdAfx.h)
 target_sources(${PROJECT_NAME} PRIVATE
 	clip.c
 	envelope.c
