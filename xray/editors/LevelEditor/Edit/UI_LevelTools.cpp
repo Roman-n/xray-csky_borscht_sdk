@@ -50,7 +50,7 @@ TForm*	CLevelTool::GetFrame()
 //---------------------------------------------------------------------------
 bool CLevelTool::OnCreate()
 {
-	inherited::OnCreate();
+    inherited::OnCreate();
     target          = OBJCLASS_DUMMY;
     sub_target		= -1;
     pCurTool       = 0;
@@ -73,11 +73,12 @@ bool CLevelTool::OnCreate()
                                                 TOnCloseEvent(this,&CLevelTool::OnPropsClose),
                           TProperties::plItemFolders|TProperties::plFolderStore|TProperties::plNoClearStore|TProperties::plFullExpand);
 */
-	m_IMProps		= xr_new<IM_PropertiesWnd>("Object Inspector", false,
-    					TOnModifiedEvent(this,&CLevelTool::OnPropsModified),
-                        IM_PropertyTree::TOnItemFocused(NULL),
-                        TOnCloseEvent(this,&CLevelTool::OnPropsClose));
-	UI->AddIMWindow	(m_IMProps);
+    m_IMProps = xr_new<IM_PropertiesWnd>("Object Inspector",
+        TOnModifiedEvent(this,&CLevelTool::OnPropsModified),
+        IM_PropertyTree::TOnItemFocused(NULL),
+        TOnCloseEvent(this,&CLevelTool::OnPropsClose));
+        
+    UI->AddIMWindow(m_IMProps);
 #ifndef NO_VCL
     pObjectListForm = TfrmObjectList::CreateForm();
 #endif

@@ -4,27 +4,27 @@
 #define EditorPreferencesH
 //---------------------------------------------------------------------------
 // refs
-class TProperties;
+class IM_PropertiesWnd;
 
 //---------------------------------------------------------------------------
 enum{
-    epoDrawPivot		= (1<<0),
-    epoDrawAnimPath		= (1<<1),
-    epoDrawJoints		= (1<<2),
-    epoDrawBoneAxis		= (1<<3),
-    epoDrawBoneNames	= (1<<4),
-    epoDrawBoneShapes	= (1<<5),
-    epoShowHint			= (1<<6),
-    epoDrawLOD			= (1<<7),
-    epoDiscardInstance	= (1<<8),
-    epoDeffLoadRB		= (1<<9),
-    epoDeffLoadCF		= (1<<10),
-	epoLZHCompress		= (1<<11)
+    epoDrawPivot      = (1<<0),
+    epoDrawAnimPath   = (1<<1),
+    epoDrawJoints     = (1<<2),
+    epoDrawBoneAxis   = (1<<3),
+    epoDrawBoneNames  = (1<<4),
+    epoDrawBoneShapes = (1<<5),
+    epoShowHint       = (1<<6),
+    epoDrawLOD        = (1<<7),
+    epoDiscardInstance = (1<<8),
+    epoDeffLoadRB      = (1<<9),
+    epoDeffLoadCF      = (1<<10),
+    epoLZHCompress     = (1<<11)
 };
 class ECORE_API CCustomPreferences
 {
 private:	// User declarations
-    TProperties*	m_ItemProps;
+    IM_PropertiesWnd*	IMProps;
 protected:
 	enum
     {

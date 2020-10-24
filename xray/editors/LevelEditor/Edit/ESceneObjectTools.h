@@ -4,6 +4,8 @@
 
 #include "ESceneCustomOTools.h"
 
+class IM_PropertiesWnd;
+
 class ESceneObjectTool: public ESceneCustomOTool
 {
 	typedef ESceneCustomOTool inherited;
@@ -23,8 +25,9 @@ protected:
 	bool 				ExportBreakableObjects	(SExportStreams* F);
 	bool 				ExportClimableObjects	(SExportStreams* F);
 
-	TProperties* 		m_Props;
+    IM_PropertiesWnd*   m_Props;
     void                OnChangeAppendRandomFlags(PropValue* prop);
+    void                OnCloseProps();
 //----------------------------------------------------
 public:
     Fvector				m_AppendRandomMinScale;

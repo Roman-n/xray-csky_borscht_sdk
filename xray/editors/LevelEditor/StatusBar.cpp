@@ -1,10 +1,11 @@
-#include "stdafx.h"
+#include "stdafx.h"	
 #pragma hdrstop
 
 #include <commctrl.h>
 #include "StatusBar.h"
 
 #include "..\ECore\ImGui\IM_Log.h"
+#include "..\ECore\ImGui\IM_PropertyTree.h"
 #include "..\ECore\Editor\ui_main.h"
 #include <xrEngine\igame_persistent.h>
 #include <xrEngine\environment.h>
@@ -43,8 +44,8 @@
 // weather
 #define MI_W_RELOAD   130
 #define MI_W_PROPS    131
-#define MI_W_NONE     131
-#define MI_W_ENTRY    132
+#define MI_W_NONE     132
+#define MI_W_ENTRY    133
 
 #define MI_TIMEFACTOR_005 200
 #define MI_TIMEFACTOR_01  201
@@ -135,17 +136,17 @@ static void CreateOptionsMenu(void)
 	HMENU hmWeather = CreatePopupMenu();
 	AppendMenu(hmWeather, MF_ENABLED|MF_STRING, MI_W_NONE, "none");
 	AppendMenu(hmWeather, MF_SEPARATOR, 0, 0);
-  CEnvironment::EnvsMapIt _I=g_pGamePersistent->Environment().WeatherCycles.begin();
-  CEnvironment::EnvsMapIt _E=g_pGamePersistent->Environment().WeatherCycles.end();
-  for (int idx = 0; _I!=_E; _I++){
-  	int s = 
-  		psDeviceFlags.test(rsEnvironment) && 
-  		g_pGamePersistent->Environment().GetWeather() == _I->first 
-  		? MF_CHECKED : MF_UNCHECKED;
-  		
-    AppendMenu(hmWeather, MF_ENABLED|MF_STRING|s, MI_W_ENTRY+idx, *_I->first);   
+	CEnvironment::EnvsMapIt _I=g_pGamePersistent->Environment().WeatherCycles.begin();
+	CEnvironment::EnvsMapIt _E=g_pGamePersistent->Environment().WeatherCycles.end();
+	for (int idx = 0; _I!=_E; _I++){
+		int s = 
+			psDeviceFlags.test(rsEnvironment) && 
+			g_pGamePersistent->Environment().GetWeather() == _I->first 
+			? MF_CHECKED : MF_UNCHECKED;
+			
+		AppendMenu(hmWeather, MF_ENABLED|MF_STRING|s, MI_W_ENTRY+idx, *_I->first);   
 		idx++;
-  }
+	}
 	AppendMenu(hmWeather, MF_SEPARATOR, 0, 0);
 	AppendMenu(hmWeather, MF_ENABLED|MF_STRING, MI_W_RELOAD, "Reload");
 	AppendMenu(hmWeather, MF_ENABLED|MF_STRING, MI_W_PROPS, "Properties...");
@@ -283,29 +284,77 @@ static BOOL SB_Notify(WPARAM wParam, LPARAM lParam)
 				
 			if(cmd == MI_W_RELOAD)
 			{
-				  Engine.ReloadSettings();
-    	    g_pGamePersistent->Environment().ED_Reload();
-    	}
+				Engine.ReloadSettings();
+				g_pGamePersistent->Environment().ED_Reload();
+			}
 			if(cmd == MI_W_PROPS)
-				; // TODO
+			{
+				class WeatherProps
+				{
+					public:
+					IM_PropertiesWnd *m_wnd;
+					float ft, tt, sp;
+					
+					WeatherProps()
+					{
+						m_wnd = xr_new<IM_PropertiesWnd>("Weather Properties");
+						m_wnd->Modal = true;
+						m_wnd->OnClose.bind(this, &OnClose);
+						m_wnd->OnOK.bind(this, &OnOK);
+						
+						CEnvironment& env	= g_pGamePersistent->Environment();
+						PropItemVec items;
+						ft=env.ed_from_time;
+						tt=env.ed_to_time;
+						sp=env.fTimeFactor;
+						PHelper().CreateTime	(items,"From Time", 	&ft);
+						PHelper().CreateTime	(items,"To Time",   	&tt);
+						PHelper().CreateFloat	(items,"Speed",			&sp, 		1.f,10000.f,1.f,1);
+						
+						m_wnd->AssignItems(items);
+						
+						m_wnd->Open();
+						UI->AddIMWindow(m_wnd);
+					}
+					
+					void OnOK()
+					{
+						CEnvironment& env	= g_pGamePersistent->Environment();
+						env.ed_from_time	= ft;
+						env.ed_to_time		= tt;
+						env.fTimeFactor		= sp;
+					}
+					
+				 	void OnClose()
+					{
+						UI->RemoveIMWindow(m_wnd);
+						xr_delete(m_wnd);
+						
+						WeatherProps *_this = this;
+						xr_delete(_this);
+					}
+				};
+				
+				xr_new<WeatherProps>();
+			}
 			if(cmd == MI_W_NONE)
 			{
-		    psDeviceFlags.set	(rsEnvironment,FALSE);
-    	  g_pGamePersistent->Environment().SetWeather(0);
-        EPrefs->sWeather = "";
-    	}
-    	if(cmd >= MI_W_ENTRY && cmd < MI_TIMEFACTOR_005)
-    	{
-    		char name[256];
-    		if(GetMenuString(hmOptions, cmd, name, 255, MF_BYCOMMAND))
-    		{
+				psDeviceFlags.set	(rsEnvironment,FALSE);
+				g_pGamePersistent->Environment().SetWeather(0);
+				EPrefs->sWeather = "";
+		}
+		if(cmd >= MI_W_ENTRY && cmd < MI_TIMEFACTOR_005)
+		{
+			char name[256];
+			if(GetMenuString(hmOptions, cmd, name, 255, MF_BYCOMMAND))
+			{
 					psDeviceFlags.set	(rsEnvironment,TRUE);
 					g_pGamePersistent->Environment().SetWeather(name);
 					EPrefs->sWeather = name;
-    		}
-    	}
-    	
-    	if(cmd >= MI_TIMEFACTOR_005 && cmd <= MI_TIMEFACTOR_100)
+			}
+		}
+		
+		if(cmd >= MI_TIMEFACTOR_005 && cmd <= MI_TIMEFACTOR_100)
 			{					 
 				switch(cmd)
 				{
@@ -415,9 +464,9 @@ BOOL SB_ProcessMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 					return TRUE;
 				}
 				
-        AnsiString 	txt;
-        float 		p,m;
-        pbi->GetInfo(txt,p,m);
+				AnsiString 	txt;
+				float 		p,m;
+				pbi->GetInfo(txt,p,m);
 				
 				DrawStatusText(s->hDC, &r, txt.c_str(), 0);
 				

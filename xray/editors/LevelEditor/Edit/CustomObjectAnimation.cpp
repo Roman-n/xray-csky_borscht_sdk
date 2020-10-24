@@ -7,6 +7,8 @@
 #include <Layers/xrRender/D3DUtils.h>
 #include "../ECore/Editor/ui_main.h"
 
+#include "../ECore/ImGui/IM_PropertyTree.h"
+
 void  CCustomObject::OnMotionableChange(PropValue* sender)
 {
 	if (m_CO_Flags.is(flMotion)){
@@ -160,44 +162,116 @@ void 	CCustomObject::OnMotionCommandsClick(ButtonValue* value, bool& bModif, boo
     	AnimationDeleteKey	(m_MotionParams->t_current);
     break;
     case 2:{
-#ifndef NO_VCL
-    	TProperties* P 		= TProperties::CreateModalForm("Scale keys");
-        PropItemVec items;
-        float from_time=m_MotionParams->min_t,to_time=m_MotionParams->max_t,scale_factor=1.f;
-		PHelper().CreateFloat	(items,"From Time", 	&from_time, 	from_time, to_time, 	1.f/30.f, 3);
-		PHelper().CreateFloat	(items,"To Time",   	&to_time, 		from_time, to_time, 	1.f/30.f, 3);
-		PHelper().CreateFloat	(items,"Scale",			&scale_factor, 	-1000.f, 1000.f);
-        P->AssignItems		(items);
-        if (mrOk==P->ShowPropertiesModal()){
-        	m_Motion->ScaleKeys(from_time,to_time,scale_factor);
-        }
-        TProperties::DestroyForm(P);
-        float mx; m_Motion->GetLength(0,&mx);
-        if (m_MotionParams->max_t<mx){ 
-        	m_MotionParams->max_t=mx;
-			m_Motion->SetParam	(m_MotionParams->min_t*30.f,m_MotionParams->max_t*30.f,30.f);
-        }
-#endif
+			class ScaleKeysDelegate
+			{
+				public:
+				IM_PropertiesWnd *m_Wnd;
+				
+    		SAnimParams*	m_MotionParams;
+    		COMotion*		m_Motion;
+    		float from_time,to_time,scale_factor;
+				
+				ScaleKeysDelegate(COMotion *motion, SAnimParams *motion_params)
+				{
+					m_Wnd = xr_new<IM_PropertiesWnd>("Scale keys");
+					m_Wnd->Modal = true;
+					m_Wnd->OnOK.bind(this, &OnOK);
+					m_Wnd->OnClose.bind(this, &OnClose);
+					m_Wnd->Open();
+					
+					m_MotionParams = motion_params;
+					m_Motion = motion;
+					
+					from_time=m_MotionParams->min_t;
+					to_time=m_MotionParams->max_t;
+					scale_factor=1.f;
+					
+					PropItemVec items;
+					PHelper().CreateFloat	(items,"From Time", 	&from_time, 	from_time, to_time, 	1.f/30.f, 3);
+					PHelper().CreateFloat	(items,"To Time",   	&to_time, 		from_time, to_time, 	1.f/30.f, 3);
+					PHelper().CreateFloat	(items,"Scale",			&scale_factor, 	-1000.f, 1000.f);
+					m_Wnd->AssignItems(items);
+					
+					UI->AddIMWindow(m_Wnd);
+				}
+				
+				void OnOK()
+				{
+					m_Motion->ScaleKeys(from_time,to_time,scale_factor);
+					float mx; m_Motion->GetLength(0,&mx);
+					if (m_MotionParams->max_t<mx){ 
+						m_MotionParams->max_t=mx;
+						m_Motion->SetParam	(m_MotionParams->min_t*30.f,m_MotionParams->max_t*30.f,30.f);
+        	}
+				}
+				
+				void OnClose()
+				{
+					UI->RemoveIMWindow(m_Wnd);
+					xr_delete(m_Wnd);
+					
+					ScaleKeysDelegate *_this = this;
+					xr_delete(_this);
+				}
+			};
+			
+			xr_new<ScaleKeysDelegate>(m_Motion, m_MotionParams);
     }break;
     case 3:{
-#ifndef NO_VCL
-    	TProperties* P 		= TProperties::CreateModalForm("Normalize keys");
-        PropItemVec items;
-        float from_time=m_MotionParams->min_t,to_time=m_MotionParams->max_t,speed=5.f;
-		PHelper().CreateFloat	(items,"From Time", 	&from_time, 	from_time, to_time, 	1.f/30.f, 3);
-		PHelper().CreateFloat	(items,"To Time",   	&to_time, 		from_time, to_time, 	1.f/30.f, 3);
-		PHelper().CreateFloat	(items,"Speed (m/sec)", &speed, 		0.f, 100.f);
-        P->AssignItems		(items);
-        if (mrOk==P->ShowPropertiesModal()){
-        	m_Motion->NormalizeKeys(from_time,to_time,speed);
-        }
-        TProperties::DestroyForm(P);
-        float mx; m_Motion->GetLength(0,&mx);
-        if (m_MotionParams->max_t<mx){ 
-        	m_MotionParams->max_t=mx;
- 			m_Motion->SetParam	(m_MotionParams->min_t*30.f,m_MotionParams->max_t*30.f,30.f);
-        }
-#endif
+			class NormalizeKeysDelegate
+			{
+				public:
+				IM_PropertiesWnd *m_Wnd;
+				
+    		SAnimParams*	m_MotionParams;
+    		COMotion*		m_Motion;
+    		float from_time,to_time,speed;
+				
+				NormalizeKeysDelegate(COMotion *motion, SAnimParams *motion_params)
+				{
+					m_Wnd = xr_new<IM_PropertiesWnd>("Normalize keys");
+					m_Wnd->Modal = true;
+					m_Wnd->OnOK.bind(this, &OnOK);
+					m_Wnd->OnClose.bind(this, &OnClose);
+					m_Wnd->Open();
+					
+					m_MotionParams = motion_params;
+					m_Motion = motion;
+					
+					from_time=m_MotionParams->min_t;
+					to_time=m_MotionParams->max_t;
+					speed=5.f;
+					
+					PropItemVec items;
+					PHelper().CreateFloat	(items,"From Time", 	&from_time, 	from_time, to_time, 	1.f/30.f, 3);
+					PHelper().CreateFloat	(items,"To Time",   	&to_time, 		from_time, to_time, 	1.f/30.f, 3);
+					PHelper().CreateFloat	(items,"Speed (m/sec)", &speed, 		0.f, 100.f);
+					m_Wnd->AssignItems(items);
+					
+					UI->AddIMWindow(m_Wnd);
+				}
+				
+				void OnOK()
+				{
+					m_Motion->NormalizeKeys(from_time,to_time,speed);
+					float mx; m_Motion->GetLength(0,&mx);
+					if (m_MotionParams->max_t<mx){ 
+						m_MotionParams->max_t=mx;
+						m_Motion->SetParam	(m_MotionParams->min_t*30.f,m_MotionParams->max_t*30.f,30.f);
+        	}
+				}
+				
+				void OnClose()
+				{
+					UI->RemoveIMWindow(m_Wnd);
+					xr_delete(m_Wnd);
+					
+					NormalizeKeysDelegate *_this = this;
+					xr_delete(_this);
+				}
+			};
+			
+			xr_new<NormalizeKeysDelegate>(m_Motion, m_MotionParams);
     }break;
     case 4:{
     	float mn,mx;

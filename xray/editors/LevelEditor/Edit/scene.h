@@ -28,6 +28,7 @@ struct UndoItem {
 #pragma pack( pop )
 
 class TProperties;
+class IM_PropertiesWnd;
 
 struct st_LevelOptions{
 	shared_str		m_FNLevelPath;
@@ -80,7 +81,7 @@ protected:
 	xr_deque<UndoItem> m_UndoStack;
 	xr_deque<UndoItem> m_RedoStack;
 
-	TProperties* m_SummaryInfo;
+	IM_PropertiesWnd* m_SummaryInfo;
 
     ObjectList		m_ESO_SnapObjects; // временно здесь а вообще нужно перенести в ESceneTools
 protected:

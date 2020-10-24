@@ -51,12 +51,28 @@ class ECORE_API IM_PropertyTree : public IM_Window
 		{
 			Clear();
 		}
+		
+		bool operator < (ImTreeNode& other)
+		{
+			return name < other.name;
+		}
+		
+		void Sort()
+		{
+			if(child)
+			{
+				child->sort();
+				for(xr_list<ImTreeNode>::iterator it = child->begin(); it != child->end(); it++)
+					it->Sort();
+			}
+		}
 	};
 
 	ImTreeNode root;
 	xr_list<ImTreeNode*> selected;
 
 	shared_str		editing_node;
+	bool          full_expand;
 
 	ImTreeNode*		GetNodeChild(ImTreeNode &node, const xr_string& name);
 	ImTreeNode*		GetNode(LPCSTR path, bool must_exist);
@@ -102,6 +118,7 @@ class ECORE_API IM_PropertyTree : public IM_Window
 	bool			IsModified();
 
 	//
+	void			RenderShortcut(PropItem* item);
 	void			RenderButton(PropItem* item);
 	void			OpenChooseForm(PropItem* item);
 	void			RenderNumeric(PropItem* item);
@@ -128,15 +145,19 @@ class ECORE_API IM_PropertyTree : public IM_Window
 class ECORE_API IM_PropertiesWnd : public IM_Window
 {
 	public:
-	xr_string m_caption;
 	IM_PropertyTree m_props;
 	bool m_open;
-	bool m_modal;
+	
+	xr_string Caption;
+	bool Modal;
+	bool ShowButtonsBar;
 
-	TOnCloseEvent m_close_event;
+	TOnCloseEvent OnClose;
+	TOnCloseEvent OnOK;
+	TOnCloseEvent OnCancel;
 
 	public:
-	IM_PropertiesWnd(const xr_string& caption, bool modal,
+	IM_PropertiesWnd(const xr_string& caption,
 	TOnModifiedEvent on_modified = NULL, IM_PropertyTree::TOnItemFocused on_focused = NULL, TOnCloseEvent on_close = NULL,
 	char folder_separator = '\\', bool allow_multiselect = false, bool draw_bullets = true);
 

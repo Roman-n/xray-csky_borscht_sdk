@@ -13,13 +13,13 @@
 /*
 	PROP_UNDEF
 	PROP_CAPTION    // yes
-	PROP_SHORTCUT,
+	PROP_SHORTCUT,  // yes
 	PROP_BUTTON,    // yes
 	PROP_CHOOSE,
 	PROP_NUMERIC,   // yes
 	PROP_BOOLEAN,   // yes
 	PROP_FLAG,      // yes
-    PROP_VECTOR,    // yes
+	PROP_VECTOR,    // yes
 	PROP_TOKEN,     // yes
 	PROP_RTOKEN,    // yes
 	PROP_RLIST,     // yes
@@ -27,14 +27,14 @@
 	PROP_FCOLOR,    // yes
 	PROP_VCOLOR,    // yes
 	PROP_RTEXT,     // yes
-    PROP_STEXT,     // yes
+	PROP_STEXT,     // yes
 	PROP_WAVE,
 	PROP_CANVAS,    // yes
-	PROP_TIME,		// yes
+	PROP_TIME,      // yes
 
 	PROP_CTEXT,     // yes
 	PROP_CLIST,     // yes
-    PROP_SH_TOKEN,
+	PROP_SH_TOKEN,
 	PROP_TEXTURE2,
 	PROP_GAMETYPE,  // yes
 */
@@ -106,8 +106,10 @@ void IM_PropertyTree::RenderNode(ImTreeNode& node)
 
 		if(node.child) // folder
 		{
-			ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow|ImGuiTreeNodeFlags_DefaultOpen;
+			ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow;
 
+			if(full_expand)
+				flags |= ImGuiTreeNodeFlags_DefaultOpen;
 			if(node.selected)
 				flags |= ImGuiTreeNodeFlags_Selected;
 
@@ -221,6 +223,13 @@ void IM_PropertyTree::RenderItem(ImTreeNode& node)
 		case PROP_CAPTION:
 		ImGui::AlignTextToFramePadding();
 		ImGui::TextUnformatted(GetDrawText(item).c_str());
+		break;
+		
+		case PROP_SHORTCUT:
+		if(editing_node == item->Key())
+			RenderShortcut(item);
+		else
+			goto click2edit;
 		break;
 
 		case PROP_BUTTON:
@@ -422,9 +431,7 @@ u32 IM_PropertyTree::GetSelectedCount()
 
 void IM_PropertyTree::AssignItems(PropItemVec& items, bool full_expand, bool full_sort)
 {
-	// unused
-	(void)full_expand;
-	(void)full_sort;
+	this->full_expand = true;//full_expand;
 
 	Clear();
 
@@ -432,6 +439,9 @@ void IM_PropertyTree::AssignItems(PropItemVec& items, bool full_expand, bool ful
 	{
 		Add((*it)->Key(), *it);
 	}
+	
+	if(full_sort)
+		root.Sort();
 }
 
 void IM_PropertyTree::Modified()
@@ -445,6 +455,70 @@ void IM_PropertyTree::Modified()
 bool IM_PropertyTree::IsModified()
 {
 	return modified;
+}
+
+void IM_PropertyTree::RenderShortcut(PropItem* item)
+{
+	if(item->m_Flags.is(PropItem::flMixed))
+	{
+		ImGui::AlignTextToFramePadding();
+		ImGui::TextUnformatted(item->GetDrawText().c_str());
+		return;
+	}
+	
+	ImGui::PushID(item);
+	
+	PropValue* V = item->GetFrontValue();
+	ShortcutValue* v = dynamic_cast<ShortcutValue*>(V);
+	
+	u8 key = 0;
+	ImGuiIO& io = ImGui::GetIO();
+	for(int i = 0; i < 256; i++)
+		if(io.KeysDown[i])
+			key = i;
+	
+	char text[256] = "";
+	if(io.KeyShift) strcat(text, "Shift + ");	
+	if(io.KeyCtrl) strcat(text, "Ctrl + ");
+	if(io.KeyAlt) strcat(text, "Alt + ");
+	
+	if(key != 0 && key != VK_CONTROL && key != VK_MENU && key != VK_SHIFT)
+	{
+		char key_name[64];
+		GetKeyNameText(MapVirtualKey(key, 0) << 16, key_name, sizeof(key_name));
+		strcat(text, key_name);
+		
+		xr_shortcut new_val;
+		new_val.key = key;
+		new_val.ext.set(xr_shortcut::flShift, io.KeyShift);
+		new_val.ext.set(xr_shortcut::flCtrl, io.KeyCtrl);
+		new_val.ext.set(xr_shortcut::flAlt, io.KeyAlt);
+		
+		if(item->AfterEdit<ShortcutValue,xr_shortcut>(new_val))
+			if(item->ApplyValue<ShortcutValue,xr_shortcut>(new_val))
+			{
+				Modified();
+				editing_node = NULL;
+			}
+	}
+	
+	if(!text[0])
+		strcpy(text, item->GetDrawText().c_str());
+	
+	ImGui::Button(text);
+	ImGui::SameLine();
+	if(ImGui::Button("Reset"))
+	{
+		xr_shortcut empty;
+		if(item->AfterEdit<ShortcutValue,xr_shortcut>(empty))
+			if(item->ApplyValue<ShortcutValue,xr_shortcut>(empty))
+			{
+				Modified();
+				editing_node = NULL;
+			}
+	}
+	
+	ImGui::PopID();
 }
 
 void IM_PropertyTree::RenderButton(PropItem* item)
@@ -1299,14 +1373,15 @@ void IM_PropertyTree::Render()
 // IM_PropertiesWnd
 // **************************************************************************
 
-IM_PropertiesWnd::IM_PropertiesWnd(const xr_string& caption, bool modal,
+IM_PropertiesWnd::IM_PropertiesWnd(const xr_string& caption,
 	TOnModifiedEvent on_modified, IM_PropertyTree::TOnItemFocused on_focused, TOnCloseEvent on_close,
 	char folder_separator, bool allow_multiselect, bool draw_bullets)
-	: m_caption(caption),
-	  m_close_event(on_close),
+	: Caption(caption),
+	  Modal(false),
+	  ShowButtonsBar(true),
+	  OnClose(on_close),
 	  m_props(folder_separator, allow_multiselect, draw_bullets),
-	  m_open(false),
-	  m_modal(modal)
+	  m_open(false)
 {
 	m_props.OnItemFocused = on_focused;
 	m_props.OnModifiedEvent = on_modified;
@@ -1326,8 +1401,8 @@ void IM_PropertiesWnd::Close()
 {
 	m_open = false;
 	
-	if(!m_close_event.empty())
-		m_close_event();
+	if(!OnClose.empty())
+		OnClose();
 }
 
 IM_PropertyTree& IM_PropertiesWnd::Props()
@@ -1345,24 +1420,54 @@ void IM_PropertiesWnd::Render()
 	if(!m_open)
 		return;
 		
-	ImGui::SetWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
 
-	if(m_modal)
-		ImGui::OpenPopup(m_caption.c_str());
-
-	if(m_modal
-	   ? ImGui::BeginPopupModal(m_caption.c_str(), &m_open)
-	   : ImGui::Begin(m_caption.c_str(), &m_open))
+	if(Modal)
 	{
-		m_props.Render();
-
-		if(m_modal)
+		static float width = ImGui::CalcTextSize("OK").x + ImGui::CalcTextSize("Cancel").x + ImGui::GetStyle().ItemSpacing.x
+			+ ImGui::GetStyle().FramePadding.x * 5;
+		static float height
+			= ImGui::CalcTextSize("OK").y + ImGui::GetStyle().FramePadding.y * 2 + ImGui::GetStyle().ItemSpacing.y;
+        
+		ImGui::OpenPopup(Caption.c_str());
+		if(ImGui::BeginPopupModal(Caption.c_str(), &m_open))
+		{
+			ImGui::BeginChild("ItemProps", ImVec2(0, ShowButtonsBar ? -height : 0), true);
+			m_props.Render();
+			ImGui::EndChild();
+			
+			if(ShowButtonsBar)
+			{
+				ImGui::Indent(ImGui::GetContentRegionAvailWidth() - width);
+				if(ImGui::Button("OK"))
+				{
+					if(!OnOK.empty())
+						OnOK();
+                  
+						m_open = false;
+				}
+          
+				ImGui::SameLine();
+				if(ImGui::Button("Cancel"))
+				{
+					if(!OnCancel.empty())
+						OnCancel();
+                  
+					m_open = false;
+				}
+			}
+			    
 			ImGui::EndPopup();
+		}
+	}
+	else
+	{
+		if(ImGui::Begin(Caption.c_str(), &m_open))
+			m_props.Render();
+      
+		ImGui::End();
 	}
 
 	if(!m_open)
-		Close();
-
-	if(!m_modal)
-		ImGui::End();
+    Close();
 }

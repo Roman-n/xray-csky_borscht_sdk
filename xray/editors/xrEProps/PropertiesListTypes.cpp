@@ -14,7 +14,29 @@ xr_string	ShortcutValue::GetDrawText		(TOnDrawTextEvent OnDrawText)
     if (!OnDrawText.empty())	OnDrawText(this, txt);
     return 			txt;
 #else
-    return {};
+	if(value->key != 0)
+	{	
+		char text[256] = "";
+		char key_name[64];
+		u8 key = value->key;
+	
+		if(value->ext.is(xr_shortcut::flShift)) 
+			strcat(text, "Shift + ");	
+		if(value->ext.is(xr_shortcut::flCtrl)) 
+			strcat(text, "Ctrl + ");
+		if(value->ext.is(xr_shortcut::flAlt)) 
+			strcat(text, "Alt + ");
+			
+		if(key != VK_CONTROL && key != VK_MENU && key != VK_SHIFT)
+		{
+			GetKeyNameText(MapVirtualKey(key, 0) << 16, key_name, sizeof(key_name));
+			strcat(text, key_name);
+		}
+		
+		return text;
+	}
+	else
+		return "None";
 #endif
 }
 

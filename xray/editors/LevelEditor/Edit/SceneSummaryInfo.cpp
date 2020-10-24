@@ -10,6 +10,7 @@
 #include "../ECore/Editor/ui_main.h"
 #include "ui_levelmain.h"
 #include "../ECore/Editor/Library.h"
+#include "../ECore/ImGui/IM_PropertyTree.h"
 
 static SSceneSummary s_summary;
 
@@ -435,13 +436,12 @@ void EScene::CollectSummaryInfo	()
 
 void EScene::ShowSummaryInfo		()
 {
+  // fill items
 	PropItemVec items;
-    // fill items
-    s_summary.FillProp				(items);
-#ifndef NO_VCL
-    m_SummaryInfo->ShowProperties	();
-	m_SummaryInfo->AssignItems		(items);
-#endif
+	s_summary.FillProp(items);
+
+	m_SummaryInfo->AssignItems(items);
+	m_SummaryInfo->Open();
 }
 
 void EScene::ExportSummaryInfo	(LPCSTR f_name)

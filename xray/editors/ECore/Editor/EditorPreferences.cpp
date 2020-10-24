@@ -1,21 +1,20 @@
 //---------------------------------------------------------------------------
 #include "stdafx.h"
-#ifndef NO_VCL
-#include "../../xrEProps/PropertiesList.h"
-#endif
+#include "../ImGui/IM_PropertyTree.h"
 #include "ui_main.h"
 #include "ui_toolscustom.h"
 //---------------------------------------------------------------------------
 CCustomPreferences* EPrefs=0;
+
 //---------------------------------------------------------------------------
 
 CCustomPreferences::CCustomPreferences()
 {
-	// view
+    // view
     view_np				= 0.1f;
     view_fp				= 1500.f;
     view_fov			= deg2rad(60.f);
-	// fog    
+    // fog    
     fog_color			= 0x00555555;
     fog_fogness			= 0.9;
     // camera
@@ -23,7 +22,7 @@ CCustomPreferences::CCustomPreferences()
     cam_fly_alt			= 1.8f;
     cam_sens_rot		= 0.6f;
     cam_sens_move		= 0.6f;
-	// tools mouse
+    // tools mouse
     tools_sens_move		= 0.3f;
     tools_sens_rot		= 0.3f;
     tools_sens_scale	= 0.3f;
@@ -78,21 +77,31 @@ void CCustomPreferences::ApplyValues()
 
 void __stdcall CCustomPreferences::OnClose	()
 {
-	ApplyValues	();	
+    ApplyValues	();	
+    UI->RemoveIMWindow(IMProps);
 }
 //---------------------------------------------------------------------------
 
 
 void CheckValidate(ShortcutValue*, const xr_shortcut& new_val, bool& result)
 {
-	result 					= true; 
+    result 					= true;
+
+    if(new_val.similar(xr_shortcut(0, FALSE, FALSE, FALSE))) // empty shortcut is always free
+        return;
+
+    if(new_val.key==0) { // key == 0 && ext != 0 - invalid
+        result = false;
+        return;
+    }
+	
     ECommandVec& cmds		= GetEditorCommands();
     for (u32 cmd_idx=0; cmd_idx<cmds.size(); cmd_idx++){
-    	SECommand*& CMD		= cmds[cmd_idx];
+        SECommand*& CMD		= cmds[cmd_idx];
         if (CMD&&CMD->editable){
-        	VERIFY(!CMD->sub_commands.empty());
+            VERIFY(!CMD->sub_commands.empty());
 		    for (u32 sub_cmd_idx=0; sub_cmd_idx<CMD->sub_commands.size(); sub_cmd_idx++){
-            	SESubCommand*& SUB_CMD = CMD->sub_commands[sub_cmd_idx];
+            SESubCommand*& SUB_CMD = CMD->sub_commands[sub_cmd_idx];
                 if (SUB_CMD->shortcut.similar(new_val)){ result = false; return;}
             }
         }
@@ -187,14 +196,12 @@ void CCustomPreferences::FillProp(PropItemVec& props)
 void CCustomPreferences::Edit()
 {
     // fill prop
-	PropItemVec props;
-
+    PropItemVec props;
     FillProp						(props);
-
-    #ifndef NO_VCL
-	m_ItemProps->AssignItems		(props);
-    m_ItemProps->ShowPropertiesModal();
-    #endif
+    
+    IMProps->AssignItems(props);
+    IMProps->Open();
+    UI->AddIMWindow(IMProps);
 
     // save changed options
     Save							();
@@ -241,10 +248,10 @@ void CCustomPreferences::Load(CInifile* I)
 
     object_flags.flags	= R_U32_SAFE	("editor_prefs","object_flags"		,object_flags.flags );
 
-	// read recent list    
+    // read recent list    
     for (u32 i=0; i<scene_recent_count; i++){
         AnsiString key = "recent_files_" + std::to_string(i);
-    	shared_str fn  	= R_STRING_SAFE	("editor_prefs",key.c_str(),shared_str("") );
+        shared_str fn  	= R_STRING_SAFE	("editor_prefs",key.c_str(),shared_str("") );
         if (fn.size())
         {
         	AStringIt it =   std::find(scene_recent_list.begin(), scene_recent_list.end(), fn.c_str() ) ;
@@ -301,8 +308,8 @@ void CCustomPreferences::Save(CInifile* I)
 
     for (AStringIt it=scene_recent_list.begin(); it!=scene_recent_list.end(); it++){
         AnsiString L = "recent_files_" + std::to_string(it - scene_recent_list.begin());
-    	AnsiString V = '"' + *it + '"';
-		I->w_string("editor_prefs",L.c_str(),V.c_str());
+        AnsiString V = '"' + *it + '"';
+        I->w_string("editor_prefs",L.c_str(),V.c_str());
     }
     I->w_string("editor_prefs","weather",   sWeather.c_str() );
     // load shortcuts
@@ -312,8 +319,8 @@ void CCustomPreferences::Save(CInifile* I)
 
 void CCustomPreferences::Load()
 {
-	string_path			fn;
-	INI_NAME			(fn);
+    string_path			fn;
+    INI_NAME			(fn);
     CInifile* I			= xr_new<CInifile>(fn, TRUE, TRUE, TRUE);
     Load				(I);
     xr_delete			(I);
@@ -321,12 +328,12 @@ void CCustomPreferences::Load()
 }
 void CCustomPreferences::Save()
 {
-	string_path			fn;
-	INI_NAME			(fn);
+    string_path			fn;
+    INI_NAME			(fn);
     CInifile* I 		= xr_new<CInifile>(fn, FALSE, TRUE, TRUE);
     I->set_override_names(TRUE);
-	Save				(I);
-	xr_delete			(I);
+    Save				(I);
+    xr_delete			(I);
 }
 
 void CCustomPreferences::AppendRecentFile(LPCSTR name)
@@ -337,9 +344,9 @@ void CCustomPreferences::AppendRecentFile(LPCSTR name)
             break;
         }
     }
-	scene_recent_list.insert(scene_recent_list.begin(),name);
-	while (scene_recent_list.size()>=EPrefs->scene_recent_count) 
-    	scene_recent_list.pop_back();
+    scene_recent_list.insert(scene_recent_list.begin(),name);
+    while (scene_recent_list.size()>=EPrefs->scene_recent_count) 
+        scene_recent_list.pop_back();
 
     ExecCommand				(COMMAND_REFRESH_UI_BAR);
 }
@@ -347,18 +354,18 @@ void CCustomPreferences::AppendRecentFile(LPCSTR name)
 
 void CCustomPreferences::OnCreate()
 {
-	Load				();
-    #ifndef NO_VCL
-	m_ItemProps 		= TProperties::CreateModalForm("Editor Preferences",false,0,0,TOnCloseEvent(this,&CCustomPreferences::OnClose),TProperties::plItemFolders|TProperties::plFullSort); //TProperties::plFullExpand TProperties::plFullSort TProperties::plNoClearStore|TProperties::plFolderStore|
-    #endif
+    Load				();
+    
+    IMProps = xr_new<IM_PropertiesWnd>("Editor Preferences");
+    IMProps->Modal = true;
+    IMProps->ShowButtonsBar = false;
+    IMProps->OnClose.bind(this, &CCustomPreferences::OnClose);
 }
 //---------------------------------------------------------------------------
 
 void CCustomPreferences::OnDestroy()
 {
-    #ifndef NO_VCL
-    TProperties::DestroyForm(m_ItemProps);
-    #endif
+    xr_delete		(IMProps);
     Save				();
 }
 //---------------------------------------------------------------------------
