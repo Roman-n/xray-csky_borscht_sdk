@@ -153,6 +153,8 @@ target_sources(${PROJECT_NAME} PRIVATE
 	ImGui/imgui_internal.h
 	ImGui/imgui_user.h
 	ImGui/imgui_widgets.cpp
+	ImGui/ImGuizmo.cpp
+	ImGui/ImGuizmo.h
 	ImGui/imstb_rectpack.h
 	ImGui/imstb_textedit.h
 	ImGui/imstb_truetype.h

@@ -208,6 +208,8 @@ target_sources(${PROJECT_NAME} PRIVATE
 	ImGui/IM_TopBar.h
 	ImGui/IM_ContextMenu.cpp
 	ImGui/IM_ContextMenu.h
+	ImGui/IM_Manipulator.cpp
+	ImGui/IM_Manipulator.h
 	framework.h
 	iniStreamImpl.cpp
 	iniStreamImpl.h

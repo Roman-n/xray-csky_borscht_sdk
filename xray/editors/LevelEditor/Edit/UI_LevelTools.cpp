@@ -18,6 +18,7 @@
 #include "Builder.h"
 
 #include "../../ECore/ImGui/IM_PropertyTree.h"
+#include "../ImGui/IM_Manipulator.h"
 
 #define DETACH_FRAME(a) 	if (a){ (a)->Hide(); 	(a)->Parent = NULL; }
 #define ATTACH_FRAME(a,b)	if (a){ (a)->Parent=(b);(a)->Show(); 		}
@@ -108,7 +109,7 @@ void CLevelTool::Reset()
 //---------------------------------------------------------------------------
 
 bool __fastcall CLevelTool::MouseStart(TShiftState Shift)
-{
+{   
     if(pCurTool && pCurTool->pCurControl)
     {
     	if ((pCurTool->pCurControl->Action()!=etaSelect)&&
@@ -312,17 +313,17 @@ void CLevelTool::ShowProperties(LPCSTR focus_to_item)
         }
     }
 */
-	m_IMProps->Open					();
+    m_IMProps->Open					();
     RealUpdateProperties			();
 
     if(focus_to_item)
-    	m_IMProps->Props().Select	(focus_to_item);
+        m_IMProps->Props().Select	(focus_to_item);
     else
     {
     	if(pCurTool && pCurTool->ClassID!=OBJCLASS_DUMMY)
         {
-           	LPCSTR cn = pCurTool->ClassDesc();
-    		m_IMProps->Props().Select(cn);
+            LPCSTR cn = pCurTool->ClassDesc();
+            m_IMProps->Props().Select(cn);
         }
     }
 
@@ -500,6 +501,9 @@ void CLevelTool::Render()
     }
     // draw cursor
     LUI->m_Cursor->Render();
+    
+    // draw manipulator
+    imManipulator.Render();
 
     inherited::Render		();
 }

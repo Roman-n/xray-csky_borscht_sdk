@@ -23,6 +23,8 @@
 #include "..\ImGui\IM_Window.h"
 #include "..\ImGui\IM_Log.h"
 
+#include "..\ImGui\ImGuizmo.h"
+
 static void ImGui_Init(HWND hwnd, IDirect3DDevice9 *d3ddevice)
 {
 	ImGui::CreateContext();
@@ -466,6 +468,8 @@ void TUI::PrepareRedraw()
 
         ImGui_ImplDX9_NewFrame();
         ImGui::GetIO().DisplaySize = ImVec2(Device.dwWidth, Device.dwHeight);
+        
+        ImGuizmo::BeginFrame();
 
     	if(show_demo_window)
     		ImGui::ShowDemoWindow(&show_demo_window);
