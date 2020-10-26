@@ -37,17 +37,7 @@ void IM_Manipulator::Render()
 			mode = bWorld ? ImGuizmo::WORLD : ImGuizmo::LOCAL;
 			snap = LTools->GetSettings(etfMSnap) ? &Tools->m_MoveSnap : NULL;
 			
-			Fvector center;
-			if(lst.size() == 1) {
-				center = lst.front()->GetPosition();
-			} else {
-				Fbox box;
-				Scene->GetBox(box, lst);
-				box.getcenter(center);
-			}
-			
-			Fmatrix mat, delta = Fidentity;
-			mat.translate(center);
+			Fmatrix mat = lst.front()->FTransformRP, delta = Fidentity;
 			
 			bool m = ImGuizmo::Manipulate(
 				(float*)&Device.mView, 
@@ -59,9 +49,22 @@ void IM_Manipulator::Render()
 				snap
 			);
 			
-			if(m)
-				for(ObjectIt it = lst.begin(); it != lst.end(); it++)
-					(*it)->Move(delta.c);
+			if(m) {
+				if(bWorld) {
+					for(ObjectIt it = lst.begin(); it != lst.end(); it++)
+						(*it)->Move(delta.c);
+				} else {
+					Fmatrix rot_inv = Fmatrix().invert(lst.front()->FTransformR);
+					Fmatrix local_offset = Fmatrix().mul(rot_inv, delta);
+			
+					for(ObjectIt it = lst.begin(); it != lst.end(); it++) {		
+						Fmatrix offset;
+						offset.mul((*it)->FTransformR, local_offset);
+						
+						(*it)->Move(offset.c);
+					}
+				}
+			}
 			
 		} break;
 		
