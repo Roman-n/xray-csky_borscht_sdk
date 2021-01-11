@@ -615,8 +615,8 @@ void IM_PropertyTree::OpenChooseForm(PropItem* item)
 		V->m_Items, TOnChooseFillItems(NULL), V->m_FillParam
 	);
 
-	cf->OnOK = IM_CFCallback(cd, &ChooseDelegate::OnOK);
-	cf->OnClose = IM_CFCallback(cd, &ChooseDelegate::OnClose);
+	cf->OnOK.bind(cd, &ChooseDelegate::OnOK);
+	cf->OnClose.bind(cd, &ChooseDelegate::OnClose);
 
 	shared_str val = V->GetValue();
 	item->BeforeEdit<ChooseValue,shared_str>(val);

@@ -299,8 +299,8 @@ static BOOL SB_Notify(WPARAM wParam, LPARAM lParam)
 					{
 						m_wnd = xr_new<IM_PropertiesWnd>("Weather Properties");
 						m_wnd->Modal = true;
-						m_wnd->OnClose.bind(this, &OnClose);
-						m_wnd->OnOK.bind(this, &OnOK);
+						m_wnd->OnClose.bind(this, &WeatherProps::OnClose);
+						m_wnd->OnOK.bind(this, &WeatherProps::OnOK);
 						
 						CEnvironment& env	= g_pGamePersistent->Environment();
 						PropItemVec items;

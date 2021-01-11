@@ -175,8 +175,8 @@ void 	CCustomObject::OnMotionCommandsClick(ButtonValue* value, bool& bModif, boo
 				{
 					m_Wnd = xr_new<IM_PropertiesWnd>("Scale keys");
 					m_Wnd->Modal = true;
-					m_Wnd->OnOK.bind(this, &OnOK);
-					m_Wnd->OnClose.bind(this, &OnClose);
+					m_Wnd->OnOK.bind(this, &ScaleKeysDelegate::OnOK);
+					m_Wnd->OnClose.bind(this, &ScaleKeysDelegate::OnClose);
 					m_Wnd->Open();
 					
 					m_MotionParams = motion_params;
@@ -231,8 +231,8 @@ void 	CCustomObject::OnMotionCommandsClick(ButtonValue* value, bool& bModif, boo
 				{
 					m_Wnd = xr_new<IM_PropertiesWnd>("Normalize keys");
 					m_Wnd->Modal = true;
-					m_Wnd->OnOK.bind(this, &OnOK);
-					m_Wnd->OnClose.bind(this, &OnClose);
+					m_Wnd->OnOK.bind(this, &NormalizeKeysDelegate::OnOK);
+					m_Wnd->OnClose.bind(this, &NormalizeKeysDelegate::OnClose);
 					m_Wnd->Open();
 					
 					m_MotionParams = motion_params;

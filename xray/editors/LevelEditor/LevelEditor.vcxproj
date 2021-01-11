@@ -170,6 +170,7 @@
     <ClInclude Include="..\..\Layers\xrRender\DetailManager.h" />
     <ClInclude Include="..\..\xrServerEntities\gametype_chooser.h" />
     <ClInclude Include="..\..\xrServerEntities\LevelGameDef.h" />
+    <ClInclude Include="Edit\AppendObjectInfoForm.h" />
     <ClInclude Include="Edit\Builder.h" />
     <ClInclude Include="Edit\Cursor3D.h" />
     <ClInclude Include="Edit\Custom2DProjector.h" />
@@ -227,6 +228,7 @@
     <ClInclude Include="Edit\UI_LevelTools.h" />
     <ClInclude Include="Edit\WayPoint.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="ImGui\IM_ContextMenu.h" />
     <ClInclude Include="ImGui\IM_FrameAIMap.h" />
     <ClInclude Include="ImGui\IM_FrameDetail.h" />
     <ClInclude Include="ImGui\IM_FrameFogVol.h" />
@@ -240,6 +242,7 @@
     <ClInclude Include="ImGui\IM_FrameSpawn.h" />
     <ClInclude Include="ImGui\IM_FrameWayPoint.h" />
     <ClInclude Include="ImGui\IM_LeftBar.h" />
+    <ClInclude Include="ImGui\IM_Manipulator.h" />
     <ClInclude Include="ImGui\IM_TopBar.h" />
     <ClInclude Include="iniStreamImpl.h" />
     <ClInclude Include="LevelEditor.h" />
@@ -257,6 +260,7 @@
     <ClCompile Include="..\..\Layers\xrRender\DetailManager_VS.cpp" />
     <ClCompile Include="..\..\xrServerEntities\gametype_chooser.cpp" />
     <ClCompile Include="..\..\xrServerEntities\LevelGameDef.cpp" />
+    <ClCompile Include="Edit\AppendObjectInfoForm.cpp" />
     <ClCompile Include="Edit\Builder.cpp" />
     <ClCompile Include="Edit\BuilderCF.cpp" />
     <ClCompile Include="Edit\BuilderCore.cpp" />
@@ -357,6 +361,7 @@
     <ClCompile Include="Edit\UI_LevelMain.cpp" />
     <ClCompile Include="Edit\UI_LevelTools.cpp" />
     <ClCompile Include="Edit\WayPoint.cpp" />
+    <ClCompile Include="ImGui\IM_ContextMenu.cpp" />
     <ClCompile Include="ImGui\IM_FrameAIMap.cpp" />
     <ClCompile Include="ImGui\IM_FrameDetail.cpp" />
     <ClCompile Include="ImGui\IM_FrameFogVol.cpp" />
@@ -370,6 +375,7 @@
     <ClCompile Include="ImGui\IM_FrameSpawn.cpp" />
     <ClCompile Include="ImGui\IM_FrameWayPoint.cpp" />
     <ClCompile Include="ImGui\IM_LeftBar.cpp" />
+    <ClCompile Include="ImGui\IM_Manipulator.cpp" />
     <ClCompile Include="ImGui\IM_TopBar.cpp" />
     <ClCompile Include="iniStreamImpl.cpp" />
     <ClCompile Include="LevelEditor.cpp" />

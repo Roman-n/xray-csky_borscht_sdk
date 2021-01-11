@@ -498,6 +498,9 @@
     <ClInclude Include="ImGui\IM_ImageEditor.h">
       <Filter>imgui</Filter>
     </ClInclude>
+    <ClInclude Include="ImGui\ImGuizmo.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -1026,6 +1029,9 @@
       <Filter>NvMender2003</Filter>
     </ClCompile>
     <ClCompile Include="ImGui\IM_ImageEditor.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\ImGuizmo.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
   </ItemGroup>

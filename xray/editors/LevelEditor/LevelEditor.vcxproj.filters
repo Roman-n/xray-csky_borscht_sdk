@@ -276,6 +276,15 @@
     <ClInclude Include="StatusBar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ImGui\IM_Manipulator.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit\AppendObjectInfoForm.h">
+      <Filter>Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\IM_ContextMenu.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LevelEditor.cpp">
@@ -655,6 +664,15 @@
     </ClCompile>
     <ClCompile Include="StatusBar.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\IM_Manipulator.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit\AppendObjectInfoForm.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\IM_ContextMenu.cpp">
+      <Filter>ImGui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
