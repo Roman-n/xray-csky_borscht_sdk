@@ -58,6 +58,7 @@
 */
 
 #define DO_NO_WAVING	0x0001
+#define DO_NORMAL_ALIGN 0x0002
 
 struct DetailHeader
 {

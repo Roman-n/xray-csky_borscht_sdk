@@ -210,6 +210,7 @@ void TfrmDOShuffle::OnItemFocused(TElTree* tv)
 		PHelper().CreateFloat	(items,"Min Scale",	&dd->m_fMinScale, 		0.1f, 100.0f);
 		PHelper().CreateFloat	(items,"Max Scale",	&dd->m_fMaxScale,		0.1f, 100.f);
 		PHelper().CreateFlag32	(items,"No Waving",	&dd->m_Flags, DO_NO_WAVING);
+		PHelper().CreateFlag32	(items,"Normal Alignment", &dd->m_Flags, DO_NORMAL_ALIGN);
     }
     m_ObjectProps->AssignItems	(items);
     if (!bTHMLockRepaint) 	paImage->Repaint();

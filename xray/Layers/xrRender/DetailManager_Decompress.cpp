@@ -187,6 +187,8 @@ void		CDetailManager::cache_Decompress(Slot* S)
 			float y		= D.vis.box.min.y-5;
 			Fvector	dir; dir.set(0,-1,0);
 
+			Fvector _N;
+
 			float		r_u,r_v,r_range;
 			for (u32 tid=0; tid<triCount; tid++)
 			{
@@ -202,7 +204,10 @@ Device.Statistic->TEST0.End		();
 					{
 						if (r_range>=0)	{
 							float y_test	= Item_P.y - r_range;
-							if (y_test>y)	y = y_test;
+							if (y_test>y) {
+								y = y_test;
+								_N.mknormal(verts[0], verts[1], verts[2]);
+							}
 						}
 					}
 				}
@@ -217,7 +222,10 @@ Device.Statistic->TEST0.End		();
 				{
 					if (r_range>=0)	{
 						float y_test	= Item_P.y - r_range;
-						if (y_test>y)	y = y_test;
+						if (y_test>y) {
+							y = y_test;
+							_N.mknormal(verts[0], verts[1], verts[2]);
+						}
 					}
 				}
 #endif
@@ -241,6 +249,17 @@ Device.Statistic->TEST0.End		();
 #else
 			Item.mRotY.rotateY				(0);
 #endif
+			if(Dobj->m_Flags.is(DO_NORMAL_ALIGN)) {
+				Fmatrix m;
+
+				m.i.crossproduct(_N, Fvector().set(0,0,1));
+				m.i.normalize();
+
+				m.j = _N;
+				m.k.crossproduct(m.i, _N);
+
+				Item.mRotY.mulA_43(m);
+			}
 
 			Item.mRotY.translate_over		(Item_P);
 			mScale.scale					(Item.scale,Item.scale,Item.scale);
