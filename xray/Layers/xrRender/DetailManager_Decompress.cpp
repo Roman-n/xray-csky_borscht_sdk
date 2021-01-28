@@ -224,7 +224,7 @@ Device.Statistic->TEST0.End		();
 						float y_test	= Item_P.y - r_range;
 						if (y_test>y) {
 							y = y_test;
-							_N.mknormal(verts[0], verts[1], verts[2]);
+							_N.mknormal(Tv[0], Tv[1], Tv[2]);
 						}
 					}
 				}
