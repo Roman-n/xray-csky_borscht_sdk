@@ -104,7 +104,7 @@ void saveWeather(shared_str name, const xr_vector<CEnvDescriptor*>& env)
         f.w_float(el->m_identifier.c_str(), "sun_longitude", rad2deg(el->sun_dir.getP()));
     }
     string_path fileName;
-    FS.update_path(fileName, "$game_weathers$", name.c_str());
+    FS.update_path(fileName, "$game_weathers$", (GamePersistent().Environment().weathersSubDir() + name.c_str()).c_str());
     strconcat(sizeof(fileName), fileName, fileName, ".ltx");
     f.save_as(fileName);
 }

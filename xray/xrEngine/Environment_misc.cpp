@@ -665,13 +665,31 @@ CEnvDescriptor* CEnvironment::create_descriptor	(shared_str const& identifier, C
 	return			(result);
 }
 
+extern u32 renderer_value;
+const char* render_str()
+{
+    switch (renderer_value) {
+    case 0:
+        return "r1\\";
+    case 1:
+    case 2:
+    case 3:
+        return "r2\\";
+    case 4:
+        return "r3\\";
+    }
+    return "";
+}
+
 void CEnvironment::load_weathers		()
 {
 	if (!WeatherCycles.empty())
 		return;
 
+    m_weathersDir = FS.exist("$game_weathers$", render_str()) ? render_str() : "";
+
 	typedef xr_vector<LPSTR>		file_list_type;
-	file_list_type*					file_list = FS.file_list_open("$game_weathers$","");
+	file_list_type*					file_list = FS.file_list_open("$game_weathers$", m_weathersDir.c_str());
 	VERIFY							(file_list);
 
 	file_list_type::const_iterator	i = file_list->begin();
@@ -690,7 +708,7 @@ void CEnvironment::load_weathers		()
 		EnvVec& env					= WeatherCycles[identifier];
 
 		string_path					file_name;
-		FS.update_path				(file_name, "$game_weathers$", identifier);
+		FS.update_path				(file_name, "$game_weathers$", (m_weathersDir + identifier).c_str());
 		strcat_s					(file_name, ".ltx");
 		CInifile*					config = CInifile::Create(file_name);
 

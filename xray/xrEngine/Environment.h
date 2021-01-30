@@ -353,6 +353,11 @@ public:
 	float						p_sun_color;
 	float						p_fog_color;
 	bool m_dynamicSun;
+
+	xr_string weathersSubDir() const { return m_weathersDir; }
+
+private:
+    xr_string m_weathersDir;
 };
 
 ENGINE_API extern Flags32	psEnvFlags;
