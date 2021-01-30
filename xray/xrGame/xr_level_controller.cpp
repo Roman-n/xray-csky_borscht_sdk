@@ -277,12 +277,6 @@ _keyboard* dik_to_ptr(int _dik, bool bSafe)
 	return			NULL;
 }
 
-int	keyname_to_dik (LPCSTR _name)
-{
-	_keyboard* _kb = keyname_to_ptr(_name);
-	return _kb->dik;
-}
-
 _keyboard*	keyname_to_ptr(LPCSTR _name)
 {
 	int idx =0;
@@ -294,7 +288,7 @@ _keyboard*	keyname_to_ptr(LPCSTR _name)
 		++idx;
 	}	
 
-	Msg				("! cant find corresponding [_keyboard*] for keyname %s", _name);
+	Msg				("! wrong keyname %s", _name);
 	return			NULL;
 }
 
@@ -557,8 +551,8 @@ public:
 		_GetItems				(args,0,cnt-1,console_command,' ');
 		_GetItem				(args,cnt-1,key,' ');
 
-		int dik					= keyname_to_dik(key);
-		bindConsoleCmds.bind	(dik, console_command);
+        if (auto kbd = keyname_to_ptr(key); kbd)
+			bindConsoleCmds.bind	(kbd->dik, console_command);
 	}
 
 	virtual void Save(IWriter* F) 
@@ -577,8 +571,8 @@ public:
 
 	virtual void Execute(LPCSTR args) 
 	{
-		int _dik = keyname_to_dik	(args);
-		bindConsoleCmds.unbind		(_dik);
+		if (auto kbd = keyname_to_ptr(args); kbd)
+			bindConsoleCmds.unbind(kbd->dik);
 	}
 };
 
