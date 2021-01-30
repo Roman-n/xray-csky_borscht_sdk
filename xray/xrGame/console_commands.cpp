@@ -1017,7 +1017,7 @@ public:
 private:
     static float m_dummy;
 };
-float CCC_PHFps::m_dummy = 0.0f;
+float CCC_PHFps::m_dummy = 1.f / fixed_step;
 
 #ifdef DEBUG
 extern void print_help(lua_State *L);
