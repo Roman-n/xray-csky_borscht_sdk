@@ -390,6 +390,16 @@ bool CSE_SmartCover::can_save			() const
 	return						(true);
 }
 
+bool CSE_SmartCover::can_switch_online	() const
+{
+	return						(true);
+}
+
+bool CSE_SmartCover::can_switch_offline	() const
+{
+	return						(false);
+}
+
 bool CSE_SmartCover::interactive		() const
 {
 	return						(false);
@@ -1284,6 +1294,11 @@ CSE_ALifeSpaceRestrictor::CSE_ALifeSpaceRestrictor	(LPCSTR caSection) : CSE_ALif
 
 CSE_ALifeSpaceRestrictor::~CSE_ALifeSpaceRestrictor	()
 {
+}
+
+bool CSE_ALifeSpaceRestrictor::can_switch_offline	() const
+{
+	return						(false);
 }
 
 bool CSE_ALifeSpaceRestrictor::used_ai_locations	() const

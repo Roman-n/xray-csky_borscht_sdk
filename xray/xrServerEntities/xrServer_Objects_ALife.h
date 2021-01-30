@@ -328,6 +328,8 @@ public:
 	virtual ISE_Shape*  __stdcall	shape					();
 	virtual bool					used_ai_locations		() const;
 	virtual bool					can_save				() const;
+	virtual bool					can_switch_online		() const;
+	virtual bool					can_switch_offline		() const;
 	virtual bool					interactive				() const;
 #ifdef XRSE_FACTORY_EXPORTS
 	virtual void 		__stdcall	on_render				(CDUInterface* du, ISE_AbstractLEOwner* owner, bool bSelected, const Fmatrix& parent,int priority, bool strictB2F);
@@ -371,6 +373,7 @@ SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeSpaceRestrictor,CSE_ALifeDynamicObject,CSE
 									CSE_ALifeSpaceRestrictor	(LPCSTR caSection);
 	virtual							~CSE_ALifeSpaceRestrictor	();
 	virtual ISE_Shape*  __stdcall	shape						();
+	virtual bool					can_switch_offline			() const;
 	virtual bool					used_ai_locations			() const;
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeSpaceRestrictor)
