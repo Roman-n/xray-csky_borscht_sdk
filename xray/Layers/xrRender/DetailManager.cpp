@@ -230,8 +230,10 @@ void CDetailManager::Load		()
 void CDetailManager::Unload		()
 {
 #ifndef _EDITOR
-	m_mask._get()->releaseData();
-	m_mask.destroy();
+    if (m_mask) {
+        m_mask._get()->releaseData();
+        m_mask.destroy();
+    }
 #endif
 
 	if (UseVS())	hw_Unload	();
