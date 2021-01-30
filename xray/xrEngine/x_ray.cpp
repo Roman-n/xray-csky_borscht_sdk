@@ -203,9 +203,7 @@ void destroyEngine	()
 
 void execUserScript				( )
 {
-// Execute script
-
-	Console->Execute			("unbindall");
+	Console->Execute			("default_controls");
 	Console->ExecuteScript		(Console->ConfigFile);
 }
 void slowdownthread	( void* )
