@@ -17,3 +17,4 @@ Flags32		psDeviceFlags		= {rsFullscreen|rsDetails|mtPhysics|mtSound|mtNetwork|rs
 
 // textures 
 int			psTextureLOD		= 0;
+u32			renderer_value		= 0;

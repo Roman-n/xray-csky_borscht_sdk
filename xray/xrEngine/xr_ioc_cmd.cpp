@@ -506,7 +506,6 @@ public:
 ENGINE_API BOOL r2_sun_static = TRUE;
 ENGINE_API BOOL r2_advanced_pp = FALSE;	//	advanced post process and effects
 
-u32	renderer_value	= 0;
 //void fill_render_mode_list();
 //void free_render_mode_list();
 

@@ -665,7 +665,6 @@ CEnvDescriptor* CEnvironment::create_descriptor	(shared_str const& identifier, C
 	return			(result);
 }
 
-extern u32 renderer_value;
 const char* render_str()
 {
     switch (renderer_value) {
