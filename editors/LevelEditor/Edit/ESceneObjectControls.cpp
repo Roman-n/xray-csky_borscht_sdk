@@ -31,7 +31,7 @@ bool TUI_ControlObjectAdd::Start(TShiftState Shift)
         if (ot->IsAppendRandomActive()&&ot->m_AppendRandomObjects.size()){
 			N = ot->m_AppendRandomObjects[::Random.randI(ot->m_AppendRandomObjects.size())].c_str();
         }else{
-            N = ((TfraObject*)parent_tool->pFrame)->Current();
+            N = fraObject->Current();
             if(!N){
                 ELog.DlgMsg(mtInformation,"Nothing selected.");
                 return false;

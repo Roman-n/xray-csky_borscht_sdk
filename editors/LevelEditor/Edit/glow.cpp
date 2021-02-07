@@ -235,7 +235,7 @@ void CGlow::SaveStream(IWriter& F)
 void CGlow::FillProp(LPCSTR pref, PropItemVec& items)
 {
 	inherited::FillProp(pref, items);
-    PropValue* V=0;
+    PropValue* V;
     V=PHelper().CreateChoose	(items,PrepareKey(pref,"Texture"), 	&m_TexName,		smTexture);	V->OnChangeEvent.bind(this,&CGlow::ShaderChange);
     V=PHelper().CreateChoose	(items,PrepareKey(pref,"Shader"),	&m_ShaderName,	smEShader);	V->OnChangeEvent.bind(this,&CGlow::ShaderChange);
     PHelper().CreateFloat		(items,PrepareKey(pref,"Radius"),	&m_fRadius,		0.01f,10000.f);

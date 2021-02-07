@@ -29,7 +29,6 @@ void TUI_ControlSectorAdd::OnExit()
 {
     TfraSector* fraSector = (TfraSector*)parent_tool->pFrame; VERIFY(fraSector);
     fraSector->paSectorActions->Hide();
-	fraSector = 0;
 }
 
 void TUI_ControlSectorAdd::AddMesh(){
