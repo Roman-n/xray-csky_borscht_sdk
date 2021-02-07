@@ -28,12 +28,13 @@ CGlow::CGlow(LPVOID data, LPCSTR name):CCustomObject(data,name){
 }
 
 void CGlow::Construct(LPVOID data){
-	ClassID		= OBJCLASS_GLOW;
-    m_GShader   = 0;
-    m_fRadius	= 0.5f;
-    m_bDefLoad	= false;
-    m_Flags.zero();
-    m_ShaderName= "effects\\glow";
+	ClassID      = OBJCLASS_GLOW;
+	m_GShader    = 0;
+	m_fRadius    = 0.5f;
+	m_bDefLoad   = false;
+	m_Flags.zero ();
+	m_ShaderName = "effects\\glow";
+	m_TexName    = "glow\\glow_white";
 }
 
 CGlow::~CGlow()
