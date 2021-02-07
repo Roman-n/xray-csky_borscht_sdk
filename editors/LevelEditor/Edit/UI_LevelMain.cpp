@@ -1018,6 +1018,18 @@ CCommandVar CommandRunScript(CCommandVar p1, CCommandVar p2)
 	return						TRUE;
 }
 
+#include "ESceneGroupTools.h"
+CCommandVar CommandCreateGroup(CCommandVar p1, CCommandVar p2)
+{
+	ESceneGroupTool *tool = dynamic_cast<ESceneGroupTool*>(
+		Scene->GetTool(OBJCLASS_GROUP)); VERIFY(tool);
+
+	tool->GroupObjects();
+	ExecCommand(COMMAND_CHANGE_TARGET, OBJCLASS_GROUP);
+
+	return TRUE;
+}
+
 void CLevelMain::RegisterCommands()
 {
 	inherited::RegisterCommands	();
@@ -1118,7 +1130,8 @@ void CLevelMain::RegisterCommands()
 	REGISTER_CMD_S	    (COMMAND_CREATE_SOUND_LIB,          CommandCreateSoundLib);
 	REGISTER_CMD_SE	    (COMMAND_TOGGLE_AIMAP_VISIBILITY,   "Visibility\\Toggle AIMap",			CommandToggleAiMapVisibility,true);
 	REGISTER_CMD_S	    (COMMAND_SHOW_CLIP_EDITOR,			CommandShowClipEditor);
-    REGISTER_CMD_S		(COMMAND_RUN_SCRIPT,				CommandRunScript);
+	REGISTER_CMD_S		(COMMAND_RUN_SCRIPT,				CommandRunScript);
+	REGISTER_CMD_SE		(COMMAND_CREATE_GROUP, 				"Edit\\Create Group",			CommandCreateGroup,true);
 
 }
 

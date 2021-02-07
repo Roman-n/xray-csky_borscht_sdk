@@ -79,7 +79,8 @@ enum {
     COMMAND_SHOWCONTEXTMENU,
     COMMAND_SHOW_CLIP_EDITOR,
 
-    COMMAND_RUN_SCRIPT
+	COMMAND_RUN_SCRIPT,
+	COMMAND_CREATE_GROUP
 };
 //------------------------------------------------------------------------------
 
