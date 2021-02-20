@@ -289,9 +289,9 @@ void CRenderDevice::on_idle		()
 	if ( (!Device.dwPrecacheFrame) && (!g_SASH.IsBenchmarkRunning()) && g_bLoaded)
 		g_SASH.StartBenchmark();
 
-	ImGui_NewFrame();
-
 	FrameMove();
+
+	ImGui_NewFrame();
 
 	// Precache
 	if (dwPrecacheFrame)
