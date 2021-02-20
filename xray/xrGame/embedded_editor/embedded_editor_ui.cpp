@@ -237,6 +237,7 @@ void showWndHud()
     bool open = true;
     ImGui::SetNextWindowBgAlpha(0.0f);
     ImGui::SetNextWindowSize(io.DisplaySize);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
     ImGui::Begin("ALL_SCREEN", &open,
         ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar
             | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoFocusOnAppearing
@@ -251,6 +252,7 @@ void showWndHud()
 
     ImGui::PopClipRect();
     ImGui::End();
+    ImGui::PopStyleVar();
 }
 
 void showUiEditor(bool& show)
