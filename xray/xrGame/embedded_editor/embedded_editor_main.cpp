@@ -1,6 +1,7 @@
 #include "stdAfx.h"
 #include "embedded_editor_main.h"
 #include "../../xrEngine/xr_input.h"
+#include "../../xrEngine/xr_ioconsole.h"
 #include "../xr_level_controller.h"
 #include "embedded_editor.h"
 #include "embedded_editor_ae.h"
@@ -40,8 +41,6 @@ enum class EditorStage {
     None,
     Light,
     Full,
-
-    Count,
 };
 EditorStage stage = EditorStage::None;
 
@@ -141,22 +140,12 @@ void ShowEditor()
 bool isRControl = false, isLControl = false, isRShift = false, isLShift = false;
 bool Editor_KeyPress(int key)
 {
-    if (key == DIK_F10)
-        stage = static_cast<EditorStage>((static_cast<int>(stage) + 1) % static_cast<int>(EditorStage::Count));
-    else if (key == DIK_RALT || key == DIK_LALT)
-        isAlt = true;
-
     if (!IsEditorActive())
         return false;
 
     ImGuiIO& io = ImGui::GetIO();
-    io.MouseDrawCursor = true;
 
     switch (key) {
-    case DIK_RALT:
-    case DIK_LALT:
-    case DIK_F10:
-        break;
     case DIK_RCONTROL:
         isRControl = true;
         io.KeyCtrl = true;
@@ -209,18 +198,28 @@ bool Editor_KeyPress(int key)
             }
         }
     }
+
+    EGameActions action = get_binded_action(key);
+    switch (action) {
+    case kSCREENSHOT:
+        Render->Screenshot();
+        break;
+    case kCONSOLE:
+        Console->Show();
+        break;
+    case kEDITOR:
+        SwitchEditor(true);
+        break;
+    }
     return true;
 }
 
 bool Editor_KeyRelease(int key)
 {
-    if (key == DIK_RALT || key == DIK_LALT)
-        isAlt = false;
-    bool active = IsEditorActive();
+    if (!IsEditorActive())
+        return false;
 
     ImGuiIO& io = ImGui::GetIO();
-    if (!active)
-        io.MouseDrawCursor = false;
 
     switch (key) {
     case DIK_RCONTROL:
@@ -252,7 +251,7 @@ bool Editor_KeyRelease(int key)
         if (key < 512)
             io.KeysDown[key] = false;
     }
-    return active;
+    return true;
 }
 
 bool Editor_KeyHold(int key)
@@ -283,4 +282,26 @@ bool Editor_MouseWheel(int direction)
     ImGuiIO& io = ImGui::GetIO();
     io.MouseWheel += direction > 0 ? +1.0f : -1.0f;
     return true;
+}
+
+void SwitchEditor(bool allowInteractive)
+{
+    switch (stage) {
+    case EditorStage::None:
+        stage = EditorStage::Light;
+        break;
+    case EditorStage::Light:
+        if (allowInteractive) {
+            stage = EditorStage::Full;
+            ImGuiIO& io = ImGui::GetIO();
+            io.MouseDrawCursor = true;
+        } else
+            stage = EditorStage::None;
+        break;
+    case EditorStage::Full:
+        stage = EditorStage::None;
+        ImGuiIO& io = ImGui::GetIO();
+        io.MouseDrawCursor = false;
+        break;
+    }
 }

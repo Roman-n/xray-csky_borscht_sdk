@@ -1,5 +1,6 @@
 #pragma once
 
+void SwitchEditor(bool allowInteractive);
 void ShowEditor();
 bool IsEditor();
 bool Editor_KeyPress(int key);

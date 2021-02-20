@@ -165,6 +165,9 @@ void CLevel::IR_OnKeyboardPress	(int key)
 			R_ASSERT2				(ai().script_engine().functor("sim_combat.start_attack",functor),"failed to get sim_combat.start_attack functor");
 			functor					();
 		}break;
+    case kEDITOR:
+		SwitchEditor(true);
+        break;
 	};
 
 	if ( !bReady || !b_ui_exist )			return;

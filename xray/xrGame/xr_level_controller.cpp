@@ -97,8 +97,9 @@ _action  actions[]		= {
 	{ "use_medkit",			kUSE_MEDKIT				,_sp},		
 	{ "quick_save",			kQUICK_SAVE				,_sp},		
 	{ "quick_load",			kQUICK_LOAD				,_sp},		
-	{ "alife_command",		kALIFE_CMD				,_sp},		
-	
+	{ "alife_command",		kALIFE_CMD				,_sp},
+
+	{ "editor",				kEDITOR					,_sp},	
 																
 	{ NULL, 				kLASTACTION				,_both}		
 };															

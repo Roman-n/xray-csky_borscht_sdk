@@ -91,6 +91,8 @@ enum	EGameActions
 	kQUICK_LOAD,
 	kALIFE_CMD,
 
+	kEDITOR,
+
 	kLASTACTION,
 	kNOTBINDED,
 	kFORCEDWORD		= u32(-1)
