@@ -255,8 +255,10 @@ void CUIMainIngameWnd::Draw()
 
 	CUIWindow::Draw();
 
-	UIZoneMap->visible = true;
-	UIZoneMap->Render();
+	if (psHUD_Flags.is(HUD_MINIMAP)) {
+		UIZoneMap->visible = true;
+		UIZoneMap->Render();
+	}
 
 	RenderQuickInfos();		
 }
@@ -290,7 +292,9 @@ void CUIMainIngameWnd::Update()
 		return;
 	}
 
-	UIZoneMap->Update();
+	if (psHUD_Flags.is(HUD_MINIMAP)) {
+		UIZoneMap->Update();
+	}
 	
 //	UIHealthBar.SetProgressPos	(m_pActor->GetfHealth()*100.0f);
 	UIMotionIcon.SetPower		(m_pActor->conditions().GetPower()*100.0f);

@@ -15,6 +15,7 @@ enum HUD_Flags : u32 {
     HUD_CROSSHAIR_RT2 = 1 << 9,
     HUD_DRAW_RT = 1 << 10,
     HUD_WEAPON_RT2 = 1 << 11,
+    HUD_MINIMAP = 1 << 12,
 };
 
 class ENGINE_API IRender_Visual;
