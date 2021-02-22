@@ -92,7 +92,7 @@ struct	hdrNODES
 #pragma pack(push,1)
 #pragma pack(1)
 #ifndef _EDITOR
-class NodePosition {
+class NodePosition6 {
 	u8	data[5];
 	
 	ICF	void xz	(u32 value)	{ CopyMemory	(data,&value,3);		}
@@ -121,7 +121,7 @@ public:
 	friend struct	CNodePositionConverter;
 };
 
-struct NodeCompressed {
+struct NodeCompressed11 {
 public:
 	u8				data[13];
 	static const u32 NODE_BIT_COUNT = 25;
@@ -192,7 +192,7 @@ public:
 	SCover			high;
 	SCover			low;
 	u16				plane;
-	NodePosition	p;
+	NodePosition6	p;
 	// 13 + 2 + 2 + 2 + 5 = 24 bytes
 
 	ICF	u32	link(u8 index) const
@@ -217,7 +217,7 @@ public:
 	friend class	CRenumbererConverter;
 };
 
-struct NodeCompressed_v10 {
+struct NodeCompressed10 {
 public:
 	u8				data[12];
 private:
@@ -282,7 +282,7 @@ public:
 	SCover			high;
 	SCover			low;
 	u16				plane;
-	NodePosition	p;
+	NodePosition6	p;
 	// 32 + 16 + 40 + 92 = 180 bits = 24.5 bytes => 25 bytes
 
 	ICF	u32	link(u8 index) const
@@ -355,7 +355,7 @@ public:
 	u16				cover2 : 4;
 	u16				cover3 : 4;
 	u16				plane;
-	NodePosition	p;
+	NodePosition6	p;
 
 	ICF	u32	link(u8 index) const
 	{
@@ -411,8 +411,10 @@ const u32 XRCL_CURRENT_VERSION		=	18; //17;	// input
 const u32 XRCL_PRODUCTION_VERSION	=	14;	// output 
 const u32 CFORM_CURRENT_VERSION		=	4;
 #ifndef _EDITOR
-const u32 MAX_AI_NODES				=	NodeCompressed::LINK_MASK_0;
 const u32 XRAI_CURRENT_VERSION		=	11;
+using NodeCompressed				=	NodeCompressed11;
+using NodePosition					=	NodePosition6;
+const u32 MAX_AI_NODES				=	NodeCompressed::LINK_MASK_0;
 const u32 MAX_NODE_XZ				=	NodePosition::MAX_XZ;
 #endif
 

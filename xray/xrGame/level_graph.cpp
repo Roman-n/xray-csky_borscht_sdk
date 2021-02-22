@@ -36,7 +36,7 @@ CLevelGraph::CLevelGraph		()
 	m_reader->advance			(sizeof(CHeader));
 	if (header().version() == 10)
 	{
-		NodeCompressed_v10* temp = (NodeCompressed_v10*)m_reader->pointer();
+		NodeCompressed10* temp = (NodeCompressed10*)m_reader->pointer();
 		u32 count = header().vertex_count();
 		m_old_nodes.resize(count);
 		for (u32 i = 0; i != count; i++) {
