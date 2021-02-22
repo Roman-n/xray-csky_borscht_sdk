@@ -3,17 +3,19 @@
 #include "iinputreceiver.h"
 
 ENGINE_API extern Flags32		psHUD_Flags;
-#define HUD_CROSSHAIR			(1<<0)
-#define HUD_CROSSHAIR_DIST		(1<<1)
-#define HUD_WEAPON				(1<<2)
-#define HUD_INFO				(1<<3)
-#define HUD_DRAW				(1<<4)
-#define HUD_CROSSHAIR_RT		(1<<5)
-#define HUD_WEAPON_RT			(1<<6)
-#define HUD_CROSSHAIR_DYNAMIC	(1<<7)
-#define HUD_CROSSHAIR_RT2		(1<<9)
-#define HUD_DRAW_RT				(1<<10)
-#define HUD_WEAPON_RT2			(1<<11)
+enum HUD_Flags : u32 {
+    HUD_CROSSHAIR = 1 << 0,
+    HUD_CROSSHAIR_DIST = 1 << 1,
+    HUD_WEAPON = 1 << 2,
+    HUD_INFO = 1 << 3,
+    HUD_DRAW = 1 << 4,
+    HUD_CROSSHAIR_RT = 1 << 5,
+    HUD_WEAPON_RT = 1 << 6,
+    HUD_CROSSHAIR_DYNAMIC = 1 << 7,
+    HUD_CROSSHAIR_RT2 = 1 << 9,
+    HUD_DRAW_RT = 1 << 10,
+    HUD_WEAPON_RT2 = 1 << 11,
+};
 
 class ENGINE_API IRender_Visual;
 class CUI;
