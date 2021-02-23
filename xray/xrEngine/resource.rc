@@ -118,7 +118,40 @@ END
 #endif    // English (U.S.) resources
 /////////////////////////////////////////////////////////////////////////////
 
+#define STR(x) XSTR(x)
+#define XSTR(x) #x
 
+VS_VERSION_INFO VERSIONINFO
+	FILEVERSION RC_VERSION
+	PRODUCTVERSION RC_VERSION
+	FILEFLAGSMASK 0x3fL
+#ifdef NDEBUG
+	FILEFLAGS 0
+#else
+	FILEFLAGS VS_FF_DEBUG
+#endif
+	FILEOS VOS__WINDOWS32
+	FILETYPE VFT_APP
+	FILESUBTYPE 0x0L
+	BEGIN
+		BLOCK "StringFileInfo"
+		BEGIN
+			BLOCK "041904b0"
+			BEGIN
+				VALUE "CompanyName", "Borscht Team\0"
+				VALUE "FileDescription", "xrEngine.exe"
+				VALUE "FileVersion", STR(APP_VERSION)
+				VALUE "OriginalFilename", "xrEngine.exe\0"
+				VALUE "ProductName", "S.T.A.L.K.E.R: Borscht Engine\0"
+				VALUE "ProductVersion", STR(FULL_VERSION)
+			END
+		END
+		BLOCK "VarFileInfo"
+		BEGIN
+			VALUE "Translation", 0x0419, 1200
+		END
+	END
+/* End of Version info */
 
 #ifndef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////

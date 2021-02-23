@@ -748,13 +748,16 @@ void CMainMenu::OnConnectToMasterServerOkClicked(CUIWindow*, void*)
 	Hide_CTMS_Dialog();
 }
 
+XRCORE_API LPCSTR build_date;
+XRCORE_API u32 build_id;
+
 LPCSTR CMainMenu::GetGSVer()
 {
 	static string256	buff;
 	static string256	buff2;
 	if(m_pGameSpyFull)
 	{
-		strcpy_s(buff2, m_pGameSpyFull->GetGameVersion(buff));
+		sprintf(buff2, "%s Build %%c[255,245,123,3]%d%%c[default] %s", m_pGameSpyFull->GetGameVersion(buff), build_id, build_date);
 	}else
 	{
 		buff[0]		= 0;

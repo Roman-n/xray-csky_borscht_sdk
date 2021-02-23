@@ -20,7 +20,7 @@
 	#ifdef CI_VERSION
 		#define GAME_VERSION				CI_VERSION
 	#else
-		#define GAME_VERSION				"1.5.10-12"
+		#define GAME_VERSION				"1.5.10-???"
 	#endif
 	#define REGISTRY_PATH					"Software\\GSC Game World\\STALKER-STCS\\"
 #endif

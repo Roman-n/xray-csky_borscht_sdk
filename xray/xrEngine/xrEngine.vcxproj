@@ -390,7 +390,7 @@
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <PreprocessorDefinitions>DEBUG;WIN32;_WINDOWS;ENGINE_BUILD;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEBUG;WIN32;_WINDOWS;ENGINE_BUILD;_SECURE_SCL=0;CI_VERSION=1.8.1.0-debug-???;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>false</StringPooling>
       <ExceptionHandling>Sync</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -412,7 +412,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party/luajit/src;$(SolutionDir)3rd_party/luabind/include;$(SolutionDir)3rd_party/imdexlib;$(SolutionDir)3rd_party/libogg-1.3.3/include;$(SolutionDir)3rd_party/libtheora-1.1.1/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;RC_VERSION=1,8,1,0;APP_VERSION=1.8.1.0;FULL_VERSION=1.8.1.0-debug-???;_VC80_UPGRADE=0x0710</PreprocessorDefinitions>
       <Culture>0x0422</Culture>
     </ResourceCompile>
     <Link>

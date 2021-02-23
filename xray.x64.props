@@ -11,10 +11,13 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <DisableSpecificWarnings>4456;4457;4458;4459;4577;4595</DisableSpecificWarnings>
-      <PreprocessorDefinitions>CI_VERSION="$(APPVEYOR_VERSION)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CI_VERSION="$(FULL_VERSION)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>/we5037 /we4840 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>RC_VERSION=$(RC_VERSION);APP_VERSION="$(APP_VERSION)";FULL_VERSION="$(FULL_VERSION)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup />
 </Project>
