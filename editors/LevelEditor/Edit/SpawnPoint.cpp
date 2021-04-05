@@ -124,13 +124,16 @@ void CSpawnPoint::CLE_Visual::OnChangeVisual	()
 void CSpawnPoint::CLE_Visual::PlayAnimation ()
 {
     // play motion if skeleton
-    StopAllAnimations			();
+	StopAllAnimations			();
+
+	if(!source->startup_animation)
+		return;
 
     CKinematicsAnimated* KA = PKinematicsAnimated(visual);
     IKinematics*		K 	= PKinematics(visual);
     if (KA)
     {
-        MotionID M 			= KA->ID_Cycle_Safe(source->startup_animation.c_str());
+		MotionID M 			= KA->ID_Cycle_Safe(source->startup_animation);
         if (M.valid())		
         	KA->PlayCycle	(M);
     }
@@ -153,13 +156,16 @@ void CSpawnPoint::CLE_Visual::PlayAnimationFirstFrame()
 {
     // play motion if skeleton
 
-    StopAllAnimations		();
+	StopAllAnimations		();
+
+	if(!source->startup_animation)
+		return;
     
     CKinematicsAnimated* KA = PKinematicsAnimated(visual);
     IKinematics*		K 	= PKinematics(visual);
     if (KA)
     {
-        MotionID M 			= KA->ID_Cycle_Safe(source->startup_animation.c_str());
+		MotionID M 			= KA->ID_Cycle_Safe(source->startup_animation);
         if (M.valid())
         {		
         	KA->PlayCycle	(M);
@@ -183,14 +189,17 @@ void CSpawnPoint::CLE_Visual::PlayAnimationLastFrame()
 {
     // play motion if skeleton
 
-    StopAllAnimations		();
+	StopAllAnimations		();
+
+	if(!source->startup_animation)
+		return;
     
     CKinematicsAnimated* KA = PKinematicsAnimated(visual);
     IKinematics*		K 	= PKinematics(visual);
     if (KA)
     {
-        MotionID M 			= KA->ID_Cycle_Safe(source->startup_animation.c_str());
-        if (M.valid())
+		MotionID M 			= KA->ID_Cycle_Safe(source->startup_animation);
+		if (M.valid())
         {		
         	KA->PlayCycle		(M);
 	    	KA->LL_IterateBlends(g_Set_blend_last_frame_CB);
