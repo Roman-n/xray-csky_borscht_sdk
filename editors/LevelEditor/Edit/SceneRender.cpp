@@ -4,6 +4,7 @@
 #include "Scene.h"
 #include "SceneObject.h"
 #include "bottombar.h"
+#include "leftbar.h"
 #include "d3dutils.h"
 
 //------------------------------------------------------------------------------
@@ -146,8 +147,9 @@ void EScene::Render( const Fmatrix& camera )
     mapRenderObjects.traverseRL		(object_StrictB2F_3);
     RENDER_SCENE_TOOLS				(3,true);
 
-    // render snap
-    RenderSnapList			();
+	// render snap
+	if(fraLeftBar->ebShowSnapList->Down)
+		RenderSnapList              ();
 
     // clear
     mapRenderObjects.clear			();

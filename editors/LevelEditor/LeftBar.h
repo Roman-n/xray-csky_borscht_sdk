@@ -226,6 +226,7 @@ __published:	// IDE-managed Components
 	TMenuItem *N29;
 	TMenuItem *miRun;
 	TMenuItem *N16;
+	TExtBtn *ebShowSnapList;
     void __fastcall ebClearClick(TObject *Sender);
     void __fastcall ebLoadClick(TObject *Sender);
     void __fastcall ebSaveClick(TObject *Sender);
@@ -333,6 +334,7 @@ __published:	// IDE-managed Components
 	void __fastcall miCompileDetailsClick(TObject *Sender);
 	void __fastcall miCompileAIMapClick(TObject *Sender);
 	void __fastcall miCompileSpawnClick(TObject *Sender);
+	void __fastcall ebShowSnapListClick(TObject *Sender);
 private:	// User declarations
     void RedrawBar();
 	void __fastcall miRecentFilesClick(TObject *Sender);

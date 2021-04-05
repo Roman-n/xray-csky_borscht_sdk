@@ -2,7 +2,7 @@ object fraLeftBar: TfraLeftBar
   Left = 0
   Top = 0
   Width = 451
-  Height = 304
+  Height = 701
   HorzScrollBar.ButtonSize = 1
   HorzScrollBar.ParentColor = False
   HorzScrollBar.Visible = False
@@ -20,11 +20,12 @@ object fraLeftBar: TfraLeftBar
   ParentColor = False
   ParentFont = False
   TabOrder = 0
+  ExplicitHeight = 304
   object paLeftBar: TPanel
     Left = 0
     Top = 0
     Width = 451
-    Height = 553
+    Height = 617
     Align = alTop
     BevelInner = bvLowered
     BevelOuter = bvNone
@@ -3249,22 +3250,22 @@ object fraLeftBar: TfraLeftBar
       Left = 1
       Top = 359
       Width = 449
-      Height = 115
+      Height = 146
       Align = alTop
       Color = 10528425
       TabOrder = 3
       DesignSize = (
         449
-        115)
+        146)
       object Bevel2: TBevel
-        Left = 2
-        Top = 46
-        Width = 457
+        Left = 1
+        Top = 69
+        Width = 447
         Height = 18
         Anchors = [akLeft, akTop, akRight]
         Shape = bsTopLine
         Style = bsRaised
-        ExplicitWidth = 436
+        ExplicitWidth = 444
       end
       object Label1: TLabel
         Left = 1
@@ -3307,7 +3308,7 @@ object fraLeftBar: TfraLeftBar
       object ebUseSnapList: TExtBtn
         Left = 2
         Top = 31
-        Width = 457
+        Width = 442
         Height = 15
         Align = alNone
         AllowAllUp = True
@@ -3317,7 +3318,7 @@ object fraLeftBar: TfraLeftBar
         HotColor = 15790320
         BtnColor = 10528425
         GroupIndex = 1
-        Caption = 'Enable/Show Snap List'
+        Caption = 'Enable Snap List'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -3326,7 +3327,6 @@ object fraLeftBar: TfraLeftBar
         Margin = 13
         ParentFont = False
         OnClick = ebUseSnapListClick
-        ExplicitWidth = 436
       end
       object ExtBtn1: TExtBtn
         Left = 2
@@ -3362,15 +3362,15 @@ object fraLeftBar: TfraLeftBar
       end
       object Bevel1: TBevel
         Left = 2
-        Top = 64
-        Width = 457
+        Top = 88
+        Width = 445
         Height = 57
         Anchors = [akLeft, akTop, akRight]
-        ExplicitWidth = 436
+        ExplicitWidth = 442
       end
       object ebSnapListMode: TExtBtn
-        Left = 15
-        Top = 49
+        Left = 6
+        Top = 73
         Width = 68
         Height = 14
         Hint = 'Append to snap list'
@@ -3379,7 +3379,7 @@ object fraLeftBar: TfraLeftBar
         BevelShow = False
         HotTrack = True
         HotColor = 15790320
-        GroupIndex = 2
+        GroupIndex = 3
         Caption = 'Mode'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -3408,8 +3408,8 @@ object fraLeftBar: TfraLeftBar
         OnClick = ebSnapListModeClick
       end
       object ebModeInvert: TExtBtn
-        Left = 152
-        Top = 49
+        Left = 144
+        Top = 73
         Width = 155
         Height = 14
         Hint = 'Clear snap list'
@@ -3439,11 +3439,11 @@ object fraLeftBar: TfraLeftBar
         ParentShowHint = False
         ShowHint = True
         OnClick = ebClearSnapClick
-        ExplicitWidth = 134
+        ExplicitWidth = 152
       end
       object ebSnapListEdit: TExtBtn
-        Left = 354
-        Top = 49
+        Left = 351
+        Top = 73
         Width = 98
         Height = 14
         Hint = 'Manually edit snap list'
@@ -3457,13 +3457,36 @@ object fraLeftBar: TfraLeftBar
         ParentShowHint = False
         ShowHint = True
         OnClick = ebSnapListEditClick
-        ExplicitLeft = 333
+        ExplicitLeft = 348
+      end
+      object ebShowSnapList: TExtBtn
+        Left = 2
+        Top = 48
+        Width = 442
+        Height = 15
+        Align = alNone
+        AllowAllUp = True
+        Anchors = [akLeft, akTop, akRight]
+        BevelShow = False
+        HotTrack = True
+        HotColor = 15790320
+        BtnColor = 10528425
+        GroupIndex = 2
+        Caption = 'Show Snap List'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        Margin = 13
+        ParentFont = False
+        OnClick = ebShowSnapListClick
       end
       object lbSnapList: TListBox
-        Left = 4
-        Top = 66
-        Width = 454
-        Height = 52
+        Left = 6
+        Top = 93
+        Width = 438
+        Height = 49
         Anchors = [akLeft, akTop, akRight]
         BorderStyle = bsNone
         Color = clGray
@@ -3483,7 +3506,7 @@ object fraLeftBar: TfraLeftBar
   end
   object paFrames: TPanel
     Left = 0
-    Top = 263
+    Top = 660
     Width = 451
     Height = 41
     Align = alBottom
@@ -3491,6 +3514,7 @@ object fraLeftBar: TfraLeftBar
     Color = 10528425
     Constraints.MinWidth = 220
     TabOrder = 1
+    ExplicitTop = 263
   end
   object fsStorage: TFormStorage
     IniSection = 'LeftBar'

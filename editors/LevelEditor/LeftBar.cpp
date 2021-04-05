@@ -859,3 +859,9 @@ void __fastcall TfraLeftBar::miCompileSpawnClick(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
+void __fastcall TfraLeftBar::ebShowSnapListClick(TObject *Sender)
+{
+	UI->RedrawScene();	
+}
+//---------------------------------------------------------------------------
+
